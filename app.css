@@ -1,0 +1,32 @@
+.header {
+  text-align: center;
+}
+.content {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.legend {
+  width: 30%;
+  height: 80vh;
+  float:left;
+  overflow-y: auto;
+
+}
+.svgMap {
+  float: left;
+  width: 70%;
+  height: 80vh;
+  margin-top:5vh;
+}
+.factHeader{
+  float:left;
+  width: 100%;
+}
+.factDate {
+  text-align: right;
+  float:right;
+}
+.factAuthor {
+  opacity: 0.5;
+}

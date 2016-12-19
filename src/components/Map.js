@@ -7,6 +7,6 @@ export default class Map extends React.Component {
     var mapAreas = this.props.areas.map(function(area) {
       return <Area d={area.d} label={area.label} color={area.color} id={area.id} />;
     });
-    return <svg style={{float: 'left'}} width="80%" height="500px" ><g strokeWidth="0.6" >{mapAreas}</g></svg>;
+    return <svg className='svgMap' ><g strokeWidth="0.6" >{mapAreas}</g></svg>;
   }
 }
