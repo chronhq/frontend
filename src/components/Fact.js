@@ -2,8 +2,8 @@ import React from 'react';
 
 export default class Fact extends React.Component {
   render(){
-    let factState = this.props.completed ? 'factAlreadyOccured' : 'factStillInFuture';
     let fact = this.props.fact;
+    let factState = fact.completed ? 'factAlreadyOccured' : 'factStillInFuture';
     let date = fact.day !== undefined ? fact.year + '-' + fact.month + '-' +  fact.day : fact.year;
 
     return(

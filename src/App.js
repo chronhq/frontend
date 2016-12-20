@@ -3,8 +3,15 @@ import Map from './components/Map';
 import Legend from './components/Legend';
 import areas from './data/svg';
 import tech from './data/tech';
+let facts = tech;
 
 export default class App extends Component {
+  componentWillUpdate(nextProps, nextState){
+    facts = tech.map(function(fact) {
+      fact.completed = nextState.year > fact.year ? true : false;
+      return fact;
+    });
+  }
   play(){
     if(this.state.year < this.state.maxYear){
       this.setState({year: this.state.year + 1});
@@ -44,8 +51,8 @@ export default class App extends Component {
         </div>
 
         <div className='content'>
-          <Map areas={areas} />
-          <Legend facts={tech} currentYear={this.state.year} />
+          <Map areas={areas} facts={facts} />
+          <Legend facts={facts} />
         </div>
       </div>
     )

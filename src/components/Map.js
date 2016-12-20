@@ -4,9 +4,17 @@ import Area from './Area';
 export default class Map extends React.Component {
 
   render() {
-    var mapAreas = this.props.areas.map(function(area) {
+    let mapAreas = this.props.areas.map(function(area) {
       return <Area d={area.d} label={area.label} color={area.color} id={area.id} />;
     });
-    return <svg className='svgMap' ><g strokeWidth="0.6" >{mapAreas}</g></svg>;
+    let locationPins = this.props.facts.map(function(fact){
+      if(fact.completed){
+        let locations = fact.location.map(function(location){
+          return <circle cx={location.cx} cy={location.cy} r="10" stroke="Black" stroke-width="1" fill="Blue" />;
+        });
+        return <g>{locations}</g>;
+      }
+    });
+    return <svg className='svgMap' ><g strokeWidth="0.6" >{mapAreas}</g>{locationPins}</svg>;
   }
 }
