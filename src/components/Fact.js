@@ -2,14 +2,12 @@ import React from 'react';
 
 export default class Fact extends React.Component {
   render(){
+    let factState = this.props.completed ? 'factAlreadyOccured' : 'factStillInFuture';
     let fact = this.props.fact;
-    let date = fact.year;
-    if ( fact.day !== undefined ){
-      date = fact.year + '-' + fact.month + '-' +  fact.day;
-    }
-    
+    let date = fact.day !== undefined ? fact.year + '-' + fact.month + '-' +  fact.day : fact.year;
+
     return(
-      <div>
+      <div className={factState}>
         <span className='factHeader'>
           <b>{fact.name}</b>
           <span className='factDate'>{date}</span>
