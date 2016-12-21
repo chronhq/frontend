@@ -4,7 +4,7 @@ import Legend from './components/Legend';
 import areas from './data/svg';
 import tech from './data/tech';
 let facts = tech;
-
+let startYear = 1750;
 export default class App extends Component {
   componentWillUpdate(nextProps, nextState){
     facts = tech.map(function(fact) {
@@ -15,7 +15,12 @@ export default class App extends Component {
   play(){
     if(this.state.year < this.state.maxYear){
       this.setState({year: this.state.year + 1});
+    }else{
+      this.restart();
     }
+  }
+  restart(){
+    this.setState({year: startYear});
   }
   togglePlay() {
     if(this.state.intervalId){
@@ -30,11 +35,12 @@ export default class App extends Component {
     this.state = {
       intervalId: 0,
       interval: 500,
-      year: 1750,
+      year: startYear,
       maxYear: 2000
     };
     this.togglePlay = this.togglePlay.bind(this);
     this.play = this.play.bind(this);
+    this.restart = this.restart.bind(this);
   }
 
   render() {
@@ -46,7 +52,9 @@ export default class App extends Component {
             Map (Thanks, Captain)
           </span>
           <span className='playButton'>
-            <button onClick={this.togglePlay}>{playButton}</button>{' '}{this.state.year}
+            <button onClick={this.restart}>Restart</button>
+            <button onClick={this.togglePlay}>{playButton}</button>
+            {' '}{this.state.year}
           </span>
         </div>
 
