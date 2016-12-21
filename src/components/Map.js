@@ -1,5 +1,6 @@
 import React from 'react';
 import Area from './Area';
+import Pin from './Pin';
 
 export default class Map extends React.Component {
 
@@ -10,7 +11,7 @@ export default class Map extends React.Component {
     let locationPins = this.props.facts.map(function(fact){
       if(fact.completed){
         let locations = fact.location.map(function(location){
-          return <circle cx={location.cx} cy={location.cy} r="10" stroke="Black" stroke-width="1" fill="Blue" />;
+          return <Pin location={location} />
         });
         return <g>{locations}</g>;
       }
