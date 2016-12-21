@@ -45,7 +45,15 @@
 }
 .factAlreadyOccured {
   color: #690;
+  transition: color 1s;
 }
 .factStillInFuture{
  color: #000;
+}
+.PinVisible{
+  transition: 0.3s all;
+}
+.PinInvisible{
+  transition: 0.3s all;
+  opacity: 0;
 }
