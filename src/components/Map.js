@@ -1,6 +1,8 @@
 import React from 'react';
 import Area from './Area';
 import Pin from './Pin';
+import { connect } from 'react-redux'
+
 
 const Map = ({ areas, facts }) => (
   <svg className='svgMap' >
@@ -12,4 +14,8 @@ const Map = ({ areas, facts }) => (
           <g><Pin location={location} visible={fact.completed}/></g>))}
   </svg>
 )
-export default Map;
+function mapStateToProps (state) {
+  return {facts: state.timeline.facts, areas: state.terrain}
+}
+
+export default connect(mapStateToProps)(Map)

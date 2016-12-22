@@ -1,7 +1,8 @@
 import React from 'react';
 
 const Fact = ({ fact }) => (
-  <div className={fact.completed ? 'factAlreadyOccured' : 'factStillInFuture'}>
+  <div className={fact.completed ? 'factAlreadyOccured' : 'factStillInFuture'}
+    key={fact.id} >
     <span className='factHeader'>
       <b>{fact.name}</b>
       <span className='factDate'>
