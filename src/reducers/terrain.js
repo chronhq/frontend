@@ -1,15 +1,20 @@
 import initialState from '../data/svg';
 
 const region = (state, action) => {
-    switch (action.type) {
-      default:
-        return state
-    }
-}
+  switch (action.type) {
+    case 'TOGGLE_REGION':
+    default:
+      return state;
+  }
+};
 const terrain = (state = initialState, action) => {
   switch (action.type) {
+    case 'TOGGLE_REGION':
+      return state.map(r =>
+        region(r, action)
+      );
     default:
-      return state
+      return state;
   }
-}
-export default terrain
+};
+export default terrain;

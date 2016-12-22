@@ -2,17 +2,18 @@ const fact = (state, action) => {
   switch (action.type) {
     case 'NEXT_YEAR':
     case 'SET_YEAR':
-      return state.year > action.year ? {...state, completed:false} : {...state, completed:true};
+      return state.year > action.year ?
+        { ...state, completed: false } : { ...state, completed: true };
     case 'TOGGLE_FACT':
       if (state.id !== action.id) {
-        return state
+        return state;
       }
       return {
         ...state,
         completed: !state.completed
       };
     default:
-      return state
+      return state;
   }
 };
 
@@ -25,8 +26,8 @@ const facts = (state = [], action) => {
         fact(f, action)
       );
     default:
-      return state
+      return state;
   }
 };
 
-export default facts
+export default facts;

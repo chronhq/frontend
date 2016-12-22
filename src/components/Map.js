@@ -1,7 +1,7 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import Area from './Area';
 import Pin from './Pin';
-import { connect } from 'react-redux'
 
 
 const Map = ({ areas, facts }) => (
@@ -11,11 +11,11 @@ const Map = ({ areas, facts }) => (
     </g>
     {facts.map(fact =>
         fact.location.map(location =>
-          <g><Pin location={location} visible={fact.completed}/></g>))}
+          <g><Pin location={location} visible={fact.completed} /></g>))}
   </svg>
-)
-function mapStateToProps (state) {
-  return {facts: state.timeline.facts, areas: state.terrain}
+);
+function mapStateToProps(state) {
+  return { facts: state.timeline.facts, areas: state.terrain };
 }
 
-export default connect(mapStateToProps)(Map)
+export default connect(mapStateToProps)(Map);

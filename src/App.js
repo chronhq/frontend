@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Map from './components/Map';
 import Legend from './components/Legend';
@@ -13,6 +13,6 @@ const App = () => (
       <Legend />
     </div>
   </div>
-)
+);
 
-export default App
+export default App;

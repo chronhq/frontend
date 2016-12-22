@@ -1,21 +1,38 @@
 {
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
-  },
+"extends": "eslint-config-airbnb",
   "env": {
     "browser": true,
     "node": true
   },
-  "parser": "babel-eslint",
   "rules": {
-    "quotes": [2, "single"],
-    "strict": [2, "never"],
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2
+    "new-cap": [2, { "capIsNewExceptions": ["List", "Map", "Set"] }],
+    "react/no-multi-comp": 0,
+    "import/default": 0,
+    "import/no-duplicates": 0,
+    "import/named": 0,
+    "import/namespace": 0,
+    "import/no-unresolved": 0,
+    "import/no-named-as-default": 2,
+    "comma-dangle": 0,
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "no-console": 0,
+    "no-alert": 0,
+    "linebreak-style": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "jsx-quotes": "off",
+    "jsx-no-bind": "off",
+    "react/jsx-no-bind": "warn",
+    "react/prop-types": "warn",
+    "no-multi-str": "off",
+    "no-param-reassign": "warn"
   },
   "plugins": [
-    "react"
-  ]
+    "react", "import"
+  ],
+    "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      "moduleDirectory": ["node_modules", "src"]
+    }
+  }
 }
