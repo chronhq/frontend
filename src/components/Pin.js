@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Pin = ({ location, visible }) => (
+const Pin = ({ location, visible = true }) => (
+  // className={visible ? 'PinVisible' : 'PinInvisible'}
   <circle
     className={visible ? 'PinVisible' : 'PinInvisible'}
     cx={location.cx} cy={location.cy}

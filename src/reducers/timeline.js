@@ -1,5 +1,5 @@
 import factsReducer from './facts';
-import factsInitialState from '../data/tech';
+import * as techData from '../data/tech';
 
 const initialState = {
   intervalId: 0,
@@ -7,8 +7,11 @@ const initialState = {
   now: 1750,
   max: 2000,
   min: 1750,
-  facts: factsInitialState
+  facts: techData.getFactsData(),
+  persons: techData.getPeople(),
+  cities: techData.getCities()
 };
+
 const timeline = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_INTERVAL':

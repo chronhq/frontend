@@ -1,30 +1,15 @@
-const fact = (state, action) => {
+const facts = (state = {}, action) => {
   switch (action.type) {
     case 'NEXT_YEAR':
-    case 'SET_YEAR':
-      return state.year > action.year ?
-        { ...state, completed: false } : { ...state, completed: true };
-    case 'TOGGLE_FACT':
-      if (state.id !== action.id) {
-        return state;
-      }
-      return {
-        ...state,
-        completed: !state.completed
+      return { ...state,
+        current: action.year in state.byYear ?
+          [...state.current, state.byYear[action.year]] :
+          state.current // Zero facts happened in this year
       };
-    default:
-      return state;
-  }
-};
-
-const facts = (state = [], action) => {
-  switch (action.type) {
-    case 'NEXT_YEAR':
     case 'SET_YEAR':
-    case 'TOGGLE_FACT':
-      return state.map(f =>
-        fact(f, action)
-      );
+      return { ...state,
+        current: action.year in state.byYear ? [state.byYear[action.year]] : []
+      };
     default:
       return state;
   }
