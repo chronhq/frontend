@@ -4,19 +4,20 @@ import Area from './Area';
 import Pin from './Pin';
 
 
-const Map = ({ areas, facts, cities }) => (
+const Map = ({ areas, currentCities, locations }) => (
   <svg className='svgMap' >
     <g strokeWidth="0.6" >
       {areas.map(area => <Area d={area.d} label={area.label} color={area.color} id={area.id} />)}
     </g>
-    {facts.current.map(year =>
-      year.map(fact =>
-        facts.byId[fact].location.map(locationId =>
-          <g><Pin location={cities[locationId]} /></g>)))}
+
+    {currentCities.map(city =>
+      <g><Pin location={locations[city]} /></g>)}
   </svg>
 );
 function mapStateToProps(state) {
-  return { facts: state.timeline.facts, areas: state.terrain, cities: state.timeline.cities };
+  return { areas: state.terrain,
+    currentCities: state.timeline.locations.current,
+    locations: state.locations };
 }
 
 export default connect(mapStateToProps)(Map);

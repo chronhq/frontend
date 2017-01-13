@@ -1,15 +1,9 @@
-const facts = (state = {}, action) => {
+import * as techData from '../data/tech';
+
+const initialState = techData.getFactsData();
+
+const facts = (state = initialState, action) => {
   switch (action.type) {
-    case 'NEXT_YEAR':
-      return { ...state,
-        current: action.year in state.byYear ?
-          [...state.current, state.byYear[action.year]] :
-          state.current // Zero facts happened in this year
-      };
-    case 'SET_YEAR':
-      return { ...state,
-        current: action.year in state.byYear ? [state.byYear[action.year]] : []
-      };
     default:
       return state;
   }

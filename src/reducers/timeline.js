@@ -1,4 +1,5 @@
-import factsReducer from './facts';
+import factsReducer from './factsTimeline';
+import locationsReducer from './locationsTimeline';
 import * as techData from '../data/tech';
 
 const initialState = {
@@ -7,24 +8,25 @@ const initialState = {
   now: 1750,
   max: 2000,
   min: 1750,
-  facts: techData.getFactsData(),
-  persons: techData.getPeople(),
-  cities: techData.getCities()
+  facts: techData.getFactsTimeline(),
+  locations: techData.getLoactionsTimeline()
 };
 
 const timeline = (state = initialState, action) => {
+  let act = action;
   switch (action.type) {
     case 'SET_INTERVAL':
       return { ...state, intervalId: action.id };
     case 'NEXT_YEAR':
-      action.year = state.now + 1;
+      act = { ...action, year: state.now + 1 };
       // falls through
     case 'SET_YEAR':
-      action.year = state.min < action.year && action.year < state.max ?
-        action.year : state.min;
+      act = state.min < act.year && act.year < state.max ?
+        act : { ...act, type: 'SET_YEAR', year: state.min };
       return { ...state,
-        facts: factsReducer(state.facts, action),
-        now: action.year };
+        facts: factsReducer(state.facts, act),
+        locations: locationsReducer(state.locations, act),
+        now: act.year };
     default:
       return state;
   }
