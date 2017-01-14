@@ -8,7 +8,7 @@ function getActualData(years, data, target) {
   return [];
 }
 
-const locationsTimeline = (state = {}, action) => {
+const layerTimeline = (state = {}, action) => {
   switch (action.type) {
     case 'NEXT_YEAR':
       return { ...state,
@@ -26,4 +26,4 @@ const locationsTimeline = (state = {}, action) => {
   }
 };
 
-export default locationsTimeline;
+export default layerTimeline;
