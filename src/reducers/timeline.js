@@ -9,7 +9,8 @@ const initialState = {
   max: 2000,
   min: 1750,
   facts: techData.getFactsTimeline(),
-  locations: techData.getLoactionsTimeline()
+  locations: techData.getLoactionsTimeline(),
+  borders: techData.getBordersTimeline(),
 };
 
 const timeline = (state = initialState, action) => {
@@ -26,6 +27,7 @@ const timeline = (state = initialState, action) => {
       return { ...state,
         facts: factsReducer(state.facts, act),
         locations: locationsReducer(state.locations, act),
+        borders: locationsReducer(state.borders, act),
         now: act.year };
     default:
       return state;
@@ -45,7 +47,7 @@ export function setYear(year) {
 export function resetYear() {
   return {
     type: 'SET_YEAR',
-    year: initialState.now
+    year: initialState.min
   };
 }
 
