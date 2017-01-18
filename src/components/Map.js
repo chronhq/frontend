@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import Area from './Area';
 import Pin from './Pin';
+import PinTooltip from './PinTooltip';
 
 
 const Map = ({ terrain, currentCities, locations, borders, territories }) => (
@@ -11,7 +12,11 @@ const Map = ({ terrain, currentCities, locations, borders, territories }) => (
     </g>
     <g>
       {currentCities.map(city =>
-        <Pin location={locations[city]} />)}
+        <g>
+          <Pin location={locations[city]} />
+          <PinTooltip location={locations[city]} />
+        </g>
+      )}
     </g>
     <g>
       {borders.current.map(id =>
