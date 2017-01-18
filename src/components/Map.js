@@ -18,7 +18,7 @@ const Map = ({ terrain, currentCities, locations, borders, territories }) => (
         <Area
           id={territories[borders.assigment[id]].id} d={borders.byId[id].d}
           color={territories[borders.assigment[id]].color}
-          label={territories[borders.assigment[id]].name} opacity='0.3'
+          label={territories[borders.assigment[id]].name} opacity='0.6'
         />
       )}
     </g>
