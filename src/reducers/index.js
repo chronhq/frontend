@@ -8,7 +8,6 @@ const facts = (state = techData.getFactsData()) => state;
 const persons = (state = techData.getPeople()) => state;
 const locations = (state = techData.getLocations()) => state;
 const borders = (state = techData.getBordersData()) => state;
-const borderAssigment = (state = techData.getBorderToCountry()) => state;
 const territories = (state = techData.getTerritoriesData()) => state;
 
 const terrain = (state = terrainState) => state;
@@ -18,7 +17,6 @@ const mapInfoApp = combineReducers({
   persons,
   locations,
   borders,
-  borderAssigment,
   territories,
   terrain,
   timeline

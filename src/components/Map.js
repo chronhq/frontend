@@ -21,9 +21,9 @@ const Map = ({ terrain, currentCities, locations, borders, territories }) => (
     <g>
       {borders.current.map(id =>
         <Area
-          id={territories[borders.assigment[id]].id} d={borders.byId[id].d}
-          color={territories[borders.assigment[id]].color}
-          label={territories[borders.assigment[id]].name} opacity='0.6'
+          id={territories[borders.byId[id].c]} d={borders.byId[id].d}
+          color={territories[borders.byId[id].c].color}
+          label={territories[borders.byId[id].c].name} opacity='0.6'
         />
       )}
     </g>
@@ -36,7 +36,6 @@ function mapStateToProps(state) {
     borders: {
       current: state.timeline.borders.current,
       byId: state.borders,
-      assigment: state.borderAssigment
     },
     territories: state.territories
   };
