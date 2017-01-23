@@ -6,7 +6,7 @@ import PinTooltip from './PinTooltip';
 
 
 const Map = ({ terrain, currentCities, locations, borders, territories }) => (
-  <svg className='svgMap' transform="scale(0.7)">
+  <svg className='svgMap' transform="scale(1)">
     <g strokeWidth="0.6" >
       {terrain.map(area => <Area d={area.d} label={area.label} color={area.color} id={area.id} />)}
     </g>
