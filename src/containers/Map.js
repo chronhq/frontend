@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import Area from './Area';
-import Pin from './Pin';
-import PinTooltip from './PinTooltip';
+import Area from '../components/Area';
+import Pin from '../components//Pin';
+import PinTooltip from '../components//PinTooltip';
 
 
 const Map = ({ terrain, currentCities, locations, borders, territories }) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Fact from './Fact';
+import Fact from '../components/Fact';
 
 
 const Legend = ({ facts, currentFacts, persons }) => (

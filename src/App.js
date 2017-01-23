@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Map from './components/Map';
-import Legend from './components/Legend';
-import Header from './components/Header';
+import Map from './containers/Map';
+import Legend from './containers/Legend';
+import Header from './containers/Header';
 
 import DevTools from './DevTools';
 
