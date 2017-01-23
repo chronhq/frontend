@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.morlov.tk/morlov/map-prototype.git"
+    "url": "https://gitlab.morlov.tk/chronist/map-prototype.git"
   },
   "keywords": [
     "react",
@@ -23,9 +23,9 @@
   ],
   "author": "Michael Orlov",
   "bugs": {
-    "url": "https://gitlab.morlov.tk/morlov/map-prototype/issues"
+    "url": "https://gitlab.morlov.tk/chronist/map-prototype/issues"
   },
-  "homepage": "https://gitlab.morlov.tk/morlov/map-prototype",
+  "homepage": "https://gitlab.morlov.tk/chronist/map-prototype",
   "devDependencies": {
     "babel-core": "^6.0.20",
     "babel-eslint": "^4.1.3",
