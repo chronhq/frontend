@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as timelineActions from '../reducers/timeline';
+import ControlButtons from '../components/ControlButtons';
 
 function togglePlay() {
   if (this.timeline.intervalId) {
@@ -18,19 +19,21 @@ const Header = ({ timeline, timelineAction }) => (
     <span>
       Map (Thanks, Captain)
     </span>
-    <span className='playButton'>
-      <button onClick={timelineAction.resetYear}>Restart</button>
-      <button
-        onClick={togglePlay.bind({ timeline, timelineAction })}
-      >
-        {timeline.intervalId !== 0 ? 'Pause' : 'Play'}
-      </button>
-      {' '}{timeline.now}
-    </span>
+    <ControlButtons
+      timeline={timeline}
+      reestYear={timelineAction.resetYear}
+      togglePlay={togglePlay.bind({ timeline, timelineAction })}
+    />
   </div>
 );
 function mapStateToProps(state) {
-  return { timeline: state.timeline };
+  return { timeline: {
+    now: state.timeline.now,
+    limit: state.timeline.max - state.timeline.now,
+    interval: state.timeline.interval,
+    intervalId: state.timeline.intervalId
+  }
+  };
 }
 function mapDispatchToProps(dispatch) {
   return {
