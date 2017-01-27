@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as timelineActions from '../reducers/timeline';
 import ControlButtons from '../components/ControlButtons';
 
-class ControlButtonsController extends Component {
+class ControlButtonsController extends PureComponent {
   togglePlay = () => {
     if (this.props.timeline.intervalId) {
       clearInterval(this.props.timeline.intervalId);
