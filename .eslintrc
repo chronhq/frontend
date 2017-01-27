@@ -1,4 +1,5 @@
 {
+"parser": "babel-eslint",
 "extends": "eslint-config-airbnb",
   "env": {
     "browser": true,
@@ -24,6 +25,8 @@
     "react/jsx-no-bind": "warn",
     "react/prop-types": "warn",
     "no-multi-str": "off",
+    "react/forbid-prop-types": 0,
+    "react/prefer-stateless-function": [0, { "ignorePureComponents": true }],
     "no-param-reassign": "warn"
   },
   "plugins": [
