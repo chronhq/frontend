@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Map from './containers/Map';
+import MapD3Container from './containers/MapD3Container';
 import Legend from './containers/Legend';
 import Header from './containers/Header';
 
@@ -11,7 +11,7 @@ const App = () => (
   <div>
     <Header />
     <div className='content'>
-      <Map />
+      <MapD3Container />
       <Legend />
     </div>
     <DevTools />
