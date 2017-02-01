@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import d3 from 'd3';
+import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 
 
@@ -7,7 +7,7 @@ export default class MapD3Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      path: d3.geo.path().projection(d3.geo.albersUsa()),
+      path: d3.geoPath().projection(d3.geoAlbersUsa()),
       geoData: [],
     };
   }
