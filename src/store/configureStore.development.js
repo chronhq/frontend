@@ -1,9 +1,11 @@
-import { createStore, compose } from 'redux';
-import { persistState } from 'redux-devtools'; // eslint-disable-line
+import { applyMiddleware, createStore, compose } from 'redux';
+import { persistState } from 'redux-devtools';  // eslint-disable-line
+import promiseMiddleware from 'redux-promise-middleware';
 import rootReducer from '../reducers';
 import DevTools from '../DevTools';
 
 const enhancer = compose(
+  applyMiddleware(promiseMiddleware()),
   DevTools.instrument(),
   persistState(
     window.location.href.match(

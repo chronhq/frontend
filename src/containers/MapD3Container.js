@@ -27,7 +27,9 @@ export default class MapD3Container extends Component {
 
   render() {
     return (
-      <div id="datamap-container"><svg className='svgMap'><g><path d={this.state.geoData} /></g></svg></div>
+      <svg className='svgMap'>
+        <g strokeWidth="0.6" ><path d={this.state.geoData} /></g>
+      </svg>
     );
   }
 }

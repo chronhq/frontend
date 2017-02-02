@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import timeline from './timeline';
+import apiTest from './apiTest';
 
 import * as techData from '../data/tech';
 import terrainState from '../data/svg';
@@ -13,6 +14,7 @@ const territories = (state = techData.getTerritoriesData()) => state;
 const terrain = (state = terrainState) => state;
 
 const mapInfoApp = combineReducers({
+  apiTest,
   facts,
   persons,
   locations,
