@@ -1,8 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
     './src/index'
@@ -13,12 +13,13 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
   ],
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
+      use: ['react-hot-loader', 'babel-loader'],
       include: path.join(__dirname, 'src')
     }]
   }
