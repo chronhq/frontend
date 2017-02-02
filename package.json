@@ -1,7 +1,9 @@
 {
   "name": "map-prototype",
-  "version": "0.0.1",
-  "description": "UI prototype for geogra-project",
+  "version": "0.0.2",
+  "description": "Prototype for chronist-project",
+  "spdx": false,
+  "license": "copyright",
   "scripts": {
     "start": "node server.js",
     "lint": "eslint src"
@@ -50,7 +52,6 @@
   },
   "dependencies": {
     "d3": "^4.5.0",
-    "gsap-react-plugin": "^1.0.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
