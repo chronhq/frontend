@@ -1,4 +1,4 @@
-# [ТЗ](chronist/roadmap#2https://gitlab.morlov.tk/chronist/roadmap/issues/2) #
+# [Техническое Задание](chronist/roadmap#2) #
 # Начнем на коленке #
 
 Данный проект содержит код прототипа отвечающий за визуальное представление
