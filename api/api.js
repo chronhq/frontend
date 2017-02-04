@@ -3,6 +3,16 @@ import locations from './locations';
 
 const app = express();
 
+function resolvePromise(action, req, res, params = []) {
+  action(req, params)
+    .then((result) => {
+      res.json(result);
+    }, (reason) => {
+      console.log('error occured while resolving promise');
+      console.log(reason);
+    });
+}
+
 app.use((req, res) => {
   console.info('Get a request');
   const splittedUrlPath = req.url.split('?')[0].split('/').slice(1);
@@ -10,7 +20,7 @@ app.use((req, res) => {
   try {
     switch (splittedUrlPath[0]) {
       case 'LOCATIONS':
-        res.json(locations());
+        resolvePromise(locations, req, res);
         break;
       default:
         console.log('DEFAULT_SWITCH');

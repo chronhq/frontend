@@ -40,8 +40,8 @@ try {
 }
 
 export default function locations() {
-  return {
+  return Promise.resolve({
     places,
     byId: Object.keys(places)
-  };
+  });
 }
