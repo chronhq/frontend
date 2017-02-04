@@ -1,12 +1,4 @@
-function getActualData(years, data, target) {
-  const res = Math.max(...years.filter(y => y < target));
-  console.log(target);
-  console.log(res);
-  if (isFinite(res)) {
-    return data[res];
-  }
-  return [];
-}
+import { getActualData } from './actions';
 
 const layerTimeline = (state = {}, action) => {
   switch (action.type) {

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
+import { askBackend } from '../reducers/actions';
 
-
-export default class MapD3Container extends Component {
+class MapD3Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +16,7 @@ export default class MapD3Container extends Component {
 
   componentWillMount() {
     this.loadRawData();
+    this.props.askBackend('LOCATIONS');
   }
 
   loadRawData() {
@@ -33,3 +36,22 @@ export default class MapD3Container extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { terrain: state.terrain,
+    currentCities: state.timeline.locations.current,
+    locations: state.locations,
+    borders: {
+      current: state.timeline.borders.current,
+      byId: state.borders,
+    },
+    territories: state.territories
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    askBackend: bindActionCreators(askBackend, dispatch),
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MapD3Container);
