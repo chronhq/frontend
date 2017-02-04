@@ -1,4 +1,4 @@
-const locations = (state = { loaded: false, places: {}, byId: [] }, action) => {
+const locations = (state = { loaded: false, places: {}, allIds: [] }, action) => {
   switch (action.type) {
     case 'LOCATIONS_PENDING':
       return {
@@ -12,7 +12,7 @@ const locations = (state = { loaded: false, places: {}, byId: [] }, action) => {
         loaded: true,
         error: false,
         places: action.payload.places,
-        byId: action.payload.byId,
+        allIds: action.payload.allIds,
       };
     case 'LOCATIONS_REJECTED':
       return {

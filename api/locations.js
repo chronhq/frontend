@@ -42,6 +42,6 @@ try {
 export default function locations() {
   return Promise.resolve({
     places,
-    byId: Object.keys(places)
+    allIds: Object.keys(places)
   });
 }
