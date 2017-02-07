@@ -15,20 +15,14 @@ class MapD3Container extends Component {
   }
 
   componentWillMount() {
-    this.loadRawData();
     this.props.askBackend('LOCATIONS');
-  }
-
-  loadRawData() {
-    d3.json('static/us.json', (error, usData) => {
-      console.log(error);
-      console.log('us.json callback');
-      this.state.geoData = this.state.path(topojson.feature(usData, usData.objects.states));
-      this.forceUpdate();
-    });
+    this.props.askBackend('TERRAIN');
   }
 
   render() {
+    if (this.props.terrain.loaded === true) {
+      this.state.geoData = this.state.path(this.props.terrain.topology); // this is bad
+    }
     return (
       <svg className='svgMap'>
         <g strokeWidth="0.6" ><path d={this.state.geoData} /></g>

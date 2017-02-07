@@ -78,16 +78,20 @@
     "better-npm-run": "0.0.14",
     "concurrently": "^3.1.0",
     "d3": "^4.5.0",
+    "esri-to-geojson": "^1.0.2",
     "express": "^4.14.0",
     "http-proxy": "^1.16.2",
     "isomorphic-fetch": "^2.2.1",
     "multireducer": "^3.1.0",
+    "object-sizeof": "^1.1.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.2.0",
-    "topojson-client": "^2.1.0"
+    "topojson-client": "^2.1.0",
+    "topojson-server": "^2.0.0",
+    "topojson-simplify": "^2.0.0"
   }
 }

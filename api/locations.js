@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { readDataFile } from './helper';
 
 const dummy = `{
   "285": {
@@ -24,20 +25,8 @@ const dummy = `{
 }`;
 
 const filename = './data/cities1.json';
-let file = dummy;
-try {
-  file = fs.readFileSync(filename);
-} catch (err) {
-  console.log(err);
-}
-let places;
 
-try {
-  places = JSON.parse(file);
-} catch (err) {
-  console.error(`==>     ERROR: Error parsing your json in ${filename}`);
-  console.error(err);
-}
+const places = readDataFile(filename) || JSON.parse(dummy);
 
 export default function locations() {
   return Promise.resolve({
