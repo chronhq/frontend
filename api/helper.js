@@ -1,26 +1,17 @@
 import fs from 'fs';
 import sizeof from 'object-sizeof';
 
-export const LOG = 'log';
-export const ERR = 'err';
-export const INFO = 'info';
+const wrapMessage = str => `${Date.now()} => ${str}`;
 
-export function logger(str, lvl = LOG) {
-  const log = `${Date.now()} => ${str}`;
-  switch (lvl) {
-    case ERR:
-      console.error(log);
-      break;
-    case INFO:
-      console.info(log);
-      break;
-    default:
-      console.log(log);
-  }
-}
+export const logger = {
+  err: str => console.error(wrapMessage(str)),
+  info: str => console.info(wrapMessage(str)),
+  log: str => console.error(wrapMessage(str))
+};
+
 export function printSize(obj, str) {
   const objSize = Math.round(sizeof(obj) / 8.192) / 100;
-  logger(`${objSize}Kb  ${str}`, INFO);
+  logger.info(`${objSize}Kb  ${str}`);
 }
 
 export function returnPlainData(content) {
@@ -32,8 +23,8 @@ export function parseJsonData(content) {
   try {
     data = JSON.parse(content);
   } catch (err) {
-    logger('ERROR: Error parsing your json', ERR);
-    logger(err, ERR);
+    logger.err('ERROR: Error parsing your json');
+    logger.err(err);
   }
   printSize(data, 'Parsed JSON');
   return data;
@@ -44,7 +35,7 @@ export function readDataFile(filename, parse = parseJsonData) {
   try {
     content = fs.readFileSync(filename);
   } catch (err) {
-    logger(err, ERR);
+    logger.err(err);
   }
   printSize(content, `Content from file ${filename}`);
   return parse(content);
