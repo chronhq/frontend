@@ -32,6 +32,11 @@
   height: 80vh;
   margin-top:5vh;
 }
+.svgMapTerrain {
+  fill: steelblue;
+  stroke: gray;
+  stroke-width: 0.4px;
+}
 .factHeader{
   float:left;
   width: 100%;

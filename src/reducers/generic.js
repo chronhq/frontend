@@ -1,20 +1,19 @@
-const locations = (state = { loaded: false, places: {}, allIds: [] }, action) => {
+const generic = (state = { loaded: false, type: 'GENERIC' }, action) => {
   switch (action.type) {
-    case 'LOCATIONS_PENDING':
+    case `${state.type}_PENDING`:
       return {
         ...state,
         loading: true
       };
-    case 'LOCATIONS_FULFILLED':
+    case `${state.type}_FULFILLED`:
       return {
         ...state,
         loading: false,
         loaded: true,
         error: false,
-        places: action.payload.places,
-        allIds: action.payload.allIds,
+        ...action.payload
       };
-    case 'LOCATIONS_REJECTED':
+    case `${state.type}_REJECTED`:
       return {
         ...state,
         loading: false,
@@ -26,4 +25,4 @@ const locations = (state = { loaded: false, places: {}, allIds: [] }, action) =>
   }
 };
 
-export default locations;
+export default generic;

@@ -1,4 +1,4 @@
-import { readDataFile, logger } from './helper';
+import { readDataFile, logger, getProjection } from './helper';
 
 const dummy = `{
   "285": {
@@ -26,8 +26,33 @@ const dummy = `{
 function locationsData() {
   const filename = './data/cities1.json';
   const places = readDataFile(filename) || JSON.parse(dummy);
+  for (const id of Object.keys(places)) {
+    if (Number(id) !== Number(places[id].cityId)) {
+      logger.err(`Fixing cityId from ${places[id].cityId} to ${id}`);
+      places[id].cityId = id;
+    }
+  }
+  return places;
+}
+
+function locationsProjectedData() {
+  const places = locationsData();
+  const project = getProjection();
+  const projected = {};
+  for (const id of Object.keys(places)) {
+    try {
+      const [x, y] = project([places[id].x, places[id].y]);
+      projected[id] = { id, x, y };
+    } catch (e) {
+      logger.err(`Failed to project location ${id}`);
+      logger.json(places[id]);
+      logger.err(e.message);
+      logger.err(e.stack);
+    }
+  }
   return {
     places,
+    projected,
     allIds: Object.keys(places)
   };
 }
@@ -54,8 +79,8 @@ function validateYear(loc) {
 function locationsTimeline() {
   const data = locationsData();
   const timeline = {};
-  for (const id of data.allIds) {
-    const loc = data.places[id];
+  for (const id of Object.keys(data)) {
+    const loc = data[id];
     const year = validateYear(loc);
 
     if (!(year in timeline)) {
@@ -71,7 +96,7 @@ function locationsTimeline() {
     }
     previousYear = currentYear;
   }
-  return { byYear: timeline, allYears: Object.keys(timeline) };
+  return { byYear: timeline, allYears: Object.keys(timeline), current: [] };
 }
 
 
@@ -81,5 +106,5 @@ export default function locations(req, url) {
 
   return urlTimeline === 'TIMELINE'
     ? Promise.resolve(locationsTimeline())
-    : Promise.resolve(locationsData());
+    : Promise.resolve(locationsProjectedData());
 }

@@ -1,16 +1,17 @@
-import * as topojson from 'topojson-client';
-
-import { readDataFile, printSize } from './helper';
+import { readDataFile, getPath } from './helper';
 
 function prepareData() {
-  const filename = './public/us.json';
-  const usData = readDataFile(filename);
-  const topodata = topojson.feature(usData, usData.objects.states);
-  printSize(topodata, 'TopoData');
-  return topodata;
+  const filename = './data/borders.json';
+  const data = readDataFile(filename);
+  return data;
 }
+
 export default function terrain() {
+  const terrainData = prepareData();
+  const path = getPath();
+  const projectedData = path(terrainData);
   return Promise.resolve({
-    terrain: prepareData()
+    terrain: terrainData,
+    projected: projectedData
   });
 }
