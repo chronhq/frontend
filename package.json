@@ -90,6 +90,7 @@
     "redux": "^3.6.0",
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.2.0",
+    "shapefile": "^0.6.2",
     "topojson-client": "^2.1.0",
     "topojson-server": "^2.0.0",
     "topojson-simplify": "^2.0.0"
