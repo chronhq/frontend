@@ -11,7 +11,8 @@ export function getActualData(years, data, target) {
 }
 
 export function askBackend(type, data = {}) {
-  const url = `/api/${type}`;
+  const uri = type.replace(/_/g, '/');
+  const url = `/api/${uri}`;
   const req = {
     method: 'POST',
     body: JSON.stringify(data),

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import timeline from './timeline';
 import locations from './locations';
 import terrain from './terrain';
+import projection from './projection';
 
 import * as techData from '../data/tech';
 
@@ -14,6 +15,7 @@ const mapInfoApp = combineReducers({
   locations,
   facts,
   persons,
+  projection,
   borders,
   territories,
   terrain,

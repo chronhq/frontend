@@ -6,8 +6,8 @@ import { logger } from './helper';
 
 const app = express();
 
-function resolvePromise(action, req, res, params = []) {
-  action(req, params)
+function resolvePromise(action, req, res, url, params = []) {
+  action(req, url, params)
     .then((result) => {
       res.json(result);
     }, (reason) => {
@@ -16,17 +16,26 @@ function resolvePromise(action, req, res, params = []) {
     });
 }
 
+function parseParams(url) {
+  const [path, params] = url.split('?');
+  const splittedUrlPath = path.split('/').slice(1);
+  const splittedUrlParams = typeof params === 'undefined' ? [] : params.split('&');
+  return [splittedUrlPath, splittedUrlParams];
+}
+
 app.use((req, res) => {
   logger.info('Got a request');
-  const splittedUrlPath = req.url.split('?')[0].split('/').slice(1);
-  logger.info(splittedUrlPath);
+  logger.info(req.url);
+  const [splittedUrlPath, splittedUrlParams] = parseParams(req.url);
+  logger.info(`URL ${splittedUrlPath}`);
+  logger.info(`Params ${splittedUrlParams}`);
   try {
     switch (splittedUrlPath[0]) {
       case 'LOCATIONS':
-        resolvePromise(locations, req, res);
+        resolvePromise(locations, req, res, splittedUrlPath, splittedUrlParams);
         break;
       case 'TERRAIN':
-        resolvePromise(terrain, req, res);
+        resolvePromise(terrain, req, res, splittedUrlPath, splittedUrlParams);
         break;
       default:
         logger.log('DEFAULT_SWITCH');
@@ -35,7 +44,8 @@ app.use((req, res) => {
   } catch (err) {
     logger.err('Strange Error Occured');
     logger.err('INTERNAL SERVER ERROR');
-    logger.err(err);
+    logger.err(err.message);
+    logger.err(err.stack);
     res.status(500).end('INTERNAL SERVER ERROR');
   }
 });

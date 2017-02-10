@@ -19,7 +19,7 @@ const initialState = {
   max: MAX_YEAR,
   min: DEFAULT_YEAR,
   facts: factsReducer(techData.getFactsTimeline(), resetYear()),
-  locations: layerReducer(techData.getLoactionsTimeline(), resetYear()),
+  locations: { type: 'LOCATIONS_TIMELINE', loaded: false },
   borders: layerReducer(techData.getBordersTimeline(), resetYear()),
 };
 
@@ -39,6 +39,12 @@ const timeline = (state = initialState, action) => {
         locations: layerReducer(state.locations, act),
         borders: layerReducer(state.borders, act),
         now: act.year };
+    case 'LOCATIONS_TIMELINE_PENDING':
+    case 'LOCATIONS_TIMELINE_FULFILLED':
+    case 'LOCATIONS_TIMELINE_REJECTED':
+      return { ...state,
+        locations: layerReducer(state.locations, act)
+      };
     default:
       return state;
   }

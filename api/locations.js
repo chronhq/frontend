@@ -1,5 +1,4 @@
-import fs from 'fs';
-import { readDataFile } from './helper';
+import { readDataFile, logger } from './helper';
 
 const dummy = `{
   "285": {
@@ -24,13 +23,63 @@ const dummy = `{
   }
 }`;
 
-const filename = './data/cities1.json';
-
-const places = readDataFile(filename) || JSON.parse(dummy);
-
-export default function locations() {
-  return Promise.resolve({
+function locationsData() {
+  const filename = './data/cities1.json';
+  const places = readDataFile(filename) || JSON.parse(dummy);
+  return {
     places,
     allIds: Object.keys(places)
-  });
+  };
+}
+
+function validateYear(loc) {
+  let year = 0;
+  if (typeof loc.founded === 'undefined') {
+    logger.err(`${loc.cityId} => Unknown date of city foundation`);
+  } else if (!(String(loc.founded).match(/\d/))) {
+    logger.err(`${loc.cityId} => Strange year '${loc.founded}'`);
+  } else {
+    try {
+      year = Number(loc.founded.split('-').shift());
+    } catch (e) {
+      logger.err(`${loc.cityId} => Casting to Number error`);
+      logger.err(JSON.stringify(loc));
+      logger.err(e.message);
+      logger.err(e.state);
+    }
+  }
+  return year;
+}
+
+function locationsTimeline() {
+  const data = locationsData();
+  const timeline = {};
+  for (const id of data.allIds) {
+    const loc = data.places[id];
+    const year = validateYear(loc);
+
+    if (!(year in timeline)) {
+      timeline[year] = [];
+    }
+    timeline[year] = [...timeline[year], loc.cityId];
+  }
+
+  let previousYear;
+  for (const currentYear of Object.keys(timeline)) {
+    if (!(typeof previousYear === 'undefined')) {
+      timeline[currentYear] = [...timeline[previousYear], ...timeline[currentYear]];
+    }
+    previousYear = currentYear;
+  }
+  return { byYear: timeline, allYears: Object.keys(timeline) };
+}
+
+
+export default function locations(req, url) {
+  url.shift(); // shifting LOCATIONS
+  const urlTimeline = url.shift();
+
+  return urlTimeline === 'TIMELINE'
+    ? Promise.resolve(locationsTimeline())
+    : Promise.resolve(locationsData());
 }
