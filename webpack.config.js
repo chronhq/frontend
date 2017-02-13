@@ -14,6 +14,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'FEATURES'])
   ],
   module: {
     rules: [{

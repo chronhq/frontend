@@ -6,14 +6,28 @@
   "license": "copyright",
   "scripts": {
     "start": "concurrent --kill-others \"npm run start-dev\" \"npm run start-dev-api\"",
+    "dev": "concurrent --kill-others \"npm run start-dev-ui\" \"npm run start-dev-api\"",
     "start-dev": "bnr start-dev",
+    "start-dev-ui": "bnr start-dev-ui",
     "start-dev-api": "bnr start-dev-api",
     "lint": "eslint src"
   },
   "betterScripts": {
+    "start-dev-ui": {
+      "command": "node ./bin/server.js",
+      "env": {
+        "FEATURES": ["UI", "DESU"],
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "PORT": 3000,
+        "HOST": "localhost",
+        "APIPORT": 3030
+      }
+    },
     "start-dev": {
       "command": "node ./bin/server.js",
       "env": {
+        "FEATURES": ["MAINLINE"],
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
         "PORT": 3000,
@@ -89,6 +103,7 @@
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
     "redux-promise-middleware": "^4.2.0",
+    "redux-saga": "^0.14.3",
     "redux-thunk": "^2.2.0",
     "shapefile": "^0.6.2",
     "topojson-client": "^2.1.0",

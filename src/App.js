@@ -3,10 +3,9 @@ import React from 'react';
 import MapD3Container from './containers/MapD3Container';
 import Legend from './containers/Legend';
 import Header from './containers/Header';
+import UI from './components/UI';
 
 import DevTools from './DevTools';
-import UI from '/components/UI'
-
 
 const App = () => (
   <div>
@@ -14,7 +13,7 @@ const App = () => (
     <div className='content'>
       <MapD3Container />
       <Legend />
-      <UI />
+      {process.env.FEATURES.includes('UI') && <UI />}
     </div>
     <DevTools />
   </div>
