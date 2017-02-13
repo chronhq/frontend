@@ -1,7 +1,7 @@
 import { readDataFile, getPath } from './helper';
 
 function prepareData() {
-  const filename = './data/borders.json';
+  const filename = './data/borders.geo.json';
   const data = readDataFile(filename);
   return data;
 }
