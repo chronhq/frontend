@@ -5,6 +5,7 @@ import Legend from './containers/Legend';
 import Header from './containers/Header';
 
 import DevTools from './DevTools';
+import UI from '/components/UI'
 
 
 const App = () => (
@@ -13,6 +14,7 @@ const App = () => (
     <div className='content'>
       <MapD3Container />
       <Legend />
+      <UI />
     </div>
     <DevTools />
   </div>
