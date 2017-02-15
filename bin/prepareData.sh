@@ -56,4 +56,4 @@ for dir in `cd $DUMP_TIMELINE; ls |grep "[0-9]"`; do
 done
 
 convertFromShp "initial-map-North-America" "map" "2017" # Initial current map
-convertFromShp "Output" "no borders" "../borders" # Terrain contour
+convertFromShp "Output" "contour" "../contour" # Terrain contour
