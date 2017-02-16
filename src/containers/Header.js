@@ -8,7 +8,6 @@ import SetProjectionContainer from './SetProjectionContainer';
 const Header = () => (
   <div className='header'>
     <span>
-      Map (Thanks, Captain)
       <ControlButtonsController />
       <SetYearFieldContainer />
       <SetProjectionContainer />
