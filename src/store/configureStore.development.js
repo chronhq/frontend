@@ -1,6 +1,5 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import { persistState } from 'redux-devtools';  // eslint-disable-line
-import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
