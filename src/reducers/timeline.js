@@ -1,6 +1,5 @@
 import factsReducer from './factsTimeline';
 import layerReducer from './layerTimeline';
-import * as techData from '../data/tech';
 
 const DEFAULT_YEAR = 1730;
 const MAX_YEAR = 2017;
@@ -18,9 +17,9 @@ const initialState = {
   now: DEFAULT_YEAR,
   max: MAX_YEAR,
   min: DEFAULT_YEAR,
-  facts: factsReducer(techData.getFactsTimeline(), resetYear()),
+  facts: { type: 'FACTS_TIMELINE', current: [], byYear: {},  loaded: false },
   locations: { type: 'LOCATIONS_TIMELINE', loaded: false },
-  borders: layerReducer(techData.getBordersTimeline(), resetYear()),
+  borders: { type: 'BORDERS_TIMELINE', current: [], byYear: {}, loaded: false },
 };
 
 const timeline = (state = initialState, action) => {

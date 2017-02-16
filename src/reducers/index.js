@@ -3,18 +3,22 @@ import timeline from './timeline';
 import genericReducer from './generic';
 import projection from './projection';
 
-import * as techData from '../data/tech';
-
 const locationDefaultState = { loaded: false, type: 'LOCATIONS', places: {}, allIds: [] };
 const terrainDefaultState = { loaded: false, type: 'TERRAIN', topology: {} };
 
 const locations = (state = locationDefaultState, action) => genericReducer(state, action);
 const terrain = (state = terrainDefaultState, action) => genericReducer(state, action);
 
-const facts = (state = techData.getFactsData()) => state;
-const persons = (state = techData.getPeople()) => state;
-const borders = (state = techData.getBordersData()) => state;
-const territories = (state = techData.getTerritoriesData()) => state;
+const factsDefaultState = { loaded: false, type: 'FACTS', allIds: {}, byId: {} };
+const personsDefaultState = { loaded: false, type: 'PERSONS', allIds: {}, byId: {} };
+const bordersDefaultState = { loaded: false, type: 'BORDERS', allIds: {}, byId: {} };
+const territoriesDefaultState = { loaded: false, type: 'TERRITORIES', allIds: {}, byId: {} };
+
+const facts = (state = factsDefaultState, action) => genericReducer(state, action);
+const persons = (state = personsDefaultState, action) => genericReducer(state, action);
+const borders = (state = bordersDefaultState, action) => genericReducer(state, action);
+const territories = (state = territoriesDefaultState, action) => genericReducer(state, action);
+
 
 const mapInfoApp = combineReducers({
   locations,
