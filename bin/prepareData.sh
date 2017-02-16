@@ -46,10 +46,20 @@ function convertFromShp(){
 
 }
 
+function validateJSON(){
+  FROM=$1
+  TO=$2
+  NAME=$3
+  echo "$(date +'%Y%m%d_%H%M%S') Validating $NAME"
+  echo "List of JSON ERRORS ===>"
+  tr '\n' ' ' < "$FROM" | sed -e "s/\s//g" -e "s/},/},\n/g" | grep ":,"
+  echo "<=== END"
+  tr '\n' ' ' < "$FROM" | sed -e "s/\s//g" -e "s/},/},\n/g" | grep -v ":," | tr '\n' ' '| sed -e "s/}, }/}}/g"  > "$DATA_DIR/$CITIES"
+}
+
 ### Main
 
-echo "$(date +'%Y%m%d_%H%M%S') Copying $CITIES"
-cp -f "$DUMP_DIR/$CITIES" "$DATA_DIR/$CITIES"
+validateJSON "$DUMP_DIR/$CITIES" "$DATA_DIR/$CITIES" "$CITIES"
 
 for dir in `cd $DUMP_TIMELINE; ls |grep "[0-9]"`; do
   convertFromShp $dir
