@@ -20,6 +20,11 @@ const generic = (state = { loaded: false, type: 'GENERIC' }, action) => {
         loaded: false,
         error: action.error
       };
+    case `${state.type}_PROJECTED`:
+      return {
+        ...state,
+        projected: action.projected
+      }
     default:
       return state;
   }

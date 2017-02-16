@@ -13,7 +13,7 @@ class MapD3Container extends Component {
 
   render() {
     return (
-      <svg className='svgMap' transform="scale(2)">
+      <svg className='svgMap'>
         <g className='svgMapTerrain' key='terrain' strokeWidth="0.6" >
           <path d={this.props.terrain.projected} />
         </g>

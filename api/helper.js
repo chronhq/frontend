@@ -45,7 +45,7 @@ export function readDataFile(filename, parse = parseJsonData) {
 }
 
 export function getProjection() {
-  return d3.geoConicEqualArea();
+  return d3.geoConicEqualArea().scale(300).rotate([300, 0, 0]);
 }
 export function getPath() {
   return d3.geoPath().projection(getProjection());

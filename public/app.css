@@ -62,3 +62,6 @@
   transition: 0.3s all;
   opacity: 0;
 }
+.inputNum{
+  width:4em;
+}

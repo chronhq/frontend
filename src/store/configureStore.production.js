@@ -1,10 +1,16 @@
 import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
-import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
 
-const enhancer = applyMiddleware(promiseMiddleware(), thunkMiddleware());
+import applyProjectionSaga from '../sagas/sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const enhancer = applyMiddleware(promiseMiddleware(), sagaMiddleware);
 
 export default function configureStore(initialState) {
-  return createStore(rootReducer, initialState, enhancer);
+  const store = createStore(rootReducer, initialState, enhancer);
+  sagaMiddleware.run(applyProjectionSaga);
+  return store;
 }
