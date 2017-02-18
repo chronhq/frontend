@@ -6,14 +6,9 @@ const projectionByName = {
   Equirectangular: d3.geoEquirectangular(),
   ConicEqualArea: d3.geoConicEqualArea()
 };
-const combineKeys = (prev, cur, idx, arr) => {
-  if (prev instanceof Array) {
-    return [...prev, {value: cur, label: cur }];
-  }
-  return [{ value: prev, label: prev }, { value: cur, label: cur }];
-};
+const combineKeys = (prev, cur) => [...prev, { value: cur, label: cur }];
 
-const projectionOptions = Object.keys(projectionByName).reduce(combineKeys);
+const projectionOptions = Object.keys(projectionByName).reduce(combineKeys, []);
 
 // Rotation https://en.wikipedia.org/wiki/Aircraft_principal_axes
 // https://github.com/d3/d3-geo/blob/master/README.md#projection_rotate
