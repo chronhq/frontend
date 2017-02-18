@@ -23,19 +23,28 @@ function parseParams(url) {
   return [splittedUrlPath, splittedUrlParams];
 }
 
-app.use((req, res) => {
+app.use((req, res, next) => {
   logger.info('Got a request');
   logger.info(req.url);
+  if (process.env.NODE_ENV === 'development') {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+  }
+  next();
+});
+
+app.all('/*', (req, res) => {
   const [splittedUrlPath, splittedUrlParams] = parseParams(req.url);
   logger.info(`URL ${splittedUrlPath}`);
   logger.info(`Params ${splittedUrlParams}`);
   try {
+    const params = [req, res, splittedUrlPath, splittedUrlParams];
     switch (splittedUrlPath[0]) {
       case 'LOCATIONS':
-        resolvePromise(locations, req, res, splittedUrlPath, splittedUrlParams);
+        resolvePromise(locations, ...params);
         break;
       case 'TERRAIN':
-        resolvePromise(terrain, req, res, splittedUrlPath, splittedUrlParams);
+        resolvePromise(terrain, ...params);
         break;
       default:
         logger.log('DEFAULT_SWITCH');
@@ -49,10 +58,13 @@ app.use((req, res) => {
     res.status(500).end('INTERNAL SERVER ERROR');
   }
 });
+
 app.listen(process.env.APIPORT, (err) => {
   if (err) {
     logger.err(err);
   }
-  console.info('----\n==> 🌎  API is running on port %s', process.env.APIPORT);
-  console.info('==> 💻  Send requests to http://%s:%s', process.env.HOST, process.env.APIPORT);
+  console.info('----\n==> 🌎  API is running on port %s',
+    process.env.APIPORT);
+  console.info('==> 💻  Send requests to http://%s:%s',
+    process.env.HOST, process.env.APIPORT);
 });

@@ -100,7 +100,6 @@
     "d3": "^4.5.0",
     "esri-to-geojson": "^1.0.2",
     "express": "^4.14.0",
-    "http-proxy": "^1.16.2",
     "isomorphic-fetch": "^2.2.1",
     "object-sizeof": "^1.1.1",
     "react": "^15.4.2",

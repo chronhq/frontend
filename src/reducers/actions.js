@@ -12,13 +12,14 @@ export function getActualData(years, data, target) {
 
 export function askBackend(type, data = {}) {
   const uri = type.replace(/_/g, '/');
-  const url = `/api/${uri}`;
+  const url = process.env.NODE_ENV === 'development'
+    ? `http://localhost:3030/${uri}`
+    : `/api/${uri}`;
   const req = {
     method: 'POST',
+    mode: 'cors',
     body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' }
   };
   return {
     type,
