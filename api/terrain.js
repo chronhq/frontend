@@ -1,9 +1,10 @@
+import { mesh } from 'topojson-client';
 import { readDataFile, getPath } from './helper';
 
 function prepareData() {
-  const filename = './data/contour.geo.json';
+  const filename = './data/contour.simple.json';
   const data = readDataFile(filename);
-  return data;
+  return mesh(data);
 }
 
 export default function terrain() {
