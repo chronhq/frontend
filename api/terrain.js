@@ -4,13 +4,13 @@ import { readDataFile, getPath } from './helper';
 function prepareData() {
   const filename = './data/contour.simple.json';
   const data = readDataFile(filename);
-  return mesh(data);
+  return data;
 }
 
 export default function terrain() {
   const terrainData = prepareData();
   const path = getPath();
-  const projectedData = path(terrainData);
+  const projectedData = path(mesh(terrainData));
   return Promise.resolve({
     terrain: terrainData,
     projected: projectedData

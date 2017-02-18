@@ -41,6 +41,10 @@
   stroke: gray;
   stroke-width: 0.4px;
 }
+.svgMapBorders {
+  fill: none;
+  stroke: black;
+}
 .factHeader{
   float:left;
   width: 100%;

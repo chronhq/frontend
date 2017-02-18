@@ -1,22 +1,54 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
+import { mesh } from 'topojson-client';
 
 export const getProjectionConfig = state => state.projection;
-export const getTerrainJson = state => state.terrain.terrain;
+export const getPath = state => state.projection.path;
+export const getProjection = state => state.projection.project;
 
-function* applyProjection(action) {
-  console.log('Executing saga with action:', action);
-  const projection = yield select(getProjectionConfig);
-  const json = yield select(getTerrainJson);
-  const type = 'TERRAIN_PROJECTED';
+export const awaitingNewPath = [
+  ['TERRAIN_PROJECTED', state => state.terrain.terrain],
+  ['BORDERS_PROJECTED', state => state.borders.byYear ]
+];
+export const hasPoints = [
+  ['LOCATIONS_PROJECTED', state => state.locations.places]
+];
 
-  console.time('Projecting');
-  const result = projection.path(json);
-  console.timeEnd('Projecting');
-  yield put({ type, projected: result });
+function* changeProjection() {
+  console.time('Change_Projection Saga');
+  const path = yield select(getPath);
+  for (const [type, selector] of awaitingNewPath) {
+    // pathProjection
+    console.time(`pathProjection ${type}`);
+    const json = yield select(selector);
+    let projected = {};
+    if (type === 'TERRAIN_PROJECTED') {
+      projected = path(mesh(json));
+    } else {
+      projected = Object.keys(json).reduce((prev, cur) => {
+        return { ...prev, [cur]: path(mesh(json[cur])) };
+      }, {});
+    }
+    console.timeEnd(`pathProjection ${type}`);
+    yield put({ type, projected });
+  }
+
+  const projection = yield select(getProjection);
+  for (const [type, selector] of hasPoints) {
+    // pointProjection
+    console.time(`pointProjection ${type}`);
+    const json = yield select(selector);
+    const projected = Object.keys(json).reduce((prev, cur) => {
+      const [x, y] = projection([json[cur].x, json[cur].y]);
+      return { ...prev, [cur]: { id: cur, x, y } };
+    }, {});
+    console.timeEnd(`pointProjection ${type}`);
+    yield put({ type, projected });
+  }
+  console.timeEnd('Change_Projection Saga');
 }
 
-function* applyProjectionSaga() {
-  yield takeEvery('CHANGE_PROJECTION', applyProjection);
+export default function* applyProjectionSaga() {
+  yield takeEvery('CHANGE_PROJECTION', changeProjection);
 }
 
-export default applyProjectionSaga;
+

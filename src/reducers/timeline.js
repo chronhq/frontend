@@ -19,7 +19,7 @@ const initialState = {
   min: DEFAULT_YEAR,
   facts: { type: 'FACTS_TIMELINE', current: [], byYear: {},  loaded: false },
   locations: { type: 'LOCATIONS_TIMELINE', loaded: false },
-  borders: { type: 'BORDERS_TIMELINE', current: [], byYear: {}, loaded: false },
+  borders: { type: 'BORDERS_TIMELINE', current: '', byYear: {}, loaded: false },
 };
 
 const timeline = (state = initialState, action) => {
@@ -43,6 +43,12 @@ const timeline = (state = initialState, action) => {
     case 'LOCATIONS_TIMELINE_REJECTED':
       return { ...state,
         locations: layerReducer(state.locations, act)
+      };
+    case 'BORDERS_TIMELINE_PENDING':
+    case 'BORDERS_TIMELINE_FULFILLED':
+    case 'BORDERS_TIMELINE_REJECTED':
+      return { ...state,
+        borders: layerReducer(state.borders, act)
       };
     default:
       return state;

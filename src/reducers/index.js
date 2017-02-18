@@ -9,10 +9,18 @@ const terrainDefaultState = { loaded: false, type: 'TERRAIN', topology: {} };
 const locations = (state = locationDefaultState, action) => genericReducer(state, action);
 const terrain = (state = terrainDefaultState, action) => genericReducer(state, action);
 
-const factsDefaultState = { loaded: false, type: 'FACTS', allIds: {}, byId: {} };
-const personsDefaultState = { loaded: false, type: 'PERSONS', allIds: {}, byId: {} };
-const bordersDefaultState = { loaded: false, type: 'BORDERS', allIds: {}, byId: {} };
-const territoriesDefaultState = { loaded: false, type: 'TERRITORIES', allIds: {}, byId: {} };
+const factsDefaultState = {
+  loaded: false, type: 'FACTS', allIds: {}, byId: {}
+};
+const personsDefaultState = {
+  loaded: false, type: 'PERSONS', allIds: {}, byId: {}
+};
+const bordersDefaultState = {
+  loaded: false, type: 'BORDERS', byYear: {}
+};
+const territoriesDefaultState = {
+  loaded: false, type: 'TERRITORIES', allIds: {}, byId: {}
+};
 
 const facts = (state = factsDefaultState, action) => genericReducer(state, action);
 const persons = (state = personsDefaultState, action) => genericReducer(state, action);

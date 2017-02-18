@@ -44,9 +44,27 @@ export function readDataFile(filename, parse = parseJsonData) {
   return parse(content);
 }
 
+export function getListOfFiles(dir, pattern) {
+  const files = fs.readdirSync(dir);
+  const result = files.filter(file => file.match(pattern));
+  return result;
+}
+
+export function getListOfYearsFromFiles(files, prefix = '') {
+  return files.reduce((prev, cur) => {
+    return prev instanceof Object
+      ? { ...prev, [cur.replace(/\..*/, '')]: `${prefix}/${cur}` }
+      : {
+        [prev.replace(/\..*/, '')]: `${prefix}/${prev}`,
+        [cur.replace(/\..*/, '')]: `${prefix}/${cur}`
+      };
+  });
+}
+
 export function getProjection() {
   return d3.geoConicEqualArea().scale(300).rotate([90, 0, 0]);
 }
 export function getPath() {
   return d3.geoPath().projection(getProjection());
 }
+
