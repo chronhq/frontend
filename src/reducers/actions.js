@@ -13,7 +13,7 @@ export function getActualData(years, data, target) {
 export function askBackend(type, data = {}) {
   const uri = type.replace(/_/g, '/');
   const url = process.env.NODE_ENV === 'development'
-    ? `http://localhost:3030/${uri}`
+    ? `http://localhost:${process.env.APIPORT}/${uri}`
     : `/api/${uri}`;
   const req = {
     method: 'POST',
