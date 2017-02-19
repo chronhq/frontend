@@ -1,5 +1,6 @@
 import { mesh } from 'topojson-client';
 import { readDataFile,
+  printSize,
   getPath,
   getListOfFiles,
   getListOfYearsFromFiles
@@ -21,7 +22,7 @@ function prepareData() {
     return {
       byYear: { ...prev.byYear, [cur]: dataFromCurYear },
       projected: { ...prev.projected, [cur]: path(mesh(dataFromCurYear)) }
-    }
+    };
   }, {});
   console.timeEnd('Prepare Borders Data');
   return {
@@ -30,6 +31,8 @@ function prepareData() {
   };
 }
 
+const preparedData = prepareData();
+printSize(preparedData, 'Prepared Borders with projection');
 export default function borders(req, url) {
   url.shift();
   return url[0] === 'TIMELINE'
@@ -37,5 +40,5 @@ export default function borders(req, url) {
       byYear: genericTimelineYears,
       allYears: Object.keys(genericTimelineYears)
     })
-    : Promise.resolve(prepareData());
+    : Promise.resolve(preparedData);
 }
