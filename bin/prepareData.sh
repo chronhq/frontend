@@ -7,6 +7,7 @@ NODE_BIN="$DIR/../node_modules/.bin/"
 SHP2JSON="$NODE_BIN/shp2json"
 GEO2TOPO="$NODE_BIN/geo2topo"
 TOPOSIMPLIFY="$NODE_BIN/toposimplify"
+SIMPLYFY_OPTIONS="-p 1"
 
 DATA_DIR="$DIR/../data/"
 DUMP_DIR="$DIR/../data-dump/"
@@ -16,6 +17,8 @@ DUMP_TIMELINE="$DUMP_DIR/Timeline"
 mkdir -p $DATA_TIMELINE
 
 CITIES="cities1.json";
+INVENTIONS="inventions.json";
+PERSONS="persons.json";
 
 function convertFromShp(){
   map_name=$1
@@ -38,7 +41,7 @@ function convertFromShp(){
     echo $(date +'%Y%m%d_%H%M%S') "Converting geo to topo"
     $GEO2TOPO < $GEO > $TOPO
     echo $(date +'%Y%m%d_%H%M%S') "Converting topo to simple"
-    $TOPOSIMPLIFY -p 1 -f < $TOPO > $SIMPLE
+    $TOPOSIMPLIFY $SIMPLYFY_OPTIONS -f < $TOPO > $SIMPLE
     # ls -la $GEO $TOPO $SIMPLE
   else
     echo "$SHP not found. Skipping"
@@ -46,20 +49,24 @@ function convertFromShp(){
 
 }
 
-function validateJSON(){
-  FROM=$1
-  TO=$2
-  NAME=$3
+function processJSON(){
+  NAME=$1
+  FROM="$DUMP_DIR/$NAME"
+  TO="$DATA_DIR/$NAME"
+  [[ $2 != "" ]] && FROM=$2
+  [[ $3 != "" ]] && TO=$3
   echo "$(date +'%Y%m%d_%H%M%S') Validating $NAME"
   echo "List of JSON ERRORS ===>"
   tr '\n' ' ' < "$FROM" | sed -e "s/\s//g" -e "s/},/},\n/g" | grep ":,"
   echo "<=== END"
-  tr '\n' ' ' < "$FROM" | sed -e "s/\s//g" -e "s/},/},\n/g" | grep -v ":," | tr '\n' ' '| sed -e "s/}, }/}}/g"  > "$DATA_DIR/$CITIES"
+  tr '\n' ' ' < "$FROM" | sed -e "s/\s//g" -e "s/},/},\n/g" -e "s%/\*.*\*/%%"| grep -v ":," | tr '\n' ' '| sed -e "s/}, }/}}/g"  > "$TO"
 }
 
 ### Main
 
-validateJSON "$DUMP_DIR/$CITIES" "$DATA_DIR/$CITIES" "$CITIES"
+processJSON "$CITIES"
+processJSON "$INVENTIONS"
+processJSON "$PERSONS"
 
 for dir in `cd $DUMP_TIMELINE; ls |grep "[0-9]"`; do
   convertFromShp $dir
