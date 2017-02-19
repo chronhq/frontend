@@ -41,12 +41,14 @@ const timeline = (state = initialState, action) => {
     case 'LOCATIONS_TIMELINE_PENDING':
     case 'LOCATIONS_TIMELINE_FULFILLED':
     case 'LOCATIONS_TIMELINE_REJECTED':
+    case 'LOCATIONS_TIMELINE_CURRENT':
       return { ...state,
         locations: layerReducer(state.locations, act)
       };
     case 'BORDERS_TIMELINE_PENDING':
     case 'BORDERS_TIMELINE_FULFILLED':
     case 'BORDERS_TIMELINE_REJECTED':
+    case 'BORDERS_TIMELINE_CURRENT':
       return { ...state,
         borders: layerReducer(state.borders, act)
       };

@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
 import DevTools from '../DevTools';
 
-import applyProjectionSaga from '../sagas/sagas';
+import sagas from '../sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [promiseMiddleware(), sagaMiddleware];
@@ -27,7 +27,7 @@ export default function configureStore(initialState) {
       store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
     );
   }
-  sagaMiddleware.run(applyProjectionSaga);
+  sagas.map(saga => sagaMiddleware.run(saga));
 
   return store;
 }

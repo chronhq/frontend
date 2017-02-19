@@ -3,7 +3,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
 
-import applyProjectionSaga from '../sagas/sagas';
+import sagas from '../sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,6 +11,6 @@ const enhancer = applyMiddleware(promiseMiddleware(), sagaMiddleware);
 
 export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState, enhancer);
-  sagaMiddleware.run(applyProjectionSaga);
+  sagas.map(saga => sagaMiddleware.run(saga));
   return store;
 }

@@ -8,6 +8,7 @@ const layerTimeline = (state = { type: 'layerName', loaded: false }, action) => 
           state.byYear[action.year] :
           state.current // Zero facts happened in this year
       };
+    case `${state.type}_CURRENT`:
     case 'SET_YEAR':
       return { ...state,
         current: action.year in state.byYear ? [state.byYear[action.year]] :

@@ -47,7 +47,7 @@ function* changeProjection() {
   console.timeEnd('Change_Projection Saga');
 }
 
-export default function* applyProjectionSaga() {
+export default function* changeProjectionSaga() {
   yield takeEvery('CHANGE_PROJECTION', changeProjection);
 }
 
