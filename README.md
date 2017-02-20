@@ -4,7 +4,10 @@
 Данный проект содержит код прототипа отвечающий за визуальное представление
 
 ## Установка
-
+``` git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git  map-prototype --recursive ```
+Либо
+```git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git
+git submodule update --init --recursive```
 ```bash
 npm install
 ```
