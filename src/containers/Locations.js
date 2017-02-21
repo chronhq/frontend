@@ -6,7 +6,6 @@ import PinTooltip from '../components/PinTooltip';
 
 class Locations extends Component {
   getLocation(id) {
-    console.log(`Asking for location ID: ${id}`);
     return {
       id,
       x: this.props.projected[id].x,

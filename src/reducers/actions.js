@@ -2,8 +2,6 @@ import fetch from 'isomorphic-fetch';
 
 export function getActualData(years, data, target) {
   const res = Math.max(...years.filter(y => y < target));
-  console.log(target);
-  console.log(res);
   if (isFinite(res)) {
     return data[res];
   }
