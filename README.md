@@ -16,6 +16,11 @@ git submodule update --init --recursive`
 ```bash
 npm install
 ```
+### Компиляция данных
+Желательно использовать GitBash или WSL в зависимости от рабочего окружения
+```bash
+bash bin/prepareData.sh
+```
 
 ### Запуск Dev сервера
 
