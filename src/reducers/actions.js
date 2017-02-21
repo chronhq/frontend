@@ -23,8 +23,6 @@ export function askBackend(type, data = {}) {
     type,
     payload: new Promise((resolve) => {
       fetch(url, req).then((response) => {
-        console.log('Response from fetch');
-        console.log(response);
         resolve(response.json());
       });
     })
