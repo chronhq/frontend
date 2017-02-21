@@ -17,7 +17,7 @@ git submodule update --init --recursive`
 npm install
 ```
 
-##№ Запуск Dev сервера
+### Запуск Dev сервера
 
 ```bash
 npm start
