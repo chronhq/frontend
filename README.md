@@ -4,15 +4,20 @@
 Данный проект содержит код прототипа отвечающий за визуальное представление
 
 ## Установка
-``` git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git  map-prototype --recursive ```
-Либо
-```git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git
-git submodule update --init --recursive```
+### Первоначальное клонирование
+
+`git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git  map-prototype --recursive`
+
+### Если необходимо загрузить сабмодули
+`git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git
+git submodule update --init --recursive`
+
+### Установка зависимостей
 ```bash
 npm install
 ```
 
-## Запуск Dev сервера
+##№ Запуск Dev сервера
 
 ```bash
 npm start
