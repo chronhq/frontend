@@ -23,6 +23,12 @@ npm install
 npm start
 ```
 
+### Запуск Dev сервера c экспериментальным UI
+
+```bash
+npm run dev
+```
+
 ### Использование Redux DevTools
 
 [Redux Devtools](https://github.com/gaearon/redux-devtools)
