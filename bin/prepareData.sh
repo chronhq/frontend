@@ -59,15 +59,32 @@ function processJSON(){
   echo "List of JSON ERRORS ===>"
   tr '\n' ' ' < "$FROM" | sed -e "s/\s//g" -e "s/},/},\n/g" | grep ":,"
   echo "<=== END"
-  tr '\n' ' ' < "$FROM" | sed -e "s/\s//g" -e "s/},/},\n/g" -e "s%/\*.*\*/%%"| grep -v ":," | tr '\n' ' '| sed -e "s/}, }/}}/g"  > "$TO"
+  tr '\n' ' ' < "$FROM" | sed \
+      -e 's/\(\W*\)\s\(\W*\)/\1++\2/g' \
+      -e "s/\s//g" \
+      -e "s/},/},\n/g" \
+      -e "s%/\*.*\*/%%" | \
+    grep -v ":," | \
+    tr '\n' ' ' | \
+    sed \
+      -e "s/}, }/}}/g" \
+      -e "s/++/ /g" \
+  > "$TO"
 }
+# 's/\(\W*\)\s\(\W\)/\1++\2/g'  # Saving spaces between words
+# "s/\s//g"                     # remove all spaces
+# "s/},/},\n/g                  # remove trailing comma
+# "s%/\*.*\*/%%"                # delete comments
+
+# "s/}, }/}}/g"                 # removing trailing comma in the end of array
+# "s/++/ /g"                    # Restoring saved spaces
 
 ### Main
 
 processJSON "$CITIES"
 processJSON "$INVENTIONS"
 processJSON "$PERSONS"
-
+exit 0
 for dir in `cd $DUMP_TIMELINE; ls |grep "[0-9]"`; do
   convertFromShp $dir
 done
