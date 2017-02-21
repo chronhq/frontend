@@ -84,7 +84,7 @@ function processJSON(){
 processJSON "$CITIES"
 processJSON "$INVENTIONS"
 processJSON "$PERSONS"
-exit 0
+
 for dir in `cd $DUMP_TIMELINE; ls |grep "[0-9]"`; do
   convertFromShp $dir
 done
