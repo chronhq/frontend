@@ -2,6 +2,7 @@ import express from 'express';
 import locations from './locations';
 import terrain from './terrain';
 import borders from './borders';
+import facts from './facts';
 
 import { logger } from './helper';
 
@@ -49,6 +50,9 @@ app.all('/*', (req, res) => {
         break;
       case 'BORDERS':
         resolvePromise(borders, ...params);
+        break;
+      case 'FACTS':
+        resolvePromise(facts, ...params);
         break;
       default:
         logger.log('DEFAULT_SWITCH');

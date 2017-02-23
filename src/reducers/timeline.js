@@ -52,6 +52,13 @@ const timeline = (state = initialState, action) => {
       return { ...state,
         borders: layerReducer(state.borders, act)
       };
+    case 'FACTS_TIMELINE_PENDING':
+    case 'FACTS_TIMELINE_FULFILLED':
+    case 'FACTS_TIMELINE_REJECTED':
+    case 'FACTS_TIMELINE_CURRENT':
+      return { ...state,
+        facts: factsReducer(state.facts, act)
+      };
     default:
       return state;
   }

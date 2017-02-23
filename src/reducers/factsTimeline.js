@@ -6,9 +6,30 @@ const factsTimeline = (state = {}, action) => {
           [...state.current, state.byYear[action.year]] :
           state.current // Zero facts happened in this year
       };
+    case `${state.type}_CURRENT`:
     case 'SET_YEAR':
       return { ...state,
         current: action.year in state.byYear ? [state.byYear[action.year]] : []
+      };
+    case `${state.type}_PENDING`:
+      return {
+        ...state,
+        loading: true
+      };
+    case `${state.type}_FULFILLED`:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        error: false,
+        ...action.payload
+      };
+    case `${state.type}_REJECTED`:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: true,
       };
     default:
       return state;

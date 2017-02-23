@@ -11,6 +11,8 @@ class MapD3Container extends Component {
     this.props.askBackend('TERRAIN');
     this.props.askBackend('BORDERS');
     this.props.askBackend('BORDERS_TIMELINE');
+    this.props.askBackend('FACTS');
+    this.props.askBackend('FACTS_TIMELINE');
   }
 
   render() {
