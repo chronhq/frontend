@@ -24,28 +24,18 @@ const factsDefaultState = {
   type: 'FACTS',
   allIds: {},
 };
-
-const locations = (state = locationDefaultState, action) => genericReducer(state, action);
-const terrain = (state = terrainDefaultState, action) => genericReducer(state, action);
-const borders = (state = bordersDefaultState, action) => genericReducer(state, action);
-const facts = (state = factsDefaultState, action) => genericReducer(state, action);
-
 const personsDefaultState = {
   loaded: false,
   type: 'PERSONS',
   allIds: {},
   byId: {}
 };
-const territoriesDefaultState = {
-  loaded: false,
-  type: 'TERRITORIES',
-  allIds: {},
-  byId: {}
-};
 
+const locations = (state = locationDefaultState, action) => genericReducer(state, action);
+const terrain = (state = terrainDefaultState, action) => genericReducer(state, action);
+const borders = (state = bordersDefaultState, action) => genericReducer(state, action);
+const facts = (state = factsDefaultState, action) => genericReducer(state, action);
 const persons = (state = personsDefaultState, action) => genericReducer(state, action);
-const territories = (state = territoriesDefaultState, action) => genericReducer(state, action);
-
 
 const mapInfoApp = combineReducers({
   locations,
@@ -53,7 +43,6 @@ const mapInfoApp = combineReducers({
   persons,
   projection,
   borders,
-  territories,
   terrain,
   timeline
 });

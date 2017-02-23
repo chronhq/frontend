@@ -3,6 +3,7 @@ import locations from './locations';
 import terrain from './terrain';
 import borders from './borders';
 import facts from './facts';
+import persons from './persons';
 
 import { logger } from './helper';
 
@@ -53,6 +54,9 @@ app.all('/*', (req, res) => {
         break;
       case 'FACTS':
         resolvePromise(facts, ...params);
+        break;
+      case 'PERSONS':
+        resolvePromise(persons, ...params);
         break;
       default:
         logger.log('DEFAULT_SWITCH');

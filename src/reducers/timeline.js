@@ -20,6 +20,7 @@ const initialState = {
   facts: { type: 'FACTS_TIMELINE', current: [], byYear: {},  loaded: false },
   locations: { type: 'LOCATIONS_TIMELINE', loaded: false },
   borders: { type: 'BORDERS_TIMELINE', current: '', byYear: {}, loaded: false },
+  persons: { type: 'PERSONS_TIMELINE', current: [], byYear: {}, loaded: false }
 };
 
 const timeline = (state = initialState, action) => {
@@ -58,6 +59,13 @@ const timeline = (state = initialState, action) => {
     case 'FACTS_TIMELINE_CURRENT':
       return { ...state,
         facts: factsReducer(state.facts, act)
+      };
+    case 'PERSONS_TIMELINE_PENDING':
+    case 'PERSONS_TIMELINE_FULFILLED':
+    case 'PERSONS_TIMELINE_REJECTED':
+    case 'PERSONS_TIMELINE_CURRENT':
+      return { ...state,
+        persons: layerReducer(state.persons, act)
       };
     default:
       return state;
