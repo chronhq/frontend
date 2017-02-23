@@ -14,27 +14,27 @@ const terrainDefaultState = {
   type: 'TERRAIN',
   topology: {}
 };
+const bordersDefaultState = {
+  loaded: false,
+  type: 'BORDERS',
+  byYear: {}
+};
+const factsDefaultState = {
+  loaded: false,
+  type: 'FACTS',
+  allIds: {},
+};
 
 const locations = (state = locationDefaultState, action) => genericReducer(state, action);
 const terrain = (state = terrainDefaultState, action) => genericReducer(state, action);
+const borders = (state = bordersDefaultState, action) => genericReducer(state, action);
+const facts = (state = factsDefaultState, action) => genericReducer(state, action);
 
-const factsDefaultState = {
-  loaded:
-  false,
-  type: 'FACTS',
-  allIds: {},
-  byId: {}
-};
 const personsDefaultState = {
   loaded: false,
   type: 'PERSONS',
   allIds: {},
   byId: {}
-};
-const bordersDefaultState = {
-  loaded: false,
-  type: 'BORDERS',
-  byYear: {}
 };
 const territoriesDefaultState = {
   loaded: false,
@@ -43,9 +43,7 @@ const territoriesDefaultState = {
   byId: {}
 };
 
-const facts = (state = factsDefaultState, action) => genericReducer(state, action);
 const persons = (state = personsDefaultState, action) => genericReducer(state, action);
-const borders = (state = bordersDefaultState, action) => genericReducer(state, action);
 const territories = (state = territoriesDefaultState, action) => genericReducer(state, action);
 
 
