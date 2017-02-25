@@ -10,8 +10,9 @@ class Locations extends Component {
       id,
       x: this.props.projected[id].x,
       y: this.props.projected[id].y,
-      name: this.props.places[id].name
-    };
+      name: this.props.places[id].name,
+      scaleRank: (this.props.places[id].scaleRank * this.props.scale) / 100 / 3
+    }; // Default scale is 300 for point size
   }
   render() {
     return (
@@ -29,6 +30,7 @@ class Locations extends Component {
 
 function mapStateToProps(state) {
   return {
+    scale: state.projection.scale,
     current: state.timeline.locations.current,
     projected: state.locations.projected,
     places: state.locations.places
