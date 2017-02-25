@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import timeline from './timeline';
 import genericReducer from './generic';
 import projection from './projection';
+import visibility from './visibility';
 
 const locationDefaultState = {
   loaded: false,
@@ -44,7 +45,8 @@ const mapInfoApp = combineReducers({
   projection,
   borders,
   terrain,
-  timeline
+  timeline,
+  visibility
 });
 
 export default mapInfoApp;

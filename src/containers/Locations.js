@@ -19,8 +19,8 @@ class Locations extends Component {
       <g key='locations'>
         {this.props.current.map(city =>
           <g key={`pin_list_${city}`}>
-            <Pin location={this.getLocation(city)} />
-            <PinTooltip location={this.getLocation(city)} />
+            {this.props.visibility.locations && <Pin location={this.getLocation(city)} />}
+            {this.props.visibility.tooltips && <PinTooltip location={this.getLocation(city)} />}
           </g>
         )}
       </g>
@@ -30,6 +30,7 @@ class Locations extends Component {
 
 function mapStateToProps(state) {
   return {
+    visibility: state.visibility,
     scale: state.projection.scale,
     current: state.timeline.locations.current,
     projected: state.locations.projected,

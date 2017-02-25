@@ -24,9 +24,10 @@ class MapD3Container extends Component {
         <g className='svgMapTerrain' key='terrain' strokeWidth="0.6" >
           <path d={this.props.terrain.projected} />
         </g>
-        <g>
+        { this.props.visibility.borders && <g>
           <path className='svgMapBorders' d={this.props.borders} />
         </g>
+         }
         <Locations />
       </svg>
     );
@@ -35,6 +36,7 @@ class MapD3Container extends Component {
 
 function mapStateToProps(state) {
   return { terrain: state.terrain,
+    visibility: state.visibility,
     borders: state.timeline.borders.current !== ''
       ? state.borders.projected[state.timeline.borders.current]
       : '',

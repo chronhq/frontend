@@ -2,6 +2,7 @@ import React from 'react';
 import ControlButtonsController from './ControlButtonsController';
 import SetYearFieldContainer from './SetYearFieldContainer';
 import SetProjectionContainer from './SetProjectionContainer';
+import SetLayerVisibility from './SetLayerVisibility';
 
 // import ApiButton from './ApiButton';
 
@@ -11,6 +12,7 @@ const Header = () => (
       <ControlButtonsController />
       <SetYearFieldContainer />
       <SetProjectionContainer />
+      <SetLayerVisibility />
     </span>
   </div>
 );

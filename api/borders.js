@@ -11,7 +11,7 @@ const pattern = 'simple';
 const fileList = getListOfFiles(folder, pattern);
 const yearToFile = getListOfYearsFromFiles(fileList, folder);
 const genericTimelineYears = Object.keys(yearToFile).reduce((prev, cur) => {
-  return { ...prev, [cur]: cur }
+  return { ...prev, [cur]: cur };
 }, {});
 const path = getPath();
 
