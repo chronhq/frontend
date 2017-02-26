@@ -41,11 +41,12 @@ class SetLayerVisibility extends Component {
           checked={this.state.tooltips}
           cb={this.handleChange}
         />
+        <br />
         <InputRange
           name='scale'
           label='Детали'
           value={this.state.scale}
-          min='1'
+          min='0'
           max='10'
           cb={this.handleChange}
         />
