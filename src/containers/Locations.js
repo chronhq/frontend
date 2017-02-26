@@ -14,15 +14,24 @@ class Locations extends Component {
       scaleRank: (this.props.places[id].scaleRank * this.props.scale) / 100 / 3
     }; // Default scale is 300 for point size
   }
+  checkSize(id) {
+    return this.props.places[id].scaleRank < this.props.visibility.scale;
+  }
   render() {
     return (
       <g key='locations'>
-        {this.props.current.map(city =>
-          <g key={`pin_list_${city}`}>
-            {this.props.visibility.locations && <Pin location={this.getLocation(city)} />}
-            {this.props.visibility.tooltips && <PinTooltip location={this.getLocation(city)} />}
-          </g>
-        )}
+        {this.props.current.map(city => (
+          this.checkSize(city) ?
+            <g key={`pin_list_${city}`}>
+              {this.props.visibility.locations &&
+                <Pin location={this.getLocation(city)} />
+              }
+              {this.props.visibility.tooltips &&
+                <PinTooltip location={this.getLocation(city)} />
+              }
+            </g>
+          : ''
+        ))}
       </g>
     );
   }

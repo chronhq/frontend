@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import InputCheckBox from '../components/InputCheckBox';
+import InputRange from '../components/InputRange';
 import { setVisibility } from '../reducers/visibility';
 
 class SetLayerVisibility extends Component {
@@ -38,6 +39,14 @@ class SetLayerVisibility extends Component {
           name='tooltips'
           label="Названия"
           checked={this.state.tooltips}
+          cb={this.handleChange}
+        />
+        <InputRange
+          name='scale'
+          label='Детали'
+          value={this.state.scale}
+          min='1'
+          max='10'
           cb={this.handleChange}
         />
       </div>
