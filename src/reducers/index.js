@@ -31,11 +31,16 @@ const personsDefaultState = {
   byId: {}
 };
 
-const locations = (state = locationDefaultState, action) => genericReducer(state, action);
-const terrain = (state = terrainDefaultState, action) => genericReducer(state, action);
-const borders = (state = bordersDefaultState, action) => genericReducer(state, action);
-const facts = (state = factsDefaultState, action) => genericReducer(state, action);
-const persons = (state = personsDefaultState, action) => genericReducer(state, action);
+const locations = (
+  state = locationDefaultState, action) => genericReducer(state, action);
+const terrain = (
+  state = terrainDefaultState, action) => genericReducer(state, action);
+const borders = (
+  state = bordersDefaultState, action) => genericReducer(state, action);
+const facts = (
+  state = factsDefaultState, action) => genericReducer(state, action);
+const persons = (
+  state = personsDefaultState, action) => genericReducer(state, action);
 
 const mapInfoApp = combineReducers({
   locations,
