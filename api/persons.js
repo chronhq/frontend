@@ -2,13 +2,13 @@ import { readDataFile } from './helper';
 
 function getPersons() {
   const filename = './data/persons.json';
-  return { allIds: readDataFile(filename) };
+  return { byId: readDataFile(filename) };
 }
 
 function personsData() {
   const data = getPersons();
-  const compiledData = Object.keys(data.allIds).reduce((prev, curId) => {
-    const cur = data.allIds[curId];
+  const compiledData = Object.keys(data.byId).reduce((prev, curId) => {
+    const cur = data.byId[curId];
     const birth = Number(cur.birthDate.replace(/-.*/g, ''));
     const death = Number(cur.deathDate.replace(/-.*/g, ''));
     const result = prev.byYear || {};

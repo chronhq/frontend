@@ -3,12 +3,12 @@ import { readDataFile } from './helper';
 function getFacts() {
   const filename = './data/inventions.json';
 
-  return { allIds: readDataFile(filename) };
+  return { byId: readDataFile(filename) };
 }
 function factsTimeline() {
   const data = getFacts();
-  const byYear = Object.keys(data.allIds).reduce((prev, curId) => {
-    const cur = data.allIds[curId];
+  const byYear = Object.keys(data.byId).reduce((prev, curId) => {
+    const cur = data.byId[curId];
     return cur.date in prev
       ? { ...prev, [cur.date]: [...prev[cur.date], cur.id] }
       : { ...prev, [cur.date]: [cur.id] };

@@ -8,12 +8,12 @@ const Fact = ({ fact, persons }) => (
     <span className='factHeader'>
       <b>{fact.name}</b>
       <span className='factDate'>
-        {fact.day !== undefined ? `${fact.year}-${fact.month}-${fact.day}` : fact.year}
+        `${fact.date}`
       </span>
     </span>
     <br />
     <span>{fact.description}</span>
-    <span className='factAuthor'> by <i>{fact.authors.map(p => persons[p].name).join(', ')}</i></span>
+    <span className='factAuthor'> by <i>{fact.PersId.map(p => persons[p].name).join(', ')}</i></span>
     <hr />
   </div>
 );

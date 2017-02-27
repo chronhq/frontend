@@ -23,12 +23,11 @@ const bordersDefaultState = {
 const factsDefaultState = {
   loaded: false,
   type: 'FACTS',
-  allIds: {},
+  byId: {}
 };
 const personsDefaultState = {
   loaded: false,
   type: 'PERSONS',
-  allIds: {},
   byId: {}
 };
 

@@ -6,7 +6,7 @@ import Fact from '../components/Fact';
 const Legend = ({ facts, currentFacts, persons }) => (
   <div className='legend'>
     {currentFacts.map(year => year.map(factId =>
-      <Fact fact={facts.byId[factId]} persons={persons} />
+      <Fact fact={facts.byId[factId]} persons={persons.byId} />
      ))}
   </div>
 );
