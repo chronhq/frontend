@@ -32,7 +32,10 @@ function prepareData() {
 }
 
 const preparedData = prepareData();
-printSize(preparedData, 'Prepared Borders with projection');
+printSize(preparedData, 'Prepared Borders TOTAL');
+printSize(preparedData.byYear, 'Prepared Borders JSON');
+printSize(preparedData.projected, 'Prepared Borders PATH');
+
 export default function borders(req, url) {
   url.shift();
   return url[0] === 'TIMELINE'
