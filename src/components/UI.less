@@ -1,0 +1,73 @@
+/* Styles for UI components */
+
+.icon-bar {
+    position: absolute;
+    top: 0;
+    float: right;
+    right: 0;
+    width: 50px;
+    height: 100%;
+    text-align: center;
+    background-color: #555;
+    height: 100%;
+}
+
+.icon-bar a {
+    padding: 16px;
+    display: block;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 16px;
+}
+
+.icon-bar a:hover {
+    background-color: #000;
+}
+
+.active {
+    background-color: #4CAF50 !important;
+}
+
+/* The side navigation menu */
+.sidenav {
+    
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    right: 0;
+    margin-right: 50px;
+    background-color: #fff; /* Black was*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    
+    width: 250px;
+    background-color: #2f2f2f;
+
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
