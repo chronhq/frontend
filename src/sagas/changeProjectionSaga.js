@@ -1,5 +1,4 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
-import { mesh } from 'topojson-client';
 
 export const getProjectionConfig = state => state.projection;
 export const getPath = state => state.projection.path;
@@ -20,14 +19,9 @@ function* changeProjection() {
     // pathProjection
     console.time(`pathProjection ${type}`);
     const json = yield select(selector);
-    // let projected = {};
-    // if (type === 'TERRAIN_PROJECTED') {
-    //   projected = path(mesh(json));
-    // } else {
     const projected = Object.keys(json).reduce((prev, cur) => {
-      return { ...prev, [cur]: path(mesh(json[cur])) };
+      return { ...prev, [cur]: path(json[cur]) };
     }, {});
-    // }
     console.timeEnd(`pathProjection ${type}`);
     yield put({ type, projected });
   }
@@ -50,5 +44,4 @@ function* changeProjection() {
 export default function* changeProjectionSaga() {
   yield takeEvery('CHANGE_PROJECTION', changeProjection);
 }
-
 

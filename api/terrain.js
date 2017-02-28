@@ -6,7 +6,7 @@ import {
 } from './helper';
 
 const folder = './data/Contour';
-const pattern = 'simple';
+const pattern = 'geosim';
 const fileList = getListOfFiles(folder, pattern);
 const nameToFile = getPureFileName(fileList, folder);
 

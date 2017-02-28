@@ -5,7 +5,7 @@ import {
 } from './helper';
 
 const folder = './data/Timeline';
-const pattern = 'simple';
+const pattern = 'geosim';
 const fileList = getListOfFiles(folder, pattern);
 const nameToFile = getPureFileName(fileList, folder);
 const genericTimelineYears = Object.keys(nameToFile).reduce((prev, cur) => {

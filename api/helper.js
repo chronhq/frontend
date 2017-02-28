@@ -1,8 +1,6 @@
 import fs from 'fs';
 import sizeof from 'object-sizeof';
 import * as d3 from 'd3';
-import { mesh } from 'topojson-client';
-
 
 const wrapMessage = str => `${Date.now()} => ${str}`;
 
@@ -72,7 +70,7 @@ export function readAndProjectMaps(nameToFile, type = 'timeline') {
     const dataFromCurYear = readDataFile(nameToFile[cur]);
     return {
       [byKey]: { ...prev[byKey], [cur]: dataFromCurYear },
-      projected: { ...prev.projected, [cur]: path(mesh(dataFromCurYear)) }
+      projected: { ...prev.projected, [cur]: path(dataFromCurYear) }
     };
   }, {});
   console.timeEnd(`Prepare ${type} Data`);
