@@ -13,12 +13,14 @@ const locationDefaultState = {
 const terrainDefaultState = {
   loaded: false,
   type: 'TERRAIN',
-  topology: {}
+  byContinent: {},
+  projected: {}
 };
 const bordersDefaultState = {
   loaded: false,
   type: 'BORDERS',
-  byYear: {}
+  byYear: {},
+  projected: {}
 };
 const factsDefaultState = {
   loaded: false,

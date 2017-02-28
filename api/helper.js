@@ -1,6 +1,7 @@
 import fs from 'fs';
 import sizeof from 'object-sizeof';
 import * as d3 from 'd3';
+import { mesh } from 'topojson-client';
 
 
 const wrapMessage = str => `${Date.now()} => ${str}`;
@@ -50,15 +51,10 @@ export function getListOfFiles(dir, pattern) {
   return result;
 }
 
-export function getListOfYearsFromFiles(files, prefix = '') {
+export function getPureFileName(files, prefix = '') {
   return files.reduce((prev, cur) => {
-    return prev instanceof Object
-      ? { ...prev, [cur.replace(/\..*/, '')]: `${prefix}/${cur}` }
-      : {
-        [prev.replace(/\..*/, '')]: `${prefix}/${prev}`,
-        [cur.replace(/\..*/, '')]: `${prefix}/${cur}`
-      };
-  });
+    return { ...prev, [cur.replace(/\..*/, '')]: `${prefix}/${cur}` };
+  }, {});
 }
 
 export function getProjection() {
@@ -67,4 +63,25 @@ export function getProjection() {
 export function getPath() {
   return d3.geoPath().projection(getProjection());
 }
+
+export function readAndProjectMaps(nameToFile, type = 'timeline') {
+  const byKey = type === 'timeline' ? 'byYear' : 'byContinent';
+  const path = getPath();
+  console.time(`Prepare ${type} Data`);
+  const data = Object.keys(nameToFile).reduce((prev, cur) => {
+    const dataFromCurYear = readDataFile(nameToFile[cur]);
+    return {
+      [byKey]: { ...prev[byKey], [cur]: dataFromCurYear },
+      projected: { ...prev.projected, [cur]: path(mesh(dataFromCurYear)) }
+    };
+  }, {});
+  console.timeEnd(`Prepare ${type} Data`);
+  printSize(data[byKey], `Prepared ${type} JSON`);
+  printSize(data.projected, `Prepared ${type} PATH`);
+  return {
+    [byKey]: data[byKey],
+    projected: data.projected
+  };
+}
+
 

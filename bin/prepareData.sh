@@ -19,7 +19,7 @@ PERSONS="persons.json"
 DATA_TIMELINE="$DATA_DIR/Timeline"
 DUMP_TIMELINE="$DUMP_DIR/Timeline"
 
-DATA_CONTOUR="$DATA_DIR/Сontour"
+DATA_CONTOUR="$DATA_DIR/Contour"
 DUMP_CONTOUR="$DUMP_DIR/maps/byContinent"
 
 mkdir -p $DATA_TIMELINE

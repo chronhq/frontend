@@ -1,40 +1,18 @@
-import { mesh } from 'topojson-client';
-import { readDataFile,
-  printSize,
-  getPath,
+import {
   getListOfFiles,
-  getListOfYearsFromFiles
+  getPureFileName,
+  readAndProjectMaps
 } from './helper';
 
 const folder = './data/Timeline';
 const pattern = 'simple';
 const fileList = getListOfFiles(folder, pattern);
-const yearToFile = getListOfYearsFromFiles(fileList, folder);
-const genericTimelineYears = Object.keys(yearToFile).reduce((prev, cur) => {
+const nameToFile = getPureFileName(fileList, folder);
+const genericTimelineYears = Object.keys(nameToFile).reduce((prev, cur) => {
   return { ...prev, [cur]: cur };
 }, {});
-const path = getPath();
 
-function prepareData() {
-  console.time('Prepare Borders Data');
-  const data = Object.keys(yearToFile).reduce((prev, cur) => {
-    const dataFromCurYear = readDataFile(yearToFile[cur]);
-    return {
-      byYear: { ...prev.byYear, [cur]: dataFromCurYear },
-      projected: { ...prev.projected, [cur]: path(mesh(dataFromCurYear)) }
-    };
-  }, {});
-  console.timeEnd('Prepare Borders Data');
-  return {
-    byYear: data.byYear,
-    projected: data.projected
-  };
-}
-
-const preparedData = prepareData();
-printSize(preparedData, 'Prepared Borders TOTAL');
-printSize(preparedData.byYear, 'Prepared Borders JSON');
-printSize(preparedData.projected, 'Prepared Borders PATH');
+const preparedData = readAndProjectMaps(nameToFile, 'terrain');
 
 export default function borders(req, url) {
   url.shift();

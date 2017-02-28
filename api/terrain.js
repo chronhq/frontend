@@ -1,18 +1,17 @@
-import { mesh } from 'topojson-client';
-import { readDataFile, getPath } from './helper';
+import {
+  logger,
+  getListOfFiles,
+  getPureFileName,
+  readAndProjectMaps
+} from './helper';
 
-function prepareData() {
-  const filename = './data/contour.simple.json';
-  const data = readDataFile(filename);
-  return data;
-}
+const folder = './data/Contour';
+const pattern = 'simple';
+const fileList = getListOfFiles(folder, pattern);
+const nameToFile = getPureFileName(fileList, folder);
+
+const preparedData = readAndProjectMaps(nameToFile, 'terrrain');
 
 export default function terrain() {
-  const terrainData = prepareData();
-  const path = getPath();
-  const projectedData = path(mesh(terrainData));
-  return Promise.resolve({
-    terrain: terrainData,
-    projected: projectedData
-  });
+  return Promise.resolve(preparedData);
 }
