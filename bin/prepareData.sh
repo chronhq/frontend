@@ -12,13 +12,29 @@ SIMPLYFY_OPTIONS="-p 1"
 DATA_DIR="$DIR/../data/"
 DUMP_DIR="$DIR/../data-dump/"
 
+CITIES="cities1.json"
+INVENTIONS="inventions.json"
+PERSONS="persons.json"
+
 DATA_TIMELINE="$DATA_DIR/Timeline"
 DUMP_TIMELINE="$DUMP_DIR/Timeline"
-mkdir -p $DATA_TIMELINE
 
-CITIES="cities1.json";
-INVENTIONS="inventions.json";
-PERSONS="persons.json";
+DATA_CONTOUR="$DATA_DIR/Сontour"
+DUMP_CONTOUR="$DUMP_DIR/maps/byContinent"
+
+mkdir -p $DATA_TIMELINE
+mkdir -p $DATA_CONTOUR
+
+function setPrefix(){
+  echo Setting Prefix to $1
+  if [[ $1 == 'timeline' ]]; then 
+    DATA_PREFIX=${DATA_TIMELINE}
+    DUMP_PREFIX=${DUMP_TIMELINE}
+  else
+    DATA_PREFIX=${DATA_CONTOUR}
+    DUMP_PREFIX=${DUMP_CONTOUR}
+  fi
+}
 
 function convertFromShp(){
   map_name=$1
@@ -28,10 +44,10 @@ function convertFromShp(){
   [[ $3 != "" ]] && export_name=$3
   echo -e "\nMap: $map_name\tDir: $dir_name\tExport:$export_name"
 
-  SHP="$DUMP_TIMELINE/$dir_name/$map_name.shp"
-  GEO="$DATA_TIMELINE/$export_name.geo.json"
-  TOPO="$DATA_TIMELINE/$export_name.topo.json"
-  SIMPLE="$DATA_TIMELINE/$export_name.simple.json"
+  SHP="$DUMP_PREFIX/$dir_name/$map_name.shp"
+  GEO="$DATA_PREFIX/$export_name.geo.json"
+  TOPO="$DATA_PREFIX/$export_name.topo.json"
+  SIMPLE="$DATA_PREFIX/$export_name.simple.json"
 
   # echo "Looking for $SHP"
   if [[ -f $SHP ]]; then
@@ -85,13 +101,9 @@ processJSON "$CITIES"
 processJSON "$INVENTIONS"
 processJSON "$PERSONS"
 
-for dir in `cd $DUMP_TIMELINE; ls |grep "[0-9]"`; do
-  convertFromShp $dir
+for p in 'contour' 'timeline'; do
+  setPrefix ${p}
+  for dir in `cd $DUMP_PREFIX; ls |grep -v "\.mxd"`; do
+    convertFromShp $dir
+  done
 done
-
-# Initial current map
-convertFromShp "initial-map-North-America" "2015" "2015"
-# Terrain contour Full Globe
-convertFromShp "land_contour" "../maps/Land_contour" "../contour"
-# Terrain contour Only for North America
-# convertFromShp "Output" "north_america_contour" "../north_america_contour"
