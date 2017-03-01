@@ -5,10 +5,11 @@ import ControlButtonsController from '../containers/ControlButtonsController';
 import SetYearFieldContainer from '../containers/SetYearFieldContainer';
 import SetProjectionContainer from '../containers/SetProjectionContainer';
 import SetLayerVisibility from '../containers/SetLayerVisibility';
+import Legend from '../containers/Legend';
 
-import './UI.less';
+import './SidePanel.less';
 
-class UI extends React.Component {
+class SidePanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,14 +36,15 @@ class UI extends React.Component {
           <button onClick={() => this.toggle(2)}><i className="fa fa-search fa-fw" /></button>
           <button onClick={() => this.toggle(3)}><i className="fa fa-clock-o fa-fw" /></button>
           <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
-          <button onClick={() => this.toggle(3)}><i className="fa fa-bar-cog fa-fw" /></button>
+          <button onClick={() => this.toggle(5)}><i className="fa fa-cog fa-fw" /></button>
         </div>
         {this.state.isOpen ?
-          <div>
-            {this.state.current === 1 ? <SideBar /> : null }
-            {this.state.current === 2 ? <SideBar2 /> : null }
-            {this.state.current === 3 ? <SideBar3 /> : null }
-            {this.state.current === 4 ? <SideBar4 /> : null }
+          <div className="sidenav">
+            {this.state.current === 1 ? <ControlButtonsController /> : null }
+            {this.state.current === 2 ? <SetYearFieldContainer /> : null }
+            {this.state.current === 3 ? <SetLayerVisibility /> : null }
+            {this.state.current === 4 ? <SetProjectionContainer /> : null }
+            {this.state.current === 5 ? <Legend /> : null }
           </div> : null
        }
       </div>
@@ -50,45 +52,4 @@ class UI extends React.Component {
   }
 }
 
-
-class SideBar extends React.Component {
-  render() {
-    return (
-      <div className="sidenav">
-        <ControlButtonsController />
-      </div>
-    );
-  }
-}
-
-class SideBar2 extends React.Component {
-  render() {
-    return (
-      <div className="sidenav">
-        <SetYearFieldContainer />
-      </div>
-    );
-  }
-}
-
-class SideBar3 extends React.Component {
-  render() {
-    return (
-      <div className="sidenav">
-        <SetProjectionContainer />
-      </div>
-    );
-  }
-}
-
-class SideBar4 extends React.Component {
-  render() {
-    return (
-      <div className="sidenav">
-        <SetLayerVisibility />
-      </div>
-    );
-  }
-}
-
-export default UI;
+export default SidePanel;
