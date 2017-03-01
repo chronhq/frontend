@@ -31,6 +31,8 @@ const projection = (state = defaultState, action) => {
       const project = state.byName[action.name].scale(scale).rotate(rotate);
       return {
         ...state,
+        scale,
+        rotate,
         name: action.name,
         project,
         path: d3.geoPath().projection(project)
