@@ -1,8 +1,6 @@
 import React from 'react';
 
 import MapD3Container from './containers/MapD3Container';
-import Legend from './containers/Legend';
-import Header from './containers/Header';
 import SidePanel from './components/SidePanel';
 
 import DevTools from './DevTools';
