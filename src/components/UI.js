@@ -1,82 +1,94 @@
 import React from 'react';
-
 import 'font-awesome/less/font-awesome.less';
-import './UI.less'
 
-import ControlButtonsController from '../containers/ControlButtonsController';	
+import ControlButtonsController from '../containers/ControlButtonsController';
+import SetYearFieldContainer from '../containers/SetYearFieldContainer';
+import SetProjectionContainer from '../containers/SetProjectionContainer';
+import SetLayerVisibility from '../containers/SetLayerVisibility';
 
+import './UI.less';
 
 class UI extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = 
-        {
-            isOpen: false,
-            current: 0,
-            style:{float:'right'},
-        };
-    }
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      current: 0,
+      style: { float: 'right' },
+    };
+  }
 
-    toggle = (id) => {
-    	const isOpen = !(this.state.current === id && this.state.isOpen === true); 
-    	this.setState({...this.state, isOpen, current:id});
-    }
+  toggle = (id) => {
+    { /*
+      console.log(`this is id ${id}`);
+      console.log(`this is current ${this.state.current} and isopen is ${this.state.isOpen}`);
+    */ }
+    const isOpen = !(this.state.current === id && this.state.isOpen === true);
+    this.setState({ ...this.state, isOpen, current: id });
+  }
 
-    render() {
-    		
-        return (
-
-				<div><div className="icon-bar">
-            <a id="Sidebar1" onClick={() => this.toggle('1')} href="#"><i className="fa fa-home"></i></a> 
-            <a onClick={() => this.toggle('2')} href="#"><i className="fa fa-search"></i></a> 
-            <a onClick={() => this.toggle('3')} href="#"><i className="fa fa-clock-o"></i></a> 
-            <a onClick={() => this.toggle('3')} href="#"><i className="fa fa-globe"></i></a>
-            <a onClick={() => this.toggle('3')} href="#"><i className="fa fa-bar-chart"></i></a> 
-            <a href="#"><i className="fa fa-cog"></i></a> 
-            <a href="#"><i className="fa fa-cog"></i></a> 
+  render() {
+    return (
+      <div>
+        <div className="icon-bar">
+          <button id="Sidebar1" onClick={() => this.toggle(1)} > <i className="fa fa-home fa-fw" /></button>
+          <button onClick={() => this.toggle(2)}><i className="fa fa-search fa-fw" /></button>
+          <button onClick={() => this.toggle(3)}><i className="fa fa-clock-o fa-fw" /></button>
+          <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
+          <button onClick={() => this.toggle(3)}><i className="fa fa-bar-cog fa-fw" /></button>
         </div>
-        
-        	{this.state.isOpen ?
-        	<div>
-         {this.state.current == 1 ? <SideBar /> : null }
-         {this.state.current == 2 ? <SideBar2 /> : null }
-         {this.state.current == 3 ? <SideBar3 /> : null }
-         </div> : null
+        {this.state.isOpen ?
+          <div>
+            {this.state.current === 1 ? <SideBar /> : null }
+            {this.state.current === 2 ? <SideBar2 /> : null }
+            {this.state.current === 3 ? <SideBar3 /> : null }
+            {this.state.current === 4 ? <SideBar4 /> : null }
+          </div> : null
        }
-      
-				</div>
-        );}
+      </div>
+    );
+  }
 }
 
 
 class SideBar extends React.Component {
-    render() {
-        return(
-        <div className="sidenav">
-          ControlButtonsController
-          <ControlButtonsController />
-        </div>
-        );}
- }
+  render() {
+    return (
+      <div className="sidenav">
+        <ControlButtonsController />
+      </div>
+    );
+  }
+}
 
 class SideBar2 extends React.Component {
-    render() {
-        return(
-        <div className="sidenav">
-          SideBar 2
-        </div>
-        );}
+  render() {
+    return (
+      <div className="sidenav">
+        <SetYearFieldContainer />
+      </div>
+    );
+  }
 }
 
 class SideBar3 extends React.Component {
-    render() {
-        return(
-        <div className="sidenav">
-          SideBar 3
-        </div>
-        );}
- }
+  render() {
+    return (
+      <div className="sidenav">
+        <SetProjectionContainer />
+      </div>
+    );
+  }
+}
 
+class SideBar4 extends React.Component {
+  render() {
+    return (
+      <div className="sidenav">
+        <SetLayerVisibility />
+      </div>
+    );
+  }
+}
 
 export default UI;
