@@ -7,19 +7,11 @@ function getPersons() {
 
 function personsData() {
   const data = getPersons();
-  const compiledData = Object.keys(data.byId).reduce((prev, curId) => {
+  const deathFacts = Object.keys(data.byId).reduce((prev, curId) => {
     const cur = data.byId[curId];
     const birth = Number(cur.birthDate.replace(/-.*/g, ''));
     const death = Number(cur.deathDate.replace(/-.*/g, ''));
-    const result = prev.byYear || {};
-    let year = birth;
-    while (year <= death) { // Building map of alive persons
-      result[year] = year in result
-        ? [...result[year], cur.PersId]
-        : [cur.PersId];
-      year += 1;
-    }
-    const newFacts = prev.facts || {};
+    const newFacts = prev;
     const bornFact = { type: 'born', id: cur.PersId };
     const deathFact = { type: 'death', id: cur.PersId };
     newFacts[birth] = birth in newFacts
@@ -28,12 +20,23 @@ function personsData() {
     newFacts[death] = death in newFacts
       ? [...newFacts[death], deathFact]
       : [deathFact];
-    return {
-      byYear: result,
-      facts: newFacts
-    };
+    return newFacts;
   }, {});
-  return compiledData;
+  const timelineYears = Object.keys(deathFacts).reduce((prevYear, curId) => {
+    const alive = deathFacts[curId].reduce((prevAlive, curFact) => {
+      return curFact.type === 'born'
+        // some one is born, adding to array
+        ? [...prevAlive, curFact.id]
+        // remove dead body
+        : prevAlive.filter(val => val !== curFact.id);
+    }, prevYear.alive);
+    return { alive,
+      data: { ...prevYear.data, [curId]: alive } };
+  }, { alive: [], data: {} });
+  return {
+    facts: deathFacts,
+    byYear: timelineYears.data
+  };
 }
 function getPersonsFacts() {
   const data = personsData();
