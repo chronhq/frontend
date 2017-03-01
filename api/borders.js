@@ -12,7 +12,7 @@ const genericTimelineYears = Object.keys(nameToFile).reduce((prev, cur) => {
   return { ...prev, [cur]: cur };
 }, {});
 
-const preparedData = readAndProjectMaps(nameToFile, 'terrain');
+const preparedData = readAndProjectMaps(nameToFile, 'borders_timeline');
 
 export default function borders(req, url) {
   url.shift();

@@ -62,8 +62,8 @@ export function getPath() {
   return d3.geoPath().projection(getProjection());
 }
 
-export function readAndProjectMaps(nameToFile, type = 'timeline') {
-  const byKey = type === 'timeline' ? 'byYear' : 'byContinent';
+export function readAndProjectMaps(nameToFile, type = 'borders_timeline') {
+  const byKey = type === 'borders_timeline' ? 'byYear' : 'byContinent';
   const path = getPath();
   console.time(`Prepare ${type} Data`);
   const data = Object.keys(nameToFile).reduce((prev, cur) => {

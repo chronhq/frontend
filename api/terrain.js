@@ -10,7 +10,7 @@ const pattern = 'geosim';
 const fileList = getListOfFiles(folder, pattern);
 const nameToFile = getPureFileName(fileList, folder);
 
-const preparedData = readAndProjectMaps(nameToFile, 'terrrain');
+const preparedData = readAndProjectMaps(nameToFile, 'terrain');
 
 export default function terrain() {
   return Promise.resolve(preparedData);
