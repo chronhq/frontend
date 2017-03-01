@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Fact from '../components/Fact';
 
+import './Legend.less';
 
 const Legend = ({ facts, currentFacts, persons }) => (
   <div className='legend'>
