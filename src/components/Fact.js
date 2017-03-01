@@ -6,14 +6,14 @@ const Fact = ({ fact, persons }) => (
     key={fact.id}
   >
     <span className='factHeader'>
-      <b>{fact.name}</b>
+      <b>{fact.nameRu}</b>
       <span className='factDate'>
-        `${fact.date}`
+        {fact.date}
       </span>
     </span>
     <br />
     <span>{fact.description}</span>
-    <span className='factAuthor'> by <i>{fact.PersId.map(p => persons[p].name).join(', ')}</i></span>
+    <span className='factAuthor'> - <i>{fact.PersId.map(p => persons[p].nameRu).join(', ')}</i></span>
     <hr />
   </div>
 );
