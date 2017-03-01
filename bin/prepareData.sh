@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 NODE_BIN="$DIR/../node_modules/.bin/"
 
 MAPSHAPER="$NODE_BIN/mapshaper"
-SIMPLYFY_OPTIONS="-simplify 5%"
+SIMPLYFY_OPTIONS="-simplify visvalingam 1%"
 
 DATA_DIR="$DIR/../data/"
 DUMP_DIR="$DIR/../data-dump/"
