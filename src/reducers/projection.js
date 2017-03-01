@@ -15,12 +15,12 @@ const projectionOptions = Object.keys(projectionByName).reduce(combineKeys, []);
 
 const defaultState = {
   name: defaultProjectionName,
-  project: d3.geoConicEqualArea(),
-  path: d3.geoPath().projection(d3.geoConicEqualArea()),
+  project: d3.geoEquirectangular(),
+  path: d3.geoPath().projection(d3.geoEquirectangular()),
   options: projectionOptions,
   byName: projectionByName,
-  scale: 300,
-  rotate: [90, 0, 0]
+  scale: 150,
+  rotate: [0, 0, 0]
 };
 
 const projection = (state = defaultState, action) => {

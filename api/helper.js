@@ -56,7 +56,7 @@ export function getPureFileName(files, prefix = '') {
 }
 
 export function getProjection() {
-  return d3.geoConicEqualArea().scale(300).rotate([90, 0, 0]);
+  return d3.geoEquirectangular().scale(150).rotate([0, 0, 0]);
 }
 export function getPath() {
   return d3.geoPath().projection(getProjection());
