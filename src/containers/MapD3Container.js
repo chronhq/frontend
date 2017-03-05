@@ -53,23 +53,38 @@ class MapD3Container extends Component {
     }
     return null;
   }
+  color = d3.scaleOrdinal(d3.schemeCategory20);
 
   render() {
     return (
       <svg className='svgMap' ref={(r) => { this.svgMap = r; }}>
         <g transform={this.transform}>
-          <g className='svgMapTerrain' key='terrain' strokeWidth="0.6" >
-            {Object.keys(this.props.terrain).map(continent => (
-              <path
-                key={`terrain_${continent}`}
-                d={this.props.terrain[continent]}
-              />
+          <g className='svgMapTerrain' key='terrain'>
+            {Object.keys(this.props.terrain).map(
+              continent => (
+                this.props.terrain[continent].map((border, borderId) => (
+                  <path
+                    key={`terrain_${continent}_${this.props.terrainData[continent].features[borderId].properties.name}`}
+                    d={border}
+// fill={this.color(this.props.terrainData[continent].features[borderId].properties.mapcolor13)}
+                  />
+                ))
               ))
             }
           </g>
-          { this.props.visibility.borders && <g>
-            <path className='svgMapBorders' d={this.props.borders} />
-          </g>
+          { (this.props.visibility.borders
+            && this.props.bordersLoaded === true)
+            && <g className='svgMapBorders'>
+              {Array.isArray(this.props.borders) && this.props.borders.map((border, borderId) => (
+                <path
+                  key={`borders_na_${borderId}_${this.props
+                    .bordersData.features[borderId].properties.name}`}
+                  d={border}
+                  fill={this.color(this.props.bordersData.features[borderId].properties.mapcolor13)}
+                />
+              ))
+            }
+            </g>
           }
           <Locations />
         </g>
@@ -80,10 +95,15 @@ class MapD3Container extends Component {
 
 function mapStateToProps(state) {
   return { terrain: state.terrain.projected,
+    terrainData: state.terrain.byContinent,
     visibility: state.visibility,
+    bordersLoaded: state.borders.loaded,
     borders: state.timeline.borders.current !== ''
       ? state.borders.projected[state.timeline.borders.current]
-      : '',
+      : [],
+    bordersData: state.timeline.borders.current !== ''
+      ? state.borders.byYear[state.timeline.borders.current]
+      : [],
     territories: state.territories
   };
 }

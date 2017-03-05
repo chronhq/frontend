@@ -70,7 +70,12 @@ export function readAndProjectMaps(nameToFile, type = 'borders_timeline') {
     const dataFromCurYear = readDataFile(nameToFile[cur]);
     return {
       [byKey]: { ...prev[byKey], [cur]: dataFromCurYear },
-      projected: { ...prev.projected, [cur]: path(dataFromCurYear) }
+      projected: { ...prev.projected,
+        [cur]: dataFromCurYear
+          .features.reduce(
+            (prevFeature, curFeature) => [...prevFeature, path(curFeature)],
+          [])
+      }
     };
   }, {});
   console.timeEnd(`Prepare ${type} Data`);
