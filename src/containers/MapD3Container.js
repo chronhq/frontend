@@ -36,7 +36,7 @@ class MapD3Container extends Component {
     }
   }
 
-  onZoom() {
+  onZoom = () => {
     this.setState({
       transform: d3.event.transform
     });
@@ -44,7 +44,7 @@ class MapD3Container extends Component {
 
   zoom = d3.zoom()
     .scaleExtent([0.5, 10])
-    .on('zoom', this.onZoom.bind(this));
+    .on('zoom', this.onZoom);
 
   get transform() {
     if (this.state.transform) {
@@ -60,7 +60,10 @@ class MapD3Container extends Component {
         <g transform={this.transform}>
           <g className='svgMapTerrain' key='terrain' strokeWidth="0.6" >
             {Object.keys(this.props.terrain).map(continent => (
-              <path key={`terrain_${continent}`} d={this.props.terrain[continent]} />
+              <path
+                key={`terrain_${continent}`}
+                d={this.props.terrain[continent]}
+              />
               ))
             }
           </g>
