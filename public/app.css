@@ -11,24 +11,6 @@
   margin-right: auto;
 }
 
-.svgMap {
-  float: left;
-  width: 70%;
-  height: 80vh;
-  margin-top:5vh;
-  border-bottom: steelblue;
-  border-style: inset;
-  border-width: 3px 3px 3px 3px;
-}
-.svgMapTerrain {
-  fill: steelblue;
-  stroke: gray;
-  stroke-width: 0.4px;
-}
-.svgMapBorders {
-  fill: none;
-  stroke: black;
-}
 .factHeader{
   float:left;
   width: 100%;
