@@ -1,13 +1,14 @@
 import {
   getListOfFiles,
   getPureFileName,
+  shiftFileNames,
   readAndProjectMaps
 } from './helper';
 
 const folder = './data/Timeline';
 const pattern = 'geosim';
 const fileList = getListOfFiles(folder, pattern);
-const nameToFile = getPureFileName(fileList, folder);
+const nameToFile = shiftFileNames(getPureFileName(fileList, folder), 0);
 const genericTimelineYears = Object.keys(nameToFile).reduce((prev, cur) => {
   return { ...prev, [cur]: cur };
 }, {});

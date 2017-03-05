@@ -55,6 +55,16 @@ export function getPureFileName(files, prefix = '') {
   }, {});
 }
 
+export function shiftFileNames(nameToFile, base = 0) {
+  const shifted = Object.keys(nameToFile).reduce((prev, curName) => {
+    return {
+      base: curName,
+      names: { ...prev.names, [prev.base]: nameToFile[curName] }
+    };
+  }, { base, names: {} });
+  return shifted.names;
+}
+
 export function getProjection() {
   return d3.geoEquirectangular().scale(150).rotate([0, 0, 0]);
 }
