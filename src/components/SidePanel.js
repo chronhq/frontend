@@ -5,7 +5,7 @@ import ControlButtonsController from '../containers/ControlButtonsController';
 import SetYearFieldContainer from '../containers/SetYearFieldContainer';
 import SetProjectionContainer from '../containers/SetProjectionContainer';
 import SetLayerVisibility from '../containers/SetLayerVisibility';
-import Legend from '../containers/Legend';
+import Feed from '../containers/Feed';
 
 import './SidePanel.less';
 
@@ -44,7 +44,7 @@ class SidePanel extends React.Component {
             {this.state.current === 2 ? <SetYearFieldContainer /> : null }
             {this.state.current === 3 ? <SetLayerVisibility /> : null }
             {this.state.current === 4 ? <SetProjectionContainer /> : null }
-            {this.state.current === 5 ? <Legend /> : null }
+            {this.state.current === 5 ? <Feed /> : null }
           </div> : null
        }
       </div>
