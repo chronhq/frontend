@@ -53,7 +53,6 @@ class MapD3Container extends Component {
     }
     return null;
   }
-  color = d3.scaleOrdinal(d3.schemeCategory20);
 
   render() {
     return (
@@ -80,7 +79,10 @@ class MapD3Container extends Component {
                   key={`borders_na_${borderId}_${this.props
                     .bordersData.features[borderId].properties.name}`}
                   d={border}
-                  fill={this.color(this.props.bordersData.features[borderId].properties.mapcolor13)}
+                  fill={this.props
+                    .color(this.props
+                      .bordersData.features[borderId]
+                        .properties.mapcolor13)}
                 />
               ))
             }
@@ -97,6 +99,7 @@ function mapStateToProps(state) {
   return { terrain: state.terrain.projected,
     terrainData: state.terrain.byContinent,
     visibility: state.visibility,
+    color: state.projection.color,
     bordersLoaded: state.borders.loaded,
     borders: state.timeline.borders.current !== ''
       ? state.borders.projected[state.timeline.borders.current]

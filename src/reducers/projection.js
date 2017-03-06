@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
+import { askBackend } from './actions';
 
-const defaultProjectionName = 'ConicEqualArea';
+const defaultProjectionName = 'Equirectangular';
 const projectionByName = {
   Mercator: d3.geoMercator(),
   Equirectangular: d3.geoEquirectangular(),
@@ -19,6 +20,7 @@ const defaultState = {
   path: d3.geoPath().projection(d3.geoEquirectangular()),
   options: projectionOptions,
   byName: projectionByName,
+  color: d3.scaleOrdinal(d3.schemeCategory20),
   scale: 150,
   rotate: [0, 0, 0]
 };
@@ -38,11 +40,32 @@ const projection = (state = defaultState, action) => {
         path: d3.geoPath().projection(project)
       };
     }
+    case 'CHANGE_PROJECTION_PENDING':
+      return {
+        ...state,
+        loading: true
+      };
+    case 'CHANGE_PROJECTION_FULFILLED':
+      return {
+        ...state,
+        loading: false,
+        sync: true,
+        error: false,
+        ...action.payload
+      };
+    case 'CHANGE_PROJECTION_REJECTED':
+      return {
+        ...state,
+        loading: false,
+        sync: false,
+        error: true,
+      };
     default:
       return state;
   }
 };
 export function setProjection(scale, rotate, name = defaultProjectionName) {
+  askBackend('CHANGE_PROJECTION', { name, rotate, scale });
   return {
     type: 'CHANGE_PROJECTION',
     name,
@@ -50,4 +73,5 @@ export function setProjection(scale, rotate, name = defaultProjectionName) {
     scale
   };
 }
+
 export default projection;
