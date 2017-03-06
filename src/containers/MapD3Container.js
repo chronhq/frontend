@@ -7,6 +7,35 @@ import { askBackend } from '../reducers/actions';
 
 import './MapD3Container.less';
 
+const TerrainMap = ({ terrain, terrainData }) => (
+  <g className='svgMapTerrain' key='terrain'>
+    {Object.keys(terrain).map(
+    continent => (
+      terrain[continent].map((border, borderId) => (
+        <path
+          key={`terrain_${continent}_${terrainData[continent].features[borderId].properties.name}`}
+          d={border}
+        />
+      ))
+    ))
+  }
+  </g>
+);
+
+const BordersMap = ({ borders, bordersData, loaded, visible, color }) => (
+  <g className='svgMapBorders'>
+    {(visible && loaded === true
+      && Array.isArray(borders))
+      && bordersData.features.map((border, borderId) => (
+        <path // There is no uniq key in properties
+          key={`borders_na_${border.properties.name.replace(/\s/g, '_')}_${borderId}`}
+          d={borders[borderId]}
+          fill={color(border.properties.mapcolor13)}
+        />
+      ))}
+  </g>
+);
+
 class MapD3Container extends Component {
   state = {
     zoomInitted: false,
@@ -58,36 +87,17 @@ class MapD3Container extends Component {
     return (
       <svg className='svgMap' ref={(r) => { this.svgMap = r; }}>
         <g transform={this.transform}>
-          <g className='svgMapTerrain' key='terrain'>
-            {Object.keys(this.props.terrain).map(
-              continent => (
-                this.props.terrain[continent].map((border, borderId) => (
-                  <path
-                    key={`terrain_${continent}_${this.props.terrainData[continent].features[borderId].properties.name}`}
-                    d={border}
-// fill={this.color(this.props.terrainData[continent].features[borderId].properties.mapcolor13)}
-                  />
-                ))
-              ))
-            }
-          </g>
-          { (this.props.visibility.borders
-            && this.props.bordersLoaded === true)
-            && <g className='svgMapBorders'>
-              {Array.isArray(this.props.borders) && this.props.borders.map((border, borderId) => (
-                <path
-                  key={`borders_na_${borderId}_${this.props
-                    .bordersData.features[borderId].properties.name}`}
-                  d={border}
-                  fill={this.props
-                    .color(this.props
-                      .bordersData.features[borderId]
-                        .properties.mapcolor13)}
-                />
-              ))
-            }
-            </g>
-          }
+          <TerrainMap
+            terrain={this.props.terrain}
+            terrainData={this.props.terrainData}
+          />
+          <BordersMap
+            visible={this.props.b.visible}
+            loaded={this.props.b.loaded}
+            borders={this.props.b.borders}
+            bordersData={this.props.b.bordersData}
+            color={this.props.color}
+          />
           <Locations />
         </g>
       </svg>
@@ -98,15 +108,17 @@ class MapD3Container extends Component {
 function mapStateToProps(state) {
   return { terrain: state.terrain.projected,
     terrainData: state.terrain.byContinent,
-    visibility: state.visibility,
     color: state.projection.color,
-    bordersLoaded: state.borders.loaded,
-    borders: state.timeline.borders.current !== ''
-      ? state.borders.projected[state.timeline.borders.current]
-      : [],
-    bordersData: state.timeline.borders.current !== ''
-      ? state.borders.byYear[state.timeline.borders.current]
-      : [],
+    b: {
+      visible: state.visibility.borders,
+      loaded: state.borders.loaded,
+      borders: state.timeline.borders.current !== ''
+        ? state.borders.projected[state.timeline.borders.current]
+        : [],
+      bordersData: state.timeline.borders.current !== ''
+        ? state.borders.byYear[state.timeline.borders.current]
+        : []
+    },
     territories: state.territories
   };
 }
