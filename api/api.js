@@ -1,4 +1,7 @@
 import express from 'express';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+
 import locations from './locations';
 import terrain from './terrain';
 import borders from './borders';
@@ -22,17 +25,32 @@ function resolvePromise(action, req, res, url, params = []) {
 function parseParams(url) {
   const [path, params] = url.split('?');
   const splittedUrlPath = path.split('/').slice(1);
-  const splittedUrlParams = typeof params === 'undefined' ? [] : params.split('&');
+  const splittedUrlParams = typeof params === 'undefined'
+    ? [] : params.split('&');
   return [splittedUrlPath, splittedUrlParams];
 }
+
+app.use(bodyParser.json());
+app.use(session({
+  secret: 'kotyatki davaite zapilem karty',
+  resave: true,
+  saveUninitialized: true,
+  httpOnly: false,
+  cookie: { secure: false, maxAge: 60000 }
+}));
+
+// rotate: [0, 0, 0],
+//   scale: 150,
+//   name: 'Equirectangular'
 
 app.use((req, res, next) => {
   logger.info('Got a request');
   logger.info(req.url);
-  if (process.env.NODE_ENV === 'development') {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-  }
+
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Credentials', 'true');
+
   next();
 });
 
@@ -43,6 +61,13 @@ app.all('/*', (req, res) => {
   try {
     const params = [req, res, splittedUrlPath, splittedUrlParams];
     switch (splittedUrlPath[0]) {
+      case 'CHANGE':
+        req.session.save(() => logger.log('session saved'));
+        console.log(req.session);
+        console.log(req.session.id);
+        console.log(req.body);
+        res.status(200).end(JSON.stringify({ status: 'OK' }));
+        break;
       case 'LOCATIONS':
         resolvePromise(locations, ...params);
         break;

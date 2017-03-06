@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import axios from 'axios';
 
 export function getActualData(years, data, target) {
   const res = Math.max(...years.filter(y => y < target));
@@ -10,12 +11,10 @@ export function getActualData(years, data, target) {
 
 export function askBackend(type, data = {}) {
   const uri = type.replace(/_/g, '/');
-  const url = process.env.NODE_ENV === 'development'
-    ? `http://localhost:${process.env.APIPORT}/${uri}`
-    : `/api/${uri}`;
+  const url = `/api/${uri}`;
   const req = {
     method: 'POST',
-    mode: 'cors',
+    credentials: 'same-origin',
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' }
   };
