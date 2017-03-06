@@ -20,7 +20,10 @@ function* changeProjection() {
     console.time(`pathProjection ${type}`);
     const json = yield select(selector);
     const projected = Object.keys(json).reduce((prev, cur) => {
-      return { ...prev, [cur]: path(json[cur]) };
+      return { ...prev, [cur]: json[cur]
+          .features.reduce(
+            (prevFeature, curFeature) => [...prevFeature, path(curFeature)],
+          []) };
     }, {});
     console.timeEnd(`pathProjection ${type}`);
     yield put({ type, projected });
