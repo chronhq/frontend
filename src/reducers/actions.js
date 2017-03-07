@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import axios from 'axios';
 
 export function getActualData(years, data, target) {
   const res = Math.max(...years.filter(y => y < target));
