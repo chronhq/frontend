@@ -50,8 +50,8 @@ class MapD3Container extends Component {
     zoomInitted: false,
     transform: null
   }
-  
-  componentDidUpdate() {
+
+  componentDidMount() {
     if (!this.state.zoomInitted) {
       const svg = d3.select(this.svgMap);
 
