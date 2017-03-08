@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { SVGPattern, getFillColors } from '../components/SVGPatternsDefs';
+
 import './Legend.less';
 
-const ColorBox = ({ color }) => (
+const ColorBox = ({ colorFn, c }) => (
   <svg width='1.5em' height='1.2em'>
-    <rect x='1' y='1' width='1.5em' height='1.2em' fill={color} />
+    <defs>
+      <SVGPattern c1={colorFn(c[0])} c2={colorFn(c[1])} id={`legend_${c[0]}_${c[1]}`} />
+    </defs>
+    <rect
+      x='1' y='1' width='1.5em' height='1.2em'
+      fill={`url(#legend_${c[0]}_${c[1]})`}
+    />
   </svg>
 );
 const Description = ({ properties }) => (
@@ -16,7 +24,7 @@ const Description = ({ properties }) => (
 
 const LegendItem = ({ properties, colorFn }) => (
   <li>
-    <ColorBox color={colorFn(properties.mapcolor13)} />
+    <ColorBox colorFn={colorFn} c={getFillColors(properties)} />
     <Description properties={properties} />
   </li>
 );

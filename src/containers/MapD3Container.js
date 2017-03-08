@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import Locations from './Locations';
+import PatternsDefs, { getPatternId } from '../components/SVGPatternsDefs';
 import { askBackend } from '../reducers/actions';
 
 import './MapD3Container.less';
@@ -22,7 +23,7 @@ const TerrainMap = ({ terrain, terrainData }) => (
   </g>
 );
 
-const BordersMap = ({ borders, bordersData, loaded, visible, color }) => (
+const BordersMap = ({ borders, bordersData, loaded, visible }) => (
   <g className='svgMapBorders'>
     {(visible && loaded === true
       && Array.isArray(borders))
@@ -30,13 +31,23 @@ const BordersMap = ({ borders, bordersData, loaded, visible, color }) => (
         <path // There is no uniq key in properties
           key={`borders_na_${border.properties.name.replace(/\s/g, '_')}_${borderId}`}
           d={borders[borderId]}
-          fill={color(border.properties.mapcolor13)}
+          fill={`url(#${getPatternId(border)})`}
         />
       ))}
   </g>
 );
 
 class MapD3Container extends Component {
+  defaultProps = {
+    b: {
+      bordersData: { features: [] },
+      borders: [],
+      loaded: false,
+      visible: false
+    },
+    terrain: [],
+    terrainData: []
+  }
   state = {
     zoomInitted: false,
     transform: null
@@ -86,6 +97,10 @@ class MapD3Container extends Component {
   render() {
     return (
       <svg className='svgMap' ref={(r) => { this.svgMap = r; }}>
+        <PatternsDefs
+          bordersData={this.props.b.bordersData}
+          color={this.props.color}
+        />
         <g transform={this.transform}>
           <TerrainMap
             terrain={this.props.terrain}
@@ -96,7 +111,6 @@ class MapD3Container extends Component {
             loaded={this.props.b.loaded}
             borders={this.props.b.borders}
             bordersData={this.props.b.bordersData}
-            color={this.props.color}
           />
           <Locations />
         </g>
@@ -117,7 +131,7 @@ function mapStateToProps(state) {
         : [],
       bordersData: state.timeline.borders.current !== ''
         ? state.borders.byYear[state.timeline.borders.current]
-        : []
+        : { features: [] }
     },
     territories: state.territories
   };
