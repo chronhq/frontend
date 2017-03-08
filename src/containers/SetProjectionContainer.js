@@ -6,6 +6,8 @@ import Select from 'react-select';
 import InputNumber from '../components/inputNumber';
 import { setProjection } from '../reducers/projection';
 
+import './SetProjectionContainer.less'; // Styles for Select
+
 class SetProjectionContainer extends PureComponent {
   constructor(props) {
     super(props);
