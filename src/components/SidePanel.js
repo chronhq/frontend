@@ -7,6 +7,7 @@ import SetProjectionContainer from '../containers/SetProjectionContainer';
 import SetLayerVisibility from '../containers/SetLayerVisibility';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
+import RotatingLogo from './RotatingLogo';
 
 import './SidePanel.less';
 
@@ -47,7 +48,7 @@ class SidePanel extends React.Component {
                 <SetYearFieldContainer />
               </div>
               : null }
-            {this.state.current === 2 ? <SetYearFieldContainer /> : null }
+            {this.state.current === 2 ? <RotatingLogo /> : null }
             {this.state.current === 3 ? <Feed /> : null }
             {this.state.current === 4 ? <Legend /> : null }
             {this.state.current === 5

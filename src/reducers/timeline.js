@@ -17,7 +17,7 @@ const initialState = {
   now: DEFAULT_YEAR,
   max: MAX_YEAR,
   min: DEFAULT_YEAR,
-  facts: { type: 'FACTS_TIMELINE', current: [], byYear: {},  loaded: false },
+  facts: { type: 'FACTS_TIMELINE', current: [], byYear: {}, loaded: false },
   locations: { type: 'LOCATIONS_TIMELINE', loaded: false },
   borders: { type: 'BORDERS_TIMELINE', current: '', byYear: {}, loaded: false },
   persons: { type: 'PERSONS_TIMELINE', current: [], byYear: {}, loaded: false }
