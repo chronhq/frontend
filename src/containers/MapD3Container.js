@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import Locations from './Locations';
 import PatternsDefs, { getPatternId } from '../components/SVGPatternsDefs';
-import { askBackend } from '../reducers/actions';
 
 import './MapD3Container.less';
 
@@ -52,18 +50,7 @@ class MapD3Container extends Component {
     zoomInitted: false,
     transform: null
   }
-  componentDidMount() {
-    this.props.askBackend('LOCATIONS');
-    this.props.askBackend('LOCATIONS_TIMELINE');
-    this.props.askBackend('TERRAIN');
-    this.props.askBackend('BORDERS');
-    this.props.askBackend('BORDERS_TIMELINE');
-    this.props.askBackend('FACTS');
-    this.props.askBackend('FACTS_TIMELINE');
-    this.props.askBackend('PERSONS');
-    this.props.askBackend('PERSONS_TIMELINE');
-    this.props.askBackend('PERSONS_FACTS');
-  }
+  
   componentDidUpdate() {
     if (!this.state.zoomInitted) {
       const svg = d3.select(this.svgMap);
@@ -137,9 +124,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    askBackend: bindActionCreators(askBackend, dispatch),
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(MapD3Container);
+export default connect(mapStateToProps)(MapD3Container);

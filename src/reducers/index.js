@@ -3,6 +3,7 @@ import timeline from './timeline';
 import genericReducer from './generic';
 import projection from './projection';
 import visibility from './visibility';
+import status from './status';
 
 const locationDefaultState = {
   loaded: false,
@@ -45,6 +46,7 @@ const persons = (
   state = personsDefaultState, action) => genericReducer(state, action);
 
 const mapInfoApp = combineReducers({
+  status,
   locations,
   facts,
   persons,
