@@ -49,7 +49,7 @@ class TimePanel extends React.Component {
     /* d3.select('circle').attr('opacity', 1); */
     //
     d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
-    //this.props.setYearAction(Number(this.state.now));
+    if (this.props.playing === 0) this.props.setYearAction(Number(this.state.now));
   }
 
 
@@ -86,6 +86,7 @@ class TimePanel extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    playing: state.timeline.intervalId,
     now: state.timeline.now,
     max: state.timeline.max,
     min: state.timeline.min
@@ -103,5 +104,6 @@ TimePanel.propTypes = {
   max: PropTypes.number.isRequired,
   now: PropTypes.number.isRequired,
   setYearAction: PropTypes.func.isRequired,
+  playing: PropTypes.number.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TimePanel);
