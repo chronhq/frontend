@@ -14,7 +14,6 @@ class SetProjectionContainer extends PureComponent {
       yawn: this.props.rotate[0],
       pitch: this.props.rotate[1],
       roll: this.props.rotate[2],
-      scale: this.props.scale
     };
   }
   handleChange = (data) => {
@@ -27,7 +26,7 @@ class SetProjectionContainer extends PureComponent {
     e.preventDefault();
     console.log(e);
     const rotate = [this.state.yawn, this.state.pitch, this.state.roll];
-    this.props.setProjectionAction(this.state.scale, rotate, this.state.name);
+    this.props.setProjectionAction(rotate, this.state.name);
   }
   render() {
     return (
@@ -36,7 +35,6 @@ class SetProjectionContainer extends PureComponent {
           {' Y'}<InputNumber name='yawn' value={this.state.yawn} cb={this.handleChange} />
           {' P'}<InputNumber name='pitch' value={this.state.pitch} cb={this.handleChange} />
           {' R'}<InputNumber name='roll' value={this.state.roll} cb={this.handleChange} />
-          {' Scale'}<InputNumber name='scale' value={this.state.scale} cb={this.handleChange} />
           <Select
             name="Select Projection"
             value={this.state.name}
@@ -56,7 +54,6 @@ function mapStateToProps(state) {
   return {
     name: state.projection.name,
     rotate: state.projection.rotate,
-    scale: state.projection.scale,
     options: state.projection.options
   };
 }
@@ -68,7 +65,6 @@ function mapDispatchToProps(dispatch) {
 SetProjectionContainer.propTypes = {
   name: PropTypes.string.isRequired,
   rotate: PropTypes.array.isRequired,
-  scale: PropTypes.number.isRequired,
   options: PropTypes.array.isRequired,
   setProjectionAction: PropTypes.func.isRequired,
 };

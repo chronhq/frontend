@@ -11,8 +11,9 @@ const layerTimeline = (state = { type: 'layerName', loaded: false }, action) => 
     case `${state.type}_CURRENT`:
     case 'SET_YEAR':
       return { ...state,
-        current: action.year in state.byYear ? [state.byYear[action.year]] :
-        getActualData(state.allYears, state.byYear, action.year)
+        current: action.year in state.byYear
+          ? state.byYear[action.year]
+          : getActualData(state.allYears, state.byYear, action.year)
       };
     case `${state.type}_PENDING`:
       return {

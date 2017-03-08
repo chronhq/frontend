@@ -21,19 +21,16 @@ const defaultState = {
   options: projectionOptions,
   byName: projectionByName,
   color: d3.scaleOrdinal(d3.schemeCategory20),
-  scale: 150,
   rotate: [0, 0, 0]
 };
 
 const projection = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_PROJECTION': {
-      const scale = 'scale' in action ? action.scale : state.scale;
       const rotate = 'rotate' in action ? action.rotate : state.rotate;
-      const project = state.byName[action.name].scale(scale).rotate(rotate);
+      const project = state.byName[action.name].rotate(rotate);
       return {
         ...state,
-        scale,
         rotate,
         name: action.name,
         project,
@@ -64,13 +61,12 @@ const projection = (state = defaultState, action) => {
       return state;
   }
 };
-export function setProjection(scale, rotate, name = defaultProjectionName) {
-  askBackend('CHANGE_PROJECTION', { name, rotate, scale });
+export function setProjection(rotate, name = defaultProjectionName) {
+  askBackend('CHANGE_PROJECTION', { name, rotate });
   return {
     type: 'CHANGE_PROJECTION',
     name,
-    rotate,
-    scale
+    rotate
   };
 }
 
