@@ -13,11 +13,12 @@ class TimePanel extends React.Component {
       min: this.props.min,
       max: this.props.max
     };
-    this.scale = d3.scaleLinear().domain([this.state.min, this.state.max]).range([30, 1000]);
+    this.scale = d3.scaleLinear().domain([this.state.min, this.state.max]).range([0, 1000]);
   }
+
   componentDidMount() {
     this.renderAxis();
-    const svgComp = d3.select(this.svgTime);
+    const svgComp = d3.selectAll('.svgTime');
     svgComp.on('click', () => {
       this.setState({ now: Math.round(this.scale.invert(d3.mouse(this.svgTime)[0])) });
       this.updateClockPosition();
@@ -32,13 +33,13 @@ class TimePanel extends React.Component {
   }
 
   followMouse() {
-    d3.select('circle')
+    d3.select('.svgTime')
       .on('mousemove', () => {
         this.setState({ now: Math.round(this.scale.invert(d3.mouse(this.svgTime)[0])) });
         this.updateClockPosition();
       })
       .on('mouseup', () => {
-        d3.select('circle')
+        d3.select('rect')
           .on('mousemove', null)
           .on('mouseup', () => null);
       });
@@ -46,9 +47,9 @@ class TimePanel extends React.Component {
 
   updateClockPosition() {
     console.log(`BOOP. Coords is ${this.scale(this.state.now)}. Year is ${this.state.now}`);
-    /* d3.select('circle').attr('opacity', 1); */
-    //
-    d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
+    const translate = 'translate('+ this.scale(this.state.now) +',0)';
+    d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`).attr('opacity', 1);
+    //d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
     if (this.props.playing === 0) this.props.setYearAction(Number(this.state.now));
   }
 
@@ -56,17 +57,51 @@ class TimePanel extends React.Component {
   renderAxis() {
     const axis = d3.axisBottom(this.scale);
 
-    const svg = d3.select('.svgTime')
-      .append('g')
+
+    const svg = d3.select(this.svgTime),
+      margin = { top: 20, right: 20, bottom: 20, left: 40 },
+      width = +svg.attr('width') - margin.left - margin.right;
+
+    svg.style('border', '1px solid black').append('g')
       .call(axis.ticks(20, 'f'));
 
-    svg.append('circle')
-      .attr('r', 5)
-      .attr('opacity', 0)
-      .attr('class', 'circle')
-      .style('fill', 'red')
-      .attr('stroke', 'steelblue')
-      .attr('stroke-width', 4);
+    /* svg.append('rect')
+      .attr('x', 0)
+      .attr('y', -50)
+      .attr('width', width)
+      .attr('height', 100)
+      .attr('fill', '#ffffff')
+      .attr('opacity', 0.5)
+      .style('z-index', -1)
+      .classed('back', true);
+      */
+
+/* arrow elements */
+    svg.append('rect')
+      .attr('y', -10)
+      .attr('width', 1)
+      .attr('height', 20)
+      .attr('opacity', 1)
+      .attr('class', 'arrow')
+      .style('fill', 'black')
+      .style('stroke', 'black')
+      .style('stroke-width', 2);
+
+    svg.append('polyline')
+      .attr('points', '-10,-25 0,-15 10,-25')
+      .style('fill', 'black')
+      .classed('arrow', true);
+
+    svg.append('text')
+      .text(`${this.state.now}`)
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', '16px')
+      .attr('x', -20)
+      .attr('y', -30)
+      .attr('opacity', 1)
+      .attr('text-achor', 'end')
+      .classed('arrow', true)
+      .attr('fill', 'black');
   }
 
   render() {
@@ -75,8 +110,8 @@ class TimePanel extends React.Component {
         <svg
           className="svgTime"
           ref={(r) => { this.svgTime = r; }}
-          width="1100" height="50"
-          viewBox="0 0 900 20"
+          width="1100" height="200"
+          viewBox="-50 0 1150 50"
           preserveAspectRatio="xMidYMid meet"
         />
       </div>
