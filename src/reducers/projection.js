@@ -26,7 +26,7 @@ const defaultState = {
 
 const projection = (state = defaultState, action) => {
   switch (action.type) {
-    case 'CHANGE_PROJECTION': {
+    case 'CHANGE_PROJECTION_SAGA': {
       const rotate = 'rotate' in action ? action.rotate : state.rotate;
       const project = state.byName[action.name].rotate(rotate);
       return {
