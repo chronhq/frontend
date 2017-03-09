@@ -20,7 +20,7 @@ const defaultState = {
   path: d3.geoPath().projection(d3.geoEquirectangular()),
   options: projectionOptions,
   byName: projectionByName,
-  color: d3.scaleOrdinal(d3.schemeCategory20),
+  color: d3.scaleOrdinal(d3.schemeCategory20c),
   rotate: [0, 0, 0]
 };
 

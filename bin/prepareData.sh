@@ -18,7 +18,7 @@ DATA_TIMELINE="$DATA_DIR/Timeline"
 DUMP_TIMELINE="$DUMP_DIR/Timeline"
 
 DATA_CONTOUR="$DATA_DIR/Contour"
-DUMP_CONTOUR="$DUMP_DIR/maps/byContinent"
+DUMP_CONTOUR="$DUMP_DIR/maps/byContinent_contour"
 
 mkdir -p $DATA_TIMELINE
 mkdir -p $DATA_CONTOUR
@@ -40,14 +40,18 @@ function convertFromShp(){
   export_name=$map_name
   [[ $2 != "" ]] && dir_name=$2
   [[ $3 != "" ]] && export_name=$3
+  S_OPTS=$SIMPLYFY_OPTIONS
   echo -e "\nMap: $map_name\tDir: $dir_name\tExport:$export_name"
 
   SHP="$DUMP_PREFIX/$dir_name/$map_name.shp"
   GEOSIM="$DATA_PREFIX/$export_name.geosim.json"
+  TOPOSIM="$DATA_PREFIX/$export_name.toposim.json"
+  [[ $export_name == 'Antarctics' ]] && S_OPTS='-simplify visvalingam 5%'
   # echo "Looking for $SHP"
   if [[ -f $SHP ]]; then
     ls -la $SHP
-    $MAPSHAPER $SHP $SIMPLYFY_OPTIONS -o format=geojson $GEOSIM
+    $MAPSHAPER $SHP $S_OPTS -o format=geojson $GEOSIM
+    $MAPSHAPER $SHP $S_OPTS -o format=topojson $TOPOSIM
   else
     echo "$SHP not found. Skipping"
   fi
