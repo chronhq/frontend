@@ -12,8 +12,20 @@ export const hasPoints = [
   ['LOCATIONS_PROJECTED', state => state.locations.places]
 ];
 
-function* changeProjection() {
+function* changeProjection(action) {
   console.time('Change_Projection Saga');
+  // Validate if there is a need to project a data
+  const prevProjection = yield select(getProjectionConfig);
+  if (action.name === prevProjection.name
+  && action.rotate[0] === prevProjection.rotate[0]
+  && action.rotate[1] === prevProjection.rotate[1]
+  && action.rotate[2] === prevProjection.rotate[2]) {
+    console.timeEnd('Change_Projection Saga');
+    return false;
+  }
+  // Save new data
+  yield put({ ...action, type: 'CHANGE_PROJECTION_SAGA' });
+
   const path = yield select(getPath);
   for (const [type, selector] of awaitingNewPath) {
     // pathProjection
@@ -42,6 +54,7 @@ function* changeProjection() {
     yield put({ type, projected });
   }
   console.timeEnd('Change_Projection Saga');
+  return true;
 }
 
 export default function* changeProjectionSaga() {
