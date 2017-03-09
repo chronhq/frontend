@@ -18,12 +18,13 @@ class TimePanel extends React.Component {
 
   componentDidMount() {
     this.renderAxis();
-    const svgComp = d3.selectAll('.svgTime');
-    svgComp.on('click', () => {
-      this.setState({ now: Math.round(this.scale.invert(d3.mouse(this.svgTime)[0])) });
-      this.updateClockPosition();
-    });
-    svgComp.on('mousedown', () => { this.followMouse(); });
+    // const svgComp = d3.select('.back');
+    // console.log(svgComp);
+    // svgComp.on('click', () => {
+    //   this.setState({ now: Math.round(this.scale.invert(d3.mouse(svgComp))) });
+    //   this.updateClockPosition();
+    // });
+    // svgComp.on('mousedown', () => { this.followMouse(); });
   }
 
   componentWillReceiveProps() {
@@ -32,24 +33,24 @@ class TimePanel extends React.Component {
     this.updateClockPosition();
   }
 
-  followMouse() {
-    d3.select('.svgTime')
-      .on('mousemove', () => {
-        this.setState({ now: Math.round(this.scale.invert(d3.mouse(this.svgTime)[0])) });
-        this.updateClockPosition();
-      })
-      .on('mouseup', () => {
-        d3.select('rect')
-          .on('mousemove', null)
-          .on('mouseup', () => null);
-      });
-  }
+  // followMouse() {
+  //   d3.select('.svgTime')
+  //     .on('mousemove', () => {
+  //       this.setState({ now: Math.round(this.scale.invert(d3.mouse(this.svgTime)[0])) });
+  //       this.updateClockPosition();
+  //     })
+  //     .on('mouseup', () => {
+  //       d3.select('rect')
+  //         .on('mousemove', null)
+  //         .on('mouseup', () => null);
+  //     });
+  // }
 
   updateClockPosition() {
     console.log(`BOOP. Coords is ${this.scale(this.state.now)}. Year is ${this.state.now}`);
-    const translate = 'translate('+ this.scale(this.state.now) +',0)';
+    const translate = `translate(${ this.scale(this.state.now) },0)`;
     d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`).attr('opacity', 1);
-    //d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
+    // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
     if (this.props.playing === 0) this.props.setYearAction(Number(this.state.now));
   }
 
@@ -65,16 +66,22 @@ class TimePanel extends React.Component {
     svg.style('border', '1px solid black').append('g')
       .call(axis.ticks(20, 'f'));
 
-    /* svg.append('rect')
+    svg.append('rect')
       .attr('x', 0)
       .attr('y', -50)
       .attr('width', width)
       .attr('height', 100)
       .attr('fill', '#ffffff')
-      .attr('opacity', 0.5)
+      .attr('opacity', 0)
       .style('z-index', -1)
-      .classed('back', true);
-      */
+      .classed('back', true)
+      .on('click', () => {
+        const rectId = this.svgTime.children[1];
+        const mouseX = d3.mouse(rectId)[0];
+        this.setState({ now: Math.round(this.scale.invert(mouseX)) });
+        this.updateClockPosition();
+      });
+
 
 /* arrow elements */
     svg.append('rect')

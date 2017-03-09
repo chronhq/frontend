@@ -66,7 +66,7 @@ export function shiftFileNames(nameToFile, base = 0) {
 }
 
 export function getProjection() {
-  return d3.geoEquirectangular().scale(150).rotate([0, 0, 0]);
+  return d3.geoEquirectangular().rotate([0, 0, 0]);
 }
 export function getPath() {
   return d3.geoPath().projection(getProjection());

@@ -7,6 +7,7 @@ import terrain from './terrain';
 import borders from './borders';
 import facts from './facts';
 import persons from './persons';
+import change from './change';
 
 import { logger } from './helper';
 
@@ -39,10 +40,6 @@ app.use(session({
   cookie: { secure: false, maxAge: 60000 }
 }));
 
-// rotate: [0, 0, 0],
-//   scale: 150,
-//   name: 'Equirectangular'
-
 app.use((req, res, next) => {
   logger.info('Got a request');
   logger.info(req.url);
@@ -62,11 +59,10 @@ app.all('/*', (req, res) => {
     const params = [req, res, splittedUrlPath, splittedUrlParams];
     switch (splittedUrlPath[0]) {
       case 'CHANGE':
-        req.session.save(() => logger.log('session saved'));
-        console.log(req.session);
-        console.log(req.session.id);
-        console.log(req.body);
-        res.status(200).end(JSON.stringify({ status: 'OK' }));
+      //   console.log('Before Session', req.session);
+      //   req.session.projection = req.body;
+      //   console.log('After Session', req.session);
+        res.status(200).end({desu: 'ok' });
         break;
       case 'LOCATIONS':
         resolvePromise(locations, ...params);
