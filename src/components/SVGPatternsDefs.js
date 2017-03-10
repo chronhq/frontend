@@ -37,6 +37,7 @@ export const SVGPattern = ({ id, c }) => (
     />
     { c[1].map((color, idx) =>
       <line
+        key={`${id}_line_${color}`}
         x1={`${5*idx}`} y1="0" x2="0" y2="5"
         style={{ stroke: color, strokeWidth: 5 }}
       />

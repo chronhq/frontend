@@ -2,7 +2,7 @@ import React from 'react';
 
 // Maximum scaleRank is 8 for smallest cities
 const sizeOfAPin = (scaleRank, scale) => {
-  const pin = Math.sqrt(Number(scaleRank) / Math.sqrt(scale));
+  const pin = Math.sqrt(Number(scaleRank) / Math.sqrt(scale)) || 1;
   return scaleRank === 0
     ? pin
     : pin / scaleRank;
