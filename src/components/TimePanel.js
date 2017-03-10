@@ -52,7 +52,7 @@ class TimePanel extends React.Component {
     const translate = `translate(${ this.scale(this.state.now) },0)`;
     d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`).attr('opacity', 1);
     // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
-    if (this.props.playing === 0) this.props.setYearAction(Number(this.state.now));
+    
   }
 
 
@@ -82,6 +82,7 @@ class TimePanel extends React.Component {
         const mouseX = d3.mouse(rectId)[0];
         this.setState({ now: Math.round(this.scale.invert(mouseX)) });
         this.updateClockPosition();
+        this.props.setYearAction(Number(this.state.now));
       });
 
 
