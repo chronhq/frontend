@@ -4,6 +4,7 @@ import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import { setYear } from '../reducers/timeline';
 import './TimePanel.less';
+import ControlButtonsController from '../containers/ControlButtonsController';
 
 class TimePanel extends React.Component {
   constructor(props) {
@@ -59,9 +60,10 @@ class TimePanel extends React.Component {
     const axis = d3.axisBottom(this.scale);
 
 
-    const svg = d3.select(this.svgTime),
-      margin = { top: 20, right: 20, bottom: 20, left: 40 },
-      width = +svg.attr('width') - margin.left - margin.right;
+    const svg = d3.select(this.svgTime);
+
+    const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+    const width = +svg.attr('width') - margin.left - margin.right;
 
     svg.style('border', '1px solid black').append('g')
       .call(axis.ticks(20, 'f'));
@@ -69,8 +71,8 @@ class TimePanel extends React.Component {
     svg.append('rect')
       .attr('x', 0)
       .attr('y', -50)
-      .attr('width', width)
-      .attr('height', 100)
+      .attr('width', 1000)
+      .attr('height', 70)
       .attr('fill', '#ffffff')
       .attr('opacity', 0)
       .style('z-index', -1)
@@ -114,13 +116,15 @@ class TimePanel extends React.Component {
   render() {
     return (
       <div id='timeline'>
+        <ControlButtonsController />
         <svg
           className="svgTime"
           ref={(r) => { this.svgTime = r; }}
-          width="1100" height="200"
-          viewBox="-50 0 1150 50"
+          width="1100" height="90"
+          viewBox="-50 0 1150 10"
           preserveAspectRatio="xMidYMid meet"
         />
+        
       </div>
     );
   }

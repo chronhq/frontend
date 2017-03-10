@@ -78,6 +78,10 @@ export function nextYear() {
   return { type: 'NEXT_YEAR' };
 }
 
+export function prevYear() {
+  return { type: 'PREV_YEAR' };
+}
+
 export function setYear(year) {
   return { type: 'SET_YEAR', year };
 }

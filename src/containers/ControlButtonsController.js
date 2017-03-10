@@ -18,8 +18,9 @@ class ControlButtonsController extends PureComponent {
   render() {
     return (<ControlButtons
       timeline={this.props.timeline}
-      reestYear={this.props.timelineAction.resetYear}
+      resetYear={this.props.timelineAction.resetYear}
       togglePlay={this.togglePlay}
+      nextYear={this.props.timelineAction.nextYear}
     />
     );
   }
