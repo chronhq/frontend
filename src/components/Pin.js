@@ -1,16 +1,18 @@
 import React from 'react';
 
 // Maximum scaleRank is 8 for smallest cities
-const sizeOfAPin = scaleRank => {
-  const r = Number(scaleRank) / 3 || 1;
-  return r;
+const sizeOfAPin = (scaleRank, scale) => {
+  const pin = Math.sqrt(Number(scaleRank) / Math.sqrt(scale));
+  return scaleRank === 0
+    ? pin
+    : pin / scaleRank;
 };
 
-const Pin = ({ location, visible = true }) => (
+const Pin = ({ location, visible = true, scale }) => (
   <circle
     className={visible ? 'PinVisible' : 'PinInvisible'}
     cx={location.x} cy={location.y}
-    r={sizeOfAPin(location.scaleRank)} stroke="Black" fill="Blue"
+    r={sizeOfAPin(location.scaleRank, scale)} stroke="Black" fill="Blue"
     key={`pin_${location.id}`}
   >
     <title>{location.name}</title>
