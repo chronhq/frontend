@@ -1,12 +1,28 @@
 import React from 'react';
+import { getColorFn } from '../reducers/actions';
 
-export const getFillColors = properties => (properties.disputed !== ''
-        ? properties.disputed.split(/;/)
-        : [properties.mapcolor13, properties.mapcolor13]);
-export const getFillPatternId = (c1, c2) => `fill_${c1}_${c2}`;
-export const getPatternId = cur => getFillPatternId(...getFillColors(cur.properties));
+const colorFn = getColorFn();
 
-export const SVGPattern = ({ id, c1, c2 }) => (
+export const getFillColorsId = (properties) => {
+  if (properties.disputed !== '') {
+    const arr = properties.disputed.split(/;/)
+    return [arr.shift(), arr];
+  }
+  return [properties.mapcolor13, []];
+};
+export const getFillColorsValue = colors =>
+  [colorFn(colors[0]), colors[1].map(colorId => colorFn(colorId))];
+
+export const getFillColors = (prop) => {
+  const ids = getFillColorsId(prop);
+  const vals = getFillColorsValue(ids);
+  return [ids, vals];
+}
+export const getFillPatternId = (c, name = 'fill') => `${name}_${c[0]}_${c[1].join('_')}`;
+
+export const getPatternId = (cur, name = 'fill') => getFillPatternId(getFillColorsId(cur.properties), name);
+
+export const SVGPattern = ({ id, c }) => (
   <pattern
     id={id}
     width="5"
@@ -17,25 +33,25 @@ export const SVGPattern = ({ id, c1, c2 }) => (
     <rect
       width="5"
       height="5"
-      fill={c2}
+      fill={c[0]}
     />
-    { c1 !== c2 && // Do not spawn additional line with same color as rect
+    { c[1].map((color, idx) =>
       <line
-        x1="0" y1="0" x2="0" y2="5"
-        style={{ stroke: c1, strokeWidth: 5 }}
+        x1={`${5*idx}`} y1="0" x2="0" y2="5"
+        style={{ stroke: color, strokeWidth: 5 }}
       />
-    }
+    )}
   </pattern>
 );
 
-const PatternsDefs = ({ bordersData, color }) => {
+const PatternsDefs = ({ bordersData }) => {
   if (typeof bordersData === 'undefined') return null;
   if (!(Array.isArray(bordersData.features))) return null;
   const patterns = bordersData.features.reduce(
     (prev, cur) => {
-      const [c1, c2] = getFillColors(cur.properties);
-      const key = getFillPatternId(c1, c2);
-      const value = <SVGPattern key={key} id={key} c1={color(c1)} c2={color(c2)} />;
+      const [cIds, cVls] = getFillColors(cur.properties);
+      const key = getFillPatternId(cIds);
+      const value = <SVGPattern key={key} id={key} c={cVls} />;
       return { ...prev,
         [key]: value
       };

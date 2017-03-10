@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { SVGPattern, getFillColors } from '../components/SVGPatternsDefs';
+import { SVGPattern, getFillColors, getFillPatternId } from '../components/SVGPatternsDefs';
 
 import './Legend.less';
 
-const ColorBox = ({ colorFn, c }) => (
+const ColorBox = ({ c, p }) => (
   <svg width='1.5em' height='1.2em'>
     <defs>
-      <SVGPattern c1={colorFn(c[0])} c2={colorFn(c[1])} id={`legend_${c[0]}_${c[1]}`} />
+      <SVGPattern c={c} id={p} />
     </defs>
     <rect
       x='1' y='1' width='1.5em' height='1.2em'
-      fill={`url(#legend_${c[0]}_${c[1]})`}
+      fill={`url(#${p})`}
     />
   </svg>
 );
@@ -22,12 +22,17 @@ const Description = ({ properties }) => (
   </span>
 );
 
-const LegendItem = ({ properties, colorFn }) => (
-  <li>
-    <ColorBox colorFn={colorFn} c={getFillColors(properties)} />
-    <Description properties={properties} />
-  </li>
-);
+const LegendItem = ({ properties }) => {
+  const [ids, vls] = getFillColors(properties);
+  const boxId = getFillPatternId(ids, 'legend');
+
+  return (
+    <li>
+      <ColorBox c={vls} p={boxId} />
+      <Description properties={properties} />
+    </li>
+  );
+};
 
 class Legend extends Component {
   uniqLegendItems = () => {

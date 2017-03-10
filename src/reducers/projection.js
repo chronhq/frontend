@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { askBackend } from './actions';
+import { askBackend, getColorFn } from './actions';
 
 const defaultProjectionName = 'Equirectangular';
 const projectionByName = {
@@ -8,7 +8,6 @@ const projectionByName = {
   ConicEqualArea: d3.geoConicEqualArea()
 };
 const combineKeys = (prev, cur) => [...prev, { value: cur, label: cur }];
-
 const projectionOptions = Object.keys(projectionByName).reduce(combineKeys, []);
 
 // Rotation https://en.wikipedia.org/wiki/Aircraft_principal_axes
@@ -20,7 +19,7 @@ const defaultState = {
   path: d3.geoPath().projection(d3.geoEquirectangular()),
   options: projectionOptions,
   byName: projectionByName,
-  color: d3.scaleOrdinal(d3.schemeCategory20c),
+  color: getColorFn(),
   rotate: [0, 0, 0]
 };
 

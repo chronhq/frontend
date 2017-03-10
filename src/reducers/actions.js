@@ -1,4 +1,9 @@
 import fetch from 'isomorphic-fetch';
+import * as d3 from 'd3';
+
+export function getColorFn() {
+  return d3.scaleOrdinal(d3.schemeCategory20c);
+}
 
 export function getActualData(years, data, target) {
   const res = Math.max(...years.filter(y => y < target));
