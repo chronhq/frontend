@@ -17,7 +17,7 @@ export const getFillColors = (prop) => {
   const ids = getFillColorsId(prop);
   const vals = getFillColorsValue(ids);
   return [ids, vals];
-}
+};
 export const getFillPatternId = (c, name = 'fill') => `${name}_${c[0]}_${c[1].join('_')}`;
 
 export const getPatternId = (cur, name = 'fill') => getFillPatternId(getFillColorsId(cur.properties), name);
