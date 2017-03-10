@@ -1,4 +1,4 @@
-import { put, takeEvery, select } from 'redux-saga/effects';
+import { put, takeEvery, select, throttle } from 'redux-saga/effects';
 
 export const getProjectionConfig = state => state.projection;
 export const getPath = state => state.projection.path;
@@ -57,7 +57,14 @@ function* changeProjection(action) {
   return true;
 }
 
+function* handleChangeScale(action) {
+  yield put({ type: 'CHANGE_PROJECTION_SCALE_SAGA', scale: action.scale });
+}
+
 export default function* changeProjectionSaga() {
   yield takeEvery('CHANGE_PROJECTION', changeProjection);
+  yield throttle(1000, 'CHANGE_PROJECTION_SCALE', handleChangeScale);
 }
+
+
 

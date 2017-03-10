@@ -37,6 +37,12 @@ const projection = (state = defaultState, action) => {
         path: d3.geoPath().projection(project)
       };
     }
+    case 'CHANGE_PROJECTION_SCALE_SAGA': {
+      return {
+        ...state,
+        scale: action.scale
+      };
+    }
     case 'CHANGE_PROJECTION_PENDING':
       return {
         ...state,
@@ -67,6 +73,13 @@ export function setProjection(rotate, name = defaultProjectionName) {
     type: 'CHANGE_PROJECTION',
     name,
     rotate
+  };
+}
+
+export function changeScale(scale = 1) {
+  return {
+    type: 'CHANGE_PROJECTION_SCALE',
+    scale
   };
 }
 

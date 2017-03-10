@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
 import Locations from './Locations';
 import PatternsDefs, { getPatternId } from '../components/SVGPatternsDefs';
+import { changeScale } from '../reducers/projection';
 
 import './MapD3Container.less';
 
@@ -64,13 +66,17 @@ class MapD3Container extends Component {
   }
 
   onZoom = () => {
+    if (this.state.transform !== null
+    && Math.round(this.state.transform.k) !== Math.round(d3.event.transform.k)) {
+      this.props.changeScale(Math.round(d3.event.transform.k));
+    }
     this.setState({
       transform: d3.event.transform
     });
   }
 
   zoom = d3.zoom()
-    .scaleExtent([0.5, 10])
+    .scaleExtent([1, 10])
     .on('zoom', this.onZoom);
 
   get transform() {
@@ -79,6 +85,11 @@ class MapD3Container extends Component {
       return `translate(${x}, ${y}) scale(${k})`;
     }
     return null;
+  }
+
+  get scale() {
+    if (this.state.transform) return this.state.transform.k;
+    return 1;
   }
 
   render() {
@@ -123,5 +134,10 @@ function mapStateToProps(state) {
     territories: state.territories
   };
 }
+function mapDispatchToProps(dispatch) {
+  return {
+    changeScale: bindActionCreators(changeScale, dispatch)
+  };
+}
 
-export default connect(mapStateToProps)(MapD3Container);
+export default connect(mapStateToProps, mapDispatchToProps)(MapD3Container);
