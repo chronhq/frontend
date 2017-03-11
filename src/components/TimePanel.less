@@ -1,8 +1,57 @@
-.svgTime, #timeline {
-    display: block;
-    margin: 0 auto;
-    left: 50%;
-    transform: translateX(-50%);
-    position: fixed;
-    bottom:0px;
+#timeline {
+	font-size: 24px;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 0 0;
+	z-index: 100;
+	color: white;
+	background: linear-gradient(rgba(192,97,57,.1), rgba(192,97,57,.1));
+	&.svgTime {
+    display: inline-block;
+   	vertical-align: middle;
+    // left: 50%;
+    border: none;
+    // transform: translateX(-50%);
+    position: relative;
+	}
+}
+
+
+.playButton {
+	display: inline-block;
+	float: left;
+	height: 90px;
+	font-size: 24px;
+	vertical-align: middle;
+	line-height: 90px;
+  text-align: center;
+  //width: 10px;
+	& button {	
+		background: none;
+		border: none;
+		margin-right: 30px;
+		// border-radius: 5px;
+		width: 20px;
+		& .active {
+			border-color:red;
+		}
+	}
+}
+
+#timeline button {}
+
+.fa {
+	color: white;
+}
+
+
+.axisTime {
+	color:white;
+	stroke: white;
+	& line {stroke:white;}
+	& path {stroke:white;}
+	& text {fill: white;}
 }

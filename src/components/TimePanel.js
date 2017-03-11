@@ -14,76 +14,71 @@ class TimePanel extends React.Component {
       min: this.props.min,
       max: this.props.max
     };
-    this.scale = d3.scaleLinear().domain([this.state.min, this.state.max]).range([0, 1000]);
+    this.scale = d3.scaleLinear().domain([this.state.min, this.state.max]).range([0, 700]);
   }
 
-  componentDidMount() {
-    this.renderAxis();
-    // const svgComp = d3.select('.back');
-    // console.log(svgComp);
-    // svgComp.on('click', () => {
-    //   this.setState({ now: Math.round(this.scale.invert(d3.mouse(svgComp))) });
-    //   this.updateClockPosition();
-    // });
-    // svgComp.on('mousedown', () => { this.followMouse(); });
-  }
+  componentDidMount() { this.renderAxis(); }
 
-  componentWillReceiveProps() {
-    this.renderAxis();
-    this.setState({ now: this.props.now });
+  componentWillReceiveProps(nextProps) {
+    // console.log(`timeline.now ${this.timeline.now}`);
+    this.setState({ now: nextProps.now });
     this.updateClockPosition();
   }
 
-  // followMouse() {
-  //   d3.select('.svgTime')
-  //     .on('mousemove', () => {
-  //       this.setState({ now: Math.round(this.scale.invert(d3.mouse(this.svgTime)[0])) });
-  //       this.updateClockPosition();
-  //     })
-  //     .on('mouseup', () => {
-  //       d3.select('rect')
-  //         .on('mousemove', null)
-  //         .on('mouseup', () => null);
-  //     });
-  // }
-
-  updateClockPosition() {
-    console.log(`BOOP. Coords is ${this.scale(this.state.now)}. Year is ${this.state.now}`);
-    const translate = `translate(${ this.scale(this.state.now) },0)`;
-    d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`).attr('opacity', 1);
-    // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
-    
-  }
-
-
-  renderAxis() {
-    const axis = d3.axisBottom(this.scale);
-
-
-    const svg = d3.select(this.svgTime);
-
-    const margin = { top: 20, right: 20, bottom: 20, left: 20 };
-    const width = +svg.attr('width') - margin.left - margin.right;
-
-    svg.style('border', '1px solid black').append('g')
-      .call(axis.ticks(20, 'f'));
-
-    svg.append('rect')
-      .attr('x', 0)
-      .attr('y', -50)
-      .attr('width', 1000)
-      .attr('height', 70)
-      .attr('fill', '#ffffff')
-      .attr('opacity', 0)
-      .style('z-index', -1)
-      .classed('back', true)
-      .on('click', () => {
+  followMouse() {
+    d3.select(this.svgTime.children[1])
+      .on('mousemove', () => {
         const rectId = this.svgTime.children[1];
         const mouseX = d3.mouse(rectId)[0];
         this.setState({ now: Math.round(this.scale.invert(mouseX)) });
         this.updateClockPosition();
+        // for performance reasons this is commented
+        // this.props.setYearAction(Number(this.state.now));
+      })
+      .on('mouseup', () => {
+        console.log('mouseup event');
         this.props.setYearAction(Number(this.state.now));
+        // d3.select select wrong. Mouseup event not happening.
+        // d3.select(this.svgTime.children[1])
+        d3.select('.svgTime')
+          .on('mousemove', () => null)
+          .on('mouseup', () => null);
       });
+  }
+
+  updateClockPosition() {
+    const translate = `translate(${this.scale(this.state.now)},0)`;
+    d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`).attr('opacity', 1);
+    // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
+  }
+
+  renderAxis() {
+    const axis = d3.axisBottom(this.scale);
+    const svg = d3.select(this.svgTime);
+
+    svg.append('g')
+      .attr('class', 'axisTime')
+      .call(axis.ticks(15, 'f'));
+
+    svg.append('rect')
+      .attr('x', 0)
+      .attr('y', -50)
+      .attr('width', 700)
+      .attr('height', 60)
+      .attr('fill', '#ffffff')
+      .attr('opacity', 0)
+      .style('z-index', -1)
+      .classed('back', true);
+
+    svg.on('click', () => {
+      const rectId = this.svgTime.children[1];
+      const mouseX = d3.mouse(rectId)[0];
+      this.setState({ now: Math.round(this.scale.invert(mouseX)) });
+      this.updateClockPosition();
+      this.props.setYearAction(Number(this.state.now));
+    });
+
+    svg.on('mousedown', () => { this.followMouse(); });
 
 
 /* arrow elements */
@@ -94,12 +89,12 @@ class TimePanel extends React.Component {
       .attr('opacity', 1)
       .attr('class', 'arrow')
       .style('fill', 'black')
-      .style('stroke', 'black')
+      .style('stroke', 'white')
       .style('stroke-width', 2);
 
     svg.append('polyline')
-      .attr('points', '-10,-25 0,-15 10,-25')
-      .style('fill', 'black')
+      .attr('points', '-10,-25 0, -15 10,-25')
+      .style('fill', 'white')
       .classed('arrow', true);
 
     svg.append('text')
@@ -111,21 +106,22 @@ class TimePanel extends React.Component {
       .attr('opacity', 1)
       .attr('text-achor', 'end')
       .classed('arrow', true)
-      .attr('fill', 'black');
+      .attr('fill', 'white');
   }
 
   render() {
     return (
-      <div id='timeline'>
-        <ControlButtonsController />
-        <svg
-          className="svgTime"
-          ref={(r) => { this.svgTime = r; }}
-          width="1100" height="90"
-          viewBox="-50 0 1150 10"
-          preserveAspectRatio="xMidYMid meet"
-        />
-        
+      <div id='timeline' className='container'>
+        <ControlButtonsController className='col-lg-4 col-md-4' />
+        <div className='col-lg-5 col-md-5'>
+          <svg
+            className="svgTime"
+            ref={(r) => { this.svgTime = r; }}
+            width="700" height="90"
+            viewBox="-50 0 750 10"
+            preserveAspectRatio="xMidYMid meet"
+          />
+        </div>
       </div>
     );
   }
@@ -151,6 +147,5 @@ TimePanel.propTypes = {
   max: PropTypes.number.isRequired,
   now: PropTypes.number.isRequired,
   setYearAction: PropTypes.func.isRequired,
-  playing: PropTypes.number.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TimePanel);

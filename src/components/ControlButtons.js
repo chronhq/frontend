@@ -3,13 +3,13 @@ import './ControlButtons.less';
 
 const ControlButtons = ({ resetYear, togglePlay, timeline, nextYear }) => (
   <span className='playButton center'>
-    <button className='btn btn-default' onClick={resetYear}><i className='fa fa-undo' aria-hidden='true' title='Restart' /></button>
-    <button><i className='fa fa-step-backward' aria-hidden='true' title='Previous Year' /></button>
+    <button className='btn btn-default' onClick={resetYear}><i className='fa fa-undo fa-lg' aria-hidden='true' title='Restart' /></button>
+    <button><i className='fa fa-step-backward fa-lg' aria-hidden='true' title='Previous Year' /></button>
     <button onClick={togglePlay} >
-      {timeline.intervalId !== 0 ? <i className='fa fa-pause' aria-hidden='true' title='Pause' /> : <i className='fa fa-play' aria-hidden='true' title='Play' />}
+      {timeline.intervalId !== 0 ? <i className='fa fa-pause fa-lg' aria-hidden='true' title='Pause' /> : <i className='fa fa-play fa-lg' aria-hidden='true' title='Play' />}
     </button>
-    <button onClick={nextYear}><i className='fa fa-step-forward' aria-hidden='true' title='Next Year' /></button>
-    {' '}{timeline.now}
+    <button onClick={nextYear}><i className='fa fa-step-forward fa-lg' aria-hidden='true' title='Next Year' /></button>
+    {/* {' '}{timeline.now} */}
   </span>
 );
 
