@@ -17,8 +17,10 @@ const ColorBox = ({ c, p }) => (
   </svg>
 );
 const Description = ({ properties }) => (
-  <span>
-    {`[${properties.type_ru}] ${properties.admin}`}
+  <span>{properties.disputed === ''
+    ? `[${properties.type_ru}] ${properties.admin}`
+    : `${properties.nameRu}`
+  }
   </span>
 );
 
