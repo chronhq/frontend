@@ -1,7 +1,7 @@
 import React from 'react';
 
 const textSize = (scaleRank, scale) => {
-  const font = 20 / Math.sqrt(scale);
+  const font = 10 / Math.sqrt(scale);
   return scaleRank === 0
     ? font
     : font / Math.sqrt((Number(scaleRank)));
