@@ -44,14 +44,16 @@ function convertFromShp(){
   echo -e "\nMap: $map_name\tDir: $dir_name\tExport:$export_name"
 
   SHP="$DUMP_PREFIX/$dir_name/$map_name.shp"
+  GEOMAX="$DATA_PREFIX/$export_name.geomax.json"
   GEOSIM="$DATA_PREFIX/$export_name.geosim.json"
   TOPOSIM="$DATA_PREFIX/$export_name.toposim.json"
   [[ $export_name == 'Antarctics' ]] && S_OPTS='-simplify visvalingam 5%'
   # echo "Looking for $SHP"
   if [[ -f $SHP ]]; then
     ls -la $SHP
+    [[ $1 == 'MAX' ]] && $MAPSHAPER $SHP -o format=geojson $GEOMAX
     $MAPSHAPER $SHP $S_OPTS -o format=geojson $GEOSIM
-    $MAPSHAPER $SHP $S_OPTS -o format=topojson $TOPOSIM
+    [[ $1 == 'TOPO' ]] && $MAPSHAPER $SHP $S_OPTS -o format=topojson $TOPOSIM
   else
     echo "$SHP not found. Skipping"
   fi
