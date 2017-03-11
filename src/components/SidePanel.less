@@ -1,29 +1,30 @@
 /* Styles for UI components */
 
 .icon-bar {
-    position: fixed;
-    top: 0;
-    float: right;
-    right: 0;
-    width: 50px;
-    height: 100%;
-    text-align: center;
-    background-color: #123f42;
-    height: calc(100%);
-    height: -webkit-calc(100%);
-    height:    -moz-calc(100%);
-    height:         calc(100%);
-}
-
-.icon-bar button {
+  position: fixed;
+  top: 0;
+  float: right;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  text-align: center;
+  //background-color: #123f42;
+  background-color: #e9dcc9;
+  height: 100%;
+  // height: -webkit-calc(100%);
+  // height:    -moz-calc(100%);
+  // height:         calc(100%);
+  & button {
     border: none;
     width: 50px;
-    background-color: #123f42;
+    background-color: none;
     padding: 16px;
     display: block;
     transition: all 0.3s ease;
     color: white;
     font-size: 16px;
+  }
+  & .fa {color:black}
 }
 
 .icon-bar button:hover {

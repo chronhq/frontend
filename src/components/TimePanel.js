@@ -12,7 +12,8 @@ class TimePanel extends React.Component {
     this.state = {
       now: this.props.now,
       min: this.props.min,
-      max: this.props.max
+      max: this.props.max,
+      isDown: false
     };
     this.scale = d3.scaleLinear().domain([this.state.min, this.state.max]).range([0, 700]);
   }
@@ -26,29 +27,29 @@ class TimePanel extends React.Component {
   }
 
   followMouse() {
-    d3.select(this.svgTime.children[1])
+    d3.select('.svgTime')
       .on('mousemove', () => {
-        const rectId = this.svgTime.children[1];
-        const mouseX = d3.mouse(rectId)[0];
-        this.setState({ now: Math.round(this.scale.invert(mouseX)) });
-        this.updateClockPosition();
-        // for performance reasons this is commented
-        // this.props.setYearAction(Number(this.state.now));
+        if (this.state.isDown) {
+          const rectId = this.svgTime.children[1];
+          const mouseX = d3.mouse(rectId)[0];
+          if (mouseX > 0 && mouseX < 700) {
+            this.setState({ now: Math.round(this.scale.invert(mouseX)) });
+            this.updateClockPosition();
+          }
+          // for performance reasons this is commented
+          // this.props.setYearAction(Number(this.state.now));
+        }
       })
       .on('mouseup', () => {
-        console.log('mouseup event');
+        this.setState({ isDown: false });
+        console.log(`mouseup event ${this.state.isDown}`);
         this.props.setYearAction(Number(this.state.now));
-        // d3.select select wrong. Mouseup event not happening.
-        // d3.select(this.svgTime.children[1])
-        d3.select('.svgTime')
-          .on('mousemove', () => null)
-          .on('mouseup', () => null);
       });
   }
 
   updateClockPosition() {
     const translate = `translate(${this.scale(this.state.now)},0)`;
-    d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`).attr('opacity', 1);
+    d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`);
     // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
   }
 
@@ -64,7 +65,7 @@ class TimePanel extends React.Component {
       .attr('x', 0)
       .attr('y', -50)
       .attr('width', 700)
-      .attr('height', 60)
+      .attr('height', 65)
       .attr('fill', '#ffffff')
       .attr('opacity', 0)
       .style('z-index', -1)
@@ -73,15 +74,19 @@ class TimePanel extends React.Component {
     svg.on('click', () => {
       const rectId = this.svgTime.children[1];
       const mouseX = d3.mouse(rectId)[0];
-      this.setState({ now: Math.round(this.scale.invert(mouseX)) });
-      this.updateClockPosition();
-      this.props.setYearAction(Number(this.state.now));
+      if (mouseX > 0 && mouseX < 700) {
+        this.setState({ now: Math.round(this.scale.invert(mouseX)) });
+        this.updateClockPosition();
+        this.props.setYearAction(Number(this.state.now));
+      }
     });
 
-    svg.on('mousedown', () => { this.followMouse(); });
+    svg.on('mousedown', () => {
+      this.setState({ isDown: true });
+      this.followMouse();
+    });
 
-
-/* arrow elements */
+    /* arrow elements */
     svg.append('rect')
       .attr('y', -10)
       .attr('width', 1)
@@ -107,6 +112,17 @@ class TimePanel extends React.Component {
       .attr('text-achor', 'end')
       .classed('arrow', true)
       .attr('fill', 'white');
+
+    svg.append('rect')
+      .attr('x', -25)
+      .attr('y', -50)
+      .attr('width', 50)
+      .attr('height', 60)
+      .attr('opacity', 0)
+      .classed('arrow svgTime', true)
+      .style('fill', '#2f2f2f')
+      .style('stroke', 'white')
+      .style('stroke-width', 2);
   }
 
   render() {
@@ -117,8 +133,8 @@ class TimePanel extends React.Component {
           <svg
             className="svgTime"
             ref={(r) => { this.svgTime = r; }}
-            width="700" height="90"
-            viewBox="-50 0 750 10"
+            width="700" height="65"
+            viewBox="-50 -30 850 25"
             preserveAspectRatio="xMidYMid meet"
           />
         </div>

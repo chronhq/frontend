@@ -8,7 +8,7 @@
 	padding: 0 0;
 	z-index: 100;
 	color: white;
-	background: linear-gradient(rgba(192,97,57,.1), rgba(192,97,57,.1));
+	background: #02364C;
 	&.svgTime {
     display: inline-block;
    	vertical-align: middle;
@@ -17,36 +17,29 @@
     // transform: translateX(-50%);
     position: relative;
 	}
-}
-
-
-.playButton {
-	display: inline-block;
-	float: left;
-	height: 90px;
-	font-size: 24px;
-	vertical-align: middle;
-	line-height: 90px;
-  text-align: center;
-  //width: 10px;
-	& button {	
-		background: none;
-		border: none;
-		margin-right: 30px;
-		// border-radius: 5px;
-		width: 20px;
-		& .active {
-			border-color:red;
+	& .playButton {
+		display: inline-block;
+		float: left;
+		height: 65px;
+		padding-left: 50px;
+		font-size: 24px;
+		vertical-align: middle;
+		line-height: 65px;
+	  text-align: center;
+	  //width: 10px;
+		& button {	
+			background: none;
+			border: none;
+			margin-right: 30px;
+			// border-radius: 5px;
+			width: 20px;
+			& .active {
+				border-color:red;
+			}
 		}
 	}
+	.fa {color: white;}
 }
-
-#timeline button {}
-
-.fa {
-	color: white;
-}
-
 
 .axisTime {
 	color:white;
@@ -55,3 +48,10 @@
 	& path {stroke:white;}
 	& text {fill: white;}
 }
+
+.arrow {
+	fill: white;
+  pointer-events: none;
+}
+// disable selectable text
+
