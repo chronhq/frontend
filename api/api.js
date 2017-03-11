@@ -58,12 +58,12 @@ app.all('/*', (req, res) => {
   try {
     const params = [req, res, splittedUrlPath, splittedUrlParams];
     switch (splittedUrlPath[0]) {
-      case 'CHANGE':
+      // case 'CHANGE':
       //   console.log('Before Session', req.session);
       //   req.session.projection = req.body;
       //   console.log('After Session', req.session);
-        res.status(200).end({desu: 'ok' });
-        break;
+        // res.status(200).end({desu: 'ok' });
+        // break;
       case 'LOCATIONS':
         resolvePromise(locations, ...params);
         break;

@@ -67,7 +67,7 @@ const projection = (state = defaultState, action) => {
   }
 };
 export function setProjection(rotate, name = defaultProjectionName) {
-  askBackend('CHANGE_PROJECTION', { name, rotate });
+  // askBackend('CHANGE_PROJECTION', { name, rotate });
   return {
     type: 'CHANGE_PROJECTION',
     name,
