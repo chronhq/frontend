@@ -5,8 +5,8 @@ const Fact = ({ fact, persons }) => (
     className={fact.completed ? 'factAlreadyOccured' : 'factStillInFuture'}
     key={fact.id}
   >
-    <span className='factHeader'>
-      <b>{fact.nameRu}</b>
+    <span >
+      <h5 className='factHeader'>{fact.nameRu}</h5>
       <span className='factDate'>
         {fact.date}
       </span>
