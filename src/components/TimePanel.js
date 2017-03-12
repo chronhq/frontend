@@ -30,9 +30,9 @@ class TimePanel extends React.Component {
     d3.select('.svgTime')
       .on('mousemove', () => {
         if (this.state.isDown) {
-          const rectId = this.svgTime.children[1];
+          const rectId = this.svgTime.childNodes[1];
           const mouseX = d3.mouse(rectId)[0];
-          if (mouseX > 0 && mouseX < 700) {
+          if (mouseX >= 0 && mouseX <= 700) {
             this.setState({ now: Math.round(this.scale.invert(mouseX)) });
             this.updateClockPosition();
           }
@@ -42,7 +42,8 @@ class TimePanel extends React.Component {
       })
       .on('mouseup', () => {
         this.setState({ isDown: false });
-        console.log(`mouseup event ${this.state.isDown}`);
+        // d3.selectAll('.arrow').classed('active', false);
+        // d3.selectAll('.arrow').attr('fill', '');
         this.props.setYearAction(Number(this.state.now));
       });
   }
@@ -72,7 +73,8 @@ class TimePanel extends React.Component {
       .classed('back', true);
 
     svg.on('click', () => {
-      const rectId = this.svgTime.children[1];
+      // const rectId = this.svgTime.children[1];
+      const rectId = this.svgTime.childNodes[1];
       const mouseX = d3.mouse(rectId)[0];
       if (mouseX > 0 && mouseX < 700) {
         this.setState({ now: Math.round(this.scale.invert(mouseX)) });
@@ -83,6 +85,8 @@ class TimePanel extends React.Component {
 
     svg.on('mousedown', () => {
       this.setState({ isDown: true });
+      //d3.selectAll('.arrow').classed('active', true);
+      d3.select('.triangle').attr('fill', '#2f2f2f');
       this.followMouse();
     });
 
@@ -99,8 +103,10 @@ class TimePanel extends React.Component {
 
     svg.append('polyline')
       .attr('points', '-10,-25 0, -15 10,-25')
-      .style('fill', 'white')
-      .classed('arrow', true);
+      .attr('fill', 'white')
+      .attr('stroke', 'white')
+      .attr('stroke-width', 2)
+      .classed('arrow triangle', true);
 
     svg.append('text')
       .text(`${this.state.now}`)

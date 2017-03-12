@@ -52,6 +52,15 @@
 .arrow {
 	fill: white;
   pointer-events: none;
+  & polyline {
+  	fill: none;
+  }
+}
+
+.active {
+	fill: white;
 }
 // disable selectable text
-
+.svgTime text {
+	pointer-events: none;
+}
