@@ -37,7 +37,7 @@ class TimePanel extends React.Component {
             this.updateClockPosition();
           }
           // for performance reasons this is commented
-          // this.props.setYearAction(Number(this.state.now));
+          this.props.setYearAction(Number(this.state.now));
         }
       })
       .on('mouseup', () => {
@@ -60,13 +60,14 @@ class TimePanel extends React.Component {
 
     svg.append('g')
       .attr('class', 'axisTime')
+      .attr('stroke-width', 1)
       .call(axis.ticks(15, 'f'));
 
     svg.append('rect')
       .attr('x', 0)
       .attr('y', -50)
       .attr('width', 700)
-      .attr('height', 65)
+      .attr('height', 55)
       .attr('fill', '#ffffff')
       .attr('opacity', 0)
       .style('z-index', -1)
@@ -101,19 +102,19 @@ class TimePanel extends React.Component {
       .style('stroke', 'white')
       .style('stroke-width', 2);
 
-    svg.append('polyline')
-      .attr('points', '-10,-25 0, -15 10,-25')
-      .attr('fill', 'white')
-      .attr('stroke', 'white')
-      .attr('stroke-width', 2)
-      .classed('arrow triangle', true);
+    // svg.append('polyline')
+    //   .attr('points', '-10,-25 0, -15 10,-25')
+    //   .attr('fill', 'white')
+    //   .attr('stroke', 'white')
+    //   .attr('stroke-width', 2)
+    //   .classed('arrow triangle', true);
 
     svg.append('text')
       .text(`${this.state.now}`)
-      .attr('font-family', 'sans-serif')
+      .attr('font-family', 'Segoe UI')
       .attr('font-size', '16px')
       .attr('x', -20)
-      .attr('y', -30)
+      .attr('y', -18)
       .attr('opacity', 1)
       .attr('text-achor', 'end')
       .classed('arrow', true)
@@ -133,14 +134,14 @@ class TimePanel extends React.Component {
 
   render() {
     return (
-      <div id='timeline' className='container'>
-        <ControlButtonsController className='col-lg-4 col-md-4' />
-        <div className='col-lg-5 col-md-5'>
+      <div id='timeline'>
+        <ControlButtonsController />
+        <div className='test'>
           <svg
             className="svgTime"
             ref={(r) => { this.svgTime = r; }}
-            width="700" height="65"
-            viewBox="-50 -30 850 25"
+            width="700" height="55"
+            viewBox="-50 -20 850 30"
             preserveAspectRatio="xMidYMid meet"
           />
         </div>

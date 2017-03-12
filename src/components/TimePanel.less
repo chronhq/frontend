@@ -1,5 +1,5 @@
 #timeline {
-	font-size: 24px;
+	font-size: 12px;
 	position: fixed;
 	bottom: 0px;
 	width: 100%;
@@ -8,6 +8,7 @@
 	padding: 0 0;
 	z-index: 100;
 	color: white;
+	height: 55px;
 	background: #02364C;
 	opacity: 1;
 	&.svgTime {
@@ -18,22 +19,23 @@
     // transform: translateX(-50%);
     position: relative;
 	}
+	& text {}
 	& .playButton {
 		display: inline-block;
 		float: left;
-		height: 65px;
+		height: 55px;
 		padding-left: 50px;
-		font-size: 24px;
+		font-size: 12px;
 		vertical-align: middle;
-		line-height: 65px;
-	  text-align: center;
+		line-height: 55px;
+	  // text-align: center;
 	  //width: 10px;
 		& button {	
 			background: none;
 			border: none;
-			margin-right: 30px;
+			margin-right: 20px;
 			// border-radius: 5px;
-			width: 20px;
+			// width: 20px;
 			& .active {
 				border-color:red;
 			}
@@ -44,10 +46,10 @@
 
 .axisTime {
 	color:white;
-	stroke: white;
+
 	& line {stroke:white;}
 	& path {stroke:white;}
-	& text {fill: white;}
+	& text {fill: white; stroke:none;}
 }
 
 .arrow {
@@ -55,6 +57,10 @@
   pointer-events: none;
   & polyline {
   	fill: none;
+  	opacity: 0;
+  }
+  & text {
+  	text-decoration: underline;
   }
 }
 // disable selectable text
