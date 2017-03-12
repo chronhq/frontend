@@ -22,7 +22,10 @@ const DownloadButton = ({ data, filename, label }) => {
 
 class Feed extends Component {
 
-  state = {}
+  state = {
+    selected: {},
+    exported: []
+  }
 
   formatFactForExport = fact =>
 `${fact.nameRu} ${fact.date}
@@ -33,8 +36,8 @@ ${fact.description}
 
   prepareForExport = (selected) =>
     Object.keys(selected).reduce((prev, stateId) => {
-      if (selected[stateId] === 1) {
-        const factId = stateId.split(/_/)[1];
+      if (selected[stateId] === true) {
+        const factId = stateId;
         return [...prev, this.formatFactForExport(this.props.facts.byId[factId])];
       }
       return prev;
@@ -53,15 +56,15 @@ ${fact.description}
       <div className='feed'>
         <h3> Лента событий </h3>
         <div className='feedFact'>{this.props.currentFacts.map((year, yearId) => year.map(factId =>
-                  <div key={`div_${factId}`}>
-                    <InputCheckBox
-                      name={`${yearId}_${factId}`}
-                      checked={false}
-                      cb={this.handleChange}
-                    />
-                    <Fact fact={this.props.facts.byId[factId]} persons={this.props.persons.byId} />
-                  </div>
-                ))}</div>
+          <div
+            key={`div_${factId}`}
+            onClick={() => this.handleChange({ [factId]: !this.state.selected[factId] })}
+            className={this.state.selected[factId] === true
+              ? 'selectedFact' : 'regularFact'}
+          >
+            <Fact fact={this.props.facts.byId[factId]} persons={this.props.persons.byId} />
+          </div>
+        ))}</div>
         <DownloadButton
           filename="facts.doc"
           label="Экспорт в doc"

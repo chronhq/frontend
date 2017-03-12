@@ -2,7 +2,7 @@ import React from 'react';
 
 const Fact = ({ fact, persons }) => (
   <div
-    className={fact.completed ? 'factAlreadyOccured' : 'factStillInFuture'}
+    className='factStillInFuture'
     key={fact.id}
   >
     <span >
@@ -15,7 +15,6 @@ const Fact = ({ fact, persons }) => (
     <span>{fact.description}</span>
     <p className='factAuthor'>
     <i>{fact.PersId.map(p => persons[p].nameRu).join(', ')}</i></p>
-    <hr />
   </div>
 );
 export default Fact;

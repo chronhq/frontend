@@ -13,9 +13,8 @@
     margin-left: 3%;
     margin-right: 3%;
   }
-  & .factStillInFuture:hover {
-    // background-color: rgba(245, 248, 250, 0.9);
-    background-color:rgba(250, 232, 228, 0.7);
+  & .factStillInFuture {
+    padding: 10px 5px 0px 5px;
   }
   & .factAuthor {
     color: #657786;
@@ -49,6 +48,25 @@
   border: 5px;
 }
 
+.regularFact {
+  margin-bottom: 5px !important;
+  border: solid 1px transparent;
+  border-radius: 15px;
+  &:hover {
+      background-color: rgba(180, 180, 180, 0.9);
+      border: solid 1px red;
+  }
+}
+.selectedFact {
+  margin-bottom: 5px !important;
+  background: rgba(150, 150, 150, 0.7);
+  border: solid 1px red;
+  border-radius: 15px;
+  &:hover {
+      background-color: rgba(120, 120, 120, 0.7);
+      border: solid 1px red;
+  }
+}
 /*
 a.button {
   -webkit-appearance: button;
