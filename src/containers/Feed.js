@@ -10,11 +10,14 @@ const DownloadButton = ({ data, filename, label }) => {
   console.log('Blob is ready for data', data);
   const fileData = window.URL.createObjectURL(blob);
   return (
-    <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="button">
-      {label}
+    <div className="btn-group">
+    <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn btn-primary"><button className="btn btn-primary"> {label} </button>
     </a>
+    <a className="btn btn-primary"> PDF </a>
+    </div>
   );
 };
+
 
 class Feed extends Component {
 
@@ -47,21 +50,22 @@ ${fact.description}
   render() {
     return (
       <div className='feed'>
+        <h3> Лента событий </h3>
+        <div>{this.props.currentFacts.map((year, yearId) => year.map(factId =>
+                  <div key={`div_${factId}`}>
+                    <InputCheckBox
+                      name={`${yearId}_${factId}`}
+                      checked={false}
+                      cb={this.handleChange}
+                    />
+                    <Fact fact={this.props.facts.byId[factId]} persons={this.props.persons.byId} />
+                  </div>
+                ))}</div>
         <DownloadButton
           filename="facts.doc"
-          label="Экспортировать в doc"
+          label="Экспорт в doc"
           data={this.state.exported}
         />
-        {this.props.currentFacts.map((year, yearId) => year.map(factId =>
-          <div key={`div_${factId}`}>
-            <InputCheckBox
-              name={`${yearId}_${factId}`}
-              checked={false}
-              cb={this.handleChange}
-            />
-            <Fact fact={this.props.facts.byId[factId]} persons={this.props.persons.byId} />
-          </div>
-        ))}
       </div>
     );
   }

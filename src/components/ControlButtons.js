@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import './ControlButtons.less';
+
 
 const ControlButtons = ({ resetYear, togglePlay, timeline, nextYear }) => (
   <span className='playButton center'>

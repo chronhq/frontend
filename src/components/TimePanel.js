@@ -85,7 +85,7 @@ class TimePanel extends React.Component {
 
     svg.on('mousedown', () => {
       this.setState({ isDown: true });
-      //d3.selectAll('.arrow').classed('active', true);
+      // d3.selectAll('.arrow').classed('active', true);
       d3.select('.triangle').attr('fill', '#2f2f2f');
       this.followMouse();
     });

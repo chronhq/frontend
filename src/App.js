@@ -7,6 +7,7 @@ import SidePanel from './components/SidePanel';
 import TimePanel from './components/TimePanel';
 
 import DevTools from './DevTools';
+import './App.less';
 
 class App extends Component {
   render() {

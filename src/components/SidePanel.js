@@ -36,7 +36,7 @@ class SidePanel extends React.Component {
         <div className="icon-bar">
           <button id="Sidebar1" onClick={() => this.toggle(1)} > <i className="fa fa-home fa-fw" /></button>
           <button onClick={() => this.toggle(2)}><i className="fa fa-search fa-fw" /></button>
-          <button onClick={() => this.toggle(3)}><i className="fa fa-clock-o fa-fw" /></button>
+          <button onClick={() => this.toggle(3)}><i className="fa fa-list-ul fa-fw" /></button>
           <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
           <button onClick={() => this.toggle(5)}><i className="fa fa-cog fa-fw" /></button>
         </div>
@@ -48,11 +48,17 @@ class SidePanel extends React.Component {
                 <SetYearFieldContainer />
               </div>
               : null }
-            {this.state.current === 2 ? <RotatingLogo /> : null }
+            {this.state.current === 2
+              ? <div>
+                <h3> Поиск </h3>
+                <RotatingLogo />
+              </div>
+              : null }
             {this.state.current === 3 ? <Feed /> : null }
             {this.state.current === 4 ? <Legend /> : null }
             {this.state.current === 5
               ? <div>
+                <h3> Настройка проекции </h3>
                 <SetProjectionContainer />
                 <SetLayerVisibility />
               </div>

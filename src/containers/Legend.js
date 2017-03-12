@@ -52,16 +52,19 @@ class Legend extends Component {
   render() {
     const uniqLegendItems = this.uniqLegendItems();
     return (
-      <ul>
-        {Object.keys(uniqLegendItems).map(propId => (
-          <LegendItem
-            key={propId}
-            properties={uniqLegendItems[propId]}
-            colorFn={c => this.props.color(c)}
-          />
-        ))
-        }
-      </ul>
+      <div>
+      <h3> Легенда </h3>
+        <ul className='Legend'>
+          {Object.keys(uniqLegendItems).map(propId => (
+            <LegendItem
+              key={propId}
+              properties={uniqLegendItems[propId]}
+              colorFn={c => this.props.color(c)}
+            />
+          ))
+          }
+        </ul>
+      </div>
     );
   }
 }
