@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Fact from '../components/Fact';
 import InputCheckBox from '../components/InputCheckBox';
 
-import './Feed.less';
+// import './Feed.less';
 
 const DownloadButton = ({ data, filename, label }) => {
   const blob = new Blob([data], { type: 'application/msword' });
@@ -11,9 +11,10 @@ const DownloadButton = ({ data, filename, label }) => {
   const fileData = window.URL.createObjectURL(blob);
   return (
     <div className="btn-group">
-    <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn btn-primary"><button className="btn btn-primary"> {label} </button>
+    <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn btn-default btn-sm">
+    {label}
     </a>
-    <a className="btn btn-primary"> PDF </a>
+    <a className="btn btn-default btn-sm"> PDF </a>
     </div>
   );
 };

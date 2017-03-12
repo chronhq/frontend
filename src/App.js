@@ -8,6 +8,7 @@ import TimePanel from './components/TimePanel';
 
 import DevTools from './DevTools';
 import './App.less';
+import 'bootstrap/less/bootstrap.less';
 
 class App extends Component {
   render() {
