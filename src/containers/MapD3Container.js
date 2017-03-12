@@ -93,6 +93,14 @@ class MapD3Container extends Component {
     return 1;
   }
 
+  get height() {
+    if (typeof this.svgMap !== 'undefined' && this.svgMap !== null
+      && 'clientHeight' in this.svgMap) {
+      return this.svgMap.clientHeight;
+    }
+    return 0;
+  }
+
   render() {
     return (
       <svg className='svgMap' ref={(r) => { this.svgMap = r; }}>
@@ -113,7 +121,7 @@ class MapD3Container extends Component {
           />
           <Locations />
         </g>
-        <SizeMeter zoom={this.scale} />
+        <SizeMeter zoom={this.scale} height={this.height} />
       </svg>
     );
   }
