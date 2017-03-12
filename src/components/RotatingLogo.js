@@ -20,7 +20,11 @@ const ring2Arc6 = 'M132.7,59.2c-19.2-11.3-44-10.2-61.4,4.1C54.6,77,47.8,99.3,53.
 class RotatingLogo extends Component {
   render() {
     return (
-      <svg width='220' height='220'>
+      <svg 
+        width='220' height='220'
+        viewBox="0 0 220 220"
+        transform="scale(0.2)"
+      >
         <g id="ringBody">
           <path className='stb0' d={ringBorder} />
           <path className='stb1' d={ringCenter} />

@@ -43,7 +43,7 @@ class LoadingScreen extends Component {
   render() {
     return (
       <div className='loadingPage'>
-        <RotatingLogo />
+        <RotatingLogo className='logo' />
         <ul>
           {Object.keys(this.props.timeline).map(t =>
             <LoadingListElement
