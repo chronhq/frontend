@@ -13,6 +13,19 @@ const projectionOptions = Object.keys(projectionByName).reduce(combineKeys, []);
 // Rotation https://en.wikipedia.org/wiki/Aircraft_principal_axes
 // https://github.com/d3/d3-geo/blob/master/README.md#projection_rotate
 
+const validateScale = (scale) => {
+  const maxScale = 10;
+  const minScale = 1;
+  if (scale > maxScale) return maxScale;
+  if (scale < minScale) return minScale;
+  return scale;
+};
+
+const validateRotation = (angle) => {
+  if (angle === 360 || angle === -360) return 0;
+  return angle;
+};
+
 const defaultState = {
   name: defaultProjectionName,
   project: d3.geoEquirectangular(),
@@ -20,7 +33,9 @@ const defaultState = {
   options: projectionOptions,
   byName: projectionByName,
   color: getColorFn(),
-  rotate: [0, 0, 0]
+  rotate: [0, 0, 0],
+  scale: 1,
+  rotation: 0
 };
 
 const projection = (state = defaultState, action) => {
@@ -39,7 +54,20 @@ const projection = (state = defaultState, action) => {
     case 'CHANGE_PROJECTION_SCALE_SAGA': {
       return {
         ...state,
-        scale: action.scale
+        scale: validateScale(action.scale)
+      };
+    }
+    case 'CHANGE_PROJECTION_ROTATION': {
+      return {
+        ...state,
+        rotation: validateRotation(action.rotation)
+      };
+    }
+    case 'CHANGE_PROJECTION_RESET_ROTATION': {
+      return {
+        ...state,
+        scale: validateScale(action.scale),
+        rotation: validateRotation(action.rotation)
       };
     }
     case 'CHANGE_PROJECTION_PENDING':
@@ -79,6 +107,21 @@ export function changeScale(scale = 1) {
   return {
     type: 'CHANGE_PROJECTION_SCALE',
     scale
+  };
+}
+
+export function rotateProjection(rotation = 0) {
+  return {
+    type: 'CHANGE_PROJECTION_ROTATION',
+    rotation
+  };
+}
+
+export function resetRotation() {
+  return {
+    type: 'CHANGE_PROJECTION_RESET_ROTATION',
+    scale: 1,
+    rotation: 0
   };
 }
 

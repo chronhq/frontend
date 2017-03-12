@@ -66,6 +66,15 @@ class MapD3Container extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const nextState = this.state;
+    if (this.state.transform
+    && Math.round(this.state.transform.k) !== nextProps.scale) {
+      nextState.transform.k = nextProps.scale;
+    }
+    this.setState({ ...nextState });
+  }
+
   onZoom = () => {
     if (this.state.transform !== null
     && Math.round(this.state.transform.k) !== Math.round(d3.event.transform.k)) {
@@ -80,14 +89,6 @@ class MapD3Container extends Component {
     .scaleExtent([1, 10])
     .on('zoom', this.onZoom);
 
-  get transform() {
-    if (this.state.transform) {
-      const { x, y, k } = this.state.transform;
-      return `translate(${x}, ${y}) scale(${k})`;
-    }
-    return null;
-  }
-
   get scale() {
     if (this.state.transform) return this.state.transform.k;
     return 1;
@@ -99,6 +100,28 @@ class MapD3Container extends Component {
       return this.svgMap.clientHeight;
     }
     return 0;
+  }
+
+  get width() {
+    if (typeof this.svgMap !== 'undefined' && this.svgMap !== null
+      && 'clientWidth' in this.svgMap) {
+      return this.svgMap.clientWidth;
+    }
+    return 0;
+  }
+
+  get rotation() {
+    const y = this.width / 2;
+    const x = this.height /2;
+    return `${this.props.rotation} ${x} ${y}`;
+  }
+
+  get transform() {
+    if (this.state.transform) {
+      const { x, y, k } = this.state.transform;
+      return `translate(${x}, ${y}) scale(${k}) rotate(${this.rotation})`;
+    }
+    return null;
   }
 
   render() {
@@ -131,6 +154,8 @@ function mapStateToProps(state) {
   return { terrain: state.terrain.projected,
     terrainData: state.terrain.byContinent,
     color: state.projection.color,
+    scale: state.projection.scale,
+    rotation: state.projection.rotation,
     b: {
       visible: state.visibility.borders,
       loaded: state.borders.loaded,
@@ -140,8 +165,7 @@ function mapStateToProps(state) {
       bordersData: state.timeline.borders.current !== ''
         ? state.borders.byYear[state.timeline.borders.current]
         : { features: [] }
-    },
-    territories: state.territories
+    }
   };
 }
 function mapDispatchToProps(dispatch) {
