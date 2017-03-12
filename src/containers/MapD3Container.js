@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
 import Locations from './Locations';
 import PatternsDefs, { getPatternId } from '../components/SVGPatternsDefs';
+import SizeMeter from '../components/SizeMeter';
 import { changeScale } from '../reducers/projection';
 
 import './MapD3Container.less';
@@ -112,6 +113,7 @@ class MapD3Container extends Component {
           />
           <Locations />
         </g>
+        <SizeMeter zoom={this.scale} />
       </svg>
     );
   }
