@@ -14,7 +14,6 @@ const DownloadButton = ({ data, filename, label }) => {
       <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn  btn-default btn-sm">
       {label}
       </a>
-      <a className="btn btn-default btn-sm"> PDF </a>
     </div>
   );
 };
@@ -68,6 +67,11 @@ ${fact.description}
         <DownloadButton
           filename="facts.doc"
           label="Экспорт в doc"
+          data={this.state.exported}
+        />
+        <DownloadButton
+          filename="facts.pdf"
+          label="Экспорт в pdf"
           data={this.state.exported}
         />
       </div>
