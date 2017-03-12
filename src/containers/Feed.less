@@ -1,11 +1,45 @@
 .feed {
-  margin-left: 3%;
-  margin-right: 3%;
-  text-align: justify;
+  text-align: center;
   & a {
     color: #515151;
     font-size: 16px !important;
   }
+  & .btn-group {
+    text-align: center; 
+  }
+  & .feedFact {
+    text-align: justify;
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+}
+
+.factHeader{
+  float:left;
+  width: 100%;
+  font-weight: bold;
+}
+
+.factDate {
+  text-align: right;
+  float:right;
+  color: #657786;
+  font-size: 16px;
+  font-weight: 100px;
+}
+.factAuthor {
+  color: #657786;
+  opacity: 1;
+}
+.factAlreadyOccured {
+  color: #690;
+  transition: color 1s;
+}
+.factStillInFuture{
+ color: #000;
+}
+.factAlreadyOccured:hover, .factStillInFuture:hover{
+  border: 5px;
 }
 
 /*

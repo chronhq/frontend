@@ -49,7 +49,7 @@ class SidePanel extends React.Component {
               </div>
               : null }
             {this.state.current === 2
-              ? <div>
+              ? <div className='search'>
                 <h3> Поиск </h3>
                 <RotatingLogo />
               </div>

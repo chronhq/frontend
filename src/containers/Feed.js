@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Fact from '../components/Fact';
 import InputCheckBox from '../components/InputCheckBox';
 
-// import './Feed.less';
+import './Feed.less';
 
 const DownloadButton = ({ data, filename, label }) => {
   const blob = new Blob([data], { type: 'application/msword' });
@@ -11,10 +11,10 @@ const DownloadButton = ({ data, filename, label }) => {
   const fileData = window.URL.createObjectURL(blob);
   return (
     <div className="btn-group">
-    <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn btn-default btn-sm">
-    {label}
-    </a>
-    <a className="btn btn-default btn-sm"> PDF </a>
+      <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn  btn-default btn-sm">
+      {label}
+      </a>
+      <a className="btn btn-default btn-sm"> PDF </a>
     </div>
   );
 };
@@ -52,7 +52,7 @@ ${fact.description}
     return (
       <div className='feed'>
         <h3> Лента событий </h3>
-        <div>{this.props.currentFacts.map((year, yearId) => year.map(factId =>
+        <div className='feedFact'>{this.props.currentFacts.map((year, yearId) => year.map(factId =>
                   <div key={`div_${factId}`}>
                     <InputCheckBox
                       name={`${yearId}_${factId}`}

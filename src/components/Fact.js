@@ -13,8 +13,8 @@ const Fact = ({ fact, persons }) => (
     </span>
     <br />
     <span>{fact.description}</span>
-    <span className='factAuthor'>
-    <i>{fact.PersId.map(p => persons[p].nameRu).join(', ')}</i></span>
+    <p className='factAuthor'>
+    <i>{fact.PersId.map(p => persons[p].nameRu).join(', ')}</i></p>
     <hr />
   </div>
 );
