@@ -33,19 +33,28 @@ class SetProjectionContainer extends PureComponent {
   render() {
     return (
       <span className='playButton'>
-        <form onSubmit={this.handleSubmit}>
-          {' Y'}<InputNumber name='yawn' value={this.state.yawn} cb={this.handleChange} />
-          {' P'}<InputNumber name='pitch' value={this.state.pitch} cb={this.handleChange} />
-          {' R'}<InputNumber name='roll' value={this.state.roll} cb={this.handleChange} />
-          <Select
-            name="Select Projection"
-            value={this.state.name}
-            options={this.props.options}
-            onChange={this.handleSelect}
-          />
-          <button type="submit">
-            Set {this.state.value}
-          </button>
+        <form onSubmit={this.handleSubmit} className='test'>
+          <div className='yprControl'>
+            {' Y'}<InputNumber name='yawn' value={this.state.yawn} cb={this.handleChange} />
+            {' P'}<InputNumber name='pitch' value={this.state.pitch} cb={this.handleChange} />
+            {' R'}<InputNumber name='roll' value={this.state.roll} cb={this.handleChange} />
+          </div>
+          <div className='form-group'>
+
+              <Select
+                name='Select Projection'
+                value={this.state.name}
+                options={this.props.options}
+                onChange={this.handleSelect}
+              />
+              
+          </div>
+
+              
+              <button type='submit' className='btn btn-default'>
+                Установить {this.state.value}
+              </button>
+
         </form>
       </span>
     );

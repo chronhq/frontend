@@ -22,7 +22,7 @@ class SetLayerVisibility extends Component {
   }
   render() {
     return (
-      <div>
+      <div className='layerControl'>
         <InputCheckBox
           name='borders'
           label="Границы"
@@ -43,6 +43,7 @@ class SetLayerVisibility extends Component {
         />
         <br />
         <InputRange
+          className='detailSlider'
           name='scale'
           label='Детали'
           value={this.state.scale}
