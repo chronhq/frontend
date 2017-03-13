@@ -117,16 +117,11 @@ class MapD3Container extends Component {
   }
 
   get rotation() {
-    const y = (this.width / 2) + this.state.transform.y;
-    const x = (this.height / 2) + this.state.transform.x;
-    console.log( `${this.props.rotation} ${x} ${y}`);
+    // Do not try to rotate relying on transform x and y
+    const y = (this.height / 2); // + this.state.transform.y || 0;
+    const x = (this.width / 2); // + this.state.transform.x || 0;
+    console.log(`${this.props.rotation} ${x} ${y}`);
     return `${this.props.rotation} ${x} ${y}`;
-  }
-
-  get center() {
-    const y = (this.width / 2) + this.state.transform.y;
-    const x = (this.height / 2) + this.state.transform.x;
-    return `<circle r=5 cx=${x} cy=${y} stroke='black'>`;
   }
 
   get transform() {
@@ -156,7 +151,6 @@ class MapD3Container extends Component {
             bordersData={this.props.b.bordersData}
           />
           <Locations />
-          {this.center}
         </g>
         <SizeMeter zoom={this.scale} height={this.height} />
       </svg>
