@@ -57,9 +57,10 @@ class SidePanel extends React.Component {
             {this.state.current === 3 ? <Feed /> : null }
             {this.state.current === 4 ? <Legend /> : null }
             {this.state.current === 5
-              ? <div>
+              ? <div className='projectionSettings'>
                 <h3> Настройка проекции </h3>
                 <SetProjectionContainer />
+                <hr />
                 <SetLayerVisibility />
               </div>
               : null }
