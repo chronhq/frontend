@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import Locations from './Locations';
 import PatternsDefs, { getPatternId } from '../components/SVGPatternsDefs';
 import SizeMeter from '../components/SizeMeter';
-import { changeScale } from '../reducers/projection';
+import { changeScale } from '../reducers/mapView';
 
 import './MapD3Container.less';
 
@@ -49,28 +49,34 @@ class MapD3Container extends Component {
     terrain: [],
     terrainData: []
   }
+
   state = {
+    defaultZoom: () => window.innerWidth / 1000,
     zoomInitted: false,
-    transform: null
+    transform: { k: 1, x: 0, y: 0 }
   }
 
   componentDidMount() {
     if (!this.state.zoomInitted) {
       const svg = d3.select(this.svgMap);
-
       svg.call(this.zoom);
-
+      svg.call(this.zoom.transform, d3.zoomIdentity.scale(this.state.defaultZoom()));
       this.setState({
-        zoomInitted: true
+        zoomInitted: true,
       });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     const nextState = this.state;
-    if (this.state.transform
-    && Math.round(this.state.transform.k) !== nextProps.scale) {
+
+    if (Math.round(this.state.transform.k) !== nextProps.scale) {
       nextState.transform.k = nextProps.scale;
+    }
+    if (nextProps.resetFlag === true) {
+      nextState.transform.x = 0;
+      nextState.transform.y = 0;
+      nextState.transform.k = this.state.defaultZoom();
     }
     this.setState({ ...nextState });
   }
@@ -111,9 +117,16 @@ class MapD3Container extends Component {
   }
 
   get rotation() {
-    const y = this.width / 2;
-    const x = this.height /2;
+    const y = (this.width / 2) + this.state.transform.y;
+    const x = (this.height / 2) + this.state.transform.x;
+    console.log( `${this.props.rotation} ${x} ${y}`);
     return `${this.props.rotation} ${x} ${y}`;
+  }
+
+  get center() {
+    const y = (this.width / 2) + this.state.transform.y;
+    const x = (this.height / 2) + this.state.transform.x;
+    return `<circle r=5 cx=${x} cy=${y} stroke='black'>`;
   }
 
   get transform() {
@@ -143,6 +156,7 @@ class MapD3Container extends Component {
             bordersData={this.props.b.bordersData}
           />
           <Locations />
+          {this.center}
         </g>
         <SizeMeter zoom={this.scale} height={this.height} />
       </svg>
@@ -154,8 +168,9 @@ function mapStateToProps(state) {
   return { terrain: state.terrain.projected,
     terrainData: state.terrain.byContinent,
     color: state.projection.color,
-    scale: state.projection.scale,
-    rotation: state.projection.rotation,
+    scale: state.mapView.scale,
+    resetFlag: state.mapView.reset,
+    rotation: state.mapView.rotation,
     b: {
       visible: state.visibility.borders,
       loaded: state.borders.loaded,

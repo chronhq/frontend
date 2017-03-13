@@ -4,6 +4,7 @@ import genericReducer from './generic';
 import projection from './projection';
 import visibility from './visibility';
 import status from './status';
+import mapView from './mapView';
 
 const locationDefaultState = {
   loaded: false,
@@ -46,6 +47,7 @@ const persons = (
   state = personsDefaultState, action) => genericReducer(state, action);
 
 const mapInfoApp = combineReducers({
+  mapView,
   status,
   locations,
   facts,

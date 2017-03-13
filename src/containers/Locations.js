@@ -46,7 +46,7 @@ class Locations extends Component {
 function mapStateToProps(state) {
   return {
     visibility: state.visibility,
-    scale: state.projection.scale,
+    scale: state.mapView.scale,
     current: state.timeline.locations.current,
     projected: state.locations.projected,
     places: state.locations.places
