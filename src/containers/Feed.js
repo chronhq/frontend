@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Fact from '../components/Fact';
-import InputCheckBox from '../components/InputCheckBox';
+import { selectLocation } from '../reducers/status';
 
 import './Feed.less';
 
@@ -48,6 +50,9 @@ ${fact.description}
     const exported = this.prepareForExport(selected);
     this.setState({ selected, exported });
   }
+  handleHover = (factId) => {
+    this.props.selectLocation(factId);
+  }
 
 
   render() {
@@ -57,6 +62,8 @@ ${fact.description}
         <div className='feedFact'>{this.props.currentFacts.map((year, yearId) => year.map(factId =>
           <div
             key={`div_${factId}`}
+            onMouseEnter={() => this.handleHover(factId)}
+            onMouseLeave={() => this.handleHover(null)}
             onClick={() => this.handleChange({ [factId]: !this.state.selected[factId] })}
             className={this.state.selected[factId] === true
               ? 'selectedFact' : 'regularFact'}
@@ -82,5 +89,10 @@ ${fact.description}
 function mapStateToProps(state) {
   return { facts: state.facts, currentFacts: state.timeline.facts.current, persons: state.persons };
 }
+function mapDispatchToProps(dispatch) {
+  return {
+    selectLocation: bindActionCreators(selectLocation, dispatch)
+  };
+}
 
-export default connect(mapStateToProps)(Feed);
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);

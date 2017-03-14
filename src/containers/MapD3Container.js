@@ -120,7 +120,6 @@ class MapD3Container extends Component {
     // Do not try to rotate relying on transform x and y
     const y = (this.height / 2); // + this.state.transform.y || 0;
     const x = (this.width / 2); // + this.state.transform.x || 0;
-    console.log(`${this.props.rotation} ${x} ${y}`);
     return `${this.props.rotation} ${x} ${y}`;
   }
 

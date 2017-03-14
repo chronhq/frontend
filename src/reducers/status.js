@@ -1,5 +1,6 @@
 const defaultState = {
-  ready: false
+  ready: false,
+  selectedLocation: null
 };
 
 const status = (state = defaultState, action) => {
@@ -7,6 +8,10 @@ const status = (state = defaultState, action) => {
     case 'CHANGE_STATUS': {
       return { ...state, ready: action.ready };
     }
+    case 'SELECT_LOCATION': {
+      return { ...state, selectedLocation: action.location };
+    }
+
     default: {
       return state;
     }
@@ -17,6 +22,13 @@ export function markItReady(ready = true) {
   return {
     type: 'CHANGE_STATUS',
     ready
+  };
+}
+
+export function selectLocation(location = null) {
+  return {
+    type: 'SELECT_LOCATION',
+    location
   };
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pin from '../components/Pin';
 import PinTooltip from '../components/PinTooltip';
+import LocationFlag from '../components/LocationFlag';
 
 const DrawPin = ({ city, visibility, scale }) => (
   <g key={`pin_list_${city.id}`}>
@@ -38,6 +39,8 @@ class Locations extends Component {
             />
           : ''
         ))}
+        {this.props.selected !== null
+          && <LocationFlag location={this.getLocation(this.props.selected)} scale={this.props.scale} />}
       </g>
     );
   }
@@ -45,6 +48,7 @@ class Locations extends Component {
 
 function mapStateToProps(state) {
   return {
+    selected: state.status.selectedLocation,
     visibility: state.visibility,
     scale: state.mapView.scale,
     current: state.timeline.locations.current,
