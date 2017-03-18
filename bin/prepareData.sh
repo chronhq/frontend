@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+EXPORT=$1
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -51,9 +52,9 @@ function convertFromShp(){
   # echo "Looking for $SHP"
   if [[ -f $SHP ]]; then
     ls -la $SHP
-    [[ $1 == 'MAX' ]] && $MAPSHAPER $SHP -o format=geojson $GEOMAX
+    [[ $EXPORT == 'MAX' ]] && $MAPSHAPER $SHP -o format=geojson $GEOMAX
     $MAPSHAPER $SHP $S_OPTS -o format=geojson $GEOSIM
-    [[ $1 == 'TOPO' ]] && $MAPSHAPER $SHP $S_OPTS -o format=topojson $TOPOSIM
+    [[ $EXPORT == 'TOPO' ]] && $MAPSHAPER $SHP $S_OPTS -o format=topojson $TOPOSIM
   else
     echo "$SHP not found. Skipping"
   fi
