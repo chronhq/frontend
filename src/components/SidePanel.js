@@ -46,14 +46,16 @@ class SidePanel extends React.Component {
           <button onClick={() => this.toggle(3)}><i className="fa fa-list-ul fa-fw" /></button>
           <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
           <button onClick={() => this.toggle(5)}><i className="fa fa-cog fa-fw" /></button>
+          <button onClick={() => this.toggleSurvey()}><i className="fa fa fa-question fa-fw" /></button>
         </div>
 
         <Modal isOpen={this.state.isSurveyOn} onClose={() => this.toggleSurvey()} />
+
+        {this.state.isOpen ?
           <div className="sidenav">
             {this.state.current === 1
               ? <div>
-                Show Survey
-                <button className='btn btn-default' onClick={() => this.toggleSurvey()}> Открыть </button>
+                Empty
               </div>
               : null }
             {this.state.current === 2

@@ -225,11 +225,14 @@ class Modal extends React.Component {
                   {opt7_2}
                 </label>
               </div>
+              {this.state.answers.question7===opt7_2 ? 
+                  <input type="text" onChange={(e) => this.handleChange(e, 'question7why')} value={this.state.answers.question7why} /> 
+                  : null} 
 
               <hr />
 
 
-              <p> Вы всё делаете: </p>
+              <p> Пришлите мне: </p>
 
               <div className='radio'>
                 <label>
