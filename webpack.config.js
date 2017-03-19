@@ -18,7 +18,8 @@ module.exports = {
     new webpack.EnvironmentPlugin(['NODE_ENV', 'APIPORT', 'FEATURES'])
   ],
   module: {
-    rules: [{
+    rules: [
+    {
       test: /\.js$/,
       use: ['react-hot-loader', 'babel-loader'],
       include: path.join(__dirname, 'src'),

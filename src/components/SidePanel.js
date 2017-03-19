@@ -8,6 +8,7 @@ import SetLayerVisibility from '../containers/SetLayerVisibility';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
 import RotatingLogo from './RotatingLogo';
+import Modal from './Modal';
 
 import './SidePanel.less';
 
@@ -18,6 +19,7 @@ class SidePanel extends React.Component {
       isOpen: false,
       current: 0,
       style: { float: 'right' },
+      isSurveyOn: false,
     };
   }
 
@@ -30,6 +32,11 @@ class SidePanel extends React.Component {
     this.setState({ ...this.state, isOpen, current: id });
   }
 
+   toggleSurvey = () => {
+    this.setState({ isSurveyOn: !this.state.isSurveyOn });
+  }
+
+
   render() {
     return (
       <div>
@@ -40,12 +47,13 @@ class SidePanel extends React.Component {
           <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
           <button onClick={() => this.toggle(5)}><i className="fa fa-cog fa-fw" /></button>
         </div>
-        {this.state.isOpen ?
+
+        <Modal isOpen={this.state.isSurveyOn} onClose={() => this.toggleSurvey()} />
           <div className="sidenav">
             {this.state.current === 1
               ? <div>
-                <ControlButtonsController />
-                <SetYearFieldContainer />
+                Show Survey
+                <button className='btn btn-default' onClick={() => this.toggleSurvey()}> Открыть </button>
               </div>
               : null }
             {this.state.current === 2
