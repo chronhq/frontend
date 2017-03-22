@@ -13,10 +13,14 @@ import db from '../database';
 
 const bordersFile = './data/collectedBorders.json';
 const folder = './data/Timeline';
-const pattern = 'geomax';
-const fileList = getListOfFiles(folder, pattern);
+
+const fileList = getListOfFiles(folder, 'geomax');
 const nameToFile = shiftFileNames(getPureFileName(fileList, folder), 0);
 
+const simFileList = getListOfFiles(folder, 'geosim');
+const simNameToFile = shiftFileNames(getPureFileName(simFileList, folder), 0);
+
+const sortKeys = (i, k) => Number(i) - Number(k);
 const checkForUniqness = (empty, target, collected) => {
   const res = { ...empty };
   const hashId = hash(target);
@@ -32,26 +36,42 @@ const checkForUniqness = (empty, target, collected) => {
   return [res, res.id];
 };
 
-const createRequest = (data, dbName, dbKeys) =>
-  Object.keys(data).sort((i, k) => i > k).map(curId =>
-    db.none(`insert into ${dbName} (${dbKeys}) values($1, $2)`, [curId, data[curId]])
-      .catch(error => console.error('Error, while inserting into',
-      `insert into ${dbName} (${dbKeys}) values($1, $2)`, dbName, error)));
+const splitProperties = (props) => {
+  const properties = {
+    disputed: props.disputed,
+    mapcolor13: props.mapcolor13,
+    name: props.name,
+    nameRu: props.nameRu,
+    wikipedia: props.wikipedia
+  };
+  const type = {
+    en: props.type_en,
+    ru: props.type_ru,
+    orig: props.type,
+  };
+  const admin = {
+    sr_adm0_a3: props.sr_adm0_a3,
+    en: props.admin,
+    ru: props.adminRu
+  };
+  return { properties, type, admin };
+};
 
 const collectData = (file) => {
-  // {
-  //   hash2id: { sha1: 1, sha2: 2 },
-  //   byId: { sha1: 'geometry1', sha2: 'geometry2' },
-  // }
-
   const p = () => ({
+    // hash2id: { sha1: 1, sha2: 2 },
     hash2id: {}, // Collect uniq hashes and assing them to numeric ids
+    // byId: { 1: 'geometry1', 2: 'geometry2' },
     byId: {}, // store geometry or properties by numeric Id
   });
+
   const struct = () => ({
     geo: p(),
     prop: p(),
+    type: p(),
+    admin: p(),
     byYear: {}, // startYear to geo+props 1999: {geoId:propId}
+    zero: 0,
     total: 0
   });
   console.time('Processing borders');
@@ -59,9 +79,37 @@ const collectData = (file) => {
     // startYear === year from which border is appliable
     const filename = nameToFile[startYear];
     const borders = readDataFile(filename);
-    return borders.features.reduce((data, feature) => {
+
+    const simFilename = simNameToFile[startYear];
+    const simBorders = readDataFile(simFilename);
+
+    return borders.features.reduce((data, feature, fId) => {
       const [geoData, geoId] = checkForUniqness(p(), feature.geometry, data.geo);
-      const [propData, propId] = checkForUniqness(p(), feature.properties, data.prop);
+
+      if (simBorders.features[fId].geometry === null) {
+        console.log('SimBorders is null for', fId);
+        return {
+          ...data,
+          zero: data.zero + 1,
+          total: data.total + 1
+        };
+      }
+      if (simBorders.features.length !== borders.features.length) {
+        console.error('Different amount of features in ', filename,
+          simBorders.features.length, borders.features.length);
+      }
+      // Take simple data instead of full
+      if (geoId in geoData.byId) {
+        geoData.byId[geoId] = simBorders.features[fId].geometry;
+      }
+      const splitedProps = splitProperties(feature.properties);
+      const [typeData, typeId] = checkForUniqness(p(), splitedProps.type, data.type);
+      const [adminData, adminId] = checkForUniqness(p(), splitedProps.admin, data.admin);
+      splitedProps.properties.type = typeId;
+      splitedProps.properties.admin = adminId;
+      // console.log(splitedProps.properties);
+      const [propData, propId] = checkForUniqness(p(), splitedProps.properties, data.prop);
+
       const byYear = startYear in data.byYear
           ? { ...data.byYear[startYear], [geoId]: propId }
           : { [geoId]: propId };
@@ -74,7 +122,16 @@ const collectData = (file) => {
           hash2id: { ...data.prop.hash2id, ...propData.hash2id },
           byId: { ...data.prop.byId, ...propData.byId },
         },
+        type: {
+          hash2id: { ...data.type.hash2id, ...typeData.hash2id },
+          byId: { ...data.type.byId, ...typeData.byId },
+        },
+        admin: {
+          hash2id: { ...data.admin.hash2id, ...adminData.hash2id },
+          byId: { ...data.admin.byId, ...adminData.byId },
+        },
         byYear: { ...data.byYear, [startYear]: byYear },
+        zero: data.zero,
         total: data.total + 1
       };
     }, prev);
@@ -101,49 +158,131 @@ console.log('Uniq properties', Object.keys(collectedData.prop.hash2id).length);
 console.log('Total features', collectedData.total);
 
 // Give names to the tables
-const BORDERS = 'borders';
-const GEOMETRY = 'geometry';
-const PROPERTIES = 'properties';
+const SCHEMA = 'chronist';
 
-const dataTable = {
-  [GEOMETRY]: collectedData.geo,
-  [PROPERTIES]: collectedData.prop
-};
+const BORDERS = `${SCHEMA}.borders`;
+const GEOMETRY = `${SCHEMA}.geometry`;
+const PROPERTIES = `${SCHEMA}.properties`;
+const ADMIN = `${SCHEMA}.admin`;
+const TYPE = `${SCHEMA}.type`;
+
+const createSchema = `CREATE SCHEMA IF NOT EXISTS ${SCHEMA};`;
 
 const geoTable = `
-  DROP TABLE IF EXISTS ${GEOMETRY};
   CREATE TABLE ${GEOMETRY} (
     id BIGSERIAL PRIMARY KEY,
-    ${GEOMETRY} JSON NOT NULL
+    geometry JSON NOT NULL
 );`;
+
+const adminTable = `
+  CREATE TABLE ${ADMIN} (
+    id SERIAL PRIMARY KEY,
+    en VARCHAR(255) NULL,
+    ru VARCHAR(255) NULL,
+    sr_adm0_a3 VARCHAR(10) NULL
+);`;
+
+const typeTable = `
+  CREATE TABLE ${TYPE} (
+    id SERIAL PRIMARY KEY,
+    en VARCHAR(50) NULL,
+    ru VARCHAR(50) NULL,
+    orig VARCHAR(50) NULL
+);`;
+
 const propsTable = `
-  DROP TABLE IF EXISTS ${PROPERTIES};
   CREATE TABLE ${PROPERTIES} (
     id BIGSERIAL PRIMARY KEY,
-    ${PROPERTIES} JSON NOT NULL
+    admin INT NULL REFERENCES ${ADMIN}(id),
+    disputed VARCHAR(50) NULL,
+    mapcolor13 INT NOT NULL,
+    name VARCHAR(255) NULL,
+    nameRu VARCHAR(255) NULL,
+    type INT NULL REFERENCES ${TYPE}(id),
+    wikipedia VARCHAR(255) NULL
 );`;
+
 const bordersTable = `
-  DROP TABLE IF EXISTS ${BORDERS};
   CREATE TABLE ${BORDERS} (
     id BIGSERIAL PRIMARY KEY,
     year INT NOT NULL,
-    geo BIGINT NOT NULL REFERENCES ${GEOMETRY}.id,
-    props BIGINT NOT NULL REFERENCES ${PROPERTIES}.id
+    geo BIGINT NOT NULL REFERENCES ${GEOMETRY}(id),
+    props BIGINT NOT NULL REFERENCES ${PROPERTIES}(id)
 );`;
 
-// Create All tables
-db.none(geoTable);
-db.none(propsTable);
-db.none(bordersTable);
+const dropTables = [
+  `DROP TABLE IF EXISTS ${ADMIN} CASCADE;`,
+  `DROP TABLE IF EXISTS ${TYPE} CASCADE;`,
+  `DROP TABLE IF EXISTS ${BORDERS} CASCADE;`,
+  `DROP TABLE IF EXISTS ${GEOMETRY} CASCADE;`,
+  `DROP TABLE IF EXISTS ${PROPERTIES} CASCADE;`
+];
 
-// Fill geoTable and propsTable
-Object.keys(dataTable).map((cur) => createRequest(dataTable[cur].byId, cur, ['id', cur]));
+const createTables = [geoTable, typeTable, adminTable, propsTable, bordersTable];
 
-// Fill bordersTable
-Object.keys(collectedData.byYear).map(year =>
-  Object.keys(collectedData.byYear[year]).sort((i, k) => i > k).map(geoId =>
-    // const propId = collectedData.byYear[year][geoId];
-    db.none(`insert into ${BORDERS} (year, geo, props) values ($1, $2, $3)`, [year, geoId, collectedData.byYear[year][geoId]])
-    .catch(error => console.error('Error, while inserting into', BORDERS, error))
-  )
-);
+const tables = [createSchema, ...dropTables, ...createTables].join('\n');
+
+// Drop and Create All tables
+db.none(tables).then(() => {
+  // Fill tables
+  db.tx((t) => {
+    const insertList = [];
+
+    // Fill geometry
+    Object.keys(collectedData.geo.byId).sort(sortKeys).map(curId =>
+      insertList.push(
+        t.none(`insert into ${GEOMETRY} (id, geometry) values($1, $2)`,
+          [curId, collectedData.geo.byId[curId]]))
+    );
+
+    // Fill types
+    Object.keys(collectedData.type.byId).sort(sortKeys).map(curId =>
+      insertList.push(
+        t.none(`insert into ${TYPE} (id, en, ru, orig) values($1, $2, $3, $4)`, [
+          curId,
+          collectedData.type.byId[curId].en,
+          collectedData.type.byId[curId].ru,
+          collectedData.type.byId[curId].orig
+        ])
+    ));
+
+    // Fill admin
+    Object.keys(collectedData.admin.byId).sort(sortKeys).map(curId =>
+      insertList.push(
+        t.none(`insert into ${ADMIN} (id, ru, en, sr_adm0_a3) values($1, $2, $3, $4)`, [
+          curId,
+          collectedData.admin.byId[curId].ru,
+          collectedData.admin.byId[curId].en,
+          collectedData.admin.byId[curId].sr_adm0_a3
+        ])
+    ));
+
+    // Fill props
+    Object.keys(collectedData.prop.byId).sort(sortKeys).map(curId =>
+      insertList.push(
+        t.none(`insert into ${PROPERTIES}
+        (id, admin, disputed, mapcolor13, name, nameRu, type, wikipedia)
+        values($1, $2, $3, $4, $5, $6, $7, $8)`, [
+          curId,
+          collectedData.prop.byId[curId].admin,
+          collectedData.prop.byId[curId].disputed,
+          collectedData.prop.byId[curId].mapcolor13,
+          collectedData.prop.byId[curId].name,
+          collectedData.prop.byId[curId].nameRu,
+          collectedData.prop.byId[curId].type,
+          collectedData.prop.byId[curId].wikipedia,
+        ])
+    ));
+
+    // Fill bordersTable
+    Object.keys(collectedData.byYear).map(year =>
+      Object.keys(collectedData.byYear[year]).sort(sortKeys).map(geoId =>
+        insertList.push(
+          t.none(`insert into ${BORDERS} (year, geo, props) values ($1, $2, $3)`,
+            [year, geoId, collectedData.byYear[year][geoId]])
+        )
+      )
+    );
+    // return t.batch(insertList);
+  }).catch(e => console.error(e));
+});
