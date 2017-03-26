@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import 'bootstrap/less/bootstrap.less';
 
 import LoadingScreen from './containers/LoadingScreen';
 import MapD3Container from './containers/MapD3Container';
@@ -9,7 +10,6 @@ import Navigation from './components/Navigation';
 
 import DevTools from './DevTools';
 import './App.less';
-import 'bootstrap/less/bootstrap.less';
 
 class App extends Component {
   render() {

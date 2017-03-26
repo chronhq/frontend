@@ -5,26 +5,46 @@
   height: 100%;
   width: 100%;
   z-index: 10;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.7);
 }
 .modal-fix {
+    text-align: center;
     /* some styles to position the modal at the center of the page */
     display: block;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 800px;
-    
-    height: 500px;
-    margin-left: -400px;
-    margin-top: -250px;
+    // top: 50%;
+    max-width: 800px;
+    height: 50%;
+    // left: 50%;
+    margin-left: 300px;
+    margin-right: 300px;
+    // margin-top: -250px;
     background-color: white;
     text-align: left;
-    box-shadow: 2px 2px 4px #000000;
-  
+    
+
     /* needed styles for the overlay */
     z-index: 10; /* keep on top of other elements on the page */
-    outline: 9999px solid rgba(0,0,0,0.5);
+    // outline: 9999px solid rgba(0,0,0,0.5);
+}
+
+.modal-dialog {
+  max-height: 50% !important;
+  background-color: white;
+  z-index: 11;
+  box-shadow: 2px 2px 4px #000000;
+  & hr { width: 95%;}
+  & input {margin-left: 20px; line-height: 32px;}
+  & .radio {margin-left: 20px;}
+}
+
+@media screen and (min-width: 340px) { 
+  .modal-fix:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
 }
 
 
@@ -35,8 +55,9 @@
 }
 
 
-.modal-fix {
+.modal-body {
   //  width: 150px;
-  //  height: 150px;
-    overflow-y: scroll;
+    max-height: 700px;
+    overflow-y: auto;
+    & button {padding: 20px 20px; width: 150px;}
 }

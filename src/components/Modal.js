@@ -51,13 +51,15 @@ class Modal extends React.Component {
     return (
       <div>
         <div className='overlay' />
-        <div className='modal-fix'>
+        <div className='modal-dialog modal-lg'>
           <div className='survey'>
 
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal" onClick={e => this.close(e)} >&times;</button>
-              <h4 className="modal-title pul5l-left">Survey Header</h4>
+              <h4 className="modal-title pul5l-left">Опрос</h4>
             </div>
+            <div className='modal-body'>
+            <p>Нам важно, чтобы вы оценили свой опыт от использования сервиса. Пожалуйста, после тестирования заполните небольшую анкету, которая сделает продукт лучше.</p>
 
             <form onSubmit={this.handleFormSubmit}>
               Я
@@ -246,10 +248,11 @@ class Modal extends React.Component {
                   {opt8_2}
                 </label>
               </div>
+              Пожалуйста, оставьте свой контакт для связи. 
 
-              <button className="btn btn-default pull-right" type="submit">Save</button>                       
+              <button className="btn btn-default pull-right" type="submit"> Отправить </button>                       
             </form>
-
+            </div>
           </div>
         </div>
       </div>
