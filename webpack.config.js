@@ -25,6 +25,10 @@ module.exports = {
         include: path.join(__dirname, 'src'),
       },
       {
+        test: /\.(html|ico)$/,
+        use: ['file-loader?name=[name].[ext]']
+      },
+      {
         test: /\.less$/,
         use: ['style-loader',
         { loader: 'css-loader', options: { importLoaders: 1 } }, 'less-loader']
