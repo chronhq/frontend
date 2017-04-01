@@ -8,30 +8,30 @@ import mapView from './mapView';
 
 const locationDefaultState = {
   loaded: false,
-  type: 'LOCATIONS',
+  REDUCER_NAME: 'LOCATIONS',
   places: {},
   allIds: []
 };
 const terrainDefaultState = {
   loaded: false,
-  type: 'TERRAIN',
+  REDUCER_NAME: 'TERRAIN',
   byContinent: {},
   projected: {}
 };
 const bordersDefaultState = {
   loaded: false,
-  type: 'BORDERS',
+  REDUCER_NAME: 'BORDERS',
   byYear: {},
   projected: {}
 };
 const factsDefaultState = {
   loaded: false,
-  type: 'FACTS',
+  REDUCER_NAME: 'FACTS',
   byId: {}
 };
 const personsDefaultState = {
   loaded: false,
-  type: 'PERSONS',
+  REDUCER_NAME: 'PERSONS',
   byId: {}
 };
 

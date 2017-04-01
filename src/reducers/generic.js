@@ -1,11 +1,11 @@
-const generic = (state = { loaded: false, type: 'GENERIC' }, action) => {
+const generic = (state = { loaded: false, REDUCER_NAME: 'GENERIC' }, action) => {
   switch (action.type) {
-    case `${state.type}_PENDING`:
+    case `${state.REDUCER_NAME}_PENDING`:
       return {
         ...state,
         loading: true
       };
-    case `${state.type}_FULFILLED`:
+    case `${state.REDUCER_NAME}_FULFILLED`:
       return {
         ...state,
         loading: false,
@@ -13,14 +13,14 @@ const generic = (state = { loaded: false, type: 'GENERIC' }, action) => {
         error: false,
         ...action.payload
       };
-    case `${state.type}_REJECTED`:
+    case `${state.REDUCER_NAME}_REJECTED`:
       return {
         ...state,
         loading: false,
         loaded: false,
         error: action.error
       };
-    case `${state.type}_PROJECTED`:
+    case `${state.REDUCER_NAME}_PROJECTED`:
       return {
         ...state,
         projected: action.projected

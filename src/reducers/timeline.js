@@ -17,10 +17,10 @@ const initialState = {
   now: DEFAULT_YEAR,
   max: MAX_YEAR,
   min: DEFAULT_YEAR,
-  facts: { type: 'FACTS_TIMELINE', current: [], byYear: {}, loaded: false },
-  locations: { type: 'LOCATIONS_TIMELINE', loaded: false },
-  borders: { type: 'BORDERS_TIMELINE', current: '', byYear: {}, loaded: false },
-  persons: { type: 'PERSONS_TIMELINE', current: [], byYear: {}, loaded: false }
+  facts: { REDUCER_NAME: 'FACTS_TIMELINE', current: [], byYear: {}, loaded: false },
+  locations: { REDUCER_NAME: 'LOCATIONS_TIMELINE', loaded: false },
+  borders: { REDUCER_NAME: 'BORDERS_TIMELINE', current: '', byYear: {}, loaded: false },
+  persons: { REDUCER_NAME: 'PERSONS_TIMELINE', current: [], byYear: {}, loaded: false }
 };
 
 const timeline = (state = initialState, action) => {
