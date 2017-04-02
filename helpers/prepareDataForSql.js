@@ -9,7 +9,7 @@ import {
   readDataFile
 } from '../api/helper';
 
-import db from '../database';
+import db from '../shared/database';
 
 const bordersFile = './data/collectedBorders.json';
 const folder = './data/Timeline';
@@ -46,7 +46,7 @@ const splitProperties = (props) => {
   };
   const type = {
     en: props.type_en,
-    ru: props.type_ru,
+    ru: props.typeRu,
     orig: props.type,
   };
   const admin = {

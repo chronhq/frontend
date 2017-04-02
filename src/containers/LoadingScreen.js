@@ -24,11 +24,13 @@ const LoadingListElement = ({ element }) => (
 
 class LoadingScreen extends Component {
   componentDidMount() {
+    this.props.askBackend('BORDERS_TIMELINE');
     this.props.askBackend('LOCATIONS');
     this.props.askBackend('LOCATIONS_TIMELINE');
     this.props.askBackend('TERRAIN');
-    this.props.askBackend('BORDERS');
-    this.props.askBackend('BORDERS_TIMELINE');
+    this.props.askBackend('PROPERTIES');
+    this.props.askBackend('PROPERTIES_ADMIN');
+    this.props.askBackend('PROPERTIES_TYPE');
     this.props.askBackend('FACTS');
     this.props.askBackend('FACTS_TIMELINE');
     this.props.askBackend('PERSONS');
@@ -36,9 +38,11 @@ class LoadingScreen extends Component {
     this.props.askBackend('PERSONS_FACTS');
   }
   componentWillReceiveProps(next) {
-    const notLoaded = sumLoading(next.timeline) + sumLoading(next.data)
+    const notLoaded = sumLoading(next.timeline) + sumLoading(next.data);
     // TODO Check for projected data
-    if (notLoaded === 0) this.props.markItReady(true);
+    if (notLoaded === 0) {
+      this.props.markItReady(true);
+    }
   }
   render() {
     return (
@@ -60,65 +64,28 @@ class LoadingScreen extends Component {
     );
   }
 }
+
+const getLoadedStatus = (name, data) => ({
+  name,
+  loaded: data.loaded,
+  loading: data.loading || false,
+  error: data.error || false
+});
+
 function mapStateToProps(state) {
   return {
     timeline: {
-      locations: {
-        name: 'Перечень мест',
-        loaded: state.timeline.locations.loaded,
-        loading: state.timeline.locations.loading || false,
-        error: state.timeline.locations.error || false
-      },
-      facts: {
-        name: 'Перечень фактов',
-        loaded: state.timeline.facts.loaded,
-        loading: state.timeline.facts.loading || false,
-        error: state.timeline.facts.error || false
-      },
-      borders: {
-        name: 'Перечень границ',
-        loaded: state.timeline.borders.loaded,
-        loading: state.timeline.borders.loading || false,
-        error: state.timeline.borders.error || false
-      },
-      persons: {
-        name: 'Перечень лиц',
-        loaded: state.timeline.persons.loaded,
-        loading: state.timeline.persons.loading || false,
-        error: state.timeline.persons.error || false
-      }
+      locations: getLoadedStatus('Перечень мест', state.timeline.locations),
+      facts: getLoadedStatus('Перечень фактов', state.timeline.facts),
+      borders: getLoadedStatus('Перечень границ', state.timeline.borders),
+      persons: getLoadedStatus('Перечень лиц', state.timeline.persons)
     },
     data: {
-      locations: {
-        name: 'География мест',
-        loaded: state.locations.loaded,
-        loading: state.locations.loading || false,
-        error: state.locations.error || false
-      },
-      facts: {
-        name: 'География фактов',
-        loaded: state.facts.loaded,
-        loading: state.facts.loading || false,
-        error: state.facts.error || false
-      },
-      borders: {
-        name: 'Политические границы',
-        loaded: state.borders.loaded,
-        loading: state.borders.loading || false,
-        error: state.borders.error || false
-      },
-      persons: {
-        name: 'Информация о людях',
-        loaded: state.persons.loaded,
-        loading: state.persons.loading || false,
-        error: state.persons.error || false
-      },
-      terrain: {
-        name: 'Физическая карта мира',
-        loaded: state.terrain.loaded,
-        loading: state.terrain.loading || false,
-        error: state.terrain.error || false
-      }
+      locations: getLoadedStatus('География мест', state.locations),
+      facts: getLoadedStatus('География фактов', state.facts),
+      borders: getLoadedStatus('Политические границы', state.borders),
+      persons: getLoadedStatus('Информация о людях', state.persons),
+      terrain: getLoadedStatus('Физическая карта мира', state.terrain)
     }
   };
 }

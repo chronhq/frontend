@@ -1,6 +1,11 @@
 import fs from 'fs';
 import sizeof from 'object-sizeof';
-import * as d3 from 'd3';
+import db from '../shared/database';
+import {
+  defaultProjectionName,
+  getGeoPath,
+  projectionByName
+} from '../shared/projections';
 
 const wrapMessage = str => `${Date.now()} => ${str}`;
 
@@ -65,11 +70,12 @@ export function shiftFileNames(nameToFile, base = 0) {
   return shifted.names;
 }
 
-export function getProjection() {
-  return d3.geoEquirectangular().rotate([0, 0, 0]);
+export function getProjection(options = { name: defaultProjectionName, rotate: [0, 0, 0] }) {
+  return projectionByName[options.name].rotate(options.rotate);
 }
-export function getPath() {
-  return d3.geoPath().projection(getProjection());
+
+export function getPath(options = undefined) {
+  return getGeoPath(getProjection(options));
 }
 
 export function readAndProjectMaps(nameToFile, type = 'borders_timeline') {
@@ -97,4 +103,24 @@ export function readAndProjectMaps(nameToFile, type = 'borders_timeline') {
   };
 }
 
+export const validateIds = (ids) => {
+  if (typeof ids !== 'undefined' && Array.isArray(ids)) {
+    return ids.reduce((prev, id) => {
+      const checked = Number(id);
+      return isNaN(checked) ? prev : [...prev, checked];
+    }, []);
+  }
+  return null;
+};
 
+export function getFromDB(res, table, key, where = '') {
+  db.any(`select * from ${table} ${where}`).then((data) => {
+    const keyData = data.reduce(
+      (prev, row) => ({ ...prev, [row.id]: row }), {});
+    res.json({ [key]: keyData });
+  })
+  .catch((error) => {
+    logger.err(error);
+    res.json({ [key]: {} });
+  });
+}

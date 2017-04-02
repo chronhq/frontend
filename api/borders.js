@@ -1,26 +1,55 @@
-import {
-  getListOfFiles,
-  getPureFileName,
-  shiftFileNames,
-  readAndProjectMaps
-} from './helper';
+import { logger, validateIds, getPath } from './helper';
+import db, { tables } from '../shared/database';
 
-const folder = './data/Timeline';
-const pattern = 'geosim';
-const fileList = getListOfFiles(folder, pattern);
-const nameToFile = shiftFileNames(getPureFileName(fileList, folder), 0);
-const genericTimelineYears = Object.keys(nameToFile).reduce((prev, cur) => {
-  return { ...prev, [cur]: cur };
-}, {});
+function getTimeline(res) {
+  db.any(`select * from ${tables.BORDERS}`).then((data) => {
+    const timeline = data.reduce((prev, row) => {
+      const d = { [row.id]: { geo: row.geo, props: row.props } };
+      if (row.year in prev) {
+        return { ...prev,
+          [row.year]: { ...prev[row.year], ...d }
+        };
+      }
+      return { ...prev, [row.year]: d };
+    }, {});
+    res.json({
+      byYear: timeline,
+      allYears: Object.keys(timeline)
+    });
+  })
+  .catch((error) => {
+    logger.err(error);
+    res.json({
+      byYear: {},
+      allYears: []
+    });
+  });
+}
 
-const preparedData = readAndProjectMaps(nameToFile, 'borders_timeline');
+function getBorders(req, res) {
+  const projection = req.body.projection;
+  const pathFn = getPath(projection);
+  const ids = validateIds(req.body.ids);
+  const where = ids ? `where id IN (${ids})` : 'limit 1';
 
-export default function borders(req, url) {
+  db.any(`select * from ${tables.GEOMETRY} ${where}`).then((data) => {
+    const geometry = data.reduce(
+      (prev, row) => ({
+        byYear: { ...prev.byYear, [row.id]: row.geometry },
+        projected: { ...prev.projected, [row.id]: pathFn(row.geometry) }
+      }), { byYear: {}, projected: {} });
+    res.json(geometry);
+  })
+  .catch((error) => {
+    logger.err(error);
+    res.json({ byYear: {}, projected: {} });
+  });
+}
+
+export default function borders(req, res, url) {
   url.shift();
+  logger.json(req.body);
   return url[0] === 'TIMELINE'
-    ? Promise.resolve({
-      byYear: genericTimelineYears,
-      allYears: Object.keys(genericTimelineYears)
-    })
-    : Promise.resolve(preparedData);
+    ? getTimeline(res)
+    : getBorders(req, res);
 }

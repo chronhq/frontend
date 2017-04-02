@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
+import { getBordersFromState } from '../reducers/actions';
 import Locations from './Locations';
-import PatternsDefs, { getPatternId } from '../components/SVGPatternsDefs';
+import PatternsDefs, { getFillPatternId } from '../components/SVGPatternsDefs';
 import SizeMeter from '../components/SizeMeter';
 import { changeScale } from '../reducers/mapView';
 
@@ -24,17 +25,16 @@ const TerrainMap = ({ terrain, terrainData }) => (
   </g>
 );
 
-const BordersMap = ({ borders, bordersData, loaded, visible }) => (
+const BordersMap = ({ borders, loaded, visible }) => (
   <g className='svgMapBorders'>
     {(visible && loaded === true
-      && Array.isArray(borders))
-      && bordersData.features.map((border, borderId) => (
-        <path // There is no uniq key in properties
-          key={`borders_na_${border.properties.name.replace(/\s/g, '_')}_${borderId}`}
-          d={borders[borderId]}
-          fill={`url(#${getPatternId(border)})`}
+      && borders.map((border) => (
+        <path
+          key={`borders_na_${border.id}`}
+          d={border.d}
+          fill={`url(#${getFillPatternId(border.props)})`}
         />
-      ))}
+      )))}
   </g>
 );
 
@@ -135,8 +135,7 @@ class MapD3Container extends Component {
     return (
       <svg className='svgMap' ref={(r) => { this.svgMap = r; }}>
         <PatternsDefs
-          bordersData={this.props.b.bordersData}
-          color={this.props.color}
+          bordersData={this.props.b.properties}
         />
         <g transform={this.transform}>
           <TerrainMap
@@ -147,7 +146,6 @@ class MapD3Container extends Component {
             visible={this.props.b.visible}
             loaded={this.props.b.loaded}
             borders={this.props.b.borders}
-            bordersData={this.props.b.bordersData}
           />
           <Locations />
         </g>
@@ -158,6 +156,7 @@ class MapD3Container extends Component {
 }
 
 function mapStateToProps(state) {
+  const bordersData = getBordersFromState(state);
   return { terrain: state.terrain.projected,
     terrainData: state.terrain.byContinent,
     color: state.projection.color,
@@ -167,12 +166,8 @@ function mapStateToProps(state) {
     b: {
       visible: state.visibility.borders,
       loaded: state.borders.loaded,
-      borders: state.timeline.borders.current !== ''
-        ? state.borders.projected[state.timeline.borders.current]
-        : [],
-      bordersData: state.timeline.borders.current !== ''
-        ? state.borders.byYear[state.timeline.borders.current]
-        : { features: [] }
+      borders: bordersData.borders,
+      properties: bordersData.properties
     }
   };
 }

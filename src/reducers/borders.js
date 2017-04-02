@@ -1,4 +1,12 @@
-const generic = (state = { loaded: false, REDUCER_NAME: 'GENERIC' }, action) => {
+const bordersDefaultState = {
+  loaded: false,
+  loading: false,
+  REDUCER_NAME: 'BORDERS',
+  byYear: {},
+  projected: {}
+};
+
+const generic = (state = bordersDefaultState, action) => {
   switch (action.type) {
     case `${state.REDUCER_NAME}_PENDING`:
       return {
@@ -11,7 +19,8 @@ const generic = (state = { loaded: false, REDUCER_NAME: 'GENERIC' }, action) => 
         loading: false,
         loaded: true,
         error: false,
-        ...action.payload
+        byYear: { ...state.byYear, ...action.payload.byYear },
+        projected: { ...state.projected, ...action.payload.projected }
       };
     case `${state.REDUCER_NAME}_REJECTED`:
       return {

@@ -5,7 +5,7 @@ const colorFn = getColorFn();
 
 export const getFillColorsId = (properties) => {
   if (properties.disputed !== '') {
-    const arr = properties.disputed.split(/;/)
+    const arr = properties.disputed.split(/;/);
     return [arr.shift(), arr];
   }
   return [properties.mapcolor13, []];
@@ -18,9 +18,7 @@ export const getFillColors = (prop) => {
   const vals = getFillColorsValue(ids);
   return [ids, vals];
 };
-export const getFillPatternId = (c, name = 'fill') => `${name}_${c[0]}_${c[1].join('_')}`;
-
-export const getPatternId = (cur, name = 'fill') => getFillPatternId(getFillColorsId(cur.properties), name);
+export const getFillPatternId = (c, name = 'fill') => `${name}_${c}`;
 
 export const SVGPattern = ({ id, c }) => (
   <pattern
@@ -51,11 +49,11 @@ export const SVGPattern = ({ id, c }) => (
 
 const PatternsDefs = ({ bordersData }) => {
   if (typeof bordersData === 'undefined') return null;
-  if (!(Array.isArray(bordersData.features))) return null;
-  const patterns = bordersData.features.reduce(
+  if (!(Array.isArray(bordersData))) return null;
+  const patterns = bordersData.reduce(
     (prev, cur) => {
-      const [cIds, cVls] = getFillColors(cur.properties);
-      const key = getFillPatternId(cIds);
+      const [cIds, cVls] = getFillColors(cur);
+      const key = getFillPatternId(cur.id);
       const value = <SVGPattern key={key} id={key} c={cVls} />;
       return { ...prev,
         [key]: value

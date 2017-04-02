@@ -5,9 +5,9 @@ import bodyParser from 'body-parser';
 import locations from './locations';
 import terrain from './terrain';
 import borders from './borders';
+import properties from './properties';
 import facts from './facts';
 import persons from './persons';
-import change from './change';
 
 import { logger } from './helper';
 
@@ -58,12 +58,6 @@ app.all('/*', (req, res) => {
   try {
     const params = [req, res, splittedUrlPath, splittedUrlParams];
     switch (splittedUrlPath[0]) {
-      // case 'CHANGE':
-      //   console.log('Before Session', req.session);
-      //   req.session.projection = req.body;
-      //   console.log('After Session', req.session);
-        // res.status(200).end({desu: 'ok' });
-        // break;
       case 'LOCATIONS':
         resolvePromise(locations, ...params);
         break;
@@ -71,7 +65,10 @@ app.all('/*', (req, res) => {
         resolvePromise(terrain, ...params);
         break;
       case 'BORDERS':
-        resolvePromise(borders, ...params);
+        borders(...params);
+        break;
+      case 'PROPERTIES':
+        properties(...params);
         break;
       case 'FACTS':
         resolvePromise(facts, ...params);

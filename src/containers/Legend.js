@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { SVGPattern, getFillColors, getFillPatternId } from '../components/SVGPatternsDefs';
+import { getBordersFromState } from '../reducers/actions';
 
 import './Legend.less';
 
@@ -18,8 +19,8 @@ const ColorBox = ({ c, p }) => (
 );
 const Description = ({ properties }) => (
   <span>{properties.disputed === ''
-    ? `[${properties.type_ru}] ${properties.admin}`
-    : `${properties.nameRu}`
+    ? `[${properties.type.ru}] ${properties.admin.ru}`
+    : `${properties.nameru}`
   }
   </span>
 );
@@ -41,9 +42,10 @@ class Legend extends Component {
     if (this.props.visibility.borders
           && this.props.bordersLoaded === true
           && Array.isArray(this.props.borders)) {
-      return this.props.bordersData.features.reduce((prev, cur) => {
-        const name = `${cur.properties.mapcolor13}_${cur.properties.type_en}_${cur.properties.sr_adm0_a3}`;
-        return { ...prev, [name]: cur.properties };
+      return this.props.properties.reduce((prev, cur) => {
+        // const name = `legend_${cur.id}`;
+        const name = `${cur.mapcolor13}_${cur.disputed}_${cur.type.en}_${cur.sr_adm0_a3}`;
+        return { ...prev, [name]: cur };
       }, {});
     }
     return {};
@@ -53,13 +55,12 @@ class Legend extends Component {
     const uniqLegendItems = this.uniqLegendItems();
     return (
       <div>
-      <h3> Легенда </h3>
+        <h3> Легенда </h3>
         <ul className='Legend'>
           {Object.keys(uniqLegendItems).map(propId => (
             <LegendItem
               key={propId}
               properties={uniqLegendItems[propId]}
-              colorFn={c => this.props.color(c)}
             />
           ))
           }
@@ -70,15 +71,11 @@ class Legend extends Component {
 }
 
 function mapStateToProps(state) {
+  const bordersData = getBordersFromState(state);
   return {
     bordersLoaded: state.borders.loaded,
-    borders: state.timeline.borders.current !== ''
-      ? state.borders.projected[state.timeline.borders.current]
-      : [],
-    bordersData: state.timeline.borders.current !== ''
-      ? state.borders.byYear[state.timeline.borders.current]
-      : [],
-    color: state.projection.color,
+    borders: bordersData.borders,
+    properties: bordersData.properties,
     visibility: state.visibility
   };
 }

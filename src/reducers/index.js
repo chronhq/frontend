@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import borders from './borders';
 import timeline from './timeline';
 import genericReducer from './generic';
 import projection from './projection';
@@ -18,12 +19,6 @@ const terrainDefaultState = {
   byContinent: {},
   projected: {}
 };
-const bordersDefaultState = {
-  loaded: false,
-  REDUCER_NAME: 'BORDERS',
-  byYear: {},
-  projected: {}
-};
 const factsDefaultState = {
   loaded: false,
   REDUCER_NAME: 'FACTS',
@@ -34,17 +29,37 @@ const personsDefaultState = {
   REDUCER_NAME: 'PERSONS',
   byId: {}
 };
+const propertiesDefaultState = {
+  loaded: false,
+  REDUCER_NAME: 'PROPERTIES',
+  properties: {}
+};
+const propertiesAdminDefaultState = {
+  loaded: false,
+  REDUCER_NAME: 'PROPERTIES_ADMIN',
+  admin: {}
+};
+const propertiesTypeDefaultState = {
+  loaded: false,
+  REDUCER_NAME: 'PROPERTIES_TYPE',
+  type: {}
+};
 
 const locations = (
   state = locationDefaultState, action) => genericReducer(state, action);
 const terrain = (
   state = terrainDefaultState, action) => genericReducer(state, action);
-const borders = (
-  state = bordersDefaultState, action) => genericReducer(state, action);
 const facts = (
   state = factsDefaultState, action) => genericReducer(state, action);
 const persons = (
   state = personsDefaultState, action) => genericReducer(state, action);
+const props = (
+  state = propertiesDefaultState, action) => genericReducer(state, action);
+const propsAdmin = (
+  state = propertiesAdminDefaultState, action) => genericReducer(state, action);
+const propsType = (
+  state = propertiesTypeDefaultState, action) => genericReducer(state, action);
+
 
 const mapInfoApp = combineReducers({
   mapView,
@@ -53,6 +68,7 @@ const mapInfoApp = combineReducers({
   facts,
   persons,
   projection,
+  properties: combineReducers({ data: props, admin: propsAdmin, type: propsType }),
   borders,
   terrain,
   timeline,

@@ -1,12 +1,12 @@
-import * as d3 from 'd3';
 import { getColorFn } from './actions';
+import {
+  defaultProjectionName,
+  defaultProjectFn,
+  defaultPathFn,
+  getGeoPath,
+  projectionByName
+} from '../../shared/projections';
 
-const defaultProjectionName = 'Equirectangular';
-const projectionByName = {
-  Mercator: d3.geoMercator(),
-  Equirectangular: d3.geoEquirectangular(),
-  ConicEqualArea: d3.geoConicEqualArea()
-};
 const combineKeys = (prev, cur) => [...prev, { value: cur, label: cur }];
 const projectionOptions = Object.keys(projectionByName).reduce(combineKeys, []);
 
@@ -15,8 +15,8 @@ const projectionOptions = Object.keys(projectionByName).reduce(combineKeys, []);
 
 const defaultState = {
   name: defaultProjectionName,
-  project: d3.geoEquirectangular(),
-  path: d3.geoPath().projection(d3.geoEquirectangular()),
+  project: defaultProjectFn,
+  path: defaultPathFn,
   options: projectionOptions,
   byName: projectionByName,
   color: getColorFn(),
@@ -33,7 +33,7 @@ const projection = (state = defaultState, action) => {
         rotate,
         name: action.name,
         project,
-        path: d3.geoPath().projection(project)
+        path: getGeoPath(project)
       };
     }
     case 'CHANGE_PROJECTION_PENDING':

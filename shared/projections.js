@@ -1,0 +1,13 @@
+import * as d3 from 'd3';
+
+export const getGeoPath = project => d3.geoPath().projection(project);
+
+export const defaultProjectionName = 'Equirectangular';
+export const projectionByName = {
+  Mercator: d3.geoMercator(),
+  Equirectangular: d3.geoEquirectangular(),
+  ConicEqualArea: d3.geoConicEqualArea()
+};
+
+export const defaultProjectFn = projectionByName[defaultProjectionName];
+export const defaultPathFn = getGeoPath(defaultProjectFn);
