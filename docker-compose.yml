@@ -1,0 +1,15 @@
+# docker-compose.yml (tag: v4)
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+    - "3000:3000"
+    volumes:
+    - .:/chronist/:rw
+    environment:
+    - NODE_ENV=dev
+  db:
+    image: "postgres:latest"
+    volumes:
+    - ./data-dump/initdb:/docker-entrypoint-initdb.d
