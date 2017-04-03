@@ -1,5 +1,5 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
-import { getNextData, askBackend } from '../reducers/actions';
+import { getNextData, getActualData, askBackend } from '../reducers/actions';
 
 export const getProjection = state => ({
   name: state.projection.name,
@@ -29,7 +29,8 @@ function* loadGeoData(action) {
   const targetYear = yield select(getCurrentYear);
   const dataToLoad = action.type === 'NEXT_YEAR'
     ? getNextData(borders.allYears, borders.byYear, targetYear)
-    : borders.byYear[0]; // BORDERS_TIMELINE_FULFILLED or SET_YEAR
+    // BORDERS_TIMELINE_FULFILLED or SET_YEAR
+    : getActualData(borders.allYears, borders.byYear, targetYear);
   const geoIds = getIdsFromTimeline('geo', dataToLoad, loadedGeometry);
   // Loading new geometry
   if (geoIds.length > 0 && geometryData.loading === false) {
