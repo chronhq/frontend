@@ -23,7 +23,7 @@ class TimePanel extends React.Component {
   componentWillReceiveProps(nextProps) {
     // console.log(`timeline.now ${this.timeline.now}`);
     this.setState({ now: nextProps.now });
-    this.updateClockPosition();
+    this.updateClockPosition(nextProps.now);
   }
 
   followMouse() {
@@ -33,8 +33,9 @@ class TimePanel extends React.Component {
           const rectId = this.svgTime.childNodes[1];
           const mouseX = d3.mouse(rectId)[0];
           if (mouseX >= 0 && mouseX <= 700) {
-            this.setState({ now: Math.round(this.scale.invert(mouseX)) });
-            this.updateClockPosition();
+            const now = Math.round(this.scale.invert(mouseX));
+            this.setState({ now });
+            this.updateClockPosition(now);
           }
           // for performance reasons this is commented
           this.props.setYearAction(Number(this.state.now));
@@ -48,9 +49,9 @@ class TimePanel extends React.Component {
       });
   }
 
-  updateClockPosition() {
-    const translate = `translate(${this.scale(this.state.now)},0)`;
-    d3.selectAll('.arrow').attr('transform', translate).text(`${this.state.now}`);
+  updateClockPosition(now = this.state.now) {
+    const translate = `translate(${this.scale(now)},0)`;
+    d3.selectAll('.arrow').attr('transform', translate).text(`${now}`);
     // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
   }
 
