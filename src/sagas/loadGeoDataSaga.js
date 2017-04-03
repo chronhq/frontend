@@ -29,7 +29,7 @@ function* loadGeoData(action) {
   const targetYear = yield select(getCurrentYear);
   const dataToLoad = action.type === 'NEXT_YEAR'
     ? getNextData(borders.allYears, borders.byYear, targetYear)
-    // BORDERS_TIMELINE_FULFILLED or SET_YEAR
+    // BORDERS_TIMELINE_FULFILLED or SET_YEAR or PREV_YEAR
     : getActualData(borders.allYears, borders.byYear, targetYear);
   const geoIds = getIdsFromTimeline('geo', dataToLoad, loadedGeometry);
   // Loading new geometry
@@ -49,5 +49,6 @@ function* loadGeoData(action) {
 export default function* loadGeoDataSaga() {
   yield takeEvery('BORDERS_TIMELINE_FULFILLED', loadGeoData);
   yield takeEvery('SET_YEAR', loadGeoData);
+  yield takeEvery('PREV_YEAR', loadGeoData);
   yield takeEvery('NEXT_YEAR', loadGeoData);
 }

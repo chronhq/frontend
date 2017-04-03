@@ -21,6 +21,7 @@ class ControlButtonsController extends PureComponent {
       resetYear={this.props.timelineAction.resetYear}
       togglePlay={this.togglePlay}
       nextYear={this.props.timelineAction.nextYear}
+      prevYear={this.props.timelineAction.prevYear}
     />
     );
   }
