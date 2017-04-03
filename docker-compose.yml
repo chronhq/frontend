@@ -14,4 +14,4 @@ services:
   db:
     image: "postgres:latest"
     volumes:
-    - ./data-dump/initdb:/docker-entrypoint-initdb.d
+    - ./initdb:/docker-entrypoint-initdb.d
