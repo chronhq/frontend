@@ -8,6 +8,7 @@ const layerTimeline = (state = { REDUCER_NAME: 'layerName', loaded: false }, act
           state.byYear[action.year] :
           state.current // Zero facts happened in this year
       };
+    case 'PREV_YEAR':
     case `${state.REDUCER_NAME}_CURRENT`:
     case 'SET_YEAR':
       return { ...state,
