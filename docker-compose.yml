@@ -3,6 +3,8 @@ version: '2'
 services:
   web:
     build: .
+    links:
+    - "db:database"
     ports:
     - "3000:3000"
     volumes:

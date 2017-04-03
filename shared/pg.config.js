@@ -1,5 +1,5 @@
 const dev = {
-  host: '127.0.0.1',
+  host: 'db',
   port: 5432,
   user: 'postgres',
   password: 'postgres',
@@ -7,7 +7,7 @@ const dev = {
 };
 
 const prod = {
-  host: '127.0.0.1',
+  host: 'db',
   port: 5432,
   user: 'chronist',
   password: 'F4hr0n1$t32', // this field must be assigned via NODE_ENV
