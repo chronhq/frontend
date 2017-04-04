@@ -4,7 +4,7 @@ const pgp = require('pg-promise')();
 
 const db = pgp(config);
 
-const SCHEMA = 'chronist';
+const SCHEMA = 'public';
 
 export const tables = {
   BORDERS: `${SCHEMA}.borders`,
