@@ -13,7 +13,11 @@ services:
     environment:
     - NODE_ENV=dev
   db:
-    image: "postgres:latest"
+    image: "postgres:alpine"
+    environment: 
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=chronist
     ports:
     - "15432:5432"
     volumes:
