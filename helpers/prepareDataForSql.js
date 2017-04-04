@@ -158,7 +158,7 @@ console.log('Uniq properties', Object.keys(collectedData.prop.hash2id).length);
 console.log('Total features', collectedData.total);
 
 // Give names to the tables
-const SCHEMA = 'chronist';
+const SCHEMA = 'public';
 
 const BORDERS = `${SCHEMA}.borders`;
 const GEOMETRY = `${SCHEMA}.geometry`;
