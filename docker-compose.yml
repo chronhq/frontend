@@ -9,9 +9,12 @@ services:
     - "3000:3000"
     volumes:
     - .:/chronist/:rw
+    - /chronist/node_modules
     environment:
     - NODE_ENV=dev
   db:
     image: "postgres:latest"
+    ports:
+    - "15432:5432"
     volumes:
     - ./initdb:/docker-entrypoint-initdb.d

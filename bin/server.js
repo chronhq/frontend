@@ -11,10 +11,15 @@ const targetUrl = `http://${process.env.HOST}:${process.env.APIPORT}`;
 app.use('/api', proxy(targetUrl));
 
 app.use(require('webpack-dev-middleware')(compiler, {
-  publicPath: config.output.publicPath
+  publicPath: config.output.publicPath,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
+  },
+  compress: true
 }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+// app.use(require('webpack-hot-middleware')(compiler));
 
 app.use('/static', express.static('public'));
 
