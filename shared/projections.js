@@ -11,3 +11,11 @@ export const projectionByName = {
 
 export const defaultProjectFn = projectionByName[defaultProjectionName];
 export const defaultPathFn = getGeoPath(defaultProjectFn);
+
+export function getProjection(options = { name: defaultProjectionName, rotate: [0, 0, 0] }) {
+  return projectionByName[options.name].rotate(options.rotate);
+}
+
+export function getPath(options = undefined) {
+  return getGeoPath(getProjection(options));
+}
