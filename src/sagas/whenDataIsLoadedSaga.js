@@ -40,6 +40,7 @@ function* loadGeoData(action) {
       ids: geoIds
     }));
   } else {
+    yield put({ type: 'BORDERS_FULFILLED', payload: { projected: {}, byYear: {} } });
     console.log('Nothing new to obtain from server');
   }
 
