@@ -26,7 +26,6 @@ class LoadingScreen extends Component {
   componentDidMount() {
     this.props.askBackend('BORDERS_TIMELINE');
     this.props.askBackend('LOCATIONS');
-    this.props.askBackend('LOCATIONS_TIMELINE');
     this.props.askBackend('TERRAIN');
     this.props.askBackend('PROPERTIES');
     this.props.askBackend('PROPERTIES_ADMIN');

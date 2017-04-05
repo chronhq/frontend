@@ -113,11 +113,12 @@ export const validateIds = (ids) => {
   return null;
 };
 
-export function getFromDB(res, table, key, where = '') {
+export function getFromDB(res, table, key, where = '', cb = () => {}) {
   db.any(`select * from ${table} ${where}`).then((data) => {
     const keyData = data.reduce(
       (prev, row) => ({ ...prev, [row.id]: row }), {});
-    res.json({ [key]: keyData });
+    const cbRes = cb(data);
+    res.json({ [key]: keyData, ...cbRes });
   })
   .catch((error) => {
     logger.err(error);

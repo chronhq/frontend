@@ -46,9 +46,45 @@ function* loadGeoData(action) {
   console.timeEnd('Loading GeoData Saga');
 }
 
-export default function* loadGeoDataSaga() {
+function* buildCitiesTimeline(action) {
+  const places = action.payload.places;
+  const timeline = Object.keys(places).reduce((prev, cur) => {
+    const place = places[cur];
+    if ('founded' in place && place.founded !== '' && place.founded !== null) {
+      const year = Number(place.founded.split('-').shift());
+      if (!(year in prev)) {
+        return { ...prev, [year]: [place.id] };
+      }
+      return { ...prev, [year]: [...prev[year], place.id] };
+    }
+    return { ...prev };
+  }, {});
+
+  let previousYear;
+  for (const currentYear of Object.keys(timeline)) {
+    if (!(typeof previousYear === 'undefined')) {
+      timeline[currentYear] = [...timeline[previousYear], ...timeline[currentYear]];
+    }
+    previousYear = currentYear;
+  }
+
+  yield put({
+    type: 'LOCATIONS_TIMELINE_FULFILLED',
+    payload: {
+      byYear: timeline,
+      allYears: Object.keys(timeline),
+      current: []
+    }
+  });
+}
+
+export default function* whenDataIsLoaded() {
+  // Load borders
   yield takeEvery('BORDERS_TIMELINE_FULFILLED', loadGeoData);
   yield takeEvery('SET_YEAR', loadGeoData);
   yield takeEvery('PREV_YEAR', loadGeoData);
   yield takeEvery('NEXT_YEAR', loadGeoData);
+
+  // Generate getTimelineBorders
+  yield takeEvery('LOCATIONS_FULFILLED', buildCitiesTimeline);
 }

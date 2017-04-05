@@ -59,7 +59,7 @@ app.all('/*', (req, res) => {
     const params = [req, res, splittedUrlPath, splittedUrlParams];
     switch (splittedUrlPath[0]) {
       case 'LOCATIONS':
-        resolvePromise(locations, ...params);
+        locations(...params);
         break;
       case 'TERRAIN':
         resolvePromise(terrain, ...params);

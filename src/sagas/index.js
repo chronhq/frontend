@@ -1,10 +1,10 @@
 import changeProjection from './changeProjectionSaga';
 import assignTimelineCurrent from './assignTimelineCurrentSaga';
 import mapView from './mapViewSaga';
-import loadGeoData from './loadGeoDataSaga';
+import whenDataIsLoaded from './whenDataIsLoadedSaga';
 
 export default [
-  loadGeoData,
+  whenDataIsLoaded,
   mapView,
   changeProjection,
   assignTimelineCurrent
