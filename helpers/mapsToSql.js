@@ -4,21 +4,40 @@ import hash from 'object-hash';
 import {
   getListOfFiles,
   getPureFileName,
-  shiftFileNames,
   printSize,
-  readDataFile
-} from '../api/helper';
+  readDataFile,
+  tables,
+  SCHEMA
+} from '../shared';
 
 import db from '../shared/database';
+
+
+// CONTOUR
+const contoursFile = './data/collectedContours.json';
+const contourFolder = './data/Contour';
+const simContoursFileList = getListOfFiles(contourFolder, 'geosim');
+const simContoursNameToFile = getPureFileName(simContoursFileList, contourFolder);
+console.log(simContoursNameToFile);
+const continentData = Object.keys(simContoursNameToFile).reduce((prev, continent) => {
+  const continentFile = simContoursNameToFile[continent];
+  const contData = readDataFile(continentFile);
+  const contFeature = contData.features.shift();
+  const contArr = [contFeature.properties.continent, contFeature.geometry];
+  return [...prev, contArr];
+}, []);
+console.log(continentData);
+fs.writeFileSync(contoursFile, JSON.stringify(continentData));
+// CONTOUR
 
 const bordersFile = './data/collectedBorders.json';
 const folder = './data/Timeline';
 
 const fileList = getListOfFiles(folder, 'geomax');
-const nameToFile = shiftFileNames(getPureFileName(fileList, folder), 0);
+const nameToFile = getPureFileName(fileList, folder);
 
 const simFileList = getListOfFiles(folder, 'geosim');
-const simNameToFile = shiftFileNames(getPureFileName(simFileList, folder), 0);
+const simNameToFile = getPureFileName(simFileList, folder);
 
 const sortKeys = (i, k) => Number(i) - Number(k);
 const checkForUniqness = (empty, target, collected) => {
@@ -141,14 +160,14 @@ const collectData = (file) => {
   return collectedData;
 };
 
-const getCollectedData = () => {
-  if (fs.existsSync(bordersFile)) {
-    return readDataFile(bordersFile);
+const getCollectedData = (file) => {
+  if (fs.existsSync(file)) {
+    return readDataFile(file);
   }
-  return collectData(bordersFile);
+  return collectData(file);
 };
 
-const collectedData = getCollectedData();
+const collectedData = getCollectedData(bordersFile);
 printSize(collectedData, 'Collected data');
 printSize(collectedData.geo, 'Collected geo data');
 printSize(collectedData.prop, 'Collected data');
@@ -157,14 +176,12 @@ console.log('Uniq borders', Object.keys(collectedData.geo.hash2id).length);
 console.log('Uniq properties', Object.keys(collectedData.prop.hash2id).length);
 console.log('Total features', collectedData.total);
 
-// Give names to the tables
-const SCHEMA = 'public';
-
-const BORDERS = `${SCHEMA}.borders`;
-const GEOMETRY = `${SCHEMA}.geometry`;
-const PROPERTIES = `${SCHEMA}.properties`;
-const ADMIN = `${SCHEMA}.admin`;
-const TYPE = `${SCHEMA}.type`;
+const { BORDERS, GEOMETRY, PROPERTIES, ADMIN, TYPE } = tables;
+// const BORDERS = `${SCHEMA}.borders`;
+// const GEOMETRY = `${SCHEMA}.geometry`;
+// const PROPERTIES = `${SCHEMA}.properties`;
+// const ADMIN = `${SCHEMA}.admin`;
+// const TYPE = `${SCHEMA}.type`;
 
 const createSchema = `CREATE SCHEMA IF NOT EXISTS ${SCHEMA};`;
 
@@ -220,10 +237,10 @@ const dropTables = [
 
 const createTables = [geoTable, typeTable, adminTable, propsTable, bordersTable];
 
-const tables = [createSchema, ...dropTables, ...createTables].join('\n');
+const tablesSql = [createSchema, ...dropTables, ...createTables].join('\n');
 
 // Drop and Create All tables
-db.none(tables).then(() => {
+db.none(tablesSql).then(() => {
   // Fill tables
   db.tx((t) => {
     const insertList = [];
@@ -285,4 +302,28 @@ db.none(tables).then(() => {
     );
     // return t.batch(insertList);
   }).catch(e => console.error(e));
+});
+
+
+// Contours table
+const CONTOUR = tables.CONTOUR;
+const contourTable = `
+  CREATE TABLE ${CONTOUR} (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NULL,
+    nameRu VARCHAR(255) NULL,
+    contour JSON NOT NULL
+);`;
+
+db.none(contourTable).then(() => {
+  // Fill tables
+  db.tx((t) => {
+    const insertList = [];
+
+    // Fill contour
+    continentData.map(continent =>
+      insertList.push(
+        t.none(`insert into ${CONTOUR} (name, contour) values($1, $2)`, continent))
+    );
+  });
 });

@@ -5,13 +5,16 @@ const pgp = require('pg-promise')();
 
 const db = pgp(config);
 
-const SCHEMA = 'public';
+export const SCHEMA = 'public';
 
 export const tables = {
+  // Inventions
   CITIES: `${SCHEMA}.cities`,
   GEO_EVENTS: `${SCHEMA}.geo_events`,
   PERSONS: `${SCHEMA}.persons`,
   INVENTIONS: `${SCHEMA}.inventions`,
+  // Contour
+  CONTOUR: `${SCHEMA}.contour`,
   // Geometry related
   BORDERS: `${SCHEMA}.borders`,
   GEOMETRY: `${SCHEMA}.geometry`,
