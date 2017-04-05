@@ -79,6 +79,72 @@ function* buildCitiesTimeline(action) {
   });
 }
 
+function getBirthAndDeath(cur) {
+  let birth = null;
+  let death = null;
+  if (cur.birth_date !== null){
+    try {
+      birth = Number(cur.birth_date.replace(/-.*/g, ''));
+    } catch (e) {
+      console.log('Failed to generate timeline data for', cur.id, e);
+    }
+  }
+  if (cur.death_date !== null) {
+    try {
+      death = Number(cur.death_date.replace(/-.*/g, ''));
+    } catch (e) {
+      console.log('Failed to generate timeline data for', cur.id, e);
+    }
+  }
+  return [birth, death];
+}
+
+function* generatePersonsTimeline(action) {
+  const data = action.payload;
+  const deathFacts = Object.keys(data.byId).reduce((prev, curId) => {
+    const cur = data.byId[curId];
+    const [birth, death] = getBirthAndDeath(cur);
+    const newFacts = prev;
+    const flag = birth !== null && death !== null;
+    const bornFact = { type: 'born', id: cur.id, flag };
+    const deathFact = { type: 'death', id: cur.id, flag };
+    if (birth !== null) {
+      newFacts[birth] = birth in newFacts
+        ? [...newFacts[birth], bornFact]
+        : [bornFact];
+    }
+    if (death !== null) {
+      newFacts[death] = death in newFacts
+        ? [...newFacts[death], deathFact]
+        : [deathFact];
+    }
+    return newFacts;
+  }, {});
+  const timelineYears = Object.keys(deathFacts).reduce((prevYear, curId) => {
+    const alive = deathFacts[curId].reduce((prevAlive, curFact) => (
+      // if flag is false - only one date is available,
+      // can't build timeline for this person
+      curFact.type === 'born' && curFact.flag
+        // some one is born, adding to array
+        ? [...prevAlive, curFact.id]
+        // remove dead body
+        : prevAlive.filter(val => val !== curFact.id)
+    ), prevYear.alive);
+    return { alive,
+      data: { ...prevYear.data, [curId]: alive } };
+  }, { alive: [], data: {} });
+  yield put({
+    type: 'PERSONS_TIMELINE_FULFILLED',
+    payload: {
+      facts: deathFacts,
+      byYear: timelineYears.data
+    }
+  });
+  const year = yield select(getCurrentYear);
+  // Did not dispath an action
+  yield put({ type: 'PERSONS_TIMELINE_CURRENT', year });
+}
+
 export default function* whenDataIsLoaded() {
   // Load borders
   yield takeEvery('BORDERS_TIMELINE_FULFILLED', loadGeoData);
@@ -88,4 +154,7 @@ export default function* whenDataIsLoaded() {
 
   // Generate getTimelineBorders
   yield takeEvery('LOCATIONS_FULFILLED', buildCitiesTimeline);
+
+  // generatePersonsTimeline
+  yield takeEvery('PERSONS_FULFILLED', generatePersonsTimeline);
 }

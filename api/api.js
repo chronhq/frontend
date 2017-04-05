@@ -74,7 +74,7 @@ app.all('/*', (req, res) => {
         resolvePromise(facts, ...params);
         break;
       case 'PERSONS':
-        resolvePromise(persons, ...params);
+        persons(...params);
         break;
       default:
         logger.log('DEFAULT_SWITCH');

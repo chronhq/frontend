@@ -31,6 +31,7 @@ const setNewYearState = (state, action) => {
     facts: factsReducer(state.facts, act),
     locations: layerReducer(state.locations, act),
     borders: layerReducer(state.borders, act),
+    persons: layerReducer(state.persons, act),
     now: act.year
   };
 };
