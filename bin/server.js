@@ -19,7 +19,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   compress: true
 }));
 
-// app.use(require('webpack-hot-middleware')(compiler));
+app.use(require('webpack-hot-middleware')(compiler));
 
 app.use('/static', express.static('public'));
 
