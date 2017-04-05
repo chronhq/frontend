@@ -1,4 +1,5 @@
 import config from './pg.config';
+import { logger } from './logger';
 
 const pgp = require('pg-promise')();
 
@@ -18,5 +19,18 @@ export const tables = {
   ADMIN: `${SCHEMA}.admin`,
   TYPE: `${SCHEMA}.type`
 };
+
+export function getFromDB(resCb, table, key, where = '', dataCb = () => {}) {
+  db.any(`select * from ${table} ${where}`).then((data) => {
+    const keyData = data.reduce(
+      (prev, row) => ({ ...prev, [row.id]: row }), {});
+    const cbRes = dataCb(data);
+    resCb({ [key]: keyData, ...cbRes });
+  })
+  .catch((error) => {
+    logger.err(error);
+    resCb({ [key]: {} });
+  });
+}
 
 export default db;

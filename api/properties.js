@@ -1,29 +1,14 @@
-import { getFromDB } from './helper';
-import { tables } from '../shared/database';
-
-
-function getAdmin(res) {
-  getFromDB(res, tables.ADMIN, 'admin');
-}
-
-function getType(res) {
-  getFromDB(res, tables.TYPE, 'type');
-}
-
-function getProps(req, res) {
-  // const ids = validateIds(req.body.ids);
-  // const where = ids ? `where id IN (${ids})` : 'limit 1';
-  getFromDB(res, tables.PROPERTIES, 'properties');
-}
+import { tables, getFromDB } from '../shared';
 
 export default function properties(req, res, url) {
   url.shift();
+  const resJson = data => res.json(data);
   switch (url[0]) {
     case 'ADMIN':
-      return getAdmin(res);
+      return getFromDB(resJson, tables.ADMIN, 'admin');
     case 'TYPE':
-      return getType(res);
+      return getFromDB(resJson, tables.TYPE, 'type');
     default:
-      return getProps(req, res);
+      return getFromDB(resJson, tables.PROPERTIES, 'properties');
   }
 }

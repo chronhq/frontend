@@ -1,20 +1,14 @@
 import fs from 'fs';
 import sizeof from 'object-sizeof';
-import db from '../shared/database';
+// import { logger } from '../shared/logger';
 import {
+  logger,
   defaultProjectionName,
   getGeoPath,
   projectionByName
-} from '../shared/projections';
+} from '../shared';
 
-const wrapMessage = str => `${Date.now()} => ${str}`;
-
-export const logger = {
-  err: str => console.error(wrapMessage(str)),
-  info: str => console.info(wrapMessage(str)),
-  log: str => console.error(wrapMessage(str)),
-  json: str => console.log(wrapMessage(JSON.stringify(str)))
-};
+export { logger } from '../shared';
 
 export function printSize(obj, str) {
   const objSize = Math.round(sizeof(obj) / 8.192) / 100;
@@ -60,16 +54,6 @@ export function getPureFileName(files, prefix = '') {
   }, {});
 }
 
-export function shiftFileNames(nameToFile, base = 0) {
-  const shifted = Object.keys(nameToFile).reduce((prev, curName) => {
-    return {
-      base: curName,
-      names: { ...prev.names, [prev.base]: nameToFile[curName] }
-    };
-  }, { base, names: {} });
-  return shifted.names;
-}
-
 export function getProjection(options = { name: defaultProjectionName, rotate: [0, 0, 0] }) {
   return projectionByName[options.name].rotate(options.rotate);
 }
@@ -112,16 +96,3 @@ export const validateIds = (ids) => {
   }
   return null;
 };
-
-export function getFromDB(res, table, key, where = '', cb = () => {}) {
-  db.any(`select * from ${table} ${where}`).then((data) => {
-    const keyData = data.reduce(
-      (prev, row) => ({ ...prev, [row.id]: row }), {});
-    const cbRes = cb(data);
-    res.json({ [key]: keyData, ...cbRes });
-  })
-  .catch((error) => {
-    logger.err(error);
-    res.json({ [key]: {} });
-  });
-}
