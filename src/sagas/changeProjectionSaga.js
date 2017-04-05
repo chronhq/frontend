@@ -5,9 +5,10 @@ export const getPath = state => state.projection.path;
 export const getProjection = state => state.projection.project;
 
 export const awaitingNewPath = [
-  ['TERRAIN_PROJECTED', state => state.terrain.byContinent],
-  ['BORDERS_PROJECTED', state => state.borders.byYear]
+  ['TERRAIN_PROJECTED', state => state.terrain.byId],
+  ['BORDERS_PROJECTED', state => state.borders.byId]
 ];
+
 export const hasPoints = [
   ['LOCATIONS_PROJECTED', state => state.locations.places]
 ];
@@ -27,16 +28,17 @@ function* changeProjection(action) {
   yield put({ ...action, type: 'CHANGE_PROJECTION_SAGA' });
 
   const path = yield select(getPath);
+
   for (const [type, selector] of awaitingNewPath) {
     // pathProjection
     console.time(`pathProjection ${type}`);
+
     const json = yield select(selector);
-    const projected = Object.keys(json).reduce((prev, cur) => {
-      return { ...prev, [cur]: json[cur]
-          .features.reduce(
-            (prevFeature, curFeature) => [...prevFeature, path(curFeature)],
-          []) };
-    }, {});
+    const jsonCb = type === 'TERRAIN_PROJECTED'
+      ? cur => path(json[cur].contour)
+      : cur => path(json[cur]);
+
+    const projected = Object.keys(json).map(jsonCb);
     console.timeEnd(`pathProjection ${type}`);
     yield put({ type, projected });
   }

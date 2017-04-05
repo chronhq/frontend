@@ -35,14 +35,14 @@ function getBorders(req, res) {
   db.any(`select * from ${tables.GEOMETRY} ${where}`).then((data) => {
     const geometry = data.reduce(
       (prev, row) => ({
-        byYear: { ...prev.byYear, [row.id]: row.geometry },
+        byId: { ...prev.byId, [row.id]: row.geometry },
         projected: { ...prev.projected, [row.id]: pathFn(row.geometry) }
-      }), { byYear: {}, projected: {} });
+      }), { byId: {}, projected: {} });
     res.json(geometry);
   })
   .catch((error) => {
     logger.err(error);
-    res.json({ byYear: {}, projected: {} });
+    res.json({ byId: {}, projected: {} });
   });
 }
 

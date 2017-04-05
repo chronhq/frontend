@@ -19,7 +19,7 @@ const generic = (state = bordersDefaultState, action) => {
         loading: false,
         loaded: true,
         error: false,
-        byYear: { ...state.byYear, ...action.payload.byYear },
+        byId: { ...state.byId, ...action.payload.byId },
         projected: { ...state.projected, ...action.payload.projected }
       };
     case `${state.REDUCER_NAME}_REJECTED`:
