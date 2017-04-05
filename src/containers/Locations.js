@@ -20,11 +20,11 @@ class Locations extends Component {
     id,
     x: this.props.projected[id].x,
     y: this.props.projected[id].y,
-    name: this.props.places[id].name,
-    scaleRank: this.props.places[id].scaleRank
-  }); // Default scale is 300 for point size
+    name: this.props.places[id].name_rus,
+    scaleRank: this.props.places[id].scalerank
+  });
 
-  checkSize = id => this.props.places[id].scaleRank < this.props.visibility.scale;
+  checkSize = id => this.props.places[id].scalerank < this.props.visibility.scale;
 
   render() {
     return (

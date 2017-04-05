@@ -5,7 +5,7 @@ import './Pin.less';
 // Maximum scaleRank is 10 for smallest cities
 const sizeOfAPin = (scaleRank, scale) => {
   const pin = Math.sqrt(Number(scaleRank) / Math.sqrt(scale)) || 1;
-  return scaleRank === 0
+  return Number(scaleRank) === 0
     ? pin
     : pin / scaleRank;
 };
