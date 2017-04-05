@@ -31,7 +31,6 @@ class LoadingScreen extends Component {
     this.props.askBackend('PROPERTIES_ADMIN');
     this.props.askBackend('PROPERTIES_TYPE');
     this.props.askBackend('FACTS');
-    this.props.askBackend('FACTS_TIMELINE');
     this.props.askBackend('PERSONS');
   }
   componentWillReceiveProps(next) {

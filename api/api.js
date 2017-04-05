@@ -13,16 +13,6 @@ import { logger } from './helper';
 
 const app = express();
 
-function resolvePromise(action, req, res, url, params = []) {
-  action(req, url, params)
-    .then((result) => {
-      res.json(result);
-    }, (reason) => {
-      logger.log('error occured while resolving promise');
-      logger.log(reason);
-    });
-}
-
 function parseParams(url) {
   const [path, params] = url.split('?');
   const splittedUrlPath = path.split('/').slice(1);
@@ -71,7 +61,7 @@ app.all('/*', (req, res) => {
         properties(...params);
         break;
       case 'FACTS':
-        resolvePromise(facts, ...params);
+        facts(...params);
         break;
       case 'PERSONS':
         persons(...params);
