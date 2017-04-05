@@ -1,17 +1,11 @@
-import {
-  logger,
-  getListOfFiles,
-  getPureFileName,
-  readAndProjectMaps
-} from './helper';
+import { tables, getFromDB, getPath } from '../shared';
 
-const folder = './data/Contour';
-const pattern = 'geosim';
-const fileList = getListOfFiles(folder, pattern);
-const nameToFile = getPureFileName(fileList, folder);
-
-const preparedData = readAndProjectMaps(nameToFile, 'terrain');
-
-export default function terrain() {
-  return Promise.resolve(preparedData);
+function projectTerrain(data) {
+  const pathFn = getPath();
+  const projected = data.reduce((prev, cur) => ({ ...prev, [cur.id]: pathFn(cur.contour) }), {});
+  return { projected };
+}
+export default function terrain(req, res) {
+  const resJson = data => res.json(data);
+  getFromDB(resJson, tables.CONTOUR, 'byId', '', projectTerrain);
 }

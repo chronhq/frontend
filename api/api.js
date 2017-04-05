@@ -62,7 +62,7 @@ app.all('/*', (req, res) => {
         locations(...params);
         break;
       case 'TERRAIN':
-        resolvePromise(terrain, ...params);
+        terrain(...params);
         break;
       case 'BORDERS':
         borders(...params);

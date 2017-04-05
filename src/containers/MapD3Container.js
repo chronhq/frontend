@@ -10,16 +10,13 @@ import { changeScale } from '../reducers/mapView';
 
 import './MapD3Container.less';
 
-const TerrainMap = ({ terrain, terrainData }) => (
+const TerrainMap = ({ terrain }) => (
   <g className='svgMapTerrain' key='terrain'>
-    {Object.keys(terrain).map(
-    continent => (
-      terrain[continent].map((border, borderId) => (
-        <path
-          key={`terrain_${continent}_${terrainData[continent].features[borderId].properties.name}`}
-          d={border}
-        />
-      ))
+    {Object.keys(terrain).map(continentId => (
+      <path
+        key={`terrain_${continentId}}`}
+        d={terrain[continentId]}
+      />
     ))
   }
   </g>
@@ -140,7 +137,6 @@ class MapD3Container extends Component {
         <g transform={this.transform}>
           <TerrainMap
             terrain={this.props.terrain}
-            terrainData={this.props.terrainData}
           />
           <BordersMap
             visible={this.props.b.visible}
@@ -158,7 +154,6 @@ class MapD3Container extends Component {
 function mapStateToProps(state) {
   const bordersData = getBordersFromState(state);
   return { terrain: state.terrain.projected,
-    terrainData: state.terrain.byContinent,
     color: state.projection.color,
     scale: state.mapView.scale,
     resetFlag: state.mapView.reset,
