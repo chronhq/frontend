@@ -130,9 +130,6 @@ function* generatePersonsTimeline(action) {
           ? [...prevAlive, curFact.id]
           // remove dead body
           : prevAlive.filter(val => val !== curFact.id);
-          // : prevAlive.reduce(
-          //     (prev, cur) => (cur !== curFact.id ? [...prev, cur] : [...prev]),
-          //   []);
       }
       return [];
     }, prevYear.alive);

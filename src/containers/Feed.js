@@ -29,7 +29,7 @@ class Feed extends Component {
   }
 
   formatFactForExport = fact =>
-`${fact.nameRu} ${fact.date}
+`${fact.name_rus} ${fact.invention_date}
 ${fact.description}
 `
 
