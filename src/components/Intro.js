@@ -35,7 +35,7 @@ class Intro extends React.Component {
     const settings = {
       dots: true,
       autoplay: true,
-      autoplaySpeed: 1500,
+      autoplaySpeed: 4000,
       arrows: false,
       fade: true,
       infinite: true,
@@ -65,18 +65,22 @@ class Intro extends React.Component {
         <div style={this.state.whichSlide === 1 ? highlightDiv : null} className='overlay-survey' />
         <div style={this.state.whichSlide === 2 ? highlightDiv : null} className='overlay-iconbar' />
         <div style={this.state.whichSlide === 3 ? highlightDiv : null} className='overlay-timeline' />
-        <div className='slider'>
-          <Slider class='text-center' {...settings}>
-            <div><h4> {SlideSalutation} </h4></div>
-            <div><h4> {SlideSurvey} </h4></div>
-            <div><h4> {SlideLayers} </h4></div>
-            <div><h4> {SlideInventions} </h4></div>
-            <div><h4> {SlideInvetionsAgain} </h4></div>
-          </Slider>
 
-          <button onClick={e => this.close(e)} className='btn btn-primary'> OK </button>
+        <div className='row'>
+          <div className='containter center'>
+            <div className='slider'>
+              <Slider class='text-center' {...settings}>
+                <div><h5> {SlideSalutation} </h5></div>
+                <div><h5> {SlideSurvey} </h5></div>
+                <div><h5> {SlideLayers} </h5></div>
+                <div><h5> {SlideInventions} </h5></div>
+                <div><h5> {SlideInvetionsAgain} </h5></div>
+              </Slider>
+
+                  <button onClick={e => this.close(e)} className='btn btn-primary'> OK </button>
+              </div>
+          </div>
         </div>
-
         <div className='icon-bar-spots'>
           { this.state.whichSlide === 5 ? <svg height="100" width="100">
             <circle cx="75" cy="25" r="12" fill="yellow" opacity='0.2' />

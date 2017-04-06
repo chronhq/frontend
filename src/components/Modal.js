@@ -1,6 +1,10 @@
 import React from 'react';
 import './Modal.less';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { askBackend } from '../reducers/actions';
+
 const QuestionZero = 'Я';
 const OptionsZero = ['учитель', 'учащийся', 'научный работник', 'укажите свой вариант:'];
 
@@ -90,12 +94,13 @@ class Modal extends React.Component {
     };
 
     this.setState({ answers: newAnswers });
-    console.log(`You have selected ${this.state.answers.question1} `);
+    console.log(`You have selected ${newAnswers} `);
   }
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(`You have selected ${this.state.answers.question1} `);
+    console.log(`You have selected ${this.state.answers} `);
+    // this.props.askBackend('');
   }
 
   close(e) {
@@ -130,17 +135,17 @@ class Modal extends React.Component {
                 {QuestionZero}
                 {OptionsZero.map(option => <Radio name='question0' value={option} key={option} data={this.state.answers.question0} cb={this.handleChange} />)}
                 {this.state.answers.question0 === OptionsZero[3] ?
-                  <input type="text" onChange={e => this.handleChange(e, 'question0why')} value={this.state.answers.question0why} />
+                  <input type="text" maxLength='20' height='20' width='80' onChange={e => this.handleChange(e, 'question0why')} value={this.state.answers.question0why} />
                   : null}
                 <hr />
 
                 {QuestionOne}
                 {OptionsOne.map(option => <Radio name='question1' value={option} key={option} data={this.state.answers.question1} cb={this.handleChange} />)}
                 <p> {QuestionOneOne}
-                  <input type="text" onChange={e => this.handleChange(e, 'question11')} value={this.state.answers.question11} />
+                  <input type="text" maxLength='2000' onChange={e => this.handleChange(e, 'question11')} value={this.state.answers.question11} />
                 </p>
                 <p> {QuestionOneTwo}
-                  <input type="text" onChange={e => this.handleChange(e, 'question12')} value={this.state.answers.question12} />
+                  <input type="text" maxLength='2000' onChange={e => this.handleChange(e, 'question12')} value={this.state.answers.question12} />
                 </p>
                 <hr />
 
@@ -188,8 +193,11 @@ class Modal extends React.Component {
 
                 <p> {QuestionEight} </p>
                 {OptionsEight.map(option => <Radio name='question8' value={option} key={option} data={this.state.answers.question8} cb={this.handleChange} />)}
-
+                <hr />
                 Пожалуйста, оставьте свой контакт для связи.
+
+                <input type="text" placeholder="Ваш E-mail" onChange={e => this.handleChange(e, 'mail')} value={this.state.answers.mail} />
+                <hr />
 
                 <button className="btn btn-default pull-right" type="submit"> Отправить </button>
               </form>
