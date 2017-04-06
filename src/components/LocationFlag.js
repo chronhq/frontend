@@ -9,8 +9,12 @@ const path4 = 'm -1.1001694,-30.944665 c -2.312633,-0.597673 -3.996898,-3.056179
 const shiftX = 0;
 const shiftY = 0;
 
-const LocationFlag = ({ location, scale = 1 }) => (
-  <g className='locationFlag' transform={`translate(${location.x + shiftX},${location.y + shiftY}) scale(${(12 - scale) * 0.03})`} >
+const LocationFlag = ({ enabled, location, scale = 1 }) => (
+  <g
+    visibility={enabled ? 'visible' : 'hidden'}
+    className='locationFlag'
+    transform={`translate(${location.x + shiftX},${location.y + shiftY}) scale(${(12 - scale) * 0.03})`}
+  >
     <path d={path1} />
     <path d={path2} />
     <path d={path3} className='path3' />

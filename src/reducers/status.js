@@ -8,7 +8,7 @@ const status = (state = defaultState, action) => {
     case 'CHANGE_STATUS': {
       return { ...state, ready: action.ready };
     }
-    case 'SELECT_LOCATION': {
+    case 'SELECT_LOCATION_SAGA': {
       return { ...state, selectedLocation: action.location };
     }
 
