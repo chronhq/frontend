@@ -15,8 +15,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
-  },
-  compress: true
+  }
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
