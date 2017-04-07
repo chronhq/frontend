@@ -9,8 +9,8 @@ const dev = {
 const prod = {
   host: 'db',
   port: 5432,
-  user: 'chronist',
-  password: 'F4hr0n1$t32', // this field must be assigned via NODE_ENV
+  user: 'postgres',
+  password: 'postgres', // this field must be assigned via NODE_ENV
   database: 'chronist'
 };
 

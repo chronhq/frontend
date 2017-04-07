@@ -10,8 +10,7 @@ services:
     volumes:
     - .:/chronist/:rw
     - /chronist/node_modules
-    environment:
-    - NODE_ENV=dev
+    command: npm run dev
   db:
     image: "postgres:alpine"
     environment: 

@@ -23,7 +23,8 @@ class App extends Component {
             <MapD3Container />
           </div>
         : <LoadingScreen /> }
-        <DevTools />
+        {process.env.NODE_ENV === 'development'
+          && <DevTools />}
       </div>
     );
   }

@@ -1,6 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const isProd = () => process.env.NODE_ENV === 'production';
+const devtool = isProd()
+  ? 'cheap-module-source-map'
+  : 'source-map';
+
+const productionPlugins = isProd()
+  ? [new webpack.optimize.UglifyJsPlugin({ sourceMap: devtool })]
+  : [];
+
 module.exports = {
   devtool: 'source-map',
   entry: [
@@ -15,7 +24,8 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'APIPORT', 'FEATURES'])
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'APIPORT']),
+    ...productionPlugins
   ],
   module: {
     rules: [
@@ -56,5 +66,3 @@ module.exports = {
     ]
   }
 };
-
-// new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
