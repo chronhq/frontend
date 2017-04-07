@@ -17,25 +17,34 @@ const DrawPin = ({ city, visibility, scale }) => (
 
 class Locations extends Component {
   state = {
-    selected: 1,
+    selected: -1,
+    selectedLoc: {
+      id: 0,
+      x: 0,
+      y: 0,
+      scaleRank: 0,
+      name: 0
+    },
     locationFlag: false
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selected !== this.state.selected) {
       if (nextProps.selected === null) {
-        this.setState({ // Initial state
-          selected: Object.keys(nextProps.places).shift(),
+        this.setState({ // Hide locationFlag
           locationFlag: false
         });
       } else {
-        this.setState({ locationFlag: true, selected: nextProps.selected });
+        this.setState({
+          locationFlag: true,
+          selected: nextProps.selected,
+          selectedLoc: this.getLocation(nextProps.selected)
+        });
       }
     }
-    if (nextProps.selected === this.state.selected && this.state.enablePin === false) {
+    if (nextProps.selected === this.state.selected && this.state.locationFlag === false) {
       this.setState({ locationFlag: true });
     }
-
   }
 
   getLocation = id => ({
@@ -62,7 +71,7 @@ class Locations extends Component {
         ))}
         <LocationFlag
           enabled={this.state.locationFlag}
-          location={this.getLocation(this.state.selected)}
+          location={this.state.selectedLoc}
           scale={this.props.scale}
         />
       </g>
