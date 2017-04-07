@@ -38,7 +38,8 @@ function* changeProjection(action) {
       ? cur => path(json[cur].contour)
       : cur => path(json[cur]);
 
-    const projected = Object.keys(json).map(jsonCb);
+    const projected = Object.keys(json).reduce(
+      (prev, cur) => ({ ...prev, [cur]: jsonCb(cur) }), {});
     console.timeEnd(`pathProjection ${type}`);
     yield put({ type, projected });
   }
