@@ -22,13 +22,6 @@ function parseParams(url) {
 }
 
 app.use(bodyParser.json());
-app.use(session({
-  secret: 'kotyatki davaite zapilem karty',
-  resave: true,
-  saveUninitialized: true,
-  httpOnly: false,
-  cookie: { secure: false, maxAge: 60000 }
-}));
 
 app.use((req, res, next) => {
   logger.info('Got a request');
@@ -67,7 +60,7 @@ app.all('/*', (req, res) => {
         persons(...params);
         break;
       default:
-        logger.log('DEFAULT_SWITCH');
+        logger.err('DEFAULT_SWITCH');
         res.status(404).end('NOT FOUND');
     }
   } catch (err) {
