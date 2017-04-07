@@ -1,7 +1,7 @@
 import factsReducer from './factsTimeline';
 import layerReducer from './layerTimeline';
 
-const DEFAULT_YEAR = 1730;
+const DEFAULT_YEAR = 1783;
 const MAX_YEAR = 2017;
 
 export function resetYear() {
