@@ -22,15 +22,21 @@ export function getIdsFromTimeline(type, t, loaded = {}) {
 function* loadGeoData(action) {
   console.time('Loading GeoData Saga');
   const geometryData = yield select(getLoadedGeometry);
-  const loadedGeometry = geometryData.byYear;
-
+  const loadedGeometry = geometryData.byId;
+  const year = {};
   const projection = yield select(getProjection);
   const borders = yield select(getTimelineBorders);
-  const targetYear = yield select(getCurrentYear);
+  year.cur = yield select(getCurrentYear);
+
+  if (action.type === 'NEXT_YEAR') year.target = year.cur + 1;
+  else if (action.type === 'PREV_YEAR') year.target = year.cur - 1;
+  else if (action.type === 'SET_YEAR') year.target = action.year;
+  else year.target = year.cur;
+
   const dataToLoad = action.type === 'NEXT_YEAR'
-    ? getNextData(borders.allYears, borders.byYear, targetYear)
+    ? getNextData(borders.allYears, borders.byYear, year.target)
     // BORDERS_TIMELINE_FULFILLED or SET_YEAR or PREV_YEAR
-    : getActualData(borders.allYears, borders.byYear, targetYear);
+    : getActualData(borders.allYears, borders.byYear, year.target);
   const geoIds = getIdsFromTimeline('geo', dataToLoad, loadedGeometry);
   // Loading new geometry
   if (geoIds.length > 0 && geometryData.loading === false) {

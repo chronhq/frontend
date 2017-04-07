@@ -6,7 +6,7 @@ export function getColorFn() {
 }
 
 export function getActualData(years, data, target) {
-  const res = Math.max(...years.filter(y => y < target));
+  const res = Math.max(...years.filter(y => y <= target));
   if (isFinite(res)) {
     return data[res];
   }
