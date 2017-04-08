@@ -2,4 +2,7 @@
 version: '2'
 services:
   web:
+    restart: always
     command: npm run start
+  db:
+    restart: always
