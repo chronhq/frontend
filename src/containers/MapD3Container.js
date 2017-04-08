@@ -6,6 +6,7 @@ import { getBordersFromState } from '../reducers/actions';
 import Locations from './Locations';
 import PatternsDefs, { getFillPatternId } from '../components/SVGPatternsDefs';
 import SizeMeter from '../components/SizeMeter';
+import LoadingWidget from '../components/LoadingWidget';
 import { changeScale } from '../reducers/mapView';
 
 import './MapD3Container.less';
@@ -146,6 +147,7 @@ class MapD3Container extends Component {
           <Locations />
         </g>
         <SizeMeter zoom={this.scale} height={this.height} />
+        <LoadingWidget height={this.height} />
       </svg>
     );
   }
