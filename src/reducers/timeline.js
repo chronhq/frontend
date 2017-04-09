@@ -13,7 +13,7 @@ export function resetYear() {
 
 const initialState = {
   intervalId: 0,
-  interval: 500,
+  interval: 1000,
   now: DEFAULT_YEAR,
   max: MAX_YEAR,
   min: DEFAULT_YEAR,
