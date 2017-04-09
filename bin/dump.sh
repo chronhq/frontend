@@ -1,14 +1,26 @@
-port=15432
-
+TABLES=$1
+PORT=$2
+PG_DUMP=$3
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PG_DUMP="pg_dump"
+
+[[ PORT == "" ]] && PORT=5432
+[[ $PG_DUMP == "" ]] && PG_DUMP="echo pg_dump"
+
+GEO_TABLES="admin type geometry properties borders contour"
+FACTS_TABLES="inventions persons cities geo_events"
+
 num=0
-for DB in admin type geometry properties borders contour inventions persons cities geo_events; do
+[[ $TABLES == "" ]] && TABLES="all"
+[[ $TABLES == "all" ]] && TABLES_LIST="${GEO_TABLES} ${FACTS_TABLES}"
+[[ $TABLES == "geo" ]] && TABLES_LIST=$GEO_TABLES
+[[ $TABLES == "facts" ]] && TABLES_LIST=$FACTS_TABLES && num=6
+
+for DB in $TABLES_LIST; do
 	let "num++"
 	[[ $num -lt 10 ]] && NAME="0${num}_${DB}" || NAME="${num}_$DB"
 	echo; echo; echo
  	echo $DB $NAME;
 	echo; echo; echo
-	$PG_DUMP --host localhost --port $port --username 'postgres' --no-password  --format plain --verbose --file "$DIR../initdb/$NAME.sql" --table public.$DB 'chronist';
+	$PG_DUMP --host localhost --port $PORT --username 'postgres' --no-password  --format plain --verbose --file "$DIR/../initdb/$NAME.sql" --table public.$DB 'chronist';
 done;
 

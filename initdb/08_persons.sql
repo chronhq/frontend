@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.2
 -- Dumped by pg_dump version 9.6.2
 
--- Started on 2017-04-05 18:02:50
+-- Started on 2017-04-09 18:01:56
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 198 (class 1259 OID 16801)
+-- TOC entry 198 (class 1259 OID 16832)
 -- Name: persons; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -41,7 +41,7 @@ CREATE TABLE persons (
 ALTER TABLE persons OWNER TO postgres;
 
 --
--- TOC entry 2163 (class 0 OID 16801)
+-- TOC entry 2163 (class 0 OID 16832)
 -- Dependencies: 198
 -- Data for Name: persons; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -348,10 +348,60 @@ COPY persons (id, name_eng, name_rus, birth_date, birth_place, death_date, death
 299	Filiberto Vázquez Dávila	Филиберто Васкез Давила	1943-08-22	272	\N	0
 300	Francisco D. Mier	Франциско Миер	\N	0	\N	0
 301	Belisario H. Romo	Белисарио Ромо	\N	0	\N	0
+302	Thomas Jefferson	Томас Джефферсон	1743-04-13	481	1826-07-04	482
+303	David Rittenhouse	Дэвид Риттенхауз	1732-04-08	0	1796-06-26	269
+304	Eli Whitney	Эли (Илай) Уитни	1765-12-08	483	1825-01-08	55
+305	James Finley	Джеймс Финли	1756	0	1828	484
+306	Benjamin Thompson	Бенджамин Томпсон	1753-03-26	485	1814-08-21	0
+307	Levi Spear Parmly	\N	\N	0	\N	0
+308	Simeon North	Симеон Норт	1765-07-13	486	1852-98-25	487
+309	Thomas Blanchard	Томас Бланшар	1788-06-24	488	1864-04-16	14
+310	Sylvester Graham	Сильвестер Грэм	1794-07-05	489	1851-09-11	490
+311	William Otis	Уильям Отис	1813-09-20	491	1839-11-13	269
+312	Charles Grafton Page	Чарльз Графтон Пейдж	1812-01-25	492	1868-05-05	284
+313	George Pullman	Джордж Пульман	1831-03-03	493	1897-10-19	279
+314	Charles Goodyear	Чарльз Гудьир	1800-12-29	55	1860-07-01	285
+315	Isaac Babbitt	Исаак (Айзек) Баббит	1799-07-26	494	1862-05-26	495
+316	Joseph Dart	Джозеф Дарт	1799	496	1879-09-28	236
+317	Norbert Rillieux	Норбер Рилье	1806-03-17	265	1894-10-08	0
+318	Edward Maynard	Эдвард Мейнард	1813-04-26	497	1891-05-04	284
+319	Jonathan J. Couch	\N	\N	0	\N	0
+320	Augustus Russell Pope	Огастас Рассел Поуп	1819-01-25	267	1858-05-24	495
+321	Josephine Cochrane	Джозефина Кокрейн	1839-03-08	0	1913-08-14	279
+322	John Landis Mason	Джон Лэндис Мейсон	1832	499	1902-02-26	285
+323	James Caleb Jackson	Джеймс Калеб Джексон	1811-03-28	500	1895-07-11	501
+324	E. C. Singer	\N	\N	0	\N	0
+325	George Herman Babcock	Джордж Герман Бэбкок	1832-06-17	502	1893-12-16	107
+326	Stephen Wilcox	Стивен Уилкокс	1830-02-12	503	1893-11-27	107
+327	Alvin J. Fellows	Элвин Феллоус	\N	0	\N	0
+328	O. A. North	\N	\N	0	\N	0
+329	Benjamin Chew Tilghman	Бенджамин Чу Тилман	1821-10-26	269	1901-07-03	269
+330	Fred Hatch	Фред Хэтч	1848-11-01	505	1929-07-07	505
+331	Henry S. Parmelee	Генри Пармели	1864	0	1902	55
+332	Samuel W. Francis	Сэмюэль Фрэнсис	1835	285	1886	506
+333	Benjamin Forstner	Бенджамин Форстнер	1834-03-25	0	1897-02-27	175
+334	Francis Edgar Stanley	Фрэнсис Эдгар Стэнли	1849-06-01	507	1918-07-13	508
+335	Samuel Pierpont Langley	Сэмюэл Пирпонт Лэнгли	1834-08-22	267	1906-02-27	509
+336	Robert Gair	Роберт Гейр	1839	0	1927	285
+337	Warren S. Johnson	Уоррен Джонсон	1847-11-06	510	1911-12-05	283
+338	Sylvanus Bowser	Сильванус Баузер	1854-08-08	63	1938-10-03	63
+339	Reuben H. Donnelley	Рубен Доннелли	1864-08-20	471	1929-02-25	279
+340	Dorr Felt	Дорр Фелт	1862-03-18	512	1930-08-07	279
+341	John J. Loud	Джон Лауд	1844-11-02	513	1916-08-10	513
+342	William Gray	Уильям Грэй	\N	0	\N	0
+343	Herman Hollerith	Герман Холлерит	1860-02-29	236	1929-11-17	284
+344	August Schrader	Август Шрадер	1870	0	1894	285
+345	Granville Woods	Гранвилл Вудс	1856-04-23	154	1910-01-30	285
+346	George Ellery Hale	Джордж Эллери Хейл	1868-06-29	279	1938-02-21	44
+347	Charles Francis Jenkins	Чарльз Фрэнсин Дженкинс	1867-08-22	114	1934-06-06	284
+348	Bradley A. Fiske	Брэдли Фиск	1854-06-13	515	1942-04-06	285
+349	Milton Reeves	Мильтон Ривз	1864-08-25	0	1925-06-04	516
+350	Charles G. Conn	Чарльз Конн	1844-01-29	517	1931-01-05	283
+351	Joshua Lionel Cowen	Джошуа Кауэн	1877-08-25	285	1965-09-08	519
 \.
 
 
--- Completed on 2017-04-05 18:02:50
+-- Completed on 2017-04-09 18:01:56
 
 --
 -- PostgreSQL database dump complete
