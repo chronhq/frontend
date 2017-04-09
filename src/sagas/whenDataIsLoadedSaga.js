@@ -33,10 +33,12 @@ function* loadGeoData(action) {
   else if (action.type === 'SET_YEAR') year.target = action.year;
   else year.target = year.cur;
 
-  const dataToLoad = action.type === 'NEXT_YEAR'
+  const actualData = getActualData(borders.allYears, borders.byYear, year.target);
+  const additionalData = action.type === 'NEXT_YEAR'
     ? getNextData(borders.allYears, borders.byYear, year.target)
     // BORDERS_TIMELINE_FULFILLED or SET_YEAR or PREV_YEAR
-    : getActualData(borders.allYears, borders.byYear, year.target);
+    : {};
+  const dataToLoad = { ...actualData, ...additionalData };
   const geoIds = getIdsFromTimeline('geo', dataToLoad, loadedGeometry);
   // Loading new geometry
   if (geoIds.length > 0 && geometryData.loading === false) {
