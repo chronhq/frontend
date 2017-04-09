@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import { setYear } from '../reducers/timeline';
 import './TimePanel.less';
-import ControlButtonsController from '../containers/ControlButtonsController';
+import ControlButtons from '../components/ControlButtons';
 
 class TimePanel extends React.Component {
   constructor(props) {
@@ -136,7 +136,7 @@ class TimePanel extends React.Component {
   render() {
     return (
       <div id='timeline'>
-        <ControlButtonsController />
+        <ControlButtons />
         <div className='test'>
           <svg
             className="svgTime"

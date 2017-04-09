@@ -12,8 +12,6 @@ export function resetYear() {
 }
 
 const initialState = {
-  intervalId: 0,
-  interval: 1000,
   now: DEFAULT_YEAR,
   max: MAX_YEAR,
   min: DEFAULT_YEAR,
@@ -38,8 +36,6 @@ const setNewYearState = (state, action) => {
 
 const timeline = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_INTERVAL':
-      return { ...state, intervalId: action.id };
     case 'PREV_YEAR':
       return setNewYearState(state, { ...action, year: state.now - 1 });
     case 'NEXT_YEAR':
