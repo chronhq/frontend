@@ -121,6 +121,9 @@ class Modal extends React.Component {
   );
 
   render() {
+    if (this.props.isOpen === false) {
+      return null;
+    }
     return (
       <div>
         <div className='overlay' />

@@ -42,6 +42,7 @@ class SidePanel extends React.Component {
   render() {
     // const onTopStyle = { 'z-index': 1000, };
     return (
+
       <div>
         <div className="icon-bar" style={this.onTopStyle}>
           <button id="Sidebar1" onClick={() => this.toggle(1)} > <i className="fa fa-home fa-fw" /></button>
