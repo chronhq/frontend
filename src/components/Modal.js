@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import './Modal.less';
-// import SurveyList from './survey.json';
+
 import { askBackend } from '../reducers/actions';
 
 
@@ -11,66 +11,108 @@ class Radio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value,
+      checked: this.props.data.checked,
+      id: `${this.props.ids.join('_')}_radio`,
+      name: `${this.props.ids[0]}_${this.props.ids[1]}_radio`
     };
   }
   render() {
     return (
       <div className='radio'>
-        <label htmlFor={this.state.value}>
+        <label htmlFor={this.state.id}>
           <input
             type='radio'
-            id={this.state.value}
-            value={this.state.value}
-            checked={this.props.data === this.state.value}
+            name={this.state.name}
+            id={this.state.id}
+            value={this.props.value}
+            checked={this.state.checked}
             onChange={(e) => {
-              this.props.cb(e, this.props.name);
+              this.setState({ checked: e.target.checked });
+              this.props.cb(e.target.checked, ...this.props.ids, 'checked');
             }}
           />
-          {this.state.value}
+          {this.props.value}
         </label>
       </div>
     );
   }
 }
 
-Radio.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  data: React.PropTypes.string,
-  cb: React.PropTypes.func.isRequired,
-  name: React.PropTypes.number,
-};
+// Radio.propTypes = {
+//   value: React.PropTypes.string.isRequired,
+//   data: React.PropTypes.string,
+//   cb: React.PropTypes.func.isRequired,
+// };
 
-Radio.defaultProps = {
-  data: '',
-  name: '',
-};
+// Radio.defaultProps = {
+//   data: '',
+//   name: '',
+// };
+
+const RadioText = ({ ids, value, data, cb }) => (
+  <div>
+    <Radio ids={ids} value={value} data={data} cb={cb} />
+    {data.checked === true ?
+      <input type='text' onChange={e => cb(e.target.value, ...ids, 'text')} value={data.text} />
+      : null}
+  </div>
+);
+
+const TextOption = ({ ids, value, data, cb }) => (
+  <div>
+    <p> {value} </p>
+    <input type='text' onChange={e => cb(e.target.value, ...ids, 'text')} value={data.text} />;
+  </div>
+);
 
 
 class Modal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      answers: {},
-    };
+    const nextState = Object.keys(this.props.surveys).reduce(
+      (prev, sid) => ({
+        ...prev,
+        [sid]: this.props.surveys[sid].json.map(
+        quest => quest.options.map((opt) => {
+          switch (opt.type) {
+            case 'radio':
+              return { checked: false };
+            case 'radio-text':
+              return { checked: false, text: '' };
+            case 'text':
+              return { text: '' };
+            default:
+              return {};
+          }
+        }))
+      }), {}
+    );
+    this.state = { answers: nextState };
   }
 
-
-  handleChange = (e, propertyName) => {
+  handleChange = (e, sid, qid, oid, type) => {
+    console.log('Hello from handle change', this.state.answers);
     const newAnswers = {
       ...this.state.answers,
-      [propertyName]: e.target.value
+      [sid]: [
+        ...this.state.answers[sid].slice(0, qid),
+        [
+          ...this.state.answers[sid][qid].slice(0, oid),
+          { ...this.state.answers[sid][qid][oid], [type]: e },
+          ...this.state.answers[sid][qid].slice(oid + 1)
+        ],
+        ...this.state.answers[sid].slice(qid + 1)
+      ]
     };
+    console.log('Bye from handle change', newAnswers);
 
     this.setState({ answers: newAnswers });
-    // console.log(`You have selected ${newAnswers} `);
   }
 
-  handleFormSubmit = (e) => {
+  handleFormSubmit = (e, sid) => {
     e.preventDefault();
     console.log(`You have selected ${this.state.answers} `);
-    // this.props.askBackend('');
-    this.props.askBackend('SURVEYS_ANSWER', this.state.answers);
+    this.props.askBackend('SURVEYS_ANSWER', { surveyId: sid, surveyData: this.state.answers });
   }
 
   close(e) {
@@ -80,45 +122,42 @@ class Modal extends React.Component {
     }
   }
 
-  processOptions = (option, oid, qid) => {
+  processOptions = (option, oid, qid, sid) => {
+    const data = {
+      ids: [sid, qid, oid],
+      key: `${sid}_${qid}_${oid}_option`,
+      value: option.value,
+      data: this.state.answers[sid][qid][oid],
+      cb: this.handleChange
+    };
     switch (option.type) {
       case 'radio':
-        return (
-          <div key={oid}>
-            <Radio name={qid} value={option.value} key={`${qid}_${oid}`} data={this.state.answers[qid]} cb={this.handleChange} />
-          </div>
-        );
-
+        return <Radio {...data} />;
       case 'radio-text':
-        return (
-          <div key={oid}>
-            <Radio name={qid} value={option.value} key={`${qid}_${oid}`} data={this.state.answers[qid]} cb={this.handleChange} />
-            {this.state.answers[qid] === option.value ?
-              <input type='text' onChange={e => this.handleChange(e, `${qid}_{oid}`)} value={this.state.answers[`${qid}_plus`]} />
-              : null}
-          </div>
-        );
-
+        return <RadioText {...data} />;
       case 'text':
-        return (
-          <div>
-            <p> {option.value} </p>
-            <input type='text' onChange={e => this.handleChange(e, `${qid}_${oid}`)} value={this.state.answers[`${qid}_${oid}`]} />;
-          </div>
-        );
-
+        return <TextOption {...data} />;
       default:
         return null;
     }
   }
 
 
-  processQuestion = (data, qid) => (
-    <div key={qid}>
+  processQuestion = (data, qid, sid) => (
+    <div key={`${sid}_${qid}`}>
       <p> {data.question} </p>
-      {data.options.map((cur, id) => this.processOptions(cur, id, qid))}
+      {data.options.map((cur, id) => this.processOptions(cur, id, qid, sid))}
     </div>
   );
+
+  printForm = sid => (
+    <form key={`${sid}_form`} onSubmit={e => this.handleFormSubmit(e, sid)}>
+      {this.props.surveys[sid].json.map(
+        (cur, curId) => this.processQuestion(cur, curId, sid))
+      }
+      <button className="btn btn-default pull-right" type="submit"> Отправить </button>
+    </form>
+  )
 
   render() {
     if (this.props.isOpen === false) {
@@ -138,10 +177,7 @@ class Modal extends React.Component {
                  Пожалуйста, после тестирования заполните небольшую анкету,
                  которая сделает продукт лучше.
               </p>
-              <form onSubmit={this.handleFormSubmit}>
-                {this.props.surveys[1].json.map(this.processQuestion)}
-                <button className="btn btn-default pull-right" type="submit"> Отправить </button>
-              </form>
+              {Object.keys(this.props.surveys).map(this.printForm)}
             </div>
           </div>
         </div>
