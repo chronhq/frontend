@@ -1,4 +1,5 @@
-import db, { tables, getFromDB } from '../shared';
+import db, { tables, getFromDB } from '../shared/database';
+import { logger } from './helper';
 
 const conditions = [
   `${tables.SURVEYS}.start_date <= CURRENT_DATE`,
@@ -7,11 +8,13 @@ const conditions = [
 ].join(' and ');
 const where = `where ${conditions}`;
 
+function validateSurveyData(body) {
+  return [body.surveyId, body.surveyData];
+}
 function insertAnswer(req, res) {
-  const surveyId = req.body.surveyId;
-  const data = req.body.surveyData;
-
-  db.none(`INSERT INTO ${tables.SURVEYS} (survey, json) VALUES($1, $2)`, [surveyId, data])
+  logger.info('Inserting answer', req.body);
+  const [surveyId, data] = validateSurveyData(req.body);
+  db.none(`INSERT INTO ${tables.ANSWERS} (survey, json) VALUES($1, $2)`, [surveyId, data])
     .then(() => res.json({ result: true }))
     .catch(error => res.json({ result: false, error }));
 }
@@ -20,10 +23,7 @@ export default function surveys(req, res, url) {
   url.shift();
   const resJson = data => res.json(data);
 
-  switch (url[0]) {
-    case 'ANSWER':
-      return insertAnswer(req, res);
-    default:
-      return getFromDB(resJson, tables.SURVEYS, 'byId', where);
-  }
+  return url[0] === 'ANSWER'
+    ? insertAnswer(req, res)
+    : getFromDB(resJson, tables.SURVEYS, 'byId', where);
 }
