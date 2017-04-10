@@ -4,7 +4,15 @@
   margin-right: 60px !important;
   text-align: center;
   & p {color: white; text-align: center;}
-  & h5 {color:white; text-align: center; margin: 50px 50px;  padding: 1% 1%; z-index: 13;}
+  & h3 {
+    color:white;
+    text-align: center; margin:
+    50px 50px; font-weight: 400;
+    padding: 1% 1%; z-index: 13;
+    line-height: 1.5em;
+    // text-shadow: 0 0 3px #000;
+    text-shadow: 2px 2px 4px #000000;
+  }
   & circle {
     position:absolute;
   }
@@ -27,6 +35,18 @@
     z-index: 100;
   }
   & button {margin-top: 30px;}
+}
+
+.slick-dots li button:before{
+    color:white !important;
+}
+
+.slider {
+  margin-top: 80px;
+  & button {
+    width: 100px;
+    height: 45px;
+  }
 }
 
 .center {
@@ -67,6 +87,17 @@
   position: fixed;
   right: 0;
   top: 250px;
+  height: 50px;
+  width: 50px;
+  z-index: 2;
+  // background-color: rgba(0,0,0,0.7);
+}
+
+
+.overlay-invention {
+  position: fixed;
+  right: 0;
+  top: 200px;
   height: 50px;
   width: 50px;
   z-index: 2;
