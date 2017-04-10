@@ -1,5 +1,4 @@
 import express from 'express';
-import session from 'express-session';
 import bodyParser from 'body-parser';
 
 import locations from './locations';
@@ -8,6 +7,7 @@ import borders from './borders';
 import properties from './properties';
 import facts from './facts';
 import persons from './persons';
+import surveys from './surveys';
 
 import { logger } from './helper';
 
@@ -41,6 +41,9 @@ app.all('/*', (req, res) => {
   try {
     const params = [req, res, splittedUrlPath, splittedUrlParams];
     switch (splittedUrlPath[0]) {
+      case 'SURVEYS':
+        surveys(...params);
+        break;
       case 'LOCATIONS':
         locations(...params);
         break;
