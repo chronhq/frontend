@@ -32,6 +32,7 @@ class LoadingScreen extends Component {
     this.props.askBackend('PROPERTIES_TYPE');
     this.props.askBackend('FACTS');
     this.props.askBackend('PERSONS');
+    this.props.askBackend('SURVEYS');
   }
   componentWillReceiveProps(next) {
     const notLoaded = sumLoading(next.timeline) + sumLoading(next.data);
@@ -81,6 +82,7 @@ function mapStateToProps(state) {
       facts: getLoadedStatus('География фактов', state.facts),
       borders: getLoadedStatus('Политические границы', state.borders),
       persons: getLoadedStatus('Информация о людях', state.persons),
+      surveys: getLoadedStatus('Опросы', state.surveys),
       terrain: getLoadedStatus('Физическая карта мира', state.terrain)
     }
   };
