@@ -8,12 +8,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 GEO_TABLES="admin type geometry properties borders contour"
 FACTS_TABLES="inventions persons cities geo_events"
+SURVEY_TABLES="surveys answers"
 
 num=0
 [[ $TABLES == "" ]] && TABLES="all"
-[[ $TABLES == "all" ]] && TABLES_LIST="${GEO_TABLES} ${FACTS_TABLES}"
+[[ $TABLES == "all" ]] && TABLES_LIST="${GEO_TABLES} ${FACTS_TABLES} ${SURVEY_TABLES}"
 [[ $TABLES == "geo" ]] && TABLES_LIST=$GEO_TABLES
 [[ $TABLES == "facts" ]] && TABLES_LIST=$FACTS_TABLES && num=6
+[[ $TABLES == "survey" ]] && TABLES_LIST=$SURVEY_TABLES && num=10
 
 for DB in $TABLES_LIST; do
 	let "num++"

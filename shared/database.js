@@ -20,7 +20,10 @@ export const tables = {
   GEOMETRY: `${SCHEMA}.geometry`,
   PROPERTIES: `${SCHEMA}.properties`,
   ADMIN: `${SCHEMA}.admin`,
-  TYPE: `${SCHEMA}.type`
+  TYPE: `${SCHEMA}.type`,
+  // Survey
+  SURVEYS: `${SCHEMA}.surveys`,
+  ANSWERS: `${SCHEMA}.answers`
 };
 
 export function getFromDB(resCb, table, key, where = '', dataCb = () => {}) {
