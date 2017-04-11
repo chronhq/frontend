@@ -16,6 +16,9 @@ class Radio extends React.Component {
       name: `${this.props.ids[0]}_${this.props.ids[1]}_radio`
     };
   }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ checked: nextProps.data.checked });
+  }
   render() {
     return (
       <div className='radio'>
@@ -27,8 +30,9 @@ class Radio extends React.Component {
             value={this.props.value}
             checked={this.state.checked}
             onChange={(e) => {
-              this.setState({ checked: e.target.checked });
-              this.props.cb(e.target.checked, ...this.props.ids, 'checked');
+              const checked = !this.state.checked;
+              this.setState({ checked });
+              this.props.cb(checked, ...this.props.ids, 'checked');
             }}
           />
           {this.props.value}
@@ -91,27 +95,36 @@ class Modal extends React.Component {
   }
 
   handleChange = (e, sid, qid, oid, type) => {
-    console.log('Hello from handle change', this.state.answers);
+    // console.log('Hello from handle change', this.state.answers);
+    const question = this.state.answers[sid][qid].map((cur, id) => {
+      if (id === oid) { // Change current value
+        return { ...cur, [type]: e };
+      }
+      if (type === 'checked') {
+        const curType = this.props.surveys[sid].survey[qid].options[id].type;
+        // Disable checked: true on other radio_buttons
+        if (curType === 'radio' || curType === 'radio-text') {
+          return { ...this.state.answers[sid][qid][id], checked: false };
+        }
+      }
+      return cur;
+    });
     const newAnswers = {
       ...this.state.answers,
       [sid]: [
         ...this.state.answers[sid].slice(0, qid),
-        [
-          ...this.state.answers[sid][qid].slice(0, oid),
-          { ...this.state.answers[sid][qid][oid], [type]: e },
-          ...this.state.answers[sid][qid].slice(oid + 1)
-        ],
+        question,
         ...this.state.answers[sid].slice(qid + 1)
       ]
     };
-    console.log('Bye from handle change', newAnswers);
+    // console.log('Bye from handle change', newAnswers);
 
     this.setState({ answers: newAnswers });
   }
 
   handleFormSubmit = (e, sid) => {
     e.preventDefault();
-    console.log(`You have selected ${this.state.answers} `);
+    // console.log(`You have selected ${this.state.answers} `);
     this.props.askBackend('SURVEYS_ANSWER', { surveyId: sid, surveyData: this.state.answers });
   }
 
