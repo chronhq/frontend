@@ -23,8 +23,8 @@ class Intro extends React.Component {
   }
 
   nextClick = (e) => {
-    // console.log(`Next click event. event is ${e}`);
     this.setState({ whichSlide: e });
+    // console.log(`whichSlide is ${e}`);
   }
 
   next() {
@@ -45,7 +45,7 @@ class Intro extends React.Component {
       fade: true,
       infinite: true,
       lazyLoad: true,
-      speed: 500,
+      speed: 5,
       beforeChange: this.nextClick,
       slidesToShow: 1,
       slidesToScroll: 1,
@@ -72,14 +72,14 @@ class Intro extends React.Component {
 
     return (
       <div className='overlay'>
-        <div style={this.state.whichSlide === 0 ? highlightDiv : null} className='overlay-iconbar' />
-        <div style={this.state.whichSlide === 0 ? highlightDiv : null} className='overlay-timeline' />
-        <div style={this.state.whichSlide === 2 ? highlightDiv : null} className='overlay-legend' />
-        <div style={this.state.whichSlide === 3 ? highlightDiv : null} className='overlay-timecontrol' />
-        <div style={this.state.whichSlide === 4 ? highlightDiv : null} className='overlay-invention' />
-        <div style={this.state.whichSlide === 4 ? highlightDiv : null} className='overlay-feed' />
-        <div style={this.state.whichSlide === 5 ? highlightDiv : null} className='overlay-survey' />
-        <div style={this.state.whichSlide === 6 ? highlightDiv : null} className='overlay-home' />
+        <div style={this.state.whichSlide === 6 ? highlightDiv : null} className='overlay-iconbar' />
+        <div style={this.state.whichSlide === 6 ? highlightDiv : null} className='overlay-timeline' />
+        <div style={this.state.whichSlide === 1 ? highlightDiv : null} className='overlay-legend' />
+        <div style={this.state.whichSlide === 2 ? highlightDiv : null} className='overlay-timecontrol' />
+        <div style={this.state.whichSlide === 3 ? highlightDiv : null} className='overlay-invention' />
+        <div style={this.state.whichSlide === 3 ? highlightDiv : null} className='overlay-feed' />
+        <div style={this.state.whichSlide === 4 ? highlightDiv : null} className='overlay-survey' />
+        <div style={this.state.whichSlide === 5 ? highlightDiv : null} className='overlay-home' />
 
         <div className='row'>
           <div className='containter center'>
