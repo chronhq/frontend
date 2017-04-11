@@ -49,6 +49,10 @@ const surveysDefault = {
   REDUCER_NAME: 'SURVEYS',
   byId: {}
 };
+const answersDefault = {
+  loaded: false,
+  REDUCER_NAME: 'SURVEYS_ANSWER'
+};
 
 const locations = (
   state = locationDefaultState, action) => genericReducer(state, action);
@@ -66,6 +70,8 @@ const propsType = (
   state = propertiesTypeDefaultState, action) => genericReducer(state, action);
 const surveys = (
   state = surveysDefault, action) => genericReducer(state, action);
+const answers = (
+  state = answersDefault, action) => genericReducer(state, action);
 
 
 const mapInfoApp = combineReducers({
@@ -77,6 +83,7 @@ const mapInfoApp = combineReducers({
   projection,
   properties: combineReducers({ data: props, admin: propsAdmin, type: propsType }),
   surveys,
+  answers,
   borders,
   terrain,
   timeline,

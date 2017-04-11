@@ -61,7 +61,7 @@ const RadioText = ({ ids, value, data, cb }) => (
 const TextOption = ({ ids, value, data, cb }) => (
   <div>
     <p> {value} </p>
-    <input type='text' onChange={e => cb(e.target.value, ...ids, 'text')} value={data.text} />;
+    <input type='text' onChange={e => cb(e.target.value, ...ids, 'text')} value={data.text} />
   </div>
 );
 
@@ -69,10 +69,10 @@ const TextOption = ({ ids, value, data, cb }) => (
 class Modal extends React.Component {
   constructor(props) {
     super(props);
-    const nextState = Object.keys(this.props.surveys).reduce(
+    const answers = Object.keys(this.props.surveys).reduce(
       (prev, sid) => ({
         ...prev,
-        [sid]: this.props.surveys[sid].json.map(
+        [sid]: this.props.surveys[sid].survey.map(
         quest => quest.options.map((opt) => {
           switch (opt.type) {
             case 'radio':
@@ -87,7 +87,7 @@ class Modal extends React.Component {
         }))
       }), {}
     );
-    this.state = { answers: nextState };
+    this.state = { answers };
   }
 
   handleChange = (e, sid, qid, oid, type) => {
@@ -147,12 +147,13 @@ class Modal extends React.Component {
     <div key={`${sid}_${qid}`}>
       <p> {data.question} </p>
       {data.options.map((cur, id) => this.processOptions(cur, id, qid, sid))}
+      {data.noSeparator !== true && <hr />}
     </div>
   );
 
   printForm = sid => (
     <form key={`${sid}_form`} onSubmit={e => this.handleFormSubmit(e, sid)}>
-      {this.props.surveys[sid].json.map(
+      {this.props.surveys[sid].survey.map(
         (cur, curId) => this.processQuestion(cur, curId, sid))
       }
       <button className="btn btn-default pull-right" type="submit"> Отправить </button>
@@ -177,7 +178,15 @@ class Modal extends React.Component {
                  Пожалуйста, после тестирования заполните небольшую анкету,
                  которая сделает продукт лучше.
               </p>
-              {Object.keys(this.props.surveys).map(this.printForm)}
+              <hr />
+              {Object.keys(this.props.surveys).map((sid) => {
+                if (sid in this.props.posted) {
+                  return this.props.posted[sid].result === true
+                    ? <p>Ваши данные успешно переданы на сервер</p>
+                    : <p>Произошла ошибка {this.props.posted[sid].error}</p>;
+                }
+                return this.printForm(sid);
+              })}
             </div>
           </div>
         </div>
@@ -195,7 +204,7 @@ Modal.propTypes = {
 
 
 function mapStateToProps(state) {
-  return { surveys: state.surveys.byId };
+  return { surveys: state.surveys.byId, posted: state.answers };
 }
 
 function mapDispatchToProps(dispatch) {

@@ -14,9 +14,9 @@ function validateSurveyData(body) {
 function insertAnswer(req, res) {
   logger.info('Inserting answer', req.body);
   const [surveyId, data] = validateSurveyData(req.body);
-  db.none(`INSERT INTO ${tables.ANSWERS} (survey, json) VALUES($1, $2)`, [surveyId, data])
-    .then(() => res.json({ result: true }))
-    .catch(error => res.json({ result: false, error }));
+  db.none(`INSERT INTO ${tables.ANSWERS} (survey, answer) VALUES($1, $2)`, [surveyId, data])
+    .then(() => res.json({ [surveyId]: { result: true } }))
+    .catch(error => res.json({ [surveyId]: { result: false, error } }));
 }
 
 export default function surveys(req, res, url) {

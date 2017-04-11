@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.2
 -- Dumped by pg_dump version 9.6.2
 
--- Started on 2017-04-10 15:17:55
+-- Started on 2017-04-11 13:59:37
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,22 +23,22 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 204 (class 1259 OID 16841)
+-- TOC entry 203 (class 1259 OID 16833)
 -- Name: answers; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE answers (
     id integer NOT NULL,
     survey integer,
-    date date DEFAULT ('now'::text)::date NOT NULL,
-    json json NOT NULL
+    "timestamp" timestamp without time zone DEFAULT ('now'::text)::date NOT NULL,
+    answer json NOT NULL
 );
 
 
 ALTER TABLE answers OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 16839)
+-- TOC entry 204 (class 1259 OID 16840)
 -- Name: answers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -54,7 +54,7 @@ ALTER TABLE answers_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 2186 (class 0 OID 0)
--- Dependencies: 203
+-- Dependencies: 204
 -- Name: answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -62,7 +62,7 @@ ALTER SEQUENCE answers_id_seq OWNED BY answers.id;
 
 
 --
--- TOC entry 2058 (class 2604 OID 16844)
+-- TOC entry 2059 (class 2604 OID 16842)
 -- Name: answers id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -70,26 +70,26 @@ ALTER TABLE ONLY answers ALTER COLUMN id SET DEFAULT nextval('answers_id_seq'::r
 
 
 --
--- TOC entry 2181 (class 0 OID 16841)
--- Dependencies: 204
+-- TOC entry 2180 (class 0 OID 16833)
+-- Dependencies: 203
 -- Data for Name: answers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY answers (id, survey, date, json) FROM stdin;
+COPY answers (id, survey, "timestamp", answer) FROM stdin;
 \.
 
 
 --
 -- TOC entry 2187 (class 0 OID 0)
--- Dependencies: 203
+-- Dependencies: 204
 -- Name: answers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('answers_id_seq', 1, false);
+SELECT pg_catalog.setval('answers_id_seq', 0, true);
 
 
 --
--- TOC entry 2061 (class 2606 OID 16850)
+-- TOC entry 2061 (class 2606 OID 16844)
 -- Name: answers answers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -98,7 +98,7 @@ ALTER TABLE ONLY answers
 
 
 --
--- TOC entry 2062 (class 2606 OID 16851)
+-- TOC entry 2062 (class 2606 OID 16845)
 -- Name: answers answers_survey_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -106,7 +106,7 @@ ALTER TABLE ONLY answers
     ADD CONSTRAINT answers_survey_fkey FOREIGN KEY (survey) REFERENCES surveys(id);
 
 
--- Completed on 2017-04-10 15:17:55
+-- Completed on 2017-04-11 13:59:37
 
 --
 -- PostgreSQL database dump complete
