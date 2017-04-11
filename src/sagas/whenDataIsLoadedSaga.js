@@ -147,13 +147,20 @@ function* generatePersonsTimeline(action) {
   yield put({
     type: 'PERSONS_TIMELINE_FULFILLED',
     payload: {
-      facts: deathFacts,
       byYear: timelineYears.data,
       allYears: Object.keys(timelineYears.data)
     }
   });
+  yield put({
+    type: 'PERSONS_FACTS_TIMELINE_FULFILLED',
+    payload: {
+      byYear: deathFacts,
+      allYears: Object.keys(deathFacts)
+    }
+  });
   const year = yield select(getCurrentYear);
   yield put({ type: 'PERSONS_TIMELINE_CURRENT', year });
+  yield put({ type: 'PERSONS_FACTS_TIMELINE_CURRENT', year });
 }
 
 function* generateFactsTimeline(action) {

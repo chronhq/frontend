@@ -18,7 +18,8 @@ const initialState = {
   facts: { REDUCER_NAME: 'FACTS_TIMELINE', current: [], byYear: {}, loaded: false },
   locations: { REDUCER_NAME: 'LOCATIONS_TIMELINE', loaded: false },
   borders: { REDUCER_NAME: 'BORDERS_TIMELINE', current: '', byYear: {}, loaded: false },
-  persons: { REDUCER_NAME: 'PERSONS_TIMELINE', current: [], byYear: {}, loaded: false }
+  personsAlive: { REDUCER_NAME: 'PERSONS_TIMELINE', current: [], byYear: {}, loaded: false },
+  personsFacts: { REDUCER_NAME: 'PERSONS_FACTS_TIMELINE', current: [], byYear: {}, loaded: false }
 };
 
 const setNewYearState = (state, action) => {
@@ -29,7 +30,8 @@ const setNewYearState = (state, action) => {
     facts: factsReducer(state.facts, act),
     locations: layerReducer(state.locations, act),
     borders: layerReducer(state.borders, act),
-    persons: layerReducer(state.persons, act),
+    personsAlive: layerReducer(state.personsAlive, act),
+    personsFacts: layerReducer(state.personsFacts, act),
     now: act.year
   };
 };
@@ -68,7 +70,14 @@ const timeline = (state = initialState, action) => {
     case 'PERSONS_TIMELINE_REJECTED':
     case 'PERSONS_TIMELINE_CURRENT':
       return { ...state,
-        persons: layerReducer(state.persons, action)
+        personsAlive: layerReducer(state.personsAlive, action)
+      };
+        case 'PERSONS_TIMELINE_PENDING':
+    case 'PERSONS_FACTS_TIMELINE_FULFILLED':
+    case 'PERSONS_FACTS_TIMELINE_REJECTED':
+    case 'PERSONS_FACTS_TIMELINE_CURRENT':
+      return { ...state,
+        personsFacts: layerReducer(state.personsFacts, action)
       };
     default:
       return state;

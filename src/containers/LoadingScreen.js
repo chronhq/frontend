@@ -75,7 +75,6 @@ function mapStateToProps(state) {
       locations: getLoadedStatus('Перечень мест', state.timeline.locations),
       facts: getLoadedStatus('Перечень фактов', state.timeline.facts),
       borders: getLoadedStatus('Перечень границ', state.timeline.borders),
-      persons: getLoadedStatus('Перечень лиц', state.timeline.persons)
     },
     data: {
       locations: getLoadedStatus('География мест', state.locations),

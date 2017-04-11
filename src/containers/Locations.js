@@ -30,7 +30,7 @@ class Locations extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selected !== this.state.selected) {
-      if (nextProps.selected === null) {
+      if (nextProps.selected === null || !(nextProps.selected in nextProps.places)) {
         this.setState({ // Hide locationFlag
           locationFlag: false
         });
