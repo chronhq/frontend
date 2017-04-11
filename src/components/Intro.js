@@ -27,10 +27,6 @@ class Intro extends React.Component {
     this.setState({ whichSlide: e });
   }
 
-  leftArrow = () => {
-    return <div className='arrowbtn'>Button</div>;
-  };
-
   render() {
     if (this.props.isOpen === false) {
       return null;
@@ -39,7 +35,7 @@ class Intro extends React.Component {
     const settings = {
       dots: true,
       autoplay: true,
-      autoplaySpeed: 800,
+      autoplaySpeed: 8000,
       arrows: true,
       adaptiveHeight: false,
       fade: true,
