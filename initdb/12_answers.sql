@@ -85,7 +85,7 @@ COPY answers (id, survey, "timestamp", answer) FROM stdin;
 -- Name: answers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('answers_id_seq', 0, true);
+SELECT pg_catalog.setval('answers_id_seq', 1, true);
 
 
 --

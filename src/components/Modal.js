@@ -6,52 +6,30 @@ import './Modal.less';
 
 import { askBackend } from '../reducers/actions';
 
+const optionPropTypes = {
+  ids: React.PropTypes.array.isRequired,
+  value: React.PropTypes.string.isRequired,
+  data: React.PropTypes.object.isRequired,
+  cb: React.PropTypes.func.isRequired
+};
 
-class Radio extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      checked: this.props.data.checked,
-      id: `${this.props.ids.join('_')}_radio`,
-      name: `${this.props.ids[0]}_${this.props.ids[1]}_radio`
-    };
-  }
-  componentWillReceiveProps(nextProps) {
-    this.setState({ checked: nextProps.data.checked });
-  }
-  render() {
-    return (
-      <div className='radio'>
-        <label htmlFor={this.state.id}>
-          <input
-            type='radio'
-            name={this.state.name}
-            id={this.state.id}
-            value={this.props.value}
-            checked={this.state.checked}
-            onChange={(e) => {
-              const checked = !this.state.checked;
-              this.setState({ checked });
-              this.props.cb(checked, ...this.props.ids, 'checked');
-            }}
-          />
-          {this.props.value}
-        </label>
-      </div>
-    );
-  }
-}
-
-// Radio.propTypes = {
-//   value: React.PropTypes.string.isRequired,
-//   data: React.PropTypes.string,
-//   cb: React.PropTypes.func.isRequired,
-// };
-
-// Radio.defaultProps = {
-//   data: '',
-//   name: '',
-// };
+const Radio = ({ ids, value, data, cb }) => (
+  <div className='radio'>
+    <label htmlFor={ids.join('r')}>
+      <input
+        type='radio'
+        id={ids.join('r')}
+        value={value}
+        checked={data.checked}
+        onChange={() => {
+          cb(!data.checked, ...ids, 'checked');
+        }}
+      />
+      {value}
+    </label>
+  </div>
+);
+Radio.propTypes = optionPropTypes;
 
 const RadioText = ({ ids, value, data, cb }) => (
   <div>
@@ -61,6 +39,7 @@ const RadioText = ({ ids, value, data, cb }) => (
       : null}
   </div>
 );
+RadioText.propTypes = optionPropTypes;
 
 const TextOption = ({ ids, value, data, cb }) => (
   <div>
@@ -68,7 +47,7 @@ const TextOption = ({ ids, value, data, cb }) => (
     <input type='text' onChange={e => cb(e.target.value, ...ids, 'text')} value={data.text} />
   </div>
 );
-
+TextOption.propTypes = optionPropTypes;
 
 class Modal extends React.Component {
   constructor(props) {
@@ -98,7 +77,9 @@ class Modal extends React.Component {
     // console.log('Hello from handle change', this.state.answers);
     const question = this.state.answers[sid][qid].map((cur, id) => {
       if (id === oid) { // Change current value
-        return { ...cur, [type]: e };
+        return type === 'checked' && e === false
+          ? cur // Disable uncheck the radio button
+          : { ...cur, [type]: e };
       }
       if (type === 'checked') {
         const curType = this.props.surveys[sid].survey[qid].options[id].type;
