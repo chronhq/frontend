@@ -61,7 +61,7 @@ const RadioText = ({ ids, value, data, cb }) => (
 const TextOption = ({ ids, value, data, cb }) => (
   <div>
     <p> {value} </p>
-    <input type='text' onChange={e => cb(e.target.value, ...ids, 'text')} value={data.text} />;
+    <input type='text' onChange={e => cb(e.target.value, ...ids, 'text')} value={data.text} />
   </div>
 );
 
@@ -72,7 +72,7 @@ class Modal extends React.Component {
     const answers = Object.keys(this.props.surveys).reduce(
       (prev, sid) => ({
         ...prev,
-        [sid]: this.props.surveys[sid].json.map(
+        [sid]: this.props.surveys[sid].survey.map(
         quest => quest.options.map((opt) => {
           switch (opt.type) {
             case 'radio':
@@ -153,7 +153,7 @@ class Modal extends React.Component {
 
   printForm = sid => (
     <form key={`${sid}_form`} onSubmit={e => this.handleFormSubmit(e, sid)}>
-      {this.props.surveys[sid].json.map(
+      {this.props.surveys[sid].survey.map(
         (cur, curId) => this.processQuestion(cur, curId, sid))
       }
       <button className="btn btn-default pull-right" type="submit"> Отправить </button>
