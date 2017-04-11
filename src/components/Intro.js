@@ -27,6 +27,10 @@ class Intro extends React.Component {
     this.setState({ whichSlide: e });
   }
 
+  next() {
+    this.slider.slickNext();
+  }
+
   render() {
     if (this.props.isOpen === false) {
       return null;
@@ -34,9 +38,9 @@ class Intro extends React.Component {
 
     const settings = {
       dots: true,
-      autoplay: true,
+      autoplay: false,
       autoplaySpeed: 8000,
-      arrows: true,
+      arrows: false,
       adaptiveHeight: false,
       fade: true,
       infinite: true,
@@ -80,7 +84,7 @@ class Intro extends React.Component {
         <div className='row'>
           <div className='containter center'>
             <div className='slider'>
-              <Slider class='text-center' {...settings}>
+              <Slider class='text-center' ref={c => this.slider = c } {...settings}>
                 <div><h4> {SlideSalutation} </h4></div>
                 <div><h4> {SlideDemo} </h4></div>
                 <div><h4> {SlideLegend} </h4></div>
@@ -89,7 +93,8 @@ class Intro extends React.Component {
                 <div><h4> {SlideSurvey} </h4></div>
                 <div><h4> {SlideHome} </h4></div>
               </Slider>
-              <button onClick={e => this.close(e)} className='btn btn-primary'> OK </button>
+              <button onClick={e => this.close(e)} className='btn btn-primary'> Закрыть </button>
+              <button onClick={e => this.next()} className='btn btn-primary'> Далее </button>
             </div>
           </div>
         </div>
