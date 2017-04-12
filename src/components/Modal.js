@@ -106,7 +106,7 @@ class Modal extends React.Component {
   handleFormSubmit = (e, sid) => {
     e.preventDefault();
     // console.log(`You have selected ${this.state.answers} `);
-    this.props.askBackend('SURVEYS_ANSWER', { surveyId: sid, surveyData: this.state.answers });
+    this.props.askBackend('SURVEYS_ANSWER', { surveyId: sid, surveyData: this.state.answers[sid] });
   }
 
   close(e) {
