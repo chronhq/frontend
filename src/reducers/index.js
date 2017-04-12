@@ -7,72 +7,25 @@ import visibility from './visibility';
 import status from './status';
 import mapView from './mapView';
 
-const locationDefaultState = {
+const getReducerState = (name, fields) => ({
   loaded: false,
-  REDUCER_NAME: 'LOCATIONS',
-  places: {},
-  allIds: []
-};
-const terrainDefaultState = {
-  loaded: false,
-  REDUCER_NAME: 'TERRAIN',
-  byContinent: {},
-  projected: {}
-};
-const factsDefaultState = {
-  loaded: false,
-  REDUCER_NAME: 'FACTS',
-  byId: {}
-};
-const personsDefaultState = {
-  loaded: false,
-  REDUCER_NAME: 'PERSONS',
-  byId: {}
-};
-const propertiesDefaultState = {
-  loaded: false,
-  REDUCER_NAME: 'PROPERTIES',
-  properties: {}
-};
-const propertiesAdminDefaultState = {
-  loaded: false,
-  REDUCER_NAME: 'PROPERTIES_ADMIN',
-  admin: {}
-};
-const propertiesTypeDefaultState = {
-  loaded: false,
-  REDUCER_NAME: 'PROPERTIES_TYPE',
-  type: {}
-};
-const surveysDefault = {
-  loaded: false,
-  REDUCER_NAME: 'SURVEYS',
-  byId: {}
-};
-const answersDefault = {
-  loaded: false,
-  REDUCER_NAME: 'SURVEYS_ANSWER'
-};
+  REDUCER_NAME: name,
+  ...fields
+});
+const newReducer = (name, fields) =>
+  (state = getReducerState(name, fields), action) =>
+    genericReducer(state, action);
 
-const locations = (
-  state = locationDefaultState, action) => genericReducer(state, action);
-const terrain = (
-  state = terrainDefaultState, action) => genericReducer(state, action);
-const facts = (
-  state = factsDefaultState, action) => genericReducer(state, action);
-const persons = (
-  state = personsDefaultState, action) => genericReducer(state, action);
-const props = (
-  state = propertiesDefaultState, action) => genericReducer(state, action);
-const propsAdmin = (
-  state = propertiesAdminDefaultState, action) => genericReducer(state, action);
-const propsType = (
-  state = propertiesTypeDefaultState, action) => genericReducer(state, action);
-const surveys = (
-  state = surveysDefault, action) => genericReducer(state, action);
-const answers = (
-  state = answersDefault, action) => genericReducer(state, action);
 
+const locations = newReducer('LOCATIONS', { places: {} });
+const terrain = newReducer('TERRAIN', { byId: {}, projected: {} });
+const facts = newReducer('FACTS', { byId: {} });
+const persons = newReducer('PERSONS', { byId: {} });
+const props = newReducer('PROPERTIES', { properties: {} });
+const propsAdmin = newReducer('PROPERTIES_ADMIN', { admin: {} });
+const propsType = newReducer('PROPERTIES_TYPE', { type: {} });
+const surveys = newReducer('SURVEYS', { byId: {} });
+const answers = newReducer('SURVEYS_ANSWER', {});
 
 const mapInfoApp = combineReducers({
   mapView,
