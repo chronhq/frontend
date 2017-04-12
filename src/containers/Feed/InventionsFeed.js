@@ -1,10 +1,7 @@
 import React from 'react';
 
 const Invention = ({ fact, persons }) => (
-  <div
-    className='factStillInFuture'
-    key={fact.id}
-  >
+  <div key={`in_${fact.id}`}>
     <span >
       <h5 className='factHeader'>{fact.name_rus}</h5>
       <span className='factDate'>

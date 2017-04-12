@@ -21,6 +21,7 @@ const locations = newReducer('LOCATIONS', { places: {} });
 const terrain = newReducer('TERRAIN', { byId: {}, projected: {} });
 const facts = newReducer('FACTS', { byId: {} });
 const persons = newReducer('PERSONS', { byId: {} });
+const personsFacts = newReducer('PERSONS_FACTS', { byId: {} });
 const props = newReducer('PROPERTIES', { properties: {} });
 const propsAdmin = newReducer('PROPERTIES_ADMIN', { admin: {} });
 const propsType = newReducer('PROPERTIES_TYPE', { type: {} });
@@ -33,6 +34,7 @@ const mapInfoApp = combineReducers({
   locations,
   facts,
   persons,
+  personsFacts,
   projection,
   properties: combineReducers({ data: props, admin: propsAdmin, type: propsType }),
   surveys,

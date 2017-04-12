@@ -109,27 +109,35 @@ function getBirthAndDeath(cur) {
 
 function* generatePersonsTimeline(action) {
   const data = action.payload;
+  let idCounter = 0;
+  const deathById = {};
   const deathFacts = Object.keys(data.byId).reduce((prev, curId) => {
     const cur = data.byId[curId];
     const [birth, death] = getBirthAndDeath(cur);
     const newFacts = prev;
     const flag = birth !== null && death !== null;
-    const bornFact = { type: 'born', id: cur.id, flag };
-    const deathFact = { type: 'death', id: cur.id, flag };
+
+    idCounter += 1;
+    const bornFact = { type: 'born', id: idCounter, person: cur.id, flag };
+    idCounter += 1;
+    const deathFact = { type: 'death', id: idCounter, person: cur.id, flag };
     if (birth !== null) {
+      deathById[bornFact.id] = bornFact;
       newFacts[birth] = birth in newFacts
-        ? [...newFacts[birth], bornFact]
-        : [bornFact];
+        ? { ...newFacts[birth], birth: [...newFacts[birth].birth, bornFact] }
+        : { death: [], birth: [bornFact] };
     }
     if (death !== null) {
+      deathById[deathFact.id] = deathFact;
       newFacts[death] = death in newFacts
-        ? [...newFacts[death], deathFact]
-        : [deathFact];
+        ? { ...newFacts[death], death: [...newFacts[death].death, deathFact] }
+        : { death: [deathFact], birth: [] };
     }
     return newFacts;
   }, {});
   const timelineYears = Object.keys(deathFacts).reduce((prevYear, curId) => {
-    const alive = deathFacts[curId].reduce((prevAlive, curFact) => {
+    const factInThisYear = [...deathFacts[curId].birth, ...deathFacts[curId].death];
+    const alive = factInThisYear.reduce((prevAlive, curFact) => {
       if (typeof prevAlive !== 'undefined') {
         // if flag is false - only one date is available,
         // can't build timeline for this person
@@ -156,6 +164,12 @@ function* generatePersonsTimeline(action) {
     payload: {
       byYear: deathFacts,
       allYears: Object.keys(deathFacts)
+    }
+  });
+  yield put({
+    type: 'PERSONS_FACTS_FULFILLED',
+    payload: {
+      byId: deathById
     }
   });
   const year = yield select(getCurrentYear);
