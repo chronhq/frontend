@@ -2,66 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Fact from '../components/Fact';
-import { selectLocation } from '../reducers/status';
+import InventionsFeed from './InventionsFeed';
+import PersonsFeed from './PersonsFeed';
+import ExportFromFeed from './ExportFromFeed';
+import { selectLocation } from '../../reducers/status';
 
 import './Feed.less';
 
-const DownloadButton = ({ data, filename, label }) => {
-  const blob = new Blob([data], { type: 'application/msword' });
-  console.log('Blob is ready for data', data);
-  const fileData = window.URL.createObjectURL(blob);
-  return (
-    <div className="btn-group">
-      <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn  btn-default btn-sm">
-      {label}
-      </a>
-    </div>
-  );
-};
-
-const InventionsFeed = ({ persons, inventions, current, selected, hoverCb, changeCb }) => (
-  <div className='InventionsFeed'>{current.map(year => year.map(invId =>
-    <div
-      key={`div_inv_${invId}`}
-      onMouseEnter={() => hoverCb(invId)}
-      onMouseLeave={() => hoverCb(null)}
-      onClick={() => changeCb({ [invId]: !selected[invId] })}
-      className={selected[invId] === true
-        ? 'selectedFact' : 'regularFact'}
-    >
-      <Fact fact={inventions.byId[invId]} persons={persons.byId} />
-    </div>
-  ))}
-  </div>
-);
-const PersonFact = ({ person, fact }) => (
-  <div
-    className='factStillInFuture'
-    key={`pf_${person.id}`}
-  >
-    <span>
-    {fact.type === 'born'
-      ? 'Родился'
-      : 'Умер' } {person.name_rus}
-    </span>
-  </div>
-);
-const PersonsFeed = ({ persons, current, selected, hoverCb, changeCb }) => (
-  <div className='PersonsFeed'>{current.map(perFact =>
-    <div
-      key={`div_per_${perFact.id}`}
-      onMouseEnter={() => hoverCb(persons.byId[perFact.id].birth_place)}
-      onMouseLeave={() => hoverCb(null)}
-      onClick={() => changeCb({ [perFact.id]: !selected[perFact.id] })}
-      className={selected[perFact.id] === true
-        ? 'selectedFact' : 'regularFact'}
-    >
-      <PersonFact person={persons.byId[perFact.id]} fact={perFact} />
-    </div>
-  )}
-  </div>
-);
 class Feed extends Component {
 
   state = {
@@ -118,16 +65,7 @@ ${fact.description}
           hoverCb={data => this.handleHover('inventions', data)}
           changeCb={data => this.handleChange('inventions', data)}
         />
-        <DownloadButton
-          filename="facts.doc"
-          label="Экспорт в doc"
-          data={this.state.exported}
-        />
-        <DownloadButton
-          filename="facts.pdf"
-          label="Экспорт в pdf"
-          data={this.state.exported}
-        />
+        <ExportFromFeed exported={this.state.exported} />
       </div>
     );
   }
