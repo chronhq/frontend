@@ -27,6 +27,7 @@ function* exportFromFeed(action) {
     const loc = getLocationName(fact.invent_place, state.locations);
     const ppl = fact.inventor.map(invId => state.persons[invId].name_rus);
     return [
+      `Название: "${fact.name_rus}"`
       `Дата: ${fact.invent_date}, Место: "${loc}" Участники: "${ppl.join(', ')}"`,
       `Описание: "${fact.description}"`,
       `Дополнительная информация: "${fact.link}"`,
