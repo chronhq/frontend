@@ -14,46 +14,48 @@ const getSelectedIds = selected =>
       : prev), []);
 
 const getLocationName = (id, loc) => (id in loc ? loc[id].name_rus : 'Неизвестно');
-const getDate = date => (date ? date : '????');
+const getDate = date => (date || '????');
+const newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
+
+const getFactDescription = (state, factId) => {
+  const fact = state.facts[factId];
+  const loc = getLocationName(fact.invent_place, state.locations);
+  const ppl = fact.inventor.map(invId => state.persons[invId].name_rus);
+  return [
+    `Название: "${fact.name_rus}"`,
+    `Дата: ${fact.invent_date}, Место: "${loc}" Участники: "${ppl.join(', ')}"`,
+    `Описание: "${fact.description}"`,
+    `Дополнительная информация: "${fact.link}"`,
+    ''
+  ].join(newLine);
+};
+
+const getPersonFacts = (state, factId) => {
+  const fact = state.personsFacts[factId];
+  const person = state.persons[fact.person];
+  const birthLoc = getLocationName(person.birth_place, state.locations);
+  const deathLoc = getLocationName(person.death_place, state.locations);
+
+  const birthDate = getDate(person.birth_date);
+  const deathDate = getDate(person.death_date);
+  return [
+    `Имя: "${person.name_rus}"`,
+    `Годы жизни: "${birthDate} - ${deathDate}"`,
+    `Место рождения: "${birthLoc}"`,
+    `Место смерти: "${deathLoc}"`,
+    ''
+  ].join(newLine);
+};
 
 function* exportFromFeed(action) {
   const state = yield select(stateSelector);
   const selected = action.selected;
 
-  const newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
+  const getPersonFactsS = factId => getPersonFacts(state, factId);
+  const getFactDescriptionS = factId => getFactDescription(state, factId);
 
-  const getFactDescription = (factId) => {
-    const fact = state.facts[factId];
-    const loc = getLocationName(fact.invent_place, state.locations);
-    const ppl = fact.inventor.map(invId => state.persons[invId].name_rus);
-    return [
-      `Название: "${fact.name_rus}"`
-      `Дата: ${fact.invent_date}, Место: "${loc}" Участники: "${ppl.join(', ')}"`,
-      `Описание: "${fact.description}"`,
-      `Дополнительная информация: "${fact.link}"`,
-      ''
-    ].join(newLine);
-  };
-
-  const getPersonFacts = (factId) => {
-    const fact = state.personsFacts[factId];
-    const person = state.persons[fact.person];
-    const birthLoc = getLocationName(person.birth_place, state.locations);
-    const deathLoc = getLocationName(person.death_place, state.locations);
-
-    const birthDate = getDate(person.birth_date);
-    const deathDate = getDate(person.death_date);
-    return [
-      `Имя: "${person.name_rus}"`,
-      `Годы жизни: "${birthDate} - ${deathDate}"`,
-      `Место рождения: "${birthLoc}"`,
-      `Место смерти: "${deathLoc}"`,
-      ''
-    ].join(newLine);
-  };
-
-  const personsFacts = getSelectedIds(selected.persons).map(getPersonFacts);
-  const inventions = getSelectedIds(selected.inventions).map(getFactDescription);
+  const personsFacts = getSelectedIds(selected.persons).map(getPersonFactsS);
+  const inventions = getSelectedIds(selected.inventions).map(getFactDescriptionS);
   // TODO format data according to action.format
   const data = [...personsFacts, ...inventions].join(newLine);
   const blob = new Blob([data], { type: 'text/plain' });
@@ -62,8 +64,6 @@ function* exportFromFeed(action) {
   const targetA = document.getElementById(action.id);
   targetA.href = fileData;
   targetA.click();
-
-
 }
 
 export default function* exportFromFeedSaga() {
