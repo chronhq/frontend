@@ -4,6 +4,7 @@ import mapView from './mapViewSaga';
 import throttleFactSelection from './throttleFactSelectionSaga';
 import whenDataIsLoaded from './whenDataIsLoadedSaga';
 import playHistory from './playHistorySaga';
+import exportFromFeed from './exportFromFeedSaga';
 
 
 export default [
@@ -12,6 +13,7 @@ export default [
   mapView,
   playHistory,
   changeProjection,
+  exportFromFeed,
   assignTimelineCurrent
 ];
 

@@ -1,29 +1,34 @@
 import React from 'react';
 
-const DownloadButton = ({ data, filename, label }) => {
-  const blob = new Blob([data], { type: 'application/msword' });
-  console.log('Blob is ready for data', data);
-  const fileData = window.URL.createObjectURL(blob);
-  return (
-    <div className="btn-group">
-      <a href={fileData} rel='noopener noreferer' target='_blank' download={filename} className="btn  btn-default btn-sm">
-        {label}
-      </a>
-    </div>
-  );
-};
+const DownloadButton = ({ cb, id, filename, label, format }) => (
+  <div className="btn-group">
+    <a href="#" onClick={() => cb(id, format)} className="btn  btn-default btn-sm">
+      {label}
+    </a>
+    <a
+      href="" id={id}
+      target='_blank' rel='noopener noreferer'
+      download={filename}className="hiddenLink"
+      style={{ display: 'none' }}
+    />
+  </div>
+);
 
-const ExportFromFeed = ({ exported }) => (
+const ExportFromFeed = ({ cb }) => (
   <div>
     <DownloadButton
-      filename="facts.doc"
-      label="Экспорт в doc"
-      data={exported}
+      filename="facts.txt"
+      label="Экспорт в txt"
+      format='txt'
+      id="factstxtdownload"
+      cb={cb}
     />
     <DownloadButton
-      filename="facts.pdf"
+      filename="facts.txt"
       label="Экспорт в pdf"
-      data={exported}
+      format='pdf'
+      id="factspdfdownload"
+      cb={cb}
     />
   </div>
 );

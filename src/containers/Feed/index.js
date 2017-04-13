@@ -9,28 +9,20 @@ import { selectLocation } from '../../reducers/status';
 
 import './Feed.less';
 
+export function exportFromFeed(id, format, selected) {
+  return {
+    type: 'FEED_EXPORT',
+    id,
+    format,
+    selected,
+  };
+}
+
 class Feed extends Component {
 
   state = {
     selected: { inventions: {}, geo_events: {}, persons: {} },
-    exported: []
   }
-
-  formatFactForExport = fact =>
-`${fact.name_rus} ${fact.invention_date}
-${fact.description}
-`
-
-  // formatFactForExport = fact => <Fact fact={fact} persons={this.props.persons.byId} />
-
-  prepareForExport = selected =>
-    Object.keys(selected).reduce((prev, stateId) => {
-      if (selected[stateId] === true) {
-        const factId = stateId;
-        return [...prev, this.formatFactForExport(this.props.facts.byId[factId])];
-      }
-      return prev;
-    }, [])
 
   handleChange = (type, data) => {
     console.log('have new data in handle change', data);
@@ -38,13 +30,16 @@ ${fact.description}
       ...this.state.selected,
       [type]: { ...this.state.selected[type], ...data }
     };
-    const exported = this.prepareForExport(selected);
-    this.setState({ selected, exported });
+    this.setState({ selected });
   }
+
   handleHover = (type, factId) => {
     this.props.selectLocation(factId);
   }
 
+  handleDownload = (id, type) => {
+    this.props.exportFromFeed(id, type, this.state.selected);
+  }
 
   render() {
     return (
@@ -65,7 +60,7 @@ ${fact.description}
           hoverCb={data => this.handleHover('inventions', data)}
           changeCb={data => this.handleChange('inventions', data)}
         />
-        <ExportFromFeed exported={this.state.exported} />
+        <ExportFromFeed cb={this.handleDownload} />
       </div>
     );
   }
@@ -75,14 +70,14 @@ function mapStateToProps(state) {
   return {
     inventions: state.facts,
     currentInventions: state.timeline.facts.current,
-    // personsAlive: state.timeline.personsAlive.current,
     personsFacts: state.timeline.personsFacts.current,
     persons: state.persons
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    selectLocation: bindActionCreators(selectLocation, dispatch)
+    selectLocation: bindActionCreators(selectLocation, dispatch),
+    exportFromFeed: bindActionCreators(exportFromFeed, dispatch)
   };
 }
 
