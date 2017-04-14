@@ -44,7 +44,7 @@ class SidePanel extends React.Component {
 
       <div>
         <div className="icon-bar" style={this.onTopStyle}>
-          <button id="Sidebar1" onClick={() => this.toggle(1)} > <i className="fa fa-home fa-fw" /></button>
+          <button onClick={() => this.toggleIntro()}> <i className="fa fa-home fa-fw" /></button>
           <button onClick={() => this.toggle(2)}><i className="fa fa-search fa-fw" /></button>
           <button onClick={() => this.toggle(3)}><i className="fa fa-list-ul fa-fw" /></button>
           <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
@@ -63,10 +63,7 @@ class SidePanel extends React.Component {
               </div>
               : null }
             {this.state.current === 2
-              ? <div className='search'>
-                <h3> Поиск </h3>
-                <RotatingLogo />
-              </div>
+              ? <SearchPanel />
               : null }
             {this.state.current === 3 ? <Feed /> : null }
             {this.state.current === 4 ? <Legend /> : null }
@@ -77,5 +74,16 @@ class SidePanel extends React.Component {
     );
   }
 }
+
+
+const SearchPanel = () => (
+  <div className='search'>
+    <h3> Поиск </h3>
+    <div className="row">
+      <div className="col-md-12"><input type="text" disabled={true} className="search" placeholder="Поиск" /></div>
+      </div>
+    <p> В скором времени в этой вкладке появится возможность быстрого поиска по изобретениям и персонам. </p>
+  </div>
+);
 
 export default SidePanel;
