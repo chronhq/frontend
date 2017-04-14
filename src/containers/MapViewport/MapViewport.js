@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
-import { getBordersFromState } from '../reducers/actions';
-import Locations from './Locations';
-import PatternsDefs, { getFillPatternId } from '../components/SVGPatternsDefs';
-import SizeMeter from '../components/SizeMeter';
-import LoadingWidget from '../components/LoadingWidget';
-import { changeScale } from '../reducers/mapView';
+import { getBordersFromState } from '../../reducers/actions';
+import Locations from '../Locations';
+import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
+import SizeMeter from './SizeMeter';
+import LoadingWidget from './LoadingWidget';
+import { changeScale } from '../../reducers/mapView';
 
-import './MapD3Container.less';
+import './MapViewport.less';
 
 const TerrainMap = ({ terrain }) => (
   <g className='svgMapTerrain' key='terrain'>
@@ -36,7 +36,7 @@ const BordersMap = ({ borders, loaded, visible }) => (
   </g>
 );
 
-class MapD3Container extends Component {
+class Map extends Component {
   defaultProps = {
     b: {
       bordersData: { features: [] },
@@ -174,4 +174,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapD3Container);
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

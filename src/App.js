@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import 'bootstrap/less/bootstrap.less';
 
 import LoadingScreen from './containers/LoadingScreen';
-import MapD3Container from './containers/MapD3Container';
+import MapViewport from './containers/MapViewport';
 import SidePanel from './components/SidePanel';
 import TimePanel from './components/TimePanel';
 import Navigation from './components/Navigation';
@@ -20,7 +20,7 @@ class App extends Component {
             <SidePanel />
             <TimePanel />
             <Navigation />
-            <MapD3Container />
+            <MapViewport />
           </div>
         : <LoadingScreen /> }
         {process.env.NODE_ENV === 'development'
