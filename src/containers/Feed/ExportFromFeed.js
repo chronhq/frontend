@@ -1,34 +1,32 @@
 import React from 'react';
 
-const DownloadButton = ({ cb, id, filename, label, format }) => (
-  <div className="btn-group">
-    <a href="#" onClick={() => cb(id, format)} className="btn  btn-default btn-sm">
-      {label}
-    </a>
-    <a
-      href="" id={id}
-      target='_blank' rel='noopener noreferer'
-      download={filename}className="hiddenLink"
-      style={{ display: 'none' }}
-    />
-  </div>
+export const feedDownloadLinkId = 'exportFromFeedDownloadLink';
+
+const DownloadButton = ({ cb, filename, label, format, disabled }) => (
+  <button disabled={disabled} onClick={() => cb(filename, format)} className="btn btn-default btn-sm">
+    {label}
+  </button>
 );
 
 const ExportFromFeed = ({ cb }) => (
   <div>
+    <a // eslint-disable-line
+      href="" id={feedDownloadLinkId}
+      target='_blank' rel='noopener noreferer' // eslint-disable-line
+      style={{ display: 'none' }}
+    />
     <DownloadButton
       filename="facts.txt"
       label="Экспорт в txt"
       format='txt'
-      id="factstxtdownload"
       cb={cb}
     />
     <DownloadButton
-      filename="facts.txt"
+      filename="facts.pdf"
       label="Экспорт в pdf"
       format='pdf'
-      id="factspdfdownload"
       cb={cb}
+      disabled
     />
   </div>
 );

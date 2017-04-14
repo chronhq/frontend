@@ -1,5 +1,7 @@
 import { takeEvery, select } from 'redux-saga/effects';
 
+import { feedDownloadLinkId } from '../containers/Feed/ExportFromFeed';
+
 export const stateSelector = state => ({
   persons: state.persons.byId,
   personsFacts: state.personsFacts.byId,
@@ -26,7 +28,8 @@ const getFactDescription = (state, factId) => {
   const ppl = fact.inventor.map(invId => state.persons[invId].name_rus);
   return [
     `Название: "${fact.name_rus}"`,
-    `Дата: ${fact.invent_date}, Место: "${loc}" Участники: "${ppl.join(', ')}"`,
+    `Дата: ${fact.invent_date}, Место: "${loc}"`,
+    `Участники: "${ppl.join(', ')}"`,
     `Описание: "${fact.description}"`,
     `Дополнительная информация: "${fact.link}"`,
     ''
@@ -64,8 +67,9 @@ function* exportFromFeed(action) {
   const blob = new Blob([data], { type: 'text/plain' });
   const fileData = window.URL.createObjectURL(blob);
 
-  const targetA = document.getElementById(action.id);
+  const targetA = document.getElementById(feedDownloadLinkId);
   targetA.href = fileData;
+  targetA.download = action.filename;
   targetA.click();
 }
 

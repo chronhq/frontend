@@ -14,7 +14,7 @@ const PersonFact = ({ person, fact }) => (
 const PersonsFeed = ({ persons, current, selected, hoverCb, changeCb }) => (
   <div className='PersonsFeed'>
     {['birth', 'death'].map(type =>
-      <div>
+      <div key={`persons_feed_${type}`}>
         <h5 className='factHeader'>
           {type === 'birth' ? 'Родились' : 'Умерли'}
         </h5>

@@ -9,10 +9,10 @@ import { selectLocation } from '../../reducers/status';
 
 import './Feed.less';
 
-export function exportFromFeed(id, format, selected) {
+export function exportFromFeed(filename, format, selected) {
   return {
     type: 'FEED_EXPORT',
-    id,
+    filename,
     format,
     selected,
   };
@@ -37,8 +37,8 @@ class Feed extends Component {
     this.props.selectLocation(factId);
   }
 
-  handleDownload = (id, type) => {
-    this.props.exportFromFeed(id, type, this.state.selected);
+  handleDownload = (filename, type) => {
+    this.props.exportFromFeed(filename, type, this.state.selected);
   }
 
   render() {
