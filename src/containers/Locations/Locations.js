@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Pin from '../components/Pin';
-import PinTooltip from '../components/PinTooltip';
-import LocationFlag from '../components/LocationFlag';
+import Pin from './Pin';
+import PinTooltip from './PinTooltip';
+import LocationFlag from './LocationFlag';
 
 const DrawPin = ({ city, visibility, scale }) => (
   <g key={`pin_list_${city.id}`}>
