@@ -1,8 +1,7 @@
 import React from 'react';
 import 'font-awesome/less/font-awesome.less';
 
-import SetProjectionContainer from '../containers/SetProjectionContainer';
-import SetLayerVisibility from '../containers/SetLayerVisibility';
+import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
 import RotatingLogo from './RotatingLogo';
@@ -71,14 +70,7 @@ class SidePanel extends React.Component {
               : null }
             {this.state.current === 3 ? <Feed /> : null }
             {this.state.current === 4 ? <Legend /> : null }
-            {this.state.current === 5
-              ? <div className='projectionSettings'>
-                <h3> Настройка проекции </h3>
-                <SetProjectionContainer />
-                <hr />
-                <SetLayerVisibility />
-              </div>
-              : null }
+            {this.state.current === 5 ? <Settings /> : null }
           </div> : null
        }
       </div>

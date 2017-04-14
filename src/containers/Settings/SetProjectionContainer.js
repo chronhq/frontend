@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 
-import InputNumber from '../components/inputNumber';
-import { setProjection } from '../reducers/projection';
+import { InputNumber } from '../../components/Input';
+import { setProjection } from '../../reducers/projection';
 
 import './SetProjectionContainer.less'; // Styles for Select
 

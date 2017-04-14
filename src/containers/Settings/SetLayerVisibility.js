@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import InputCheckBox from '../components/InputCheckBox';
-import InputRange from '../components/InputRange';
-import { setVisibility } from '../reducers/visibility';
+import { InputCheckBox, InputRange } from '../../components/Input';
+import { setVisibility } from '../../reducers/visibility';
 
 class SetLayerVisibility extends Component {
   constructor(props) {
