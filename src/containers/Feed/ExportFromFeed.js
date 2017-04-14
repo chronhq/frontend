@@ -3,7 +3,7 @@ import React from 'react';
 export const feedDownloadLinkId = 'exportFromFeedDownloadLink';
 
 const DownloadButton = ({ cb, filename, label, format, disabled }) => (
-  <button disabled={disabled} onClick={() => cb(filename, format)} className="btn btn-default btn-sm">
+  <button disabled={disabled} onClick={() => cb(filename, format)} className="btn btn-default">
     {label}
   </button>
 );
