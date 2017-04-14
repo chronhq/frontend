@@ -40,21 +40,16 @@ class SetProjectionContainer extends PureComponent {
             {' R'}<InputNumber name='roll' value={this.state.roll} cb={this.handleChange} />
           </div>
           <div className='form-group'>
-
-              <Select
-                name='Select Projection'
-                value={this.state.name}
-                options={this.props.options}
-                onChange={this.handleSelect}
-              />
-              
+            <Select
+              name='Select Projection'
+              value={this.state.name}
+              options={this.props.options}
+              onChange={this.handleSelect}
+            />
           </div>
-
-              
-              <button type='submit' className='btn btn-default'>
-                Установить {this.state.value}
-              </button>
-
+          <button type='submit' className='btn btn-default'>
+            Установить {this.state.value}
+          </button>
         </form>
       </span>
     );
