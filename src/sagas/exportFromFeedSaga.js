@@ -13,7 +13,10 @@ const getSelectedIds = selected =>
       ? [...prev, stateId]
       : prev), []);
 
-const getLocationName = (id, loc) => (id in loc ? loc[id].name_rus : 'Неизвестно');
+const getLocationName = (id, loc) => (id in loc
+  ? `${loc[id].name_rus} (${loc[id].name_eng}, ${loc[id].admin_1}, ${loc[id].adm_0})`
+  : 'Неизвестно');
+
 const getDate = date => (date || '????');
 const newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
 
