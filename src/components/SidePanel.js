@@ -1,5 +1,7 @@
 import React from 'react';
 import 'font-awesome/less/font-awesome.less';
+import ym from 'react-yandex-metrika';
+
 
 import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
@@ -31,6 +33,8 @@ class SidePanel extends React.Component {
 
   toggleSurvey = () => {
     this.setState({ isSurveyOn: !this.state.isSurveyOn });
+    ym('hit', '/survey');
+    // ym('reachGoal', 'whateverGoal', {awesomeParameter: 42});
   }
 
   toggleIntro = () => {

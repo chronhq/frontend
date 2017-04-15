@@ -108,11 +108,12 @@
     "react-responsive-carousel": "^3.1.5",
     "react-select": "^1.0.0-rc.3",
     "react-slick": "^0.14.7",
+    "react-yandex-metrika": "^2.0.0",
     "redux": "^3.6.0",
     "redux-promise-middleware": "^4.2.0",
     "redux-saga": "^0.14.5",
-    "style-loader": "^0.16.1",
     "slick-carousel": "^1.6.0",
+    "style-loader": "^0.16.1",
     "url-loader": "^0.5.8"
   }
 }
