@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -7,10 +8,10 @@ import './Modal.less';
 import { askBackend } from '../reducers/actions';
 
 const optionPropTypes = {
-  ids: React.PropTypes.array.isRequired,
-  value: React.PropTypes.string.isRequired,
-  data: React.PropTypes.object.isRequired,
-  cb: React.PropTypes.func.isRequired
+  ids: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
+  cb: PropTypes.func.isRequired
 };
 
 const Radio = ({ ids, value, data, cb }) => (

@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Select from 'react-select';
@@ -8,7 +9,7 @@ import { setProjection } from '../../reducers/projection';
 
 import './SetProjectionContainer.less'; // Styles for Select
 
-class SetProjectionContainer extends PureComponent {
+class SetProjectionContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {

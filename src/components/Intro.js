@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.less';
 import 'slick-carousel/slick/slick-theme.less';
@@ -113,8 +114,8 @@ class Intro extends React.Component {
 }
 
 Intro.propTypes = {
-  onClose: React.PropTypes.func.isRequired,
-  isOpen: React.PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default Intro;
