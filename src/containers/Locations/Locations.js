@@ -30,6 +30,10 @@ class Locations extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const getSelectedLoc = () => nextProps.selectedType !== 'geoEvents'
+          ? this.props.projected[nextProps.selected]
+          : this.props.geoEvents[nextProps.selected];
+
     if (nextProps.selected !== this.state.selected
     || nextProps.selectedType != this.state.selectedType) {
       if (nextProps.selected === null || !(nextProps.selected in nextProps.places)) {
@@ -37,9 +41,7 @@ class Locations extends Component {
           locationFlag: false
         });
       } else {
-        const selectedLoc = nextProps.selectedType !== 'geoEvents'
-          ? this.props.projected[nextProps.selected]
-          : this.props.geoEvents[nextProps.selected];
+        const selectedLoc = getSelectedLoc();
         this.setState({
           locationFlag: true,
           selected: nextProps.selected,
@@ -48,8 +50,12 @@ class Locations extends Component {
         });
       }
     }
-    if (nextProps.selected === this.state.selected && this.state.locationFlag === false) {
-      this.setState({ locationFlag: true });
+    if (nextProps.selectedType === this.state.selectedType
+    && nextProps.selected === this.state.selected
+    && this.state.locationFlag === false) {
+      // In case of new projection need to set projected data again
+      const selectedLoc = getSelectedLoc();
+      this.setState({ locationFlag: true, selectedLoc });
     }
   }
 
