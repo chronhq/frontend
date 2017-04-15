@@ -1,5 +1,5 @@
-import db, { tables, getFromDB } from '../shared/database';
-import { logger } from './helper';
+import db, { tables, getFromDB } from '../../shared/database';
+import { logger } from '../../shared';
 
 const conditions = [
   `${tables.SURVEYS}.start_date <= CURRENT_DATE`,
@@ -20,7 +20,6 @@ function insertAnswer(req, res) {
 }
 
 export default function surveys(req, res, url) {
-  url.shift();
   const resJson = data => res.json(data);
 
   return url[0] === 'ANSWER'

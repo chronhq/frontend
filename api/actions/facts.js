@@ -1,4 +1,4 @@
-import { tables, getFromDB } from '../shared';
+import { tables, getFromDB } from '../../shared';
 
 export default function facts(req, res) {
   const fixInventors = (data) => {

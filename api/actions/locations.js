@@ -1,5 +1,4 @@
-import { getProjection } from './helper';
-import { tables, getFromDB } from '../shared';
+import { getProjection, tables, getFromDB } from '../../shared';
 
 function projectLocations(data) {
   // using default projection

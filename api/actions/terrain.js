@@ -1,4 +1,4 @@
-import { tables, getFromDB, getPath } from '../shared';
+import { tables, getFromDB, getPath } from '../../shared';
 
 function projectTerrain(data) {
   const pathFn = getPath();

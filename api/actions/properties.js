@@ -1,7 +1,6 @@
-import { tables, getFromDB } from '../shared';
+import { tables, getFromDB } from '../../shared';
 
 export default function properties(req, res, url) {
-  url.shift();
   const resJson = data => res.json(data);
   switch (url[0]) {
     case 'ADMIN':

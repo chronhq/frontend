@@ -1,24 +1,18 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import locations from './locations';
-import terrain from './terrain';
-import borders from './borders';
-import properties from './properties';
-import facts from './facts';
-import persons from './persons';
-import surveys from './surveys';
-
-import { logger } from './helper';
+import { logger } from '../shared';
+import actions from './actions';
 
 const app = express();
 
 function parseParams(url) {
   const [path, params] = url.split('?');
-  const splittedUrlPath = path.split('/').slice(1);
-  const splittedUrlParams = typeof params === 'undefined'
+  const urlPath = path.split('/').slice(1);
+  const urlKey = urlPath.shift().toLowerCase();
+  const urlParams = typeof params === 'undefined'
     ? [] : params.split('&');
-  return [splittedUrlPath, splittedUrlParams];
+  return [urlKey, urlPath, urlParams];
 }
 
 app.use(bodyParser.json());
@@ -34,40 +28,24 @@ app.use((req, res, next) => {
   next();
 });
 
+const findAction = (urlKey, params) => {
+  if (urlKey in actions) {
+    actions[urlKey](...params);
+  } else {
+    logger.err('DEFAULT_SWITCH');
+    params[1].status(404).end('NOT FOUND');
+  }
+};
+
 app.all('/*', (req, res) => {
-  const [splittedUrlPath, splittedUrlParams] = parseParams(req.url);
-  logger.info(`URL ${splittedUrlPath}`);
-  logger.info(`Params ${splittedUrlParams}`);
+  const [urlKey, urlPath, urlParams] = parseParams(req.url);
+  logger.info(`URL ${urlPath}`);
+  logger.info(`Params ${urlParams}`);
   try {
-    const params = [req, res, splittedUrlPath, splittedUrlParams];
-    switch (splittedUrlPath[0]) {
-      case 'SURVEYS':
-        surveys(...params);
-        break;
-      case 'LOCATIONS':
-        locations(...params);
-        break;
-      case 'TERRAIN':
-        terrain(...params);
-        break;
-      case 'BORDERS':
-        borders(...params);
-        break;
-      case 'PROPERTIES':
-        properties(...params);
-        break;
-      case 'FACTS':
-        facts(...params);
-        break;
-      case 'PERSONS':
-        persons(...params);
-        break;
-      default:
-        logger.err('DEFAULT_SWITCH');
-        res.status(404).end('NOT FOUND');
-    }
+    const params = [req, res, urlPath, urlParams];
+    findAction(urlKey, params);
   } catch (err) {
-    logger.err('Strange Error Occured');
+    logger.err('Strange Error Occurred');
     logger.err('INTERNAL SERVER ERROR');
     logger.err(err.message);
     logger.err(err.stack);

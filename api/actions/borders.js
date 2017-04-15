@@ -1,5 +1,15 @@
-import { logger, validateIds, getPath } from './helper';
-import db, { tables } from '../shared/database';
+import { logger, getPath } from '../../shared';
+import db, { tables } from '../../shared/database';
+
+export const validateIds = (ids) => {
+  if (typeof ids !== 'undefined' && Array.isArray(ids)) {
+    return ids.reduce((prev, id) => {
+      const checked = Number(id);
+      return isNaN(checked) ? prev : [...prev, checked];
+    }, []);
+  }
+  return null;
+};
 
 function getTimeline(res) {
   db.any(`select * from ${tables.BORDERS}`).then((data) => {
@@ -47,7 +57,6 @@ function getBorders(req, res) {
 }
 
 export default function borders(req, res, url) {
-  url.shift();
   logger.json(req.body);
   return url[0] === 'TIMELINE'
     ? getTimeline(res)
