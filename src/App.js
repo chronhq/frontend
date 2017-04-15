@@ -18,7 +18,7 @@ class App extends Component {
       <div>
         { this.props.ready ?
           <div className='content'>
-            <YMInitializer accounts={[42866674]} options={{ defer: true }} />
+            {process.env.NODE_ENV === 'production' && <YMInitializer accounts={[42866674]} options={{ defer: true }} />}
             <SidePanel />
             <TimePanel />
             <Navigation />
