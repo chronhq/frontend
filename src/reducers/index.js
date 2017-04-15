@@ -27,7 +27,7 @@ const propsAdmin = newReducer('PROPERTIES_ADMIN', { admin: {} });
 const propsType = newReducer('PROPERTIES_TYPE', { type: {} });
 const surveys = newReducer('SURVEYS', { byId: {} });
 const answers = newReducer('SURVEYS_ANSWER', {});
-const geoEvents = newReducer('EVENTS_GEO', { byId: {} });
+const geoEvents = newReducer('EVENTS_GEO', { byId: {}, projected: {} });
 
 const mapInfoApp = combineReducers({
   mapView,

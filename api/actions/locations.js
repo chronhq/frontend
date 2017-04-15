@@ -1,6 +1,6 @@
 import { getProjection, tables, getFromDB } from '../../shared';
 
-function projectLocations(data) {
+export function projectLocations(data) {
   // using default projection
   const project = getProjection();
   const projected = data.reduce((prev, cur) => {

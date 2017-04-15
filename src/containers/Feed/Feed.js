@@ -35,7 +35,7 @@ class Feed extends Component {
   }
 
   handleHover = (type, factId) => {
-    this.props.selectLocation(factId);
+    this.props.selectLocation(type, factId);
   }
 
   handleDownload = (filename, type) => {

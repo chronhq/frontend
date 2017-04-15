@@ -10,7 +10,8 @@ export const awaitingNewPath = [
 ];
 
 export const hasPoints = [
-  ['LOCATIONS_PROJECTED', state => state.locations.places]
+  ['LOCATIONS_PROJECTED', state => state.locations.places],
+  ['EVENTS_GEO_PROJECTED', state => state.geoEvents.byId],
 ];
 
 function* changeProjection(action) {

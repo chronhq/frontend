@@ -11,7 +11,10 @@ const status = (state = defaultState, action) => {
       return { ...state, ready: action.ready };
     }
     case 'SELECT_LOCATION_SAGA': {
-      return { ...state, selectedLocation: action.location };
+      return { ...state,
+        selectedLocation: action.location,
+        selectedLocationType: action.locationType
+      };
     }
     case 'START_STOP': {
       return { ...state, playing: action.playing };
@@ -33,10 +36,11 @@ export function markItReady(ready = true) {
   };
 }
 
-export function selectLocation(location = null) {
+export function selectLocation(locationType = 'person', location = null) {
   return {
     type: 'SELECT_LOCATION',
-    location
+    location,
+    locationType,
   };
 }
 

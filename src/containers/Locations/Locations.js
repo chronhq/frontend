@@ -25,20 +25,26 @@ class Locations extends Component {
       scaleRank: 0,
       name: 0
     },
-    locationFlag: false
+    locationFlag: false,
+    selectedType: 'locations'
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selected !== this.state.selected) {
+    if (nextProps.selected !== this.state.selected
+    || nextProps.selectedType != this.state.selectedType) {
       if (nextProps.selected === null || !(nextProps.selected in nextProps.places)) {
         this.setState({ // Hide locationFlag
           locationFlag: false
         });
       } else {
+        const selectedLoc = nextProps.selectedType !== 'geoEvents'
+          ? this.props.projected[nextProps.selected]
+          : this.props.geoEvents[nextProps.selected];
         this.setState({
           locationFlag: true,
           selected: nextProps.selected,
-          selectedLoc: this.getLocation(nextProps.selected)
+          selectedLoc,
+          selectedType: nextProps.selectedType,
         });
       }
     }
@@ -82,10 +88,12 @@ class Locations extends Component {
 function mapStateToProps(state) {
   return {
     selected: state.status.selectedLocation,
+    selectedType: state.status.selectedLocationType,
     visibility: state.visibility,
     scale: state.mapView.scale,
     current: state.timeline.locations.current,
     projected: state.locations.projected,
+    geoEvents: state.geoEvents.projected,
     places: state.locations.places
   };
 }
