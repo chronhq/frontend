@@ -4,6 +4,7 @@ import loadGeoData from './loadGeoData';
 import personsTimeline from './personsTimeline';
 import locationsTimeline from './locationsTimeline';
 import factsTimeline from './factsTimeline';
+import geoEventsTimeline from './geoEventsTimeline';
 
 export default function* processAndLoadData() {
   // Load borders
@@ -20,4 +21,7 @@ export default function* processAndLoadData() {
 
   // generatePersonsTimeline
   yield takeEvery('FACTS_FULFILLED', factsTimeline);
+
+  // generateGeoEventsTimeline
+  yield takeEvery('EVENTS_GEO_FULFILLED', geoEventsTimeline);
 }

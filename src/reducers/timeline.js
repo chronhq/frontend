@@ -18,6 +18,7 @@ const initialState = {
   facts: { REDUCER_NAME: 'FACTS_TIMELINE', current: [], byYear: {}, loaded: false },
   locations: { REDUCER_NAME: 'LOCATIONS_TIMELINE', loaded: false },
   borders: { REDUCER_NAME: 'BORDERS_TIMELINE', current: '', byYear: {}, loaded: false },
+  geoEvents: { REDUCER_NAME: 'EVENTS_GEO_TIMELINE', current: '', byYear: {}, loaded: false },
   personsAlive: { REDUCER_NAME: 'PERSONS_TIMELINE', current: [], byYear: {}, loaded: false },
   personsFacts: { REDUCER_NAME: 'PERSONS_FACTS_TIMELINE', current: [], byYear: {}, loaded: false }
 };
@@ -30,6 +31,7 @@ const setNewYearState = (state, action) => {
     facts: factsReducer(state.facts, act),
     locations: layerReducer(state.locations, act),
     borders: layerReducer(state.borders, act),
+    geoEvents: layerReducer(state.geoEvents, act),
     personsAlive: layerReducer(state.personsAlive, act),
     personsFacts: layerReducer(state.personsFacts, act),
     now: act.year
@@ -44,9 +46,7 @@ const timeline = (state = initialState, action) => {
       return setNewYearState(state, { ...action, year: state.now + 1 });
     case 'SET_YEAR':
       return setNewYearState(state, action);
-    case 'LOCATIONS_TIMELINE_PENDING':
     case 'LOCATIONS_TIMELINE_FULFILLED':
-    case 'LOCATIONS_TIMELINE_REJECTED':
     case 'LOCATIONS_TIMELINE_CURRENT':
       return { ...state,
         locations: layerReducer(state.locations, action)
@@ -58,26 +58,25 @@ const timeline = (state = initialState, action) => {
       return { ...state,
         borders: layerReducer(state.borders, action)
       };
-    case 'FACTS_TIMELINE_PENDING':
     case 'FACTS_TIMELINE_FULFILLED':
-    case 'FACTS_TIMELINE_REJECTED':
     case 'FACTS_TIMELINE_CURRENT':
       return { ...state,
         facts: factsReducer(state.facts, action)
       };
-    case 'PERSONS_TIMELINE_PENDING':
     case 'PERSONS_TIMELINE_FULFILLED':
-    case 'PERSONS_TIMELINE_REJECTED':
     case 'PERSONS_TIMELINE_CURRENT':
       return { ...state,
         personsAlive: layerReducer(state.personsAlive, action)
       };
-        case 'PERSONS_TIMELINE_PENDING':
     case 'PERSONS_FACTS_TIMELINE_FULFILLED':
-    case 'PERSONS_FACTS_TIMELINE_REJECTED':
     case 'PERSONS_FACTS_TIMELINE_CURRENT':
       return { ...state,
         personsFacts: layerReducer(state.personsFacts, action)
+      };
+    case 'EVENTS_GEO_TIMELINE_FULFILLED':
+    case 'EVENTS_GEO_TIMELINE_CURRENT':
+      return { ...state,
+        geoEvents: layerReducer(state.geoEvents, action)
       };
     default:
       return state;

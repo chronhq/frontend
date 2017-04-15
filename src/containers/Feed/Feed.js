@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import InventionsFeed from './InventionsFeed';
 import PersonsFeed from './PersonsFeed';
+import GeoEventsFeed from './GeoEventsFeed';
 import ExportFromFeed from './ExportFromFeed';
 import { selectLocation } from '../../reducers/status';
 
@@ -21,7 +22,7 @@ export function exportFromFeed(filename, format, selected) {
 class Feed extends Component {
 
   state = {
-    selected: { inventions: {}, geo_events: {}, persons: {} },
+    selected: { inventions: {}, geoEvents: {}, persons: {} },
   }
 
   handleChange = (type, data) => {
@@ -52,6 +53,15 @@ class Feed extends Component {
           hoverCb={data => this.handleHover('persons', data)}
           changeCb={data => this.handleChange('persons', data)}
         />
+        <hr />
+        <GeoEventsFeed
+          geoEvents={this.props.geoEvents}
+          current={this.props.currentGeoEvents}
+          selected={this.state.selected.geoEvents}
+          hoverCb={data => this.handleHover('geoEvents', data)}
+          changeCb={data => this.handleChange('geoEvents', data)}
+        />
+        <hr />
         <InventionsFeed
           persons={this.props.persons}
           inventions={this.props.inventions}
@@ -60,6 +70,7 @@ class Feed extends Component {
           hoverCb={data => this.handleHover('inventions', data)}
           changeCb={data => this.handleChange('inventions', data)}
         />
+        <hr />
         <ExportFromFeed cb={this.handleDownload} />
       </div>
     );
@@ -70,6 +81,8 @@ function mapStateToProps(state) {
   return {
     inventions: state.facts,
     currentInventions: state.timeline.facts.current,
+    geoEvents: state.geoEvents,
+    currentGeoEvents: state.timeline.geoEvents.current,
     personsFacts: state.timeline.personsFacts.current,
     persons: state.persons
   };
