@@ -18,7 +18,7 @@ class ControlButtons extends Component {
 
   render() {
     return (
-      <span className='playButton center'>
+      <div className='playButton center col-sm-4 col-sm-pull-8'>
         <button onClick={this.props.resetYear}>
           <i className='fa fa-undo' aria-hidden='true' title='Restart' />
         </button>
@@ -34,7 +34,7 @@ class ControlButtons extends Component {
           </button>
         }
         <button onClick={this.props.nextYear}><i className='fa fa-step-forward' aria-hidden='true' title='Next Year' /></button>
-      </span>
+      </div>
     );
   }
 }

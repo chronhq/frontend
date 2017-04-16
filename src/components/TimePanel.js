@@ -1,7 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
 import { setYear } from '../reducers/timeline';
 import './TimePanel.less';
@@ -11,20 +10,32 @@ class TimePanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      width: window.innerWidth - 300,
       now: this.props.now,
       min: this.props.min,
       max: this.props.max,
       isDown: false
     };
-    this.scale = d3.scaleLinear().domain([this.state.min, this.state.max]).range([0, 700]);
+
+    this.scale = d3
+      .scaleLinear()
+      .domain([this.state.min, this.state.max])
+      .range([0, this.state.width]);
   }
 
-  componentDidMount() { this.renderAxis(); }
+  componentDidMount() {
+    this.renderAxis();
+    window.addEventListener('resize', () => this.resize());
+  }
 
   componentWillReceiveProps(nextProps) {
     // console.log(`timeline.now ${this.timeline.now}`);
     this.setState({ now: nextProps.now });
     this.updateClockPosition(nextProps.now);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.resize());
   }
 
   followMouse() {
@@ -54,6 +65,17 @@ class TimePanel extends React.Component {
     const translate = `translate(${this.scale(now)},0)`;
     d3.selectAll('.arrow').attr('transform', translate).text(`${now}`);
     // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
+  }
+
+  resize() {
+    // console.log('resize triggered');
+    // this.setState({ width: window.innerWidth - 400 });
+    // if (window.innerWidth < 768) {
+    //   this.setState({ width: window.innerWidth - 400 });
+    // } else {
+    //   this.setState({ width: 360 });
+    // }
+    // console.log(`width: ${this.state.width}px`);
   }
 
   renderAxis() {
@@ -111,16 +133,28 @@ class TimePanel extends React.Component {
     //   .attr('stroke-width', 2)
     //   .classed('arrow triangle', true);
 
-    svg.append('text')
-      .text(`${this.state.now}`)
-      .attr('font-family', 'Segoe UI')
-      .attr('font-size', '16px')
-      .attr('x', -20)
-      .attr('y', -18)
-      .attr('opacity', 1)
-      .attr('text-achor', 'end')
-      .classed('arrow', true)
-      .attr('fill', 'white');
+    // svg.append('text')
+    //   .text(`${this.state.now}`)
+    //   .attr('font-family', 'Segoe UI')
+    //   .attr('font-size', '16px')
+    //   .attr('x', -20)
+    //   .attr('y', -18)
+    //   .attr('opacity', 1)
+    //   .attr('z-index', 5)
+    //   .attr('text-achor', 'end')
+    //   .classed('arrow', true)
+    //   .attr('fill', 'white');
+
+    // svg.append('rect')
+    //   .attr('x', -30)
+    //   .attr('y', -45)
+    //   .attr('opacity', 0.5)
+    //   .attr('z-index', 2)
+    //   .attr('width', 55)
+    //   .attr('height', 30)
+    //   .classed('arrow', true)
+    //   .attr('fill', '#2f2f2f')
+    //   .attr('stroke', 'black');
 
     svg.append('rect')
       .attr('x', -25)
@@ -135,18 +169,24 @@ class TimePanel extends React.Component {
   }
 
   render() {
+    const viewBox = "-50 -15 " + (this.state.width + 50) + " 40";
     return (
-      <div id='timeline'>
-        <ControlButtons />
-        <div className='test'>
+      <div id='timeline' className='row'>
+        <div className='col-sm-8 col-sm-push-4'>
           <svg
             className="svgTime"
             ref={(r) => { this.svgTime = r; }}
-            width="700" height="55"
-            viewBox="-50 -20 850 30"
-            preserveAspectRatio="xMidYMid meet"
+            // width="700"
+            // height="80"
+            width='100%'
+            height='55px'
+            // viewBox="-50 -30 850 40"
+            viewBox={viewBox}
+            // preserveAspectRatio="xMaxYMin meet"
+            preserveAspectRatio="none"
           />
         </div>
+        <ControlButtons />
       </div>
     );
   }
