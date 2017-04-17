@@ -11,7 +11,7 @@ const Invention = ({ fact, persons }) => (
     <br />
     <span>{fact.description}</span>
     <p className='factAuthor'>
-      <i>{fact.inventor.map(p => persons[p].name_rus).join(', ')}</i>
+      <i>{fact.inventor.map(p => (p !== 0 ? persons[p].name_rus : '')).join(', ')}</i>
     </p>
   </div>
 );

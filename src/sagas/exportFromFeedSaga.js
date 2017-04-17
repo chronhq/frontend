@@ -25,7 +25,7 @@ const newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
 const getFactDescription = (state, factId) => {
   const fact = state.facts[factId];
   const loc = getLocationName(fact.invent_place, state.locations);
-  const ppl = fact.inventor.map(invId => state.persons[invId].name_rus);
+  const ppl = fact.inventor.map(invId => (invId !== 0 ? state.persons[invId].name_rus : ''));
   return [
     `Название: "${fact.name_rus}"`,
     `Дата: ${fact.invent_date}, Место: "${loc}"`,
