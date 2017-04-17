@@ -1,6 +1,7 @@
 import { takeEvery, select } from 'redux-saga/effects';
 
 import { feedDownloadLinkId } from '../containers/Feed/ExportFromFeed';
+import { getInventors } from '../containers/Feed/InventionsFeed';
 
 export const stateSelector = state => ({
   persons: state.persons.byId,
@@ -25,7 +26,7 @@ const newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
 const getFactDescription = (state, factId) => {
   const fact = state.facts[factId];
   const loc = getLocationName(fact.invent_place, state.locations);
-  const ppl = fact.inventor.map(invId => (invId !== 0 ? state.persons[invId].name_rus : ''));
+  const ppl = getInventors(state.persons, fact.inventor);
   return [
     `Название: "${fact.name_rus}"`,
     `Дата: ${fact.invent_date}, Место: "${loc}"`,

@@ -1,5 +1,9 @@
 import React from 'react';
 
+export const getInventors = (persons, inventors) => inventors.reduce(
+  (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].name_rus]), []
+);
+
 const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
     <span >
@@ -11,7 +15,8 @@ const Invention = ({ fact, persons }) => (
     <br />
     <span>{fact.description}</span>
     <p className='factAuthor'>
-      <i>{fact.inventor.map(p => (p !== 0 ? persons[p].name_rus : '')).join(', ')}</i>
+      <i>{getInventors(persons, fact.inventor).join(', ')}
+      </i>
     </p>
   </div>
 );
