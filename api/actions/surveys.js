@@ -9,7 +9,7 @@ const conditions = [
 const where = `where ${conditions}`;
 
 function validateSurveyData(body) {
-  return [body.surveyId, body.surveyData];
+  return [Number(body.surveyId), JSON.stringify(body.surveyData)];
 }
 function insertAnswer(req, res) {
   logger.info('Inserting answer', req.body);
