@@ -18,6 +18,7 @@ class TimePanel extends React.Component {
       isDown: false
     };
   }
+
   get scale() {
     return d3
     .scaleLinear()
@@ -37,10 +38,8 @@ class TimePanel extends React.Component {
 
     const svg = d3.select(this.svgTime);
     svg.on('click', () => {
-      // const rectId = this.svgTime.children[1];
       const rectId = this.svgTime.childNodes[0];
       const mouseX = d3.mouse(rectId)[0];
-      console.log(mouseX);
       if (mouseX > 0 && mouseX < this.state.width) {
         this.setState({ now: Math.round(this.scale.invert(mouseX)) });
         this.updateClockPosition();
@@ -90,7 +89,6 @@ class TimePanel extends React.Component {
   }
 
   updateClockPosition(now = this.state.now) {
-    console.log('Update clock position year', now);
     const translate = `translate(${this.scale(now)},0)`;
     this.setState({ arrow: translate })
   }
@@ -118,8 +116,8 @@ class TimePanel extends React.Component {
             preserveAspectRatio="none"
           >
           <g className="axisTime" strokeWidth="1" ref={(r) => { this.svgAxis = r; }} />
-            <rect x='0' y='-50' width={this.state.width + 50} onClick={this.someClickFn} height='55' fill='#ffffff' opacity='0' className='back' style={{zIndex: -1}} />
-            <rect y='-10' width='1' height='20' opacity='1' className='arrow' transform={this.state.arrow} style={{fill: 'black', stroke: 'white', strokeWidth: 2}}>{this.state.now}</rect>
+            <rect x='0' y='-50' width={this.state.width + 50} height='55' fill='#ffffff' opacity='0' className='back' style={{zIndex: -1}} />
+            <rect y='-10' width='1' height='20' opacity='1' className='arrow' transform={this.state.arrow} style={{fill: 'black', stroke: 'white', strokeWidth: 2}} />
           </svg>
         </div>
         <ControlButtons />
