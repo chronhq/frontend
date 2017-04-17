@@ -80,19 +80,19 @@ COPY type (id, en, ru, orig) FROM stdin;
 1	Viceroyalty	Вице-королевство	Virreinato
 2	State	Штат	State
 3	Republic	Республика	Republic
-4	Federal District	Федеральный круг	Federal District
+4	Federal District	Федеральный округ	Federal District
 5	Territory	Территория	Territory
 6	Disputed territory	Спорная территория	Disputed territory
 7	Colony	Колония	Колония
 8	Kingdom	Королевство	Kingdom
-9	France colony	Французская колония	\tColonie française
+9	France colony	Французская колония	Colonie française
 10	Territory	Территория	Territorio
 11	State	Штат	Estado
-12	Federal District	Федеральный круг	Distrito Federal
+12	Federal District	Федеральный округ	Distrito Federal
 13	Republic	Республика	Republica
-14	Territory	неогранизованная территория	Territorio
-15	Territory	неогранизованная территория	Territory
-16	Territory	нейтральная территория	Territory
+14	Territory	Неогранизованная территория	Territorio
+15	Territory	Неогранизованная территория	Territory
+16	Territory	Нейтральная территория	Territory
 17	Confederate State	Конфедеративный штат	Confederate State
 18	Disputed State	Спорный штат	Disputed State
 19	Confederate State	Штат	Confederate State
