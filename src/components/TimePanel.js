@@ -10,22 +10,50 @@ class TimePanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: window.innerWidth - 300,
+      arrow: 'translate(0,0)',
+      width: this.width,
       now: this.props.now,
       min: this.props.min,
       max: this.props.max,
       isDown: false
     };
-
-    this.scale = d3
-      .scaleLinear()
-      .domain([this.state.min, this.state.max])
-      .range([0, this.state.width]);
+  }
+  get scale() {
+    return d3
+    .scaleLinear()
+    .domain([this.state.min, this.state.max])
+    .range([0, this.state.width]);
   }
 
+  get width() {
+    return window.innerWidth < 768
+      ? window.innerWidth - 100
+      : window.innerWidth - 300;
+  }
+
+
   componentDidMount() {
-    this.renderAxis();
     window.addEventListener('resize', () => this.resize());
+
+    const svg = d3.select(this.svgTime);
+    svg.on('click', () => {
+      // const rectId = this.svgTime.children[1];
+      const rectId = this.svgTime.childNodes[0];
+      const mouseX = d3.mouse(rectId)[0];
+      console.log(mouseX);
+      if (mouseX > 0 && mouseX < this.state.width) {
+        this.setState({ now: Math.round(this.scale.invert(mouseX)) });
+        this.updateClockPosition();
+        this.props.setYearAction(Number(this.state.now));
+      }
+    }).on('mousedown', () => {
+      this.setState({ isDown: true });
+      // d3.selectAll('.arrow').classed('active', true);
+      d3.select('.triangle').attr('fill', '#2f2f2f');
+      this.followMouse();
+    });
+  // Draw axis
+  this.resize();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,7 +72,7 @@ class TimePanel extends React.Component {
         if (this.state.isDown) {
           const rectId = this.svgTime.childNodes[1];
           const mouseX = d3.mouse(rectId)[0];
-          if (mouseX >= 0 && mouseX <= 700) {
+          if (mouseX >= 0 && mouseX <= this.state.width) {
             const now = Math.round(this.scale.invert(mouseX));
             this.setState({ now });
             this.updateClockPosition(now);
@@ -62,129 +90,37 @@ class TimePanel extends React.Component {
   }
 
   updateClockPosition(now = this.state.now) {
+    console.log('Update clock position year', now);
     const translate = `translate(${this.scale(now)},0)`;
-    d3.selectAll('.arrow').attr('transform', translate).text(`${now}`);
-    // d3.select('circle').attr('cx', this.scale(this.state.now)).attr('opacity', 1);
+    this.setState({ arrow: translate })
   }
 
   resize() {
-    // console.log('resize triggered');
-    // this.setState({ width: window.innerWidth - 400 });
-    // if (window.innerWidth < 768) {
-    //   this.setState({ width: window.innerWidth - 400 });
-    // } else {
-    //   this.setState({ width: 360 });
-    // }
-    // console.log(`width: ${this.state.width}px`);
-  }
-
-  renderAxis() {
-    const axis = d3.axisBottom(this.scale);
-    const svg = d3.select(this.svgTime);
-
-    svg.append('g')
-      .attr('class', 'axisTime')
-      .attr('stroke-width', 1)
-      .call(axis.ticks(15, 'f'));
-
-    svg.append('rect')
-      .attr('x', 0)
-      .attr('y', -50)
-      .attr('width', 700)
-      .attr('height', 55)
-      .attr('fill', '#ffffff')
-      .attr('opacity', 0)
-      .style('z-index', -1)
-      .classed('back', true);
-
-    svg.on('click', () => {
-      // const rectId = this.svgTime.children[1];
-      const rectId = this.svgTime.childNodes[1];
-      const mouseX = d3.mouse(rectId)[0];
-      if (mouseX > 0 && mouseX < 700) {
-        this.setState({ now: Math.round(this.scale.invert(mouseX)) });
-        this.updateClockPosition();
-        this.props.setYearAction(Number(this.state.now));
-      }
-    });
-
-    svg.on('mousedown', () => {
-      this.setState({ isDown: true });
-      // d3.selectAll('.arrow').classed('active', true);
-      d3.select('.triangle').attr('fill', '#2f2f2f');
-      this.followMouse();
-    });
-
-    /* arrow elements */
-    svg.append('rect')
-      .attr('y', -10)
-      .attr('width', 1)
-      .attr('height', 20)
-      .attr('opacity', 1)
-      .attr('class', 'arrow')
-      .style('fill', 'black')
-      .style('stroke', 'white')
-      .style('stroke-width', 2);
-
-    // svg.append('polyline')
-    //   .attr('points', '-10,-25 0, -15 10,-25')
-    //   .attr('fill', 'white')
-    //   .attr('stroke', 'white')
-    //   .attr('stroke-width', 2)
-    //   .classed('arrow triangle', true);
-
-    // svg.append('text')
-    //   .text(`${this.state.now}`)
-    //   .attr('font-family', 'Segoe UI')
-    //   .attr('font-size', '16px')
-    //   .attr('x', -20)
-    //   .attr('y', -18)
-    //   .attr('opacity', 1)
-    //   .attr('z-index', 5)
-    //   .attr('text-achor', 'end')
-    //   .classed('arrow', true)
-    //   .attr('fill', 'white');
-
-    // svg.append('rect')
-    //   .attr('x', -30)
-    //   .attr('y', -45)
-    //   .attr('opacity', 0.5)
-    //   .attr('z-index', 2)
-    //   .attr('width', 55)
-    //   .attr('height', 30)
-    //   .classed('arrow', true)
-    //   .attr('fill', '#2f2f2f')
-    //   .attr('stroke', 'black');
-
-    svg.append('rect')
-      .attr('x', -25)
-      .attr('y', -50)
-      .attr('width', 50)
-      .attr('height', 60)
-      .attr('opacity', 0)
-      .classed('arrow svgTime', true)
-      .style('fill', '#2f2f2f')
-      .style('stroke', 'white')
-      .style('stroke-width', 2);
+    const width = this.width;
+    this.setState({ width });
+    const svgAxis = d3.select(this.svgAxis);
+    svgAxis.call(d3.axisBottom(this.scale).ticks(parseInt(width / 45), 'f'));
+    this.updateClockPosition();
   }
 
   render() {
-    const viewBox = '-50 -15 ' + (this.state.width + 50) + ' 40';
+    const viewBox = '-10 -15 ' + (this.state.width + 20) + ' 40';
     return (
       <div id='timeline' className='row'>
         <div className='col-sm-9 col-sm-push-3'>
           <svg
             className="svgTime"
             ref={(r) => { this.svgTime = r; }}
-            // width="700"
-            // height="80"
             width='100%'
             height='55px'
-            // viewBox="-50 -30 850 40"
             viewBox={viewBox}
             // preserveAspectRatio="xMaxYMin meet"
             preserveAspectRatio="none"
-          />
+          >
+          <g className="axisTime" strokeWidth="1" ref={(r) => { this.svgAxis = r; }} />
+            <rect x='0' y='-50' width={this.state.width + 50} onClick={this.someClickFn} height='55' fill='#ffffff' opacity='0' className='back' style={{zIndex: -1}} />
+            <rect y='-10' width='1' height='20' opacity='1' className='arrow' transform={this.state.arrow} style={{fill: 'black', stroke: 'white', strokeWidth: 2}}>{this.state.now}</rect>
+          </svg>
         </div>
         <ControlButtons />
       </div>
