@@ -4,7 +4,7 @@ import SetProjectionContainer from './SetProjectionContainer';
 import SetLayerVisibility from './SetLayerVisibility';
 
 const Settings = () => (
-  <div className='projectionSettings'>
+  <div className='projectionSettings center'>
     <h3> Настройка проекции </h3>
     <SetProjectionContainer />
     <hr />

@@ -109,6 +109,7 @@ select {
 
 .PlayButtons {
   text-align: center;
+  margin: auto;
 }
 
 .yprControl {
@@ -143,4 +144,12 @@ select {
   & -moz-placeholder { text-align:right; }
   & input {text-allign: left; width: 90%; height: 35px; margin: 20px 20px; }
   & p {margin-left: 20px;}
+}
+
+
+@media screen and (max-width:768px) {
+  height: -ms-viewport-calc(~'100% - 55px');
+  height: -webkit-calc(~'100% - 80px');
+  height:    -moz-calc(~'100% - 80px');
+  height:         calc(~'100% - 80px');
 }

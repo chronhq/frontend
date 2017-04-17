@@ -33,7 +33,7 @@ class SetProjectionContainer extends Component {
   }
   render() {
     return (
-      <span className='playButton'>
+      <div className='changeProjBtn'>
         <form onSubmit={this.handleSubmit} className='test'>
           <div className='yprControl'>
             {' Y'}<InputNumber name='yawn' value={this.state.yawn} cb={this.handleChange} />
@@ -52,7 +52,7 @@ class SetProjectionContainer extends Component {
             Установить {this.state.value}
           </button>
         </form>
-      </span>
+      </div>
     );
   }
 
