@@ -49,6 +49,7 @@
     width: 100px;
     height: 35px;
     margin: 20px 20px;
+    z-index: 50;
   }
 }
 
@@ -67,81 +68,44 @@
   height: 100%;
 }
 
-.overlay-timeline {
-  position: fixed;
-  bottom: 0;
-  height: 55px;
-  width: 100%;
-  // z-index: 20;
-  // background-color: rgba(0,0,0,0.7);
-}
+.overlay-timeline {position: fixed; bottom: 0; height: 55px; width: 100%;}
 
-.overlay-iconbar {
-  position: fixed;
-  right: 0;
-  height: calc(~'100% - 55px');
-  width: 50px;
-  z-index: 3;
-  margin-right: 2px;
-  // background-color: rgba(0,0,0,0.7);
-}
+.overlay-iconbar {position: fixed; right: 0; height: calc(~'100% - 55px'); width: 50px; z-index: 3; margin-right: 2px; }
 
-.overlay-survey {
-  position: fixed;
-  right: 0;
-  top: 250px;
-  height: 50px;
-  width: 50px;
-  z-index: 2;
-  // background-color: rgba(0,0,0,0.7);
-}
+.overlay-survey {position: fixed; right: 0; top: 250px; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-invention {position: fixed; right: 0; top: 200px; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-feed {position: fixed; right: 0; top: 100px; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-home {position: fixed; right: 0; top: 0; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-legend {position: fixed; right: 0; top: 150px; height: 50px; width: 50px; z-index: 2; }
+
+.overlay-timecontrol { position: fixed; bottom: 0; height: 55px; width: 250px;}
 
 
-.overlay-invention {
-  position: fixed;
-  right: 0;
-  top: 200px;
-  height: 50px;
-  width: 50px;
-  z-index: 2;
-  // background-color: rgba(0,0,0,0.7);
-}
+@media screen and (max-width:768px) {
+  .overlay-timecontrol {right: 25%; height: 22px; width: 50%; min-width: 225px; }
+  .overlay-timeline {height: 80px;}
+  .overlay-iconbar {height: calc(~'100% - 80px');}
+  // .slider {margin-bottom: 85px;}
+  // .slider > .text-center > h4 {margin-bottom: 85px; color:red; height:50%; overflow-y: hidden;}
+  .slider {
+    margin-top: 5px;
+    min-height: 1px;
+    text-align: center;
+    margin-right: 45px;
+    margin-top: 5px;
+    margin-left: 25px;
+    vertical-align: middle;
+    & h4 {
+      color:white;
+      font-size: 13px;
+      margin: 1px 1px;
+      vertical-align: middle;
+    }
+    & button {margin-top: 30px; text-size:14; width: 80px;}
 
-.overlay-feed {
-  position: fixed;
-  right: 0;
-  top: 100px;
-  height: 50px;
-  width: 50px;
-  z-index: 2;
-  // background-color: rgba(0,0,0,0.7);
-}
-
-.overlay-home {
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 50px;
-  width: 50px;
-  z-index: 2;
-}
-
-.overlay-legend {
-  position: fixed;
-  right: 0;
-  top: 150px;
-  height: 50px;
-  width: 50px;
-  z-index: 2;
-}
-
-.overlay-timecontrol {
-  position: fixed;
-  bottom: 0;
-  height: 55px;
-  width: 250px;
-}
-
-.slider {
-  z-index: 50;
+  }
 }

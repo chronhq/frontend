@@ -18,7 +18,7 @@ class ControlButtons extends Component {
 
   render() {
     return (
-      <div className='playButton center col-sm-4 col-sm-pull-8'>
+      <div className='playButton center col-sm-3 col-sm-pull-9'>
         <button onClick={this.props.resetYear}>
           <i className='fa fa-undo' aria-hidden='true' title='Restart' />
         </button>

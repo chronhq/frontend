@@ -169,10 +169,10 @@ class TimePanel extends React.Component {
   }
 
   render() {
-    const viewBox = "-50 -15 " + (this.state.width + 50) + " 40";
+    const viewBox = '-50 -15 ' + (this.state.width + 50) + ' 40';
     return (
       <div id='timeline' className='row'>
-        <div className='col-sm-8 col-sm-push-4'>
+        <div className='col-sm-9 col-sm-push-3'>
           <svg
             className="svgTime"
             ref={(r) => { this.svgTime = r; }}
