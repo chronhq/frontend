@@ -7,7 +7,7 @@ import LoadingScreen from './containers/LoadingScreen';
 import MapViewport from './containers/MapViewport';
 import SidePanel from './components/SidePanel';
 import TimePanel from './components/TimePanel';
-import Navigation from './components/Navigation';
+import MapControls from './components/MapControls';
 
 import DevTools from './DevTools';
 import './App.less';
@@ -21,7 +21,7 @@ class App extends Component {
             {process.env.NODE_ENV === 'production' && <YMInitializer accounts={[42866674]} options={{ defer: true }} />}
             <SidePanel />
             <TimePanel />
-            <Navigation />
+            <MapControls />
             <MapViewport />
           </div>
         : <LoadingScreen /> }

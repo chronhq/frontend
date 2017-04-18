@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { changeScale, rotateProjection, resetRotation } from '../reducers/mapView';
-import './Navigation.less';
+import './MapControls.less';
 
 const VertButton = ({ cb, fa }) => (
   <button
@@ -14,7 +14,7 @@ const VertButton = ({ cb, fa }) => (
   </button>
 );
 
-class Navigation extends Component {
+class MapControls extends Component {
   handleRotation = (step) => {
     this.props.rotateProjection(this.props.rotation + step);
   }
@@ -28,7 +28,7 @@ class Navigation extends Component {
   }
   render() {
     return (
-      <div id='navigation' className='btn-group-vertical'>
+      <div id='mapControls' className='btn-group-vertical'>
         <VertButton fa='home' cb={() => this.handleReset()} />
         <hr />
         <VertButton fa='rotate-left' cb={() => this.handleRotation(-15)} />
@@ -55,4 +55,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(MapControls);
