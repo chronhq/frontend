@@ -6,6 +6,7 @@ import { getInventors } from '../containers/Feed/InventionsFeed';
 export const stateSelector = state => ({
   persons: state.persons.byId,
   personsFacts: state.personsFacts.byId,
+  geoEvents: state.geoEvents.byId,
   locations: state.locations.places,
   facts: state.facts.byId
 });
@@ -54,17 +55,28 @@ const getPersonFacts = (state, factId) => {
   ].join(newLine);
 };
 
+const getGeoEventsFact = (state, factId) => {
+  const fact = state.geoEvents[factId];
+  return [
+    `Дата: ${fact.date}`,
+    `Описание: "${fact.description}"`,
+    ''
+  ].join(newLine);
+};
+
 function* exportFromFeed(action) {
   const state = yield select(stateSelector);
   const selected = action.selected;
 
   const getPersonFactsS = factId => getPersonFacts(state, factId);
   const getFactDescriptionS = factId => getFactDescription(state, factId);
+  const getGeoEventsFactsS = factId => getGeoEventsFact(state, factId);
 
   const personsFacts = getSelectedIds(selected.persons).map(getPersonFactsS);
   const inventions = getSelectedIds(selected.inventions).map(getFactDescriptionS);
+  const geoEvents = getSelectedIds(selected.geoEvents).map(getGeoEventsFactsS);
   // TODO format data according to action.format
-  const data = [...personsFacts, ...inventions].join(newLine);
+  const data = [...personsFacts, ...inventions, ...geoEvents].join(newLine);
   const blob = new Blob([data], { type: 'text/plain' });
   const fileData = window.URL.createObjectURL(blob);
 
