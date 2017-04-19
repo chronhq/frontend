@@ -1,10 +1,31 @@
 #mapControls {
 	position: fixed;
-	bottom: 100px;
+	bottom: 85px;
 	left: 45px;
   & hr {
     border: none;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+  & .btn {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #mapControls {
+    position: fixed;
+    bottom: 95px;
+    left: 20px;
+    & hr {
+      border: none;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+    & .btn {
+      width: 35px;
+      height: 35px;
+    }
   }
 }

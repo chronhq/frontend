@@ -151,7 +151,7 @@ class Modal extends React.Component {
       {this.props.surveys[sid].survey.map(
         (cur, curId) => this.processQuestion(cur, curId, sid))
       }
-      <button className="btn btn-default pull-right" type="submit"> Отправить </button>
+      <button className="btn btn-default text-right" type="submit"> Отправить </button>
     </form>
   )
 

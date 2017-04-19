@@ -41,7 +41,7 @@
   height: -webkit-calc(~'100% - 55px');
   height:    -moz-calc(~'100% - 55px');
   height:         calc(~'100% - 55px');
-  margin-bottom: 20px;
+  padding-bottom: 20px;
   // text-align: center;
   width: 350px;
   position: fixed; /* Stay in place */
@@ -74,7 +74,6 @@
     // color:red;
   }
 }
-
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
@@ -148,8 +147,20 @@ select {
 
 
 @media screen and (max-width:768px) {
-  height: -ms-viewport-calc(~'100% - 55px');
-  height: -webkit-calc(~'100% - 80px');
-  height:    -moz-calc(~'100% - 80px');
-  height:         calc(~'100% - 80px');
+  .sidenav {
+    height: -ms-viewport-calc(~'100% - 85px');
+    height:      -webkit-calc(~'100% - 85px');
+    height:         -moz-calc(~'100% - 85px');
+    height:              calc(~'100% - 85px');
+    width: -ms-viewport-calc(~'100% - 50px');
+    width:      -webkit-calc(~'100% - 50px');
+    width:         -moz-calc(~'100% - 50px');
+    width:              calc(~'100% - 50px');
+  }
+  .icon-bar {
+    height: -ms-viewport-calc(~'100% - 85px');
+    height: -webkit-calc(~'100% - 85px');
+    height:    -moz-calc(~'100% - 85px');
+    height:         calc(~'100% - 85px');
+  }
 }

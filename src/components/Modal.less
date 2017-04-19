@@ -7,13 +7,14 @@
   z-index: 10;
   background-color: rgba(0,0,0,0.7);
 }
+
 .modal-fix {
     text-align: center;
     /* some styles to position the modal at the center of the page */
     display: block;
     position: fixed;
     // top: 50%;
-    max-width: 800px;
+    // max-width: 800px;
     height: 50%;
     // left: 50%;
     margin-left: 300px;
@@ -21,7 +22,7 @@
     // margin-top: -250px;
     background-color: white;
     text-align: left;
-    
+
 
     /* needed styles for the overlay */
     z-index: 10; /* keep on top of other elements on the page */
@@ -38,7 +39,7 @@
   & .radio {margin-left: 20px;}
 }
 
-@media screen and (min-width: 340px) { 
+@media screen and (min-width: 340px) {
   .modal-fix:before {
     display: inline-block;
     vertical-align: middle;
@@ -56,8 +57,10 @@
 
 
 .modal-body {
+    // text-align: right;
   //  width: 150px;
-    max-height: 700px;
-    overflow-y: auto;
-    & button {padding: 20px 20px; width: 150px;}
+    // max-height: ;
+    overflow: hidden;
+    & button {padding: 20px 20px; text-align: center;clear:both; width: 150px; float:right;}
 }
+
