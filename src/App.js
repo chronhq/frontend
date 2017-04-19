@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { YMInitializer } from 'react-yandex-metrika';
 import 'bootstrap/less/bootstrap.less';
 
 import LoadingScreen from './containers/LoadingScreen';
@@ -18,7 +17,6 @@ class App extends Component {
       <div>
         { this.props.ready ?
           <div className='content'>
-            {process.env.NODE_ENV === 'production' && <YMInitializer accounts={[42866674]} options={{ defer: true }} />}
             <SidePanel />
             <TimePanel />
             <MapControls />
