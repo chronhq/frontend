@@ -1,16 +1,19 @@
 import React from 'react';
 import 'font-awesome/less/font-awesome.less';
+import { YMInitializer } from 'react-yandex-metrika';
 import ym from 'react-yandex-metrika';
 
 
 import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
-import RotatingLogo from './RotatingLogo';
 import Modal from './Modal';
 import Intro from './Intro';
 
 import './SidePanel.less';
+
+
+const YmId = (process.env.NODE_ENV === 'production') ? [42857239, 42866674] : [42866674];
 
 class SidePanel extends React.Component {
   constructor(props) {
@@ -20,11 +23,22 @@ class SidePanel extends React.Component {
       current: 0,
       style: { float: 'right' },
       isSurveyOn: false,
-      isIntroOn: true,
+      isIntroOn: false,
     };
   }
 
+  componentDidMount() {
+    this.logPageView();
+  }
+
+  logPageView() {
+    // console.log('=====YM=====>', location.pathname);
+    // console.log(`Id is ${hit}`);
+    ym('hit', location.pathname);
+  }
+
   toggle = (id) => {
+    // this.logPageView(id);
     //  console.log(`this is id ${id}`);
     //  console.log(`this is current ${this.state.current} and isopen is ${this.state.isOpen}`);
     const isOpen = !(this.state.current === id && this.state.isOpen === true);
@@ -47,6 +61,8 @@ class SidePanel extends React.Component {
     return (
 
       <div>
+
+        <YMInitializer accounts={YmId} options={{ defer: true }} />
         <div className="icon-bar" style={this.onTopStyle}>
           <button onClick={() => this.toggleIntro()}> <i className="fa fa-home fa-fw" /></button>
           <button onClick={() => this.toggle(2)}><i className="fa fa-search fa-fw" /></button>
@@ -84,9 +100,10 @@ const SearchPanel = () => (
   <div className='search'>
     <h3> Поиск </h3>
     <div className="row">
-      <div className="col-md-12"><input type="text" disabled={true} className="search" placeholder="Поиск" /></div>
-      </div>
-    <p> В скором времени в этой вкладке появится возможность быстрого поиска по изобретениям и персонам. </p>
+      <div className="col-md-12"><input type="text" disabled className="search" placeholder="Поиск" /></div>
+    </div>
+    <p> В скором времени в этой вкладке появится возможность
+      быстрого поиска по изобретениям и персонам. </p>
   </div>
 );
 
