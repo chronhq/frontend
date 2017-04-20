@@ -1,7 +1,8 @@
 import React from 'react';
-import 'font-awesome/less/font-awesome.less';
 import { YMInitializer } from 'react-yandex-metrika';
 import ym from 'react-yandex-metrika';
+
+import 'font-awesome/less/font-awesome.less';
 
 
 import Settings from '../containers/Settings';
@@ -23,7 +24,7 @@ class SidePanel extends React.Component {
       current: 0,
       style: { float: 'right' },
       isSurveyOn: false,
-      isIntroOn: false,
+      isIntroOn: (process.env.NODE_ENV === 'production'),
     };
   }
 
