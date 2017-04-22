@@ -16,6 +16,7 @@ const validateRotation = (angle) => {
 const defaultState = {
   scale: 1,
   reset: false,
+  buttonZoom: false,
   rotation: 0
 };
 
@@ -25,6 +26,7 @@ const mapView = (state = defaultState, action) => {
       return {
         ...state,
         reset: false,
+        buttonZoom: action.buttonZoom,
         scale: validateScale(action.scale)
       };
     }
@@ -49,9 +51,10 @@ const mapView = (state = defaultState, action) => {
   }
 };
 
-export function changeScale(scale = 1) {
+export function changeScale(scale = 1, buttonZoom) {
   return {
     type: 'MAP_VIEW_SCALE',
+    buttonZoom,
     scale
   };
 }

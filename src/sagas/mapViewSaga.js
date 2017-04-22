@@ -1,7 +1,7 @@
 import { put, throttle } from 'redux-saga/effects';
 
 function* handleChangeScale(action) {
-  yield put({ type: 'MAP_VIEW_SCALE_SAGA', scale: action.scale });
+  yield put({ ...action, type: 'MAP_VIEW_SCALE_SAGA' });
 }
 
 export default function* changeProjectionSaga() {

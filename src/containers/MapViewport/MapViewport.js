@@ -68,7 +68,8 @@ class Map extends Component {
   componentWillReceiveProps(nextProps) {
     const nextState = this.state;
 
-    if (Math.round(this.state.transform.k) !== nextProps.scale) {
+    if (Math.round(this.state.transform.k) !== nextProps.scale
+    && nextProps.buttonZoom ) {
       nextState.transform.k = nextProps.scale;
     }
     if (nextProps.resetFlag === true) {
@@ -82,7 +83,7 @@ class Map extends Component {
   onZoom = () => {
     if (this.state.transform !== null
     && Math.round(this.state.transform.k) !== Math.round(d3.event.transform.k)) {
-      this.props.changeScale(Math.round(d3.event.transform.k));
+      this.props.changeScale(Math.round(d3.event.transform.k), false);
     }
     this.setState({
       transform: d3.event.transform
@@ -160,6 +161,7 @@ function mapStateToProps(state) {
     scale: state.mapView.scale,
     resetFlag: state.mapView.reset,
     rotation: state.mapView.rotation,
+    buttonZoom: state.mapView.buttonZoom,
     b: {
       visible: state.visibility.borders,
       loaded: state.borders.loaded,

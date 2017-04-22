@@ -20,7 +20,7 @@ class MapControls extends Component {
   }
 
   handleScale = (step) => {
-    this.props.changeScale(this.props.scale + step);
+    this.props.changeScale(this.props.scale + step, true);
   }
 
   handleReset = () => {
