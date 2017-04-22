@@ -51,10 +51,13 @@ class Map extends Component {
   state = {
     defaultZoom: () => window.innerWidth / 1000,
     zoomInitted: false,
+    widgetTransform: 'translate(0,0)',
     transform: { k: 1, x: 0, y: 0 }
   }
 
   componentDidMount() {
+    window.addEventListener('resize', () => this.resize());
+    this.resize();
     if (!this.state.zoomInitted) {
       const svg = d3.select(this.svgMap);
       svg.call(this.zoom);
@@ -78,6 +81,16 @@ class Map extends Component {
       nextState.transform.k = this.state.defaultZoom();
     }
     this.setState({ ...nextState });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.resize());
+  }
+
+  resize = () => {
+    const x = this.width > 768 ? 100 : 60;
+    const y = this.width > 768 ? this.height - 100 : this.height - 100;
+    this.setState({ widgetTransform: `translate(${x}, ${y})` });
   }
 
   onZoom = () => {
@@ -147,8 +160,10 @@ class Map extends Component {
           />
           <Locations />
         </g>
-        <SizeMeter zoom={this.scale} height={this.height} />
-        <LoadingWidget height={this.height} />
+        <g transform={this.state.widgetTransform}>
+          <SizeMeter zoom={this.scale} height={this.height} />
+          <LoadingWidget height={this.height} />
+        </g>
       </svg>
     );
   }

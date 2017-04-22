@@ -29,7 +29,7 @@ const LoadingStatusConnected = connect(mapStateToProps)(LoadingStatus);
 
 
 const LoadingWidget = ({ height = 0 }) => (
-  <g className='sizeMeter' transform={`translate(100,${height - 140})`} strokeWidth="1" stroke='black' >
+  <g className='sizeMeter' transform={`translate(0,-40)`} strokeWidth="1" stroke='black' >
     <LoadingStatusConnected />
   </g>
 );

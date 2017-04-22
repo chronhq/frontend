@@ -3,7 +3,7 @@ import React from 'react';
 const kmPerPx = 32; // 41.7;
 
 const SizeMeter = ({ zoom = 1, height = 0 }) => (
-  <g className='sizeMeter' transform={`translate(100,${height - 100})`} strokeWidth="1" stroke='black' >
+  <g className='sizeMeter' strokeWidth="1" stroke='black' >
     <line x1="0" y1="0" x2="100" y2="0" />
     <line x1="0" y1="0" x2="0" y2="-5" />
     <line x1="100" y1="0" x2="100" y2="-5" />
