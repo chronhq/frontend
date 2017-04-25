@@ -53,6 +53,25 @@
   padding-top: 0px; /* Place content 20px from the top */
   transition: 0.8s; /* 0.5 second transition effect to slide in the sidenav */
   background-color:rgba(233, 232, 228, 0.9);
+  & .feed-panel {
+    // overflow-y: auto;
+    // overflow-x: hidden;
+    //max-height: calc(~'100% - 200px');
+    // max-height: 500px;
+    margin-bottom: 50px;
+  }
+  & .export-buttons {
+    text-align: center;
+    position: fixed;
+    margin: auto;
+    bottom: 55px;
+    padding: auto;
+    width: 333px;
+    padding-top: 8px;
+    background: rgba(233, 232, 228, 0.9);
+    // background: #2f2f2f;
+    height: 50px;
+  }
   & a {
     // padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -156,6 +175,21 @@ select {
     width:      -webkit-calc(~'100% - 50px');
     width:         -moz-calc(~'100% - 50px');
     width:              calc(~'100% - 50px');
+    & .export-buttons {
+      text-align: center;
+      position: fixed;
+      margin: auto;
+      bottom: 80px;
+      padding: auto;
+      width: -ms-viewport-calc(~'100% - 50px');
+      width:      -webkit-calc(~'100% - 50px');
+      width:         -moz-calc(~'100% - 50px');
+      width:              calc(~'100% - 50px');
+      padding-top: 8px;
+      background: rgba(233, 232, 228, 0.9);
+      // background: #2f2f2f;
+      height: 50px;
+    }
   }
   .icon-bar {
     height: -ms-viewport-calc(~'100% - 85px');
