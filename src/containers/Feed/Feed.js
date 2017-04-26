@@ -47,34 +47,36 @@ class Feed extends Component {
     return (
       <div className='feed'>
         <h3> Лента событий </h3>
-        <Panel collapsible defaultExpanded header="Люди" eventKey="1">
-          <PersonsFeed
-            persons={this.props.persons}
-            current={this.props.personsFacts}
-            selected={this.state.selected.persons}
-            hoverCb={data => this.handleHover('persons', data)}
-            changeCb={data => this.handleChange('persons', data)}
-          />
-        </Panel>
-        <Panel collapsible defaultExpanded header="Геополитические события" eventKey="2">
-          <GeoEventsFeed
-            geoEvents={this.props.geoEvents}
-            current={this.props.currentGeoEvents}
-            selected={this.state.selected.geoEvents}
-            hoverCb={data => this.handleHover('geoEvents', data)}
-            changeCb={data => this.handleChange('geoEvents', data)}
-          />
-        </Panel>
-        <Panel collapsible defaultExpanded header="Изобретения" eventKey="3">
-          <InventionsFeed
-            persons={this.props.persons}
-            inventions={this.props.inventions}
-            current={this.props.currentInventions}
-            selected={this.state.selected.inventions}
-            hoverCb={data => this.handleHover('inventions', data)}
-            changeCb={data => this.handleChange('inventions', data)}
-          />
-        </Panel>
+        <div className='feed-panel'>
+          <Panel collapsible defaultExpanded header="Люди" eventKey="1">
+            <PersonsFeed
+              persons={this.props.persons}
+              current={this.props.personsFacts}
+              selected={this.state.selected.persons}
+              hoverCb={data => this.handleHover('persons', data)}
+              changeCb={data => this.handleChange('persons', data)}
+            />
+          </Panel>
+          <Panel collapsible defaultExpanded header="Геополитические события" eventKey="2">
+            <GeoEventsFeed
+              geoEvents={this.props.geoEvents}
+              current={this.props.currentGeoEvents}
+              selected={this.state.selected.geoEvents}
+              hoverCb={data => this.handleHover('geoEvents', data)}
+              changeCb={data => this.handleChange('geoEvents', data)}
+            />
+          </Panel>
+          <Panel collapsible defaultExpanded header="Изобретения" eventKey="3">
+            <InventionsFeed
+              persons={this.props.persons}
+              inventions={this.props.inventions}
+              current={this.props.currentInventions}
+              selected={this.state.selected.inventions}
+              hoverCb={data => this.handleHover('inventions', data)}
+              changeCb={data => this.handleChange('inventions', data)}
+            />
+          </Panel>
+        </div>
         <hr />
         <ExportFromFeed cb={this.handleDownload} />
       </div>
