@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pin from './Pin';
-import PinTooltip from './PinTooltip';
+import PinTooltip, { getTooltipSize } from './PinTooltip';
 import LocationFlag from './LocationFlag';
 
-const DrawPin = ({ city, visibility, scale }) => (
+const DrawPin = ({ city, visibility, visible, scale }) => (
   <g key={`pin_list_${city.id}`}>
     {visibility.locations &&
       <Pin location={city} scale={scale} />
     }
-    {visibility.tooltips && scale > city.scaleRank &&
+    {visible &&
       <PinTooltip location={city} scale={scale} />
     }
   </g>
 );
 
 class Locations extends Component {
-  state = {
-    selected: -1,
-    selectedLoc: {
-      id: 0,
-      x: 0,
-      y: 0,
-      scaleRank: 0,
-      name: 0
-    },
-    locationFlag: false,
-    selectedType: 'locations'
+  constructor(props) {
+    super(props);
+    const current = this.sortPlacesByScaleRank(props);
+    const visibility = this.getVisibility(props, current);
+    this.state = {
+      selected: -1,
+      selectedLoc: {
+        id: 0,
+        x: 0,
+        y: 0,
+        scaleRank: 0,
+        name: 0
+      },
+      current, // []
+      visibility, // []
+      locationFlag: false,
+      selectedType: 'locations'
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,7 +64,61 @@ class Locations extends Component {
       const selectedLoc = getSelectedLoc();
       this.setState({ locationFlag: true, selectedLoc });
     }
+
+    // Prepare current cities list
+    if (nextProps.current !== this.props.current) {
+      const current = this.sortPlacesByScaleRank(nextProps);
+      const visibility = this.getVisibility(nextProps, current);
+      this.setState({ current, visibility });
+    } else if (nextProps.scale != this.props.scale){
+      const visibility = this.getVisibility(nextProps, this.state.current);
+      this.setState({ visibility });
+    }
   }
+
+  sortPlacesByScaleRank = (nextProps) => {
+    // Prepare current cities list
+    // sort current cities by scale
+    const byScale = nextProps.current.reduce((prev, city) => {
+      const scaleRank = Number(nextProps.places[city].scalerank);
+      // check size
+      if (nextProps.places[city].scalerank < nextProps.visibility.scale) {
+        if (!(scaleRank in prev)) prev[scaleRank] = [];
+        return {
+          ...prev,
+          [scaleRank]: [...prev[scaleRank], city]
+        }
+      } else {
+        return { ...prev };
+      }
+    }, {});
+    // Join them into one array
+    const current = Object.keys(byScale).reduce(
+      (prev, scale) => [...prev, ...byScale[scale]], []);
+    return current;
+  }
+
+  getVisibility = (props, current) => {
+    if (props.visibility.tooltips) {
+      const tooltips = []; // array of added text rectangles
+      return current.map((city) => {
+        const loc = this.getLocation(city);
+        const size = getTooltipSize(loc, props.scale);
+        const noOverlap = (s) => ( // returns false is collision detected
+          (s.top > size.bottom || s.bottom < size.top
+          || s.left > size.right || s.right < size.left)
+        );
+        const placeIsFree = tooltips.every(noOverlap);
+        if (placeIsFree === true) {
+          tooltips.push(size);
+          return true;
+        }
+        return false;
+      });
+    } else {
+      return current.map(() => false);
+    }
+  };
 
   getLocation = id => ({
     id,
@@ -71,14 +132,15 @@ class Locations extends Component {
   render() {
     return (
       <g key='locations'>
-        {this.props.current.map(city => (
+        {this.state.current.map((city, id) => (
           this.checkSize(city)
             ? <DrawPin
-              scale={this.props.scale}
-              key={`pin_list_${city}`}
-              city={this.getLocation(city)}
-              visibility={this.props.visibility}
-            />
+            scale={this.props.scale}
+            key={`pin_list_${city}`}
+            city={this.getLocation(city)}
+            visible={this.state.visibility[id]}
+            visibility={this.props.visibility}
+          />
           : ''
         ))}
         <LocationFlag
