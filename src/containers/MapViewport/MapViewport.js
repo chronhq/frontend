@@ -8,6 +8,7 @@ import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs
 import SizeMeter from './SizeMeter';
 import LoadingWidget from './LoadingWidget';
 import { changeScale } from '../../reducers/mapView';
+import { setClickInfo } from '../../reducers/status';
 
 import './MapViewport.less';
 
@@ -23,7 +24,7 @@ const TerrainMap = ({ terrain }) => (
   </g>
 );
 
-const BordersMap = ({ borders, loaded, visible }) => (
+const BordersMap = ({ borders, loaded, visible, setClickInfo }) => (
   <g className='svgMapBorders'>
     {(visible && loaded === true
       && borders.map((border) => (
@@ -31,6 +32,7 @@ const BordersMap = ({ borders, loaded, visible }) => (
           key={`borders_na_${border.id}`}
           d={border.d}
           fill={`url(#${getFillPatternId(border.props)})`}
+          onClick={() => setClickInfo('border', border.props)}
         />
       )))}
   </g>
@@ -157,12 +159,13 @@ class Map extends Component {
             visible={this.props.b.visible}
             loaded={this.props.b.loaded}
             borders={this.props.b.borders}
+            setClickInfo={this.props.setClickInfo}
           />
           <Locations />
         </g>
         <g transform={this.state.widgetTransform}>
           <SizeMeter zoom={this.scale} height={this.height} />
-          <LoadingWidget height={this.height} />
+          <LoadingWidget />
         </g>
       </svg>
     );
@@ -187,7 +190,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    changeScale: bindActionCreators(changeScale, dispatch)
+    changeScale: bindActionCreators(changeScale, dispatch),
+    setClickInfo: bindActionCreators(setClickInfo, dispatch)
   };
 }
 

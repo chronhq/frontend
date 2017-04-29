@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Pin from './Pin';
 import PinTooltip, { getTooltipSize } from './PinTooltip';
 import LocationFlag from './LocationFlag';
+import { setClickInfo } from '../../reducers/status';
 
-const DrawPin = ({ city, visibility, visible, scale }) => (
-  <g key={`pin_list_${city.id}`}>
+const DrawPin = ({ city, visibility, visible, scale, cb }) => (
+  <g key={`pin_list_${city.id}`}
+    onClick={cb} >
     {visibility.locations &&
       <Pin location={city} scale={scale} />
     }
@@ -138,6 +141,7 @@ class Locations extends Component {
             scale={this.props.scale}
             key={`pin_list_${city}`}
             city={this.getLocation(city)}
+            cb={() => this.props.setClickInfo('location', city)}
             visible={this.state.visibility[id]}
             visibility={this.props.visibility}
           />
@@ -166,8 +170,14 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    setClickInfo: bindActionCreators(setClickInfo, dispatch)
+  };
+}
+
 Locations.defaultProps = {
   current: []
 };
 
-export default connect(mapStateToProps)(Locations);
+export default connect(mapStateToProps, mapDispatchToProps)(Locations);

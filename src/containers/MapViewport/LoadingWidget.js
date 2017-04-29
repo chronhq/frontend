@@ -28,8 +28,8 @@ function mapStateToProps(state) {
 const LoadingStatusConnected = connect(mapStateToProps)(LoadingStatus);
 
 
-const LoadingWidget = ({ height = 0 }) => (
-  <g className='sizeMeter' transform={`translate(0,-40)`} strokeWidth="1" stroke='black' >
+const LoadingWidget = () => (
+  <g className='sizeMeter' transform='translate(0,-40)' strokeWidth="1" stroke='black' >
     <LoadingStatusConnected />
   </g>
 );

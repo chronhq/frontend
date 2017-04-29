@@ -2,7 +2,10 @@ const defaultState = {
   ready: false,
   yearInterval: 1000,
   playing: false,
-  selectedLocation: null
+  clickInfo: null,
+  clickInfoType: 'location', // 'border', 'location'
+  selectedLocation: null,
+  selectedLocationType: 'persons' // inventions, geoEvents, persons
 };
 
 const status = (state = defaultState, action) => {
@@ -14,6 +17,12 @@ const status = (state = defaultState, action) => {
       return { ...state,
         selectedLocation: action.location,
         selectedLocationType: action.locationType
+      };
+    }
+    case 'SELECT_CLICK_INFO': {
+      return { ...state,
+        clickInfo: action.clickInfo,
+        clickInfoType: action.clickInfoType
       };
     }
     case 'START_STOP': {
@@ -41,6 +50,14 @@ export function selectLocation(locationType = 'person', location = null) {
     type: 'SELECT_LOCATION',
     location,
     locationType,
+  };
+}
+
+export function setClickInfo(clickInfoType = 'border', clickInfo = null) {
+  return {
+    type: 'SELECT_CLICK_INFO',
+    clickInfoType,
+    clickInfo,
   };
 }
 
