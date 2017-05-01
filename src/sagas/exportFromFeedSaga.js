@@ -78,12 +78,17 @@ function* exportFromFeed(action) {
   // TODO format data according to action.format
   const data = [...personsFacts, ...inventions, ...geoEvents].join(newLine);
   const blob = new Blob([data], { type: 'text/plain' });
-  const fileData = window.URL.createObjectURL(blob);
 
-  const targetA = document.getElementById(feedDownloadLinkId);
-  targetA.href = fileData;
-  targetA.download = action.filename;
-  targetA.click();
+  if (navigator.appVersion.toString().indexOf('.NET') > 0) {
+        window.navigator.msSaveBlob(blob, action.filename);
+  } else {
+    const fileData = window.URL.createObjectURL(blob);
+
+    const targetA = document.getElementById(feedDownloadLinkId);
+    targetA.href = fileData;
+    targetA.download = action.filename;
+    targetA.click();
+  }
 }
 
 export default function* exportFromFeedSaga() {
