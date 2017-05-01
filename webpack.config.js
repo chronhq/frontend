@@ -32,7 +32,7 @@ module.exports = {
       {
         test: /\.js$/,
         use: ['react-hot-loader', 'babel-loader'],
-        include: path.join(__dirname, 'src'),
+        include: [path.join(__dirname, 'src'), path.join(__dirname, 'shared')],
       },
       {
         test: /\.(html|ico)$/,
