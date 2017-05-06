@@ -9,7 +9,8 @@ const LocationWidget = ({ location }) => (
   <div>
   Название: {location.name_rus}<br />
   Основан: {location.founded || 'Неизвестно'}<br />
-  Население: {location.population || 'Неизвестно'}
+  Население: {location.population || 'Неизвестно'}<br />
+  (По последней переписи)
   </div>
 );
 
@@ -18,7 +19,7 @@ const BordersWidget = ({ border, type, disputed, admin }) => (
     Название: {border.nameru}<br />
     Тип: {type}<br />
     {disputed.length !== 0
-    ? `Спор между: ${disputed}`
+    ? `Спор между: ${disputed.join(', ')}`
     : `Принадлежит: ${admin}`}
   </div>
 );
