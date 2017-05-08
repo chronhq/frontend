@@ -21,11 +21,11 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.get('/favicon.ico', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/favicon.ico'));
+  res.sendFile(path.join(__dirname, '../src/img/favicon.ico'));
 });
 
 app.get('/richpreview.png', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/richpreview.png'));
+  res.sendFile(path.join(__dirname, '../src/img/richpreview.png'));
 });
 
 app.get('*', (req, res) => {
