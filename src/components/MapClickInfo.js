@@ -33,7 +33,24 @@ class MapClickInfo extends Component {
       case 'border': {
         const border = this.props.properties[this.props.selected];
         const disputed = border.disputed !== ''
-          ? border.disputed.split(';').map(id => this.props.admin[id].ru)
+          ? border.disputed.split(';').map(mapColor => { // map over mapcolor13 of admin
+              // console.log('disputed', border.disputed, mapColor);
+              return Object.keys(this.props.properties).reduce((prev, propId) => {
+                // console.log(prev, this.props.properties[propId].disputed === "",
+                // Number(this.props.properties[propId].mapcolor13) === Number(mapColor),
+                // this.props.properties[propId].admin
+                // );
+                if (prev === '?') {
+                  if (this.props.properties[propId].disputed === ""
+                    && Number(this.props.properties[propId].mapcolor13) === Number(mapColor)) {
+                      const id = this.props.properties[propId].admin;
+                      // console.log('returning', this.props.admin[id].ru);
+                      return this.props.admin[id].ru;
+                    }
+                }
+                return prev;
+              },'?')
+            })
           : [];
         const admin = this.props.admin[border.admin].ru;
         
