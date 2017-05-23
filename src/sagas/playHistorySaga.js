@@ -9,8 +9,10 @@ function* playTimer(action) {
   while (playing === true) {
     const yearInterval = yield select(getYearInterval);
     playing = yield select(getPlayingStatus);
-    yield put({ type: 'NEXT_YEAR' });
-    yield delay(yearInterval);
+    if (playing === true) {
+      yield put({ type: 'NEXT_YEAR' });
+      yield delay(yearInterval);
+    }
   }
 }
 
