@@ -250,7 +250,7 @@ COPY properties (id, admin, disputed, mapcolor13, name, nameru, type, wikipedia)
 167	8		3	Morelos	Морелос	11	
 168	14		10	Manitoba	Манитоба	22	http://en.wikipedia.org/wiki/Manitoba
 169	14		17	Northwest Territories	Северо-Западные территории	24	http://en.wikipedia.org/wiki/Northwest_Territories
-170	15	6;10	16	Alaska Disputed Territory	Территория Аляска (спор)	21	https://en.wikipedia.org/wiki/Alaska_boundary_dispute
+170	15	7;10	16	Alaska Disputed Territory	Территория Аляска (спор)	21	https://en.wikipedia.org/wiki/Alaska_boundary_dispute
 171	14		10	British Columbia	Британская Колумбия	22	http://en.wikipedia.org/wiki/British_Columbia
 172	14		10	Prince Edward Island	Остров Принца Эдуарда	22	http://en.wikipedia.org/wiki/Prince_Edward_Island
 173	16		18	the Dominion of Newfoundland	Доминион Ньюфаундленд	25	http://en.wikipedia.org/wiki/Newfoundland_and_Labrador
