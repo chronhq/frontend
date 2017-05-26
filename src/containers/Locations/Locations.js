@@ -12,7 +12,7 @@ const DrawPin = ({ city, visibility, visible, scale, cb }) => (
     {visibility.locations &&
       <Pin location={city} scale={scale} />
     }
-    {visible &&
+    {(visibility.tooltips && visible) &&
       <PinTooltip location={city} scale={scale} />
     }
   </g>
