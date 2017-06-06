@@ -24,8 +24,8 @@ app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, '../src/img/favicon.ico'));
 });
 
-app.get('/richpreview.png', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/img/richpreview.png'));
+app.get('/richpreview.jpg', (req, res) => {
+  res.sendFile(path.join(__dirname, '../src/img/richpreview.jpg'));
 });
 
 app.get('*', (req, res) => {
