@@ -8,7 +8,6 @@ import 'font-awesome/less/font-awesome.less';
 import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
-import Modal from './Modal';
 import Intro from './Intro';
 
 import './SidePanel.less';
@@ -23,7 +22,6 @@ class SidePanel extends React.Component {
       isOpen: false,
       current: 0,
       style: { float: 'right' },
-      isSurveyOn: false,
       isIntroOn: (process.env.NODE_ENV === 'production'),
     };
   }
@@ -46,12 +44,6 @@ class SidePanel extends React.Component {
     this.setState({ ...this.state, isOpen, current: id });
   }
 
-  toggleSurvey = () => {
-    this.setState({ isSurveyOn: !this.state.isSurveyOn });
-    ym('hit', '/survey');
-    // ym('reachGoal', 'whateverGoal', {awesomeParameter: 42});
-  }
-
   toggleIntro = () => {
     this.setState({ isIntroOn: !this.state.isIntroOn });
   }
@@ -70,10 +62,8 @@ class SidePanel extends React.Component {
           <button onClick={() => this.toggle(3)}><i className="fa fa-list-ul fa-fw" /></button>
           <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
           <button onClick={() => this.toggle(5)}><i className="fa fa-cog fa-fw" /></button>
-          <button onClick={() => this.toggleSurvey()}><i className="fa fa fa-question fa-fw" /></button>
         </div>
 
-        <Modal isOpen={this.state.isSurveyOn} onClose={() => this.toggleSurvey()} />
         <Intro isOpen={this.state.isIntroOn} onClose={() => this.toggleIntro()} />
 
         {this.state.isOpen ?
