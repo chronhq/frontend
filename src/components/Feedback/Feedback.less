@@ -1,0 +1,59 @@
+@base00: #263238; //
+@base01: #2C393F; //
+@base02: #37474F; //
+@base03: #707880; //
+@base04: #C9CCD3; //
+@base05: #CDD3DE; //
+@base06: #D5DBE5; //
+@base07: #FFFFFF; //
+@base08: #EC5F67; //
+@base09: #EA9560; //
+@base0A: #FFCC00; //
+@base0B: #8BD649; //
+@base0C: #80CBC4; //
+@base0D: #89DDFF; //
+@base0E: #82AAFF; //
+@base0F: #EC5F67; //
+
+#feedback {
+  margin-right: 20px;
+
+  & textarea,
+  & input {
+    // margin-bottom: 1em;
+    width: 100%;
+    height: 38px;
+    padding: 9px 15px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    margin: 10px;
+    background-color: @base07;
+    background-image: none;
+    border: 1px solid #ccc;
+    // border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  }
+
+  & button {
+    border: 1px solid #C9CCD3;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: none;
+    margin: 10px;
+    height: 38px;
+    padding: 9px 15px;
+    line-height: 18px;
+    font-size: 14px;
+    outline: none;
+    border-radius: 0;
+    background: none;
+    &:focus { outline: none !important; }
+    &:hover { outline: 0 !important; }
+    &:active { outline: 0 !important; }
+  }
+}
+
+
+

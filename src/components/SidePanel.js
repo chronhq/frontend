@@ -1,4 +1,6 @@
 import React from 'react';
+import { OverlayTrigger, Tooltip, ButtonToolbar, Button } from 'react-bootstrap';
+
 import { YMInitializer } from 'react-yandex-metrika';
 import ym from 'react-yandex-metrika';
 
@@ -9,11 +11,16 @@ import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
 import Intro from './Intro';
+import Feedback from './Feedback/';
 
 import './SidePanel.less';
 
 
 const YmId = (process.env.NODE_ENV === 'production') ? [42857239, 42866674] : [42866674];
+
+const tooltip = text => (
+  <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
+);
 
 class SidePanel extends React.Component {
   constructor(props) {
@@ -23,6 +30,7 @@ class SidePanel extends React.Component {
       current: 0,
       style: { float: 'right' },
       isIntroOn: (process.env.NODE_ENV === 'production'),
+      isFeedbackOn: false,
     };
   }
 
@@ -37,9 +45,6 @@ class SidePanel extends React.Component {
   }
 
   toggle = (id) => {
-    // this.logPageView(id);
-    //  console.log(`this is id ${id}`);
-    //  console.log(`this is current ${this.state.current} and isopen is ${this.state.isOpen}`);
     const isOpen = !(this.state.current === id && this.state.isOpen === true);
     this.setState({ ...this.state, isOpen, current: id });
   }
@@ -48,38 +53,60 @@ class SidePanel extends React.Component {
     this.setState({ isIntroOn: !this.state.isIntroOn });
   }
 
+  toggleFeedback = () => {
+    console.log('toggleFeedback');
+    this.setState({ isFeedbackOn: !this.state.isFeedbackOn });
+  }
+
+  FeedbackButton = () => (
+    <div className='export-buttons'>
+      <Button bsStyle='default' onClick={() => this.toggleFeedback()}><i className='fa fa-comment fa-fw' />Кнопка</Button>
+    </div>
+  );
 
   render() {
-    // const onTopStyle = { 'z-index': 1000, };
     return (
 
       <div>
 
         <YMInitializer accounts={YmId} options={{ defer: true }} />
         <div className="icon-bar" style={this.onTopStyle}>
-          <button onClick={() => this.toggleIntro()}> <i className="fa fa-home fa-fw" /></button>
-          <button onClick={() => this.toggle(2)}><i className="fa fa-search fa-fw" /></button>
-          <button onClick={() => this.toggle(3)}><i className="fa fa-list-ul fa-fw" /></button>
-          <button onClick={() => this.toggle(4)}><i className="fa fa-globe fa-fw" /></button>
-          <button onClick={() => this.toggle(5)}><i className="fa fa-cog fa-fw" /></button>
+          <ButtonToolbar>
+            <OverlayTrigger placement='left' overlay={tooltip('Интро')} >
+              <Button bsStyle='default' onClick={() => this.toggleIntro()}><i className='fa fa-home fa-fw' /> </Button>
+              {/* <Button bsStyle='default' onClick={() => this.toggle(1)}><i className='fa fa-home fa-fw' /> </Button> */}
+            </OverlayTrigger>
+            <OverlayTrigger placement='left' overlay={tooltip('Поиск')}>
+              <Button bsStyle='default' onClick={() => this.toggle(2)}><i className='fa fa-search fa-fw' /></Button>
+            </OverlayTrigger>
+
+            <OverlayTrigger placement='left' overlay={tooltip('Лента событий')}>
+              <Button bsStyle='default' onClick={() => this.toggle(3)}><i className='fa fa-list-ul fa-fw' /></Button>
+            </OverlayTrigger>
+            <OverlayTrigger placement='left' overlay={tooltip('Легенда')}>
+              <Button bsStyle='default' onClick={() => this.toggle(4)}><i className='fa fa-globe fa-fw' /></Button>
+            </OverlayTrigger>
+            <OverlayTrigger placement='left' overlay={tooltip('Настройки проекции')}>
+              <Button bsStyle='default' onClick={() => this.toggle(5)}><i className='fa fa-cog fa-fw' /></Button>
+            </OverlayTrigger>
+
+          </ButtonToolbar>
         </div>
 
         <Intro isOpen={this.state.isIntroOn} onClose={() => this.toggleIntro()} />
+        {/* <Intro isOpen={this.state.current === 1} onClose={() => this.toggle(1)} />  */}
+        <Feedback isOpen={this.state.isFeedbackOn} onClose={() => this.toggleFeedback()} />
 
-        {this.state.isOpen ?
+        {this.state.isOpen &&
           <div className="sidenav">
-            {this.state.current === 1
-              ? <div>
-                <h3> Empty </h3>
-              </div>
-              : null }
-            {this.state.current === 2
-              ? <SearchPanel />
-              : null }
-            {this.state.current === 3 ? <Feed /> : null }
-            {this.state.current === 4 ? <Legend /> : null }
-            {this.state.current === 5 ? <Settings /> : null }
-          </div> : null
+            {this.state.current === 9 && <div> Empty</div> }
+            {this.state.current === 2 && <SearchPanel /> }
+            {this.state.current === 3 && <Feed /> }
+            {this.state.current === 4 && <Legend /> }
+            {this.state.current === 5 &&
+              <Settings onClose={() => this.toggleFeedback()} />
+            }
+          </div>
        }
       </div>
     );
