@@ -12,6 +12,7 @@ import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
 import Intro from './Intro';
 import Feedback from './Feedback/';
+import Modal from './Modal';
 
 import './SidePanel.less';
 
@@ -72,21 +73,21 @@ class SidePanel extends React.Component {
         <YMInitializer accounts={YmId} options={{ defer: true }} />
         <div className="icon-bar" style={this.onTopStyle}>
           <ButtonToolbar>
-            <OverlayTrigger placement='left' overlay={tooltip('Интро')} >
+            <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Интро')} >
               <Button bsStyle='default' onClick={() => this.toggleIntro()}><i className='fa fa-home fa-fw' /> </Button>
               {/* <Button bsStyle='default' onClick={() => this.toggle(1)}><i className='fa fa-home fa-fw' /> </Button> */}
             </OverlayTrigger>
-            <OverlayTrigger placement='left' overlay={tooltip('Поиск')}>
+            <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Поиск')}>
               <Button bsStyle='default' onClick={() => this.toggle(2)}><i className='fa fa-search fa-fw' /></Button>
             </OverlayTrigger>
 
-            <OverlayTrigger placement='left' overlay={tooltip('Лента событий')}>
+            <OverlayTrigger placement='left' delayHide={0}  overlay={tooltip('Лента событий')}>
               <Button bsStyle='default' onClick={() => this.toggle(3)}><i className='fa fa-list-ul fa-fw' /></Button>
             </OverlayTrigger>
-            <OverlayTrigger placement='left' overlay={tooltip('Легенда')}>
+            <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Легенда')}>
               <Button bsStyle='default' onClick={() => this.toggle(4)}><i className='fa fa-globe fa-fw' /></Button>
             </OverlayTrigger>
-            <OverlayTrigger placement='left' overlay={tooltip('Настройки проекции')}>
+            <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Настройки проекции')}>
               <Button bsStyle='default' onClick={() => this.toggle(5)}><i className='fa fa-cog fa-fw' /></Button>
             </OverlayTrigger>
 
