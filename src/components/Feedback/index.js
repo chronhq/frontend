@@ -19,7 +19,7 @@ class FeedbackForm extends React.Component {
     const pi = 314159;
     const ts = Math.floor(Date.now() / 1000);
     const arr = ts.toString().split('');
-    const magic = arr.reduce((m, cur) => (cur === 0 ? m : m * cur), 1);
+    const magic = arr.reduce((m, cur) => (Number(cur) === 0 ? m : m * cur), 1);
     const params = `p=${ts * pi}&m=${magic * this.state.text.length}`;
     return params;
   }
@@ -37,7 +37,7 @@ class FeedbackForm extends React.Component {
             const req = {
               method: 'POST',
               credentials: 'same-origin',
-              body: `${this.getSecret()}&demo=1&email=${this.state.email}&name=${this.state.name}&text=${this.state.text}`,
+              body: `${this.getSecret()}&demo=1&email=${this.state.email}&name=${encode(this.state.name)}&text=${encodeURI(this.state.text)}`,
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             };
             fetch(url, req).then((response) => {
