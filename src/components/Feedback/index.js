@@ -37,7 +37,7 @@ class FeedbackForm extends React.Component {
             const req = {
               method: 'POST',
               credentials: 'same-origin',
-              body: `${this.getSecret()}&demo=1&email=${this.state.email}&name=${encode(this.state.name)}&text=${encodeURI(this.state.text)}`,
+              body: `${this.getSecret()}&demo=1&email=${this.state.email}&name=${encodeURI(this.state.name)}&text=${encodeURI(this.state.text)}`,
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             };
             fetch(url, req).then((response) => {
