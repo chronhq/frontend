@@ -3,3 +3,5 @@ npm-debug.log*
 .DS_Store
 dist
 data
+*.sublime-workspace
+*.sublime-project

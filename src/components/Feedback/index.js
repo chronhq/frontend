@@ -78,6 +78,16 @@ class FeedbackForm extends React.Component {
           <Row>
             <button type='submit' className='btn btn-empty'>Отправить</button>
           </Row>
+          <Row className='text-center'>
+            <p>Нажимая на кнопку, вы даете согласие на обработку своих персональных данных <br />
+
+            <a
+              href='https://chronist.ru/privacy'
+              target='_blank'
+              rel='noopener noreferrer'
+            >Политика конфедициальности</a>
+            </p>
+          </Row>
         </Form>
       </div>
     );
@@ -100,7 +110,7 @@ class Feedback extends React.Component {
       <Modal.Dialog>
         <Modal.Header>
           <Button className='close float-left' onClick={e => this.close(e)} > &times; </Button>
-          <Modal.Title>Обратная связь</Modal.Title>
+          <Modal.Title> Обратная связь </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Нашли ошибку?

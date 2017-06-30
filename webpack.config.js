@@ -2,9 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 
 const isProd = () => process.env.NODE_ENV === 'production';
+// const devtool = isProd()
+//   ? 'cheap-module-source-map'
+//   : 'source-map';
+
 const devtool = isProd()
-  ? 'cheap-module-source-map'
+  ? 'eval'
   : 'source-map';
+
 
 const productionPlugins = isProd()
   ? [new webpack.optimize.UglifyJsPlugin({ sourceMap: devtool })]
