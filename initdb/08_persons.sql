@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.2
 -- Dumped by pg_dump version 9.6.2
 
--- Started on 2017-04-09 18:01:56
+-- Started on 2017-06-25 21:10:34
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 198 (class 1259 OID 16832)
+-- TOC entry 202 (class 1259 OID 33240)
 -- Name: persons; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -41,8 +41,8 @@ CREATE TABLE persons (
 ALTER TABLE persons OWNER TO postgres;
 
 --
--- TOC entry 2163 (class 0 OID 16832)
--- Dependencies: 198
+-- TOC entry 2171 (class 0 OID 33240)
+-- Dependencies: 202
 -- Data for Name: persons; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -398,10 +398,185 @@ COPY persons (id, name_eng, name_rus, birth_date, birth_place, death_date, death
 349	Milton Reeves	Мильтон Ривз	1864-08-25	0	1925-06-04	516
 350	Charles G. Conn	Чарльз Конн	1844-01-29	517	1931-01-05	283
 351	Joshua Lionel Cowen	Джошуа Кауэн	1877-08-25	285	1965-09-08	519
+352	Charles Washington Merrill	Чарльз Меррилл	1869-12-21	146	1958-02-05	260
+353	Thomas B. Crowe	Томас Кроу	1877	0	1952	400
+354	Frederick Baldwin	Фредерик Болдуин	\N	0	\N	0
+355	Arthur Pitney	Артут Питни	1871	521	1933	279
+356	Thomas Sullivan 	Томас Салливан	\N	0	\N	0
+357	Robert W. Wood	Роберт Вуд	1868-05-02	522	1955-08-11	523
+358	Ummo F. Luebben	Уммо Луббен	1867-08	0	1953-08	224
+359	John W. Page	Джон Пейдж	1865	279	\N	0
+360	Lewis H. Nash	Льюис Нэш	1852	524	1923-11-11	0
+361	Frank Epperson	Фрэнк Эпперсон	1894	276	1983-10	525
+362	John Raphael Rogers	Джон Рафаэль Роджерс	1856-12-11	526	1934-02-18	285
+363	William Elvis Sloan	Уильям Элвис Слоун	1867-10	527	1961-06-25	279
+364	Lee de Forest	Ли де Форест	1873-08-26	528	1961-06-30	283
+365	Elwood Thomas Baker	Элвуд Томас Бейкер	1854	0	1938-11-22	0
+366	Charles Graham Baker	Чарльз Грэм Бейкер	1883-07-16	150	1950-05-15	283
+367	Alfred Carlton Gilbert	Альфред Карлтон Гилберт	1884-02-15	175	1961-01-24	267
+368	Edward N. Hines	Эдвард Хайнс	1870	0	1938	0
+369	 Charles P. Rudabaker	Чарльз Рудабейкер	\N	0	\N	0
+370	John Lloyd Wright	Джон Лойд Райт	1892-12-12	415	1972-12-20	529
+371	Edward C. Wente	Эдвард Венте	1889-01-02	530	1972-06-09	531
+372	Gilbert Vernam	Гилберт Вернам	1890-04-03	285	1960-02-07	532
+373	Walter Deubener	Уолтер Дебенер	1887	167	1980-03-29	167
+374	Malcolm Loughead	Малкольм Лофхед	1886	525	1958	0
+375	Stephen J. Poplawski	Стивен Поплавски	1885-08-14	0	1956-12-09	534
+376	Christian Nelson	Кристиан Нельсон	1893	0	1992	535
+377	Earle Dickson	Эрл Диксон	1892-10-10	0	1961-09-21	42
+378	Benjamin Katz	Бенджамин Кац	\N	0	\N	0
+379	Ben P. Ellerbeck 	Бен Эллербек	\N	0	\N	0
+380	Raymond DeWalt	Рэймонд Де Уолт	1885-10-09	0	1961-05-08	538
+381	Louis Alan Hazeltine	Луис Алан Хэзельтин	1886-08-07	296	1964-05-24	540
+382	James Cummings	Джеймс Каммингс	1895-12-28	0	1981-05-27	542
+383	John Earl McLeod	Джон Эрл Маклауд	1891-03-19	0	1987-04-02	0
+384	Leo Gerstenzang	Лео Герштенцанг	1892-06-03	0	1973-10-01	285
+385	Lionel C Sternberger	Лайонел Стернбергер	1907-02-21	285	1964-01-30	544
+386	Morris M. Titterington	Моррис Титтерингтон	1891-07-20	545	1928-07-11	0
+387	Iwan Serrurier	Иван Серрурье	1878-09-21	0	1953	44
+388	Lloyd Espenschied	Лойд  Эспеншид	1889-04-27	264	1986-06-01	285
+389	Harold Alden Wheeler	Гарольд Элден Вилер	1903-05-10	167	1996-04-25	546
+390	Richard Gurley Drew	Ричард Герли Дрю	1899-06-22	167	1980-12-14	533
+391	Herbert W. Sellner	Герберт Селлнер	1887-02-05	547	1930-04-22	547
+392	Francis W. Davis	Фрэнсис Дэвис	1887-08-19	269	1978-04-16	316
+393	Otto Frederick Rohwedder	Отто Фредерик Роведдер	1880-07-07	51	1960-11-08	549
+394	Frank Ofeldt 	Фрэнк Офелд	\N	0	\N	0
+395	Lloyd Groff Copeman	Ллойд Грофф Копман	1881-12-28	71	1956-05-07	0
+396	Philip Drinker	Филип Дринкер	1894-12-12	408	1972-10-19	551
+397	Earle Haas	Эрл Хаас	1888	7	1981	397
+398	Clarence Birdseye	Клэренс Бердсай	1886-12-09	285	1956-10-07	285
+399	Ernest Lawrence	Эрнес Лоуренс	1901-08-08	552	1958-08-27	397
+400	Samuel Ruben	Сэмюэль Рубен	1900-07-14	553	1988-07-16	554
+401	Harold Eugene Edgerton	Гарольд Юджин Эджертон	1903-04-06	556	1990-01-04	316
+402	Samuel Stephens Kistler	Сэмюэль Стивенс Кистлер	1900-03-26	557	1975-11-06	221
+403	William C. Schopp	Уильям Шопп	1883	0	\N	0
+404	William G. Pankonin	Уильям Панконин	1888	279	1977	277
+405	John A. Borden	Джон Борден	\N	0	\N	0
+406	Donald Roebling	Дональд Роблинг	1908-11-15	285	1959-08-29	267
+407	Ub Iwerks	Аб Айверкс	1901-03-24	177	1971-07-07	559
+408	George Nissen	Джордж Ниссен	1914-02-03	560	2010-04-07	263
+409	Larry Griswold	Ларри Грисуолд	1905-09-17	223	1996-08-24	0
+410	Carlton Cole "Carl" Magee 	Карлтон Коул Мэги	1872-01	562	1946-02	563
+411	Arnold Orville Beckman	Арнольд Бекман	1900-04-10	564	2004-05-18	263
+412	Henry Frank Phillips	Генри Фрэнк Филлипс	1889-06-04	565	1958-04-13	220
+413	George Inman 	Джордж Инман	1895-06-06	566	1972-07-17	230
+414	James Michael Curran	Джеймс Майкл Каррен	1903-06-09	224	1968-02-12	224
+415	Edward E. Simmons	Эдвард Симмонс	1911	283	2004-05-18	11
+416	Niels Christensen	Нильс Кристенсен	1865-08-16	0	1952-10-05	279
+417	Sylvan Goldman	Сильвэн Голдман	1898-11-15	567	1984-11-25	225
+418	Russell Harrison Varian	Рассел Харрисон Вариан	1898-04-24	284	1959-07-28	237
+419	Sigurd Fergus Varian	Сигурд Фергус Вариан	1901-05-04	197	1961-10-18	77
+420	Michael Sveda	Майкл Свида	1912-02-03	568	1999-08-10	13
+421	Wallace Carothers	Уоллес Карозерс	1896-04-27	569	1937-04-29	269
+422	Burrhus Frederic Skinner	Беррес Фредерик Скиннер	1904-03-20	570	1990-08-18	316
+423	Roy J. Plunkett	Рой Планкетт	1910-06-26	571	1994-05-12	182
+424	Clinton Riggs	Клинтон Риггз	1910-07-15	573	1997-05-22	563
+425	Clay Puett	Клэй Пуэтт	1899-09-12	574	1998-09-23	262
+426	Victor Vacquier	Виктор Вакье	1907-10-13	0	2009-01-11	263
+427	Richard Thompson James	Ричард Томпсон Джеймс	1914-01-01	0	1974	0
+428	Andrew Freeman	Эндрю Фриман	1909-03-10	576	1996-01-17	577
+429	Granville Sloan Knox	Грэнвилл Слоун Нокс	1907-08-01	578	1998-01-31	579
+430	Earl Tupper	Эрл Таппер	1907-07-28	580	1983-10-05	0
+431	Joseph Buford Cox	Джозеф Бьюфорд Кокс	1905-03-18	0	2002-08-10	220
+432	John C. Biggins	Джон Биггинс	1910	285	1971-09-18	360
+433	Claude Schaeffer Beck	Клод Шэффер Бек	1894-11-08	582	1971-10-14	230
+434	Leonard Bocour	Леонард Бокур	1910-03-18	285	1993-09-06	285
+435	Sam Golden	Сэм Голден	1915-05-20	0	1997-03-11	285
+436	Jacob Rabinow	Якоб Рабинов	1910-01-08	0	1999-09-11	284
+437	Edward 'Ed' Lowe	Эдвард Лоу	1920-07-10	167	1995-10-04	583
+438	George Clemens	Джордж Клеменс	\N	0	\N	0
+439	Francis Melvin Rogallo	Фрэнсис Мельвин Рогалло	1912-01-27	585	2009-09-01	586
+440	Gertrude Rogallo	Гертруда Рогалло	1914-01-13	0	2008-01-28	586
+441	Walter Frederick Morrison	Уолтер Фредерик Моррисон	1920-01-16	587	2010-02-09	588
+442	Gilmore Schjeldahl	Гилмор Скелдал	1912-06-01	589	2002-03-10	590
+443	Norman Holter	Норман Холтер	1914-02-01	213	1983-07-21	213
+444	Grace Hopper	Грейс Хоппер	1906-12-09	285	1992-01-01	592
+445	Edward Seymour	Эдвард Сеймур	1904	0	1998	593
+446	Richard Hamming	Ричард Хэмминг	1915-02-11	279	1998-01-07	594
+447	Hugh Bradner	Хью Брэднер	1915-11-05	595	2008-05-05	263
+448	Forest Dewey Dodrill	Форест Дьюи Додрилл	1902-01-26	596	1997-06-28	196
+449	Andrew Kay	Эндрю Кей	1919-01-22	66	2014-08-28	597
+450	Norman Larsen	Норман Ларсен	1923	279	1970-12	598
+451	Virginia Apgar	Вирджиния Апгар	1909-06-07	599	1974-08-07	285
+452	Frank P. Marugg	Фрэнк Мэраг	1887	400	1973-02-11	400
+453	Charles H. Townes	Чарльз Таунс	1915-07-28	384	2015-01-27	135
+454	William C. Brown 	Уильям Браун	1916-05-22	0	1999-02-03	0
+455	Orville Carlisle	Орвилл Карлайл	1917-07-05	600	1988-08-01	600
+456	James Elam	Джеймс Илэм	1918-05-31	183	1995-07-10	0
+457	Peter Safar	Петер Сафар	1924-04-12	0	2003-08-02	601
+458	Lawrence Jerome Fogel	Лоуренс Фогель	1928-03-02	285	2007-02-18	263
+459	William Holmes Crosby	Уильям Холмс Кросби	1914-12-01	602	2005-01-15	603
+460	Walton Musser	Уолтон Массер	1909	364	1998-06-08	0
+461	Simon Foner	Саймон Фонер	1925-08-13	312	2007-10-02	316
+462	Nicholas McKay	Николас Маккей	1920-12-08	0	2014-11-15	262
+463	John Backus	Джон Бэкус	1924-12-03	269	2007-03-17	604
+464	Gerard Kitchen O'Neill 	Джерард Китчен О'Нил	1927-02-06	285	1992-04-27	605
+465	Louis Keller	Луис Келлер	1923	606	2010-07-11	607
+466	Cyril Keller	Сирил Келлер	1922	606	\N	0
+467	Marvin Minsky	Марвин Мински	1927-08-09	285	2016-01-24	267
+468	Benjamin Eisenstadt	Бенджамин Айзенштадт	1906-12-07	285	1996-04-08	285
+469	Robert H. Wentorf	Роберт Венторф	1926-05-28	433	1997-04-03	608
+470	Dudley Allen Buck	Дадли Аллен Бак	1927-04-25	276	1959-05-21	609
+471	John McCarthy	Джон Маккарти	1927-09-04	267	2011-10-24	380
+472	Roger Bacon	Роджер Бейкон	1926-04-16	230	2007-01-26	611
+473	Philo Farnsworth	Фило Фарнсуорт	1906-08-19	612	1971-03-11	221
+474	Leonard Rivkin	Леонард Ривкин	1926	0	2015	400
+475	Gregory Goodwin Pincus	Грегори Гудвин Пинкус	1903-04-09	613	1967-08-22	267
+476	Irving Friedman	Ирвинг Фридман	1920-01-12	285	2005-06-28	615
+477	Neal Elgar Miller 	Нил Элгар Миллер	1909-08-03	235	2002-03-23	616
+478	James Edward Maceo West 	Джеймс Эдвард Масео Вест	1931-02-10	617	\N	0
+479	Robert Noel Hall	Роберт Ноел Холл	1919-12-25	55	2016-11-07	396
+480	Leland C. Clark Jr.	Лилэнд Кларк	1918-12-04	166	2005-09-25	231
+481	Larry Stevenson	Ларри Стивенсон	1930-12-22	438	2012-03-25	438
+482	Thomas J. Fogarty	Томас Фогерти	1934-02-25	231	\N	0
+483	Harold Rosen	Гарольд Розен	1926-03-20	265	2017-01-30	283
+484	William Powell "Bill" Lear 	Уильям Лир	1902-06-26	619	1978-05-14	174
+485	Chandra Kumar Naranbhai Patel 	Пател Кумар	1938-07-02	0	\N	0
+486	William B. Bridges	Уильям Бриджес	1934	620	\N	0
+487	Robert Wendell Lucky	Роберт Уэнделл Лаки	1936-01-09	312	\N	0
+488	Sherman Poppen	Шерман Поппен	1930-03-25	342	\N	0
+489	Theodor Holm "Ted" Nelson 	Теодор Нельсон	1937-06-17	279	\N	0
+490	Paul C. Fisher	Пол Фишер	1913-10-10	622	2006-10-20	623
+491	Wesley Allison Clark 	Уэсли Элиссон Кларк	1927-04-10	55	2016-02-22	285
+492	Charles Edwin Molnar	Чарльз Эдвин Молнар	1935-03-14	69	1966-12-13	624
+493	George Claude Pimentel	Джордж Клод Пиментель	1922-05-02	625	1989-06-18	626
+494	Joseph Sobek	Джозей Собек	1918-04-05	627	1998-03-27	627
+495	Sinkey Boone	Синки Бун	1937-01-24	0	2010-09-01	628
+496	Larry Hench	Ларри Хенч	1938-11-21	629	2015-12-16	631
+497	Joseph Frederick "Joe" Sutter	Джо Саттер	1921-03-21	261	2016-08-30	422
+498	John "Jack" Higson Cover	Джон "Джек" Хигсон Кавер	1920-04-06	285	2009-02-07	632
+499	George Elwood Smith	Джордж Элвуд Смит	1930-05-10	633	\N	0
+500	Willard Boyle	Уиллард Бойл	1924-08-19	634	2011-05-07	0
+501	Merle Robbins	Мерл Роббинс	1912	635	1984-01-15	231
+502	David L. Noble	Дэвид Нобл	1918-07-16	636	2004-04-25	216
+503	Leon Ong Chua	Леон Чуа	1936-06-28	0	\N	0
+504	Dennis Ritchie	Деннис Ритчи	1941-09-09	637	2011-10-12	638
+505	Edward Joseph Hoffman 	Эдвард Джозеф Хоффман	1942-01-01	264	2004-07-01	283
+506	Michael Edward Phelps	Майкл Эдвард Фелпс	1939-08-24	230	\N	0
+507	Clayton Jacobson II	Клэйтон Джейкобсон II	1933-10-12	220	\N	0
+508	Stanley Norman Cohen	Стэнли Норман Коэн	1935-02-17	639	\N	0
+509	Herbert Boyer	Герберт Бойер	1936-07-10	640	\N	0
+510	John J. Mooney	Джон Муни	1929	137	\N	0
+511	Carl Donald Keith	Карл Дональд Кит	1920-05-29	0	2008-11-09	641
+512	Henry Heimlich	Генри Геймлих	1920-02-03	421	2016-12-17	231
+513	George Joseph Laurer	Джордж Джозеф Лорер	1925-09-23	285	\N	0
+514	Wilbert Lee "Bill" Gore 	Уилберт Ли "Билл" Гор	1912-01-25	644	1986-07-26	645
+515	Robert W. Gore	Роберт Гор	1937-04-15	221	\N	0
+516	Charles Gaines	Чарльз Гейнс	1942-01-06	647	\N	0
+517	Bob Gurnsey	Боб Гернси	1942-11-17	58	2015-08-24	647
+518	David Chaum	Дэвид Чаум	1955-01-01	0	\N	0
+519	Ted Selker	Тед Зелькер	1956-09-04	169	\N	0
+520	Kary Mullis	Кэри Муллис	1944-12-28	649	\N	0
+521	Chuck Hull	Чак Халл	1939-05-12	651	\N	0
+522	Larry Hornbeck	Ларри Хорнбек	1943-09-17	264	\N	0
+523	S. Scott Crump	Скотт Крамп	1953	0	\N	0
+524	John Ousterhout	Джон Оустерхаут	\N	0	\N	0
+525	Carl Deckard	Карл Декард	1961	0	\N	0
+526	Joy Mangano	Джой Мангэно	1956-02-01	654	\N	0
 \.
 
 
--- Completed on 2017-04-09 18:01:56
+-- Completed on 2017-06-25 21:10:34
 
 --
 -- PostgreSQL database dump complete

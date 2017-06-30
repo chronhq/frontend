@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import fetch from 'isomorphic-fetch';
 import { Modal, Button, Row, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import './Feedback.less';
 
@@ -11,6 +12,17 @@ class FeedbackForm extends React.Component {
     email: '',
     text: ''
   }
+  getGlyph() {
+    return this.state.success ? 'fa icon-check ' : 'fa icon-cancel';
+  }
+  getSecret() {
+    const pi = 314159;
+    const ts = Math.floor(Date.now() / 1000);
+    const arr = ts.toString().split('');
+    const magic = arr.reduce((m, cur) => (Number(cur) === 0 ? m : m * cur), 1);
+    const params = `p=${ts * pi}&m=${magic * this.state.text.length}`;
+    return params;
+  }
 
   render() {
     return (
@@ -18,21 +30,27 @@ class FeedbackForm extends React.Component {
         <Form
           horizontal
           className='form-inline'
-          // action='contact.php'
-          // onSubmit={(e) => {
-          //   e.preventDefault();
-          //   console.log(`submit: name:${this.state.name}, email: ${this.state.email}, text: ${this.state.text}`);
-          //   const _this = this;
-          //   axios.post('/contact.php', `email=${this.state.email}&name=${this.state.name}&text=${this.state.text}`)
-          //     .then(function (response) {
-          //       _this.setState({ ..._this.state, email: '', name: '', text: '', visibile: true, success: true });
-          //       console.log(response);
-          //     })
-          //     .catch(function (error) {
-          //       _this.setState({ ..._this.state, visibile: true, success: false });
-          //       console.log(error);
-          //     });
-          // }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const _this = this;
+            const url = '/shared/contact.php';
+            const req = {
+              method: 'POST',
+              credentials: 'same-origin',
+              body: `${this.getSecret()}&demo=1&email=${this.state.email}&name=${encodeURI(this.state.name)}&text=${encodeURI(this.state.text)}`,
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            };
+            fetch(url, req).then((response) => {
+              const success = response.status === 200;
+              const wipe = success ? { email: '', name: '', text: '' } : {};
+              _this.setState({ ..._this.state, ...wipe, visibile: true, success });
+              console.log('resp', response);
+            })
+            .catch(function (error) {
+              _this.setState({ ..._this.state, visibile: true, success: false });
+              console.log('err', error);
+            });
+          }}
         >
           <Row>
             <textarea
@@ -77,6 +95,7 @@ class FeedbackForm extends React.Component {
           </Row>
           <Row>
             <button type='submit' className='btn btn-empty'>Отправить</button>
+            <span key='result' style={this.state.visibile ? {} : { display: 'none' }} className={this.getGlyph()}>{' '}{this.state.success ? 'Ваше сообщение успешно отправлено' : 'Произошла ошибка'}<br /></span>
           </Row>
           <Row className='text-center'>
             <p>Нажимая на кнопку, вы даете согласие на обработку своих персональных данных <br />
