@@ -1,9 +1,14 @@
 import React from 'react';
 
 const GeoEvent = ({ fact }) => (
-  <div>
-    {fact.description}
-    <span className='factDate'>{fact.date}</span>
+  <div className='factTest'>
+    <div>
+      {fact.description}
+    </div>
+    <div>
+      <h5 className='factHeader'> </h5>
+      <h5 className='factDate'>{fact.date}</h5>
+    </div>
   </div>
 );
 

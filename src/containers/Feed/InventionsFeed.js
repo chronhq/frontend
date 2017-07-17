@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row } from 'react-bootstrap';
 
 export const getInventors = (persons, inventors) => inventors.reduce(
   (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].name_rus]), []
@@ -6,14 +7,14 @@ export const getInventors = (persons, inventors) => inventors.reduce(
 
 const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
-    <span >
-      <h5 className='factHeader'>{fact.name_rus}</h5>
-      <span className='factDate'>
-        {fact.invent_date}
-      </span>
-    </span>
+      <div>
+        <h5 className='factHeader'>{fact.name_rus}</h5>
+        <h5 className='factDate'> {fact.invent_date} </h5>
+      </div>
     <br />
-    <span>{fact.description}</span>
+    <div className='factDescription'>
+      {fact.description}
+    </div>
     <p className='factAuthor'>
       <i>{getInventors(persons, fact.inventor).join(', ')}
       </i>

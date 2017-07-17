@@ -26,38 +26,86 @@
   }
 }
 
+.feedEntry {
+
+}
+
+.factTest {
+  overflow: hidden;
+}
+
+.factPerson {
+  float: left;
+}
+
 .factHeader {
-  text-align: center;
+  text-align: left;
   float:left;
-  width: 100%;
+  width: 70%;
   font-weight: bold;
 }
 
 .factDate {
   text-align: right;
-  float:right;
+  float:left;
+  width: 30%;
+  padding: 0 4px;
+  // font-size: 10px;
+  // padding-right: 20px;
   color: #657786;
-  font-size: 14px;
-  font-weight: normal;
+  // font-size: 14px;
+  // font-weight: normal;
 }
+
+.factDescription {
+  text-align: left;
+  font-size: 12px;
+}
+
+.factAuthor {
+  text-align: left;
+  padding-left: 1em;
+}
+// .regularFact {
+//   margin-bottom: 5px !important;
+//   border: solid 1px transparent;
+//   border-radius: 15px;
+//   &:hover {
+//       background-color: rgba(180, 180, 180, 0.9);
+//       border: solid 1px red;
+//   }
+// }
 
 .regularFact {
   margin-bottom: 5px !important;
   border: solid 1px transparent;
-  border-radius: 15px;
+  // border-radius: 15px;
+  transition: font 0.3s ease;
+  font-size: 12px;
+  // color: gray;
+    color: black;
+  border-bottom: solid black 1px;
   &:hover {
-      background-color: rgba(180, 180, 180, 0.9);
-      border: solid 1px red;
+    // font-size: 13px;
+    // font-weight: 800;
+    border-bottom: solid black 2px;
   }
 }
+
+
 .selectedFact {
+  border-right: solid 3px black;
   margin-bottom: 5px !important;
-  background: rgba(150, 150, 150, 0.7);
-  border: solid 1px red;
-  border-radius: 15px;
+  background: rgba(150, 150, 150, 0.2);
+  font-size: 13px;
+  // border: solid 1px red;
+  // border-radius: 15px;
   &:hover {
-    background-color: rgba(120, 120, 120, 0.7);
-    border: solid 1px red;
+    // background-color: rgba(120, 120, 120, 0.7);
+    // border: solid 1px red;
+      border-right: solid 5px black;
+
+
   }
 }
 /*

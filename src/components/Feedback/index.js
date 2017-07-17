@@ -95,7 +95,15 @@ class FeedbackForm extends React.Component {
           </Row>
           <Row>
             <button type='submit' className='btn btn-empty'>Отправить</button>
-            <span key='result' style={this.state.visibile ? {} : { display: 'none' }} className={this.getGlyph()}>{' '}{this.state.success ? 'Ваше сообщение успешно отправлено' : 'Произошла ошибка'}<br /></span>
+            <span
+              key='result'
+              style={this.state.visibile ? {} : { display: 'none' }}
+              className={this.getGlyph()}
+            >
+            {' '}{
+              this.state.success ? 'Ваше сообщение успешно отправлено' : 'Произошла ошибка'
+            }<br />
+            </span>
           </Row>
           <Row className='text-center'>
             <p>Нажимая на кнопку, вы даете согласие на обработку своих персональных данных <br />

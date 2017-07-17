@@ -76,10 +76,15 @@ npm run dev
 #Project todo
 ----------------
 
+#Bugs
+ - [] На геособытиях отображается только событие этого года. лента не растёт.
+ - [] Электрический звонок с говнопробелами &nbsp;
+
+
 ## UI
+- [ ] добавить сетку на море
 - [ ] Форма подписи внутри демо #18
 - [ ] Форма обратной связи #19
-- [ ] FAQ #17
 - [ ] reduce css {C}
 - [ ] local css {C}
 - [ ] less cleaning {C}
@@ -109,9 +114,10 @@ npm run dev
 - [ ] Extend functionality with brush and expandent stuff {C}
 
 ##MapControls
-- [ ]
+
 
 ##DONE
+- [x] FAQ #17
 - [x] Shadows for map labels {B}
 - [x] React LifeCycle
 - [x] Feed
