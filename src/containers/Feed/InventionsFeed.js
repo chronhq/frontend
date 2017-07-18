@@ -13,7 +13,7 @@ const Invention = ({ fact, persons }) => (
       </div>
     <br />
     <div className='factDescription'>
-      {fact.description}
+      {fact.description.replace(/\u00a0/g, ' ')}
     </div>
     <p className='factAuthor'>
       <i>{getInventors(persons, fact.inventor).join(', ')}
