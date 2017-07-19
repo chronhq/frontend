@@ -112,7 +112,7 @@ class FeedbackForm extends React.Component {
               href='https://chronist.ru/privacy'
               target='_blank'
               rel='noopener noreferrer'
-            >Политика конфедициальности</a>
+            >Политика конфиденциальности</a>
             </p>
           </Row>
         </Form>
