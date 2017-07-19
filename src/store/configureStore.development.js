@@ -1,6 +1,5 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import { persistState } from 'redux-devtools';  // eslint-disable-line
-import promiseMiddleware from 'redux-promise-middleware';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
 import DevTools from '../DevTools';
@@ -8,7 +7,7 @@ import DevTools from '../DevTools';
 import sagas from '../sagas';
 
 const sagaMiddleware = createSagaMiddleware();
-const middleware = [promiseMiddleware(), sagaMiddleware];
+const middleware = [sagaMiddleware];
 const enhancer = compose(
   applyMiddleware(...middleware),
   DevTools.instrument(),
