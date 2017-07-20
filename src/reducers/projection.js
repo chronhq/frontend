@@ -19,7 +19,6 @@ const defaultState = {
   path: defaultPathFn,
   options: projectionOptions,
   byName: projectionByName,
-  color: getColorFn(),
   rotate: [0, 0, 0]
 };
 

@@ -3,6 +3,7 @@ const defaultState = {
   yearInterval: 1000,
   playing: false,
   clickInfo: null,
+  landOwnershipColors: { colors: {}, auto: true, enabled: true, zoomPoint: 4 },
   clickInfoType: 'location', // 'border', 'location'
   selectedLocation: null,
   selectedLocationType: 'persons' // inventions, geoEvents, persons
@@ -30,6 +31,15 @@ const status = (state = defaultState, action) => {
     }
     case 'SET_YEAR_INTERVAL': {
       return { ...state, yearInterval: action.yearInterval };
+    }
+    case 'LAND_OWNERSHIP_COLORS': {
+      return { ...state, landOwnershipColors: { ...state.landOwnershipColors, colors: action.colors }};
+    }
+    case 'LAND_OWNERSHIP_COLORS_MODE': {
+      return { ...state, landOwnershipColors: { ...state.landOwnershipColors, mode: action.mode }};
+    }
+    case 'LAND_OWNERSHIP_COLORS_ENABLED': {
+      return { ...state, landOwnershipColors: { ...state.landOwnershipColors, enabled: action.enabled }};
     }
 
     default: {

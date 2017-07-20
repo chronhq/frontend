@@ -5,6 +5,7 @@ import personsTimeline from './personsTimeline';
 import locationsTimeline from './locationsTimeline';
 import factsTimeline from './factsTimeline';
 import geoEventsTimeline from './geoEventsTimeline';
+import landOwnershipColors from './landOwnershipColors';
 
 export default function* processAndLoadData() {
   // Load borders
@@ -24,4 +25,7 @@ export default function* processAndLoadData() {
 
   // generateGeoEventsTimeline
   yield takeEvery('EVENTS_GEO_FULFILLED', geoEventsTimeline);
+
+  // generate additional colors from Properties
+  yield takeEvery('PROPERTIES_FULFILLED', landOwnershipColors);
 }
