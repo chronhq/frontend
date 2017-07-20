@@ -76,7 +76,7 @@ ALTER TABLE ONLY admin ALTER COLUMN id SET DEFAULT nextval('admin_id_seq'::regcl
 --
 
 COPY admin (id, en, ru, sr_adm0_a3) FROM stdin;
-0	United Kingdom	Объедиденное Королевство	UK
+0	United Kingdom	Соедиденное Королевство	UK
 1	Spanish Empire	Испанская империя	ESP
 2	United States of America	Соединённые Штаты Америки	USA
 3	Vermont Republic	Республика Вермонт	VRT
@@ -92,7 +92,7 @@ COPY admin (id, en, ru, sr_adm0_a3) FROM stdin;
 13	United States of America	Соединённые Штаты Америки	CSA
 14	Canada	Канада	CAN
 15			NaN
-16	United Kingdom	Объедиденное Королевство	TBE
+16	United Kingdom	Британская Империя	TBE
 17	Republic of Hawaii	Республика Гавайи	ROH
 18	The Dominion of Newfoundland	Доминион Ньюфаундленд	DON
 \.
