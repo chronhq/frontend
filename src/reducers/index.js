@@ -4,17 +4,9 @@ import timeline from './timeline';
 import genericReducer from './generic';
 import projection from './projection';
 import runtime from './runtime';
+import { newDummyReducer } from './_helper';
 
-
-const getReducerState = (name, fields) => ({
-  loaded: false,
-  REDUCER_NAME: name,
-  ...fields
-});
-const newReducer = (name, fields) =>
-  (state = getReducerState(name, fields), action) =>
-    genericReducer(state, action);
-
+const newReducer = newDummyReducer(genericReducer);
 
 const locations = newReducer('LOCATIONS', { places: {} });
 const terrain = newReducer('TERRAIN', { byId: {}, projected: {} });

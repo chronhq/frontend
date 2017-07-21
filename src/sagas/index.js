@@ -7,6 +7,7 @@ import playHistory from './playHistorySaga';
 import exportFromFeed from './exportFromFeedSaga';
 import askBackend from './askBackendSaga';
 import prepareBordersProps from './prepareBordersPropsSaga';
+import changeYear from './changeYearSaga';
 
 
 export default [
@@ -18,6 +19,7 @@ export default [
   exportFromFeed,
   askBackend,
   prepareBordersProps,
+  changeYear,
   assignTimelineCurrent
 ];
 

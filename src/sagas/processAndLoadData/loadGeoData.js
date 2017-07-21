@@ -16,7 +16,7 @@ export const getProjection = state => ({
 
 export const getTimelineBorders = state => state.timeline.borders;
 export const getLoadedGeometry = state => state.borders;
-export const getCurrentYear = state => state.timeline.now;
+export const getCurrentYear = state => state.timeline.year.now;
 
 function* loadGeoData(action) {
   console.time('Loading GeoData Saga');

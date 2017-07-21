@@ -1,4 +1,4 @@
-import { getActualData } from './actions';
+import { getActualData } from '../actions';
 
 const layerTimeline = (state = { REDUCER_NAME: 'layerName', loaded: false }, action) => {
   switch (action.type) {

@@ -1,6 +1,6 @@
 import { put, select } from 'redux-saga/effects';
 
-export const getCurrentYear = state => state.timeline.now;
+export const getCurrentYear = state => state.timeline.year.now;
 
 function getBirthAndDeath(cur) {
   let birth = null;

@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
-import { setYear } from '../reducers/timeline';
+import { setYear } from '../reducers/timeline/year';
 import './TimePanel.less';
 import ControlButtons from '../components/ControlButtons';
 
@@ -132,9 +132,9 @@ class TimePanel extends React.Component {
 function mapStateToProps(state) {
   return {
     playing: state.timeline.intervalId,
-    now: state.timeline.now,
-    max: state.timeline.max,
-    min: state.timeline.min
+    now: state.timeline.year.now,
+    max: state.timeline.year.max,
+    min: state.timeline.year.min
   };
 }
 function mapDispatchToProps(dispatch) {
