@@ -6,6 +6,7 @@ import processAndLoadData from './processAndLoadData';
 import playHistory from './playHistorySaga';
 import exportFromFeed from './exportFromFeedSaga';
 import askBackend from './askBackendSaga';
+import prepareBordersProps from './prepareBordersPropsSaga';
 
 
 export default [
@@ -16,6 +17,7 @@ export default [
   changeProjection,
   exportFromFeed,
   askBackend,
+  prepareBordersProps,
   assignTimelineCurrent
 ];
 

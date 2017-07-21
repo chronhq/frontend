@@ -174,7 +174,6 @@ class Map extends Component {
 }
 
 function mapStateToProps(state) {
-  const bordersData = getBordersFromState(state);
   return { terrain: state.terrain.projected,
     landOwnershipColors: state.status.landOwnershipColors,
     scale: state.mapView.scale,
@@ -184,8 +183,8 @@ function mapStateToProps(state) {
     b: {
       visible: state.visibility.borders,
       loaded: state.borders.loaded,
-      borders: bordersData.borders,
-      properties: bordersData.properties
+      borders: state.runtime.bordersData.borders,
+      properties: state.runtime.bordersData.properties
     }
   };
 }

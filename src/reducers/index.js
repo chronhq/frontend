@@ -6,6 +6,7 @@ import projection from './projection';
 import visibility from './visibility';
 import status from './status';
 import mapView from './mapView';
+import runtime from './runtime';
 
 const getReducerState = (name, fields) => ({
   loaded: false,
@@ -44,6 +45,7 @@ const mapInfoApp = combineReducers({
   borders,
   terrain,
   timeline,
+  runtime,
   visibility
 });
 
