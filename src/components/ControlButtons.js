@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { nextYear, prevYear, resetYear } from '../reducers/timeline';
-import { startPlaying, stopPlaying } from '../reducers/status';
+import { startPlaying, stopPlaying } from '../reducers/runtime/status';
 
 
 class ControlButtons extends Component {
@@ -40,7 +40,7 @@ class ControlButtons extends Component {
 }
 
 function mapStateToProps(state) {
-  return { playing: state.status.playing };
+  return { playing: state.runtime.status.playing };
 }
 
 function mapDispatchToProps(dispatch) {

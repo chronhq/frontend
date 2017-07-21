@@ -7,8 +7,8 @@ import Locations from '../Locations';
 import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
 import SizeMeter from './SizeMeter';
 import LoadingWidget from './LoadingWidget';
-import { changeScale } from '../../reducers/mapView';
-import { setClickInfo } from '../../reducers/status';
+import { changeScale } from '../../reducers/runtime/mapView';
+import { setClickInfo } from '../../reducers/runtime/status';
 
 import './MapViewport.less';
 
@@ -175,13 +175,13 @@ class Map extends Component {
 
 function mapStateToProps(state) {
   return { terrain: state.terrain.projected,
-    landOwnershipColors: state.status.landOwnershipColors,
-    scale: state.mapView.scale,
-    resetFlag: state.mapView.reset,
-    rotation: state.mapView.rotation,
-    buttonZoom: state.mapView.buttonZoom,
+    landOwnershipColors: state.runtime.status.landOwnershipColors,
+    scale: state.runtime.mapView.scale,
+    resetFlag: state.runtime.mapView.reset,
+    rotation: state.runtime.mapView.rotation,
+    buttonZoom: state.runtime.mapView.buttonZoom,
     b: {
-      visible: state.visibility.borders,
+      visible: state.runtime.visibility.borders,
       loaded: state.borders.loaded,
       borders: state.runtime.bordersData.borders,
       properties: state.runtime.bordersData.properties

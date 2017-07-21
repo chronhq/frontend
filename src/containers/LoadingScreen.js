@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import RotatingLogo from '../components/RotatingLogo';
 import { askBackend } from '../reducers/actions';
-import { markItReady } from '../reducers/status';
+import { markItReady } from '../reducers/runtime/status';
 import './LoadingScreen.less';
 
 const getIcon = (e) => {
@@ -83,7 +83,6 @@ function mapStateToProps(state) {
       borders: getLoadedStatus('Политические границы', state.borders),
       geoEvents: getLoadedStatus('Описание изменений', state.geoEvents),
       persons: getLoadedStatus('Информация о людях', state.persons),
-      surveys: getLoadedStatus('Опросы', state.surveys),
       terrain: getLoadedStatus('Физическая карта мира', state.terrain)
     }
   };

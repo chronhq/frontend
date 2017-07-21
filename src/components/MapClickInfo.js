@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setClickInfo } from '../reducers/status';
+import { setClickInfo } from '../reducers/runtime/status';
 
 import './MapClickInfo.less';
 
@@ -91,8 +91,8 @@ class MapClickInfo extends Component {
 
 function mapStateToProps(state) {
   return {
-    selected: state.status.clickInfo,
-    widgetType: state.status.clickInfoType,
+    selected: state.runtime.status.clickInfo,
+    widgetType: state.runtime.status.clickInfoType,
     persons: state.persons.byId,
     locations: state.locations.places,
     properties: state.properties.data.properties,

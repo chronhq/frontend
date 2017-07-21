@@ -81,11 +81,11 @@ class Legend extends Component {
 function mapStateToProps(state) {
   const bordersData = getBordersFromState(state);
   return {
-    landOwnershipColors: state.status.landOwnershipColors,
+    landOwnershipColors: state.runtime.status.landOwnershipColors,
     bordersLoaded: state.borders.loaded,
     borders: bordersData.borders,
     properties: bordersData.properties,
-    visibility: state.visibility
+    visibility: state.runtime.visibility
   };
 }
 

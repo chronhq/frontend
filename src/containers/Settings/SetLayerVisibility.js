@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { InputCheckBox, InputRange } from '../../components/Input';
-import { setVisibility } from '../../reducers/visibility';
+import { setVisibility } from '../../reducers/runtime/visibility';
 
 class SetLayerVisibility extends Component {
   constructor(props) {
@@ -56,10 +56,10 @@ class SetLayerVisibility extends Component {
 }
 function mapStateToProps(state) {
   return {
-    borders: state.visibility.borders,
-    locations: state.visibility.locations,
-    tooltips: state.visibility.tooltips,
-    scale: state.visibility.scale,
+    borders: state.runtime.visibility.borders,
+    locations: state.runtime.visibility.locations,
+    tooltips: state.runtime.visibility.tooltips,
+    scale: state.runtime.visibility.scale,
   };
 }
 function mapDispatchToProps(dispatch) {

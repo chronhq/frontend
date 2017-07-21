@@ -3,10 +3,8 @@ import borders from './borders';
 import timeline from './timeline';
 import genericReducer from './generic';
 import projection from './projection';
-import visibility from './visibility';
-import status from './status';
-import mapView from './mapView';
 import runtime from './runtime';
+
 
 const getReducerState = (name, fields) => ({
   loaded: false,
@@ -26,13 +24,9 @@ const personsFacts = newReducer('PERSONS_FACTS', { byId: {} });
 const props = newReducer('PROPERTIES', { properties: {} });
 const propsAdmin = newReducer('PROPERTIES_ADMIN', { admin: {} });
 const propsType = newReducer('PROPERTIES_TYPE', { type: {} });
-const surveys = newReducer('SURVEYS', { byId: {} });
-const answers = newReducer('SURVEYS_ANSWER', {});
 const geoEvents = newReducer('EVENTS_GEO', { byId: {}, projected: {} });
 
 const mapInfoApp = combineReducers({
-  mapView,
-  status,
   locations,
   facts,
   geoEvents,
@@ -40,13 +34,10 @@ const mapInfoApp = combineReducers({
   personsFacts,
   projection,
   properties: combineReducers({ data: props, admin: propsAdmin, type: propsType }),
-  surveys,
-  answers,
   borders,
   terrain,
   timeline,
   runtime,
-  visibility
 });
 
 export default mapInfoApp;

@@ -1,13 +1,11 @@
 const defaultState = {
-  bordersData: {
-    borders: [],
-    properties: []
-  }
+  borders: [],
+  properties: []
 };
 const runtime = (state = defaultState, action) => {
   switch(action.type) {
     case 'RUNTIME_BORDERS': {
-      return { ...state, bordersData: action.bordersData };
+      return { ...state, ...action.bordersData };
     }
     default: {
       return state;

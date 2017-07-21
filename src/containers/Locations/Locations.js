@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import Pin from './Pin';
 import PinTooltip, { getTooltipSize } from './PinTooltip';
 import LocationFlag from './LocationFlag';
-import { setClickInfo } from '../../reducers/status';
+import { setClickInfo } from '../../reducers/runtime/status';
 
 const DrawPin = ({ city, visibility, visible, scale, cb }) => (
   <g key={`pin_list_${city.id}`}
@@ -159,10 +159,10 @@ class Locations extends Component {
 
 function mapStateToProps(state) {
   return {
-    selected: state.status.selectedLocation,
-    selectedType: state.status.selectedLocationType,
-    visibility: state.visibility,
-    scale: state.mapView.scale,
+    selected: state.runtime.status.selectedLocation,
+    selectedType: state.runtime.status.selectedLocationType,
+    visibility: state.runtime.visibility,
+    scale: state.runtime.mapView.scale,
     current: state.timeline.locations.current,
     projected: state.locations.projected,
     geoEvents: state.geoEvents.projected,

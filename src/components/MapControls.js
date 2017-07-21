@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { changeScale, rotateProjection, resetRotation } from '../reducers/mapView';
+import { changeScale, rotateProjection, resetRotation } from '../reducers/runtime/mapView';
 import './MapControls.less';
 
 const VertButton = ({ cb, fa }) => (
@@ -43,8 +43,8 @@ class MapControls extends Component {
 
 function mapStateToProps(state) {
   return {
-    scale: state.mapView.scale,
-    rotation: state.mapView.rotation
+    scale: state.runtime.mapView.scale,
+    rotation: state.runtime.mapView.rotation
   };
 }
 function mapDispatchToProps(dispatch) {

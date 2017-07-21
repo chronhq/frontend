@@ -34,7 +34,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    ready: state.status.ready
+    ready: state.runtime.status.ready
   };
 }
 export default connect(mapStateToProps)(App);
