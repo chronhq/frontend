@@ -1,5 +1,7 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 export const getInventors = (persons, inventors) => inventors.reduce(
   (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].name_rus]), []
@@ -7,13 +9,13 @@ export const getInventors = (persons, inventors) => inventors.reduce(
 
 const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
-      <div>
-        <h5 className='factHeader'>{fact.name_rus}</h5>
-        <h5 className='factDate'> {fact.invent_date} </h5>
-      </div>
+    <div>
+      <h5 className='factHeader'>{fact.name_rus}</h5>
+      <h5 className='factDate'> {fact.invent_date} </h5>
+    </div>
     <br />
     <div className='factDescription'>
-      {fact.description}
+      {fact.description} <Test />
     </div>
     <p className='factAuthor'>
       <i>{getInventors(persons, fact.inventor).join(', ')}
@@ -37,5 +39,29 @@ const InventionsFeed = ({ persons, inventions, current, selected, hoverCb, chang
   ))}
   </div>
 );
+
+class Test extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      style: { color: 'blue' }
+    };
+  }
+
+  render() {
+    return(
+      <div style={this.state.style} > Test </div>
+    );
+  }
+}
+
+
+function mapStateToProps(state) {
+  return {
+
+  };
+}
+
+connect(mapStateToProps)(Test);
 
 export default InventionsFeed;
