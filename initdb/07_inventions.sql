@@ -48,25 +48,25 @@ ALTER TABLE inventions OWNER TO postgres;
 --
 
 COPY inventions (id, name_eng, name_rus, description, invent_date, inventor, invent_place, link) FROM stdin;
-1	Swim fins	Ласты	Приспособление для плавания в форме плавника или весла	1717	{2}	267	https://en.wikipedia.org/wiki/Swimfin
-2	Octant	Октант	Угломерный отражательный инструмент, ныне вышедший из употребления	1730	{3}	0	https://en.wikipedia.org/wiki/Combine_harvester
-3	Flexible urinary catheter	Гибкий мочевой катетер	Латексная, полиуретановая или силиконовая трубка вставленная в мочевой пузырь пациента в медицинских целях	1752	{2}	269	https://en.wikipedia.org/wiki/Urinary_catheterization
-4	Bifocals	Бифокальная линза	Линза с двумя оптическими зонами. Обычно имеет большой сегмент для дали и сегмент для чтения	1784	{2}	269	https://en.wikipedia.org/wiki/Bifocals
-5	Fire hydrant	Пожарный гидрант	Устройство для отбора воды из водопроводной сети для тушения пожара	1792	{4}	269	https://en.wikipedia.org/wiki/Fire_hydrant
-6	Vapor-compression refrigeration	Компрессионная холодильная машина	Устройство, служащее для отвода теплоты от охлаждаемого тела	1805	{5}	269	https://en.wikipedia.org/wiki/Vapor-compression_refrigeration
-7	Circular saw	Цикрулярная пила	Режущий инструмент в виде плоского металлического диска, на внешней кромке которого расположены зубья	1813	{6}	156	https://en.wikipedia.org/wiki/Circular_saw
-8	Electric doorbell	Электрический звонок	Электрический звонок активируемый выносной кнопкой	1831	{7}	156	https://en.wikipedia.org/wiki/Doorbell
-9	Combine harvester	Зерноуборочный комбайн	Машина, которая одновременно срезала хлеб, обмолачивала его и очищала зерно от шелухи	1834	{8}	289	https://en.wikipedia.org/wiki/Combine_harvester
-10	Relay	Реле	Электрическое устройство, предназначенное для замыкания или размыкания электрической цепи	1835	{7}	291	https://en.wikipedia.org/wiki/Relay
-11	Lobster Trap	Ловушка для лобстеров	Ловушка с конусовидным входом направленным во внутрь	1808	{10}	294	https://en.wikipedia.org/wiki/Lobster_trap
-12	Baseball	Бейсбол	Командная спортивная игра с бейсбольным мячом и битой	1845	{9}	285	https://en.wikipedia.org/wiki/Baseball
-13	Printing telegraph	Буквопечатающий телеграфный аппарат	Скорость передачи была около 40 слов в минуту, или до 2000 слов в час	1846	{11}	285	https://en.wikipedia.org/wiki/Printing_telegraph
-14	Morse code	Азбука Морзе	Способ знакового кодирования последовательностью сигналов: длинных («тире») и коротких («точек»)	1836	{13,12}	284	https://en.wikipedia.org/wiki/Morse_code
-15	Inhalational anaesthetic	Ингаляционный анестетик	Анастезия которая может быть доставлено путём ингаляции	1842	{14}	269	https://en.wikipedia.org/wiki/Inhalational_anaesthetic
-16	Gas mask	Противогаз	Маска для защиты от вдыхания загрязняющих веществ в воздухе и токсичных газов	1847	{15}	0	https://en.wikipedia.org/wiki/Gas_mask
-17	Safety pin	Английская булавка	Разновидность булавки, в которой остриё иглы накрывается крышкой для защиты от случайного укола	1849	{16}	285	https://en.wikipedia.org/wiki/Safety_pin
-18	Inverted microscope	Инвертированный микроскоп	Оптический прибор с «перевернутой» конструкцией, которая позволяет вести исследование объекта с его нижней стороны	1850	{17}	265	https://en.wikipedia.org/wiki/Inverted_microscope
-19	Potato chips	Картофельные чипсы	Закуска, представляющая собой зажаренные тонкие ломтики картофеля	1853	{18}	301	https://en.wikipedia.org/wiki/Potato_chip
+1	Swim fins	Ласты	Приспособление для плавания в форме плавника или весла	1717	{2}	267	https://en.wikipedia.org/wiki/Swimfin
+2	Octant	Октант	Угломерный отражательный инструмент, ныне вышедший из употребления	1730	{3}	0	https://en.wikipedia.org/wiki/Combine_harvester
+3	Flexible urinary catheter	Гибкий мочевой катетер	Латексная, полиуретановая или силиконовая трубка вставленная в мочевой пузырь пациента в медицинских целях	1752	{2}	269	https://en.wikipedia.org/wiki/Urinary_catheterization
+4	Bifocals	Бифокальная линза	Линза с двумя оптическими зонами. Обычно имеет большой сегмент для дали и сегмент для чтения	1784	{2}	269	https://en.wikipedia.org/wiki/Bifocals
+5	Fire hydrant	Пожарный гидрант	Устройство для отбора воды из водопроводной сети для тушения пожара	1792	{4}	269	https://en.wikipedia.org/wiki/Fire_hydrant
+6	Vapor-compression refrigeration	Компрессионная холодильная машина	Устройство, служащее для отвода теплоты от охлаждаемого тела	1805	{5}	269	https://en.wikipedia.org/wiki/Vapor-compression_refrigeration
+7	Circular saw	Цикрулярная пила	Режущий инструмент в виде плоского металлического диска, на внешней кромке которого расположены зубья	1813	{6}	156	https://en.wikipedia.org/wiki/Circular_saw
+8	Electric doorbell	Электрический звонок	Электрический звонок активируемый выносной кнопкой	1831	{7}	156	https://en.wikipedia.org/wiki/Doorbell
+9	Combine harvester	Зерноуборочный комбайн	Машина, которая одновременно срезала хлеб, обмолачивала его и очищала зерно от шелухи	1834	{8}	289	https://en.wikipedia.org/wiki/Combine_harvester
+10	Relay	Реле	Электрическое устройство, предназначенное для замыкания или размыкания электрической цепи	1835	{7}	291	https://en.wikipedia.org/wiki/Relay
+11	Lobster Trap	Ловушка для лобстеров	Ловушка с конусовидным входом направленным во внутрь	1808	{10}	294	https://en.wikipedia.org/wiki/Lobster_trap
+12	Baseball	Бейсбол	Командная спортивная игра с бейсбольным мячом и битой	1845	{9}	285	https://en.wikipedia.org/wiki/Baseball
+13	Printing telegraph	Буквопечатающий телеграфный аппарат	Скорость передачи была около 40 слов в минуту, или до 2000 слов в час	1846	{11}	285	https://en.wikipedia.org/wiki/Printing_telegraph
+14	Morse code	Азбука Морзе	Способ знакового кодирования последовательностью сигналов: длинных («тире») и коротких («точек»)	1836	{13,12}	284	https://en.wikipedia.org/wiki/Morse_code
+15	Inhalational anaesthetic	Ингаляционный анестетик	Анастезия которая может быть доставлено путём ингаляции	1842	{14}	269	https://en.wikipedia.org/wiki/Inhalational_anaesthetic
+16	Gas mask	Противогаз	Маска для защиты от вдыхания загрязняющих веществ в воздухе и токсичных газов	1847	{15}	0	https://en.wikipedia.org/wiki/Gas_mask
+17	Safety pin	Английская булавка	Разновидность булавки, в которой остриё иглы накрывается крышкой для защиты от случайного укола	1849	{16}	285	https://en.wikipedia.org/wiki/Safety_pin
+18	Inverted microscope	Инвертированный микроскоп	Оптический прибор с «перевернутой» конструкцией, которая позволяет вести исследование объекта с его нижней стороны	1850	{17}	265	https://en.wikipedia.org/wiki/Inverted_microscope
+19	Potato chips	Картофельные чипсы	Закуска, представляющая собой зажаренные тонкие ломтики картофеля	1853	{18}	301	https://en.wikipedia.org/wiki/Potato_chip
 20	Spring Clothespin	Прищепка с пружинным зажимом	Специальный вид зажима, обычно использующийся для крепления предметов в верёвке	1853	{19}	302	https://en.wikipedia.org/wiki/Clothespin
 21	Calliope	Каллиопа	Паровой орган, использующий локомотивные или пароходные гудки	1855	{20}	303	https://en.wikipedia.org/wiki/Calliope_(music)
 22	Condensed milk	Сгущенное молоко	Концентрированное молоко, обычно с сахаров	1856	{21}	0	https://en.wikipedia.org/wiki/Condensed_milk

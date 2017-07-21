@@ -5,6 +5,7 @@ import throttleFactSelection from './throttleFactSelectionSaga';
 import processAndLoadData from './processAndLoadData';
 import playHistory from './playHistorySaga';
 import exportFromFeed from './exportFromFeedSaga';
+import askBackend from './askBackendSaga';
 
 
 export default [
@@ -14,6 +15,7 @@ export default [
   playHistory,
   changeProjection,
   exportFromFeed,
+  askBackend,
   assignTimelineCurrent
 ];
 
