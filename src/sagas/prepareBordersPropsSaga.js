@@ -2,8 +2,8 @@ import { put, takeEvery, select } from 'redux-saga/effects';
 
 const stateSelector = state => ({
   current: state.timeline.borders.current,
-  borders: state.borders.projected,
-  properties: state.properties
+  borders: state.data.borders.projected,
+  properties: state.data.properties
 });
 
 const bordersDataSelector = state => state.runtime.bordersData;

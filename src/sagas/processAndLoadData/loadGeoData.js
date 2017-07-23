@@ -10,12 +10,12 @@ export function getIdsFromTimeline(type, t, loaded = {}) {
 }
 
 export const getProjection = state => ({
-  name: state.projection.name,
-  rotate: state.projection.rotate
+  name: state.data.projection.name,
+  rotate: state.data.projection.rotate
 });
 
 export const getTimelineBorders = state => state.timeline.borders;
-export const getLoadedGeometry = state => state.borders;
+export const getLoadedGeometry = state => state.data.borders;
 export const getCurrentYear = state => state.timeline.year.now;
 
 function* loadGeoData(action) {

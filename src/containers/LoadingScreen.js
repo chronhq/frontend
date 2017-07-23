@@ -78,12 +78,12 @@ function mapStateToProps(state) {
       borders: getLoadedStatus('Перечень границ', state.timeline.borders),
     },
     data: {
-      locations: getLoadedStatus('География мест', state.locations),
-      facts: getLoadedStatus('География фактов', state.facts),
-      borders: getLoadedStatus('Политические границы', state.borders),
-      geoEvents: getLoadedStatus('Описание изменений', state.geoEvents),
-      persons: getLoadedStatus('Информация о людях', state.persons),
-      terrain: getLoadedStatus('Физическая карта мира', state.terrain)
+      locations: getLoadedStatus('География мест', state.data.locations),
+      facts: getLoadedStatus('География фактов', state.data.facts),
+      borders: getLoadedStatus('Политические границы', state.data.borders),
+      geoEvents: getLoadedStatus('Описание изменений', state.data.geoEvents),
+      persons: getLoadedStatus('Информация о людях', state.data.persons),
+      terrain: getLoadedStatus('Физическая карта мира', state.data.terrain)
     }
   };
 }

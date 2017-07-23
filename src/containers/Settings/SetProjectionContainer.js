@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 
 import { InputNumber } from '../../components/Input';
-import { setProjection } from '../../reducers/projection';
+import { setProjection } from '../../reducers/data/projection';
 
 import './SetProjectionContainer.less'; // Styles for Select
 
@@ -59,9 +59,9 @@ class SetProjectionContainer extends Component {
 }
 function mapStateToProps(state) {
   return {
-    name: state.projection.name,
-    rotate: state.projection.rotate,
-    options: state.projection.options
+    name: state.data.projection.name,
+    rotate: state.data.projection.rotate,
+    options: state.data.projection.options
   };
 }
 function mapDispatchToProps(dispatch) {

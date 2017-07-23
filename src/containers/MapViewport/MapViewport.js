@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
-import { getBordersFromState } from '../../reducers/actions';
 import Locations from '../Locations';
 import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
 import SizeMeter from './SizeMeter';
@@ -174,7 +173,7 @@ class Map extends Component {
 }
 
 function mapStateToProps(state) {
-  return { terrain: state.terrain.projected,
+  return { terrain: state.data.terrain.projected,
     landOwnershipColors: state.runtime.status.landOwnershipColors,
     scale: state.runtime.mapView.scale,
     resetFlag: state.runtime.mapView.reset,
@@ -182,7 +181,7 @@ function mapStateToProps(state) {
     buttonZoom: state.runtime.mapView.buttonZoom,
     b: {
       visible: state.runtime.visibility.borders,
-      loaded: state.borders.loaded,
+      loaded: state.data.borders.loaded,
       borders: state.runtime.bordersData.borders,
       properties: state.runtime.bordersData.properties
     }

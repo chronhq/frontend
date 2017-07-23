@@ -1,17 +1,17 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
 
-export const getProjectionConfig = state => state.projection;
-export const getPath = state => state.projection.path;
-export const getProjection = state => state.projection.project;
+export const getProjectionConfig = state => state.data.projection;
+export const getPath = state => state.data.projection.path;
+export const getProjection = state => state.data.projection.project;
 
 export const awaitingNewPath = [
-  ['TERRAIN_PROJECTED', state => state.terrain.byId],
-  ['BORDERS_PROJECTED', state => state.borders.byId]
+  ['TERRAIN_PROJECTED', state => state.data.terrain.byId],
+  ['BORDERS_PROJECTED', state => state.data.borders.byId]
 ];
 
 export const hasPoints = [
-  ['LOCATIONS_PROJECTED', state => state.locations.places],
-  ['EVENTS_GEO_PROJECTED', state => state.geoEvents.byId],
+  ['LOCATIONS_PROJECTED', state => state.data.locations.places],
+  ['EVENTS_GEO_PROJECTED', state => state.data.geoEvents.byId],
 ];
 
 function* changeProjection(action) {

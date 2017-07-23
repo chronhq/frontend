@@ -4,11 +4,11 @@ import { feedDownloadLinkId } from '../containers/Feed/ExportFromFeed';
 import { getInventors } from '../containers/Feed/InventionsFeed';
 
 export const stateSelector = state => ({
-  persons: state.persons.byId,
-  personsFacts: state.personsFacts.byId,
-  geoEvents: state.geoEvents.byId,
-  locations: state.locations.places,
-  facts: state.facts.byId
+  persons: state.data.persons.byId,
+  personsFacts: state.data.personsFacts.byId,
+  geoEvents: state.data.geoEvents.byId,
+  locations: state.data.locations.places,
+  facts: state.data.facts.byId
 });
 
 const getSelectedIds = selected =>
@@ -26,7 +26,7 @@ const newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
 
 const getFactDescription = (state, factId) => {
   const fact = state.facts[factId];
-  const loc = getLocationName(fact.invent_place, state.locations);
+  const loc = getLocationName(fact.invent_place, state.data.locations);
   const ppl = getInventors(state.persons, fact.inventor);
   return [
     `Название: "${fact.name_rus}"`,
@@ -41,8 +41,8 @@ const getFactDescription = (state, factId) => {
 const getPersonFacts = (state, factId) => {
   const fact = state.personsFacts[factId];
   const person = state.persons[fact.person];
-  const birthLoc = getLocationName(person.birth_place, state.locations);
-  const deathLoc = getLocationName(person.death_place, state.locations);
+  const birthLoc = getLocationName(person.birth_place, state.data.locations);
+  const deathLoc = getLocationName(person.death_place, state.data.locations);
 
   const birthDate = getDate(person.birth_date);
   const deathDate = getDate(person.death_date);

@@ -20,7 +20,7 @@ class LoadingStatus extends Component {
 
 function mapStateToProps(state) {
   return {
-    borders: state.borders.byId,
+    borders: state.data.borders.byId,
     current: state.timeline.borders.current,
     activeLoading: state.timeline.borders.loading
   };

@@ -86,12 +86,12 @@ class Feed extends Component {
 
 function mapStateToProps(state) {
   return {
-    inventions: state.facts,
+    inventions: state.data.facts,
     currentInventions: state.timeline.facts.current,
-    geoEvents: state.geoEvents,
+    geoEvents: state.data.geoEvents,
     currentGeoEvents: state.timeline.geoEvents.current,
     personsFacts: state.timeline.personsFacts.current,
-    persons: state.persons
+    persons: state.data.persons
   };
 }
 function mapDispatchToProps(dispatch) {

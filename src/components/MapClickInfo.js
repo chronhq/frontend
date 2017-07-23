@@ -93,11 +93,11 @@ function mapStateToProps(state) {
   return {
     selected: state.runtime.status.clickInfo,
     widgetType: state.runtime.status.clickInfoType,
-    persons: state.persons.byId,
-    locations: state.locations.places,
-    properties: state.properties.data.properties,
-    admin: state.properties.admin.admin,
-    type: state.properties.type.type
+    persons: state.data.persons.byId,
+    locations: state.data.locations.places,
+    properties: state.data.properties.data.properties,
+    admin: state.data.properties.admin.admin,
+    type: state.data.properties.type.type
   };
 }
 function mapDispatchToProps(dispatch) {

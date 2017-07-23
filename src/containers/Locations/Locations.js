@@ -164,9 +164,9 @@ function mapStateToProps(state) {
     visibility: state.runtime.visibility,
     scale: state.runtime.mapView.scale,
     current: state.timeline.locations.current,
-    projected: state.locations.projected,
-    geoEvents: state.geoEvents.projected,
-    places: state.locations.places
+    projected: state.data.locations.projected,
+    geoEvents: state.data.geoEvents.projected,
+    places: state.data.locations.places
   };
 }
 
