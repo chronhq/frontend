@@ -26,7 +26,7 @@ function* changeProjection(action) {
     return false;
   }
   // Save new data
-  yield put({ ...action, type: 'CHANGE_PROJECTION_SAGA' });
+  yield put({ ...action, type: 'CHANGE_PROJECTION' });
 
   const path = yield select(getPath);
 
@@ -62,7 +62,7 @@ function* changeProjection(action) {
 }
 
 export default function* changeProjectionSaga() {
-  yield takeEvery('CHANGE_PROJECTION', changeProjection);
+  yield takeEvery('CHANGE_PROJECTION_SAGA', changeProjection);
 }
 
 

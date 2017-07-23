@@ -22,7 +22,7 @@ const defaultState = {
 
 const mapView = (state = defaultState, action) => {
   switch (action.type) {
-    case 'MAP_VIEW_SCALE_SAGA': {
+    case 'MAP_VIEW_SCALE': {
       return {
         ...state,
         reset: false,
@@ -53,7 +53,7 @@ const mapView = (state = defaultState, action) => {
 
 export function changeScale(scale = 1, buttonZoom) {
   return {
-    type: 'MAP_VIEW_SCALE',
+    type: 'MAP_VIEW_SCALE_SAGA',
     buttonZoom,
     scale
   };

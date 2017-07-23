@@ -23,7 +23,7 @@ const defaultState = {
 
 const projection = (state = defaultState, action) => {
   switch (action.type) {
-    case 'CHANGE_PROJECTION_SAGA': {
+    case 'CHANGE_PROJECTION': {
       const rotate = 'rotate' in action ? action.rotate : state.rotate;
       const project = state.byName[action.name].rotate(rotate);
       return {
@@ -61,7 +61,7 @@ const projection = (state = defaultState, action) => {
 export function setProjection(rotate, name = defaultProjectionName) {
   // askBackend('CHANGE_PROJECTION', { name, rotate });
   return {
-    type: 'CHANGE_PROJECTION',
+    type: 'CHANGE_PROJECTION_SAGA',
     name,
     rotate
   };

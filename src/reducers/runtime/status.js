@@ -14,7 +14,7 @@ const status = (state = defaultState, action) => {
     case 'CHANGE_STATUS': {
       return { ...state, ready: action.ready };
     }
-    case 'SELECT_LOCATION_SAGA': {
+    case 'SELECT_LOCATION': {
       return { ...state,
         selectedLocation: action.location,
         selectedLocationType: action.locationType
@@ -57,7 +57,7 @@ export function markItReady(ready = true) {
 
 export function selectLocation(locationType = 'person', location = null) {
   return {
-    type: 'SELECT_LOCATION',
+    type: 'SELECT_LOCATION_SAGA',
     location,
     locationType,
   };

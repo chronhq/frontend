@@ -3,7 +3,7 @@ import { select, put, throttle } from 'redux-saga/effects';
 export const getColorsStatus = state => state.runtime.status.landOwnershipColors;
 
 function* handleChangeScale(action) {
-  yield put({ ...action, type: 'MAP_VIEW_SCALE_SAGA' });
+  yield put({ ...action, type: 'MAP_VIEW_SCALE' });
   const loc = yield select(getColorsStatus);
   if(loc.auto === true) {
     const combinedColors = action.scale < loc.zoomPoint;
@@ -14,5 +14,5 @@ function* handleChangeScale(action) {
 }
 
 export default function* changeProjectionSaga() {
-  yield throttle(1000, 'MAP_VIEW_SCALE', handleChangeScale);
+  yield throttle(1000, 'MAP_VIEW_SCALE_SAGA', handleChangeScale);
 }
