@@ -1,8 +1,8 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
 
-export const getProjectionConfig = state => state.data.projection;
-export const getPath = state => state.data.projection.path;
-export const getProjection = state => state.data.projection.project;
+export const getProjectionConfig = state => state.runtime.projection;
+export const getPath = state => state.runtime.projection.path;
+export const getProjection = state => state.runtime.projection.project;
 
 export const awaitingNewPath = [
   ['TERRAIN_PROJECTED', state => state.data.terrain.byId],

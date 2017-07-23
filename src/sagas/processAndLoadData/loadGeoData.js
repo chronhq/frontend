@@ -10,8 +10,8 @@ export function getIdsFromTimeline(type, t, loaded = {}) {
 }
 
 export const getProjection = state => ({
-  name: state.data.projection.name,
-  rotate: state.data.projection.rotate
+  name: state.runtime.projection.name,
+  rotate: state.runtime.projection.rotate
 });
 
 export const getTimelineBorders = state => state.timeline.borders;
