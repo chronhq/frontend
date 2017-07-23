@@ -13,8 +13,8 @@ const dls = { current: [], byYear: {} };
 
 const factsDefaultState = { REDUCER_NAME: 'FACTS_TIMELINE', ...dls };
 const layersDefaultState = {
-  locations: { REDUCER_NAME: 'LOCATIONS_TIMELINE', ...dls  },
-  borders: { REDUCER_NAME: 'BORDERS_TIMELINE', ...dls, current: '' },
+  locations: { REDUCER_NAME: 'LOCATIONS_TIMELINE', ...dls },
+  borders: { REDUCER_NAME: 'BORDERS_TIMELINE', current: '' },
   geoEvents: { REDUCER_NAME: 'EVENTS_GEO_TIMELINE', ...dls, current: '' },
   personsAlive: { REDUCER_NAME: 'PERSONS_TIMELINE', ...dls },
   personsFacts: { REDUCER_NAME: 'PERSONS_FACTS_TIMELINE', ...dls }
