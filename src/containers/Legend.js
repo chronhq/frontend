@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { SVGPattern, getFillColors, getFillPatternId } from '../components/SVGPatternsDefs';
-import { getBordersFromState } from '../reducers/actions';
 
 import './Legend.less';
 
@@ -79,12 +78,11 @@ class Legend extends Component {
 }
 
 function mapStateToProps(state) {
-  const bordersData = getBordersFromState(state);
   return {
     landOwnershipColors: state.runtime.status.landOwnershipColors,
     bordersLoaded: state.borders.loaded,
-    borders: bordersData.borders,
-    properties: bordersData.properties,
+    borders: state.runtime.bordersData.borders,
+    properties: state.runtime.bordersData.properties,
     visibility: state.runtime.visibility
   };
 }
