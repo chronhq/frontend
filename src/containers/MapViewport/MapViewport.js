@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as d3 from 'd3';
 import Locations from '../Locations';
 import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
-import SizeMeter from './SizeMeter';
+import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
 import { changeScale } from '../../reducers/runtime/mapView';
 import { setClickInfo } from '../../reducers/runtime/status';
@@ -164,7 +164,7 @@ class Map extends Component {
           <Locations />
         </g>
         <g transform={this.state.widgetTransform}>
-          <SizeMeter zoom={this.scale} height={this.height} />
+          <ScaleWidget zoom={this.scale} height={this.height} />
           <LoadingWidget />
         </g>
       </svg>

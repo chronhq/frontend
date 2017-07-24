@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import RotatingLogo from '../components/RotatingLogo';
-import { askBackend } from '../reducers/actions';
-import { markItReady } from '../reducers/runtime/status';
+import RotatingLogo from './RotatingLogo';
+import { askBackend } from '../../reducers/actions';
+import { markItReady } from '../../reducers/runtime/status';
 import './LoadingScreen.less';
 
 const getIcon = (e) => {
