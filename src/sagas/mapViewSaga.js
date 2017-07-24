@@ -1,6 +1,6 @@
 import { select, put, throttle } from 'redux-saga/effects';
 
-export const getColorsStatus = state => state.runtime.status.landOwnershipColors;
+export const getColorsStatus = state => state.runtime.landOwnershipColors;
 
 function* handleChangeScale(action) {
   yield put({ ...action, type: 'MAP_VIEW_SCALE' });
@@ -8,7 +8,7 @@ function* handleChangeScale(action) {
   if(loc.auto === true) {
     const combinedColors = action.scale < loc.zoomPoint;
     if(loc.enabled !== combinedColors) {
-      yield put({ type: 'LAND_OWNERSHIP_COLORS_ENABLED', enabled: combinedColors });
+      yield put({ type: 'LAND_OWNERSHIP_COLORS_AUTO', enabled: combinedColors });
     }
   }
 }

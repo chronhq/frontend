@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SetProjectionContainer from './SetProjectionContainer';
 import SetLayerVisibility from './SetLayerVisibility';
 import FeedbackButtons from '../../components/Feedback/FeedbackButtons';
+import SetOwnershipColorGrouping from './SetOwnershipColorGrouping';
 
 class Settings extends React.Component {
   render() {
@@ -13,6 +14,9 @@ class Settings extends React.Component {
         <SetProjectionContainer />
         <hr />
         <SetLayerVisibility />
+        <br />
+        <h3> Группировка территорий </h3>
+        <SetOwnershipColorGrouping />
         <FeedbackButtons onClose={this.props.onClose} />
       </div>
     );

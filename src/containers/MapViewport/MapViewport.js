@@ -174,7 +174,7 @@ class Map extends Component {
 
 function mapStateToProps(state) {
   return { terrain: state.data.terrain.projected,
-    landOwnershipColors: state.runtime.status.landOwnershipColors,
+    landOwnershipColors: state.runtime.landOwnershipColors,
     scale: state.runtime.mapView.scale,
     resetFlag: state.runtime.mapView.reset,
     rotation: state.runtime.mapView.rotation,
