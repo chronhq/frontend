@@ -26,11 +26,11 @@ export const getTooltipSize = (location, scale) => {
   // <rect x={obj.left} y={obj.top} width={obj.right - obj.left } height={obj.bottom - obj.top} fill='black' />
 };
 
-const PinTooltip = ({ location, scale }) => (
+const LocationDotLabel = ({ location, scale }) => (
   <g key={`pin_tooltip_${location.cityId}`} className='tooltip' transform={`translate(${location.x},${location.y})`}>
     <text y='1em' x={textX(location, scale)} textAnchor='middle' fontSize={textSize(location.scaleRank, scale)}>
       {location.name}
     </text>
   </g>
 );
-export default PinTooltip;
+export default LocationDotLabel;

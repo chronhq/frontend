@@ -1,23 +1,23 @@
 import React from 'react';
 
-import './Pin.less';
+import './LocationDot.less';
 
 // Maximum scaleRank is 10 for smallest cities
-const sizeOfAPin = (scaleRank, scale) => {
+const sizeOfALocationDot = (scaleRank, scale) => {
   const pin = Math.sqrt(Number(scaleRank) / Math.sqrt(scale)) || 1;
   return Number(scaleRank) === 0
     ? pin
     : pin / scaleRank;
 };
 
-const Pin = ({ location, scale }) => (
+const LocationDot = ({ location, scale }) => (
   <circle
-    className='PinVisible'
+    className='LocationDotVisible'
     cx={location.x} cy={location.y}
-    r={sizeOfAPin(location.scaleRank, scale)}
+    r={sizeOfALocationDot(location.scaleRank, scale)}
     key={`pin_${location.id}`}
   >
     <title>{location.name}</title>
   </circle>
 );
-export default Pin;
+export default LocationDot;

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Pin from './Pin';
-import PinTooltip, { getTooltipSize } from './PinTooltip';
+import LocationDot from './LocationDot';
+import LocationDotLabel, { getTooltipSize } from './LocationDotLabel';
 import LocationFlag from './LocationFlag';
 import { setClickInfo } from '../../reducers/runtime/status';
 
-const DrawPin = ({ city, visibility, visible, scale, cb }) => (
+const DrawLocationDot = ({ city, visibility, visible, scale, cb }) => (
   <g key={`pin_list_${city.id}`}
     onClick={cb} >
     {visibility.locations &&
-      <Pin location={city} scale={scale} />
+      <LocationDot location={city} scale={scale} />
     }
     {(visibility.tooltips && visible) &&
-      <PinTooltip location={city} scale={scale} />
+      <LocationDotLabel location={city} scale={scale} />
     }
   </g>
 );
@@ -137,7 +137,7 @@ class Locations extends Component {
       <g key='locations'>
         {this.state.current.map((city, id) => (
           this.checkSize(city)
-            ? <DrawPin
+            ? <DrawLocationDot
             scale={this.props.scale}
             key={`pin_list_${city}`}
             city={this.getLocation(city)}
