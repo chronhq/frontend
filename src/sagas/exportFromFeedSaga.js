@@ -1,3 +1,7 @@
+/**
+ * @file Export from feed. Preparing blob data and saving file to disk.
+*/
+
 import { takeEvery, select } from 'redux-saga/effects';
 
 import { feedDownloadLinkId } from '../containers/Feed/ExportFromFeed';

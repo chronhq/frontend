@@ -1,3 +1,10 @@
+/**
+ * @file Catching every FULFILLED request action which affects timeline
+ * Action on XXX_TIMELINE_CURRENT is equivalent to SET_YEAR|PREV_YEAR
+ * If the (CHANGE)_YEAR was performed and necessary data was not loaded,
+ * this saga will fix timeline status after data will be loaded
+*/
+
 import { put, takeEvery, select } from 'redux-saga/effects';
 
 export const getYear = state => state.timeline.now;

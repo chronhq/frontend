@@ -1,3 +1,7 @@
+/**
+ * @file Validate year before send it to reducer
+*/
+
 import { put, takeEvery, select } from 'redux-saga/effects';
 
 const yearSelector = state => state.timeline.year;

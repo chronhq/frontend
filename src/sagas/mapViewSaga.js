@@ -1,3 +1,9 @@
+/**
+ * @file Throttling MAP_VIEW_SCALE_SAGA and toggling LAND_OWNERSHIP_COLORS_AUTO
+ * Reducing number of 'dispatches' when user uses mousewheel zoom
+ * Dispatching LAND_OWNERSHIP_COLORS_AUTO if needed
+*/
+
 import { select, put, throttle } from 'redux-saga/effects';
 
 export const getColorsStatus = state => state.runtime.landOwnershipColors;

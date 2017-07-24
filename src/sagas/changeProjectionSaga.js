@@ -1,3 +1,8 @@
+/**
+ * @file Catching every CHANGE_PROJECTION_SAGA and calculating new projections
+ * Calculating new points for TERRAIN, BORDERS, GEO_EVENTS, LOCATIONS
+*/
+
 import { put, takeEvery, select } from 'redux-saga/effects';
 
 export const getProjectionConfig = state => state.runtime.projection;

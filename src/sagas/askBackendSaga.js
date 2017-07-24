@@ -1,3 +1,12 @@
+/**
+ * @file Catching every 'ASK_BACKEND_SAGA' action.
+ * Performing a request for an API server from `${action.resource}`
+ * Firing `${action.resource}_PENDING` before sending a request
+ * Firing `${action.resource}_FULFILLED` if request was succeeded
+ * Firing `${action.resource}_REJECTED` if request was rejected
+ * _PENDING _FULFILLED _REJECTED is a legacy from redux-promise-middleware
+ */
+
 import fetch from 'isomorphic-fetch';
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 

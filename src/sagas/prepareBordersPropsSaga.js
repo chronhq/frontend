@@ -1,3 +1,7 @@
+/**
+ * @file Combine projected borders and admin data into a nice tree
+*/
+
 import { put, takeEvery, select } from 'redux-saga/effects';
 
 const stateSelector = state => ({

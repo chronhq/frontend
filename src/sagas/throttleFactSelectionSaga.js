@@ -1,3 +1,7 @@
+/**
+ * @file Throttling mouseover event on 'Feed' (Show LocationFlag)
+*/
+
 import { put, throttle } from 'redux-saga/effects';
 
 function* handleSelection(action) {

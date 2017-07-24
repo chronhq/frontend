@@ -1,3 +1,9 @@
+/**
+ * @file This saga is equal to simple setInterval() function
+ * Every `yearInterval` dispatching `CHANGE_YEAR_SAGA`
+ * Interval is taken from state.runtime.status.yearInterval
+*/
+
 import { put, takeEvery, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 
