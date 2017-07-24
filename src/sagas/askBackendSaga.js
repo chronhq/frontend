@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 
 export default function* askBackendSaga() {
-  yield takeEvery('ASK_BACKEND', askBackend);
+  yield takeEvery('ASK_BACKEND_SAGA', askBackend);
 }
 
 function fetchResponse(url, req){
@@ -22,7 +22,7 @@ function* askBackend({resource, data, type}) {
   yield put({type: `${resource}_PENDING`});
   try {
     const payload = yield call(fetchResponse, url, req);
-    console.log(payload);
+    // console.log(payload);
     yield put({type: `${resource}_FULFILLED`, payload});
   } catch (e) {
     yield put({type: `${resource}_REJECTED`, payload: { error: e.message }});

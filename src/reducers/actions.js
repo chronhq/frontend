@@ -48,7 +48,7 @@ export function getNextData(years, data, target) {
 
 export function askBackend(resource, data = {}) {
   return {
-    type: 'ASK_BACKEND',
+    type: 'ASK_BACKEND_SAGA',
     resource,
     data
   };
