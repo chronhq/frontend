@@ -1,4 +1,6 @@
 import { put } from 'redux-saga/effects';
+import { locationsTimelineFF } from '../../reducers/actions';
+
 
 function* locationsTimeline(action) {
   const places = action.payload.places;
@@ -22,14 +24,7 @@ function* locationsTimeline(action) {
     previousYear = currentYear;
   }
 
-  yield put({
-    type: 'LOCATIONS_TIMELINE_FULFILLED',
-    payload: {
-      byYear: timeline,
-      allYears: Object.keys(timeline),
-      current: []
-    }
-  });
+  yield put(locationsTimelineFF(timeline));
 }
 
 export default locationsTimeline;

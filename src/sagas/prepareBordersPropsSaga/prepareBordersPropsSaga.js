@@ -9,7 +9,7 @@ const stateSelector = state => ({
   current: state.timeline.borders.current,
   borders: state.data.borders.projected,
   properties: state.data.properties,
-  colorsData: state.runtime.landOwnershipColors
+  colorsData: state.runtime.colorsData
 });
 
 const bordersDataSelector = state => state.runtime.bordersData;

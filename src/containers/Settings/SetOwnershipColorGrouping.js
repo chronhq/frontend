@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Select from 'react-select';
 import { InputRange } from '../../components/Input';
 
-import { changeGrouping } from '../../reducers/runtime/landOwnershipColors';
+import { changeGrouping } from '../../reducers/runtime/colorsData';
 
 import './SetProjectionContainer.less'; // Styles for Select
 
@@ -79,9 +79,9 @@ class SetOwnershipGrouping extends Component {
 }
 function mapStateToProps(state) {
   return {
-    auto: state.runtime.landOwnershipColors.auto,
-    enabled: state.runtime.landOwnershipColors.enabled,
-    zoomPoint: state.runtime.landOwnershipColors.zoomPoint,
+    auto: state.runtime.colorsData.auto,
+    enabled: state.runtime.colorsData.enabled,
+    zoomPoint: state.runtime.colorsData.zoomPoint,
   };
 }
 function mapDispatchToProps(dispatch) {

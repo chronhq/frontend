@@ -1,4 +1,5 @@
 import { put } from 'redux-saga/effects';
+import { geoEventsFF } from '../../reducers/actions';
 
 function* geoEventsTimeline(action) {
   const data = action.payload;
@@ -9,13 +10,7 @@ function* geoEventsTimeline(action) {
       ? { ...prev, [year]: [...prev[year], cur.id] }
       : { ...prev, [year]: [cur.id] };
   }, {});
-  yield put({
-    type: 'EVENTS_GEO_TIMELINE_FULFILLED',
-    payload: {
-      byYear,
-      allYears: Object.keys(byYear)
-    }
-  });
+  yield put(geoEventsFF(byYear));
 }
 
 export default geoEventsTimeline;

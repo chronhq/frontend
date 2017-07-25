@@ -5,10 +5,10 @@ import status from './status';
 import mapView from './mapView';
 import bordersData from './bordersData';
 import projection from './projection';
-import landOwnershipColors from './landOwnershipColors';
+import colorsData from './colorsData';
 
 export default combineReducers({
-  landOwnershipColors,
+  colorsData,
   projection,
   visibility,
   status,

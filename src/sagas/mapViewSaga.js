@@ -6,7 +6,7 @@
 
 import { select, put, throttle } from 'redux-saga/effects';
 
-export const getColorsStatus = state => state.runtime.landOwnershipColors;
+export const getColorsStatus = state => state.runtime.colorsData;
 
 function* handleChangeScale(action) {
   yield put({ ...action, type: 'MAP_VIEW_SCALE' });

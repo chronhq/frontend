@@ -1,4 +1,9 @@
 import { put, select } from 'redux-saga/effects';
+import {
+  personsTimelineFF,
+  personsFactsTimelineFF,
+  personsFactsFF
+} from '../../reducers/actions';
 
 export const getCurrentYear = state => state.timeline.year.now;
 
@@ -67,26 +72,11 @@ function* personsTimeline(action) {
     return { alive,
       data: { ...prevYear.data, [curId]: alive } };
   }, { alive: [], data: {} });
-  yield put({
-    type: 'PERSONS_TIMELINE_FULFILLED',
-    payload: {
-      byYear: timelineYears.data,
-      allYears: Object.keys(timelineYears.data)
-    }
-  });
-  yield put({
-    type: 'PERSONS_FACTS_TIMELINE_FULFILLED',
-    payload: {
-      byYear: deathFacts,
-      allYears: Object.keys(deathFacts)
-    }
-  });
-  yield put({
-    type: 'PERSONS_FACTS_FULFILLED',
-    payload: {
-      byId: deathById
-    }
-  });
+
+  yield put(personsTimelineFF(timelineYears.data));
+  yield put(personsFactsTimelineFF(deathFacts));
+  yield put(personsFactsFF(deathById));
+
 }
 
 export default personsTimeline;

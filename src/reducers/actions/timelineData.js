@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch';
-
 export function getActualData(years, data, target) {
   const res = Math.max(...years.filter(y => y <= target));
   if (isFinite(res)) {
@@ -14,12 +12,4 @@ export function getNextData(years, data, target) {
     return data[res];
   }
   return [];
-}
-
-export function askBackend(resource, data = {}) {
-  return {
-    type: 'ASK_BACKEND_SAGA',
-    resource,
-    data
-  };
 }

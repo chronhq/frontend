@@ -2,7 +2,7 @@ const defaultState = { colors: {}, auto: true, enabled: true, zoomPoint: 4, name
 
 const getName = (enabled) => 'grouped' || 'separated';
 
-const landOwnershipColors = (state = defaultState, action) => {
+const colorsData = (state = defaultState, action) => {
   switch (action.type) {
     case 'LAND_OWNERSHIP_COLORS': {
       return { ...state, colors: action.colors };
@@ -34,4 +34,4 @@ export function changeGrouping(auto, enabled, zoomPoint) {
   };
 }
 
-export default landOwnershipColors;
+export default colorsData;

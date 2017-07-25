@@ -1,6 +1,7 @@
 import { put } from 'redux-saga/effects';
+import { setColorsData } from '../../reducers/actions';
 
-function* landOwnershipColors(action) {
+function* colorsData(action) {
   const data = action.payload.properties;
   // Count the colors per 'admin'
   const ranking = Object.keys(data).reduce((prev, curId) => {
@@ -19,10 +20,7 @@ function* landOwnershipColors(action) {
     return { ...prev, [admin]: adminMax.id };
     }, {});
 
-  yield put({
-    type: 'LAND_OWNERSHIP_COLORS',
-    colors
-  });
+  yield put(setColorsData(colors));
 }
 
-export default landOwnershipColors;
+export default colorsData;

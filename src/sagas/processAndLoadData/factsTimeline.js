@@ -1,4 +1,5 @@
 import { put } from 'redux-saga/effects';
+import { factsTimelineFF } from '../../reducers/actions';
 
 function* factsTimeline(action) {
   const data = action.payload;
@@ -8,13 +9,7 @@ function* factsTimeline(action) {
       ? { ...prev, [cur.invent_date]: [...prev[cur.invent_date], cur.id] }
       : { ...prev, [cur.invent_date]: [cur.id] };
   }, {});
-  yield put({
-    type: 'FACTS_TIMELINE_FULFILLED',
-    payload: {
-      byYear,
-      allYears: Object.keys(byYear)
-    }
-  });
+  yield put(factsTimelineFF(byYear));
 }
 
 export default factsTimeline;

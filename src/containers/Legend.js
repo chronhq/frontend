@@ -78,7 +78,7 @@ class Legend extends Component {
 
 function mapStateToProps(state) {
   return {
-    colorsData: state.runtime.landOwnershipColors,
+    colorsData: state.runtime.colorsData,
     bordersLoaded: state.data.borders.loaded,
     borders: state.runtime.bordersData.borders,
     properties: state.runtime.bordersData.properties,

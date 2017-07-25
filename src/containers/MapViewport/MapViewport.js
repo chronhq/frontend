@@ -149,7 +149,7 @@ class Map extends Component {
       <svg className='svgMap' ref={(r) => { this.svgMap = r; }}>
         <PatternsDefs
           bordersData={this.props.b.properties}
-          colorsData={this.props.landOwnershipColors}
+          colorsData={this.props.colorsData}
         />
         <g transform={this.transform}>
           <TerrainMap
@@ -174,7 +174,7 @@ class Map extends Component {
 
 function mapStateToProps(state) {
   return { terrain: state.data.terrain.projected,
-    landOwnershipColors: state.runtime.landOwnershipColors,
+    colorsData: state.runtime.colorsData,
     scale: state.runtime.mapView.scale,
     resetFlag: state.runtime.mapView.reset,
     rotation: state.runtime.mapView.rotation,
