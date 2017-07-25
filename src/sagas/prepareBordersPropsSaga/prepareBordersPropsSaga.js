@@ -3,16 +3,18 @@
 */
 
 import { put, takeEvery, select } from 'redux-saga/effects';
+import { getFillColors } from './calculateBorderColors';
 
 const stateSelector = state => ({
   current: state.timeline.borders.current,
   borders: state.data.borders.projected,
-  properties: state.data.properties
+  properties: state.data.properties,
+  colorsData: state.runtime.landOwnershipColors
 });
 
 const bordersDataSelector = state => state.runtime.bordersData;
 
-function getBordersFromState({ current, borders, properties }) {
+function getBordersFromState({ current, borders, properties, colorsData }) {
 
   if (current) {
     return Object.keys(current).reduce((prev, curId) => {
@@ -23,6 +25,10 @@ function getBordersFromState({ current, borders, properties }) {
         type: properties.type.type[curProps.type],
         admin: properties.admin.admin[curProps.admin],
       };
+      filledProps.colors = {
+        grouped: getFillColors(filledProps, { ...colorsData, enabled: true }),
+        separated: getFillColors(filledProps, { ...colorsData, enabled: false }),
+      }
       return {
         borders: [
           ...prev.borders, {

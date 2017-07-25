@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { SVGPattern, getFillColors, getFillPatternId } from '../components/SVGPatternsDefs';
+import { SVGPattern, getFillPatternId } from '../components/SVGPatternsDefs';
 
 import './Legend.less';
 
@@ -27,7 +27,7 @@ const Description = ({ properties, scaleView }) => (
 );
 
 const LegendItem = ({ properties, colorsData }) => {
-  const [ids, vls] = getFillColors(properties, colorsData);
+  const [ids, vls] = properties.colors[colorsData.name];
   const boxId = getFillPatternId(ids, 'legend');
 
   return (
@@ -43,11 +43,10 @@ class Legend extends Component {
     if (this.props.visibility.borders
           && this.props.bordersLoaded === true
           && Array.isArray(this.props.borders)) {
-      const scaleView = this.props.landOwnershipColors.enabled;
+      const scaleView = this.props.colorsData.enabled;
       return this.props.properties.reduce((prev, cur) => {
-        // const name = `legend_${cur.id}`;
-        const mapcolor13 = getFillColors(cur, this.props.landOwnershipColors)[0].shift();
-        // const mapcolor13 = ids.shift();
+        const colors = cur.colors[this.props.colorsData.name][0];
+        const mapcolor13 = `${colors[0]}_${colors[1].join('_')}`;
         const name = scaleView === true
           ? `${mapcolor13}_${cur.sr_adm0_a3}`
           : `${mapcolor13}_${cur.disputed}_${cur.type.en}_${cur.sr_adm0_a3}`;
@@ -58,7 +57,7 @@ class Legend extends Component {
   }
 
   render() {
-    const uniqLegendItems = this.uniqLegendItems(this.props.landOwnershipColors.enabled);
+    const uniqLegendItems = this.uniqLegendItems();
     return (
       <div>
         <h3> Легенда </h3>
@@ -67,7 +66,7 @@ class Legend extends Component {
             <LegendItem
               key={propId}
               properties={uniqLegendItems[propId]}
-              colorsData={this.props.landOwnershipColors}
+              colorsData={this.props.colorsData}
             />
           ))
           }
@@ -79,7 +78,7 @@ class Legend extends Component {
 
 function mapStateToProps(state) {
   return {
-    landOwnershipColors: state.runtime.landOwnershipColors,
+    colorsData: state.runtime.landOwnershipColors,
     bordersLoaded: state.data.borders.loaded,
     borders: state.runtime.bordersData.borders,
     properties: state.runtime.bordersData.properties,
