@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 
 import { InputNumber } from '../../components/Input';
-import { setProjection } from '../../reducers/runtime/projection';
+import { setProjection } from '../../reducers/actions';
 
 import './SetProjectionContainer.less'; // Styles for Select
 

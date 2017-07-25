@@ -6,8 +6,7 @@ import Locations from '../Locations';
 import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
-import { changeScale } from '../../reducers/runtime/mapView';
-import { setClickInfo } from '../../reducers/actions';
+import { setClickInfo, changeScale } from '../../reducers/actions';
 
 import './MapViewport.less';
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { changeScale, rotateProjection, resetRotation } from '../reducers/runtime/mapView';
+import { changeScale, rotateProjection, resetRotation } from '../reducers/actions';
 import './MapControls.less';
 
 const VertButton = ({ cb, fa }) => (

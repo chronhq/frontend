@@ -25,13 +25,4 @@ const colorsData = (state = defaultState, action) => {
   }
 };
 
-export function changeGrouping(auto, enabled, zoomPoint) {
-  return {
-    type: 'LAND_OWNERSHIP_COLORS_CHANGE',
-    auto,
-    enabled,
-    zoomPoint
-  };
-}
-
 export default colorsData;

@@ -14,7 +14,3 @@ const visibility = (state = defaultState, action) => {
   }
 };
 export default visibility;
-
-export function setVisibility(data) {
-  return { type: 'CHANGE_VISIBILITY', data };
-}

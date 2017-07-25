@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Select from 'react-select';
 import { InputRange } from '../../components/Input';
 
-import { changeGrouping } from '../../reducers/runtime/colorsData';
+import { changeGrouping } from '../../reducers/actions';
 
 import './SetProjectionContainer.less'; // Styles for Select
 

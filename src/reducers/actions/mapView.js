@@ -16,3 +16,26 @@ export function colorsDataAutoToggle(enabled) {
 export function selectLocationSaga(action) {
   return { ...action, type: 'SELECT_LOCATION' };
 }
+
+export function changeScale(scale = 1, buttonZoom) {
+  return {
+    type: 'MAP_VIEW_SCALE_SAGA',
+    buttonZoom,
+    scale
+  };
+}
+
+export function rotateProjection(rotation = 0) {
+  return {
+    type: 'MAP_VIEW_ROTATION',
+    rotation
+  };
+}
+
+export function resetRotation() {
+  return {
+    type: 'MAP_VIEW_RESET',
+    scale: 1,
+    rotation: 0
+  };
+}

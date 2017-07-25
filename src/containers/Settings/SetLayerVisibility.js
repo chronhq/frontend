@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { InputCheckBox, InputRange } from '../../components/Input';
-import { setVisibility } from '../../reducers/runtime/visibility';
+import { setVisibility } from '../../reducers/actions';
 
 class SetLayerVisibility extends Component {
   constructor(props) {
