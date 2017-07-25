@@ -3,9 +3,10 @@
 */
 
 import { put, throttle } from 'redux-saga/effects';
+import { selectLocationSaga } from '../reducers/actions';
 
 function* handleSelection(action) {
-  yield put({ ...action, type: 'SELECT_LOCATION' });
+  yield put(selectLocationSaga(action));
 }
 
 export default function* changeProjectionSaga() {

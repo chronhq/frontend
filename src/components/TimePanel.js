@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { PropTypes } from 'react';
 import * as d3 from 'd3';
-import { setYear } from '../reducers/timeline/year';
+import { setYear } from '../reducers/actions';
 import './TimePanel.less';
 import ControlButtons from '../components/ControlButtons';
 
@@ -52,7 +52,7 @@ class TimePanel extends React.Component {
       this.followMouse();
     });
   // Draw axis
-  this.resize();
+    this.resize();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,19 +90,19 @@ class TimePanel extends React.Component {
 
   updateClockPosition(now = this.state.now) {
     const translate = `translate(${this.scale(now)},0)`;
-    this.setState({ arrow: translate })
+    this.setState({ arrow: translate });
   }
 
   resize() {
     const width = this.width;
     this.setState({ width });
     const svgAxis = d3.select(this.svgAxis);
-    svgAxis.call(d3.axisBottom(this.scale).ticks(parseInt(width / 45), 'f'));
+    svgAxis.call(d3.axisBottom(this.scale).ticks(parseInt(width / 45, 10), 'f'));
     this.updateClockPosition();
   }
 
   render() {
-    const viewBox = '-15 -15 ' + (this.state.width + 30) + ' 40';
+    const viewBox = `-15 -15 ${this.state.width + 30} 40`;
     return (
       <div id='timeline' className='row'>
         <div className='col-sm-9 col-sm-push-3'>
@@ -115,12 +115,12 @@ class TimePanel extends React.Component {
             // preserveAspectRatio="xMaxYMin meet"
             preserveAspectRatio="none"
           >
-          <g className="axisTime" strokeWidth="1" ref={(r) => { this.svgAxis = r; }} />
-          <rect x='0' y='-50' width={this.state.width + 50} height='55' fill='#ffffff' opacity='0' className='back' style={{zIndex: -1}} />
-          <g transform={this.state.arrow}>
-            <rect y='-2' width='1' height='12' opacity='1' className='arrow' style={{fill: 'black', stroke: 'white', strokeWidth: 2}} />
-            <text x='-15' y='-5' style={{fill: "white"}}>{this.state.now}</text>
-          </g>
+            <g className="axisTime" strokeWidth="1" ref={(r) => { this.svgAxis = r; }} />
+            <rect x='0' y='-50' width={this.state.width + 50} height='55' fill='#ffffff' opacity='0' className='back' style={{ zIndex: -1 }} />
+            <g transform={this.state.arrow}>
+              <rect y='-2' width='1' height='12' opacity='1' className='arrow' style={{ fill: 'black', stroke: 'white', strokeWidth: 2 }} />
+              <text x='-15' y='-5' style={{ fill: 'white' }}>{this.state.now}</text>
+            </g>
           </svg>
         </div>
         <ControlButtons />

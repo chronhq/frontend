@@ -8,15 +8,21 @@ const yearSelector = state => state.timeline.year;
 function* changeYear(action) {
   const year = yield select(yearSelector);
   const getNow = () => {
-    switch(action.action) {
+    switch (action.action) {
       case 'NEXT_YEAR': {
         return year.now + 1;
       } case 'SET_YEAR': {
         return action.year;
       } case 'PREV_YEAR': {
         return year.now + 1;
+      } case 'RESET_YEAR': {
+        return year.min - 1;
       }
-  }}
+      default: {
+        return year.now;
+      }
+    }
+  };
   const now = getNow();
   const reset = year.min > now || now > year.max;
   const resp = reset === true
@@ -25,7 +31,7 @@ function* changeYear(action) {
   yield put(resp);
 }
 
-function* initTimeline(action) {
+function* initTimeline() {
   const year = yield select(yearSelector);
   yield put({ type: 'SET_YEAR', year: year.min });
 }

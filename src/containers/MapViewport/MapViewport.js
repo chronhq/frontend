@@ -7,7 +7,7 @@ import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
 import { changeScale } from '../../reducers/runtime/mapView';
-import { setClickInfo } from '../../reducers/runtime/status';
+import { setClickInfo } from '../../reducers/actions';
 
 import './MapViewport.less';
 
@@ -23,15 +23,15 @@ const TerrainMap = ({ terrain }) => (
   </g>
 );
 
-const BordersMap = ({ borders, loaded, visible, setClickInfo }) => (
+const BordersMap = ({ borders, loaded, visible, setClickInfoCb }) => (
   <g className='svgMapBorders'>
     {(visible && loaded === true
-      && borders.map((border) => (
+      && borders.map(border => (
         <path
           key={`borders_na_${border.id}`}
           d={border.d}
           fill={`url(#${getFillPatternId(border.props)})`}
-          onClick={() => setClickInfo('border', border.props)}
+          onClick={() => setClickInfoCb('border', border.props)}
         />
       )))}
   </g>
@@ -73,7 +73,7 @@ class Map extends Component {
     const nextState = this.state;
 
     if (Math.round(this.state.transform.k) !== nextProps.scale
-    && nextProps.buttonZoom ) {
+    && nextProps.buttonZoom) {
       nextState.transform.k = nextProps.scale;
     }
     if (nextProps.resetFlag === true) {
@@ -159,7 +159,7 @@ class Map extends Component {
             visible={this.props.b.visible}
             loaded={this.props.b.loaded}
             borders={this.props.b.borders}
-            setClickInfo={this.props.setClickInfo}
+            setClickInfoCb={this.props.setClickInfo}
           />
           <Locations />
         </g>

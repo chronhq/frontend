@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { nextYear, prevYear, resetYear } from '../reducers/timeline/year';
-import { startPlaying, stopPlaying } from '../reducers/runtime/status';
-
+import { nextYear, prevYear, resetYear } from '../reducers/actions';
+import { startPlaying, stopPlaying } from '../reducers/actions';
 
 class ControlButtons extends Component {
   static propTypes = {

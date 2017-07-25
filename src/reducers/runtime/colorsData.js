@@ -1,6 +1,6 @@
 const defaultState = { colors: {}, auto: true, enabled: true, zoomPoint: 4, name: 'grouped' };
 
-const getName = (enabled) => 'grouped' || 'separated';
+const getName = enabled => (enabled === true ? 'grouped' : 'separated');
 
 const colorsData = (state = defaultState, action) => {
   switch (action.type) {

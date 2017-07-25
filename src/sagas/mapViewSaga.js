@@ -5,16 +5,17 @@
 */
 
 import { select, put, throttle } from 'redux-saga/effects';
+import { mapViewScale, colorsDataAutoToggle } from '../reducers/actions';
 
 export const getColorsStatus = state => state.runtime.colorsData;
 
 function* handleChangeScale(action) {
-  yield put({ ...action, type: 'MAP_VIEW_SCALE' });
+  yield put(mapViewScale(action.scale, action.buttonZoom));
   const loc = yield select(getColorsStatus);
-  if(loc.auto === true) {
+  if (loc.auto === true) {
     const combinedColors = action.scale < loc.zoomPoint;
-    if(loc.enabled !== combinedColors) {
-      yield put({ type: 'LAND_OWNERSHIP_COLORS_AUTO', enabled: combinedColors });
+    if (loc.enabled !== combinedColors) {
+      yield put(colorsDataAutoToggle(combinedColors));
     }
   }
 }

@@ -7,7 +7,7 @@ import InventionsFeed from './InventionsFeed';
 import PersonsFeed from './PersonsFeed';
 import GeoEventsFeed from './GeoEventsFeed';
 import ExportFromFeed from './ExportFromFeed';
-import { selectLocation } from '../../reducers/runtime/status';
+import { selectLocation } from '../../reducers/actions';
 
 import './Feed.less';
 

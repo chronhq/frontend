@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import LocationDot from './LocationDot';
 import LocationDotLabel, { getTooltipSize } from './LocationDotLabel';
 import LocationFlag from './LocationFlag';
-import { setClickInfo } from '../../reducers/runtime/status';
+import { setClickInfo } from '../../reducers/actions';
 
 const DrawLocationDot = ({ city, visibility, visible, scale, cb }) => (
-  <g key={`pin_list_${city.id}`}
-    onClick={cb} >
+  <g
+    key={`pin_list_${city.id}`}
+    onClick={cb}
+  >
     {visibility.locations &&
       <LocationDot location={city} scale={scale} />
     }
@@ -36,13 +38,13 @@ class Locations extends Component {
       visibility, // []
       locationFlag: false,
       selectedType: 'locations'
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    const getSelectedLoc = () => nextProps.selectedType !== 'geoEvents'
+    const getSelectedLoc = () => (nextProps.selectedType !== 'geoEvents'
           ? this.props.projected[nextProps.selected]
-          : this.props.geoEvents[nextProps.selected];
+          : this.props.geoEvents[nextProps.selected]);
 
     if (nextProps.selected !== this.state.selected
     || nextProps.selectedType != this.state.selectedType) {
@@ -73,7 +75,7 @@ class Locations extends Component {
       const current = this.sortPlacesByScaleRank(nextProps);
       const visibility = this.getVisibility(nextProps, current);
       this.setState({ current, visibility });
-    } else if (nextProps.scale != this.props.scale){
+    } else if (nextProps.scale != this.props.scale) {
       const visibility = this.getVisibility(nextProps, this.state.current);
       this.setState({ visibility });
     }
@@ -90,10 +92,9 @@ class Locations extends Component {
         return {
           ...prev,
           [scaleRank]: [...prev[scaleRank], city]
-        }
-      } else {
-        return { ...prev };
+        };
       }
+      return { ...prev };
     }, {});
     // Join them into one array
     const current = Object.keys(byScale).reduce(
@@ -107,7 +108,7 @@ class Locations extends Component {
       return current.map((city) => {
         const loc = this.getLocation(city);
         const size = getTooltipSize(loc, props.scale);
-        const noOverlap = (s) => ( // returns false is collision detected
+        const noOverlap = s => ( // returns false is collision detected
           (s.top > size.bottom || s.bottom < size.top
           || s.left > size.right || s.right < size.left)
         );
@@ -118,9 +119,8 @@ class Locations extends Component {
         }
         return false;
       });
-    } else {
-      return current.map(() => false);
     }
+    return current.map(() => false);
   };
 
   getLocation = id => ({
@@ -138,13 +138,13 @@ class Locations extends Component {
         {this.state.current.map((city, id) => (
           this.checkSize(city)
             ? <DrawLocationDot
-            scale={this.props.scale}
-            key={`pin_list_${city}`}
-            city={this.getLocation(city)}
-            cb={() => this.props.setClickInfo('location', city)}
-            visible={this.state.visibility[id]}
-            visibility={this.props.visibility}
-          />
+              scale={this.props.scale}
+              key={`pin_list_${city}`}
+              city={this.getLocation(city)}
+              cb={() => this.props.setClickInfo('location', city)}
+              visible={this.state.visibility[id]}
+              visibility={this.props.visibility}
+            />
           : ''
         ))}
         <LocationFlag

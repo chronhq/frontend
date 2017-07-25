@@ -1,5 +1,9 @@
 import { put, select } from 'redux-saga/effects';
-import { getNextData, getActualData, askBackend } from '../../reducers/actions';
+import {
+  getNextData,
+  getActualData,
+  emptyBordersFF,
+  askBackend } from '../../reducers/actions';
 
 export function getIdsFromTimeline(type, t, loaded = {}) {
   // type must be geo or props
@@ -47,7 +51,7 @@ function* loadGeoData(action) {
       ids: geoIds
     }));
   } else {
-    yield put({ type: 'BORDERS_FULFILLED', payload: { projected: {}, byYear: {} } });
+    yield put(emptyBordersFF());
     console.log('Nothing new to obtain from server');
   }
 

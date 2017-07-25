@@ -15,7 +15,6 @@ const stateSelector = state => ({
 const bordersDataSelector = state => state.runtime.bordersData;
 
 function getBordersFromState({ current, borders, properties, colorsData }) {
-
   if (current) {
     return Object.keys(current).reduce((prev, curId) => {
       const cur = current[curId];
@@ -28,7 +27,7 @@ function getBordersFromState({ current, borders, properties, colorsData }) {
       filledProps.colors = {
         grouped: getFillColors(filledProps, { ...colorsData, enabled: true }),
         separated: getFillColors(filledProps, { ...colorsData, enabled: false }),
-      }
+      };
       return {
         borders: [
           ...prev.borders, {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import RotatingLogo from './RotatingLogo';
 import { askBackend } from '../../reducers/actions';
-import { markItReady } from '../../reducers/runtime/status';
+import { markItReady } from '../../reducers/actions';
 import './LoadingScreen.less';
 
 const getIcon = (e) => {
@@ -33,7 +33,6 @@ class LoadingScreen extends Component {
     this.props.askBackend('EVENTS_GEO');
     this.props.askBackend('FACTS');
     this.props.askBackend('PERSONS');
-    this.props.askBackend('SURVEYS');
   }
   componentWillReceiveProps(next) {
     const notLoaded = sumLoading(next.timeline) + sumLoading(next.data);

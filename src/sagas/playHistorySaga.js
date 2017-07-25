@@ -6,6 +6,7 @@
 
 import { put, takeEvery, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
+import { nextYear } from '../reducers/actions';
 
 export const getPlayingStatus = state => state.runtime.status.playing;
 export const getYearInterval = state => state.runtime.status.yearInterval;
@@ -16,7 +17,7 @@ function* playTimer(action) {
     const yearInterval = yield select(getYearInterval);
     playing = yield select(getPlayingStatus);
     if (playing === true) {
-      yield put({ type: 'CHANGE_YEAR_SAGA', action: 'NEXT_YEAR' });
+      yield put(nextYear());
       yield delay(yearInterval);
     }
   }

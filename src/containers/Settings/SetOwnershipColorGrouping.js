@@ -26,9 +26,9 @@ class SetOwnershipGrouping extends Component {
         label: 'Always off'
       }
     ];
-    const name = this.props.auto === true 
+    const name = this.props.auto === true
       ? 'auto'
-      : (this.props.enabled === true 
+      : (this.props.enabled === true
           && 'on' || 'off');
     this.state = {
       options,
@@ -74,7 +74,7 @@ class SetOwnershipGrouping extends Component {
           cb={this.changeZoomPoint}
         />
       </div>
-    )
+    );
   }
 }
 function mapStateToProps(state) {
