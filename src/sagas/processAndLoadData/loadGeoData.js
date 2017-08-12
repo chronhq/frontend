@@ -8,7 +8,9 @@ import {
 export function getIdsFromTimeline(type, t, loaded = {}) {
   // type must be geo or props
   return Object.keys(t).reduce(
-    (prev, cur) => (t[cur][type] in loaded ? prev : [...prev, t[cur][type]])
+    (prev, cur) => (t[cur][type] in loaded
+      ? prev
+      : [...prev, { id: t[cur][type] }])
     , []
   );
 }
@@ -47,8 +49,10 @@ function* loadGeoData(action) {
   if (geoIds.length > 0 && geometryData.loading === false) {
     console.log('Asking for geo ids', geoIds);
     yield put(askBackend('BORDERS', {
-      projection,
-      ids: geoIds
+      cb: projection,
+      fiter: JSON.stringify(
+        { where: { or: geoIds } }
+      )
     }));
   } else {
     yield put(emptyBordersFF());

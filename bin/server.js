@@ -6,11 +6,11 @@ const config = require('../webpack.config');
 
 const app = express();
 const compiler = webpack(config);
-const targetUrl = `http://${process.env.HOST}:${process.env.APIPORT}`;
+const targetUrl = `http://api:${process.env.APIPORT}/`;
 const siteBackend = 'https://chronist.ru/';
-
+console.log('api proxy target', targetUrl);
+// app.use('/api', proxy(targetUrl));
 app.use('/api', proxy(targetUrl));
-
 app.use('/shared', proxy(siteBackend));
 
 app.use(require('webpack-dev-middleware')(compiler, {

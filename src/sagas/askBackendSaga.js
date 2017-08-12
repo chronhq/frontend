@@ -8,32 +8,38 @@
  */
 
 import fetch from 'isomorphic-fetch';
-import { put, takeEvery, select, call } from 'redux-saga/effects';
+import { put, takeEvery, call } from 'redux-saga/effects';
+import { getUrlFromResource, getCbFromResource } from './askBackendCallbacks';
 
-export default function* askBackendSaga() {
-  yield takeEvery('ASK_BACKEND_SAGA', askBackend);
+function fetchResponse(url, req) {
+  return fetch(url, req).then(response => response.json());
 }
 
-function fetchResponse(url, req){
-  return fetch(url, req).then((response) => response.json());
-}
+function* askBackend({ resource, data }) {
+  const uri = getUrlFromResource(resource);
+  const prefix = '/api/api';
+  const url = typeof (data.filter) !== 'undefined'
+    ? `${prefix}/${uri}?filter=${data.filter}`
+    : `${prefix}/${uri}`;
 
-function* askBackend({resource, data, type}) {
-  const uri = resource.replace(/_/g, '/');
-  const url = `/api/${uri}`;
+  const cbPayload = getCbFromResource(resource);
+
   const req = {
-    method: 'POST',
+    method: 'GET',
     credentials: 'same-origin',
-    body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' }
   };
 
-  yield put({type: `${resource}_PENDING`});
+  yield put({ type: `${resource}_PENDING` });
   try {
     const payload = yield call(fetchResponse, url, req);
-    // console.log(payload);
-    yield put({type: `${resource}_FULFILLED`, payload});
+    const result = cbPayload(payload, data.cb);
+    yield put({ type: `${resource}_FULFILLED`, result });
   } catch (e) {
-    yield put({type: `${resource}_REJECTED`, payload: { error: e.message }});
+    yield put({ type: `${resource}_REJECTED`, payload: { error: e.message } });
   }
+}
+
+export default function* askBackendSaga() {
+  yield takeEvery('ASK_BACKEND_SAGA', askBackend);
 }
