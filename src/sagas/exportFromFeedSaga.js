@@ -22,7 +22,7 @@ const getSelectedIds = selected =>
       : prev), []);
 
 const getLocationName = (id, loc) => (id in loc
-  ? `${loc[id].name_rus} (${loc[id].name_eng}, ${loc[id].admin_1}, ${loc[id].adm_0})`
+  ? `${loc[id].nameRus} (${loc[id].nameEng}, ${loc[id].admin_1}, ${loc[id].adm_0})`
   : 'Неизвестно');
 
 const getDate = date => (date || '????');
@@ -33,8 +33,8 @@ const getFactDescription = (state, factId) => {
   const loc = getLocationName(fact.invent_place, state.locations);
   const ppl = getInventors(state.persons, fact.inventor);
   return [
-    `Название: "${fact.name_rus}"`,
-    `Дата: ${fact.invent_date}, Место: "${loc}"`,
+    `Название: "${fact.nameRus}"`,
+    `Дата: ${fact.inventDate}, Место: "${loc}"`,
     `Участники: "${ppl.join(', ')}"`,
     `Описание: "${fact.description}"`,
     `Дополнительная информация: "${fact.link}"`,
@@ -45,13 +45,13 @@ const getFactDescription = (state, factId) => {
 const getPersonFacts = (state, factId) => {
   const fact = state.personsFacts[factId];
   const person = state.persons[fact.person];
-  const birthLoc = getLocationName(person.birth_place, state.locations);
-  const deathLoc = getLocationName(person.death_place, state.locations);
+  const birthLoc = getLocationName(person.birthPlace, state.locations);
+  const deathLoc = getLocationName(person.deathPlace, state.locations);
 
-  const birthDate = getDate(person.birth_date);
-  const deathDate = getDate(person.death_date);
+  const birthDate = getDate(person.birthDate);
+  const deathDate = getDate(person.deathDate);
   return [
-    `Имя: "${person.name_rus}"`,
+    `Имя: "${person.nameRus}"`,
     `Годы жизни: "${birthDate} - ${deathDate}"`,
     `Место рождения: "${birthLoc}"`,
     `Место смерти: "${deathLoc}"`,

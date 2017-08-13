@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 export const getInventors = (persons, inventors) => inventors.reduce(
-  (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].name_rus]), []
+  (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].nameRus]), []
 );
 
 const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
     <div>
-      <h5 className='factHeader'>{fact.name_rus}</h5>
-      <h5 className='factDate'> {fact.invent_date} </h5>
+      <h5 className='factHeader'>{fact.nameRus}</h5>
+      <h5 className='factDate'> {fact.inventDate} </h5>
     </div>
     <br />
     <div className='factDescription'>

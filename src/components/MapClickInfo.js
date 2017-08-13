@@ -7,7 +7,7 @@ import './MapClickInfo.less';
 
 const LocationWidget = ({ location }) => (
   <div>
-  Название: {location.name_rus}<br />
+  Название: {location.nameRus}<br />
   Основан: {location.founded || 'Неизвестно'}<br />
   Население: {location.population || 'Неизвестно'}<br />
   (По последней переписи)

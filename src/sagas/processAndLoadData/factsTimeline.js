@@ -5,9 +5,9 @@ function* factsTimeline(action) {
   const data = action.payload;
   const byYear = Object.keys(data.byId).reduce((prev, curId) => {
     const cur = data.byId[curId];
-    return cur.invent_date in prev
-      ? { ...prev, [cur.invent_date]: [...prev[cur.invent_date], cur.id] }
-      : { ...prev, [cur.invent_date]: [cur.id] };
+    return cur.inventDate in prev
+      ? { ...prev, [cur.inventDate]: [...prev[cur.inventDate], cur.id] }
+      : { ...prev, [cur.inventDate]: [cur.id] };
   }, {});
   yield put(factsTimelineFF(byYear));
 }

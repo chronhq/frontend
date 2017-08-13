@@ -6,7 +6,7 @@ function* geoEventsTimeline(action) {
   const byYear = Object.keys(data.byId).reduce((prev, curId) => {
     const cur = data.byId[curId];
     const year = Number(cur.date.replace(/-.*/g, ''));
-    return cur.invent_date in prev
+    return cur.inventDate in prev
       ? { ...prev, [year]: [...prev[year], cur.id] }
       : { ...prev, [year]: [cur.id] };
   }, {});

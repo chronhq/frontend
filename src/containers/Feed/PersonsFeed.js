@@ -6,9 +6,9 @@ const PersonFact = ({ person, fact }) => (
     key={`pf_${fact.id}`}
   >
     <div className='factTest'>
-      <h5 className='factHeader'> {person.name_rus} </h5>
+      <h5 className='factHeader'> {person.nameRus} </h5>
       <h5 className='factDate'>
-        {person.birth_date ? person.birth_date : '????'} <br /> {person.death_date ? person.death_date : '????'}
+        {person.birthDate ? person.birthDate : '????'} <br /> {person.deathDate ? person.deathDate : '????'}
       </h5>
     </div>
   </div>

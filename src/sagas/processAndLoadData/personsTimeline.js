@@ -10,16 +10,16 @@ export const getCurrentYear = state => state.timeline.year.now;
 function getBirthAndDeath(cur) {
   let birth = null;
   let death = null;
-  if (cur.birth_date !== null) {
+  if (cur.birthDate !== null) {
     try {
-      birth = Number(cur.birth_date.replace(/-.*/g, ''));
+      birth = Number(cur.birthDate.replace(/-.*/g, ''));
     } catch (e) {
       console.log('Failed to generate timeline data for', cur.id, e);
     }
   }
-  if (cur.death_date !== null) {
+  if (cur.deathDate !== null) {
     try {
-      death = Number(cur.death_date.replace(/-.*/g, ''));
+      death = Number(cur.deathDate.replace(/-.*/g, ''));
     } catch (e) {
       console.log('Failed to generate timeline data for', cur.id, e);
     }
