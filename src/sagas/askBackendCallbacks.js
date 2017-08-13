@@ -101,9 +101,9 @@ const getBorders = (data) => {
 const resourceToCb = {
   PERSONS: defaultCb,
   TERRAIN: data => defaultCb(data, 'byId', projectTerrain),
-  PROPERTIES: defaultCb,
-  PROPERTIES_ADMIN: defaultCb,
-  PROPERTIES_TYPE: defaultCb,
+  PROPERTIES: data => defaultCb(data, 'properties'),
+  PROPERTIES_ADMIN: data => defaultCb(data, 'admin'),
+  PROPERTIES_TYPE: data => defaultCb(data, 'type'),
   LOCATIONS: data => defaultCb(data, 'places', projectLocations),
   FACTS: data => fixInventors(defaultCb(data, 'byId')),
   EVENTS_GEO: data => defaultCb(data, 'byId', projectLocations),

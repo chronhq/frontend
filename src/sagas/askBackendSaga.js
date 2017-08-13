@@ -32,9 +32,9 @@ function* askBackend({ resource, data }) {
 
   yield put({ type: `${resource}_PENDING` });
   try {
-    const payload = yield call(fetchResponse, url, req);
-    const result = cbPayload(payload, data.cb);
-    yield put({ type: `${resource}_FULFILLED`, result });
+    const resp = yield call(fetchResponse, url, req);
+    const payload = cbPayload(resp, data.cb);
+    yield put({ type: `${resource}_FULFILLED`, payload });
   } catch (e) {
     yield put({ type: `${resource}_REJECTED`, payload: { error: e.message } });
   }

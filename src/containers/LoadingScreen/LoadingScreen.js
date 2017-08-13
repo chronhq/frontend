@@ -24,7 +24,7 @@ const LoadingListElement = ({ element }) => (
 
 class LoadingScreen extends Component {
   componentDidMount() {
-    // this.props.askBackend('BORDERS_TIMELINE');
+    this.props.askBackend('BORDERS_TIMELINE');
     this.props.askBackend('LOCATIONS');
     this.props.askBackend('TERRAIN');
     this.props.askBackend('PROPERTIES');
