@@ -25,7 +25,7 @@ export const getLoadedGeometry = state => state.data.borders;
 export const getCurrentYear = state => state.timeline.year.now;
 
 function* loadGeoData(action) {
-  console.time('Loading GeoData Saga');
+  // console.time('Loading GeoData Saga');
   const geometryData = yield select(getLoadedGeometry);
   const loadedGeometry = geometryData.byId;
   const year = {};
@@ -54,12 +54,12 @@ function* loadGeoData(action) {
         { where: { or: geoIds } }
       )
     }));
-  } else {
-    yield put(emptyBordersFF());
-    console.log('Nothing new to obtain from server');
+  // } else {
+  //   yield put(emptyBordersFF());
+  //   console.log('Nothing new to obtain from server');
   }
 
-  console.timeEnd('Loading GeoData Saga');
+  // console.timeEnd('Loading GeoData Saga');
 }
 
 export default loadGeoData;

@@ -77,14 +77,14 @@ class TimePanel extends React.Component {
             this.updateClockPosition(now);
           }
           // for performance reasons this is commented
-          this.props.setYearAction(Number(this.state.now));
+          // this.props.setYearAction(Number(this.state.now));
         }
       })
       .on('mouseup', () => {
         this.setState({ isDown: false });
         // d3.selectAll('.arrow').classed('active', false);
         // d3.selectAll('.arrow').attr('fill', '');
-        this.props.setYearAction(Number(this.state.now));
+        // this.props.setYearAction(Number(this.state.now));
       });
   }
 
