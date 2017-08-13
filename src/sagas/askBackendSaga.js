@@ -17,7 +17,7 @@ function fetchResponse(url, req) {
 
 function* askBackend({ resource, data }) {
   const uri = getUrlFromResource(resource);
-  const prefix = '/api/api';
+  const prefix = '/api';
   const url = typeof (data.filter) !== 'undefined'
     ? `${prefix}/${uri}?filter=${data.filter}`
     : `${prefix}/${uri}`;
