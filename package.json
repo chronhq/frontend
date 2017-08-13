@@ -5,12 +5,10 @@
   "spdx": false,
   "license": "copyright",
   "scripts": {
-    "start": "concurrently --kill-others \"npm run prod-web\" \"npm run prod-api\"",
-    "dev": "concurrently --kill-others \"npm run dev-web\" \"npm run dev-api\"",
+    "start": "concurrently --kill-others \"npm run prod-web\"",
+    "dev": "concurrently --kill-others \"npm run dev-web\"",
     "prod-web": "bnr prod-web",
-    "prod-api": "bnr prod-api",
     "dev-web": "bnr dev-web",
-    "dev-api": "bnr dev-api",
     "lint": "eslint src"
   },
   "betterScripts": {
@@ -20,21 +18,8 @@
         "NODE_ENV": "production"
       }
     },
-    "prod-api": {
-      "command": "node ./bin/api.js",
-      "env": {
-        "NODE_PATH": "./api",
-        "NODE_ENV": "production"
-      }
-    },
     "dev-web": {
       "command": "node ./bin/server.js"
-    },
-    "dev-api": {
-      "command": "node ./bin/api.js",
-      "env": {
-        "NODE_PATH": "./api"
-      }
     }
   },
   "repository": {
