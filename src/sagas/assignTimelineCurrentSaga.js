@@ -20,7 +20,9 @@ const TIMELINE_ACTIONS = [
 function* findCurrent(action) {
   const year = yield select(getYear);
   const type = action.type.replace('FULFILLED', 'CURRENT');
-  yield put({ type, year });
+  if (typeof(year) !== 'undefined') {
+    yield put({ type, year });
+  }
 }
 
 export default function* assignTimelineCurrentSaga() {
