@@ -3,7 +3,7 @@ import {
   getNextData,
   getActualData,
   emptyBordersFF,
-  askBackend } from '../../reducers/actions';
+  loadData } from '../../reducers/actions';
 
 export function getIdsFromTimeline(type, t, loaded = {}) {
   // type must be geo or props
@@ -36,9 +36,10 @@ function* loadGeoData(action) {
   if (action.type === 'NEXT_YEAR') year.target = year.cur + 1;
   else if (action.type === 'PREV_YEAR') year.target = year.cur - 1;
   else if (action.type === 'SET_YEAR') year.target = action.year;
+  else if (typeof(year.cur) === 'undefined') year.target = year.min;
   else year.target = year.cur;
 
-  const actualData = getActualData(borders.allYears, borders.byYear, year.target);
+  const actualData = getActualData(borders.allYears, borders.byYear, year.target, action.type);
   const additionalData = action.type === 'NEXT_YEAR'
     ? getNextData(borders.allYears, borders.byYear, year.target)
     // BORDERS_TIMELINE_FULFILLED or SET_YEAR or PREV_YEAR
@@ -48,12 +49,15 @@ function* loadGeoData(action) {
   // Loading new geometry
   if (geoIds.length > 0 && geometryData.loading === false) {
     console.log('Asking for geo ids', geoIds);
-    yield put(askBackend('BORDERS', {
-      cb: projection,
-      fiter: JSON.stringify(
-        { where: { or: geoIds } }
-      )
-    }));
+    yield put(loadData([{
+      resource: 'BORDERS',
+      req: {
+        cb: projection,
+        fiter: JSON.stringify(
+          { where: { or: geoIds } }
+        )
+      }}]
+    ));
   // } else {
   //   yield put(emptyBordersFF());
   //   console.log('Nothing new to obtain from server');

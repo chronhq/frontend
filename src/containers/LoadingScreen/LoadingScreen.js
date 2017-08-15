@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import RotatingLogo from './RotatingLogo';
-import { askBackend } from '../../reducers/actions';
+import { loadData } from '../../reducers/actions';
 import { markItReady } from '../../reducers/actions';
 import './LoadingScreen.less';
 
@@ -24,15 +24,32 @@ const LoadingListElement = ({ element }) => (
 
 class LoadingScreen extends Component {
   componentDidMount() {
-    this.props.askBackend('BORDERS_TIMELINE');
-    this.props.askBackend('LOCATIONS');
-    this.props.askBackend('TERRAIN');
-    this.props.askBackend('PROPERTIES');
-    this.props.askBackend('PROPERTIES_ADMIN');
-    this.props.askBackend('PROPERTIES_TYPE');
-    this.props.askBackend('EVENTS_GEO');
-    this.props.askBackend('FACTS');
-    this.props.askBackend('PERSONS');
+    this.props.loadData([
+      {
+        resource: 'BORDERS_TIMELINE',
+      },{
+        resource: 'LOCATIONS',
+        req: { key: 'places' }
+      },{
+        resource: 'TERRAIN',
+      },{
+        resource: 'PROPERTIES',
+        req: { key: 'properties' }
+      },{
+        resource: 'PROPERTIES_ADMIN',
+        req: { key: 'admin' }
+      },{
+        resource: 'PROPERTIES_TYPE',
+        req: { key: 'type' }
+      },{
+        resource: 'EVENTS_GEO',
+        req: { key: 'byId' }
+      },{
+        resource: 'FACTS',
+      },{
+        resource: 'PERSONS'
+      }
+    ]);
   }
   componentWillReceiveProps(next) {
     const notLoaded = sumLoading(next.timeline) + sumLoading(next.data);
@@ -75,6 +92,9 @@ function mapStateToProps(state) {
       locations: getLoadedStatus('Перечень мест', state.timeline.locations),
       facts: getLoadedStatus('Перечень фактов', state.timeline.facts),
       borders: getLoadedStatus('Перечень границ', state.timeline.borders),
+      personsFacts: getLoadedStatus('Годы жизни великих людей', state.timeline.personsFacts),
+      personsAlive: getLoadedStatus('Годы жизни великих людей', state.timeline.personsAlive),
+      geoEvents: getLoadedStatus('Годы жизни великих людей', state.timeline.geoEvents)
     },
     data: {
       locations: getLoadedStatus('География мест', state.data.locations),
@@ -88,7 +108,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    askBackend: bindActionCreators(askBackend, dispatch),
+    loadData: bindActionCreators(loadData, dispatch),
     markItReady: bindActionCreators(markItReady, dispatch),
   };
 }

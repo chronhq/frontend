@@ -1,8 +1,13 @@
 import { put } from 'redux-saga/effects';
-import { setColorsData } from '../../reducers/actions';
+import { setColorsData } from '../../../reducers/actions';
+import { defaultCb } from './_helper';
 
-function* colorsData(action) {
-  const data = action.payload.properties;
+
+function* properties(res, resource, req) {
+  const payload = defaultCb(res, req.key);
+  yield put({ type: 'PROPERTIES_FULFILLED', payload });
+
+  const data = payload.properties;
   // Count the colors per 'admin'
   const ranking = Object.keys(data).reduce((prev, curId) => {
     const cur = data[curId];
@@ -23,4 +28,4 @@ function* colorsData(action) {
   yield put(setColorsData(colors));
 }
 
-export default colorsData;
+export default properties;

@@ -5,10 +5,18 @@ export * from './mapView';
 export * from './status';
 
 export function askBackend(resource, data = {}) {
+  // deprecated
   return {
-    type: 'ASK_BACKEND_SAGA',
+    type: 'ASK_BACKEND_SAGA_DEPRECATED',
     resource,
     data
+  };
+}
+
+export function loadData(fetchList = []) {
+  return {
+    type: 'LOAD_DATA_SAGA',
+    fetchList
   };
 }
 
@@ -22,7 +30,6 @@ export function changeGrouping(auto, enabled, zoomPoint) {
 }
 
 export function setProjection(rotate, name = defaultProjectionName) {
-  // askBackend('CHANGE_PROJECTION', { name, rotate });
   return {
     type: 'CHANGE_PROJECTION_SAGA',
     name,

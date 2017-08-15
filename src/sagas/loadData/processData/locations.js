@@ -1,9 +1,15 @@
-import { put } from 'redux-saga/effects';
-import { locationsTimelineFF } from '../../reducers/actions';
+import { put, select } from 'redux-saga/effects';
+import { locationsTimelineFF } from '../../../reducers/actions';
+import { projectionSelector, defaultCb, projectLocations } from './_helper';
 
+function* locations(res, resource, req) {
+  const data = defaultCb(res, req.key);
+  const projection = yield select(projectionSelector);
+  const project = projection.project;
+  const projected = projectLocations(res, project);
+  yield put({ type: `LOCATIONS_FULFILLED`, payload: { ...data, projected } });
 
-function* locationsTimeline(action) {
-  const places = action.payload.places;
+  const places = data.places;
   const timeline = Object.keys(places).reduce((prev, cur) => {
     const place = places[cur];
     if ('founded' in place && place.founded !== '' && place.founded !== null) {
@@ -27,4 +33,4 @@ function* locationsTimeline(action) {
   yield put(locationsTimelineFF(timeline));
 }
 
-export default locationsTimeline;
+export default locations;

@@ -14,7 +14,7 @@ const layerTimeline = (state = { REDUCER_NAME: 'layerName', loaded: false }, act
       return { ...state,
         current: action.year in state.byYear
           ? state.byYear[action.year]
-          : getActualData(state.allYears, state.byYear, action.year)
+          : getActualData(state.allYears, state.byYear, action.year, state.REDUCER_NAME)
       };
     case `${state.REDUCER_NAME}_PENDING`:
       return {

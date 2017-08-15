@@ -3,7 +3,9 @@ import {
   personsTimelineFF,
   personsFactsTimelineFF,
   personsFactsFF
-} from '../../reducers/actions';
+} from '../../../reducers/actions';
+
+import { defaultCb } from './_helper';
 
 export const getCurrentYear = state => state.timeline.year.now;
 
@@ -27,8 +29,11 @@ function getBirthAndDeath(cur) {
   return [birth, death];
 }
 
-function* personsTimeline(action) {
-  const data = action.payload;
+function* persons(res, resource, req) {
+  const data = defaultCb(res, req.key);
+  yield put({ type: 'PERSONS_FULFILLED', payload: { ...data } });
+
+  // const data = action.payload;
   let idCounter = 0;
   const deathById = {};
   const deathFacts = Object.keys(data.byId).reduce((prev, curId) => {
@@ -79,4 +84,4 @@ function* personsTimeline(action) {
 
 }
 
-export default personsTimeline;
+export default persons;
