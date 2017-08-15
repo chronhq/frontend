@@ -1,5 +1,12 @@
 .overlay {
   cursor: pointer;
+    position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.7);
   // z-index: 3;
   margin-right: 60px !important;
   text-align: center;
@@ -37,6 +44,17 @@
   }
   & button {margin-top: 30px;}
 }
+
+// .overlay {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   height: 100%;
+//   width: 100%;
+//   z-index: 10;
+//   background-color: rgba(0,0,0,0.7);
+// }
+
 
 .slick-dots li button:before{
     color:white !important;

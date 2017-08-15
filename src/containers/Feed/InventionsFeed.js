@@ -7,6 +7,8 @@ export const getInventors = (persons, inventors) => inventors.reduce(
   (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].nameRus]), []
 );
 
+let isFlipped = false;
+
 const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
     <div>
@@ -15,7 +17,7 @@ const Invention = ({ fact, persons }) => (
     </div>
     <br />
     <div className='factDescription'>
-      {fact.description.replace(/\u00a0/g, ' ')} <Test />
+      {fact.description.replace(/\u00a0/g, ' ')}
     </div>
     <p className='factAuthor'>
       <i>{getInventors(persons, fact.inventor).join(', ')}
@@ -39,29 +41,5 @@ const InventionsFeed = ({ persons, inventions, current, selected, hoverCb, chang
   ))}
   </div>
 );
-
-class Test extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      style: { color: 'blue' }
-    };
-  }
-
-  render() {
-    return(
-      <div style={this.state.style} > Test </div>
-    );
-  }
-}
-
-
-function mapStateToProps(state) {
-  return {
-
-  };
-}
-
-connect(mapStateToProps)(Test);
 
 export default InventionsFeed;
