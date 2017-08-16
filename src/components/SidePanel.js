@@ -12,6 +12,8 @@ import Legend from '../containers/Legend';
 import Intro from './Intro';
 import Feedback from './Feedback/';
 import ControlButtons from '../components/ControlButtons';
+import TimePanel from './TimePanel';
+import ReturnUiButton from './Timeline/ReturnUiButton';
 
 import './SidePanel.less';
 
@@ -124,6 +126,10 @@ class SidePanel extends React.Component {
   );
 
   render() {
+    if (this.state.UI.alignPanel === 'none') {
+      return <ReturnUiButton cb={data => this.handleChange('alignPanel', data)}/>;
+      // return null;
+    }
     return (
 
       <div>
@@ -195,4 +201,12 @@ const SearchPanel = () => (
   </div>
 );
 
-export default SidePanel;
+
+const UI = () => (
+  <div>
+    <TimePanel />
+    <SidePanel />
+  </div>
+);
+
+export default UI;

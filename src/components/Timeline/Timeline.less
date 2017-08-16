@@ -1,0 +1,147 @@
+body {background: gray;}
+
+h2 {
+  font-size: 30px;
+  font-family: commonText, sans-serif;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+p {
+  font-size: 14px;
+  color: @base00;
+}
+
+// li { margin-bottom: 0.2em;}
+
+@base00: #263238; //
+@base01: #2C393F; //
+@base02: #37474F; //
+@base03: #707880; //
+@base04: #C9CCD3; //
+@base05: #CDD3DE; //
+@base06: #D5DBE5; //
+@base07: #FFFFFF; //
+@base08: #EC5F67; //
+@base09: #EA9560; //
+@base0A: #FFCC00; //
+@base0B: #8BD649; //
+@base0C: #80CBC4; //
+@base0D: #89DDFF; //
+@base0E: #82AAFF; //
+@base0F: #EC5F67; //
+
+.timeline {
+  max-width: 49em;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -3em;
+    left: 2em;
+    width: .1em;
+    height: calc(100% + 10em);
+    background: linear-gradient(to bottom, #151515 0%, #3b3b3b 5%, #3b3b3b 95%, #151515 100%);
+
+    @media screen and (min-width: 45em) {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.timeline__id {
+  position: absolute;
+  top: 2.0em;
+  left: 2.12em;
+    // padding: .5em 1em;
+    background: #282727;
+    transform: translateX(-50%);
+    content: '';
+  // position: absolute;
+  width: 5px;
+  height: 5px;
+  border: 1px solid salmon;
+  background-color: #fff;
+  border-radius: 100%;
+
+  @media screen and (min-width: 45em) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.timeline__selected {
+    color: @base06;
+    width: 12px;
+    height: 12px;
+    border: 0px solid salmon;
+  }
+  // top: 15%;
+  // right: px;
+}
+
+
+.timeline__content {
+  position: relative;
+  display: block;
+  margin-left: 6em;
+  padding: 1em;
+  text-align: left;
+
+  @media screen and (min-width: 45em) {
+    text-align: right;
+    margin-left: 0;
+    width: calc(50% - 4em);
+  }
+}
+
+.timeline__content--flipped {
+  @media screen and (min-width: 45em) {
+    float: right;
+    text-align: left;
+  }
+}
+
+.timeline__entry {
+  position: relative;
+  margin-bottom: 2em;
+  color: @base00;
+}
+
+.timeline__heading {
+  margin-top: 0.2em;
+  margin-bottom: .25em;
+  font-size: 1.2rem;
+
+  &.timeline__selected {
+    color: @base06;
+  }
+}
+
+.timeline__text {
+  color: @base01;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.timeline__selected {
+  & .timeline__id {
+    color: @base06;
+    width: 12px;
+    height: 12px;
+    border: 0px solid salmon;
+  }
+
+  & .timeline__heading {
+    color: @base06;
+  }
+}

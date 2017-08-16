@@ -16,6 +16,34 @@
   width: 50px;
 }
 
+.icon-bar--small {
+  height: 50px;
+  text-align: center;
+  z-index: 10;
+  //background-color: #123f42;
+  background-color: #e9dcc9;
+  right: 0;
+  position: fixed;
+  top: 0;
+  float: right;
+  width: 50px;
+  & button {
+    border: none;
+    width: 50px;
+    background-color: #e9dcc9;
+    padding: 14px;
+    display: block;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 16px;
+    &:hover {background-color: #d4e1e9;}
+  }
+  & .fa {color:black}
+  &.active {
+    background-color: #4CAF50 !important;
+  }
+}
+
 .icon-bar {
   text-align: center;
   z-index: 10;
