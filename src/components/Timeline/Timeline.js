@@ -8,7 +8,12 @@ const Event = () =>  (
   <div>
   <div className='timeline__content timeline__content--flipped'>
   <h4 className='timeline__heading'> Flipped Heading </h4>
-  <p className='timeline__text'> lorem ipsum </p>
+  <p className='timeline__text'>
+    Lorem ipsum
+    Lorem Ipsum has been the industry's standard
+dummy text ever since the 1500s, when an unknown
+printer took a galley of type and scrambled it to
+  </p>
   </div>
   <div className='timeline__content'>
   <h4 className='timeline__heading'> Year </h4>
@@ -48,6 +53,15 @@ class Timeline extends React.Component {
 }
 // const Timeline = () => (<div>Timeline Div QUADR</div>);
 
+
+// Lorem Ipsum is simply dummy
+// text of the printing and typesetting industry.
+// Lorem Ipsum has been the industry's standard
+// dummy text ever since the 1500s, when an unknown
+// printer took a galley of type and scrambled it to
+//  make a type specimen book. It has survived not only
+//   five centuries, but also the leap into electronic
+//    typesetting, remaining essentially unchange
 
         // <ul className='timeline'>
         //   <li className='timeline__entry'>

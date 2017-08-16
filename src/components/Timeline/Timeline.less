@@ -40,6 +40,10 @@ p {
   margin: 0;
   padding: 0;
   list-style: none;
+  box-sizing: border-box;
+  & * {
+    box-sizing: border-box;
+  }
 
   &:before {
     content: "";
@@ -98,6 +102,8 @@ p {
   @media screen and (min-width: 45em) {
     text-align: right;
     margin-left: 0;
+    margin-bottom: .5em;
+    position: releative;
     width: calc(50% - 4em);
   }
 }
@@ -106,6 +112,7 @@ p {
   @media screen and (min-width: 45em) {
     float: right;
     text-align: left;
+    // width: 33%;
   }
 }
 
@@ -135,13 +142,15 @@ p {
 
 .timeline__selected {
   & .timeline__id {
-    color: @base06;
+    color: @base01;
+    text-decoration: underline;
     width: 12px;
     height: 12px;
-    border: 0px solid salmon;
+    border: 2px solid salmon;
   }
 
   & .timeline__heading {
-    color: @base06;
+     color: @base01;
+    text-decoration: underline;
   }
 }
