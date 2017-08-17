@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import 'bootstrap/less/bootstrap.less';
 
+import { Flag } from 'flag';
+
 import LoadingScreen from './containers/LoadingScreen';
 import MapViewport from './containers/MapViewport';
 import UI from './components/SidePanel';
@@ -24,8 +26,10 @@ class App extends Component {
             <MapViewport />
           </div>
         : <LoadingScreen /> }
-        {process.env.NODE_ENV === 'development'
-          && <DevTools />}
+        <Flag
+          name="devTools"
+          render={() => <DevTools />}
+        />
       </div>
     );
   }

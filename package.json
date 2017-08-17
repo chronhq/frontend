@@ -79,6 +79,7 @@
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "file-loader": "^0.11.2",
+    "flag": "^2.0.3",
     "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
     "less": "^2.7.2",
