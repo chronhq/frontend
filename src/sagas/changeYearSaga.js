@@ -19,7 +19,8 @@ function* changeYear(action) {
         return year.min - 1;
       }
       default: {
-        return year.now;
+        return typeof(year.now) !== 'undefined'
+          ? year.now : year.min;
       }
     }
   };

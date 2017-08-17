@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import 'bootstrap/less/bootstrap.less';
 
 import { Flag } from 'flag';
@@ -18,14 +17,18 @@ class App extends Component {
   render() {
     return (
       <div>
-        { this.props.ready ?
-          <div className='content'>
-            <UI />
-            <MapClickInfo />
-            <MapControls />
-            <MapViewport />
-          </div>
-        : <LoadingScreen /> }
+        <Flag
+          name="loadingScreen"
+          render={() => <LoadingScreen />}
+          fallbackRender={() =>
+            <div className='content'>
+              <UI />
+              <MapClickInfo />
+              <MapControls />
+              <MapViewport />
+            </div>
+          }
+        />
         <Flag
           name="devTools"
           render={() => <DevTools />}
@@ -35,9 +38,5 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    ready: state.runtime.status.ready
-  };
-}
-export default connect(mapStateToProps)(App);
+
+export default App;

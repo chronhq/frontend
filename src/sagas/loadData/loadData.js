@@ -34,6 +34,7 @@ function fetchResponse(url, req) {
 
 function* defaultGenCb(res, resource, req) {
   const payload = yield call(defaultCb, res, req.key);
+  console.log('payload', payload);
   yield put({ type: `${resource}_FULFILLED`, payload });
 }
 
@@ -47,7 +48,11 @@ const resourceToCb = {
   INVENTIONS: inventions,
   EVENTS_GEO: geoEvents,
   BORDERS: getBorders,
-  BORDERS_TIMELINE: getBordersTimeline
+  BORDERS_TIMELINE: getBordersTimeline,
+  COURSES: defaultGenCb,
+  COURSE_TIMELINES: defaultGenCb,
+  COURSE_EVENTS: defaultGenCb,
+  COURSE_TRACES: defaultGenCb,
 };
 
 
@@ -62,6 +67,7 @@ function* executeRequest({ resource, req }) {
     const resp = yield call(fetchResponse, url, req);
     yield call(resourceToCb[resource], resp, resource, req);
   } catch (e) {
+    console.error(e);
     yield put({ type: `${resource}_REJECTED`, payload: { error: e.message } });
   }
 }

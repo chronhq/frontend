@@ -6,16 +6,15 @@ const resourceToURL = {
   BORDERS_TIMELINE: 'borders',
   TERRAIN: 'contours',
   LOCATIONS: 'cities',
-  INVENTIONS: 'inventions'
 };
 
 export const getUrlFromResource = resource => (
   resourceToURL[resource]
     ? resourceToURL[resource]
-    : resource.replace(/_/g, '/').toLowerCase()
+    : resource.split('_').map(c => `${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`).join('')
 );
 
-export const defaultCb = (data, key = 'byId', dataCb = () => {}) => {
+export const defaultCb = (data = [], key = 'byId', dataCb = () => {}) => {
   const keyData = data.reduce(
     (prev, row) => ({ ...prev, [row.id]: row }), {});
   // const cbRes = dataCb(data);
