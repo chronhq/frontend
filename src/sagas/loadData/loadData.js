@@ -1,24 +1,21 @@
 /**
- * @file Catching every 'ASK_BACKEND_SAGA' action.
+ * @file Catching every 'LOAD_DATA_SAGA' action.
  * Performing a request for an API server from `${action.resource}`
- * Firing `${action.resource}_PENDING` before sending a request
+ * // Firing `${action.resource}_PENDING` before sending a request
  * Firing `${action.resource}_FULFILLED` if request was succeeded
  * Firing `${action.resource}_REJECTED` if request was rejected
  * _PENDING _FULFILLED _REJECTED is a legacy from redux-promise-middleware
  */
 
- // import personsTimeline from './personsTimeline';
-// import locationsTimeline from './locationsTimeline';
-// import geoEventsTimeline from './geoEventsTimeline';
-// import colorsData from './colorsData';
-
 import fetch from 'isomorphic-fetch';
 import { put, call, fork } from 'redux-saga/effects';
+
 import { getUrlFromResource, defaultCb } from './processData/_helper.js';
+
 import { getBorders, getBordersTimeline } from './processData/borders';
 import projectTerrain from './processData/projectTerrain';
 import persons from './processData/persons';
-import facts from './processData/facts';
+import inventions from './processData/inventions';
 import geoEvents from './processData/geoEvents';
 import locations from './processData/locations';
 import properties from './processData/properties';
@@ -47,7 +44,7 @@ const resourceToCb = {
   PROPERTIES_ADMIN: defaultGenCb,
   PROPERTIES_TYPE: defaultGenCb,
   LOCATIONS: locations,
-  FACTS: facts,
+  INVENTIONS: inventions,
   EVENTS_GEO: geoEvents,
   BORDERS: getBorders,
   BORDERS_TIMELINE: getBordersTimeline
@@ -72,7 +69,7 @@ function* executeRequest({ resource, req }) {
 function* loadData({ fetchList }) {
   //  { type: 'LOAD_DATA_SAGA', fetchList: [
   //    {resource: 'BORDER', req: {filter: '', key: 'byId'}},
-  //    {resource: 'FACTS', req: {}},
+  //    {resource: 'INVENTIONS', req: {}},
   //   ... ]};
   // console.log('Wow, fetch list', fetchList);
   for (const item of fetchList) {

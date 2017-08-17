@@ -1,10 +1,10 @@
-const factsTimeline = (state = {}, action) => {
+const inventionsTimeline = (state = {}, action) => {
   switch (action.type) {
     case 'NEXT_YEAR':
       return { ...state,
         current: action.year in state.byYear ?
           [...state.current, state.byYear[action.year]] :
-          state.current // Zero facts happened in this year
+          state.current // Zero inventions happened in this year
       };
     case 'PREV_YEAR':
     case `${state.REDUCER_NAME}_CURRENT`:
@@ -37,4 +37,4 @@ const factsTimeline = (state = {}, action) => {
   }
 };
 
-export default factsTimeline;
+export default inventionsTimeline;

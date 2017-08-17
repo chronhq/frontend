@@ -5,9 +5,9 @@ export function setColorsData(colors) {
   };
 }
 
-export function factsTimelineFF(byYear) {
+export function inventionsTimelineFF(byYear) {
   return {
-    type: 'FACTS_TIMELINE_FULFILLED',
+    type: 'INVENTIONS_TIMELINE_FULFILLED',
     payload: {
       byYear,
       allYears: Object.keys(byYear)

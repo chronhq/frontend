@@ -6,7 +6,7 @@ const resourceToURL = {
   BORDERS_TIMELINE: 'borders',
   TERRAIN: 'contours',
   LOCATIONS: 'cities',
-  FACTS: 'inventions'
+  INVENTIONS: 'inventions'
 };
 
 export const getUrlFromResource = resource => (

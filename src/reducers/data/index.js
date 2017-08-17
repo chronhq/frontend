@@ -5,14 +5,14 @@ import { newReducer } from '../_helper';
 
 const locations = newReducer('LOCATIONS', { places: {} });
 const terrain = newReducer('TERRAIN', { byId: {}, projected: {} });
-const facts = newReducer('FACTS', { byId: {} });
+const inventions = newReducer('INVENTIONS', { byId: {} });
 const persons = newReducer('PERSONS', { byId: {} });
 const personsFacts = newReducer('PERSONS_FACTS', { byId: {} });
 const geoEvents = newReducer('EVENTS_GEO', { byId: {}, projected: {} });
 
 export default combineReducers({
   locations,
-  facts,
+  inventions,
   geoEvents,
   persons,
   personsFacts,

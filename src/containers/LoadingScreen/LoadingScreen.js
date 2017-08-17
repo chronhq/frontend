@@ -45,7 +45,7 @@ class LoadingScreen extends Component {
         resource: 'EVENTS_GEO',
         req: { key: 'byId' }
       },{
-        resource: 'FACTS',
+        resource: 'INVENTIONS',
       },{
         resource: 'PERSONS'
       }
@@ -90,7 +90,7 @@ function mapStateToProps(state) {
   return {
     timeline: {
       locations: getLoadedStatus('Перечень мест', state.timeline.locations),
-      facts: getLoadedStatus('Перечень фактов', state.timeline.facts),
+      inventions: getLoadedStatus('Список изобретений', state.timeline.inventions),
       borders: getLoadedStatus('Перечень границ', state.timeline.borders),
       personsFacts: getLoadedStatus('Годы жизни великих людей', state.timeline.personsFacts),
       personsAlive: getLoadedStatus('Годы жизни великих людей', state.timeline.personsAlive),
@@ -98,7 +98,7 @@ function mapStateToProps(state) {
     },
     data: {
       locations: getLoadedStatus('География мест', state.data.locations),
-      facts: getLoadedStatus('География фактов', state.data.facts),
+      inventions: getLoadedStatus('География изобретений', state.data.inventions),
       borders: getLoadedStatus('Политические границы', state.data.borders),
       geoEvents: getLoadedStatus('Описание изменений', state.data.geoEvents),
       persons: getLoadedStatus('Информация о людях', state.data.persons),

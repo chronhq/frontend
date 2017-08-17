@@ -12,7 +12,7 @@ export const stateSelector = state => ({
   personsFacts: state.data.personsFacts.byId,
   geoEvents: state.data.geoEvents.byId,
   locations: state.data.locations.places,
-  facts: state.data.facts.byId
+  inventions: state.data.inventions.byId
 });
 
 const getSelectedIds = selected =>
@@ -29,7 +29,7 @@ const getDate = date => (date || '????');
 const newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
 
 const getFactDescription = (state, factId) => {
-  const fact = state.facts[factId];
+  const fact = state.inventions[factId];
   const loc = getLocationName(fact.invent_place, state.locations);
   const ppl = getInventors(state.persons, fact.inventor);
   return [

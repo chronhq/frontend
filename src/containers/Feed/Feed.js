@@ -86,8 +86,8 @@ class Feed extends Component {
 
 function mapStateToProps(state) {
   return {
-    inventions: state.data.facts,
-    currentInventions: state.timeline.facts.current,
+    inventions: state.data.inventions,
+    currentInventions: state.timeline.inventions.current,
     geoEvents: state.data.geoEvents,
     currentGeoEvents: state.timeline.geoEvents.current,
     personsFacts: state.timeline.personsFacts.current,

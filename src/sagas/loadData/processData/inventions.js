@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 
-import { factsTimelineFF } from '../../../reducers/actions';
+import { inventionsTimelineFF } from '../../../reducers/actions';
 import { defaultCb } from './_helper';
 
 const fixInventors = (data) => {
@@ -16,9 +16,9 @@ const fixInventors = (data) => {
   return { byId };
 };
 
-function* facts(resp) {
+function* inventions(resp) {
   const data = yield call(fixInventors, defaultCb(resp, 'byId'));
-  yield put({ type: 'FACTS_FULFILLED', payload: data });
+  yield put({ type: 'INVENTIONS_FULFILLED', payload: data });
   
   const byYear = Object.keys(data.byId).reduce((prev, curId) => {
     const cur = data.byId[curId];
@@ -26,7 +26,7 @@ function* facts(resp) {
       ? { ...prev, [cur.inventDate]: [...prev[cur.inventDate], cur.id] }
       : { ...prev, [cur.inventDate]: [cur.id] };
   }, {});
-  yield put(factsTimelineFF(byYear));
+  yield put(inventionsTimelineFF(byYear));
 }
 
-export default facts;
+export default inventions;
