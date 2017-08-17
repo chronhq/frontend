@@ -11,7 +11,7 @@ const targetUrl = `http://api:${process.env.APIPORT}/`;
 const siteBackend = 'https://chronist.ru/';
 
 app.use('/api', proxy(targetUrl, {
-  forwardPath: (req, res) => url.parse(req.originalUrl).path
+  proxyReqPathResolver: req => url.parse(req.originalUrl).path
 }));
 app.use('/shared', proxy(siteBackend));
 
