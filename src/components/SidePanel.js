@@ -1,5 +1,6 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip, ButtonToolbar, Button, FormControl, ControlLabel } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 import { YMInitializer } from 'react-yandex-metrika';
 import ym from 'react-yandex-metrika';
@@ -14,6 +15,7 @@ import Feedback from './Feedback/';
 import ControlButtons from '../components/ControlButtons';
 import TimePanel from './TimePanel';
 import ReturnUiButton from './Timeline/ReturnUiButton';
+import AlignToggler from './Debug';
 
 import './SidePanel.less';
 
@@ -24,42 +26,6 @@ const tooltip = text => (
   <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
 );
 
-class AlignToggler extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 'right',
-    };
-  }
-
-  handleChange = (event) => {
-    this.setState({ value: event.target.value });
-    console.log(this.state.value);
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.props.cb(`${this.state.value}`);
-  }
-
-  render() {
-    return (
-      <div className='text-center'>
-        <h3> Debug </h3>
-        <form onSubmit={e => this.handleSubmit(e)}>
-          <ControlLabel>UI Align</ControlLabel>
-          <FormControl componentClass="select" placeholder="select" onChange={e => this.handleChange(e)}>
-            <option value='right'>Правое</option>
-            <option value='left'>Левое</option>
-            <option value='none'>none</option>
-          </FormControl>
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    );
-  }
-}
-
 class SidePanel extends React.Component {
   constructor(props) {
     super(props);
@@ -68,22 +34,14 @@ class SidePanel extends React.Component {
       current: 0,
       isIntroOn: (process.env.NODE_ENV === 'production'),
       isFeedbackOn: false,
-      UI: { alignPanel: 'right' }
+      // UI: { alignPanel: 'right' }
+      // UI: this.props.facade,
     };
   }
 
-  // get iconBarStyle() {
-  //   return (
-  //       position: 'fixed',
-  //       this.state.alignPanel == left ? 'right: 0' : 'left: 0',
-  //       float: 'right',
-  //       top: 0,
-  //       width: '50px',
-  //   );
-  // }
-
   componentDidMount() {
-    this.logPageView();
+    // this.logPageView();
+    console.log(`stuff: ${this.props.facade.alignPanel}`);
   }
 
   logPageView() {
@@ -108,13 +66,13 @@ class SidePanel extends React.Component {
 
   handleChange = (type, data) => {
     // console.log('have new data in handle change', data);
-    const UI = {
-      ...this.state.UI,
-    };
-      // [type]: { ...this.state.UI[type], ...data }
-    UI[type] = data;
-    // console.log(data);
-    this.setState({ UI });
+    // const UI = {
+    //   ...this.props.facade,
+    // };
+    //   // [type]: { ...this.props.facade[type], ...data }
+    // UI[type] = data;
+    // // console.log(data);
+    // this.setState({ UI });
     // this.forceUpdate();
   }
 
@@ -126,7 +84,7 @@ class SidePanel extends React.Component {
   );
 
   render() {
-    if (this.state.UI.alignPanel === 'none') {
+    if (this.props.facade.alignPanel === 'none') {
       return <ReturnUiButton cb={data => this.handleChange('alignPanel', data)}/>;
       // return null;
     }
@@ -134,7 +92,7 @@ class SidePanel extends React.Component {
 
       <div>
         <YMInitializer accounts={YmId} options={{ defer: true }} />
-        <div className={this.state.UI.alignPanel === 'left' ? 'icon-bar--left icon-bar' : 'icon-bar--right icon-bar'} >
+        <div className={this.props.facade.alignPanel === 'left' ? 'icon-bar--left icon-bar' : 'icon-bar--right icon-bar'} >
           <ButtonToolbar>
             <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Интро')} >
               <Button bsStyle='default' onClick={() => this.toggleIntro()}><i className='fa fa-home fa-fw' /> </Button>
@@ -167,7 +125,7 @@ class SidePanel extends React.Component {
         <Feedback isOpen={this.state.isFeedbackOn} onClose={() => this.toggleFeedback()} />
 
         {this.state.isOpen &&
-          <div className={this.state.UI.alignPanel === 'left' ? 'sidenav--left sidenav' : 'sidenav--right sidenav'} >
+          <div className={this.props.facade.alignPanel === 'left' ? 'sidenav--left sidenav' : 'sidenav--right sidenav'} >
             {this.state.current === 9 && <div> Empty</div> }
             {this.state.current === 2 && <SearchPanel /> }
             {this.state.current === 3 && <Feed /> }
@@ -202,11 +160,15 @@ const SearchPanel = () => (
 );
 
 
-const UI = () => (
-  <div>
-    <TimePanel />
-    <SidePanel />
-  </div>
-);
+// const UI = () => (
+//   <div>
+//     <TimePanel />
+//     <SidePanel />
+//   </div>
+// );
 
-export default UI;
+function mapStateToProps(state) {
+  return { facade: state.runtime.facade };
+}
+
+export default connect(mapStateToProps)(SidePanel);

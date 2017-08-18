@@ -6,6 +6,7 @@ import mapView from './mapView';
 import bordersData from './bordersData';
 import projection from './projection';
 import colorsData from './colorsData';
+import facade from './facade';
 
 export default combineReducers({
   colorsData,
@@ -13,5 +14,6 @@ export default combineReducers({
   visibility,
   status,
   mapView,
-  bordersData
+  bordersData,
+  facade,
 });
