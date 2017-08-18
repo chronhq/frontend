@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -28,7 +28,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE cities (
-    id bigint,
+    id integer NOT NULL,
     scalerank bigint,
     cityclass bigint,
     name_eng text,
@@ -43,6 +43,22 @@ CREATE TABLE cities (
 
 
 ALTER TABLE cities OWNER TO postgres;
+
+
+
+
+CREATE SEQUENCE cities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE cities_id_seq OWNER TO postgres;
+
+ALTER SEQUENCE cities_id_seq OWNED BY cities.id;
+
+ALTER TABLE ONLY cities ALTER COLUMN id SET DEFAULT nextval('cities_id_seq'::regclass);
 
 --
 -- TOC entry 2163 (class 0 OID 16838)
@@ -569,6 +585,16 @@ COPY cities (id, scalerank, cityclass, name_eng, name_rus, founded, adm_0, admin
 518	8	2	Elkhart	Элкарт	1839	USA	Indiana	50949	-85.9688890000000043	41.6830560000000006
 519	8	2	Palm Beach	Палм-Бич	1911	USA	Florida	10468	-80.0394439999999889	26.7149999999999999
 \.
+
+
+
+SELECT MAX(id) FROM cities;
+
+SELECT nextval('cities_id_seq');
+
+SELECT setval('cities_id_seq', (SELECT MAX(id) FROM cities));
+  
+SELECT setval('cities_id_seq', COALESCE((SELECT MAX(id)+1 FROM cities), 1), false);
 
 
 -- Completed on 2017-04-09 18:01:56

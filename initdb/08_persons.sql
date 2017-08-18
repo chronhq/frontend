@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -28,7 +28,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE persons (
-    id bigint,
+    id serial PRIMARY KEY,
     name_eng text,
     name_rus text,
     birth_date text,
@@ -39,6 +39,22 @@ CREATE TABLE persons (
 
 
 ALTER TABLE persons OWNER TO postgres;
+
+
+
+--CREATE SEQUENCE persons_id_seq
+ --   START WITH 1
+ --   INCREMENT BY 1
+ --   NO MINVALUE
+ --   NO MAXVALUE
+ --   CACHE 1;
+
+--ALTER TABLE persons_id_seq OWNER TO postgres;
+
+--ALTER TABLE ONLY persons ALTER COLUMN id SET DEFAULT nextval('persons_id_seq'::regclass);
+
+--ALTER TABLE ONLY persons
+--    ADD CONSTRAINT persons_pkey PRIMARY KEY (id);
 
 --
 -- TOC entry 2171 (class 0 OID 33240)
@@ -574,6 +590,22 @@ COPY persons (id, name_eng, name_rus, birth_date, birth_place, death_date, death
 525	Carl Deckard	Карл Декард	1961	0	\N	0
 526	Joy Mangano	Джой Мангэно	1956-02-01	654	\N	0
 \.
+
+
+-- Login to psql and run the following
+-- What is the result?
+SELECT MAX(id) FROM persons;
+
+-- Then run...
+-- This should be higher than the last result.
+SELECT nextval('persons_id_seq');
+
+-- If it's not higher... run this set the sequence last to your highest pid it. 
+-- (wise to run a quick pg_dump first...)
+SELECT setval('persons_id_seq', (SELECT MAX(id) FROM persons));
+-- if your tables might have no rows
+-- false means the set value will be returned by the next nextval() call    
+SELECT setval('persons_id_seq', COALESCE((SELECT MAX(id)+1 FROM persons), 1), false);
 
 
 -- Completed on 2017-06-25 21:10:34

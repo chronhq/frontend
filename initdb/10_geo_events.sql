@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -38,6 +38,22 @@ CREATE TABLE geo_events (
 
 ALTER TABLE geo_events OWNER TO postgres;
 
+CREATE SEQUENCE geo_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE geo_events_id_seq OWNER TO postgres;
+
+ALTER SEQUENCE geo_events_id_seq OWNED BY borders.id;
+
+ALTER TABLE ONLY geo_events ALTER COLUMN id SET DEFAULT nextval('geo_events_id_seq'::regclass);
+
+
+ALTER TABLE ONLY geo_events
+    ADD CONSTRAINT geo_events_pkey PRIMARY KEY (id);
 --
 -- TOC entry 2163 (class 0 OID 16844)
 -- Dependencies: 200
@@ -177,6 +193,16 @@ COPY geo_events (id, date, description, y, x) FROM stdin;
 130	1999-4-1	Канадская Территория Нунавут создана из Северно-Западных Территорий.	66.3401120000000049	-94.1268929999999955
 \.
 
+
+
+
+SELECT MAX(id) FROM geo_events;
+
+SELECT nextval('geo_events_id_seq');
+
+SELECT setval('geo_events_id_seq', (SELECT MAX(id) FROM geo_events));
+  
+SELECT setval('geo_events_id_seq', COALESCE((SELECT MAX(id)+1 FROM geo_events), 1), false);
 
 -- Completed on 2017-04-09 18:01:57
 

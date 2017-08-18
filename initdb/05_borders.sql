@@ -5761,6 +5761,16 @@ ALTER TABLE ONLY borders
     ADD CONSTRAINT borders_props_fkey FOREIGN KEY (props) REFERENCES properties(id);
 
 
+
+SELECT MAX(id) FROM borders;
+
+SELECT nextval('borders_id_seq');
+
+SELECT setval('borders_id_seq', (SELECT MAX(id) FROM borders));
+  
+SELECT setval('borders_id_seq', COALESCE((SELECT MAX(id)+1 FROM borders), 1), false);
+	
+	
 -- Completed on 2017-04-05 18:02:49
 
 --

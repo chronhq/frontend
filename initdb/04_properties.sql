@@ -28,7 +28,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE properties (
-    id bigint NOT NULL,
+    id integer NOT NULL,
     admin integer,
     disputed character varying(50),
     mapcolor13 integer NOT NULL,
@@ -328,6 +328,16 @@ ALTER TABLE ONLY properties
     ADD CONSTRAINT properties_type_fkey FOREIGN KEY (type) REFERENCES type(id);
 
 
+SELECT MAX(id) FROM properties;
+
+SELECT nextval('properties_id_seq');
+
+SELECT setval('properties_id_seq', (SELECT MAX(id) FROM properties));
+  
+SELECT setval('properties_id_seq', COALESCE((SELECT MAX(id)+1 FROM properties), 1), false);
+
+	
+	
 -- Completed on 2017-04-05 18:02:49
 
 --

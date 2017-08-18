@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -122,3 +122,17 @@ ALTER TABLE ONLY admin
 -- PostgreSQL database dump complete
 --
 
+-- Login to psql and run the following
+-- What is the result?
+SELECT MAX(id) FROM admin;
+
+-- Then run...
+-- This should be higher than the last result.
+SELECT nextval('admin_id_seq');
+
+-- If it's not higher... run this set the sequence last to your highest pid it. 
+-- (wise to run a quick pg_dump first...)
+SELECT setval('admin_id_seq', (SELECT MAX(id) FROM admin));
+-- if your tables might have no rows
+-- false means the set value will be returned by the next nextval() call    
+SELECT setval('admin_id_seq', COALESCE((SELECT MAX(id)+1 FROM admin), 1), false);

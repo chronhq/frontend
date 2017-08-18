@@ -1,4 +1,4 @@
---
+﻿--
 -- PostgreSQL database dump
 --
 
@@ -28,7 +28,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE type (
-    id integer NOT NULL,
+    id serial NOT NULL,
     en character varying(50),
     ru character varying(50),
     orig character varying(50)
@@ -36,38 +36,6 @@ CREATE TABLE type (
 
 
 ALTER TABLE type OWNER TO postgres;
-
---
--- TOC entry 189 (class 1259 OID 16407)
--- Name: type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE type_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE type_id_seq OWNER TO postgres;
-
---
--- TOC entry 2172 (class 0 OID 0)
--- Dependencies: 189
--- Name: type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE type_id_seq OWNED BY type.id;
-
-
---
--- TOC entry 2046 (class 2604 OID 16412)
--- Name: type id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY type ALTER COLUMN id SET DEFAULT nextval('type_id_seq'::regclass);
-
 
 --
 -- TOC entry 2167 (class 0 OID 16409)
@@ -124,6 +92,15 @@ SELECT pg_catalog.setval('type_id_seq', 1, false);
 ALTER TABLE ONLY type
     ADD CONSTRAINT type_pkey PRIMARY KEY (id);
 
+
+
+SELECT MAX(id) FROM type;
+
+SELECT nextval('type_id_seq');
+
+SELECT setval('type_id_seq', (SELECT MAX(id) FROM type));
+  
+SELECT setval('type_id_seq', COALESCE((SELECT MAX(id)+1 FROM type), 1), false);
 
 -- Completed on 2017-04-05 18:02:48
 

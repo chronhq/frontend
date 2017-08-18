@@ -29,9 +29,9 @@ SET default_with_oids = false;
 
 CREATE TABLE contour (
     id integer NOT NULL,
-    name character varying(255),
-    nameru character varying(255),
-    contour json NOT NULL
+  name character varying(255),
+  nameru character varying(255),
+  contour json NOT NULL
 );
 
 
@@ -103,6 +103,16 @@ ALTER TABLE ONLY contour
     ADD CONSTRAINT contour_pkey PRIMARY KEY (id);
 
 
+
+SELECT MAX(id) FROM contour;
+
+SELECT nextval('contour_id_seq');
+
+SELECT setval('contour_id_seq', (SELECT MAX(id) FROM contour));
+  
+SELECT setval('contour_id_seq', COALESCE((SELECT MAX(id)+1 FROM contour), 1), false);
+
+	
 -- Completed on 2017-04-05 18:02:50
 
 --
