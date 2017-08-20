@@ -1,12 +1,15 @@
-const envFlags = (process.env.NODE_ENV === 'production')
-  ? {
-    // production flags
-    flagSet: 'production',
-  }
-  : {
-    // development flags
-    flagSet: 'development',
-    devTools: true,
-  };
+const production = {
+  // production flags
+  flagSet: 'production',
+};
 
-export default envFlags;
+const development = {
+  // development flags
+  flagSet: 'development',
+  devTools: true,
+  UI: { 
+    TimePanel: false,
+  }
+};
+
+export default (process.env.NODE_ENV === 'production') ? production : development;
