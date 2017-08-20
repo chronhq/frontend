@@ -6,7 +6,7 @@ import { setFlagsAction } from 'flag';
 import RotatingLogo from './RotatingLogo';
 import { loadData } from '../../reducers/actions';
 import { markItReady } from '../../reducers/actions';
-import './LoadingScreen.less';
+import './CourseSelection.less';
 
 const getIcon = (e) => {
   if (e.loaded) {
@@ -26,44 +26,44 @@ const LoadingListElement = ({ element }) => (
 const defaultViewData = [
   {
     resource: 'BORDERS_TIMELINE',
-  },{
+  }, {
     resource: 'LOCATIONS',
     req: { key: 'places' }
-  },{
+  }, {
     resource: 'TERRAIN',
-  },{
+  }, {
     resource: 'PROPERTIES',
     req: { key: 'properties' }
-  },{
+  }, {
     resource: 'PROPERTIES_ADMIN',
     req: { key: 'admin' }
-  },{
+  }, {
     resource: 'PROPERTIES_TYPE',
     req: { key: 'type' }
-  },{
+  }, {
     resource: 'EVENTS_GEO',
     req: { key: 'byId' }
-  },{
+  }, {
     resource: 'INVENTIONS',
-  },{
+  }, {
     resource: 'PERSONS'
   }
 ];
 
-const listOfCources = [
-  {resource: 'COURSES'}
+const listOfCourses = [
+  { resource: 'COURSES' }
 ];
 
-class LoadingScreen extends Component {
+class CourseSelection extends Component {
   componentDidMount() {
-    this.props.loadData(listOfCources);
+    this.props.loadData(listOfCourses);
   }
   componentWillReceiveProps(next) {
     const notLoaded = sumLoading(next.timeline) + sumLoading(next.data);
     // TODO Check for projected data
     if (notLoaded === 0) {
       this.props.markItReady(true);
-      this.props.setFlagsAction({ loadingScreen: false });
+      this.props.setFlagsAction({ CourseSelection: false });
     }
   }
   selectCourse(id) {
@@ -87,15 +87,15 @@ class LoadingScreen extends Component {
         {Object.keys(this.props.courses.list.byId).map(c => this.courseButton(this.props.courses.list.byId[c]))}
         <ul>
           {Object.keys(this.props.timeline).map(t =>
-            <LoadingListElement
+            (<LoadingListElement
               key={`timeline_${t}`}
               element={this.props.timeline[t]}
-            />)}
+            />))}
           {Object.keys(this.props.data).map(t =>
-            <LoadingListElement
+            (<LoadingListElement
               key={`data_${t}`}
               element={this.props.data[t]}
-            />)}
+            />))}
         </ul>
       </div>
     );
@@ -137,4 +137,4 @@ function mapDispatchToProps(dispatch) {
     setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(LoadingScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CourseSelection);

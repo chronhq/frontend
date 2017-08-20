@@ -3,7 +3,7 @@ import 'bootstrap/less/bootstrap.less';
 
 import { Flag } from 'flag';
 
-import LoadingScreen from './containers/LoadingScreen';
+import CourseSelection from './containers/CourseSelection';
 import MapViewport from './containers/MapViewport';
 import UI from './components/SidePanel';
 // import TimePanel from './components/TimePanel';
@@ -18,16 +18,16 @@ class App extends Component {
     return (
       <div>
         <Flag
-          name="loadingScreen"
-          render={() => <LoadingScreen />}
-          fallbackRender={() =>
+          name="CourseSelection"
+          render={() => <CourseSelection />}
+          fallbackRender={() => (
             <div className='content'>
               <UI />
               <MapClickInfo />
               <MapControls />
               <MapViewport />
             </div>
-          }
+          )}
         />
         <Flag
           name="devTools"
