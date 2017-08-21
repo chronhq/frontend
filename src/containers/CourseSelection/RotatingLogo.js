@@ -20,8 +20,9 @@ const ring2Arc6 = 'M132.7,59.2c-19.2-11.3-44-10.2-61.4,4.1C54.6,77,47.8,99.3,53.
 class RotatingLogo extends Component {
   render() {
     return (
-      <svg 
-        width='220' height='220'
+      <svg
+        width='220'
+        height='220'
         viewBox="0 0 220 220"
         transform="scale(0.2)"
       >
@@ -36,7 +37,7 @@ class RotatingLogo extends Component {
             r2: spring(360, { stiffness: 1, damping: 0 }),
           }}
         >
-          {value => <g>
+          {value => (<g>
             <g transform={`rotate(${value.r1}, 105, 105)`}>
               <path className='st0' d='M66.5,120.8' />
               <path className='st1' d={ring1Arc} />
@@ -58,7 +59,7 @@ class RotatingLogo extends Component {
               <circle className='st3' cx='119.2' cy='20.4' r='2.5' />
 
             </g>
-          </g>
+          </g>)
           }
         </Motion>
       </svg>

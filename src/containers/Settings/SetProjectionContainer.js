@@ -55,7 +55,6 @@ class SetProjectionContainer extends Component {
       </div>
     );
   }
-
 }
 function mapStateToProps(state) {
   return {

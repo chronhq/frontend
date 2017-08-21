@@ -18,7 +18,7 @@ const TerrainMap = ({ terrain }) => (
         d={terrain[continentId]}
       />
     ))
-  }
+    }
   </g>
 );
 

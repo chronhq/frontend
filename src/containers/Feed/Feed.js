@@ -21,7 +21,6 @@ export function exportFromFeed(filename, format, selected) {
 }
 
 class Feed extends Component {
-
   state = {
     selected: { inventions: {}, geoEvents: {}, persons: {} },
   }

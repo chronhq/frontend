@@ -11,7 +11,10 @@ const ColorBox = ({ c, p }) => (
       <SVGPattern c={c} id={p} />
     </defs>
     <rect
-      x='1' y='1' width='1.5em' height='1.2em'
+      x='1'
+      y='1'
+      width='1.5em'
+      height='1.2em'
       fill={`url(#${p})`}
     />
   </svg>

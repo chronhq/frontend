@@ -11,5 +11,4 @@ export default function* processAndLoadData() {
 
   // Handle data loading
   yield takeEvery('LOAD_DATA_SAGA', loadData);
-
 }

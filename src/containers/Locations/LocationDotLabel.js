@@ -11,7 +11,7 @@ const textX = (location, scale, px = true) => {
   const shift = 0.3;
   const x = textSize(location.scaleRank, scale) * location.name.length * shift;
   return px ? `${x}px` : x;
-}
+};
 
 export const getTooltipSize = (location, scale) => {
   const curTextY = textSize(location.scaleRank, scale); // Not accurate

@@ -8,7 +8,8 @@
     "dev": "concurrently --kill-others \"npm run dev-web\"",
     "prod-web": "bnr prod-web",
     "dev-web": "bnr dev-web",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "lint-fix": "eslint src --fix"
   },
   "betterScripts": {
     "prod-web": {

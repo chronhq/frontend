@@ -17,17 +17,20 @@ export const SVGPattern = ({ id, c }) => (
   >
     <rect
       width={`${c[1].length > 1 ?
-      5 + (c[1].length * 2.5)
-      : 5}`}
+        5 + (c[1].length * 2.5)
+        : 5}`}
       height="5"
       fill={c[0]}
     />
     { c[1].map((color, idx) =>
-      <line
+      (<line
         key={`${id}_line_${color}`}
-        x1={`${5 * idx}`} y1="0" x2={`${5 * idx}`} y2="5"
+        x1={`${5 * idx}`}
+        y1="0"
+        x2={`${5 * idx}`}
+        y2="5"
         style={{ stroke: color, strokeWidth: 5 }}
-      />
+      />)
     )}
   </pattern>
 );

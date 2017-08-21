@@ -85,7 +85,7 @@ class SidePanel extends React.Component {
 
   render() {
     if (this.props.facade.alignPanel === 'none') {
-      return <ReturnUiButton cb={data => this.handleChange('alignPanel', data)}/>;
+      return <ReturnUiButton cb={data => this.handleChange('alignPanel', data)} />;
       // return null;
     }
     return (
@@ -141,7 +141,7 @@ class SidePanel extends React.Component {
               </div>
             }
           </div>
-       }
+        }
       </div>
     );
   }

@@ -17,7 +17,7 @@ export default class InputRange extends Component {
           onChange={(e) => {
             this.setState({ value: Number(e.target.value) });
             this.props.cb({ [this.props.name]: Number(e.target.value) });
-            }}
+          }}
         />
         {this.props.label}
       </label>

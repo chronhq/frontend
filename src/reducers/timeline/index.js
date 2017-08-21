@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { newDummyReducer } from '../_helper'
+import { newDummyReducer } from '../_helper';
 import inventionsReducer from './inventionsTimeline';
 import layerReducer from './layerTimeline';
 

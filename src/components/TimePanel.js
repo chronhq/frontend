@@ -20,19 +20,6 @@ class TimePanel extends React.Component {
     };
   }
 
-  get scale() {
-    return d3
-    .scaleLinear()
-    .domain([this.state.min, this.state.max])
-    .range([0, this.state.width]);
-  }
-
-  get width() {
-    return window.innerWidth < 768
-      ? window.innerWidth - 100
-      : window.innerWidth - 300;
-  }
-
 
   componentDidMount() {
     window.addEventListener('resize', () => this.resize());
@@ -52,7 +39,7 @@ class TimePanel extends React.Component {
       d3.select('.triangle').attr('fill', '#2f2f2f');
       this.followMouse();
     });
-  // Draw axis
+    // Draw axis
     this.resize();
   }
 
@@ -64,6 +51,19 @@ class TimePanel extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize());
+  }
+
+  get scale() {
+    return d3
+      .scaleLinear()
+      .domain([this.state.min, this.state.max])
+      .range([0, this.state.width]);
+  }
+
+  get width() {
+    return window.innerWidth < 768
+      ? window.innerWidth - 100
+      : window.innerWidth - 300;
   }
 
   followMouse() {

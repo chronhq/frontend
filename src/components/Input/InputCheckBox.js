@@ -14,7 +14,7 @@ export default class InputCheckBox extends Component {
           onChange={(e) => {
             this.setState({ checked: Number(e.target.checked) });
             this.props.cb({ [this.props.name]: Number(e.target.checked) });
-            }}
+          }}
         />
         {this.props.label}
       </label>

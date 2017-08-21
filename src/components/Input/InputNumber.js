@@ -7,14 +7,15 @@ export default class InputNumber extends Component {
   }
   render() {
     return (
-      <input className='inputNum'
+      <input
+        className='inputNum'
         type='number'
         size='5'
         value={this.state.value}
         onChange={(e) => {
           this.setState({ value: Number(e.target.value) });
           this.props.cb({ [this.props.name]: Number(e.target.value) });
-          }}
+        }}
       />
     );
   }

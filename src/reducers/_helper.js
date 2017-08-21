@@ -6,7 +6,7 @@ export const getReducerState = (name, fields) => ({
   ...fields
 });
 
-export const newDummyReducer = (reducerFn) =>
+export const newDummyReducer = reducerFn =>
   (name, fields) =>
     (state = getReducerState(name, fields), action) =>
       reducerFn(state, action);

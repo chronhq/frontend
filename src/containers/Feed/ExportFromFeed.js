@@ -11,7 +11,8 @@ const DownloadButton = ({ cb, filename, label, format, disabled }) => (
 const ExportFromFeed = ({ cb }) => (
   <div className='export-buttons'>
     <a // eslint-disable-line
-      href="" id={feedDownloadLinkId}
+      href=""
+      id={feedDownloadLinkId}
       target='_blank' rel='noopener noreferer' // eslint-disable-line
       style={{ display: 'none' }}
     />

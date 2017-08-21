@@ -43,8 +43,8 @@ class Locations extends Component {
 
   componentWillReceiveProps(nextProps) {
     const getSelectedLoc = () => (nextProps.selectedType !== 'geoEvents'
-          ? this.props.projected[nextProps.selected]
-          : this.props.geoEvents[nextProps.selected]);
+      ? this.props.projected[nextProps.selected]
+      : this.props.geoEvents[nextProps.selected]);
 
     if (nextProps.selected !== this.state.selected
     || nextProps.selectedType != this.state.selectedType) {
@@ -145,7 +145,7 @@ class Locations extends Component {
               visible={this.state.visibility[id]}
               visibility={this.props.visibility}
             />
-          : ''
+            : ''
         ))}
         <LocationFlag
           enabled={this.state.locationFlag}

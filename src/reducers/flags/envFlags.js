@@ -7,7 +7,7 @@ const development = {
   // development flags
   flagSet: 'development',
   devTools: true,
-  UI: { 
+  UI: {
     TimePanel: false,
   }
 };
