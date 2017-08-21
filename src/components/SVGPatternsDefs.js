@@ -40,7 +40,7 @@ const PatternsDefs = ({ bordersData, colorsData }) => {
   if (!(Array.isArray(bordersData))) return null;
   const patterns = bordersData.reduce(
     (prev, cur) => {
-      const [cIds, cVls] = cur.colors[colorsData.name];
+      const cVls = cur.colors[colorsData.name][1];
       const key = getFillPatternId(cur.id);
       const value = <SVGPattern key={key} id={key} c={cVls} />;
       return { ...prev,

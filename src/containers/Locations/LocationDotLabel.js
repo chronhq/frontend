@@ -20,10 +20,9 @@ export const getTooltipSize = (location, scale) => {
     top: location.y,
     bottom: location.y + curTextY,
     left: location.x,
-    right: location.x + 2 * curTextX,
+    right: location.x + (2 * curTextX),
   };
   return obj;
-  // <rect x={obj.left} y={obj.top} width={obj.right - obj.left } height={obj.bottom - obj.top} fill='black' />
 };
 
 const LocationDotLabel = ({ location, scale }) => (

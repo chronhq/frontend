@@ -50,7 +50,7 @@ class Map extends Component {
 
   state = {
     defaultZoom: () => window.innerWidth / 1000,
-    zoomInitted: false,
+    zoomInitSuccess: false,
     widgetTransform: 'translate(0,0)',
     transform: { k: 1, x: 0, y: 0 }
   }
@@ -58,12 +58,13 @@ class Map extends Component {
   componentDidMount() {
     window.addEventListener('resize', () => this.resize());
     this.resize();
-    if (!this.state.zoomInitted) {
+    if (!this.state.zoomInitSuccess) {
       const svg = d3.select(this.svgMap);
       svg.call(this.zoom);
       svg.call(this.zoom.transform, d3.zoomIdentity.scale(this.state.defaultZoom()));
+      /* eslint-disable react/no-did-mount-set-state */
       this.setState({
-        zoomInitted: true,
+        zoomInitSuccess: true,
       });
     }
   }
@@ -87,12 +88,6 @@ class Map extends Component {
     window.removeEventListener('resize', () => this.resize());
   }
 
-  resize = () => {
-    const x = this.width > 768 ? 100 : 60;
-    const y = this.width > 768 ? this.height - 100 : this.height - 100;
-    this.setState({ widgetTransform: `translate(${x}, ${y})` });
-  }
-
   onZoom = () => {
     if (this.state.transform !== null
     && Math.round(this.state.transform.k) !== Math.round(d3.event.transform.k)) {
@@ -102,10 +97,6 @@ class Map extends Component {
       transform: d3.event.transform
     });
   }
-
-  zoom = d3.zoom()
-    .scaleExtent([1, 10])
-    .on('zoom', this.onZoom);
 
   get scale() {
     if (this.state.transform) return this.state.transform.k;
@@ -142,6 +133,16 @@ class Map extends Component {
     }
     return null;
   }
+
+  resize = () => {
+    const x = this.width > 768 ? 100 : 60;
+    const y = this.width > 768 ? this.height - 100 : this.height - 100;
+    this.setState({ widgetTransform: `translate(${x}, ${y})` });
+  }
+
+  zoom = d3.zoom()
+    .scaleExtent([1, 10])
+    .on('zoom', this.onZoom);
 
   render() {
     return (
