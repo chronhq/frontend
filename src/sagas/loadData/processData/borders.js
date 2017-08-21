@@ -19,7 +19,11 @@ export function* getBordersTimeline(data) {
   };
   const action = { type: 'BORDERS_TIMELINE_FULFILLED', payload };
   yield put(action);
-  yield call(loadGeoData, action);
+  if (payload.allYears.length > 0) {
+    yield call(loadGeoData, action);
+  } else { // I'm not sure about this hook
+    yield put({ type: 'BORDERS_FULFILLED', payload: { error: 'EMPTY TIMELINE' } });
+  }
 }
 
 export function* getBorders(data) {

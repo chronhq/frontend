@@ -81,24 +81,43 @@ const listOfCourses = [{
 }];
 
 class CourseSelection extends Component {
+  state = {
+    loading: false,
+    course: false,
+  }
+
   componentDidMount() {
     this.props.loadData(listOfCourses);
   }
   componentWillReceiveProps(next) {
-    const notLoaded = sumLoading(next.timeline) + sumLoading(next.data);
+    const notLoaded = this.state.course
+      ? sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.courses)
+      : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
     // TODO Check for projected data
     if (notLoaded === 0) {
       this.props.markItReady(true);
-      this.props.setFlagsAction({ CourseSelection: false });
+      this.props.setFlagsAction({ CourseSelection: false, ...this.toggleUI });
     }
   }
+
+  get toggleUI() {
+    return this.state.course
+      ? { UI: { TimePanel: false } }
+      : { UI: { TimePanel: true } };
+  }
+
   selectCourse(id) {
+    this.setState({ loading: true, course: Boolean(id) });
     this.props.loadData(requestData(id));
   }
   courseButton(course) {
     const key = `courseSelector_id${course.id}`;
     return (
-      <button key={key} onClick={() => this.selectCourse(course.id)}>{course.name}</button>
+      <button
+        disabled={this.state.loading}
+        key={key}
+        onClick={() => this.selectCourse(course.id)}
+      >{course.name}</button>
     );
   }
   render() {
@@ -107,8 +126,8 @@ class CourseSelection extends Component {
         <RotatingLogo className='logo' />
         <br />
         {this.courseButton({ name: 'Загрузить данные', id: 0 })}
-        {Object.keys(this.props.courses.list.byId).map(
-          c => this.courseButton(this.props.courses.list.byId[c]))
+        {Object.keys(this.props.availableCourses).map(
+          c => this.courseButton(this.props.availableCourses[c]))
         }
         <ul>
           {Object.keys(this.props.timeline).map(t =>
@@ -136,23 +155,30 @@ const getLoadedStatus = (name, data) => ({
 
 function mapStateToProps(state) {
   return {
+    courses: {
+      events: getLoadedStatus('Перечень событий', state.courses.events),
+      timeline: getLoadedStatus('Хронология событий', state.courses.timeline),
+      traces: getLoadedStatus('История путешествий', state.courses.traces),
+    },
+    full: {
+      inventions: getLoadedStatus('Список изобретений', state.timeline.inventions),
+      geoEvents: getLoadedStatus('Годы жизни великих людей', state.timeline.geoEvents),
+      inventionsData: getLoadedStatus('География изобретений', state.data.inventions),
+      geoEventsData: getLoadedStatus('Описание изменений', state.data.geoEvents),
+    },
     timeline: {
       locations: getLoadedStatus('Перечень мест', state.timeline.locations),
-      inventions: getLoadedStatus('Список изобретений', state.timeline.inventions),
       borders: getLoadedStatus('Перечень границ', state.timeline.borders),
       personsFacts: getLoadedStatus('Годы жизни великих людей', state.timeline.personsFacts),
       personsAlive: getLoadedStatus('Годы жизни великих людей', state.timeline.personsAlive),
-      geoEvents: getLoadedStatus('Годы жизни великих людей', state.timeline.geoEvents),
     },
     data: {
       locations: getLoadedStatus('География мест', state.data.locations),
-      inventions: getLoadedStatus('География изобретений', state.data.inventions),
       borders: getLoadedStatus('Политические границы', state.data.borders),
-      geoEvents: getLoadedStatus('Описание изменений', state.data.geoEvents),
       persons: getLoadedStatus('Информация о людях', state.data.persons),
       terrain: getLoadedStatus('Физическая карта мира', state.data.terrain),
     },
-    courses: state.courses,
+    availableCourses: state.courses.list.byId,
   };
 }
 function mapDispatchToProps(dispatch) {
