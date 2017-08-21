@@ -31,7 +31,8 @@ CREATE TABLE contour (
     id integer NOT NULL,
   name character varying(255),
   nameru character varying(255),
-  contour json NOT NULL
+  contour json NOT NULL,
+  course INTEGER DEFAULT 0
 );
 
 
