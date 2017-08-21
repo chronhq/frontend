@@ -7,7 +7,7 @@ function* locations(res, resource, req) {
   const projection = yield select(projectionSelector);
   const project = projection.project;
   const projected = projectLocations(res, project);
-  yield put({ type: `LOCATIONS_FULFILLED`, payload: { ...data, projected } });
+  yield put({ type: 'LOCATIONS_FULFILLED', payload: { ...data, projected } });
 
   const places = data.places;
   const timeline = Object.keys(places).reduce((prev, cur) => {
@@ -23,6 +23,8 @@ function* locations(res, resource, req) {
   }, {});
 
   let previousYear;
+
+  /* eslint-disable no-restricted-syntax */
   for (const currentYear of Object.keys(timeline)) {
     if (!(typeof previousYear === 'undefined')) {
       timeline[currentYear] = [...timeline[previousYear], ...timeline[currentYear]];

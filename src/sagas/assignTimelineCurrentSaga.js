@@ -20,12 +20,13 @@ const TIMELINE_ACTIONS = [
 function* findCurrent(action) {
   const year = yield select(getYear);
   const type = action.type.replace('FULFILLED', 'CURRENT');
-  if (typeof(year) !== 'undefined') {
+  if (typeof (year) !== 'undefined') {
     yield put({ type, year });
   }
 }
 
 export default function* assignTimelineCurrentSaga() {
+  /* eslint-disable no-restricted-syntax */
   for (const type of TIMELINE_ACTIONS) {
     yield takeEvery(type, findCurrent);
   }

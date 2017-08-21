@@ -64,13 +64,3 @@ export function locationsTimelineFF(byYear) {
     }
   };
 }
-
-export function emptyBordersFF() {
-  return {
-    type: 'BORDERS_FULFILLED',
-    payload: {
-      projected: {},
-      byYear: {}
-    }
-  };
-}

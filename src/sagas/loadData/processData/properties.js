@@ -20,8 +20,8 @@ function* properties(res, resource, req) {
   const colors = Object.keys(ranking).reduce((prev, admin) => {
     const adminMax = Object.keys(ranking[admin]).reduce((color, curColor) =>
       (ranking[admin][curColor] > color.value
-      ? { value: ranking[admin][curColor], id: curColor }
-      : color), { value: 0, id: 1 });
+        ? { value: ranking[admin][curColor], id: curColor }
+        : color), { value: 0, id: 1 });
     return { ...prev, [admin]: adminMax.id };
   }, {});
 

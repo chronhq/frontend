@@ -19,7 +19,7 @@ const fixInventors = (data) => {
 function* inventions(resp) {
   const data = yield call(fixInventors, defaultCb(resp, 'byId'));
   yield put({ type: 'INVENTIONS_FULFILLED', payload: data });
-  
+
   const byYear = Object.keys(data.byId).reduce((prev, curId) => {
     const cur = data.byId[curId];
     return cur.inventDate in prev

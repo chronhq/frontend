@@ -3,7 +3,6 @@ import { projectionSelector } from './_helper';
 import loadGeoData from '../loadGeoData';
 
 
-
 export function* getBordersTimeline(data) {
   const timeline = data.reduce((prev, row) => {
     const d = { [row.id]: { geo: row.geo, props: row.props } };
@@ -21,7 +20,7 @@ export function* getBordersTimeline(data) {
   const action = { type: 'BORDERS_TIMELINE_FULFILLED', payload };
   yield put(action);
   yield call(loadGeoData, action);
-};
+}
 
 export function* getBorders(data) {
   const projection = yield select(projectionSelector);
@@ -31,5 +30,5 @@ export function* getBorders(data) {
       byId: { ...prev.byId, [row.id]: row.geometry },
       projected: { ...prev.projected, [row.id]: pathFn(row.geometry) }
     }), { byId: {}, projected: {} });
-    yield put({ type: 'BORDERS_FULFILLED', payload });
-};
+  yield put({ type: 'BORDERS_FULFILLED', payload });
+}

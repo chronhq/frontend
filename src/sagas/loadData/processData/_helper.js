@@ -14,7 +14,7 @@ export const getUrlFromResource = resource => (
     : resource.split('_').map(c => `${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`).join('')
 );
 
-export const defaultCb = (data = [], key = 'byId', dataCb = () => {}) => {
+export const defaultCb = (data = [], key = 'byId') => {
   const keyData = data.reduce(
     (prev, row) => ({ ...prev, [row.id]: row }), {});
   // const cbRes = dataCb(data);
@@ -28,6 +28,6 @@ export const projectLocations = (data, project) => {
     return { ...prev, [cur.id]: { id: cur.id, x, y } };
   }, {});
   return projected;
-}
+};
 
 export const projectionSelector = state => state.runtime.projection;

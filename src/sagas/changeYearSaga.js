@@ -19,7 +19,7 @@ function* changeYear(action) {
         return year.min - 1;
       }
       default: {
-        return typeof(year.now) !== 'undefined'
+        return typeof (year.now) !== 'undefined'
           ? year.now : year.min;
       }
     }

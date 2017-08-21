@@ -35,6 +35,7 @@ function* changeProjection(action) {
 
   const path = yield select(getPath);
 
+  /* eslint-disable no-restricted-syntax */
   for (const [type, selector] of awaitingNewPath) {
     // pathProjection
     console.time(`pathProjection ${type}`);
@@ -51,6 +52,7 @@ function* changeProjection(action) {
   }
 
   const projection = yield select(getProjection);
+  /* eslint-disable no-restricted-syntax */
   for (const [type, selector] of hasPoints) {
     // pointProjection
     console.time(`pointProjection ${type}`);
@@ -69,6 +71,3 @@ function* changeProjection(action) {
 export default function* changeProjectionSaga() {
   yield takeEvery('CHANGE_PROJECTION_SAGA', changeProjection);
 }
-
-
-

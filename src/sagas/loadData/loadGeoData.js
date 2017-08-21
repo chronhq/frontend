@@ -2,7 +2,6 @@ import { put, select } from 'redux-saga/effects';
 import {
   getNextData,
   getActualData,
-  emptyBordersFF,
   loadData } from '../../reducers/actions';
 
 export function getIdsFromTimeline(type, t, loaded = {}) {
@@ -36,7 +35,7 @@ function* loadGeoData(action) {
   if (action.type === 'NEXT_YEAR') year.target = year.cur + 1;
   else if (action.type === 'PREV_YEAR') year.target = year.cur - 1;
   else if (action.type === 'SET_YEAR') year.target = action.year;
-  else if (typeof(year.cur) === 'undefined') year.target = year.min;
+  else if (typeof (year.cur) === 'undefined') year.target = year.min;
   else year.target = year.cur;
 
   const actualData = getActualData(borders.allYears, borders.byYear, year.target, action.type);
@@ -53,14 +52,11 @@ function* loadGeoData(action) {
       resource: 'BORDERS',
       req: {
         cb: projection,
-        fiter: JSON.stringify(
+        filter: JSON.stringify(
           { where: { or: geoIds } }
         )
-      }}]
+      } }]
     ));
-  // } else {
-  //   yield put(emptyBordersFF());
-  //   console.log('Nothing new to obtain from server');
   }
 
   // console.timeEnd('Loading GeoData Saga');

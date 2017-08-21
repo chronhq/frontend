@@ -1,4 +1,4 @@
-import { put, select } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import {
   personsTimelineFF,
   personsFactsTimelineFF,
@@ -81,7 +81,6 @@ function* persons(res, resource, req) {
   yield put(personsTimelineFF(timelineYears.data));
   yield put(personsFactsTimelineFF(deathFacts));
   yield put(personsFactsFF(deathById));
-
 }
 
 export default persons;

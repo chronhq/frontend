@@ -81,10 +81,10 @@ function* exportFromFeed(action) {
   const geoEvents = getSelectedIds(selected.geoEvents).map(getGeoEventsFactsS);
   // TODO format data according to action.format
   const data = [...personsFacts, ...inventions, ...geoEvents].join(newLine);
-  const blob = new Blob([data], { encoding:"UTF-8",type:"text/plain;charset=UTF-8" });
+  const blob = new Blob([data], { encoding: 'UTF-8', type: 'text/plain;charset=UTF-8' });
 
   if (navigator.appVersion.toString().indexOf('.NET') > 0) {
-        window.navigator.msSaveBlob(blob, action.filename);
+    window.navigator.msSaveBlob(blob, action.filename);
   } else {
     const fileData = window.URL.createObjectURL(blob);
 

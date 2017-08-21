@@ -8,7 +8,7 @@ function* geoEvents(res, resource, req) {
   const projection = yield select(projectionSelector);
   const project = projection.project;
   const projected = projectLocations(res, project);
-  yield put({ type: `EVENTS_GEO_FULFILLED`, payload: { ...data, projected } });
+  yield put({ type: 'EVENTS_GEO_FULFILLED', payload: { ...data, projected } });
 
   const byYear = Object.keys(data.byId).reduce((prev, curId) => {
     const cur = data.byId[curId];

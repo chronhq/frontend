@@ -10,7 +10,7 @@
 import fetch from 'isomorphic-fetch';
 import { put, call, fork } from 'redux-saga/effects';
 
-import { getUrlFromResource, defaultCb } from './processData/_helper.js';
+import { getUrlFromResource, defaultCb } from './processData/_helper';
 
 import { getBorders, getBordersTimeline } from './processData/borders';
 import projectTerrain from './processData/projectTerrain';
@@ -28,7 +28,7 @@ const headers = {
 };
 const prefix = '/api';
 
-function fetchResponse(url, req) {
+function fetchResponse(url) {
   return fetch(url, headers).then(response => response.json());
 }
 
@@ -64,7 +64,7 @@ function* executeRequest({ resource, req }) {
 
   // yield put({ type: `${resource}_PENDING` });
   try {
-    const resp = yield call(fetchResponse, url, req);
+    const resp = yield call(fetchResponse, url);
     yield call(resourceToCb[resource], resp, resource, req);
   } catch (e) {
     console.error(e);
@@ -78,8 +78,10 @@ function* loadData({ fetchList }) {
   //    {resource: 'INVENTIONS', req: {}},
   //   ... ]};
   // console.log('Wow, fetch list', fetchList);
+
+  /* eslint-disable no-restricted-syntax */
   for (const item of fetchList) {
-    if (typeof(item.req) === 'undefined') item.req = {};
+    if (typeof (item.req) === 'undefined') item.req = {};
     yield fork(executeRequest, item);
   }
 }
