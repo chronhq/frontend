@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
+-- Dumped from database version 9.6.4
+-- Dumped by pg_dump version 9.6.4
 
--- Started on 2017-06-25 21:10:34
+-- Started on 2017-08-21 13:47:28 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -589,6 +589,36 @@ COPY persons (id, name_eng, name_rus, birth_date, birth_place, death_date, death
 524	John Ousterhout	Джон Оустерхаут	\N	0	\N	0
 525	Carl Deckard	Карл Декард	1961	0	\N	0
 526	Joy Mangano	Джой Мангэно	1956-02-01	654	\N	0
+527	Matsumae Yoshihiro	Мацумаэ Ёсихиро	\N	0	\N	0
+528	Girolamo Angelis	Джироламо Анджелис	\N	0	\N	0
+529	Maarten Gerritszoon de Vries	Маартен Герритсен Де Фриз	\N	0	\N	0
+530	Vasiliy Poyarkov	Василий Поярков	\N	0	\N	0
+531	Semen Shelkovnikov	Семён Шелковников	\N	0	\N	0
+532	Tokugawa Mitsukuni	Токугава Мицукуни	\N	0	\N	0
+533	Ivan Kozyrevsky	Иван Козыревский	\N	0	\N	0
+534	Dembei	Дэмбэй	\N	0	\N	0
+535	Vladimir Atlasov	Владимир Атласов	\N	0	\N	0
+536	Fyodor Luzhin	Федор Федорович Лужин	\N	0	\N	0
+537	Danil Antsipherov	Данил Анциферов	\N	0	\N	0
+538	Peter the Great	Пётр Первый	\N	0	\N	0
+539	Martyn Shanberg	Мартын Петрович Шпанберг	\N	0	\N	0
+540	Ivan Evreinov	Иван Михайлович Евреинов	\N	0	\N	0
+541	William Valton	Вильям Вальтон	\N	0	\N	0
+542	Ivan Chorniy	Иван Черный    	\N	0	\N	0
+543	Hidaya Kyuubee	Хидая Кюбээ	\N	0	\N	0
+544	Tsukinoe	Цукиноэ	\N	0	\N	0
+545	Ivan Antipin	Иван Михайлович Антипин	\N	0	\N	0
+546	Dmitriy Shabalin	Дмитрий Яковлевич Шабалин	\N	0	\N	0
+547	Dmitriy Shabalin	Дмитрий Яковлевич Шабалин	\N	0	\N	0
+548	Jean-François de Galaup, comte de Lapérouse	Жан-Франсуа де Лаперуз	\N	0	\N	0
+549	Adam Laxman	Адам Лаксман	\N	0	\N	0
+550	Grigory Shelikhov	Григорий Иванович Щелихов	\N	0	\N	0
+551	William Robert Broughton	Уильям Роберт Броутон	\N	0	\N	0
+552	Nikolay Khvostov	Николай Александрович Хвостов	\N	0	\N	0
+553	Gavriil Davydov	Гавриил Иванович Давыдов	\N	0	\N	0
+554	Matsuda Denjuro	Мацуда Дэндзюро	\N	0	\N	0
+555	Mamiya Rinzō	Мамия Риндзо	\N	0	\N	0
+556	Yevfimiy Putyatin	Евфимий Васильевич Путятин	\N	0	\N	0
 \.
 
 
@@ -608,7 +638,7 @@ SELECT setval('persons_id_seq', (SELECT MAX(id) FROM persons));
 SELECT setval('persons_id_seq', COALESCE((SELECT MAX(id)+1 FROM persons), 1), false);
 
 
--- Completed on 2017-06-25 21:10:34
+-- Completed on 2017-08-21 13:47:28 UTC
 
 --
 -- PostgreSQL database dump complete
