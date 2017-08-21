@@ -24,17 +24,18 @@ const LoadingListElement = ({ element }) => (
 );
 
 const requestData = (id) => {
-  const filter = JSON.stringify({ where: { id } });
+  const filter = JSON.stringify({ where: { courseId: id } });
+  const baseFilter = JSON.stringify({ where: { course: id } });
   const base = [
     {
       resource: 'BORDERS_TIMELINE',
-      req: { filter },
+      req: { filter: baseFilter },
     }, {
       resource: 'LOCATIONS',
       req: { key: 'places' },
     }, {
       resource: 'TERRAIN',
-      req: { filter },
+      req: { filter: baseFilter },
     }, {
       resource: 'PROPERTIES',
       req: { key: 'properties' },
