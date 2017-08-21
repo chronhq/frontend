@@ -6,11 +6,10 @@ const isObject = item => (item && typeof item === 'object' && !Array.isArray(ite
 
 function mergeFlags(source, target) {
   const flags = { ...source, ...target };
-  const deep = Object.keys(flags).reduce((prev, flag) => {
-    return (isObject(flags[flag] && source[flag] && target[flag]))
+  const deep = Object.keys(flags).reduce((prev, flag) => (
+    (isObject(flags[flag] && source[flag] && target[flag]))
       ? { ...prev, [flag]: mergeFlags(source[flag], target[flag]) }
-      : prev;
-  }, {});
+      : prev), {});
   return { ...flags, ...deep };
 }
 

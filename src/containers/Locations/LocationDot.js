@@ -13,7 +13,8 @@ const sizeOfALocationDot = (scaleRank, scale) => {
 const LocationDot = ({ location, scale }) => (
   <circle
     className='LocationDotVisible'
-    cx={location.x} cy={location.y}
+    cx={location.x}
+    cy={location.y}
     r={sizeOfALocationDot(location.scaleRank, scale)}
     key={`pin_${location.id}`}
   >

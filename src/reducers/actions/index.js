@@ -20,7 +20,7 @@ export function changeGrouping(auto, enabled, zoomPoint) {
   };
 }
 
-export function setProjection(rotate, name = defaultProjectionName) {
+export function setProjection(rotate, name) {
   return {
     type: 'CHANGE_PROJECTION_SAGA',
     name,

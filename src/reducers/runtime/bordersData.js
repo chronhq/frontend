@@ -3,7 +3,7 @@ const defaultState = {
   properties: []
 };
 const runtime = (state = defaultState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'RUNTIME_BORDERS': {
       return { ...state, ...action.bordersData };
     }
@@ -11,6 +11,6 @@ const runtime = (state = defaultState, action) => {
       return state;
     }
   }
-}
+};
 
 export default runtime;

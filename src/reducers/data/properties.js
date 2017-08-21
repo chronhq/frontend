@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { newReducer } from '../_helper'
+import { newReducer } from '../_helper';
 
 const props = newReducer('PROPERTIES', { properties: {} });
 const propsAdmin = newReducer('PROPERTIES_ADMIN', { admin: {} });
