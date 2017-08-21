@@ -398,6 +398,20 @@ COPY inventions (id, name_eng, name_rus, description, invent_date, inventor, inv
 \.
 
 
+SELECT MAX(id) FROM inventions;
+
+-- Then run...
+-- This should be higher than the last result.
+SELECT nextval('inventions_id_seq');
+
+-- If it's not higher... run this set the sequence last to your highest pid it. 
+-- (wise to run a quick pg_dump first...)
+SELECT setval('inventions_id_seq', (SELECT MAX(id) FROM inventions));
+-- if your tables might have no rows
+-- false means the set value will be returned by the next nextval() call    
+SELECT setval('inventions_id_seq', COALESCE((SELECT MAX(id)+1 FROM inventions), 1), false);
+
+
 -- Completed on 2017-04-09 18:01:56
 
 --
