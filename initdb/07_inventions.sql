@@ -28,7 +28,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE inventions (
-    id bigint,
+    id serial,
     name_eng text,
     name_rus text,
     description text,
