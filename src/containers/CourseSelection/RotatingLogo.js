@@ -45,7 +45,7 @@ class RotatingLogo extends Component {
               <path className='st2' d={ring1Arc3} />
               <circle className='st3' cx='136.6' cy='165.8' r='2.5' />
             </g>
-            <g transform={`rotate(-${value.r2}, 105, 105)`}>
+            <g transform={`rotate(${0 - value.r2}, 105, 105)`}>
               <path className='st0' d='M66.5,120.8' />
               <path className='st4' d={ring2Arc} />
               <path className='st4' d={ring2Arc2} />

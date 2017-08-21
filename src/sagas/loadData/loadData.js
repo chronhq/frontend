@@ -34,7 +34,7 @@ function fetchResponse(url) {
 
 function* defaultGenCb(res, resource, req) {
   const payload = yield call(defaultCb, res, req.key);
-  console.log('payload', payload);
+  console.log('payload', resource, payload);
   yield put({ type: `${resource}_FULFILLED`, payload });
 }
 
@@ -62,11 +62,14 @@ function* executeRequest({ resource, req }) {
     ? `${prefix}/${uri}?filter=${req.filter}`
     : `${prefix}/${uri}`;
 
-  // yield put({ type: `${resource}_PENDING` });
+    // yield put({ type: `${resource}_PENDING` });
+  console.log(url, resource);
+  const urlCb = resourceToCb[resource] ? resourceToCb[resource] : defaultGenCb;
   try {
     const resp = yield call(fetchResponse, url);
-    yield call(resourceToCb[resource], resp, resource, req);
+    yield call(urlCb, resp, resource, req);
   } catch (e) {
+    console.log('Error failed to execute request:', resource, req, url);
     console.error(e);
     yield put({ type: `${resource}_REJECTED`, payload: { error: e.message } });
   }

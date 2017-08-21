@@ -32,7 +32,7 @@ CREATE TABLE borders (
     year integer NOT NULL,
     geo bigint NOT NULL,
     props bigint NOT NULL,
-    course INTEGER DEFAULT 0
+    courseId INTEGER DEFAULT 0
 
 );
 

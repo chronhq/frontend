@@ -25,17 +25,16 @@ const LoadingListElement = ({ element }) => (
 
 const requestData = (id) => {
   const filter = JSON.stringify({ where: { courseId: id } });
-  const baseFilter = JSON.stringify({ where: { course: id } });
   const base = [
     {
       resource: 'BORDERS_TIMELINE',
-      req: { filter: baseFilter },
+      req: { filter },
     }, {
       resource: 'LOCATIONS',
       req: { key: 'places' },
     }, {
       resource: 'TERRAIN',
-      req: { filter: baseFilter },
+      req: { filter },
     }, {
       resource: 'PROPERTIES',
       req: { key: 'properties' },
@@ -61,12 +60,12 @@ const requestData = (id) => {
 
   const courseViewData = [
     {
-      resource: 'courseTimelines',
-      req: { filter },
+      resource: 'COURSE_TIMELINES',
+      req: { filter, key: 'tick' },
     }, {
-      resource: 'courseEvents',
+      resource: 'COURSE_EVENTS',
     }, {
-      resource: 'courseTraces',
+      resource: 'COURSE_TRACES',
     },
   ];
   return id !== 0
@@ -94,11 +93,7 @@ class CourseSelection extends Component {
     }
   }
   selectCourse(id) {
-    if (id === 0) {
-      this.props.loadData(requestData(id));
-    } else {
-      console.log('Not implemented');
-    }
+    this.props.loadData(requestData(id));
   }
   courseButton(course) {
     const key = `courseSelector_id${course.id}`;
