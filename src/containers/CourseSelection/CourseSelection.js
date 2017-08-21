@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 
 import RotatingLogo from './RotatingLogo';
-import { loadData } from '../../reducers/actions';
-import { markItReady } from '../../reducers/actions';
+import { loadData, markItReady } from '../../reducers/actions';
+
 import './CourseSelection.less';
 
 const getIcon = (e) => {
@@ -23,36 +23,62 @@ const LoadingListElement = ({ element }) => (
   <li><i className={`fa ${getIcon(element)}`} aria-hidden="true" />{element.name}</li>
 );
 
-const defaultViewData = [
-  {
-    resource: 'BORDERS_TIMELINE',
-  }, {
-    resource: 'LOCATIONS',
-    req: { key: 'places' }
-  }, {
-    resource: 'TERRAIN',
-  }, {
-    resource: 'PROPERTIES',
-    req: { key: 'properties' }
-  }, {
-    resource: 'PROPERTIES_ADMIN',
-    req: { key: 'admin' }
-  }, {
-    resource: 'PROPERTIES_TYPE',
-    req: { key: 'type' }
-  }, {
-    resource: 'EVENTS_GEO',
-    req: { key: 'byId' }
-  }, {
-    resource: 'INVENTIONS',
-  }, {
-    resource: 'PERSONS'
-  }
-];
+const requestData = (id) => {
+  const filter = JSON.stringify({ where: { id } });
+  const base = [
+    {
+      resource: 'BORDERS_TIMELINE',
+      req: { filter },
+    }, {
+      resource: 'LOCATIONS',
+      req: { key: 'places' },
+    }, {
+      resource: 'TERRAIN',
+      req: { filter },
+    }, {
+      resource: 'PROPERTIES',
+      req: { key: 'properties' },
+    }, {
+      resource: 'PROPERTIES_ADMIN',
+      req: { key: 'admin' },
+    }, {
+      resource: 'PROPERTIES_TYPE',
+      req: { key: 'type' },
+    }, {
+      resource: 'PERSONS',
+    },
+  ];
 
-const listOfCourses = [
-  { resource: 'COURSES' }
-];
+  const defaultViewData = [
+    {
+      resource: 'EVENTS_GEO',
+      req: { key: 'byId' },
+    }, {
+      resource: 'INVENTIONS',
+    },
+  ];
+
+  const courseViewData = [
+    {
+      resource: 'courseTimelines',
+      req: { filter },
+    }, {
+      resource: 'courseEvents',
+    }, {
+      resource: 'courseTraces',
+    },
+  ];
+  return id !== 0
+    ? [...base, ...courseViewData]
+    : [...base, ...defaultViewData];
+};
+
+const listOfCourses = [{
+  resource: 'COURSES',
+  req: {
+    filter: JSON.stringify({ where: { active: true } }),
+  },
+}];
 
 class CourseSelection extends Component {
   componentDidMount() {
@@ -68,14 +94,15 @@ class CourseSelection extends Component {
   }
   selectCourse(id) {
     if (id === 0) {
-      this.props.loadData(defaultViewData);
+      this.props.loadData(requestData(id));
     } else {
       console.log('Not implemented');
     }
   }
   courseButton(course) {
+    const key = `courseSelector_id${course.id}`;
     return (
-      <button onClick={() => this.selectCourse(course.id)}>{course.name}</button>
+      <button key={key} onClick={() => this.selectCourse(course.id)}>{course.name}</button>
     );
   }
   render() {
@@ -84,7 +111,9 @@ class CourseSelection extends Component {
         <RotatingLogo className='logo' />
         <br />
         {this.courseButton({ name: 'Загрузить данные', id: 0 })}
-        {Object.keys(this.props.courses.list.byId).map(c => this.courseButton(this.props.courses.list.byId[c]))}
+        {Object.keys(this.props.courses.list.byId).map(
+          c => this.courseButton(this.props.courses.list.byId[c]))
+        }
         <ul>
           {Object.keys(this.props.timeline).map(t =>
             (<LoadingListElement
@@ -106,7 +135,7 @@ const getLoadedStatus = (name, data) => ({
   name,
   loaded: data.loaded,
   loading: data.loading || false,
-  error: data.error || false
+  error: data.error || false,
 });
 
 function mapStateToProps(state) {
@@ -117,7 +146,7 @@ function mapStateToProps(state) {
       borders: getLoadedStatus('Перечень границ', state.timeline.borders),
       personsFacts: getLoadedStatus('Годы жизни великих людей', state.timeline.personsFacts),
       personsAlive: getLoadedStatus('Годы жизни великих людей', state.timeline.personsAlive),
-      geoEvents: getLoadedStatus('Годы жизни великих людей', state.timeline.geoEvents)
+      geoEvents: getLoadedStatus('Годы жизни великих людей', state.timeline.geoEvents),
     },
     data: {
       locations: getLoadedStatus('География мест', state.data.locations),
@@ -125,7 +154,7 @@ function mapStateToProps(state) {
       borders: getLoadedStatus('Политические границы', state.data.borders),
       geoEvents: getLoadedStatus('Описание изменений', state.data.geoEvents),
       persons: getLoadedStatus('Информация о людях', state.data.persons),
-      terrain: getLoadedStatus('Физическая карта мира', state.data.terrain)
+      terrain: getLoadedStatus('Физическая карта мира', state.data.terrain),
     },
     courses: state.courses,
   };
