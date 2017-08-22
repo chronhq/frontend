@@ -5,7 +5,8 @@ import {
   BrowserRouter as Router,
   browserHistory
 } from 'react-router-dom';
-import { ConnectedFlagsProvider, Flag } from 'flag';
+import { ConnectedFlagsProvider } from 'flag';
+import { loadData } from './reducers/actions';
 
 import configureStore from './store/configureStore';
 
@@ -14,6 +15,15 @@ import AppRouter from './routes';
 
 
 const store = configureStore();
+
+const listOfCourses = [{
+  resource: 'COURSES',
+  req: {
+    filter: JSON.stringify({ where: { active: true } }),
+  },
+}];
+
+store.dispatch(loadData(listOfCourses));
 
 ReactDOM.render(
   <Provider store={store}>
