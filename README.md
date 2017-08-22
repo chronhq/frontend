@@ -82,35 +82,26 @@ npm run dev
 ----------------
 ## UI
 - [ ] добавить сетку на море
-- [ ] reduce css {C}
-- [ ] local css {C}
+- [ ] reduce amount css {C}
 - [ ] less cleaning {C}
 - [ ] Filters {C}
 - [ ] Запилить настроечки с цветовым темами {B}
-- [ ] Настройку положения icon-bar и side-bar {B}
 - [ ] Dynamic legend #big {C}
 - [ ] Мобильные евенты {A}
 - [ ] feed unresponsive когда play
-
-## Sidenav
-- [ ] as
-
-##Intro
-- [ ] Mouse interference make sync off slide with id {C}
-
-##Timeline
-- [ ] Extend functionality with brush and expandent stuff {C}
-
-
-##In gitlab
- - [GL] На геособытиях отображается только событие этого года. лента не растёт.
-- [x] Форма подписи внутри демо #18
-- [x] Форма обратной связи #19
- - [GL] Электрический звонок с говнопробелами &nbsp;
-- [ ] Кука аналитика #20
+- [ ] сменить шрифты
+- [ ]
 - [ ] Changelog #7
+- [ ] Кука аналитика #20
+- [ ] Extend functionality with brush and expandent stuff {C}
+- [ ] as
+- [ ] Mouse interference make sync off slide with id {C}
+- [ ] animation of expedition and stuff.
 
 ##DONE
+- [x] Форма обратной связи #19
+- [x] Форма подписи внутри демо #18
+- [x] Настройку положения icon-bar и side-bar {B}
 - [x] Shadows for map {B}
 - [x] Тултипы для меню #21
 - [x] Форма подписи внутри демо #18

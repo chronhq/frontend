@@ -1,13 +1,8 @@
 import React from 'react';
-import { Row } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 export const getInventors = (persons, inventors) => inventors.reduce(
   (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].nameRus]), []
 );
-
-let isFlipped = false;
 
 const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
