@@ -6,22 +6,10 @@ import { setFlagsAction } from 'flag';
 import RotatingLogo from './RotatingLogo';
 import { loadData, markItReady } from '../../reducers/actions';
 
-import './CourseSelection.less';
+import TilesScreen from './TilesScreen';
 
-const getIcon = (e) => {
-  if (e.loaded) {
-    return 'fa-check';
-  } else if (e.loading) {
-    return 'fa-spinner';
-  }
-  return 'fa-times';
-};
 const sumLoading = obj =>
   Object.keys(obj).reduce((prev, curId) => prev + Number(!obj[curId].loaded), 0);
-
-const LoadingListElement = ({ element }) => (
-  <li><i className={`fa ${getIcon(element)}`} aria-hidden="true" />{element.name}</li>
-);
 
 const requestData = (id) => {
   const filter = JSON.stringify({ where: { courseId: id } });
@@ -84,6 +72,7 @@ class CourseSelection extends Component {
   state = {
     loading: false,
     course: false,
+    selected: null,
   }
 
   componentDidMount() {
@@ -107,40 +96,21 @@ class CourseSelection extends Component {
   }
 
   selectCourse(id) {
-    this.setState({ loading: true, course: Boolean(id) });
+    this.setState({ loading: true, course: Boolean(id), selected: id });
     this.props.loadData(requestData(id));
   }
-  courseButton(course) {
-    const key = `courseSelector_id${course.id}`;
-    return (
-      <button
-        disabled={this.state.loading}
-        key={key}
-        onClick={() => this.selectCourse(course.id)}
-      >{course.name}</button>
-    );
-  }
+
   render() {
     return (
       <div className='loadingPage'>
         <RotatingLogo className='logo' />
         <br />
-        {this.courseButton({ name: 'Загрузить данные', id: 0 })}
-        {Object.keys(this.props.availableCourses).map(
-          c => this.courseButton(this.props.availableCourses[c]))
-        }
-        <ul>
-          {Object.keys(this.props.timeline).map(t =>
-            (<LoadingListElement
-              key={`timeline_${t}`}
-              element={this.props.timeline[t]}
-            />))}
-          {Object.keys(this.props.data).map(t =>
-            (<LoadingListElement
-              key={`data_${t}`}
-              element={this.props.data[t]}
-            />))}
-        </ul>
+        <TilesScreen
+          courses={this.props.availableCourses}
+          loading={this.state.loading}
+          selected={this.state.selected}
+          selectCourse={id => this.selectCourse(id)}
+        />
       </div>
     );
   }
@@ -178,7 +148,7 @@ function mapStateToProps(state) {
       persons: getLoadedStatus('Информация о людях', state.data.persons),
       terrain: getLoadedStatus('Физическая карта мира', state.data.terrain),
     },
-    availableCourses: state.courses.list.byId,
+    availableCourses: state.courses.list.byId || {},
   };
 }
 function mapDispatchToProps(dispatch) {

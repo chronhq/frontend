@@ -33,7 +33,10 @@ CREATE TABLE course (
     "сreated" timestamp with time zone NOT NULL,
     edited timestamp with time zone NOT NULL,
     active boolean NOT NULL,
-    id integer NOT NULL
+    id integer NOT NULL,
+    url text NOT NULL UNIQUE,
+    ui integer NOT NULL,
+    img text NULL
 );
 
 
@@ -77,10 +80,11 @@ ALTER TABLE ONLY course ALTER COLUMN id SET DEFAULT nextval('course_id_seq'::reg
 -- Data for Name: course; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY course (name, description, "сreated", edited, active, id) FROM stdin;
-Testcourse	This is test course	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	1
-Yet another course	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 	2017-08-17 10:42:57.414+00	2017-08-17 10:42:57.414+00	f	2
-История российско-японских отношений	История российско-японских отношений	2017-08-17 10:42:57.418+00	2017-08-17 10:42:57.418+00	t	3
+COPY course (name, description, "сreated", edited, active, id, url, ui) FROM stdin;
+Интерактивная карта мира	Изменение политических границ и изобретения в Северной Америке с XVIII - XXIвв. (Дополняется)	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	0	world	0
+Testcourse	This is test course	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	1	testcourse	0
+Yet another course	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 	2017-08-17 10:42:57.414+00	2017-08-17 10:42:57.414+00	f	2	loremipsum	0
+История российско-японских отношений в XVII - XXвв.	Русские исследования Дальнего Востока и Сахалина. Завоевание японцами северных провинций и их отношения с айнами.	2017-08-17 10:42:57.418+00	2017-08-17 10:42:57.418+00	t	3	ainu	1
 \.
 
 
