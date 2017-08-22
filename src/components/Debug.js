@@ -20,13 +20,10 @@ class AlignToggler extends React.Component {
 
   handleChange = (event) => {
     this.setState({ value: event.target.value });
-    console.log(this.state.value);
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // this.props.cb(`${this.state.value}`);
-    // dispatch here
     this.props.changeUI({  alignPanel: this.state.value });
   }
 

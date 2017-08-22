@@ -1,7 +1,17 @@
 import React from 'react';
 import { OverlayTrigger, Button, Tooltip } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 // import 'ReturnUiButton.less';
 import Timeline from './Timeline';
+
+
+function changeUI(data) {
+  return {
+    type: 'CHANGE_UI',
+    data
+  };
+}
 
 const tooltip = text => (
   <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
@@ -14,7 +24,8 @@ class ReturnUiButton extends React.Component {
 
   handleToggle() {
     // console.log('');
-    this.props.cb(`right`);
+    // this.props.cb(`right`);
+    this.props.changeUI({  alignPanel: 'right' });
   }
 
   handleNext() {
@@ -45,23 +56,31 @@ class ReturnUiButton extends React.Component {
   }
 }
 
-class SomeButtons extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+// class SomeButtons extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
-    return (
-      <div>
-        <Button> ^ </Button>
-        <Button> </Button>
-      </div>
+//   render() {
+//     return (
+//       <div>
+//         <Button> ^ </Button>
+//         <Button> </Button>
+//       </div>
 
-    );
-  }
-  // methods
+//     );
+//   }
+//   // methods
+// }
+
+function mapStateToProps(state) {
+  return { facade: state.runtime.facade };
 }
 
-// const ReturnUiButton = () => (<div>Shit</div>)
+function mapDispatchToProps(dispatch) {
+  return {
+    changeUI: bindActionCreators(changeUI, dispatch)
+  };
+}
 
-export default ReturnUiButton;
+export default connect(mapStateToProps, mapDispatchToProps)(ReturnUiButton);

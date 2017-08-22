@@ -2,23 +2,26 @@ import React from 'react';
 
 import './Timeline.less';
 
-const dummy_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const DummyArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const Event = () =>  (
   <div>
-  <div className='timeline__content timeline__content--flipped'>
-  <h4 className='timeline__heading'> Flipped Heading </h4>
-  <p className='timeline__text'>
-    Lorem ipsum
-    Lorem Ipsum has been the industry's standard
-dummy text ever since the 1500s, when an unknown
-printer took a galley of type and scrambled it to
-  </p>
-  </div>
-  <div className='timeline__content'>
-  <h4 className='timeline__heading'> Year </h4>
-  {/* <p className='timeline__text'> Text</p> */}
-  </div>
+    <div className="timeline__heading">
+      <h4 className='event__name'> Какидзаки Ёсихиро получает имя Мацумаэ и лицензию сёгуна на торговлю с айнами </h4>
+      <h4 className='event__date'> 1604 </h4>
+    </div>
+    <div className="timeline__text">
+      <p>
+        В 1604 г. Токугава Иэясу, ставший годом ранее сёгуном, выдал Какидзаки Ёсихиро лицензию на монопольную торговлю с айнами. В отличие от других владетельных князей, он не получил от сёгуна земли (то есть остров Хоккайдо по-прежнему не входил в территорию Японии), но при этом стал прямым вассалом сёгуна и попросил о смене имени своего дома на Мацумаэ.
+      </p>
+      {/*
+      <ul>
+        <li>Rerum sit libero possimus amet excepturi</li>
+        <li>Exercitationem enim dolores sunt praesentium dolorum praesentium</li>
+        <li>Modi aut dolores dignissimos sequi sit ut aliquid molestias deserunt illo</li>
+      </ul>
+    */}
+    </div>
   </div>
 );
 
@@ -38,19 +41,20 @@ class Timeline extends React.Component {
 
   render() {
     return (
-      <div className='container'>
-      <ol className='timeline'>
-      {dummy_array.map(point =>
-        <li key={`key_${point}`} className={ this.state.isSelect ? 'timeline__entry timeline__selected' : 'timeline__entry' } onClick={e => this.selectEvent(e)}>
-          <span className="timeline__id" />
-          <Event someProp={point} />
-        </li>
+      <div className='timeline'>
+      {DummyArray.map(id =>
+        <div key={`key_${id}`} className={ this.state.isSelect ? 'timeline__entry timeline__entry--selected' : 'timeline__entry' } onClick={e => this.selectEvent(e)}>
+          <Event />
+        </div>
         )}
-      </ol>
       </div>
       );
   }
 }
+
+//         <li key={`key_${point}`} className={ this.state.isSelect ? 'timeline__entry timeline__selected' : 'timeline__entry' } onClick={e => this.selectEvent(e)}>
+
+
 // const Timeline = () => (<div>Timeline Div QUADR</div>);
 
 
@@ -63,7 +67,7 @@ class Timeline extends React.Component {
 //   five centuries, but also the leap into electronic
 //    typesetting, remaining essentially unchange
 
-        // <ul className='timeline'>
+        // <ul classNameName='timeline'>
         //   <li className='timeline__entry'>
         //     <span className="timeline__id">Date</span>
         //     <div className='timeline__content'>
