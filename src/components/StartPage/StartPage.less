@@ -1,0 +1,105 @@
+#app {
+  min-height: 100%;
+  position: relative;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  // color: @base00;
+  // font-family: commonText, sans-serif;
+}
+
+.starpage__title {
+  // width: 60%;
+  margin: 0 auto;
+  color:white;
+  text-align: center;
+  margin-bottom: 1em;
+
+}
+
+.startpage__container {
+  margin: 0 0;
+  padding: 0 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("./back-progressive.jpg");
+  width:100vw;
+  height:100vh;
+  background-color: gray;
+  width: 100%;
+  padding-bottom: 130px;
+  padding-top: 50px;
+  line-height: 33px;
+  text-align: center;
+}
+
+.tile__container {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  display:flex;
+  // flex-wrap:wrap;
+  flex-wrap:nowrap;
+  flex-direction:row;
+  justify-content:flex-start;
+  // align-items:stretch;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  min-width: 30%;
+  @media screen and (max-width: 40em) {
+    flex-direction:column;
+    justify-content:flex-start;
+  }
+}
+
+.startpage__tile {
+  border: 1px solid gray; //remvoe
+  // display: inline-block;
+  text-align: center;
+  // width: px;
+  // min-width: 150px;
+  min-height: 60vh;
+  flex-basis: 200px;
+  // padding: 0 auto;
+  margin: 0 1em;
+   -webkit-transition: .4s ease-out 0.4s;
+  -moz-filter: grayscale(1) 0.4s;
+  -moz-transition: .4s ease-out 0.4s;
+  -o-filter: grayscale(1) 0.4s;
+  -o-transition: .4s ease-in-out 0.4s;
+  background-color: rgba(255,255,255,0.4);
+  // background: transparent;
+
+  &:hover {
+    background: rgba(255,255,255,0.5);
+    // -webkit-filter: grayscale(1);
+    border:  1px solid #d0d0d0;
+
+  }
+
+  @media screen and (max-width: 40em) {
+    min-height: 20vh;
+    margin-bottom: 20px;
+    // height: 200px;
+    min-width: 80vw;
+  }
+
+}
+
+.tile__icon {
+  font-size: 70px;
+  color: white;
+  @media screen and (max-width: 40em) {
+    font-size: 50px;
+  }
+}
+
+.tile__description {
+  font-size: 1em;
+  padding: 3px 3px;
+  line-height: 1.1em;
+  text-align: left;
+}
