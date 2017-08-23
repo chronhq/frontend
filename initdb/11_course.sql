@@ -29,6 +29,7 @@ SET default_with_oids = false;
 
 CREATE TABLE course (
     name text NOT NULL,
+		author text NOT NULL,
     description text NOT NULL,
     "сreated" timestamp with time zone NOT NULL,
     edited timestamp with time zone NOT NULL,
@@ -80,11 +81,11 @@ ALTER TABLE ONLY course ALTER COLUMN id SET DEFAULT nextval('course_id_seq'::reg
 -- Data for Name: course; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY course (name, description, "сreated", edited, active, id, url, ui) FROM stdin;
-Интерактивная карта мира	Изменение политических границ и изобретения в Северной Америке с XVIII - XXIвв. (Дополняется)	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	0	world	0
-Testcourse	This is test course	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	1	testcourse	0
-Yet another course	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 	2017-08-17 10:42:57.414+00	2017-08-17 10:42:57.414+00	f	2	loremipsum	0
-История российско-японских отношений в XVII - XXвв.	Русские исследования Дальнего Востока и Сахалина. Завоевание японцами северных провинций и их отношения с айнами.	2017-08-17 10:42:57.418+00	2017-08-17 10:42:57.418+00	t	3	ainu	1
+COPY course (name, author, description, "сreated", edited, active, id, url, ui) FROM stdin;
+Интерактивная карта мира	Хронист	Изменение политических границ и изобретения в Северной Америке с XVIII - XXIвв. (Дополняется)	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	0	world	0
+Testcourse	Хронист	This is test course	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	1	testcourse	0
+Yet another course	Хронист	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 	2017-08-17 10:42:57.414+00	2017-08-17 10:42:57.414+00	f	2	loremipsum	0
+История российско-японских отношений в XVII - XXвв.	Щепкин В.В.	Русские исследования Дальнего Востока и Сахалина. Завоевание японцами северных провинций и их отношения с айнами.	2017-08-17 10:42:57.418+00	2017-08-17 10:42:57.418+00	t	3	ainu	1
 \.
 
 
