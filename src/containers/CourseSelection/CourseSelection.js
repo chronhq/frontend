@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 
-import RotatingLogo from './RotatingLogo';
 import { loadData, markItReady } from '../../reducers/actions';
 
 import TilesScreen from './TilesScreen';
@@ -103,8 +102,6 @@ class CourseSelection extends Component {
   render() {
     return (
       <div className='loadingPage'>
-        <RotatingLogo className='logo' />
-        <br />
         <TilesScreen
           courses={this.props.availableCourses}
           loading={this.state.loading}
