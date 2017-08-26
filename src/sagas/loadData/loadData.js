@@ -34,7 +34,19 @@ function fetchResponse(url) {
 
 function* defaultGenCb(res, resource, req) {
   const payload = yield call(defaultCb, res, req.key);
-  console.log('payload', resource, payload);
+  // console.log('payload', resource, payload);
+  yield put({ type: `${resource}_FULFILLED`, payload });
+}
+
+function* arrayGenCb(res = [], resource, req) {
+  // req: { key: 'byId', id: 'id' }
+  const keyData = res.reduce(
+    (prev, row) => {
+      const arr = prev[row[req.id]] ? prev[row[req.id]] : [];
+      return { ...prev, [row[req.id]]: [...arr, row] };
+    }, {}
+  );
+  const payload = { [req.key]: keyData };
   yield put({ type: `${resource}_FULFILLED`, payload });
 }
 
@@ -51,8 +63,8 @@ const resourceToCb = {
   BORDERS_TIMELINE: getBordersTimeline,
   COURSES: defaultGenCb,
   COURSE_TIMELINES: defaultGenCb,
-  COURSE_EVENTS: defaultGenCb,
-  COURSE_TRACES: defaultGenCb,
+  COURSE_EVENTS: arrayGenCb,
+  COURSE_TRACES: arrayGenCb,
 };
 
 

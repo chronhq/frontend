@@ -51,8 +51,10 @@ const requestData = (id) => {
       req: { filter, key: 'tick' },
     }, {
       resource: 'COURSE_EVENTS',
+      req: { id: 'courseTimelineId', key: 'tick' }
     }, {
       resource: 'COURSE_TRACES',
+      req: { id: 'courseTimelineId', key: 'tick' }
     },
   ];
   return id !== 0
