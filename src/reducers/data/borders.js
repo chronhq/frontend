@@ -2,7 +2,7 @@ const bordersDefaultState = {
   loaded: false,
   loading: false,
   REDUCER_NAME: 'BORDERS',
-  byYear: {},
+  byId: {},
   projected: {}
 };
 
