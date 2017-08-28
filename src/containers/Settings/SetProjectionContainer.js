@@ -19,13 +19,13 @@ class SetProjectionContainer extends Component {
       yawn: this.props.rotate[0],
       pitch: this.props.rotate[1],
       roll: this.props.rotate[2],
-      centerLat: this.props.center[0],
-      centerLon: this.props.center[1],
-      topLeftLat: this.props.clip[0][1],
-      topLeftLon: this.props.clip[0][0],
-      bottomRightLat: this.props.clip[1][1],
-      bottomRightLon: this.props.clip[1][0],
-      clipIsEnabled: this.props.clip === defaultClip,
+      centerLon: this.props.center[0],
+      centerLat: this.props.center[1],
+      clipLeft: this.props.clip[0][0],
+      clipTop: this.props.clip[0][1],
+      clipRight: this.props.clip[1][0],
+      clipBottom: this.props.clip[1][1],
+      clipEnabled: this.props.clip === defaultClip,
     };
   }
   handleChange = (data) => {
@@ -38,9 +38,9 @@ class SetProjectionContainer extends Component {
     e.preventDefault();
     console.log(e);
     const rotate = [this.state.yawn, this.state.pitch, this.state.roll];
-    const clip = this.state.clipIsEnabled
-      ? [[this.state.topLeftLon, this.state.topLeftLat],
-        [this.state.bottomRightLat, this.state.bottomRightLat]]
+    const clip = this.state.clipEnabled
+      ? [[this.state.clipLeft, this.state.clipTop],
+        [this.state.clipRight, this.state.clipBottom]]
       : defaultClip;
     const center = [this.state.centerLon, this.state.centerLat];
     this.props.setProjectionAction({
@@ -50,39 +50,11 @@ class SetProjectionContainer extends Component {
       name: this.state.name
     });
   }
-  drawPointInput = name => (
-    <div>
-      {' lon'}<InputNumber name={`${name}Lon`} value={this.state[`${name}Lon`]} cb={this.handleChange} />
-      {' lat'}<InputNumber name={`${name}Lat`} value={this.state[`${name}Lat`]} cb={this.handleChange} />
-    </div>
-  )
 
   render() {
     return (
       <div className='changeProjBtn'>
         <form onSubmit={this.handleSubmit} className='test'>
-          <div className='yprControl'>
-            {' Y'}<InputNumber name='yawn' value={this.state.yawn} cb={this.handleChange} />
-            {' P'}<InputNumber name='pitch' value={this.state.pitch} cb={this.handleChange} />
-            {' R'}<InputNumber name='roll' value={this.state.roll} cb={this.handleChange} />
-          </div>
-          <p>Установить центр</p>
-          {this.drawPointInput('center')}
-          <InputCheckBox
-            name='clipIsEnabled'
-            label="Обрезать контур карты"
-            checked={this.state.clipIsEnabled}
-            cb={this.handleChange}
-          />
-          {this.state.clipIsEnabled ?
-            <div>
-              <p>Установить левую верхнюю точку</p>
-              {this.drawPointInput('topLeft')}
-              <p>Установить правую нижнюю точку</p>
-              {this.drawPointInput('bottomRight')}
-            </div>
-            : ''
-          }
           <div className='form-group'>
             <Select
               name='Select Projection'
@@ -91,6 +63,36 @@ class SetProjectionContainer extends Component {
               onChange={this.handleSelect}
             />
           </div>
+          <div className='yprControl'>
+            <p>Выполнить поворот</p>
+            {' Y'}<InputNumber name='yawn' value={this.state.yawn} cb={this.handleChange} />
+            {' P'}<InputNumber name='pitch' value={this.state.pitch} cb={this.handleChange} />
+            {' R'}<InputNumber name='roll' value={this.state.roll} cb={this.handleChange} />
+          </div>
+          <div>
+            <p>Установить центр</p>
+            {' Долгота '}<InputNumber name='centerLon' value={this.state.centerLon} cb={this.handleChange} />
+            {' Широта '}<InputNumber name='centerLat' value={this.state.centerLat} cb={this.handleChange} />
+          </div>
+          <br />
+          <InputCheckBox
+            name='clipIsEnabled'
+            label="Обрезать контур карты"
+            checked={this.state.clipIsEnabled}
+            cb={this.handleChange}
+          />
+          {this.state.clipIsEnabled ?
+            <div>
+              <p>Установить значение граничных точек в градусах</p>
+              {'   Левая '}<InputNumber name='clipLeft' value={this.state.clipLeft} cb={this.handleChange} />
+              {' Верхняя '}<InputNumber name='clipTop' value={this.state.clipTop} cb={this.handleChange} />
+              <br />
+              {' Правая '}<InputNumber name='clipRight' value={this.state.clipRight} cb={this.handleChange} />
+              {' Нижняя '}<InputNumber name='clipBottom' value={this.state.clipBottom} cb={this.handleChange} />
+            </div>
+            : ''
+          }
+          <br />
           <button type='submit' className='btn btn-default'>
             Установить {this.state.value}
           </button>
