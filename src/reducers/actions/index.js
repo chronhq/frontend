@@ -20,10 +20,12 @@ export function changeGrouping(auto, enabled, zoomPoint) {
   };
 }
 
-export function setProjection(rotate, name) {
+export function setProjection({ rotate, name, clip, center }) {
   return {
     type: 'CHANGE_PROJECTION_SAGA',
     name,
+    clip,
+    center,
     rotate
   };
 }

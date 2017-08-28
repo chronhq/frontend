@@ -32,17 +32,26 @@ const defaultState = {
   path: defaultPathFn,
   options: projectionOptions,
   byName: projectionByName,
-  rotate: [0, 0, 0]
+  center: [0, 0],
+  clip: null,
+  rotate: [0, 0, 0],
 };
 
 const projection = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_PROJECTION': {
       const rotate = 'rotate' in action ? action.rotate : state.rotate;
-      const project = state.byName[action.name].rotate(rotate);
+      const center = 'center' in action ? action.center : state.center;
+      const clip = 'clip' in action ? action.clip : state.clip;
+      const projectBase = state.byName[action.name].center(center).rotate(rotate);
+      const project = clip === null
+        ? projectBase
+        : projectBase.clipExtent([projectBase(clip[0]), projectBase(clip[1])]);
       return {
         ...state,
         rotate,
+        center,
+        clip,
         name: action.name,
         project,
         path: getGeoPath(project)

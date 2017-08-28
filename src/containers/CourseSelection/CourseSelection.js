@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 
-import { loadData, markItReady } from '../../reducers/actions';
+import { loadData, markItReady, setProjection } from '../../reducers/actions';
 
 import TilesScreen from './TilesScreen';
 
@@ -98,6 +98,7 @@ class CourseSelection extends Component {
 
   selectCourse(id) {
     this.setState({ loading: true, course: Boolean(id), selected: id });
+    this.props.setProjection(this.props.availableCourses[id].projection);
     this.props.loadData(requestData(id));
   }
 
@@ -154,6 +155,7 @@ function mapDispatchToProps(dispatch) {
   return {
     loadData: bindActionCreators(loadData, dispatch),
     markItReady: bindActionCreators(markItReady, dispatch),
+    setProjection: bindActionCreators(setProjection, dispatch),
     setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
   };
 }
