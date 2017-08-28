@@ -6,16 +6,14 @@ import Select from 'react-select';
 
 import { InputNumber, InputCheckBox } from '../../components/Input';
 import { setProjection } from '../../reducers/actions';
+import { defaultClip } from '../../reducers/runtime/projection';
 
 import './SetProjectionContainer.less'; // Styles for Select
 
 class SetProjectionContainer extends Component {
   constructor(props) {
     super(props);
-    const clip = this.props.clip !== null
-      ? this.props.clip
-      : [[0, 0], [0, 0]];
-    const clipIsEnabled = Boolean(this.props.clip);
+
     this.state = {
       name: this.props.name,
       yawn: this.props.rotate[0],
@@ -23,11 +21,11 @@ class SetProjectionContainer extends Component {
       roll: this.props.rotate[2],
       centerLat: this.props.center[0],
       centerLon: this.props.center[1],
-      topLeftLat: clip[0][0],
-      topLeftLon: clip[0][1],
-      bottomRightLat: clip[1][0],
-      bottomRightLon: clip[1][1],
-      clipIsEnabled,
+      topLeftLat: this.props.clip[0][1],
+      topLeftLon: this.props.clip[0][0],
+      bottomRightLat: this.props.clip[1][1],
+      bottomRightLon: this.props.clip[1][0],
+      clipIsEnabled: this.props.clip === defaultClip,
     };
   }
   handleChange = (data) => {
@@ -41,10 +39,10 @@ class SetProjectionContainer extends Component {
     console.log(e);
     const rotate = [this.state.yawn, this.state.pitch, this.state.roll];
     const clip = this.state.clipIsEnabled
-      ? [[this.state.topLeftLat, this.state.topLeftLon],
-        [this.state.bottomRightLat, this.state.bottomRightLon]]
-      : null;
-    const center = [this.state.centerLat, this.state.centerLon];
+      ? [[this.state.topLeftLon, this.state.topLeftLat],
+        [this.state.bottomRightLat, this.state.bottomRightLat]]
+      : defaultClip;
+    const center = [this.state.centerLon, this.state.centerLat];
     this.props.setProjectionAction({
       rotate,
       center,
@@ -54,8 +52,8 @@ class SetProjectionContainer extends Component {
   }
   drawPointInput = name => (
     <div>
-      {' lat'}<InputNumber name={`${name}Lat`} value={this.state[`${name}Lat`]} cb={this.handleChange} />
       {' lon'}<InputNumber name={`${name}Lon`} value={this.state[`${name}Lon`]} cb={this.handleChange} />
+      {' lat'}<InputNumber name={`${name}Lat`} value={this.state[`${name}Lat`]} cb={this.handleChange} />
     </div>
   )
 

@@ -33,10 +33,13 @@ const checkCenter = (cur, prev) => (
 );
 const sameProjection = (cur, prev) => (
   cur.name === prev.name
-  && checkRotation(cur, prev) 
+  && checkRotation(cur, prev)
   && checkClip(cur, prev)
   && checkCenter(cur, prev)
 );
+
+export const thisPointInTheBox = (x, y, topLeft, bottomRight) =>
+  (!(x < topLeft[0] || x > bottomRight[0] || y < bottomRight[1] || y > topLeft[1]));
 
 function* changeProjection(action) {
   console.time('Change_Projection Saga');
@@ -78,8 +81,15 @@ function* changeProjection(action) {
     console.time(`pointProjection ${type}`);
     const json = yield select(selector);
     const projected = Object.keys(json).reduce((prev, cur) => {
-      const [x, y] = projection([json[cur].x, json[cur].y]);
-      return { ...prev, [cur]: { id: cur, x, y } };
+      if (thisPointInTheBox(
+        json[cur].x,
+        json[cur].y,
+        action.clip[0],
+        action.clip[1])) {
+        const [x, y] = projection([json[cur].x, json[cur].y]);
+        return { ...prev, [cur]: { id: cur, x, y } };
+      }
+      return prev;
     }, {});
     console.timeEnd(`pointProjection ${type}`);
     yield put({ type, projected });

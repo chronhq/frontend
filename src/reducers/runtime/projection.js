@@ -2,6 +2,9 @@ import * as d3 from 'd3';
 
 export const getGeoPath = project => d3.geoPath().projection(project);
 
+// Default Clip values [[Left, Top], [Right, Bottom]]
+export const defaultClip = [[-180, 90], [180, -90]];
+
 export const defaultProjectionName = 'Equirectangular';
 export const projectionByName = {
   Mercator: d3.geoMercator(),
@@ -33,7 +36,7 @@ const defaultState = {
   options: projectionOptions,
   byName: projectionByName,
   center: [0, 0],
-  clip: null,
+  clip: defaultClip,
   rotate: [0, 0, 0],
 };
 

@@ -6,7 +6,7 @@ function* locations(res, resource, req) {
   const data = defaultCb(res, req.key);
   const projection = yield select(projectionSelector);
   const project = projection.project;
-  const projected = projectLocations(res, project);
+  const projected = projectLocations(res, project, projection.clip);
   yield put({ type: 'LOCATIONS_FULFILLED', payload: { ...data, projected } });
 
   const places = data.places;
