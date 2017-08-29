@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import { Flag } from 'flag';
 
 import { InputNumber, InputCheckBox } from '../../components/Input';
 import { setProjection } from '../../reducers/actions';
@@ -50,6 +51,30 @@ class SetProjectionContainer extends Component {
       name: this.state.name
     });
   }
+  devProjectionSettings() {
+    return (
+      <div>
+        <InputCheckBox
+          name='clipIsEnabled'
+          label="Обрезать контур карты"
+          checked={this.state.clipIsEnabled}
+          cb={this.handleChange}
+        />
+        {this.state.clipIsEnabled ?
+          <div>
+            <p>Установить значение граничных точек в градусах</p>
+            {'   Левая '}<InputNumber name='clipLeft' value={this.state.clipLeft} cb={this.handleChange} />
+            {' Верхняя '}<InputNumber name='clipTop' value={this.state.clipTop} cb={this.handleChange} />
+            <br />
+            {' Правая '}<InputNumber name='clipRight' value={this.state.clipRight} cb={this.handleChange} />
+            {' Нижняя '}<InputNumber name='clipBottom' value={this.state.clipBottom} cb={this.handleChange} />
+          </div>
+          : ''
+        }
+        <br />
+      </div>
+    );
+  }
 
   render() {
     return (
@@ -75,24 +100,10 @@ class SetProjectionContainer extends Component {
             {' Широта '}<InputNumber name='centerLat' value={this.state.centerLat} cb={this.handleChange} />
           </div>
           <br />
-          <InputCheckBox
-            name='clipIsEnabled'
-            label="Обрезать контур карты"
-            checked={this.state.clipIsEnabled}
-            cb={this.handleChange}
+          <Flag
+            name="UI.devProjection"
+            render={() => this.devProjectionSettings()}
           />
-          {this.state.clipIsEnabled ?
-            <div>
-              <p>Установить значение граничных точек в градусах</p>
-              {'   Левая '}<InputNumber name='clipLeft' value={this.state.clipLeft} cb={this.handleChange} />
-              {' Верхняя '}<InputNumber name='clipTop' value={this.state.clipTop} cb={this.handleChange} />
-              <br />
-              {' Правая '}<InputNumber name='clipRight' value={this.state.clipRight} cb={this.handleChange} />
-              {' Нижняя '}<InputNumber name='clipBottom' value={this.state.clipBottom} cb={this.handleChange} />
-            </div>
-            : ''
-          }
-          <br />
           <button type='submit' className='btn btn-default'>
             Установить {this.state.value}
           </button>
@@ -119,7 +130,7 @@ SetProjectionContainer.propTypes = {
   name: PropTypes.string.isRequired,
   rotate: PropTypes.array.isRequired,
   center: PropTypes.array.isRequired,
-  clip: PropTypes.array,
+  clip: PropTypes.array.isRequired,
   options: PropTypes.array.isRequired,
   setProjectionAction: PropTypes.func.isRequired,
 };

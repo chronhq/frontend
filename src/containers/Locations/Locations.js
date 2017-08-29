@@ -111,7 +111,7 @@ class Locations extends Component {
           y: this.props.projected[id].y,
           name: this.props.places[id].nameRus,
           scaleRank: this.props.places[id].scalerank
-        }
+        };
       }
       return { id, x: 0, y: 0, name: '', scaleRank: 0 };
     };
