@@ -14,7 +14,6 @@ import './SetProjectionContainer.less'; // Styles for Select
 class SetProjectionContainer extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: this.props.name,
       yawn: this.props.rotate[0],
@@ -26,7 +25,7 @@ class SetProjectionContainer extends Component {
       clipTop: this.props.clip[0][1],
       clipRight: this.props.clip[1][0],
       clipBottom: this.props.clip[1][1],
-      clipEnabled: this.props.clip === defaultClip,
+      clipEnabled: (JSON.stringify(this.props.clip) !== JSON.stringify(defaultClip)),
     };
   }
   handleChange = (data) => {
@@ -55,12 +54,12 @@ class SetProjectionContainer extends Component {
     return (
       <div>
         <InputCheckBox
-          name='clipIsEnabled'
+          name='clipEnabled'
           label="Обрезать контур карты"
-          checked={this.state.clipIsEnabled}
+          checked={this.state.clipEnabled}
           cb={this.handleChange}
         />
-        {this.state.clipIsEnabled ?
+        {this.state.clipEnabled ?
           <div>
             <p>Установить значение граничных точек в градусах</p>
             {'   Левая '}<InputNumber name='clipLeft' value={this.state.clipLeft} cb={this.handleChange} />
