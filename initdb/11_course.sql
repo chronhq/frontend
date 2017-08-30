@@ -86,7 +86,7 @@ COPY course (name, author, description, "сreated", edited, active, id, url, ui,
 Интерактивная карта мира	Хронист	Изменение политических границ и изобретения в Северной Америке с XVIII - XXIвв. (Дополняется)	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	0	world	0	{"clip": [[-180, 90], [180, -90]], "rotate":  [0, 0, 0], "center": [0, 0], "name": "Equirectangular"}
 Testcourse	Хронист	This is test course	2017-08-16 09:59:08.23+00	2017-08-16 09:59:08.23+00	t	1	testcourse	0	{"clip": [[-180, 90], [180, -90]], "rotate":  [0, 0, 0], "center": [0, 0], "name": "Equirectangular"}
 Yet another course	Хронист	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 	2017-08-17 10:42:57.414+00	2017-08-17 10:42:57.414+00	f	2	loremipsum	0	{"clip": [[-180, 90], [180, -90]], "rotate":  [0, 0, 0], "center": [0, 0], "name": "Equirectangular"}
-История российско-японских отношений в XVII - XXвв.	Щепкин В.В.	Русские исследования Дальнего Востока и Сахалина. Завоевание японцами северных провинций и их отношения с айнами.	2017-08-17 10:42:57.418+00	2017-08-17 10:42:57.418+00	t	3	ainu	1	{"clip": [[113, 67], [163, 27]], "rotate":  [-15, -1, 0], "center": [143, 47], "name": "Mercator"}
+История российско-японских отношений в XVII - XXвв.	Щепкин В.В.	Русские исследования Дальнего Востока и Сахалина. Завоевание японцами северных провинций и их отношения с айнами.	2017-08-17 10:42:57.418+00	2017-08-17 10:42:57.418+00	t	3	ainu	1	{"clip": [[110, 65], [170, 35]], "rotate":  [-15, -1, 3], "center": [143, 47], "name": "Mercator"}
 \.
 
 
