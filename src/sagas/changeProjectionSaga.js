@@ -18,15 +18,34 @@ export const hasPoints = [
   ['LOCATIONS_PROJECTED', state => state.data.locations.places],
   ['EVENTS_GEO_PROJECTED', state => state.data.geoEvents.byId],
 ];
+const checkRotation = (cur, prev) => (
+  cur.rotate[0] === prev.rotate[0]
+  && cur.rotate[1] === prev.rotate[1]
+  && cur.rotate[2] === prev.rotate[2]
+);
+
+const checkClip = (cur, prev) => (
+  cur.clip[0] === prev.clip[0] && cur.clip[1] === prev.clip[1]
+);
+
+const checkCenter = (cur, prev) => (
+  cur.center === prev.center
+);
+const sameProjection = (cur, prev) => (
+  cur.name === prev.name
+  && checkRotation(cur, prev)
+  && checkClip(cur, prev)
+  && checkCenter(cur, prev)
+);
+
+export const thisPointInTheBox = (x, y, topLeft, bottomRight) =>
+  (!(x < topLeft[0] || x > bottomRight[0] || y < bottomRight[1] || y > topLeft[1]));
 
 function* changeProjection(action) {
   console.time('Change_Projection Saga');
   // Validate if there is a need to project a data
   const prevProjection = yield select(getProjectionConfig);
-  if (action.name === prevProjection.name
-  && action.rotate[0] === prevProjection.rotate[0]
-  && action.rotate[1] === prevProjection.rotate[1]
-  && action.rotate[2] === prevProjection.rotate[2]) {
+  if (sameProjection(action, prevProjection)) {
     console.timeEnd('Change_Projection Saga');
     return false;
   }
@@ -44,11 +63,15 @@ function* changeProjection(action) {
     const jsonCb = type === 'TERRAIN_PROJECTED'
       ? cur => path(json[cur].contour)
       : cur => path(json[cur]);
-
-    const projected = Object.keys(json).reduce(
-      (prev, cur) => ({ ...prev, [cur]: jsonCb(cur) }), {});
-    console.timeEnd(`pathProjection ${type}`);
-    yield put({ type, projected });
+    try {
+      const projected = Object.keys(json).reduce(
+        (prev, cur) => ({ ...prev, [cur]: jsonCb(cur) }), {});
+      console.timeEnd(`pathProjection ${type}`);
+      yield put({ type, projected });
+    } catch (err) {
+      console.error('Error occurred in projecting', type);
+      yield put({ type, projected: {}, error: err });
+    }
   }
 
   const projection = yield select(getProjection);
@@ -58,8 +81,15 @@ function* changeProjection(action) {
     console.time(`pointProjection ${type}`);
     const json = yield select(selector);
     const projected = Object.keys(json).reduce((prev, cur) => {
-      const [x, y] = projection([json[cur].x, json[cur].y]);
-      return { ...prev, [cur]: { id: cur, x, y } };
+      if (thisPointInTheBox(
+        json[cur].x,
+        json[cur].y,
+        action.clip[0],
+        action.clip[1])) {
+        const [x, y] = projection([json[cur].x, json[cur].y]);
+        return { ...prev, [cur]: { id: cur, x, y } };
+      }
+      return prev;
     }, {});
     console.timeEnd(`pointProjection ${type}`);
     yield put({ type, projected });

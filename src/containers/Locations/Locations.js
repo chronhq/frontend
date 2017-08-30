@@ -103,13 +103,18 @@ class Locations extends Component {
     return current.map(() => false);
   };
 
-    getLocation = id => ({
-      id,
-      x: this.props.projected[id].x,
-      y: this.props.projected[id].y,
-      name: this.props.places[id].nameRus,
-      scaleRank: this.props.places[id].scalerank
-    });
+    getLocation = (id) => {
+      if (id in this.props.projected) {
+        return {
+          id,
+          x: this.props.projected[id].x,
+          y: this.props.projected[id].y,
+          name: this.props.places[id].nameRus,
+          scaleRank: this.props.places[id].scalerank
+        };
+      }
+      return { id, x: 0, y: 0, name: '', scaleRank: 0 };
+    };
 
     sortPlacesByScaleRank = (nextProps) => {
       // Prepare current cities list
@@ -133,11 +138,12 @@ class Locations extends Component {
     }
 
     checkSize = id => this.props.places[id].scalerank < this.props.visibility.scale;
+    checkBoundaries = id => this.props.projected[id];
     render() {
       return (
         <g key='locations'>
           {this.state.current.map((city, id) => (
-            this.checkSize(city)
+            (this.checkSize(city) && this.checkBoundaries(city))
               ? <DrawLocationDot
                 scale={this.props.scale}
                 key={`pin_list_${city}`}

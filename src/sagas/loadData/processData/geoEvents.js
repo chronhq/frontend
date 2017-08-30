@@ -7,7 +7,7 @@ function* geoEvents(res, resource, req) {
   const data = defaultCb(res, req.key);
   const projection = yield select(projectionSelector);
   const project = projection.project;
-  const projected = projectLocations(res, project);
+  const projected = projectLocations(res, project, projection.clip);
   yield put({ type: 'EVENTS_GEO_FULFILLED', payload: { ...data, projected } });
 
   const byYear = Object.keys(data.byId).reduce((prev, curId) => {

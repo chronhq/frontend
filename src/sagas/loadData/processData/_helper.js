@@ -1,3 +1,5 @@
+import { thisPointInTheBox } from '../../changeProjectionSaga';
+
 const resourceToURL = {
   EVENTS_GEO: 'geoEvents',
   PROPERTIES_ADMIN: 'admins',
@@ -22,10 +24,13 @@ export const defaultCb = (data = [], key = 'byId') => {
   return { [key]: keyData };
 };
 
-export const projectLocations = (data, project) => {
+export const projectLocations = (data, project, clip) => {
   const projected = data.reduce((prev, cur) => {
-    const [x, y] = project([cur.x, cur.y]);
-    return { ...prev, [cur.id]: { id: cur.id, x, y } };
+    if (thisPointInTheBox(cur.x, cur.y, clip[0], clip[1])) {
+      const [x, y] = project([cur.x, cur.y]);
+      return { ...prev, [cur.id]: { id: cur.id, x, y } };
+    }
+    return prev;
   }, {});
   return projected;
 };

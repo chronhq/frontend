@@ -1,6 +1,9 @@
-import * as d3 from 'd3';
+import * as d3 from 'd3-geo';
 
 export const getGeoPath = project => d3.geoPath().projection(project);
+
+// Default Clip values [[Left, Top], [Right, Bottom]]
+export const defaultClip = [[-180, 90], [180, -90]];
 
 export const defaultProjectionName = 'Equirectangular';
 export const projectionByName = {
@@ -32,17 +35,26 @@ const defaultState = {
   path: defaultPathFn,
   options: projectionOptions,
   byName: projectionByName,
-  rotate: [0, 0, 0]
+  center: [0, 0],
+  clip: defaultClip,
+  rotate: [0, 0, 0],
 };
 
 const projection = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_PROJECTION': {
       const rotate = 'rotate' in action ? action.rotate : state.rotate;
-      const project = state.byName[action.name].rotate(rotate);
+      const center = 'center' in action ? action.center : state.center;
+      const clip = 'clip' in action ? action.clip : state.clip;
+      const projectBase = state.byName[action.name].center(center).rotate(rotate);
+      const project = clip === null
+        ? projectBase
+        : projectBase.clipExtent([projectBase(clip[0]), projectBase(clip[1])]);
       return {
         ...state,
         rotate,
+        center,
+        clip,
         name: action.name,
         project,
         path: getGeoPath(project)

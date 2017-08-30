@@ -2,7 +2,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as d3 from 'd3';
+
+import { select, mouse } from 'd3-selection';
+import { axisBottom } from 'd3-axis';
+import { scaleLinear } from 'd3-scale';
+
 import { setYear } from '../reducers/actions';
 import './TimePanel.less';
 import ControlButtons from '../components/ControlButtons';
@@ -24,10 +28,10 @@ class TimePanel extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', () => this.resize());
 
-    const svg = d3.select(this.svgTime);
+    const svg = select(this.svgTime);
     svg.on('click', () => {
       const rectId = this.svgTime.childNodes[0];
-      const mouseX = d3.mouse(rectId)[0];
+      const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.state.width) {
         this.setState({ now: Math.round(this.scale.invert(mouseX)) });
         this.updateClockPosition();
@@ -35,8 +39,8 @@ class TimePanel extends React.Component {
       }
     }).on('mousedown', () => {
       this.setState({ isDown: true });
-      // d3.selectAll('.arrow').classed('active', true);
-      d3.select('.triangle').attr('fill', '#2f2f2f');
+      // selectAll('.arrow').classed('active', true);
+      select('.triangle').attr('fill', '#2f2f2f');
       this.followMouse();
     });
     // Draw axis
@@ -54,24 +58,25 @@ class TimePanel extends React.Component {
   }
 
   get scale() {
-    return d3
-      .scaleLinear()
+    return scaleLinear()
       .domain([this.state.min, this.state.max])
       .range([0, this.state.width]);
   }
 
+  /* eslint-disable class-methods-use-this */
   get width() {
     return window.innerWidth < 768
       ? window.innerWidth - 100
       : window.innerWidth - 300;
   }
+  /* eslint-enable */
 
   followMouse() {
-    d3.select('.svgTime')
+    select('.svgTime')
       .on('mousemove', () => {
         if (this.state.isDown) {
           const rectId = this.svgTime.childNodes[1];
-          const mouseX = d3.mouse(rectId)[0];
+          const mouseX = mouse(rectId)[0];
           if (mouseX >= 0 && mouseX <= this.state.width) {
             const now = Math.round(this.scale.invert(mouseX));
             this.setState({ now });
@@ -83,8 +88,8 @@ class TimePanel extends React.Component {
       })
       .on('mouseup', () => {
         this.setState({ isDown: false });
-        // d3.selectAll('.arrow').classed('active', false);
-        // d3.selectAll('.arrow').attr('fill', '');
+        // selectAll('.arrow').classed('active', false);
+        // selectAll('.arrow').attr('fill', '');
         // this.props.setYearAction(Number(this.state.now));
       });
   }
@@ -97,8 +102,8 @@ class TimePanel extends React.Component {
   resize() {
     const width = this.width;
     this.setState({ width });
-    const svgAxis = d3.select(this.svgAxis);
-    svgAxis.call(d3.axisBottom(this.scale).ticks(parseInt(width / 45, 10), 'f'));
+    const svgAxis = select(this.svgAxis);
+    svgAxis.call(axisBottom(this.scale).ticks(parseInt(width / 45, 10), 'f'));
     this.updateClockPosition();
   }
 
