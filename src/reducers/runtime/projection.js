@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import * as d3 from 'd3-geo';
 
 export const getGeoPath = project => d3.geoPath().projection(project);
 

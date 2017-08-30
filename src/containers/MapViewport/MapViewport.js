@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as d3 from 'd3';
+
+import { zoom, zoomIdentity } from 'd3-zoom';
+import { select, event } from 'd3-selection';
+
 import Locations from '../Locations';
 import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
@@ -59,9 +62,9 @@ class Map extends Component {
     window.addEventListener('resize', () => this.resize());
     this.resize();
     if (!this.state.zoomInitSuccess) {
-      const svg = d3.select(this.svgMap);
+      const svg = select(this.svgMap);
       svg.call(this.zoom);
-      svg.call(this.zoom.transform, d3.zoomIdentity.scale(this.state.defaultZoom()));
+      svg.call(this.zoom.transform, zoomIdentity.scale(this.state.defaultZoom()));
       /* eslint-disable react/no-did-mount-set-state */
       this.setState({
         zoomInitSuccess: true,
@@ -90,11 +93,11 @@ class Map extends Component {
 
   onZoom = () => {
     if (this.state.transform !== null
-    && Math.round(this.state.transform.k) !== Math.round(d3.event.transform.k)) {
-      this.props.changeScale(Math.round(d3.event.transform.k), false);
+    && Math.round(this.state.transform.k) !== Math.round(event.transform.k)) {
+      this.props.changeScale(Math.round(event.transform.k), false);
     }
     this.setState({
-      transform: d3.event.transform
+      transform: event.transform
     });
   }
 
@@ -140,7 +143,7 @@ class Map extends Component {
     this.setState({ widgetTransform: `translate(${x}, ${y})` });
   }
 
-  zoom = d3.zoom()
+  zoom = zoom()
     .scaleExtent([1, 10])
     .on('zoom', this.onZoom);
 
