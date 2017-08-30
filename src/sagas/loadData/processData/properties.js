@@ -13,7 +13,7 @@ function* properties(res, resource, req) {
     const cur = data[curId];
     if (cur.disputed !== '') return prev;
     const admin = prev[cur.admin] || {};
-    admin[cur.mapcolor13] = (admin[cur.mapcolor13] || 0) + 1;
+    admin[cur.color] = (admin[cur.color] || 0) + 1;
     return { ...prev, [cur.admin]: admin };
   }, {});
   // Find the most common color for this 'admin'

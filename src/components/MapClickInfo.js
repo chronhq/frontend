@@ -42,7 +42,7 @@ class MapClickInfo extends Component {
               // );
               if (prev === '?') {
                 if (this.props.properties[propId].disputed === ''
-                    && Number(this.props.properties[propId].mapcolor13) === Number(mapColor)) {
+                    && this.props.properties[propId].color === mapColor) {
                   const id = this.props.properties[propId].admin;
                   // console.log('returning', this.props.admin[id].ru);
                   return this.props.admin[id].ru;

@@ -30,8 +30,8 @@ const Description = ({ properties, scaleView }) => (
 );
 
 const LegendItem = ({ properties, colorsData }) => {
-  const [ids, vls] = properties.colors[colorsData.name];
-  const boxId = getFillPatternId(ids, 'legend');
+  const vls = properties.colors[colorsData.name];
+  const boxId = getFillPatternId(properties.id, 'legend');
 
   return (
     <li>
@@ -48,8 +48,8 @@ class Legend extends Component {
           && Array.isArray(this.props.borders)) {
       const scaleView = this.props.colorsData.enabled;
       return this.props.properties.reduce((prev, cur) => {
-        const colors = cur.colors[this.props.colorsData.name][0];
-        const mapcolor13 = `${colors[0]}_${colors[1].join('_')}`;
+        const colors = cur.colors[this.props.colorsData.name];
+        const mapcolor13 = `${colors}.join('_')}`;
         const name = scaleView === true
           ? `${mapcolor13}_${cur.sr_adm0_a3}`
           : `${mapcolor13}_${cur.disputed}_${cur.type.en}_${cur.sr_adm0_a3}`;
