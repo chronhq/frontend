@@ -1,19 +1,32 @@
 const path = require('path');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 const isProd = () => process.env.NODE_ENV === 'production';
 const devtool = isProd()
   ? 'cheap-module-source-map'
   : 'source-map';
 
-// const devtool = isProd()
-//   ? 'eval'
-//   : 'source-map';
+const uglify = {
+  beautify: false,
+  comments: false,
+  mangle: true,
+  sourceMap: devtool,
+  compress: {
+    sequences: true,
+    booleans: true,
+    loops: true,
+    unused: true,
+    warnings: false,
+    drop_console: true,
+    unsafe: true
+  }
+};
 
-
-const productionPlugins = isProd()
-  ? [new webpack.optimize.UglifyJsPlugin({ sourceMap: devtool })]
-  : [];
+const envPlugins = isProd()
+  ? [new webpack.optimize.UglifyJsPlugin(uglify)]
+  : [new BundleAnalyzerPlugin({ analyzerHost: '0.0.0.0', analyzerPort: '3001' })];
 
 module.exports = {
   devtool: 'source-map',
@@ -30,7 +43,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.EnvironmentPlugin(['NODE_ENV', 'APIPORT']),
-    ...productionPlugins
+    ...envPlugins
   ],
   module: {
     rules: [
@@ -45,8 +58,11 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader',
-        { loader: 'css-loader', options: { importLoaders: 1 } }, 'less-loader']
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'less-loader'
+        ]
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
