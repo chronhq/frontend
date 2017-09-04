@@ -1,11 +1,11 @@
-﻿--
+--
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
+-- Dumped from database version 9.6.4
+-- Dumped by pg_dump version 9.6.4
 
--- Started on 2017-04-05 18:02:48
+-- Started on 2017-09-04 18:39:31 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,12 +23,12 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 190 (class 1259 OID 16409)
+-- TOC entry 188 (class 1259 OID 16398)
 -- Name: type; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE type (
-    id serial NOT NULL,
+    id integer NOT NULL,
     en character varying(50),
     ru character varying(50),
     orig character varying(50)
@@ -38,8 +38,40 @@ CREATE TABLE type (
 ALTER TABLE type OWNER TO postgres;
 
 --
--- TOC entry 2167 (class 0 OID 16409)
--- Dependencies: 190
+-- TOC entry 187 (class 1259 OID 16396)
+-- Name: type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE type_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2231 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE type_id_seq OWNED BY type.id;
+
+
+--
+-- TOC entry 2105 (class 2604 OID 16401)
+-- Name: type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY type ALTER COLUMN id SET DEFAULT nextval('type_id_seq'::regclass);
+
+
+--
+-- TOC entry 2226 (class 0 OID 16398)
+-- Dependencies: 188
 -- Data for Name: type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -72,20 +104,21 @@ COPY type (id, en, ru, orig) FROM stdin;
 25	Dominion	Доминион	Dominion
 26	Repuplic	Республика	Republic
 27	Territory	Штат	Territory
+28	\N	\N	
 \.
 
 
 --
--- TOC entry 2173 (class 0 OID 0)
--- Dependencies: 189
+-- TOC entry 2232 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('type_id_seq', 1, false);
+SELECT pg_catalog.setval('type_id_seq', 27, false);
 
 
 --
--- TOC entry 2048 (class 2606 OID 16414)
+-- TOC entry 2107 (class 2606 OID 16403)
 -- Name: type type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -93,16 +126,7 @@ ALTER TABLE ONLY type
     ADD CONSTRAINT type_pkey PRIMARY KEY (id);
 
 
-
-SELECT MAX(id) FROM type;
-
-SELECT nextval('type_id_seq');
-
-SELECT setval('type_id_seq', (SELECT MAX(id) FROM type));
-  
-SELECT setval('type_id_seq', COALESCE((SELECT MAX(id)+1 FROM type), 1), false);
-
--- Completed on 2017-04-05 18:02:48
+-- Completed on 2017-09-04 18:39:31 UTC
 
 --
 -- PostgreSQL database dump complete

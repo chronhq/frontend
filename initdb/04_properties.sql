@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.4
 -- Dumped by pg_dump version 9.6.4
 
--- Started on 2017-08-30 18:54:13 UTC
+-- Started on 2017-09-04 18:39:31 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -289,6 +289,83 @@ COPY properties (id, admin, disputed, color, name, nameru, type, wikipedia) FROM
 194	14		#9e9ac8	Saskatchewan	Саскачеван	22	http://en.wikipedia.org/wiki/Saskatchewan
 202	14		#9e9ac8	Newfoundland and Labrador	Ньюфаундленд и Лабрадор	22	http://en.wikipedia.org/wiki/Newfoundland_and_Labrador
 208	14		#756bb1	Nunavut	Нунавут	24	http://en.wikipedia.org/wiki/Nunavut
+209	19		#85a0d3	Hokkaido	Хоккайдо	28	\N
+210	19		#85a0d3	Shumshu island	о. Шумшу	28	\N
+211	19		#85a0d3	Paramushir island	о. Парамушир	28	\N
+212	19		#85a0d3	Atlasova island	о. Атласова	28	\N
+213	19		#85a0d3	Onekotan island	о. Онекотан	28	\N
+214	19		#85a0d3	Makanrushi island	о. Маканруши	28	\N
+215	19		#85a0d3	Harimkotan island	о. Харимкотан	28	\N
+216	19		#85a0d3	Shiashkotan island	о. Шиашкотан	28	\N
+217	19		#85a0d3	Ekarma island	о. Экарма	28	\N
+218	19		#85a0d3	Matua island	о. Матуа	28	\N
+219	19		#85a0d3	Rasshua island	о. Расшуа	28	\N
+220	19		#85a0d3	Ketoi island	о. Кетой	28	\N
+221	19		#85a0d3	Simushir island	о. Симушир	28	\N
+222	19		#85a0d3	Urup island	о. Уруп	28	\N
+223	19		#85a0d3	Iturup island	о. Итуруп	28	\N
+224	19		#85a0d3	Kunashir island	о. Кунашир	28	\N
+225	19		#85a0d3	Shikotan island	о. Шикотан	28	\N
+226	19		#85a0d3	Chyornye Bratya islands	о-ва Черные Братья	28	\N
+227	19		#85a0d3	South Kuril Ridge	Южно-Курильская гряда	28	\N
+228	20		#e84444	Honshu	Хонсю	28	\N
+229	19		#85a0d3	Sakhalin	Сахалин	28	\N
+230	20		#f48081	Matsumae	Мацумаэ	28	\N
+231	20		#f48081	Hokkaido	Хоккайдо	28	\N
+232	21		#80d0de	Shumshu island	Курильские острова	28	\N
+233	21		#80d0de	Paramushir island	о. Парамушир	28	\N
+234	20		#e84444	Hokkaido	Хоккайдо	28	\N
+235	21		#80d0de	Shumshu island	о. Шумшу	28	\N
+236	21		#80d0de	Atlasova island	о. Атласова	28	\N
+237	21		#80d0de	Onekotan island	о. Онекотан	28	\N
+238	21		#80d0de	Makanrushi island	о. Маканруши	28	\N
+239	21		#80d0de	Harimkotan island	о. Харимкотан	28	\N
+240	21		#80d0de	Shiashkotan island	о. Шиашкотан	28	\N
+241	21		#80d0de	Ekarma island	о. Экарма	28	\N
+242	21		#80d0de	Matua island	о. Матуа	28	\N
+243	21		#80d0de	Rasshua island	о. Расшуа	28	\N
+244	21		#80d0de	Ketoi island	о. Кетой	28	\N
+245	21		#80d0de	Simushir island	о. Симушир	28	\N
+246	21		#80d0de	Urup island	о. Уруп	28	\N
+247	21		#80d0de	Iturup island	о. Итуруп	28	\N
+248	21		#80d0de	Chyornye Bratya islands	о-ва Черные Братья	28	\N
+249	22		#7f7f7f	Iturup island	о. Итуруп	28	\N
+250	22		#7f7f7f	Kunashir island	о. Кунашир	28	\N
+251	20		#f48081	Kunashir island	о. Кунашир	28	\N
+252	20		#f48081	Shikotan island	о. Шикотан	28	\N
+253	20		#f48081	South Kuril Ridge	Южно-Курильская гряда	28	\N
+254	23		#f48081	Hokkaido	Япония	28	\N
+255	20		#f48081	Iturup island	о. Итуруп	28	\N
+256	20		#e84444	Iturup island	о. Итуруп	28	\N
+257	20		#e84444	Kunashir island	о. Кунашир	28	\N
+258	20		#e84444	Shikotan island	о. Шикотан	28	\N
+259	20		#e84444	South Kuril Ridge	Южно-Курильская гряда	28	\N
+260	20		#e84444	Sakhalin	Сахалин	28	\N
+261	20		#f48081	Sakhalin	Сахалин	28	\N
+262	20		#f48081	Hokkaido	Хоккайдо	28	\N
+263	20		#f48081	Iturup island	о. Итуруп	28	\N
+264	20		#f48081	Kunashir island	о. Кунашир	28	\N
+265	20		#f48081	Shikotan island	о. Шикотан	28	\N
+266	20		#f48081	South Kuril Ridge	Южно-Курильская гряда	28	\N
+267	20	#e84444;#80d0de	#e84444;#80d0de	Sakhalin	Сахалин	28	\N
+268	21		#80d0de	Sakhalin	Сахалин	28	\N
+269	20		#e84444	Shumshu island	о. Шумшу	28	\N
+270	20		#e84444	Paramushir island	о. Парамушир	28	\N
+271	20		#e84444	Atlasova island	о. Атласова	28	\N
+272	20		#e84444	Onekotan island	о. Онекотан	28	\N
+273	20		#e84444	Makanrushi island	о. Маканруши	28	\N
+274	20		#e84444	Harimkotan island	о. Харимкотан	28	\N
+275	20		#e84444	Shiashkotan island	о. Шиашкотан	28	\N
+276	20		#e84444	Ekarma island	о. Экарма	28	\N
+277	20		#e84444	Matua island	о. Матуа	28	\N
+278	20		#e84444	Rasshua island	о. Расшуа	28	\N
+279	20		#e84444	Ketoi island	о. Кетой	28	\N
+280	20		#e84444	Simushir island	о. Симушир	28	\N
+281	20		#e84444	Urup island	о. Уруп	28	\N
+282	20		#e84444	Chyornye Bratya islands	о-ва Черные Братья	28	\N
+283	21		#80d0de	Kunashir island	о. Кунашир	28	\N
+284	21		#80d0de	Shikotan island	о. Шикотан	28	\N
+285	21		#80d0de	South Kuril Ridge	Южно-Курильская гряда	28	\N
 \.
 
 
@@ -328,7 +405,7 @@ ALTER TABLE ONLY properties
     ADD CONSTRAINT properties_type_fkey FOREIGN KEY (type) REFERENCES type(id);
 
 
--- Completed on 2017-08-30 18:54:13 UTC
+-- Completed on 2017-09-04 18:39:32 UTC
 
 --
 -- PostgreSQL database dump complete

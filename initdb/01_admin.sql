@@ -1,11 +1,11 @@
-﻿--
+--
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
+-- Dumped from database version 9.6.4
+-- Dumped by pg_dump version 9.6.4
 
--- Started on 2017-04-05 18:02:48
+-- Started on 2017-09-04 18:39:31 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 192 (class 1259 OID 16417)
+-- TOC entry 185 (class 1259 OID 16385)
 -- Name: admin; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -38,7 +38,7 @@ CREATE TABLE admin (
 ALTER TABLE admin OWNER TO postgres;
 
 --
--- TOC entry 191 (class 1259 OID 16415)
+-- TOC entry 186 (class 1259 OID 16391)
 -- Name: admin_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -53,8 +53,8 @@ CREATE SEQUENCE admin_id_seq
 ALTER TABLE admin_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2172 (class 0 OID 0)
--- Dependencies: 191
+-- TOC entry 2231 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: admin_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -62,7 +62,7 @@ ALTER SEQUENCE admin_id_seq OWNED BY admin.id;
 
 
 --
--- TOC entry 2046 (class 2604 OID 16420)
+-- TOC entry 2105 (class 2604 OID 16393)
 -- Name: admin id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -70,8 +70,8 @@ ALTER TABLE ONLY admin ALTER COLUMN id SET DEFAULT nextval('admin_id_seq'::regcl
 
 
 --
--- TOC entry 2167 (class 0 OID 16417)
--- Dependencies: 192
+-- TOC entry 2225 (class 0 OID 16385)
+-- Dependencies: 185
 -- Data for Name: admin; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -95,20 +95,25 @@ COPY admin (id, en, ru, sr_adm0_a3) FROM stdin;
 16	United Kingdom	Британская Империя	TBE
 17	Republic of Hawaii	Республика Гавайи	ROH
 18	The Dominion of Newfoundland	Доминион Ньюфаундленд	DON
+19	Ainu Lands	Земли Айнов	\N
+20	Japan	Япония	\N
+21	Russia	Россия	\N
+22	Neutral territory	Нейтральная территория	\N
+23	Japan	Земли Айнов	\N
 \.
 
 
 --
--- TOC entry 2173 (class 0 OID 0)
--- Dependencies: 191
+-- TOC entry 2232 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: admin_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('admin_id_seq', 1, false);
+SELECT pg_catalog.setval('admin_id_seq', 19, false);
 
 
 --
--- TOC entry 2048 (class 2606 OID 16425)
+-- TOC entry 2107 (class 2606 OID 16395)
 -- Name: admin admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -116,23 +121,9 @@ ALTER TABLE ONLY admin
     ADD CONSTRAINT admin_pkey PRIMARY KEY (id);
 
 
--- Completed on 2017-04-05 18:02:48
+-- Completed on 2017-09-04 18:39:31 UTC
 
 --
 -- PostgreSQL database dump complete
 --
 
--- Login to psql and run the following
--- What is the result?
-SELECT MAX(id) FROM admin;
-
--- Then run...
--- This should be higher than the last result.
-SELECT nextval('admin_id_seq');
-
--- If it's not higher... run this set the sequence last to your highest pid it. 
--- (wise to run a quick pg_dump first...)
-SELECT setval('admin_id_seq', (SELECT MAX(id) FROM admin));
--- if your tables might have no rows
--- false means the set value will be returned by the next nextval() call    
-SELECT setval('admin_id_seq', COALESCE((SELECT MAX(id)+1 FROM admin), 1), false);
