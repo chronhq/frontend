@@ -34,8 +34,8 @@ CREATE TABLE course (
     "сreated" timestamp with time zone NOT NULL,
     edited timestamp with time zone NOT NULL,
     active boolean NOT NULL,
-    id integer NOT NULL,
-    url text NOT NULL UNIQUE,
+    id serial NOT NULL,
+    url text NOT NULL,
     ui integer NOT NULL,
     projection json NOT NULL,
     img text NULL
@@ -49,15 +49,7 @@ ALTER TABLE course OWNER TO postgres;
 -- Name: course_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE course_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 
-
-ALTER TABLE course_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 2231 (class 0 OID 0)
@@ -65,16 +57,13 @@ ALTER TABLE course_id_seq OWNER TO postgres;
 -- Name: course_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE course_id_seq OWNED BY course.id;
+
 
 
 --
 -- TOC entry 2105 (class 2604 OID 16888)
 -- Name: course id; Type: DEFAULT; Schema: public; Owner: postgres
 --
-
-ALTER TABLE ONLY course ALTER COLUMN id SET DEFAULT nextval('course_id_seq'::regclass);
-
 
 --
 -- TOC entry 2226 (class 0 OID 16885)
@@ -96,8 +85,6 @@ Yet another course	Хронист	Lorem ipsum dolor sit amet, consectetur adipis
 -- Name: course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('course_id_seq', 3, true);
-
 
 --
 -- TOC entry 2107 (class 2606 OID 16914)
@@ -107,6 +94,14 @@ SELECT pg_catalog.setval('course_id_seq', 3, true);
 ALTER TABLE ONLY course
     ADD CONSTRAINT course_pkey PRIMARY KEY (id);
 
+
+SELECT MAX(id) FROM course;
+
+SELECT nextval('course_id_seq');
+
+SELECT setval('course_id_seq', (SELECT MAX(id) FROM course));
+  
+SELECT setval('course_id_seq', COALESCE((SELECT MAX(id)+1 FROM course), 1), false);
 
 -- Completed on 2017-08-21 13:47:27 UTC
 
