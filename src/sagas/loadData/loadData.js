@@ -19,6 +19,7 @@ import inventions from './processData/inventions';
 import geoEvents from './processData/geoEvents';
 import locations from './processData/locations';
 import properties from './processData/properties';
+import courseTimelines from './processData/courseTimelines';
 
 
 const headers = {
@@ -62,7 +63,7 @@ const resourceToCb = {
   BORDERS: getBorders,
   BORDERS_TIMELINE: getBordersTimeline,
   COURSES: defaultGenCb,
-  COURSE_TIMELINES: defaultGenCb,
+  COURSE_TIMELINES: courseTimelines,
   COURSE_EVENTS: arrayGenCb,
   COURSE_TRACES: arrayGenCb,
 };

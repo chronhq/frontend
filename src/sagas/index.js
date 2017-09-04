@@ -7,6 +7,7 @@ import playHistory from './playHistorySaga';
 import exportFromFeed from './exportFromFeedSaga';
 import prepareBordersProps from './prepareBordersPropsSaga';
 import changeYear from './changeYearSaga';
+import changeTick from './changeTickSaga';
 
 
 export default [
@@ -18,6 +19,7 @@ export default [
   exportFromFeed,
   prepareBordersProps,
   changeYear,
+  changeTick,
   assignTimelineCurrent
 ];
 

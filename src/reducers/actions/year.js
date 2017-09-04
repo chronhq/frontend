@@ -13,3 +13,11 @@ export function setYear(year) {
 export function resetYear() {
   return { type: 'CHANGE_YEAR_SAGA', action: 'RESET_YEAR' };
 }
+
+export function changeTick(tick) {
+  return { type: 'CHANGE_TICK', tick };
+}
+
+export function changeInitialYear(state) {
+  return { type: 'CHANGE_INITIAL_YEAR', state };
+}
