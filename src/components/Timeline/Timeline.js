@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 
 import './Timeline.less';
 
-const Event = ({ timeline, events }) => (
-  <div className={false ? 'timeline__entry timeline__entry--selected' : 'timeline__entry'}>
+const Event = ({ timeline, events, selectCb, selectedId }) => (
+  <div>
     {events && events.map(event =>
-      <div key={`event_${event.id}`}>
+      <div
+        key={`event_${event.id}`}
+        onClick={() => selectCb(event.id)}
+        className={(selectedId === event.id) ? 'timeline__entry timeline__entry--selected' : 'timeline__entry'}
+      >
         <div className="timeline__heading">
           <h4 className='event__name'> {event.title} </h4>
           <h4 className='event__date'> {timeline.year} </h4>
@@ -24,13 +28,19 @@ class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSelect: false,
+      selectedId: 1,
     };
   }
 
   selectEvent(e) {
     e.preventDefault();
     this.setState({ isSelect: !this.state.isSelect });
+  }
+
+  handleSelect = (eventId) => {
+    console.log(`eventid is${eventId}`);
+    this.setState({ selectedId: eventId });
+    // this.props.selectLocation(eventId);
   }
 
   render() {
@@ -41,6 +51,8 @@ class Timeline extends React.Component {
             key={`events_${tickid}`}
             timeline={this.props.timeline[tickid]}
             events={this.props.events[tickid]}
+            selectCb={data => this.handleSelect(data)}
+            selectedId={this.state.selectedId}
           />
         )}
       </div>
