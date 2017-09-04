@@ -596,7 +596,6 @@ COPY persons (id, name_eng, name_rus, birth_date, birth_place, death_date, death
 531	Semen Shelkovnikov	Семён Шелковников	\N	0	\N	0
 532	Tokugawa Mitsukuni	Токугава Мицукуни	\N	0	\N	0
 533	Vladimir Atlasov	Владимир Атласов	\N	0	\N	0
-533	Ivan Kozyrevsky	Иван Козыревский	\N	0	\N	0
 534	Dembei	Дэмбэй	\N	0	\N	0
 535	Ivan Kozyrevsky	Иван Козыревский	\N	0	\N	0
 536	Danil Antsipherov	Данил Анциферов	\N	0	\N	0
