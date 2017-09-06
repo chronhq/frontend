@@ -42,12 +42,6 @@ ALTER TABLE admin OWNER TO postgres;
 -- Name: admin_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE admin_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 
 
 ALTER TABLE admin_id_seq OWNER TO postgres;
@@ -57,17 +51,6 @@ ALTER TABLE admin_id_seq OWNER TO postgres;
 -- Dependencies: 186
 -- Name: admin_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
-
-ALTER SEQUENCE admin_id_seq OWNED BY admin.id;
-
-
---
--- TOC entry 2105 (class 2604 OID 16393)
--- Name: admin id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY admin ALTER COLUMN id SET DEFAULT nextval('admin_id_seq'::regclass);
-
 
 --
 -- TOC entry 2225 (class 0 OID 16385)
