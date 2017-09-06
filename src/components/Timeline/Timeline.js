@@ -1,15 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { bindActionCreators } from 'redux';
+import { changeTick } from '../../reducers/actions';
 import './Timeline.less';
 
-const Event = ({ timeline, events, selectCb, selectedId }) => (
+
+const Event = ({ tickid, timeline, events, selectCb, selectedId }) => (
   <div>
     {events && events.map(event =>
       <div
         key={`event_${event.id}`}
-        onClick={() => selectCb(event.id)}
-        className={(selectedId === event.id) ? 'timeline__entry timeline__entry--selected' : 'timeline__entry'}
+        // onClick={() => selectCb(event.id)}
+        onClick={() => selectCb(tickid, event.id)}
+        className={(selectedId == tickid) ? 'timeline__entry timeline__entry--selected' : 'timeline__entry'}
       >
         <div className="timeline__heading">
           <h4 className='event__name'> {event.title} </h4>
@@ -23,23 +27,20 @@ const Event = ({ timeline, events, selectCb, selectedId }) => (
   </div>
 );
 
-
 class Timeline extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedId: 1,
-    };
+  static propTypes = {
+    changeTick: PropTypes.func.isRequired,
+    timeline: PropTypes.object.isRequired,
+    events: PropTypes.object.isRequired,
+    tick: PropTypes.number.isRequired
   }
 
-  selectEvent(e) {
-    e.preventDefault();
-    this.setState({ isSelect: !this.state.isSelect });
-  }
 
-  handleSelect = (eventId) => {
-    console.log(`eventid is${eventId}`);
-    this.setState({ selectedId: eventId });
+  handleSelect = (tick, event) => {
+    console.log(`tick is ${tick}`);
+    console.log(`event is ${event}`);
+    this.setState({ selectedId: event });
+    this.props.changeTick(parseInt(tick));
     // this.props.selectLocation(eventId);
   }
 
@@ -49,10 +50,11 @@ class Timeline extends React.Component {
         {Object.keys(this.props.timeline).map(tickid =>
           <Event
             key={`events_${tickid}`}
+            tickid={tickid}
             timeline={this.props.timeline[tickid]}
             events={this.props.events[tickid]}
-            selectCb={data => this.handleSelect(data)}
-            selectedId={this.state.selectedId}
+            selectCb={(tick, event) => this.handleSelect(tick, event)}
+            selectedId={this.props.tick}
           />
         )}
       </div>
@@ -63,8 +65,15 @@ class Timeline extends React.Component {
 function mapStateToProps(state) {
   return {
     timeline: state.courses.timeline.tick,
-    events: state.courses.events.tick
+    events: state.courses.events.tick,
+    tick: state.timeline.year.tick
   };
 }
 
-export default connect(mapStateToProps)(Timeline);
+function mapDispatchToProps(dispatch) {
+  return {
+    changeTick: bindActionCreators(changeTick, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
