@@ -28,7 +28,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE cities (
-    id integer NOT NULL,
+    id serial NOT NULL,
     scalerank bigint,
     cityclass bigint,
     name_eng text,
@@ -45,22 +45,6 @@ CREATE TABLE cities (
 ALTER TABLE cities OWNER TO postgres;
 
 
-
-
-CREATE SEQUENCE cities_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-ALTER TABLE cities_id_seq OWNER TO postgres;
-
-ALTER SEQUENCE cities_id_seq OWNED BY cities.id;
-
-ALTER TABLE ONLY cities ALTER COLUMN id SET DEFAULT nextval('cities_id_seq'::regclass);
-
---
 -- TOC entry 2163 (class 0 OID 16838)
 -- Dependencies: 199
 -- Data for Name: cities; Type: TABLE DATA; Schema: public; Owner: postgres

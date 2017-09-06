@@ -28,7 +28,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE admin (
-    id integer NOT NULL,
+    id serial NOT NULL,
     en character varying(255),
     ru character varying(255),
     sr_adm0_a3 character varying(10)
