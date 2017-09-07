@@ -23,6 +23,6 @@ for DB in $TABLES_LIST; do
 	# echo; echo; echo
  	echo $DB $NAME;
 	# echo; echo; echo
-	$PG_DUMP --username 'postgres' --no-password  --format plain --verbose --file "$NAME.sql" --table public.$DB 'chronist';
+	$PG_DUMP --username 'postgres' --no-password  --format plain --verbose --inserts --file "$NAME.sql" --table public.$DB 'chronist';
 done;
 
