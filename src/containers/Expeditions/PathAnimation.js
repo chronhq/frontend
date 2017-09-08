@@ -29,7 +29,7 @@ class PathAnimation extends React.Component {
   animateShip() {
     const node = select(this.circle);
     node.transition()
-      .duration(4000)
+      .duration(8000)
       .attrTween('transform', this.translateAlong(this.path.node()))
       .ease(easeLinear)
       .on('end', () => this.animateShip());
@@ -49,7 +49,8 @@ class PathAnimation extends React.Component {
     this.newPath = this.container
       .append('path')
       .style('stroke', '#00f')
-      .style('stroke-width', '4px')
+      .style('fill', 'none')
+      .style('stroke-width', '0.1px')
       .data([this.props.points])
       .attr('d', this.line);
 
@@ -62,10 +63,10 @@ class PathAnimation extends React.Component {
       .attr('stroke-dasharray', `${totalLength}  ${totalLength}`)
       .attr('stroke-dashoffset', totalLength)
       .transition()
-      .duration(4000)
+      .duration(8000)
       .attr('stroke-dashoffset', 0)
       .ease(easeLinear)
-      .on('end', () => this.transitionPath());
+      .on('end', () => this.transitionPath()); //loop
   }
 
   animateAll() {
@@ -78,7 +79,9 @@ class PathAnimation extends React.Component {
       .append('path')
       .classed('expedition', true)
       .style('stroke', '#222')
-      .style('stroke-dasharray', '4,4')
+      .style('fill', 'none')
+      .style('stroke-width', '0.1px')
+      .style('stroke-dasharray', '0.5, 0.5')
       .data([this.props.points])
       .attr('d', this.line);
   }
@@ -88,7 +91,7 @@ class PathAnimation extends React.Component {
       <g ref={(r) => { this.container = r; }} >
         <circle
           ref={(c) => { this.circle = c; }}
-          r={5}
+          r={0.2}
         />
       </g>
     );
