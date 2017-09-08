@@ -6,6 +6,7 @@ import { zoom, zoomIdentity } from 'd3-zoom';
 import { select, event } from 'd3-selection';
 
 import Locations from '../Locations';
+import Expeditions from '../Expeditions';
 import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
@@ -165,6 +166,7 @@ class Map extends Component {
             setClickInfoCb={this.props.setClickInfo}
           />
           <Locations />
+          <Expeditions />
         </g>
         <g transform={this.state.widgetTransform}>
           <ScaleWidget zoom={this.scale} height={this.height} />
