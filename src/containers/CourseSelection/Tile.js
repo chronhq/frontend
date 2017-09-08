@@ -5,9 +5,14 @@ const Tile = ({ course, disabled, selectCourse, selected }) => {
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div className='startpage__tile' onClick={disabled ? () => true : () => selectCourse(course.id)} >
-      <h3> {course.name} </h3>
-      <i className="fa fa-globe fa-5x tile__icon" aria-hidden="true" />
-      <p className='tile__description'>{course.description}</p>
+      <div className='tile__icon'>
+        <i className="fa fa-globe fa-3x" aria-hidden="true" />
+      </div>
+      <div className='tile__content'>
+        <h3 className='tile__title'> {course.name} </h3>
+        <div className='tile__content__separator' />
+        <p className='tile__description'>{course.description}</p>
+      </div>
     </div>
   );
 };
