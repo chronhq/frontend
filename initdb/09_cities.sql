@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.3
 -- Dumped by pg_dump version 9.6.3
 
--- Started on 2017-09-08 11:20:08 UTC
+-- Started on 2017-09-11 15:06:45 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -45,7 +45,7 @@ CREATE TABLE cities (
 ALTER TABLE cities OWNER TO postgres;
 
 --
--- TOC entry 201 (class 1259 OID 16839)
+-- TOC entry 203 (class 1259 OID 16847)
 -- Name: cities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -60,8 +60,8 @@ CREATE SEQUENCE cities_id_seq
 ALTER TABLE cities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2197 (class 0 OID 0)
--- Dependencies: 201
+-- TOC entry 2230 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: cities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -69,7 +69,7 @@ ALTER SEQUENCE cities_id_seq OWNED BY cities.id;
 
 
 --
--- TOC entry 2071 (class 2604 OID 16844)
+-- TOC entry 2104 (class 2604 OID 16849)
 -- Name: cities id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -77,7 +77,7 @@ ALTER TABLE ONLY cities ALTER COLUMN id SET DEFAULT nextval('cities_id_seq'::reg
 
 
 --
--- TOC entry 2192 (class 0 OID 16841)
+-- TOC entry 2224 (class 0 OID 16841)
 -- Dependencies: 202
 -- Data for Name: cities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -599,19 +599,31 @@ INSERT INTO cities VALUES (516, 8, 2, 'Columbus', 'Колумбус', '1864', 'U
 INSERT INTO cities VALUES (517, 8, 2, 'Phelps', 'Фелпс', '1796', 'USA', 'New York', 7072, -77.0580729999999932, 42.9575530000000043);
 INSERT INTO cities VALUES (518, 8, 2, 'Elkhart', 'Элкарт', '1839', 'USA', 'Indiana', 50949, -85.9688890000000043, 41.6830560000000006);
 INSERT INTO cities VALUES (519, 8, 2, 'Palm Beach', 'Палм-Бич', '1911', 'USA', 'Florida', 10468, -80.0394439999999889, 26.7149999999999999);
+INSERT INTO cities VALUES (520, 8, 2, 'Ohotsk', 'Охотск', '1647', 'RUS', 'Khabarovsk', 3488, 143.409999999999997, 59.3733000000000004);
+INSERT INTO cities VALUES (521, 8, 2, 'Shinhidaka', 'Синхидака', NULL, 'JPN', 'Hokkaido', 24391, 140.009999999999991, 41.8290000000000006);
+INSERT INTO cities VALUES (522, 8, 2, 'Anadyr', 'Анадырь', '1889', 'RUS', 'Chukchi Autonomous Okrug', 15468, 177.474996299999987, 64.7369903799999946);
+INSERT INTO cities VALUES (523, 8, 2, 'Bolsheretsk', 'Большерецк', '1703', 'RUS', 'Kamchtka', NULL, 156.584399999999988, 52.9005999999999972);
+INSERT INTO cities VALUES (524, 8, 2, 'Sendai', 'Сэндай', '1600', 'JPN', 'Miyagi', 1052147, 140.924399999999991, 38.2603999999999971);
+INSERT INTO cities VALUES (525, 8, 2, 'Akkeshi', 'Аккэси', NULL, 'JPN', 'Hokkaido', 9741, 144.849999999999994, 43.0499999999999972);
+INSERT INTO cities VALUES (526, 8, 2, 'Ozerskoe', 'Озёрское', '1785', 'RUS', 'Sakhalin', 1326, 143.169000000000011, 46.601700000000001);
+INSERT INTO cities VALUES (527, 8, 2, 'Zyryanskoe', 'Зырянское', '1785', 'RUS', 'Sakhalin', NULL, 142.001000000000005, 46.8900000000000006);
+INSERT INTO cities VALUES (528, 8, 2, 'Il''inskoe', 'Ильинское', '1853-08-30', 'RUS', 'Sakhalin', 649, 142.256499999999988, 47.9853999999999985);
+INSERT INTO cities VALUES (529, 8, 2, 'Nemuro', 'Нэмуро', '1790', 'JPN', 'Hokkaido', 27109, 145.582999999999998, 43.3299999999999983);
+INSERT INTO cities VALUES (530, 8, 2, 'Hakodate', 'Хакодате', '1454', 'JPN', 'Hokkaido', 272648, 140.781200000000013, 41.7661000000000016);
+INSERT INTO cities VALUES (531, 8, 2, 'Matsumae', 'Мацумаэ', '1606', 'JPN', 'Hokkaido', NULL, 140.163199999999989, 41.4224999999999994);
 
 
 --
--- TOC entry 2198 (class 0 OID 0)
--- Dependencies: 201
+-- TOC entry 2231 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: cities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('cities_id_seq', 520, false);
+SELECT pg_catalog.setval('cities_id_seq', 531, true);
 
 
 --
--- TOC entry 2073 (class 2606 OID 16849)
+-- TOC entry 2106 (class 2606 OID 16851)
 -- Name: cities cities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -619,7 +631,7 @@ ALTER TABLE ONLY cities
     ADD CONSTRAINT cities_pkey PRIMARY KEY (id);
 
 
--- Completed on 2017-09-08 11:20:09 UTC
+-- Completed on 2017-09-11 15:06:46 UTC
 
 --
 -- PostgreSQL database dump complete
