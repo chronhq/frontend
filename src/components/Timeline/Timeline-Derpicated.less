@@ -77,22 +77,13 @@
   // width:100%;
   float: right;
   // display: flex;
-  // max-width:800px;
-  width: 35vw;
-  min-width: 350px;
-  @media screen and (max-width: 60em) {
-    min-width: 95vw;
-  }
+  max-width:800px;
   // margin-right: 50px;
   // background:#fff;
 
   padding: 30px 60px;
   position: relative;
   // box-shadow: @container-shadow;
-
-  &:focus {
-    outline: none;
-  }
   &:before {
     content: '';
     position: absolute;
@@ -102,7 +93,9 @@
     width: @border-width;
     background: #ddd;
     // z-index: 4;
+    @media screen and (max-width: 40em) {
       left: 2em;
+    }
   }
   &:after {
     content: "";
@@ -115,7 +108,6 @@
   clear: both;
   text-align: left;
   position: relative;
-  transition: height 1000ms 0ms, opacity 1000ms 1000ms;
   .timeline__heading {
     margin-bottom: .5em;
     float: left;
@@ -124,11 +116,13 @@
     padding-right: @gutter;
     text-align: right;
     position: relative;
+    @media screen and (max-width: 40em) {
       margin: 0 0 1em;
       float: left;
       width: 100%;
       text-align: left;
       padding-left: @gutter;
+    }
     &:before {
       content: '';
       position: absolute;
@@ -157,11 +151,11 @@
       // right: -@dot-diameter/2;
       right: -0.1em; //HARDCODE
       // z-index: 99;
-
+      @media screen and (max-width: 40em) {
         float: left;
         left: -2.5em; //#TODO Remove hardcode
         // left: @dot-diameter;
-
+      }
     }
     h3 {
       margin: 0;
@@ -175,19 +169,11 @@
   .timeline__text {
     margin: 0 0 1em;
     float: right;
+    width: 66%;
     padding-left: @gutter;
-
-    // animation
-    // transition: height 500ms 500ms, opacity 500ms 0ms;
-// -webkit-transition: max-height 1.5s cubic-bezier(0, 1.05, 0, 1);
-    // -moz-transition: max-height 1.5s cubic-bezier(0, 1.05, 0, 1);
-    // transition: max-height 1.5s ease cubic-bezier(0, 1.05, 0, 1);    
-    transition: height 1000ms 0ms, opacity 1000ms 1000ms;
-    // opacity: 0.0;
-    overflow: hidden;
-    height: 0px;
-    
+    @media screen and (max-width: 40em) {
       width: 100%;
+    }
     p {
       line-height: 1.4em;
       &:first-child {
@@ -208,30 +194,15 @@
 }
 
 .timeline__entry--selected {
-  transition: height 1000ms 0ms, opacity 1000ms 1000ms;
   .timeline__heading {
     &:before {
       width: @dot-diameter--selected;
       height: @dot-diameter--selected;
       right: -0.3em; //HARDCODE
+      @media screen and (man-width: 40em) {
         left: -2.6em;
+      }
     }
-  }
-
-  .timeline__text {
-        // -webkit-transition: max-height 2s ease;
-    // -moz-transition: max-height 2s ease;
-    // transition: max-height 2s ease;
-    transition: height 1000ms 1000ms, opacity 1000ms 500ms;
-    height: auto;
-  //     -webkit-transition: 0.5s;
-  // -moz-transition: 0.5s;
-  // -o-transition: 0.5s;
-  // transition: 0.5s;
-    // width: 100px;
-    opacity: 1.0;
-    // box-sizing: border-box;
-    // transition: height 500ms 0ms, opacity 500ms 500ms;
   }
 }
 
