@@ -12,6 +12,7 @@ function* locations(res, resource, req) {
   const places = data.places;
   const timeline = Object.keys(places).reduce((prev, cur) => {
     const place = places[cur];
+    place.founded = place.founded === null ? '0000' : place.founded;
     if ('founded' in place && place.founded !== '' && place.founded !== null) {
       const year = Number(place.founded.split('-').shift());
       if (!(year in prev)) {

@@ -138,12 +138,12 @@ class Locations extends Component {
     }
 
     checkSize = id => this.props.places[id].scalerank < this.props.visibility.scale;
-    checkBoundaries = id => this.props.projected[id];
+
     render() {
       return (
         <g key='locations'>
           {this.state.current.map((city, id) => (
-            (this.checkSize(city) && this.checkBoundaries(city))
+            (this.checkSize(city))
               ? <DrawLocationDot
                 scale={this.props.scale}
                 key={`pin_list_${city}`}
@@ -165,12 +165,17 @@ class Locations extends Component {
 }
 
 function mapStateToProps(state) {
+  // Use only projected cities
+  const current = state.timeline.locations.current.reduce(
+    (prev, id) => (
+      id in state.data.locations.projected ? [...prev, id] : prev), []
+  );
   return {
     selected: state.runtime.status.selectedLocation,
     selectedType: state.runtime.status.selectedLocationType,
     visibility: state.runtime.visibility,
     scale: state.runtime.mapView.scale,
-    current: state.timeline.locations.current,
+    current,
     projected: state.data.locations.projected,
     geoEvents: state.data.geoEvents.projected,
     places: state.data.locations.places
