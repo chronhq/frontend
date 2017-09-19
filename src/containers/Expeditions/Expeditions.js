@@ -16,7 +16,7 @@ class Expeditions extends Component {
 function mapStateToProps(state) {
   const tick = state.timeline.year.tick;
   const tracesByTick = state.courses.traces.tick;
-  return tick in tracesByTick
+  return tick in tracesByTick // List of different traces
     ? { traces: tracesByTick[tick] }
     : { traces: [] };
 }

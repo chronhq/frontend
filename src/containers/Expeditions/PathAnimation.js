@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { line, curveNatural } from 'd3-shape';
 import { select } from 'd3-selection';
 import { easeLinear } from 'd3-ease';
-import { transition } from 'd3-transition';
+// import { transition } from 'd3-transition';
 import './PathAnimation.less';
 
 class PathAnimation extends React.Component {
@@ -12,7 +12,8 @@ class PathAnimation extends React.Component {
     this.state = {
       y: 25,
       vy: 20,
-      animated: false
+      animated: false,
+      pathPoints: this.props.points.reduce((prev, cur) => [...prev, ...cur.projected], []),
     };
     this.line = line().curve(curveNatural);
   }
@@ -29,7 +30,7 @@ class PathAnimation extends React.Component {
   animateShip() {
     const node = select(this.circle);
     node.transition()
-      .duration(8000)
+      .duration(this.props.duration)
       .attrTween('transform', this.translateAlong(this.path.node()))
       .ease(easeLinear)
       .on('end', () => this.animateShip());
@@ -51,7 +52,7 @@ class PathAnimation extends React.Component {
       .style('stroke', '#00f')
       .style('fill', 'none')
       .style('stroke-width', '0.1px')
-      .data([this.props.points])
+      .data([this.state.pathPoints])
       .attr('d', this.line);
 
     this.transitionPath();
@@ -63,7 +64,7 @@ class PathAnimation extends React.Component {
       .attr('stroke-dasharray', `${totalLength}  ${totalLength}`)
       .attr('stroke-dashoffset', totalLength)
       .transition()
-      .duration(8000)
+      .duration(this.props.duration)
       .attr('stroke-dashoffset', 0)
       .ease(easeLinear)
       .on('end', () => this.transitionPath()); //loop
@@ -82,7 +83,7 @@ class PathAnimation extends React.Component {
       .style('fill', 'none')
       .style('stroke-width', '0.1px')
       .style('stroke-dasharray', '0.5, 0.5')
-      .data([this.props.points])
+      .data([this.state.pathPoints])
       .attr('d', this.line);
   }
 
@@ -98,9 +99,13 @@ class PathAnimation extends React.Component {
   }
 }
 
+PathAnimation.defaultProps = {
+  duration: 8000
+};
 
 PathAnimation.propTypes = {
-  points: PropTypes.array.isRequired
+  points: PropTypes.array.isRequired,
+  duration: PropTypes.number
 };
 
 // figure for testing directional movements

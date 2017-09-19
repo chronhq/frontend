@@ -2,14 +2,19 @@ import { put, select } from 'redux-saga/effects';
 import { projectionSelector, projectLocations } from './_helper';
 
 const projectRow = (row, projection) => {
-  // prepare data
-  const data = row.path.map((point, id) => ({ id, x: point.lng, y: point.lat }));
-  // obtain projected data
-  const prj = projectLocations(data, projection.project, projection.clip);
-  // flatten Object by id into array of points
-  const projected = Object.keys(prj).map(p => [prj[p].x, prj[p].y]);
-  return { ...row, projected };
-}
+  // Iterate over path chunks
+  const d = row.path.map((chunk) => {
+    // prepare data
+    const data = chunk.path.map((point, id) => ({ id, x: point[0], y: point[1] }));
+    // obtain projected data
+    const prj = projectLocations(data, projection.project, projection.clip);
+    // flatten Object by id into array of points
+    const projected = Object.keys(prj).map(p => [prj[p].x, prj[p].y]);
+    return { projected, type: chunk.type };
+  });
+  return { ...row, projected: d };
+};
+
 function* courseTraces(res = [], resource, req) {
   // req: { key: 'byId', id: 'id' }
   const projection = yield select(projectionSelector);
