@@ -7,29 +7,27 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './Timeline.less';
 
 
-const Event = ({ tickid, timeline, events, selectCb, selectedId }) => {
+const Event = ({ event, selectCb, selectedId }) => {
   const eventClasses = ['timeline__entry'];
-  if (selectedId == tickid) { eventClasses.push('timeline__entry--selected'); }
+  if (selectedId === event.tick) { eventClasses.push('timeline__entry--selected'); }
 
   return (
     <div>
-      {events && events.map(event =>
-        <div
-          key={`event_${event.id}`}
-          // onClick={() => selectCb(event.id)}
-          onClick={() => selectCb(tickid, event.id)}
-          className={eventClasses.join(' ')}
-          role="button"
-        >
-          <div className="timeline__heading">
-            <h4 className='event__name'> {event.title} </h4>
-            <h4 className='event__date'> {timeline.year} </h4>
-          </div>
-          <div className='timeline__text'>
-            <p>{event.description}</p>
-          </div>
+      <div
+        key={`event_${event.id}`}
+        // onClick={() => selectCb(event.id)}
+        onClick={() => selectCb(event.tick, event.id)}
+        className={eventClasses.join(' ')}
+        role="button"
+      >
+        <div className="timeline__heading">
+          <h4 className='event__name'> {event.title} </h4>
+          <h4 className='event__date'> {event.year} </h4>
         </div>
-      )}
+        <div className='timeline__text'>
+          <p>{event.description}</p>
+        </div>
+      </div>
     </div>
   );
 };
@@ -37,16 +35,15 @@ const Event = ({ tickid, timeline, events, selectCb, selectedId }) => {
 class Timeline extends React.Component {
   static propTypes = {
     changeTick: PropTypes.func.isRequired,
-    timeline: PropTypes.object.isRequired,
-    events: PropTypes.object.isRequired,
+    timeline: PropTypes.array.isRequired,
     tick: PropTypes.number.isRequired
   }
 
-  handleSelect = (tick, event) => {
+  handleSelect = (tick) => {
     console.log(`tick is ${tick}`);
-    console.log(`event is ${event}`);
-    this.setState({ selectedId: event });
-    this.props.changeTick(parseInt(tick));
+    // console.log(`event is ${event}`);
+    // this.setState({ selectedId: event });
+    this.props.changeTick(tick);
     // this.props.selectLocation(eventId);
   }
 
@@ -81,15 +78,13 @@ class Timeline extends React.Component {
           tabIndex='0'
           onKeyDown={e => this.handlePress(e)}
         >
-          {Object.keys(this.props.timeline).map(tickid =>
-            <Event
-              key={`events_${tickid}`}
-              tickid={tickid}
-              timeline={this.props.timeline[tickid]}
-              events={this.props.events[tickid]}
-              selectCb={(tick, event) => this.handleSelect(tick, event)}
+          {this.props.timeline.map(event => (
+            event !== null && <Event
+              key={`events_${event.tick}`}
+              event={event}
+              selectCb={(tick, ev) => this.handleSelect(tick, ev)}
               selectedId={this.props.tick}
-            />
+            />)
           )}
         </div>
       </ReactCSSTransitionGroup>
@@ -98,10 +93,22 @@ class Timeline extends React.Component {
 }
 
 function mapStateToProps(state) {
+  const tick = state.timeline.year.tick;
+  const ticks = state.courses.timeline.tick;
+
+  const timeline = [null, null, ticks[tick], null, null];
+  const fillTimeline = (shift) => {
+    const middle = 2;
+    const curTick = tick + shift;
+    if (curTick in ticks) {
+      timeline[middle + shift] = ticks[curTick];
+    }
+  };
+  [-2, -1, 1, 2].map(fillTimeline);
+  console.log(timeline);
   return {
-    timeline: state.courses.timeline.tick,
-    events: state.courses.events.tick,
-    tick: state.timeline.year.tick
+    timeline,
+    tick,
   };
 }
 
