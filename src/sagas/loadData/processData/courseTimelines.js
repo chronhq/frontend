@@ -13,7 +13,7 @@ const findMinMax = (ticks) => {
 };
 
 function* courseTimelines(res, resource, req) {
-  const payload = yield call(defaultCb, res, req.key);
+  const payload = yield call(defaultCb, res, req.key, req.id);
   yield put(changeInitialYear(findMinMax(payload.tick)));
   yield put({ type: `${resource}_FULFILLED`, payload });
 }

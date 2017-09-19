@@ -16,9 +16,9 @@ export const getUrlFromResource = resource => (
     : resource.split('_').map(c => `${c.charAt(0).toUpperCase()}${c.slice(1).toLowerCase()}`).join('')
 );
 
-export const defaultCb = (data = [], key = 'byId') => {
+export const defaultCb = (data = [], key = 'byId', id = 'id') => {
   const keyData = data.reduce(
-    (prev, row) => ({ ...prev, [row.id]: row }), {});
+    (prev, row) => ({ ...prev, [row[id]]: row }), {});
   // const cbRes = dataCb(data);
   // return { [key]: keyData, ...cbRes };
   return { [key]: keyData };

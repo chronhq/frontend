@@ -48,10 +48,7 @@ const requestData = (id) => {
   const courseViewData = [
     {
       resource: 'COURSE_TIMELINES',
-      req: { filter, key: 'tick' },
-    }, {
-      resource: 'COURSE_EVENTS',
-      req: { id: 'courseTimelineId', key: 'tick' }
+      req: { filter, id: 'tick', key: 'tick' },
     }, {
       resource: 'COURSE_TRACES',
       req: { id: 'courseTimelineId', key: 'tick' }
@@ -126,7 +123,6 @@ const getLoadedStatus = (name, data) => ({
 function mapStateToProps(state) {
   return {
     courses: {
-      events: getLoadedStatus('Перечень событий', state.courses.events),
       timeline: getLoadedStatus('Хронология событий', state.courses.timeline),
       traces: getLoadedStatus('История путешествий', state.courses.traces),
     },
