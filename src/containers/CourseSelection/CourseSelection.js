@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 
-import { loadData, markItReady, setProjection } from '../../reducers/actions';
+import { loadData, markItReady, setProjection, setVisibility } from '../../reducers/actions';
 
 import TilesScreen from './TilesScreen';
 
@@ -82,15 +82,25 @@ class CourseSelection extends Component {
       : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
     // TODO Check for projected data
     if (notLoaded === 0) {
+      const uiSettings = this.toggleUI;
       this.props.markItReady(true);
-      this.props.setFlagsAction({ CourseSelection: false, ...this.toggleUI });
+      this.props.setFlagsAction({ CourseSelection: false, ...uiSettings.flags });
+      if ('visibility' in uiSettings) {
+        this.props.setVisibility(uiSettings.visibility);
+      }
     }
   }
 
   get toggleUI() {
     return this.state.course
-      ? { UI: { TimePanel: false } }
-      : { UI: { TimePanel: true } };
+      ? { flags: { UI: { TimePanel: false } },
+        visibility: {
+          borders: 1,
+          locations: 1,
+          tooltips: 1,
+          scale: 10
+        } }
+      : { flags: { UI: { TimePanel: true } } };
   }
 
   selectCourse(id) {
@@ -153,6 +163,7 @@ function mapDispatchToProps(dispatch) {
     markItReady: bindActionCreators(markItReady, dispatch),
     setProjection: bindActionCreators(setProjection, dispatch),
     setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
+    setVisibility: bindActionCreators(setVisibility, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CourseSelection);
