@@ -21,8 +21,8 @@ const Event = ({ event, selectCb, selectedId }) => {
         className={eventClasses.join(' ')}
       >
         <div className="timeline__heading">
-          <h4 className='event__name'> {event.title} Tick: {event.tick} - Id: {event.id} </h4>
-          <h4 className='event__date'> {event.year} </h4>
+          <h4 className='event__name'>{event.title}</h4>
+          <h4 className='event__date'>{event.year}</h4>
         </div>
         <div className='timeline__text'>
           <p>{event.description}</p>

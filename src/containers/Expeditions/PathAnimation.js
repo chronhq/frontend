@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { line, curveNatural } from 'd3-shape';
+import { line, curveCardinal } from 'd3-shape';
 import { select } from 'd3-selection';
 import { easeLinear } from 'd3-ease';
 // import { transition } from 'd3-transition';
@@ -15,15 +15,16 @@ class PathAnimation extends React.Component {
       animated: false,
       pathPoints: this.props.points.reduce((prev, cur) => [...prev, ...cur.projected], []),
     };
-    this.line = line().curve(curveNatural);
+    this.line = line().curve(curveCardinal);
   }
 
   componentDidMount() {
     this.container = select(this.container);
     this.renderPath();
+    this.renderPath2();
     // comment this
     this.animateShip();
-    this.animatePath();
+    // this.animatePath();
   }
 
 
