@@ -6,6 +6,7 @@ import SidePanel from '../components/SidePanel';
 import TimePanel from '../components/TimePanel';
 import MapControls from '../components/MapControls';
 import MapClickInfo from '../components/MapClickInfo';
+import MiniSidebar from '../components/Timeline/MiniSidebar';
 
 const UI = () => (
   <div className='content'>
@@ -16,6 +17,10 @@ const UI = () => (
     <Flag
       name="UI.TimePanel"
       render={() => <TimePanel />}
+    />
+     <Flag
+      name="UI.MiniSidebar"
+      render={() => <MiniSidebar />}
     />
     <Flag
       name="UI.MapClickInfo"
