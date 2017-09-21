@@ -21,10 +21,9 @@ class PathAnimation extends React.Component {
   componentDidMount() {
     this.container = select(this.container);
     this.renderPath();
-    this.renderPath2();
     // comment this
     this.animateShip();
-    // this.animatePath();
+    this.animatePath();
   }
 
 
