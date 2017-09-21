@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { OverlayTrigger, Button, Tooltip } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import 'ReturnUiButton.less';
+// import 'MiniSidebar.less';
 import Timeline from './Timeline';
 import { changeTick } from '../../reducers/actions';
 
@@ -18,7 +18,7 @@ const tooltip = text => (
   <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
 );
 
-class ReturnUiButton extends React.Component {
+class MiniSidebar extends React.Component {
   static propTypes = {
     changeTick: PropTypes.func.isRequired,
     timeline: PropTypes.object.isRequired,
@@ -99,4 +99,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReturnUiButton);
+export default connect(mapStateToProps, mapDispatchToProps)(MiniSidebar);

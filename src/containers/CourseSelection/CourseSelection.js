@@ -93,14 +93,14 @@ class CourseSelection extends Component {
 
   get toggleUI() {
     return this.state.course
-      ? { flags: { UI: { TimePanel: false } },
+      ? { flags: { UI: { TimePanel: false, SidePanel: false, MiniSidebar: true } },
         visibility: {
           borders: 1,
           locations: 1,
           tooltips: 1,
           scale: 10
         } }
-      : { flags: { UI: { TimePanel: true } } };
+      : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false } } };
   }
 
   selectCourse(id) {

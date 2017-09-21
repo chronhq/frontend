@@ -14,7 +14,7 @@ import Intro from './Intro';
 import Feedback from './Feedback/';
 import ControlButtons from '../components/ControlButtons';
 import TimePanel from './TimePanel';
-import ReturnUiButton from './Timeline/ReturnUiButton';
+// import ReturnUiButton from './Timeline/ReturnUiButton';
 import AlignToggler from './Debug';
 
 import './SidePanel.less';
@@ -84,10 +84,10 @@ class SidePanel extends React.Component {
   );
 
   render() {
-    if (this.props.facade.alignPanel === 'none') {
-      return <ReturnUiButton cb={data => this.handleChange('alignPanel', data)} />;
-      // return null;
-    }
+    // if (this.props.facade.alignPanel === 'none') {
+    //   // return <ReturnUiButton cb={data => this.handleChange('alignPanel', data)} />;
+    //   // return null;
+    // }
     return (
 
       <div>

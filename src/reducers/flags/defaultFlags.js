@@ -9,5 +9,6 @@ export default {
     SidePanel: true,
     MapClickInfo: true,
     MapControls: true,
+    MiniSidebar: false,
   }
 };
