@@ -1,7 +1,5 @@
 
-const validateScale = (scale) => {
-  const maxScale = 10;
-  const minScale = 1;
+const validateScale = (scale, maxScale, minScale) => {
   if (scale > maxScale) return maxScale;
   if (scale < minScale) return minScale;
   return scale;
@@ -15,6 +13,8 @@ const validateRotation = (angle) => {
 
 const defaultState = {
   scale: 1,
+  maxScale: 10,
+  minScale: 1,
   reset: false,
   buttonZoom: false,
   rotation: 0
@@ -22,12 +22,19 @@ const defaultState = {
 
 const mapView = (state = defaultState, action) => {
   switch (action.type) {
+    case 'DEFAULT_SCALE_CHANGE': {
+      return {
+        ...state,
+        maxScale: action.maxScale,
+        minScale: action.minScale,
+      }
+    }
     case 'MAP_VIEW_SCALE': {
       return {
         ...state,
         reset: false,
         buttonZoom: action.buttonZoom,
-        scale: validateScale(action.scale)
+        scale: validateScale(action.scale, action.maxScale, action.minScale)
       };
     }
     case 'MAP_VIEW_ROTATION': {

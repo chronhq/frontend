@@ -6,6 +6,14 @@ export function mapViewScale(scale, buttonZoom) {
   };
 }
 
+export function defaultScaleChange(minScale, maxScale) {
+  return {
+    minScale,
+    maxScale,
+    type: 'DEFAULT_SCALE_CHANGE'
+  };
+}
+
 export function colorsDataAutoToggle(enabled) {
   return {
     type: 'LAND_OWNERSHIP_COLORS_AUTO',

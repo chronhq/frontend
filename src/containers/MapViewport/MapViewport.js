@@ -145,7 +145,7 @@ class Map extends Component {
   }
 
   zoom = zoom()
-    .scaleExtent([1, 10])
+    .scaleExtent([this.props.minScale, this.props.maxScale])
     .on('zoom', this.onZoom);
 
   render() {
@@ -181,6 +181,8 @@ function mapStateToProps(state) {
   return { terrain: state.data.terrain.projected,
     colorsData: state.runtime.colorsData,
     scale: state.runtime.mapView.scale,
+    maxScale: state.runtime.mapView.maxScale,
+    minScale: state.runtime.mapView.minScale,
     resetFlag: state.runtime.mapView.reset,
     rotation: state.runtime.mapView.rotation,
     buttonZoom: state.runtime.mapView.buttonZoom,

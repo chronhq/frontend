@@ -3,7 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 
-import { loadData, markItReady, setProjection, setVisibility } from '../../reducers/actions';
+import { loadData,
+  markItReady,
+  setProjection,
+  setVisibility,
+  defaultScaleChange,
+} from '../../reducers/actions';
 
 import TilesScreen from './TilesScreen';
 
@@ -88,6 +93,9 @@ class CourseSelection extends Component {
       if ('visibility' in uiSettings) {
         this.props.setVisibility(uiSettings.visibility);
       }
+      if ('zoom' in uiSettings) {
+        this.props.defaultScaleChange(uiSettings.zoom.minScale, uiSettings.zoom.maxScale);
+      }
     }
   }
 
@@ -99,7 +107,12 @@ class CourseSelection extends Component {
           locations: 1,
           tooltips: 1,
           scale: 10
-        } }
+        },
+        zoom: {
+          minScale: 5,
+          maxScale: 20,
+        },
+      }
       : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false } } };
   }
 
@@ -164,6 +177,7 @@ function mapDispatchToProps(dispatch) {
     setProjection: bindActionCreators(setProjection, dispatch),
     setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
     setVisibility: bindActionCreators(setVisibility, dispatch),
+    defaultScaleChange: bindActionCreators(defaultScaleChange, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CourseSelection);
