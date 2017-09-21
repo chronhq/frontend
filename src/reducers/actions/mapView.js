@@ -6,10 +6,12 @@ export function mapViewScale(scale, buttonZoom) {
   };
 }
 
-export function defaultScaleChange(minScale, maxScale) {
+export function defaultScaleChange(minScale, maxScale, mapWidth, mapShift) {
   return {
     minScale,
     maxScale,
+    mapWidth,
+    mapShift,
     type: 'DEFAULT_SCALE_CHANGE'
   };
 }

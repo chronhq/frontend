@@ -53,7 +53,7 @@ class Map extends Component {
   }
 
   state = {
-    defaultZoom: () => window.innerWidth / 1000,
+    defaultZoom: () => window.innerWidth / this.props.mapWidth,
     zoomInitSuccess: false,
     widgetTransform: 'translate(0,0)',
     transform: { k: 1, x: 0, y: 0 }
@@ -65,7 +65,9 @@ class Map extends Component {
     if (!this.state.zoomInitSuccess) {
       const svg = select(this.svgMap);
       svg.call(this.zoom);
-      svg.call(this.zoom.transform, zoomIdentity.scale(this.state.defaultZoom()));
+      svg.call(this.zoom.transform, zoomIdentity
+        .translate(this.getTransformX(), this.getTransformY())
+        .scale(this.state.defaultZoom()));
       /* eslint-disable react/no-did-mount-set-state */
       this.setState({
         zoomInitSuccess: true,
@@ -81,8 +83,8 @@ class Map extends Component {
       nextState.transform.k = nextProps.scale;
     }
     if (nextProps.resetFlag === true) {
-      nextState.transform.x = 0;
-      nextState.transform.y = 0;
+      nextState.transform.x = this.getTransformX();
+      nextState.transform.y = this.getTransformY();
       nextState.transform.k = this.state.defaultZoom();
     }
     this.setState({ ...nextState });
@@ -101,6 +103,9 @@ class Map extends Component {
       transform: event.transform
     });
   }
+
+  getTransformX = () => this.props.mapShift[0] * this.state.defaultZoom();
+  getTransformY = () => this.props.mapShift[1] * this.state.defaultZoom();
 
   get scale() {
     if (this.state.transform) return this.state.transform.k;
@@ -183,6 +188,8 @@ function mapStateToProps(state) {
     scale: state.runtime.mapView.scale,
     maxScale: state.runtime.mapView.maxScale,
     minScale: state.runtime.mapView.minScale,
+    mapWidth: state.runtime.mapView.mapWidth,
+    mapShift: state.runtime.mapView.mapShift,
     resetFlag: state.runtime.mapView.reset,
     rotation: state.runtime.mapView.rotation,
     buttonZoom: state.runtime.mapView.buttonZoom,

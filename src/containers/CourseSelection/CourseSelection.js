@@ -94,7 +94,11 @@ class CourseSelection extends Component {
         this.props.setVisibility(uiSettings.visibility);
       }
       if ('zoom' in uiSettings) {
-        this.props.defaultScaleChange(uiSettings.zoom.minScale, uiSettings.zoom.maxScale);
+        this.props.defaultScaleChange(
+          uiSettings.zoom.minScale,
+          uiSettings.zoom.maxScale,
+          uiSettings.zoom.mapWidth,
+          uiSettings.zoom.mapShift);
       }
     }
   }
@@ -109,8 +113,10 @@ class CourseSelection extends Component {
           scale: 10
         },
         zoom: {
-          minScale: 5,
+          minScale: 4,
           maxScale: 20,
+          mapWidth: 300,
+          mapShift: [-350, -150],
         },
       }
       : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false } } };
