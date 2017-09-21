@@ -14,14 +14,14 @@ const Event = ({ event, selectCb, selectedId }) => {
   return (
     <div>
       <div
+        role="button"
         key={`event_${event.id}`}
         // onClick={() => selectCb(event.id)}
         onClick={() => selectCb(event.tick, event.id)}
         className={eventClasses.join(' ')}
-        role="button"
       >
         <div className="timeline__heading">
-          <h4 className='event__name'> {event.title} </h4>
+          <h4 className='event__name'> {event.title} Tick: {event.tick} - Id: {event.id} </h4>
           <h4 className='event__date'> {event.year} </h4>
         </div>
         <div className='timeline__text'>
@@ -36,21 +36,31 @@ class Timeline extends React.Component {
   static propTypes = {
     changeTick: PropTypes.func.isRequired,
     timeline: PropTypes.array.isRequired,
-    tick: PropTypes.number.isRequired
+    tick: PropTypes.number.isRequired,
+    ticks: PropTypes.array.isRequired
   }
 
+
   handleSelect = (tick) => {
-    console.log(`tick is ${tick}`);
+    // console.log(`tick is ${tick}`);
     // console.log(`event is ${event}`);
     // this.setState({ selectedId: event });
     this.props.changeTick(tick);
     // this.props.selectLocation(eventId);
   }
 
-  handlePress(e) {
+  handleWheel(event) {
+    if (event.deltaY > 0) {
+      this.handleNext();
+    } else if (event.deltaY < 0) {
+      this.handlePrevious();
+    }
+  }
+
+  handlePress(event) {
     // console.log(e.keyCode);
-    e.preventDefault();
-    switch (e.keyCode) {
+    event.preventDefault();
+    switch (event.keyCode) {
       case 38:
         this.handlePrevious();
         break;
@@ -61,11 +71,17 @@ class Timeline extends React.Component {
   }
 
   handleNext() {
-    this.props.timeline[parseInt(this.props.tick) + 1] && this.props.changeTick(parseInt(this.props.tick) + 1);
+    /* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
+    // this.props.timeline[parseInt(this.props.tick, 10) + 1] &&
+    // this.props.changeTick(parseInt(this.props.tick, 10) + 1);
+    this.props.ticks[this.props.tick + 1] &&
+    this.props.changeTick(this.props.tick + 1);
   }
 
   handlePrevious() {
-    this.props.timeline[this.props.tick - 1] && this.props.changeTick(this.props.tick - 1);
+    /* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
+    this.props.ticks[this.props.tick - 1] &&
+    this.props.changeTick(this.props.tick - 1);
   }
 
   render() {
@@ -76,6 +92,7 @@ class Timeline extends React.Component {
           id="keyboard"
           role="button"
           tabIndex='0'
+          onWheel={(e) => this.handleWheel(e)}
           onKeyDown={e => this.handlePress(e)}
         >
           {this.props.timeline.map(event => (
@@ -86,6 +103,7 @@ class Timeline extends React.Component {
               selectedId={this.props.tick}
             />)
           )}
+
         </div>
       </ReactCSSTransitionGroup>
     );
@@ -109,6 +127,7 @@ function mapStateToProps(state) {
   return {
     timeline,
     tick,
+    ticks
   };
 }
 
