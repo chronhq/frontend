@@ -52,9 +52,9 @@ const PatternsDefs = ({ bordersData, colorsData }) => {
       };
     }, {});
   return (
-    <defs>
+    <g>
       {Object.keys(patterns).map(id => patterns[id])}
-    </defs>
+    </g>
   );
 };
 

@@ -40,6 +40,26 @@ const BordersMap = ({ borders, loaded, visible, setClickInfoCb }) => (
   </g>
 );
 
+const SymbolsDefs = ({ symbols }) => ( // MapPics
+  <g className="symbolsDefs">
+    {symbols.map(mapPic => (
+      <symbol id={`mapPic_${mapPic.id}`}>
+        {mapPic.g.map(g => g.style.fill !== '#FEFEFE' && <path d={g.d} style={g.style} />)}
+      </symbol>
+    ))}
+  </g>
+);
+
+const MapDecorations = ({ decorations }) => (
+  <g className="mapDecorations">
+    {decorations.map(icon => (<use
+      xlinkHref={`#mapPic_${icon.picId}`}
+      transform={`translate(${icon.projected.x},${icon.projected.y}) ${icon.transform}`}
+    />))
+    }
+  </g>
+);
+
 class Map extends Component {
   defaultProps = {
     b: {
@@ -156,10 +176,13 @@ class Map extends Component {
   render() {
     return (
       <svg className='svgMap' ref={(r) => { this.svgMap = r; }}>
-        <PatternsDefs
-          bordersData={this.props.b.properties}
-          colorsData={this.props.colorsData}
-        />
+        <defs>
+          <PatternsDefs
+            bordersData={this.props.b.properties}
+            colorsData={this.props.colorsData}
+          />
+          <SymbolsDefs symbols={this.props.mapPics} />
+        </defs>
         <g transform={this.transform}>
           <TerrainMap
             terrain={this.props.terrain}
@@ -172,6 +195,7 @@ class Map extends Component {
           />
           <Locations />
           <Expeditions />
+          <MapDecorations decorations={this.props.mapDecorations} />
         </g>
         <g transform={this.state.widgetTransform}>
           <ScaleWidget zoom={this.scale} height={this.height} />
@@ -193,6 +217,8 @@ function mapStateToProps(state) {
     resetFlag: state.runtime.mapView.reset,
     rotation: state.runtime.mapView.rotation,
     buttonZoom: state.runtime.mapView.buttonZoom,
+    mapPics: Object.values(state.data.mapPics.byId),
+    mapDecorations: Object.values(state.data.mapDecorations.byId),
     b: {
       visible: state.runtime.visibility.borders,
       loaded: state.data.borders.loaded,

@@ -38,6 +38,10 @@ const requestData = (id) => {
       req: { key: 'type' },
     }, {
       resource: 'PERSONS',
+    }, {
+      resource: 'MAP_DECORATIONS',
+    }, {
+      resource: 'MAP_PICS',
     },
   ];
 
@@ -168,6 +172,8 @@ function mapStateToProps(state) {
       personsAlive: getLoadedStatus('Годы жизни великих людей', state.timeline.personsAlive),
     },
     data: {
+      mapDecorations: getLoadedStatus('Расположение украшений', state.data.mapDecorations),
+      mapPics: getLoadedStatus('Иконки и картинки', state.data.mapPics),
       locations: getLoadedStatus('География мест', state.data.locations),
       borders: getLoadedStatus('Политические границы', state.data.borders),
       persons: getLoadedStatus('Информация о людях', state.data.persons),

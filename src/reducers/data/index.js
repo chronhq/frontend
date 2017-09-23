@@ -9,6 +9,8 @@ const inventions = newReducer('INVENTIONS', { byId: {} });
 const persons = newReducer('PERSONS', { byId: {} });
 const personsFacts = newReducer('PERSONS_FACTS', { byId: {} });
 const geoEvents = newReducer('EVENTS_GEO', { byId: {}, projected: {} });
+const mapDecorations = newReducer('MAP_DECORATIONS', { byId: {} });
+const mapPics = newReducer('MAP_PICS', { byId: {} });
 
 export default combineReducers({
   locations,
@@ -19,4 +21,6 @@ export default combineReducers({
   properties,
   borders,
   terrain,
+  mapDecorations,
+  mapPics,
 });

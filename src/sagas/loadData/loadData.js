@@ -21,6 +21,7 @@ import locations from './processData/locations';
 import properties from './processData/properties';
 import courseTimelines from './processData/courseTimelines';
 import courseTraces from './processData/courseTraces';
+import mapDecorations from './processData/mapDecorations';
 
 
 const headers = {
@@ -67,6 +68,7 @@ const resourceToCb = {
   COURSE_TIMELINES: courseTimelines,
   COURSE_EVENTS: arrayGenCb,
   COURSE_TRACES: courseTraces,
+  MAP_DECORATIONS: mapDecorations,
 };
 
 
