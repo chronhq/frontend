@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { changeTick } from '../../reducers/actions';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './Timeline.less';
+// import './Timeline-Derpicated.less';
+import { Next, Previous, NavigationPan } from './TimelineControls';
 
 
 const Event = ({ event, selectCb, selectedId }) => {
@@ -20,13 +22,13 @@ const Event = ({ event, selectCb, selectedId }) => {
         onClick={() => selectCb(event.tick, event.id)}
         className={eventClasses.join(' ')}
       >
-        <div className="timeline__heading">
-          <h4 className='event__name'>{event.title}</h4>
-          <h4 className='event__date'>{event.year}</h4>
-        </div>
-        <div className='timeline__text'>
-          <p>{event.description}</p>
-        </div>
+        <div className="timeline__heading"> {event.year} </div>
+        <div className='timeline__title'> {event.title} </div>
+        <div className='timeline__text'> {event.description} </div>
+        {/*  
+          <h4 className='event__date'>{event.year}</h4> 
+        <div className='timeline__id'>{event.year}</div>
+         */}
       </div>
     </div>
   );
@@ -37,9 +39,12 @@ class Timeline extends React.Component {
     changeTick: PropTypes.func.isRequired,
     timeline: PropTypes.array.isRequired,
     tick: PropTypes.number.isRequired,
-    ticks: PropTypes.array.isRequired
+    ticks: PropTypes.object.isRequired
   }
 
+  state = {
+    isMinified: false
+  }
 
   handleSelect = (tick) => {
     // console.log(`tick is ${tick}`);
@@ -84,17 +89,27 @@ class Timeline extends React.Component {
     this.props.changeTick(this.props.tick - 1);
   }
 
+  toggleSidebar() {
+    console.log('togglesdiebar');
+    this.setState({ isMinified: !this.state.isMinified });
+  }
+
   render() {
+    const timelineClasses = ['timeline'];
+    if (this.state.isMinified) { timelineClasses.push('timeline__minified'); }
+
     return (
-      <ReactCSSTransitionGroup>
-        <div
-          className='timeline'
-          id="keyboard"
-          role="button"
-          tabIndex='0'
-          onWheel={(e) => this.handleWheel(e)}
-          onKeyDown={e => this.handlePress(e)}
-        >
+      <div
+        className={timelineClasses.join(' ')}
+        id="keyboard"
+        role="button"
+        tabIndex='0'
+        onWheel={e => this.handleWheel(e)}
+        onKeyDown={e => this.handlePress(e)}
+      >
+        <NavigationPan isMin={this.state.isMinified} cb={() => this.toggleSidebar()} />
+        <Next />
+        <div className='event__container'>
           {this.props.timeline.map(event => (
             event !== null && <Event
               key={`events_${event.tick}`}
@@ -103,9 +118,9 @@ class Timeline extends React.Component {
               selectedId={this.props.tick}
             />)
           )}
-
         </div>
-      </ReactCSSTransitionGroup>
+        <Previous />
+      </div>
     );
   }
 }

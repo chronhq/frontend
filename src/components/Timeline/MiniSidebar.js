@@ -18,7 +18,7 @@ const tooltip = text => (
   <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
 );
 
-class MiniSidebar extends React.Component {
+class MiniSidebarOld extends React.Component {
   static propTypes = {
     changeTick: PropTypes.func.isRequired,
     timeline: PropTypes.object.isRequired,
@@ -84,6 +84,10 @@ class MiniSidebar extends React.Component {
 //   // methods
 // }
 
+const MiniSidebar = () => (
+  <Timeline />
+);
+
 function mapStateToProps(state) {
   return {
     facade: state.runtime.facade,
@@ -99,4 +103,5 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MiniSidebar);
+// export default connect(mapStateToProps, mapDispatchToProps)(MiniSidebar);
+export default MiniSidebar;
