@@ -3,13 +3,7 @@ export * from './timelineData';
 export * from './year';
 export * from './mapView';
 export * from './status';
-
-export function loadData(fetchList = []) {
-  return {
-    type: 'LOAD_DATA_SAGA',
-    fetchList
-  };
-}
+export * from './loadData';
 
 export function changeGrouping(auto, enabled, zoomPoint) {
   return {

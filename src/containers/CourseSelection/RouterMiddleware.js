@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 
-import { loadData,
+import { loadDataForCourse,
   markItReady,
   setProjection,
   setVisibility,
@@ -14,60 +14,6 @@ import { withRouter } from 'react-router-dom'
 
 const sumLoading = obj =>
   Object.keys(obj).reduce((prev, curId) => prev + Number(!obj[curId].loaded), 0);
-
-const requestData = (id) => {
-  const filter = JSON.stringify({ where: { courseId: id } });
-  const base = [
-    {
-      resource: 'BORDERS_TIMELINE',
-      req: { filter },
-    }, {
-      resource: 'LOCATIONS',
-      req: { key: 'places' },
-    }, {
-      resource: 'TERRAIN',
-      req: { filter },
-    }, {
-      resource: 'PROPERTIES',
-      req: { key: 'properties' },
-    }, {
-      resource: 'PROPERTIES_ADMIN',
-      req: { key: 'admin' },
-    }, {
-      resource: 'PROPERTIES_TYPE',
-      req: { key: 'type' },
-    }, {
-      resource: 'PERSONS',
-    }, {
-      resource: 'MAP_DECORATIONS',
-    }, {
-      resource: 'MAP_PICS',
-    },
-  ];
-
-  const defaultViewData = [
-    {
-      resource: 'EVENTS_GEO',
-      req: { key: 'byId' },
-    }, {
-      resource: 'INVENTIONS',
-    },
-  ];
-
-  const courseViewData = [
-    {
-      resource: 'COURSE_TIMELINES',
-      req: { filter, id: 'tick', key: 'tick' },
-    }, {
-      resource: 'COURSE_TRACES',
-      req: { id: 'courseTimelineId', key: 'tick' }
-    },
-  ];
-  return id !== 0
-    ? [...base, ...courseViewData]
-    : [...base, ...defaultViewData];
-};
-
 
 class RouterMiddleware extends Component {
   state = {
@@ -130,14 +76,12 @@ class RouterMiddleware extends Component {
 
   selectCourse(availableCourses, name) {
     const course = Object.values(availableCourses).find(cur => cur.url === name);
-    console.log('finded course', course);
     if (course !== undefined) {
       this.setState({ loading: true, course: Boolean(course.id), selected: course.id });
 
       this.props.setProjection(availableCourses[course.id].projection);
 
-      const data = requestData(course.id);
-      this.props.loadData(data);
+      this.props.loadDataForCourse(course.id);
     } else {
       this.props.history.push('404');
     }
@@ -145,9 +89,6 @@ class RouterMiddleware extends Component {
   startLoading(coursesLoaded, availableCourses) {
     if (coursesLoaded && this.props.id !== null) {
       this.selectCourse(availableCourses, this.props.id);
-    } else {
-      console.log('Loading not started');
-      console.log(coursesLoaded, this.props.id);
     }
   }
 
@@ -204,7 +145,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    loadData: bindActionCreators(loadData, dispatch),
+    loadDataForCourse: bindActionCreators(loadDataForCourse, dispatch),
     markItReady: bindActionCreators(markItReady, dispatch),
     setProjection: bindActionCreators(setProjection, dispatch),
     setFlagsAction: bindActionCreators(setFlagsAction, dispatch),

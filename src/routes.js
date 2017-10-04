@@ -3,16 +3,16 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
+import { Flag } from 'flag';
 
 import App from './App';
 // import NotFound from './'
 // import StartPage from './components/StartPage';
-import CourseSelection from './containers/CourseSelection/CourseSelectionNew';
+import CourseSelection from './containers/CourseSelection';
 // import CourseSelection from './containers/CourseSelection';
 import DevTools from './DevTools';
 import UI from './containers/UI';
-import { Flag } from 'flag';
 
 const AppSelect = () => (
   <div>
@@ -35,14 +35,14 @@ const NotFound = () => (
   </div>
 );
 
-const Test = ({ match }) => {
-  console.log(match);
-  return(
-    <div>
-      <h3> Test {match.params.id}</h3>
-    </div>
-  );
-};
+// const Test = ({ match }) => {
+//   console.log(match);
+//   return(
+//     <div>
+//       <h3> Test {match.params.id}</h3>
+//     </div>
+//   );
+// };
 
 const AppRouter = () => (
   <Switch>
