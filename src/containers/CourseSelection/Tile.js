@@ -13,7 +13,7 @@ const Tile = ({ course, disabled, selectCourse, selected }) => {
           <i className="fa fa-globe fa-3x" aria-hidden="true" />
         </div>
         */}
-    <Link to={`${course.id}`}>
+    <Link to={`${course.url}`}>
         <div className='tile__content'>
           <h3 className='tile__title'> {course.name}  {course.id} </h3>
           {/* <div className='tile__content__separator' /> */}

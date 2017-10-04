@@ -68,34 +68,29 @@ const requestData = (id) => {
     : [...base, ...defaultViewData];
 };
 
-const listOfCourses = [{
-  resource: 'COURSES',
-  req: {
-    filter: JSON.stringify({ where: { active: true } }),
-  },
-}];
 
 class RouterMiddleware extends Component {
   state = {
     loading: false,
     course: false,
     selected: null,
-    shouldupdate: true,
   }
 
   componentDidMount() {
-    this.props.loadData(listOfCourses);
-    this.selectCourse(this.props.id);
-    // console.log(typeof(this.props.id));
+    this.startLoading(this.props.coursesLoaded, this.props.availableCourses);
   }
 
   componentWillReceiveProps(next) {
+    if (next.coursesLoaded === true
+      && this.state.loading !== true) {
+      // we need to force loading, because 'nextProps' not yet installed
+      this.startLoading(next.coursesLoaded, next.availableCourses);
+    }
     const notLoaded = this.state.course
       ? sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.courses)
       : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
     // console.log(sumLoading(next.timeline), sumLoading(next.data), sumLoading(next.full));
     if (notLoaded === 0) {
-      console.log('mark1');
       const uiSettings = this.toggleUI;
       this.props.markItReady(true);
       this.props.setFlagsAction({ CourseSelection: false, ...uiSettings.flags });
@@ -112,13 +107,6 @@ class RouterMiddleware extends Component {
     }
 
     // TODO Check for projected data
-    if (this.props.availableCourses[this.props.id] !== next.availableCourses[this.props.id]) {
-      this.props.setProjection(next.availableCourses[this.props.id].projection);
-      // if (!(this.props.id in next.availableCourses)) {
-      // // if 
-      //   this.props.history.push('404');
-      // };
-    }
   }
 
   get toggleUI() {
@@ -140,10 +128,27 @@ class RouterMiddleware extends Component {
       : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false } } };
   }
 
-  selectCourse(id) {
-    this.setState({ loading: true, course: Boolean(id), selected: id });
-    // this.props.setProjection(this.props.availableCourses[this.props.id].projection);
-    this.props.loadData(requestData(id));
+  selectCourse(availableCourses, name) {
+    const course = Object.values(availableCourses).find(cur => cur.url === name);
+    console.log('finded course', course);
+    if (course !== undefined) {
+      this.setState({ loading: true, course: Boolean(course.id), selected: course.id });
+
+      this.props.setProjection(availableCourses[course.id].projection);
+
+      const data = requestData(course.id);
+      this.props.loadData(data);
+    } else {
+      this.props.history.push('404');
+    }
+  }
+  startLoading(coursesLoaded, availableCourses) {
+    if (coursesLoaded && this.props.id !== null) {
+      this.selectCourse(availableCourses, this.props.id);
+    } else {
+      console.log('Loading not started');
+      console.log(coursesLoaded, this.props.id);
+    }
   }
 
   render() {
@@ -170,6 +175,7 @@ const getLoadedStatus = (name, data) => ({
 function mapStateToProps(state) {
   return {
     availableCourses: state.courses.list.byId || {},
+    coursesLoaded: state.courses.list.loaded,
     courses: {
       timeline: getLoadedStatus('Хронология событий', state.courses.timeline),
       traces: getLoadedStatus('История путешествий', state.courses.traces),
