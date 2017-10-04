@@ -194,10 +194,10 @@ class Map extends Component {
             borders={this.props.b.borders}
             setClickInfoCb={this.props.setClickInfo}
           />
-          <Locations />
-          <Expeditions />
           <MapDecorations decorations={this.props.mapDecorations} />
           <GeoPoints />
+          <Expeditions />
+          <Locations />
         </g>
         <g transform={this.state.widgetTransform}>
           <ScaleWidget zoom={this.scale} height={this.height} />
