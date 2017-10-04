@@ -137,7 +137,6 @@ function mapStateToProps(state) {
     }
   };
   [-2, -1, 1, 2].map(fillTimeline);
-  console.log(timeline);
   return {
     timeline,
     tick,
