@@ -7,6 +7,7 @@ import { select, event } from 'd3-selection';
 
 import Locations from '../Locations';
 import Expeditions from '../Expeditions';
+import GeoPoints from '../GeoPoints';
 import PatternsDefs, { getFillPatternId } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
@@ -196,6 +197,7 @@ class Map extends Component {
           <Locations />
           <Expeditions />
           <MapDecorations decorations={this.props.mapDecorations} />
+          <GeoPoints />
         </g>
         <g transform={this.state.widgetTransform}>
           <ScaleWidget zoom={this.scale} height={this.height} />
