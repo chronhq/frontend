@@ -90,7 +90,6 @@ class Timeline extends React.Component {
   }
 
   toggleSidebar() {
-    console.log('togglesdiebar');
     this.setState({ isMinified: !this.state.isMinified });
   }
 

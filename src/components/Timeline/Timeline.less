@@ -56,7 +56,7 @@
 @border-width: 4px;
 @dot-diameter: 10px;
 @dot-diameter--selected: 14px;
-@timeline__width: 800px;
+@timeline__width: 400px;
 @timeline__width--min: 400px;
 @box-size: 50px;
 
@@ -92,6 +92,8 @@
   // right: -380px;
   // margin-right: 50px;
   // background:#fff;
+  // top: 100px;
+  // height: calc(~'100vh - 150px');
   height: 100vh;
   overflow-y: hidden;
   // padding: 30px 50px;
@@ -104,9 +106,9 @@
     border-left-color: #888888;
     border-left-width: 4px;
     top: 0px;
-    width: 50%;
+    width: 100%;
     height: 100vh;
-    left: calc(~'50%'); //@gutter/2
+    // left: calc(~'50%'); //@gutter/2
     bottom: 0px;
     // width: @border-width;
     // background: #ddd;
@@ -147,7 +149,7 @@
   .timeline__heading {
     margin-bottom: .5em;
     text-decoration: underline;
-    width: 50%;
+    width: 100%;
     padding-right: @gutter;
     text-align: left;
     padding-left: 1em;
@@ -201,7 +203,7 @@
   .timeline__title {
     margin-bottom: .5em;
     // text-decoration: underline;z
-    width: 50%;
+    width: 100%;
     padding-right: @gutter;
     text-align: left;
     padding-left: 1em;
@@ -215,7 +217,7 @@
   .timeline__text {
     margin: 0 0 1em;
     width: @timeline__width--min;
-    width: 50%;
+    width: 100%;
     padding-left: @gutter;
     transition: height 1000ms 0ms, opacity 1000ms 1000ms;
     // opacity: 0.0;

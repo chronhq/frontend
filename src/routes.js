@@ -8,59 +8,49 @@ import { connect } from 'react-redux';
 import App from './App';
 // import NotFound from './'
 // import StartPage from './components/StartPage';
+import CourseSelection from './containers/CourseSelection/CourseSelectionNew';
+// import CourseSelection from './containers/CourseSelection';
+import DevTools from './DevTools';
+import UI from './containers/UI';
+import { Flag } from 'flag';
 
+const AppSelect = () => (
+  <div>
+    <Flag
+      name="CourseSelection"
+      // render={() => <RouterMiddleware id={match.params.id} />}
+      render={() => <CourseSelection />}
+      fallbackRender={() => <UI />}
+    />
+    <Flag
+      name="devTools"
+      render={() => <DevTools />}
+    />
+  </div>
+);
 
+const NotFound = () => (
+  <div>
+    <h3> Not Found </h3>
+  </div>
+);
 
-// import { bindActionCreators } from 'redux';
-// import { loadData } from './reducers/actions';
-
-// const listOfCourses = [{
-//   resource: 'COURSES',
-//   req: {
-//     filter: JSON.stringify({ where: { active: true } }),
-//   },
-// }];
-
-
-// const mapStateToAppProps = (state) => ({
-//   // location: state.location
-//   courses: state.courses.list.byId
-// })
-
-// const mapDispatchToProps = (dispatch) => ({
-//     loadData: bindActionCreators(loadData, dispatch),
-//   }
-// );
-
-// // this.props.courses.list.byId.
-// const AppRouter = connect(mapStateToAppProps)((props) =>
-// {
-//   // console.log(props);
-//   // props.loadData(listOfCourses);
-
-//   return (
-//     <Switch>
-//       {/* <Route exact path={`/`} render={() => <StartPage id={props.courses}/>} /> */}
-//        <Route exact path='/' render={() => <App />} />
-//       {
-//       {Object.keys(props.courses).map(id =>
-//       )}
-//        }
-//        {/*
-//       <Route path={`/1`} render={() => <App /> } />
-//       <Route exact path={`/`} render={() => <StartPage id={1}/>} />
-//        <Route path='/course1' component={} />
-//        <Route render={NotFound} />
-//       */}
-//     </Switch>
-//   );
-// }
-// );
+const Test = ({ match }) => {
+  console.log(match);
+  return(
+    <div>
+      <h3> Test {match.params.id}</h3>
+    </div>
+  );
+};
 
 const AppRouter = () => (
-    <Switch>
-       <Route exact path='/' render={() => <App />} />
-    </Switch>
+  <Switch>
+    <Route exact path='/' component={AppSelect} />
+    <Route exact path='/404' component={NotFound} />
+    <Route path='/:id' component={App} />
+    <Route render={NotFound} />
+  </Switch>
 );
 
 // class AppRouter extends AnotherClass {
