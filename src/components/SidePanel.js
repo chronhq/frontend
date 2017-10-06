@@ -13,7 +13,7 @@ import Legend from '../containers/Legend';
 import Intro from './Intro';
 import Feedback from './Feedback/';
 import ControlButtons from '../components/ControlButtons';
-import TimePanel from './TimePanel';
+// import TimePanel from './TimePanel';
 // import ReturnUiButton from './Timeline/ReturnUiButton';
 import AlignToggler from './Debug';
 

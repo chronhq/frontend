@@ -3,7 +3,7 @@ import 'bootstrap/less/bootstrap.less';
 
 import { Flag } from 'flag';
 
-import CourseSelection from './containers/CourseSelection';
+// import CourseSelection from './containers/CourseSelection';
 import RouterMiddleware from './containers/CourseSelection/RouterMiddleware';
 import UI from './containers/UI';
 

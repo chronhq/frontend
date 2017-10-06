@@ -18,7 +18,7 @@ const UI = () => (
       name="UI.TimePanel"
       render={() => <TimePanel />}
     />
-     <Flag
+    <Flag
       name="UI.MiniSidebar"
       render={() => <MiniSidebar />}
     />

@@ -8,7 +8,7 @@ export default {
     TimePanel: true,
     SidePanel: true,
     MapClickInfo: true,
-    MapControls: true,
+    MapControls: false,
     MiniSidebar: false,
   }
 };
