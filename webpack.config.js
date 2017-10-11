@@ -49,7 +49,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ['react-hot-loader', 'babel-loader'],
+        use: ['react-hot-loader/webpack', 'babel-loader'],
         include: [path.join(__dirname, 'src'), path.join(__dirname, 'shared')],
       },
       {
