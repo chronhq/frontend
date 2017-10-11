@@ -8,7 +8,7 @@ class GeoPoints extends Component {
         {this.props.geoPoints.map(icon => (
           <use
             xlinkHref={`#mapPic_${icon.pic}`}
-            transform={`translate(${icon.projected.x},${icon.projected.y}) scale(0.005)`}
+            transform={`translate(${icon.projected.x},${icon.projected.y}) scale(0.05)`}
           />
         ))}
       </g>);
