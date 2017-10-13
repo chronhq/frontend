@@ -35,9 +35,10 @@ class NextComponent extends React.Component {
   render() {
     return (
       <div className='timeline__control control__up'>
-        <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Previous')} >
+        <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Предыдущий год')} >
           <button onClick={() => this.handlePrevious()}>
             <i className='fa fa-angle-up fa-fw' />
+            <hr />
           </button>
         </OverlayTrigger>
       </div>
@@ -54,7 +55,6 @@ class PreviousComponent extends React.Component {
 
   handleNext() {
     /* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
-    console.log('stuff');
     this.props.ticks[this.props.tick + 1] &&
     this.props.changeTick(this.props.tick + 1);
   }
@@ -62,8 +62,9 @@ class PreviousComponent extends React.Component {
   render() {
     return (
       <div className='timeline__control control__down'>
-        <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Next')} >
+        <OverlayTrigger placement='left' delayHide={200} overlay={tooltip('Следущий год')} >
           <button onClick={() => this.handleNext()}>
+            <hr />
             <i className='fa fa-angle-down fa-fw' />
           </button>
         </OverlayTrigger>
@@ -72,12 +73,12 @@ class PreviousComponent extends React.Component {
   }
 }
 
-export const NavigationPan = ({ cb }) => (
+export const NavigationPan = ({ cb, isMin }) => (
   <div className='timeline__control control__home'>
     {/* <div> Placehold </div> */}
-    <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Next')} >
+    <OverlayTrigger placement='left' delayHide={200} overlay={tooltip((isMin) ? 'Развернуть' : 'Свернуть')} >
       <button onClick={() => cb()}>
-        <i className='fa fa-gear fa-fw' />
+        <i className='fa fa-bars fa-fw' />
       </button>
     </OverlayTrigger>
   </div>

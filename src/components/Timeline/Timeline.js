@@ -25,6 +25,7 @@ const Event = ({ event, selectCb, selectedId }) => {
         <div className="timeline__heading"> {event.year} </div>
         <div className='timeline__title'> {event.title} </div>
         <div className='timeline__text'> {event.description} </div>
+
         {/*  
           <h4 className='event__date'>{event.year}</h4> 
         <div className='timeline__id'>{event.year}</div>

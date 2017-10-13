@@ -3,6 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 
+import 'font-awesome/less/font-awesome.less';
+import './RouterMiddleware.less';
+
 import { loadDataForCourse,
   markItReady,
   setProjection,
@@ -94,8 +97,7 @@ class RouterMiddleware extends Component {
 
   render() {
     return (
-      <div className='text-center'>
-        <h3> Router Middleware</h3>
+      <div className='loading-screen'>
         <i className='fa fa-circle-o-notch fa-spin fa-2x fa-fw' />
         <span className='sr-only'>Loading...</span>
         {/*

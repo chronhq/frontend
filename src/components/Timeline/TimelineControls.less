@@ -1,11 +1,11 @@
-@box-size: 50px;
+@box-size: 57px;
 
 .timeline__control {
   clear: both;
   // margin-bottom: .5em;
   float: right;
   // text-decoration: underline;z
-  width: 100%;
+  width: 98%;
   height: @box-size;
   // text-align: left;
   // padding-left: 0.3em;
@@ -15,19 +15,26 @@
   position: absolute;
 
   @media screen and (max-width: 40em) {
-    width: 100%;
+    width: 98%;
   }
   button {
-    color: #335A7B;
-    background-color: rgba(230, 240, 255, 0.0);
+    // color: #335A7B;
+    // background-color: rgba(230, 240, 255, 0.0);
     // opacity: 0;
     // border: none;
+    background-color: transparent;
+    padding: 0;
     outline: none;
+    border: none;
     height: 100%;
     width: 100%;
     i {
       // width: 100px;
       font-size: 20px;
+    }
+    hr {
+      width: 80%;
+      margin: 0 auto;
     }
   }
 }
