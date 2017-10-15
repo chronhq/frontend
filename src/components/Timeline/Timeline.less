@@ -94,12 +94,13 @@
 //   min-height: 100vh;
 //   width: 100vw;
   // position: fixed;
-  margin-top: 105px;
+  margin-top: 130px;
   margin-bottom: 50px;
   overflow-y: hidden;
+  // overflow-y: scroll;
 //   padding: 50px;
   // position: absolute;
-  height: calc(~'100% - 155px');
+  height: calc(~'100% - 180px');
   bottom: 50px;
 //   // font-weight: 300;
 //   // color: #333;
@@ -214,7 +215,8 @@
     font-family: OpenSans-Light;
     user-select: none; 
     color: @heading__c;
-    letter-spacing: -1px;
+    letter-spacing: -2px;
+    // color: red;
     margin-bottom: .1em;
     font-size: 20px;  
     width: 100%;
@@ -403,7 +405,7 @@
     left: 0;
     .timeline__heading {
       width: @box-size;
-      padding: 0 0;
+      padding: 0 5px;
       text-align: center;
       right: 0;
       &:before {

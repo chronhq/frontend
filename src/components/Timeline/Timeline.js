@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,13 +10,14 @@ import './Timeline.less';
 import { Next, Previous, NavigationPan } from './TimelineControls';
 
 
-const Event = ({ event, selectCb, selectedId }) => {
+const Event = ({ event, selectCb, selectedId, selectedEventRef }) => {
   const eventClasses = ['timeline__entry'];
   if (selectedId === event.tick) { eventClasses.push('timeline__entry--selected'); }
 
   return (
     <div>
-      <div
+      <div 
+        ref={(selectedId === event.tick) ? selectedEventRef : null }
         role="button"
         key={`event_${event.id}`}
         // onClick={() => selectCb(event.id)}
@@ -25,7 +27,6 @@ const Event = ({ event, selectCb, selectedId }) => {
         <div className="timeline__heading"> {event.year} </div>
         <div className='timeline__title'> {event.title} </div>
         <div className='timeline__text'> {event.description} </div>
-
         {/*  
           <h4 className='event__date'>{event.year}</h4> 
         <div className='timeline__id'>{event.year}</div>
@@ -38,13 +39,23 @@ const Event = ({ event, selectCb, selectedId }) => {
 class Timeline extends React.Component {
   static propTypes = {
     changeTick: PropTypes.func.isRequired,
-    timeline: PropTypes.array.isRequired,
+    timeline: PropTypes.object.isRequired,
     tick: PropTypes.number.isRequired,
     ticks: PropTypes.object.isRequired
   }
 
   state = {
     isMinified: false
+  }
+
+  componentDidUpdate() {
+    const scrollHeight = '300px';
+    const selectedNode = document.getElementsByClassName('timeline__entry--selected');
+    const containerNode = document.getElementsByClassName('event__container');
+    console.log(selectedNode[0].scrollTop, selectedNode[0].offsetTop);
+    console.log(containerNode[0].scrollTop, containerNode[0].offsetTop);
+    containerNode[0].scrollTop = selectedNode[0].offsetTop-200; // HARDCODE
+    console.log(selectedNode);
   }
 
   handleSelect = (tick) => {
@@ -110,10 +121,11 @@ class Timeline extends React.Component {
         <NavigationPan isMin={this.state.isMinified} cb={() => this.toggleSidebar()} />
         <Next />
         <div className='event__container'>
-          {this.props.timeline.map(event => (
+          {Object.keys(this.props.timeline).map(event => (
             event !== null && <Event
-              key={`events_${event.tick}`}
-              event={event}
+              selectedEventRef={(r) => { this.selectedRef = r; }}
+              key={`events_${event}`}
+              event={this.props.timeline[event]}
               selectCb={(tick, ev) => this.handleSelect(tick, ev)}
               selectedId={this.props.tick}
             />)
@@ -126,22 +138,11 @@ class Timeline extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const tick = state.timeline.year.tick;
-  const ticks = state.courses.timeline.tick;
-
-  const timeline = [null, null, ticks[tick], null, null];
-  const fillTimeline = (shift) => {
-    const middle = 2;
-    const curTick = tick + shift;
-    if (curTick in ticks) {
-      timeline[middle + shift] = ticks[curTick];
-    }
-  };
-  [-2, -1, 1, 2].map(fillTimeline);
   return {
-    timeline,
-    tick,
-    ticks
+    timeline: state.courses.timeline.tick,
+    // events: state.courses.events.tick,
+    tick: state.timeline.year.tick,
+    ticks: state.courses.timeline.tick
   };
 }
 
