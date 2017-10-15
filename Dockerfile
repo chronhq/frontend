@@ -1,5 +1,5 @@
 # Dockerfile (tag: v3)
-FROM mhart/alpine-node:6
+FROM mhart/alpine-node:8
 RUN apk add --no-cache git
 ADD . /chronist
 WORKDIR /chronist
