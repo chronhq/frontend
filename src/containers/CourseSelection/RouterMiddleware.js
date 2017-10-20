@@ -60,7 +60,7 @@ class RouterMiddleware extends Component {
 
   get toggleUI() {
     return this.state.course
-      ? { flags: { UI: { TimePanel: false, SidePanel: false, MiniSidebar: true } },
+      ? { flags: { UI: { TimePanel: false, SidePanel: false, MiniSidebar: true, LegendHOC: true, Bio: false } },
         visibility: {
           borders: 1,
           locations: 1,
@@ -74,7 +74,7 @@ class RouterMiddleware extends Component {
           mapShift: [-350, -150],
         },
       }
-      : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false } } };
+      : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false, LegendHOC: false, Bio: false } } };
   }
 
   selectCourse(availableCourses, name) {

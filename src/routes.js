@@ -46,7 +46,7 @@ const NotFound = () => (
 
 const AppRouter = () => (
   <Switch>
-    <Route exact path='/' component={AppSelect} />
+    <Route exact path='/' component={CourseSelection} />
     <Route exact path='/404' component={NotFound} />
     <Route path='/:id' component={App} />
     <Route render={NotFound} />

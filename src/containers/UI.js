@@ -7,6 +7,8 @@ import TimePanel from '../components/TimePanel';
 import MapControls from '../components/MapControls';
 import MapClickInfo from '../components/MapClickInfo';
 import MiniSidebar from '../components/Timeline/MiniSidebar';
+import LegendHOC from '../containers/LegendHOC';
+import Bio from '../components/Timeline/Bio';
 
 const UI = () => (
   <div className='content'>
@@ -33,6 +35,14 @@ const UI = () => (
     <Flag
       name="UI.MapViewport"
       render={() => <MapViewport />}
+    />
+    <Flag 
+      name="UI.LegendHOC"
+      render={() => <LegendHOC />}
+    />
+    <Flag
+      name="UI.Bio"
+      render={() => <Bio />}
     />
   </div>
 );

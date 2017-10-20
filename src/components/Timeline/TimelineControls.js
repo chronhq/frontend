@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 // import 'MiniSidebar.less';
 import './TimelineControls.less';
 import { changeTick } from '../../reducers/actions';
+import TimelineButtons from './TimelineButtons';
 
 function changeUI(data) {
   return {
@@ -73,14 +74,14 @@ class PreviousComponent extends React.Component {
   }
 }
 
-export const NavigationPan = ({ cb, isMin }) => (
+export const NavigationPan = ({ cb, isMin, cbbio }) => (
   <div className='timeline__control control__home'>
-    {/* <div> Placehold </div> */}
-    <OverlayTrigger placement='left' delayHide={200} overlay={tooltip((isMin) ? 'Развернуть' : 'Свернуть')} >
+    <OverlayTrigger placement='bottom' delayHide={200} overlay={tooltip((isMin) ? 'Развернуть' : 'Свернуть')} >
       <button onClick={() => cb()}>
         <i className='fa fa-bars fa-fw' />
       </button>
     </OverlayTrigger>
+    {(isMin) ? null : <TimelineButtons cb={cbbio} />}
   </div>
 );
 
