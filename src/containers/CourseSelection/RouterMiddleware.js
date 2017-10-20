@@ -11,6 +11,7 @@ import { loadDataForCourse,
   setProjection,
   setVisibility,
   defaultScaleChange,
+  setMapDimensions,
 } from '../../reducers/actions';
 
 import { withRouter } from 'react-router-dom'
@@ -40,41 +41,23 @@ class RouterMiddleware extends Component {
       : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
     // console.log(sumLoading(next.timeline), sumLoading(next.data), sumLoading(next.full));
     if (notLoaded === 0) {
-      const uiSettings = this.toggleUI;
+      const uiSettings = this.props.availableCourses[this.state.selected].config.settings;
+      console.log('UI settings', uiSettings);
+      const mapDimensions = this.props.availableCourses[this.state.selected].projected;
+      this.props.setMapDimensions(mapDimensions);
       this.props.markItReady(true);
-      this.props.setFlagsAction({ CourseSelection: false, ...uiSettings.flags });
+      this.props.setFlagsAction({ CourseSelection: false, SelectedCourse: this.state.selected, ...uiSettings.flags });
       if ('visibility' in uiSettings) {
         this.props.setVisibility(uiSettings.visibility);
       }
       if ('zoom' in uiSettings) {
         this.props.defaultScaleChange(
           uiSettings.zoom.minScale,
-          uiSettings.zoom.maxScale,
-          uiSettings.zoom.mapWidth,
-          uiSettings.zoom.mapShift);
+          uiSettings.zoom.maxScale);
       }
     }
 
     // TODO Check for projected data
-  }
-
-  get toggleUI() {
-    return this.state.course
-      ? { flags: { UI: { TimePanel: false, SidePanel: false, MiniSidebar: true, LegendHOC: true, Bio: false } },
-        visibility: {
-          borders: 1,
-          locations: 1,
-          tooltips: 1,
-          scale: 10
-        },
-        zoom: {
-          minScale: 4,
-          maxScale: 20,
-          mapWidth: 300,
-          mapShift: [-350, -150],
-        },
-      }
-      : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false, LegendHOC: false, Bio: false } } };
   }
 
   selectCourse(availableCourses, name) {
@@ -82,7 +65,7 @@ class RouterMiddleware extends Component {
     if (course !== undefined) {
       this.setState({ loading: true, course: Boolean(course.id), selected: course.id });
 
-      this.props.setProjection(availableCourses[course.id].projection);
+      this.props.setProjection(availableCourses[course.id].config.projection);
 
       this.props.loadDataForCourse(course.id);
     } else {
@@ -153,6 +136,7 @@ function mapDispatchToProps(dispatch) {
     setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
     setVisibility: bindActionCreators(setVisibility, dispatch),
     defaultScaleChange: bindActionCreators(defaultScaleChange, dispatch),
+    setMapDimensions: bindActionCreators(setMapDimensions, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RouterMiddleware));

@@ -40,25 +40,29 @@ const defaultState = {
   rotate: [0, 0, 0],
 };
 
+export const calculateProjection = (state, action) => {
+  const rotate = 'rotate' in action ? action.rotate : state.rotate;
+  const center = 'center' in action ? action.center : state.center;
+  const clip = 'clip' in action ? action.clip : state.clip;
+  const projectBase = state.byName[action.name].center(center).rotate(rotate);
+  const project = clip === null
+    ? projectBase
+    : projectBase.clipExtent([projectBase(clip[0]), projectBase(clip[1])]);
+  return {
+    ...state,
+    rotate,
+    center,
+    clip,
+    name: action.name,
+    project,
+    path: getGeoPath(project)
+  };
+};
+
 const projection = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_PROJECTION': {
-      const rotate = 'rotate' in action ? action.rotate : state.rotate;
-      const center = 'center' in action ? action.center : state.center;
-      const clip = 'clip' in action ? action.clip : state.clip;
-      const projectBase = state.byName[action.name].center(center).rotate(rotate);
-      const project = clip === null
-        ? projectBase
-        : projectBase.clipExtent([projectBase(clip[0]), projectBase(clip[1])]);
-      return {
-        ...state,
-        rotate,
-        center,
-        clip,
-        name: action.name,
-        project,
-        path: getGeoPath(project)
-      };
+      return calculateProjection(state, action);
     }
     case 'CHANGE_PROJECTION_PENDING':
       return {
