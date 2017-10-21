@@ -14,7 +14,7 @@ class BioButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isBioOn: false,
+      isBioOn: true,
     };
   }
 
@@ -26,7 +26,7 @@ class BioButton extends React.Component {
 
   render() {
     return (
-      <OverlayTrigger placement='bottom' delayHide={0} overlay={tooltip('Информация об авторе')} >
+      <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip('Информация об авторе')} >
         <button onClick={() => this.bioToggle()}>
           <i className='fa fa-user-circle' aria-hidden='true' />
         </button>

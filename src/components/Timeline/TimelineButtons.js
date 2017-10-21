@@ -9,12 +9,12 @@ const tooltip = text => (
 );
 
 const ReturnButton = () => (
-  <OverlayTrigger placement='bottom' delayHide={0} overlay={tooltip('Домой')} >
-    <button>
-      <Link exact to='/'>
+  <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip('Домой')} >
+    <Link to='/'>
+      <button>
         <i className='fa fa-reply' aria-hidden='true' />
-      </Link>
-    </button>
+      </button>
+    </Link>
   </OverlayTrigger>
 );
 

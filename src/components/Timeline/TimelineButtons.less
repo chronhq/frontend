@@ -1,20 +1,17 @@
 @box-size: 57px;
 
 .timeline__buttons {
-  button a {
-    color: inherit;
+  a {
+    height: @box-size;
+    overflow: hidden;
+    // content: " ";
+    display: block;
+    // clear: both;
   }
-  // clear: both;
-  // display: inline-block;
-  // // margin-bottom: .5em;
+  a button {
+    color: rgb(51, 51, 51);
+  }
   float: right;
-  // // text-decoration: underline;z
   width: auto;
   height: @box-size;
-  // // text-align: left;
-  // // padding-left: 0.3em;
-  // // position: relative;
-  // // right: 50%;
-  // z-index: 8;
-  // position: absolute;
 }
