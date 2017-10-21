@@ -36,7 +36,7 @@ class NextComponent extends React.Component {
   render() {
     return (
       <div className='timeline__control control__up'>
-        <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Предыдущий год')} >
+        <OverlayTrigger placement='left' delayShow={150} delayHide={5} overlay={tooltip('Предыдущий год')} >
           <button onClick={() => this.handlePrevious()}>
             <i className='fa fa-angle-up fa-fw' />
             <hr />
@@ -63,7 +63,7 @@ class PreviousComponent extends React.Component {
   render() {
     return (
       <div className='timeline__control control__down'>
-        <OverlayTrigger placement='left' delayHide={200} overlay={tooltip('Следущий год')} >
+        <OverlayTrigger placement='left' delayShow={150} delayHide={5} overlay={tooltip('Следущий год')} >
           <button onClick={() => this.handleNext()}>
             <hr />
             <i className='fa fa-angle-down fa-fw' />
@@ -76,7 +76,7 @@ class PreviousComponent extends React.Component {
 
 export const NavigationPan = ({ cb, isMin, cbbio }) => (
   <div className='timeline__control control__home'>
-    <OverlayTrigger placement='bottom' delayHide={200} overlay={tooltip((isMin) ? 'Развернуть' : 'Свернуть')} >
+    <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip((isMin) ? 'Развернуть' : 'Свернуть')} >
       <button onClick={() => cb()}>
         <i className='fa fa-bars fa-fw' />
       </button>

@@ -9,7 +9,6 @@ const tooltip = text => (
 );
 
 
-// this.props.setFlagsAction({ CourseSelection: false, ...uiSettings.flags });
 class BioButton extends React.Component {
   bioToggle() {
     this.props.setFlagsAction({ UI: { Bio: !this.props.isBioOn } });
@@ -17,7 +16,7 @@ class BioButton extends React.Component {
 
   render() {
     return (
-      <OverlayTrigger placement='bottom' delayHide={0} overlay={tooltip('Информация об авторе')} >
+      <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip('Информация об авторе')} >
         <button onClick={() => this.bioToggle()}>
           <i className='fa fa-user-circle' aria-hidden='true' />
         </button>
