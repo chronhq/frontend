@@ -44,8 +44,13 @@ const BordersMap = ({ borders, loaded, visible, setClickInfoCb }) => (
 const SymbolsDefs = ({ symbols }) => ( // MapPics
   <g className="symbolsDefs">
     {symbols.map(mapPic => (
-      <symbol id={`mapPic_${mapPic.id}`}>
-        {mapPic.g.map(g => g.style.fill !== '#FEFEFE' && <path d={g.d} style={g.style} />)}
+      <symbol id={`mapPic_${mapPic.id}`} key={`mapPic_key_${mapPic.id}`}>
+        {mapPic.g.map((g, id) => (
+          <path
+            key={`mapPic_g_key_${mapPic.id}_${id}`}
+            d={g.d}
+            style={g.style}
+          />))}
       </symbol>
     ))}
   </g>
@@ -54,6 +59,7 @@ const SymbolsDefs = ({ symbols }) => ( // MapPics
 const MapDecorations = ({ decorations }) => (
   <g className="mapDecorations">
     {decorations.map(icon => (<use
+      key={`mapPic_key_${icon.id}_${icon.picId}`}
       xlinkHref={`#mapPic_${icon.picId}`}
       transform={`translate(${icon.projected.x},${icon.projected.y}) ${icon.transform}`}
     />))
@@ -62,17 +68,6 @@ const MapDecorations = ({ decorations }) => (
 );
 
 class Map extends Component {
-  defaultProps = {
-    b: {
-      bordersData: { features: [] },
-      borders: [],
-      loaded: false,
-      visible: false
-    },
-    terrain: [],
-    terrainData: []
-  }
-
   state = {
     defaultZoom: () => {
       const w = window.innerWidth / this.props.mapWidth;
@@ -211,6 +206,17 @@ class Map extends Component {
     );
   }
 }
+
+Map.defaultProps = {
+  b: {
+    bordersData: { features: [] },
+    borders: [],
+    loaded: false,
+    visible: false
+  },
+  terrain: [],
+  terrainData: []
+};
 
 function mapStateToProps(state) {
   return { terrain: state.data.terrain.projected,
