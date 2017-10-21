@@ -11,17 +11,8 @@ const tooltip = text => (
 
 // this.props.setFlagsAction({ CourseSelection: false, ...uiSettings.flags });
 class BioButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isBioOn: false,
-    };
-  }
-
   bioToggle() {
-    console.log(this.state.isBioOn);
-    this.setState({ isBioOn: !this.state.isBioOn });
-    this.props.setFlagsAction({ UI: { Bio: this.state.isBioOn } });
+    this.props.setFlagsAction({ UI: { Bio: !this.props.isBioOn } });
   }
 
   render() {
@@ -34,6 +25,11 @@ class BioButton extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    isBioOn: state.flags.UI.Bio
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -41,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(BioButton);
+export default connect(mapStateToProps, mapDispatchToProps)(BioButton);
