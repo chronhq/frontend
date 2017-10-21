@@ -27,7 +27,6 @@ class RouterMiddleware extends Component {
   }
 
   componentDidMount() {
-    console.log('Router Middleware did mount');
     this.startLoading(this.props.coursesLoaded, this.props.availableCourses);
   }
 
@@ -35,15 +34,12 @@ class RouterMiddleware extends Component {
     if (next.coursesLoaded === true
       && this.state.loading !== true) {
       // we need to force loading, because 'nextProps' not yet installed
-      console.log('Router Middleware nextprops force');
       this.startLoading(next.coursesLoaded, next.availableCourses);
     }
     const notLoaded = this.state.course
       ? sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.courses)
       : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
-    console.log('Router Middleware notLoaded', notLoaded);
     if (notLoaded === 0) {
-      console.log('Router Middleware set new flags');
       const uiSettings = this.props.availableCourses[this.state.selected].config.settings;
       const mapDimensions = this.props.availableCourses[this.state.selected].projected;
       this.props.setMapDimensions(mapDimensions);
@@ -68,7 +64,6 @@ class RouterMiddleware extends Component {
   }
 
   selectCourse(availableCourses, name) {
-    console.log('Router Middleware selecting course', name);
     const course = Object.values(availableCourses).find(cur => cur.url === name);
     if (course !== undefined) {
       this.setState({ loading: true, course: Boolean(course.id), selected: course.id });
