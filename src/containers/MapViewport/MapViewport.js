@@ -44,8 +44,13 @@ const BordersMap = ({ borders, loaded, visible, setClickInfoCb }) => (
 const SymbolsDefs = ({ symbols }) => ( // MapPics
   <g className="symbolsDefs">
     {symbols.map(mapPic => (
-      <symbol id={`mapPic_${mapPic.id}`}>
-        {mapPic.g.map(g => g.style.fill !== '#FEFEFE' && <path d={g.d} style={g.style} />)}
+      <symbol id={`mapPic_${mapPic.id}`} key={`mapPic_key_${mapPic.id}`}>
+        {mapPic.g.map((g, id) => (
+          <path
+            key={`mapPic_g_key_${mapPic.id}_${id}`}
+            d={g.d}
+            style={g.style}
+          />))}
       </symbol>
     ))}
   </g>
@@ -54,6 +59,7 @@ const SymbolsDefs = ({ symbols }) => ( // MapPics
 const MapDecorations = ({ decorations }) => (
   <g className="mapDecorations">
     {decorations.map(icon => (<use
+      key={`mapPic_key_${icon.id}_${icon.picId}`}
       xlinkHref={`#mapPic_${icon.picId}`}
       transform={`translate(${icon.projected.x},${icon.projected.y}) ${icon.transform}`}
     />))
@@ -62,19 +68,12 @@ const MapDecorations = ({ decorations }) => (
 );
 
 class Map extends Component {
-  defaultProps = {
-    b: {
-      bordersData: { features: [] },
-      borders: [],
-      loaded: false,
-      visible: false
-    },
-    terrain: [],
-    terrainData: []
-  }
-
   state = {
-    defaultZoom: () => window.innerWidth / this.props.mapWidth,
+    defaultZoom: () => {
+      const w = window.innerWidth / this.props.mapWidth;
+      const h = window.innerHeight / this.props.mapHeight;
+      return w > h ? h : w;
+    },
     zoomInitSuccess: false,
     widgetTransform: 'translate(0,0)',
     transform: { k: 1, x: 0, y: 0 }
@@ -87,8 +86,8 @@ class Map extends Component {
       const svg = select(this.svgMap);
       svg.call(this.zoom);
       svg.call(this.zoom.transform, zoomIdentity
-        .translate(this.getTransformX(), this.getTransformY())
-        .scale(this.state.defaultZoom()));
+        .scale(this.state.defaultZoom())
+        .translate(this.getTransformX(), this.getTransformY()));
       /* eslint-disable react/no-did-mount-set-state */
       this.setState({
         zoomInitSuccess: true,
@@ -125,12 +124,12 @@ class Map extends Component {
     });
   }
 
-  getTransformX = () => this.props.mapShift[0] * this.state.defaultZoom();
-  getTransformY = () => this.props.mapShift[1] * this.state.defaultZoom();
+  getTransformX = () => this.props.mapShift[0] * this.scale;
+  getTransformY = () => this.props.mapShift[1] * this.scale;
 
   get scale() {
     if (this.state.transform) return this.state.transform.k;
-    return 1;
+    return this.state.defaultZoom();
   }
 
   get height() {
@@ -208,6 +207,17 @@ class Map extends Component {
   }
 }
 
+Map.defaultProps = {
+  b: {
+    bordersData: { features: [] },
+    borders: [],
+    loaded: false,
+    visible: false
+  },
+  terrain: [],
+  terrainData: []
+};
+
 function mapStateToProps(state) {
   return { terrain: state.data.terrain.projected,
     colorsData: state.runtime.colorsData,
@@ -215,6 +225,7 @@ function mapStateToProps(state) {
     maxScale: state.runtime.mapView.maxScale,
     minScale: state.runtime.mapView.minScale,
     mapWidth: state.runtime.mapView.mapWidth,
+    mapHeight: state.runtime.mapView.mapHeight,
     mapShift: state.runtime.mapView.mapShift,
     resetFlag: state.runtime.mapView.reset,
     rotation: state.runtime.mapView.rotation,

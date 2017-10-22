@@ -149,3 +149,30 @@ npm run dev
 - [x] Mobile friendly markup
 
 
+##WARNINGS: 
+
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules/chokidar/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN less-loader@4.0.5 requires a peer of less@^2.3.1 but none was installed.
+npm WARN flag@2.0.4 requires a peer of react@^15.5.4 but none was installed.
+npm WARN react-dom@15.6.2 requires a peer of react@^15.6.2 but none was installed.
+npm WARN slick-carousel@1.8.1 requires a peer of jquery@>=1.8.0 but none was installed.
+npm WARN react-addons-css-transition-group@15.6.2 requires a peer of react@^15.4.2 but none was installed.
+npm WARN react-slick@0.15.4 requires a peer of react@^0.14.0 || ^15.0.1 but none was installed.
+npm WARN react-slick@0.15.4 requires a peer of react-dom@^0.14.0 || ^15.0.1 but none was installed.
+npm WARN redux-devtools@3.4.0 requires a peer of react@^0.14.9 || ^15.3.0 but none was installed.
+npm WARN redux-devtools-log-monitor@1.3.0 requires a peer of react@^0.14.9 || ^15.3.0 but none was installed.
+npm WARN redux-devtools-dock-monitor@1.1.2 requires a peer of react@^0.14.9 || ^15.3.0 but none was installed.
+npm WARN react-json-tree@0.10.9 requires a peer of react@^15.0.0 but none was installed.
+npm WARN react-json-tree@0.10.9 requires a peer of react-dom@^15.0.0 but none was installed.
+
+
+offsetHeight
+:
+209
+offsetTop
+:
+381
+offsetTop
+:
+716

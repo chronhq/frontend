@@ -11,6 +11,7 @@ import { loadDataForCourse,
   setProjection,
   setVisibility,
   defaultScaleChange,
+  setMapDimensions,
 } from '../../reducers/actions';
 
 import { withRouter } from 'react-router-dom'
@@ -38,43 +39,28 @@ class RouterMiddleware extends Component {
     const notLoaded = this.state.course
       ? sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.courses)
       : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
-    // console.log(sumLoading(next.timeline), sumLoading(next.data), sumLoading(next.full));
     if (notLoaded === 0) {
-      const uiSettings = this.toggleUI;
+      const uiSettings = this.props.availableCourses[this.state.selected].config.settings;
+      const mapDimensions = this.props.availableCourses[this.state.selected].projected;
+      this.props.setMapDimensions(mapDimensions);
       this.props.markItReady(true);
-      this.props.setFlagsAction({ CourseSelection: false, ...uiSettings.flags });
+      this.props.setFlagsAction({
+        CourseSelection: false,
+        SelectedCourse: this.state.selected,
+        SelectedCourseName: this.props.id,
+        ...uiSettings.flags
+      });
       if ('visibility' in uiSettings) {
         this.props.setVisibility(uiSettings.visibility);
       }
       if ('zoom' in uiSettings) {
         this.props.defaultScaleChange(
           uiSettings.zoom.minScale,
-          uiSettings.zoom.maxScale,
-          uiSettings.zoom.mapWidth,
-          uiSettings.zoom.mapShift);
+          uiSettings.zoom.maxScale);
       }
     }
 
     // TODO Check for projected data
-  }
-
-  get toggleUI() {
-    return this.state.course
-      ? { flags: { UI: { TimePanel: false, SidePanel: false, MiniSidebar: true, LegendHOC: true, Bio: false } },
-        visibility: {
-          borders: 1,
-          locations: 1,
-          tooltips: 1,
-          scale: 10
-        },
-        zoom: {
-          minScale: 4,
-          maxScale: 20,
-          mapWidth: 300,
-          mapShift: [-350, -150],
-        },
-      }
-      : { flags: { UI: { TimePanel: true, SidePanel: true, MiniSidebar: false, LegendHOC: false, Bio: false } } };
   }
 
   selectCourse(availableCourses, name) {
@@ -82,7 +68,7 @@ class RouterMiddleware extends Component {
     if (course !== undefined) {
       this.setState({ loading: true, course: Boolean(course.id), selected: course.id });
 
-      this.props.setProjection(availableCourses[course.id].projection);
+      this.props.setProjection(availableCourses[course.id].config.projection);
 
       this.props.loadDataForCourse(course.id);
     } else {
@@ -100,16 +86,12 @@ class RouterMiddleware extends Component {
       <div className='loading-screen'>
         <i className='fa fa-circle-o-notch fa-spin fa-2x fa-fw' />
         <span className='sr-only'>Loading...</span>
-        {/*
-        <button onClick={() => this.selectCourse()}> Click </button>
-      */}
       </div>
     );
   }
 }
 
-const getLoadedStatus = (name, data) => ({
-  name,
+const getLoadedStatus = data => ({
   loaded: data.loaded,
   loading: data.loading || false,
   error: data.error || false,
@@ -119,29 +101,33 @@ function mapStateToProps(state) {
   return {
     availableCourses: state.courses.list.byId || {},
     coursesLoaded: state.courses.list.loaded,
+    flags: {
+      SelectedCourse: state.flags.SelectedCourse,
+      SelectedCourseName: state.flags.SelectedCourseName,
+    },
     courses: {
-      timeline: getLoadedStatus('Хронология событий', state.courses.timeline),
-      traces: getLoadedStatus('История путешествий', state.courses.traces),
+      timeline: getLoadedStatus(state.courses.timeline),
+      traces: getLoadedStatus(state.courses.traces),
     },
     full: {
-      inventions: getLoadedStatus('Список изобретений', state.timeline.inventions),
-      geoEvents: getLoadedStatus('Годы жизни великих людей', state.timeline.geoEvents),
-      inventionsData: getLoadedStatus('География изобретений', state.data.inventions),
-      geoEventsData: getLoadedStatus('Описание изменений', state.data.geoEvents),
+      inventions: getLoadedStatus(state.timeline.inventions),
+      geoEvents: getLoadedStatus(state.timeline.geoEvents),
+      inventionsData: getLoadedStatus(state.data.inventions),
+      geoEventsData: getLoadedStatus(state.data.geoEvents),
     },
     timeline: {
-      locations: getLoadedStatus('Перечень мест', state.timeline.locations),
-      borders: getLoadedStatus('Перечень границ', state.timeline.borders),
-      personsFacts: getLoadedStatus('Годы жизни великих людей', state.timeline.personsFacts),
-      personsAlive: getLoadedStatus('Годы жизни великих людей', state.timeline.personsAlive),
+      locations: getLoadedStatus(state.timeline.locations),
+      borders: getLoadedStatus(state.timeline.borders),
+      personsFacts: getLoadedStatus(state.timeline.personsFacts),
+      personsAlive: getLoadedStatus(state.timeline.personsAlive),
     },
     data: {
-      mapDecorations: getLoadedStatus('Расположение украшений', state.data.mapDecorations),
-      mapPics: getLoadedStatus('Иконки и картинки', state.data.mapPics),
-      locations: getLoadedStatus('География мест', state.data.locations),
-      borders: getLoadedStatus('Политические границы', state.data.borders),
-      persons: getLoadedStatus('Информация о людях', state.data.persons),
-      terrain: getLoadedStatus('Физическая карта мира', state.data.terrain),
+      mapDecorations: getLoadedStatus(state.data.mapDecorations),
+      mapPics: getLoadedStatus(state.data.mapPics),
+      locations: getLoadedStatus(state.data.locations),
+      borders: getLoadedStatus(state.data.borders),
+      persons: getLoadedStatus(state.data.persons),
+      terrain: getLoadedStatus(state.data.terrain),
     },
   };
 }
@@ -153,6 +139,7 @@ function mapDispatchToProps(dispatch) {
     setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
     setVisibility: bindActionCreators(setVisibility, dispatch),
     defaultScaleChange: bindActionCreators(defaultScaleChange, dispatch),
+    setMapDimensions: bindActionCreators(setMapDimensions, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RouterMiddleware));

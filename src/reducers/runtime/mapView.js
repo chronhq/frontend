@@ -16,6 +16,7 @@ const defaultState = {
   maxScale: 10,
   minScale: 1,
   mapWidth: 1000,
+  mapHeight: 500,
   mapShift: [0, 0],
   reset: false,
   buttonZoom: false,
@@ -29,7 +30,13 @@ const mapView = (state = defaultState, action) => {
         ...state,
         maxScale: action.maxScale,
         minScale: action.minScale,
+      };
+    }
+    case 'SET_MAP_DIMENSIONS': {
+      return {
+        ...state,
         mapWidth: action.mapWidth,
+        mapHeight: action.mapHeight,
         mapShift: action.mapShift,
       };
     }

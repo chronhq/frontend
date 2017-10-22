@@ -19,11 +19,15 @@ const ColorBox = ({ c, p }) => (
     />
   </svg>
 );
+const detailedName = properties => (properties.type.ru === null
+  ? `${properties.admin.ru}`
+  : `[${properties.type.ru}] ${properties.admin.ru}`);
+
 const Description = ({ properties, scaleView }) => (
   <span>{properties.disputed === ''
     ? scaleView === true
         && `${properties.admin.ru}`
-        || `[${properties.type.ru}] ${properties.admin.ru}`
+        || detailedName(properties)
     : `${properties.nameru}`
   }
   </span>

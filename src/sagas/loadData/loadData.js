@@ -19,6 +19,7 @@ import inventions from './processData/inventions';
 import geoEvents from './processData/geoEvents';
 import locations from './processData/locations';
 import properties from './processData/properties';
+import courseList from './processData/courseList';
 import courseTimelines from './processData/courseTimelines';
 import courseTraces from './processData/courseTraces';
 import courseGeoPoints from './processData/courseGeoPoints';
@@ -65,7 +66,7 @@ const resourceToCb = {
   EVENTS_GEO: geoEvents,
   BORDERS: getBorders,
   BORDERS_TIMELINE: getBordersTimeline,
-  COURSES: defaultGenCb,
+  COURSES: courseList,
   COURSE_TIMELINES: courseTimelines,
   COURSE_EVENTS: arrayGenCb,
   COURSE_TRACES: courseTraces,
