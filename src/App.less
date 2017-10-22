@@ -1,13 +1,17 @@
 @font-face {
-  font-family: Roboto-Light;
-  src: url(./assets/Roboto-Light.ttf);
+  font-family: OpenSans-Light;
+  src: url(./assets/OpenSans-Light.ttf);
 }
 
-body {
+body, text {
   margin: 0 0;
-  font-family: Roboto-Light, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  // letter-spacing: 0.02em;
+  font-family: OpenSans-Light;
+  text-rendering: optimizeSpeed;
+  color: hsla(0, 0%, 0%, 0.8);
+  font-weight: normal;
+  word-wrap: break-word;
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "clig", "calt";
 }
 
 .content {
