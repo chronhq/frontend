@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Flag } from 'flag';
 
 import { zoom, zoomIdentity } from 'd3-zoom';
 import { select, event } from 'd3-selection';
@@ -193,9 +194,13 @@ class Map extends Component {
             borders={this.props.b.borders}
             setClickInfoCb={this.props.setClickInfo}
           />
-          <MapDecorations decorations={this.props.mapDecorations} />
-          <GeoPoints />
-          <Expeditions />
+          {this.props.course !== 0 && (
+            <g>
+              <MapDecorations decorations={this.props.mapDecorations} />
+              <GeoPoints />
+              <Expeditions />
+            </g>
+          )}
           <Locations />
         </g>
         <g transform={this.state.widgetTransform}>
@@ -219,7 +224,9 @@ Map.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  return { terrain: state.data.terrain.projected,
+  return {
+    course: state.flags.SelectedCourse,
+    terrain: state.data.terrain.projected,
     colorsData: state.runtime.colorsData,
     scale: state.runtime.mapView.scale,
     maxScale: state.runtime.mapView.maxScale,
