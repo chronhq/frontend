@@ -70,7 +70,7 @@ class MapClickInfo extends Component {
       <div>
         {this.props.selected &&
         <div id='mapClickInfo'>
-          <div className='mapClickInfo-header'>
+          <div>
           Информация
             <button
               className='close'
@@ -81,6 +81,7 @@ class MapClickInfo extends Component {
           <div>
             {this.drawWidget()}
           </div>
+          <hr />
         </div>
         }
       </div>
