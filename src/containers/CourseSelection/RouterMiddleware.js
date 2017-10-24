@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
+import { withRouter } from 'react-router-dom';
 
 import 'font-awesome/less/font-awesome.less';
 import './RouterMiddleware.less';
@@ -13,8 +14,7 @@ import { loadDataForCourse,
   defaultScaleChange,
   setMapDimensions,
 } from '../../reducers/actions';
-
-import { withRouter } from 'react-router-dom'
+import RotatingLogo from './RotatingLogo';
 
 const sumLoading = obj =>
   Object.keys(obj).reduce((prev, curId) => prev + Number(!obj[curId].loaded), 0);
@@ -84,8 +84,7 @@ class RouterMiddleware extends Component {
   render() {
     return (
       <div className='loading-screen'>
-        <i className='fa fa-circle-o-notch fa-spin fa-2x fa-fw' />
-        <span className='sr-only'>Loading...</span>
+        <RotatingLogo />
       </div>
     );
   }
