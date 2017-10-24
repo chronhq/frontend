@@ -14,7 +14,7 @@ function* changeYear(action) {
       } case 'SET_YEAR': {
         return action.year;
       } case 'PREV_YEAR': {
-        return year.now + 1;
+        return year.now - 1;
       } case 'RESET_YEAR': {
         return year.min - 1;
       }
@@ -27,7 +27,7 @@ function* changeYear(action) {
   const now = getNow();
   const reset = year.min > now || now > year.max;
   const resp = reset === true
-    ? { type: 'SET_YEAR', year: action.now }
+    ? { type: 'SET_YEAR', year: year.min }
     : { type: action.action, year: now };
   yield put(resp);
 }
