@@ -36,7 +36,7 @@ const UI = () => (
       name="UI.MapViewport"
       render={() => <MapViewport />}
     />
-    <Flag 
+    <Flag
       name="UI.LegendHOC"
       render={() => <LegendHOC />}
     />

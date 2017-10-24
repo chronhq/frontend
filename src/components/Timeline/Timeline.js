@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { changeTick } from '../../reducers/actions';
 import './Timeline.less';
 import { Next, Previous, NavigationPan } from './TimelineControls';
+import ym from 'react-yandex-metrika';
 
 
 const Event = ({ event, selectCb, selectedId }) => {
@@ -38,6 +39,10 @@ class Timeline extends React.Component {
   state = {
     isMinified: false,
     isBioOn: false,
+  }
+
+  componentDidMount() {
+    ym('hit', `course`);
   }
 
   componentDidUpdate() {

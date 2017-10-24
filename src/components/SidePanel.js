@@ -1,8 +1,6 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip, ButtonToolbar, Button, FormControl, ControlLabel } from 'react-bootstrap';
 import { connect } from 'react-redux';
-
-import { YMInitializer } from 'react-yandex-metrika';
 import ym from 'react-yandex-metrika';
 
 import 'font-awesome/less/font-awesome.less';
@@ -13,14 +11,8 @@ import Legend from '../containers/Legend';
 import Intro from './Intro';
 import Feedback from './Feedback/';
 import ControlButtons from '../components/ControlButtons';
-// import TimePanel from './TimePanel';
-// import ReturnUiButton from './Timeline/ReturnUiButton';
 import AlignToggler from './Debug';
-
 import './SidePanel.less';
-
-
-const YmId = (process.env.NODE_ENV === 'production') ? [42857239, 42866674] : [42866674];
 
 const tooltip = text => (
   <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
@@ -34,20 +26,11 @@ class SidePanel extends React.Component {
       current: 0,
       isIntroOn: (process.env.NODE_ENV === 'production'),
       isFeedbackOn: false,
-      // UI: { alignPanel: 'right' }
-      // UI: this.props.facade,
     };
   }
 
   componentDidMount() {
-    // this.logPageView();
-    console.log(`stuff: ${this.props.facade.alignPanel}`);
-  }
-
-  logPageView() {
-    // console.log('=====YM=====>', location.pathname);
-    // console.log(`Id is ${hit}`);
-    ym('hit', location.pathname);
+    ym('hit', 'world');
   }
 
   toggle = (id) => {
@@ -84,14 +67,8 @@ class SidePanel extends React.Component {
   );
 
   render() {
-    // if (this.props.facade.alignPanel === 'none') {
-    //   // return <ReturnUiButton cb={data => this.handleChange('alignPanel', data)} />;
-    //   // return null;
-    // }
     return (
-
       <div>
-        <YMInitializer accounts={YmId} options={{ defer: true }} />
         <div className={this.props.facade.alignPanel === 'left' ? 'icon-bar--left icon-bar' : 'icon-bar--right icon-bar'} >
           <ButtonToolbar>
             <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Интро')} >
@@ -116,12 +93,10 @@ class SidePanel extends React.Component {
               <Button bsStyle='default' onClick={() => this.toggle(6)}><i className='fa fa-cog fa-fw' /></Button>
             </OverlayTrigger>
             }
-
           </ButtonToolbar>
         </div>
 
         <Intro isOpen={this.state.isIntroOn} onClose={() => this.toggleIntro()} />
-        {/* <Intro isOpen={this.state.current === 1} onClose={() => this.toggle(1)} />  */}
         <Feedback isOpen={this.state.isFeedbackOn} onClose={() => this.toggleFeedback()} />
 
         {this.state.isOpen &&
@@ -158,14 +133,6 @@ const SearchPanel = () => (
       быстрого поиска по изобретениям и персонам. </p>
   </div>
 );
-
-
-// const UI = () => (
-//   <div>
-//     <TimePanel />
-//     <SidePanel />
-//   </div>
-// );
 
 function mapStateToProps(state) {
   return { facade: state.runtime.facade };

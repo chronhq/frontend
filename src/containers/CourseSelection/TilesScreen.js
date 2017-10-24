@@ -32,7 +32,7 @@ import './TilesScreen.less';
 //       // .style('fill', '#335A7B')
 
 //     const url = 'http://enjalot.github.io/wwsd/data/world/world-110m.geojson';
-  
+
 //     // json(url, function(err, geojson) {
 //     //   this.container.append('path')
 //     //     .attr('d', path(geojson));
@@ -53,8 +53,8 @@ import './TilesScreen.less';
 
 const TilesScreen = ({ courses, loading, selected, selectCourse }) => (
   <div className='startpage__container parent'>
-    
-    <h2 className='starpage__title'> Выберите Режим </h2>
+
+    <h2 className='starpage__title'> Выберите Режим <hr /> </h2>
     <div className='tile__container'>
       {Object.keys(courses).map(c => (
         <Tile

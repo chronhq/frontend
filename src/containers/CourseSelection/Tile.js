@@ -8,7 +8,7 @@ const Tile = ({ course, disabled, selectCourse }) => {
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div className='startpage__tile child' >
-      {/* 
+      {/*
       <div className='tile__icon'>
         <i className="fa fa-globe fa-3x" aria-hidden="true" />
       </div>
