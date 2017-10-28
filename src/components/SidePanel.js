@@ -3,8 +3,6 @@ import { OverlayTrigger, Tooltip, ButtonToolbar, Button, FormControl, ControlLab
 import { connect } from 'react-redux';
 import ym from 'react-yandex-metrika';
 
-import 'font-awesome/less/font-awesome.less';
-
 import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';

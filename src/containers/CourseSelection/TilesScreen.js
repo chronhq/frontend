@@ -54,18 +54,22 @@ import './TilesScreen.less';
 const TilesScreen = ({ courses, loading, selected, selectCourse }) => (
   <div className='startpage__container parent'>
 
-    <h2 className='starpage__title'> Выберите Режим <hr /> </h2>
+    <div className='starpage__title'>
+      <h3> Выберите Режим </h3>
+    </div>
     <div className='tile__container'>
-      {Object.keys(courses).map(c => (
-        <Tile
-          key={`courseSelector_id${c}`}
-          course={courses[c]}
-          disabled={loading}
-          selected={selected === courses[c].id}
-          selectCourse={id => selectCourse(id)}
-        />
-      ))
-      }
+      <div className='hex-row'>
+        {Object.keys(courses).map(c => (
+          <Tile
+            key={`courseSelector_id${c}`}
+            course={courses[c]}
+            disabled={loading}
+            selected={selected === courses[c].id}
+            selectCourse={id => selectCourse(id)}
+          />
+        ))
+        }
+      </div>
     </div>
   </div>
 );

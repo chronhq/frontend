@@ -3,11 +3,15 @@ import {
   Link,
 } from 'react-router-dom';
 
+function isOdd(n) {
+   return Math.abs(n % 2) === 1;
+}
+
 const Tile = ({ course, disabled, selectCourse }) => {
   // const className = selected ? 'courseTileSelected' : 'courseTileRegular';
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
-    <div className='startpage__tile child' >
+    <div className={isOdd(course.id) ? 'tile odd' : 'tile'}>
       {/*
       <div className='tile__icon'>
         <i className="fa fa-globe fa-3x" aria-hidden="true" />
