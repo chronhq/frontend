@@ -71,6 +71,7 @@ const resourceToCb = {
   COURSE_EVENTS: arrayGenCb,
   COURSE_TRACES: courseTraces,
   COURSE_GEOPOINTS: courseGeoPoints,
+  MAP_LABELS: mapDecorations,
   MAP_DECORATIONS: mapDecorations,
 };
 

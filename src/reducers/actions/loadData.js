@@ -42,6 +42,8 @@ export function loadDataForCourse(id) {
       resource: 'MAP_DECORATIONS',
     }, {
       resource: 'MAP_PICS',
+    }, {
+      resource: 'MAP_LABELS',
     },
   ];
 

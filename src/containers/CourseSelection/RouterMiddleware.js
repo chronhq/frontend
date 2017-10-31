@@ -123,6 +123,7 @@ function mapStateToProps(state) {
     data: {
       mapDecorations: getLoadedStatus(state.data.mapDecorations),
       mapPics: getLoadedStatus(state.data.mapPics),
+      mapLabels: getLoadedStatus(state.data.mapLabels),
       locations: getLoadedStatus(state.data.locations),
       borders: getLoadedStatus(state.data.borders),
       persons: getLoadedStatus(state.data.persons),

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Flag } from 'flag';
+// import { Flag } from 'flag';
 
 import { zoom, zoomIdentity } from 'd3-zoom';
 import { select, event } from 'd3-selection';
@@ -28,7 +28,9 @@ const TerrainMap = ({ terrain }) => (
   </g>
 );
 
-const BordersMap = ({ borders, loaded, visible, setClickInfoCb }) => (
+const BordersMap = ({
+ borders, loaded, visible, setClickInfoCb 
+}) => (
   <g className='svgMapBorders'>
     {(visible && loaded === true
       && borders.map(border => (
@@ -64,6 +66,20 @@ const MapDecorations = ({ decorations }) => (
       xlinkHref={`#mapPic_${icon.picId}`}
       transform={`translate(${icon.projected.x},${icon.projected.y}) ${icon.transform}`}
     />))
+    }
+  </g>
+);
+
+const MapLabels = ({ labels }) => (
+  <g className="mapLabels">
+    {labels.map(text => (
+      <text
+        key={`mapLabel_key_${text.id}`}
+        className={`mapLabels ${text.style}`}
+        transform={`translate(${text.projected.x},${text.projected.y})`}
+      >
+        {text.string}
+      </text>))
     }
   </g>
 );
@@ -197,6 +213,7 @@ class Map extends Component {
           {this.props.course !== 0 && (
             <g>
               <MapDecorations decorations={this.props.mapDecorations} />
+              <MapLabels labels={this.props.mapLabels} />
               <GeoPoints />
               <Expeditions />
             </g>
@@ -239,6 +256,7 @@ function mapStateToProps(state) {
     buttonZoom: state.runtime.mapView.buttonZoom,
     mapPics: Object.values(state.data.mapPics.byId),
     mapDecorations: Object.values(state.data.mapDecorations.byId),
+    mapLabels: Object.values(state.data.mapLabels.byId),
     b: {
       visible: state.runtime.visibility.borders,
       loaded: state.data.borders.loaded,
