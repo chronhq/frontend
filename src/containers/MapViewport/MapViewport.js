@@ -102,17 +102,22 @@ class Map extends Component {
     if (!this.state.zoomInitSuccess) {
       const svg = select(this.svgMap);
       const projection = this.props.projection;
+      const that = this;
       svg.on('mousedown.log', function() {
-        console.log(projection.invert(mouse(this)));
+        const mouseXY = mouse(this);
+        const coordinates = [
+          (mouseXY[0] - that.state.transform.x) / that.state.transform.k,
+          (mouseXY[1] - that.state.transform.y) / that.state.transform.k ];
+        console.log('Projection calculated', projection.invert(coordinates));
       });
       svg.call(this.zoom);
       svg.call(this.zoom.transform, zoomIdentity
         .scale(this.state.defaultZoom())
         .translate(this.getTransformX(), this.getTransformY()));
-      /* eslint-disable react/no-did-mount-set-state */
-      this.setState({
-        zoomInitSuccess: true,
-      });
+        /* eslint-disable react/no-did-mount-set-state */
+                this.setState({
+                  zoomInitSuccess: true,
+                });
     }
   }
 
