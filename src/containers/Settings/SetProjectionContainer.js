@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import { Flag } from 'flag';
 
-import { InputNumber, InputCheckBox } from '../../components/Input';
+import { InputNumber, InputCheckBox, InputSelect } from '../../components/Input';
 import { setProjection } from '../../reducers/actions';
 import { defaultClip } from '../../reducers/runtime/projection';
 
@@ -80,7 +79,7 @@ class SetProjectionContainer extends Component {
       <div className='changeProjBtn'>
         <form onSubmit={this.handleSubmit} className='test'>
           <div className='form-group'>
-            <Select
+            <InputSelect
               name='Select Projection'
               value={this.state.name}
               options={this.props.options}
