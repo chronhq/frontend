@@ -79,11 +79,8 @@ class SidePanel extends React.Component {
             <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Лента событий')}>
               <Button bsStyle='default' onClick={() => this.toggle(3)}><i className='fa fa-list-ul fa-fw' /></Button>
             </OverlayTrigger>
-            <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Легенда')}>
-              <Button bsStyle='default' onClick={() => this.toggle(4)}><i className='fa fa-globe fa-fw' /></Button>
-            </OverlayTrigger>
             <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Настройки проекции')}>
-              <Button bsStyle='default' onClick={() => this.toggle(5)}><i className='fa fa-cog fa-fw' /></Button>
+              <Button bsStyle='default' onClick={() => this.toggle(4)}><i className='fa fa-cog fa-fw' /></Button>
             </OverlayTrigger>
 
             {(process.env.NODE_ENV !== 'production') &&
@@ -102,8 +99,7 @@ class SidePanel extends React.Component {
             {this.state.current === 9 && <div> Empty</div> }
             {this.state.current === 2 && <SearchPanel /> }
             {this.state.current === 3 && <Feed /> }
-            {this.state.current === 4 && <Legend /> }
-            {this.state.current === 5 &&
+            {this.state.current === 4 &&
               <Settings onClose={() => this.toggleFeedback()} />
             }
             {this.state.current === 7 && null }

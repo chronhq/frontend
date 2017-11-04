@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 // import { Flag } from 'flag';
 
 import { zoom, zoomIdentity } from 'd3-zoom';
-import { select, event } from 'd3-selection';
+import { select, event, mouse } from 'd3-selection';
 
 import Locations from '../Locations';
 import Expeditions from '../Expeditions';
@@ -101,14 +101,23 @@ class Map extends Component {
     this.resize();
     if (!this.state.zoomInitSuccess) {
       const svg = select(this.svgMap);
+      const projection = this.props.projection;
+      const that = this;
+      svg.on('mousedown.log', function() {
+        const mouseXY = mouse(this);
+        const coordinates = [
+          (mouseXY[0] - that.state.transform.x) / that.state.transform.k,
+          (mouseXY[1] - that.state.transform.y) / that.state.transform.k ];
+        console.log('Projection calculated', projection.invert(coordinates));
+      });
       svg.call(this.zoom);
       svg.call(this.zoom.transform, zoomIdentity
         .scale(this.state.defaultZoom())
         .translate(this.getTransformX(), this.getTransformY()));
-      /* eslint-disable react/no-did-mount-set-state */
-      this.setState({
-        zoomInitSuccess: true,
-      });
+        /* eslint-disable react/no-did-mount-set-state */
+                this.setState({
+                  zoomInitSuccess: true,
+                });
     }
   }
 
@@ -242,6 +251,7 @@ Map.defaultProps = {
 
 function mapStateToProps(state) {
   return {
+    projection: state.runtime.projection.project,
     course: state.flags.SelectedCourse,
     terrain: state.data.terrain.projected,
     colorsData: state.runtime.colorsData,

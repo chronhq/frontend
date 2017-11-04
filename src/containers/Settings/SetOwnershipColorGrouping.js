@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Select from 'react-select';
-import { InputRange } from '../../components/Input';
+import { InputRange, InputSelect } from '../../components/Input';
 
 import { changeGrouping } from '../../reducers/actions';
 
@@ -26,13 +25,23 @@ class SetOwnershipGrouping extends Component {
         label: 'Always off'
       }
     ];
-    const name = this.props.auto === true
+    const getValue = () => {
+      let val = 2;
+      if (this.props.auto) {
+        val = 0;
+      } else if (this.props.enabled) {
+        val = 1;
+      }
+      return val;
+    };
+      // ? 0 : (this.props.enabled === true && 1 || 2);
+    const value = this.props.auto === true
       ? 'auto'
       : (this.props.enabled === true
           && 'on' || 'off');
     this.state = {
       options,
-      name,
+      value: value,
       auto: this.props.auto,
       zoomPoint: this.props.zoomPoint,
       enabled: this.props.enabled
@@ -45,7 +54,7 @@ class SetOwnershipGrouping extends Component {
   }
 
   changeAutoGrouping = (data) => {
-    const newState = { ...this.state, name: data.value, ...this.values[data.value] };
+    const newState = { ...this.state, value: data.value, ...this.values[data.value] };
     this.setState(newState);
     this.props.changeGrouping(newState.auto, newState.enabled, newState.zoomPoint);
   }
@@ -57,9 +66,9 @@ class SetOwnershipGrouping extends Component {
   render() {
     return (
       <div className='layerControl'>
-        <Select
+        <InputSelect
           name='Change grouping'
-          value={this.state.name}
+          value={this.state.value}
           options={this.state.options}
           onChange={this.changeAutoGrouping}
         />
