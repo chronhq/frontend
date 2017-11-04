@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { nextYear, prevYear, resetYear, startPlaying, stopPlaying } from '../reducers/actions';
+import YearInput from './TimePanel-YearInput';
 
 class ControlButtons extends Component {
   static propTypes = {
@@ -16,7 +17,7 @@ class ControlButtons extends Component {
 
   render() {
     return (
-      <div className='playButton center col-sm-3 col-sm-pull-9'>
+      <div className='playButton col-sm-4 col-sm-pull-8'>
         <button onClick={this.props.resetYear}>
           <i className='fa fa-undo' aria-hidden='true' title='Restart' />
         </button>
@@ -32,6 +33,7 @@ class ControlButtons extends Component {
           </button>
         }
         <button onClick={this.props.nextYear}><i className='fa fa-step-forward' aria-hidden='true' title='Next Year' /></button>
+        <YearInput />
       </div>
     );
   }

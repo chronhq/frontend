@@ -1,11 +1,17 @@
+
+@base00: white;
+@base01: #eee;
+
 #timeline {
 	font-size: 12px;
 	position: fixed;
 	bottom: 0px;
 	width: 100%;
-	margin-left: 0px;
-	margin-right: 0px;
-	padding: 0 0;
+
+	// margin-left: 0px;
+	// margin-right: 0px;
+  margin: 0;
+	padding: 0;
 	z-index: 8;
 	color: white;
 	height: 55px;
@@ -19,7 +25,6 @@
     // transform: translateX(-50%);
     position: relative;
 	}
-	.fa {color: white;}
 }
 
 .axisTime {
@@ -44,28 +49,36 @@
 // disable selectable text
 .svgTime text {
 	pointer-events: none;
+  height: 55px;
 }
 
  .playButton {
-
+  // height: 55px;
+  text-align: right;
+  margin: 0;
     display: inline-block;
     // float: left;
     //height: 55px;
     // padding-left: 50px;
     font-size: 12px;
     vertical-align: middle;
-    height: 55px;
+    // height: 55px;
     line-height: 55px;
     text-align: center;
     //width: 10px;
     & button {
+      // float: right;
       background: none;
       border: none;
-      margin-right: 20px;
+      margin-right: 10px;
       // border-radius: 5px;
       // width: 20px;
+
+      &:hover {
+        color: #bbb;
+      }
       & .active {
-        border-color:red;
+        border-color: red;
       }
     }
   }
@@ -74,4 +87,35 @@
 @media screen and (max-width:768px) {
   #timeline {height: 85px;}
   & .playButton {width:100%; line-height: 25px; height: 25px; text-align: center; }
+}
+
+.yearInput {
+  background: transparent;
+  outline: none;
+  border: none;
+  text-align: center;
+  width: 60px;
+  // height: 55px;
+  // float: right;
+  color: transparent;
+  text-shadow: 0 0 0 white;
+  letter-spacing: -0.5px;
+  font-size: 16px;
+  &:hover {
+    color: #bbb;
+  }
+  &:focus {
+    outline: none;
+}
+}
+
+.error.yearInput { border-bottom: 2px solid red; }
+
+.col-sm-4,
+.col-sm-pull-8,
+.col-sm-8,
+.col-sm-push-4
+{
+  margin: 0;
+  // height: 55px;
 }

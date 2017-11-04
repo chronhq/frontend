@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: 'eval',
   entry: [
     'babel-polyfill',
     './src/index'
@@ -13,9 +13,6 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: 'http://localhost:8080/static/'
   },
-  // watchOptions: {
-  //   poll: true
-  // },
   devServer: {
     historyApiFallback: true,
     inline: true,

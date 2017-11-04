@@ -15,11 +15,10 @@ class TimePanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrow: 'translate(0,0)',
+      // arrow: 'translate(0,0)',
+      position: 0,
       width: this.width,
       now: this.props.now,
-      min: this.props.min,
-      max: this.props.max,
       isDown: false
     };
   }
@@ -34,23 +33,23 @@ class TimePanel extends React.Component {
       const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.state.width) {
         this.setState({ now: Math.round(this.scale.invert(mouseX)) });
-        this.updateClockPosition();
+        // this.updateClockPosition();
         this.props.setYearAction(Number(this.state.now));
       }
-    }).on('mousedown', () => {
-      this.setState({ isDown: true });
-      // selectAll('.arrow').classed('active', true);
-      select('.triangle').attr('fill', '#2f2f2f');
-      this.followMouse();
+    // }).on('mousedown', () => {
+    //   this.setState({ isDown: true });
+    //   // selectAll('.arrow').classed('active', true);
+    //   select('.triangle').attr('fill', '#2f2f2f');
+    //   // this.followMouse();
     });
-    // Draw axis
+    // // Draw axis
     this.resize();
   }
 
   componentWillReceiveProps(nextProps) {
     // console.log(`timeline.now ${this.timeline.now}`);
     this.setState({ now: nextProps.now });
-    this.updateClockPosition(nextProps.now);
+    // this.updateClockPosition(nextProps.now);
   }
 
   componentWillUnmount() {
@@ -59,7 +58,7 @@ class TimePanel extends React.Component {
 
   get scale() {
     return scaleLinear()
-      .domain([this.state.min, this.state.max])
+      .domain([this.props.min, this.props.max])
       .range([0, this.state.width]);
   }
 
@@ -71,61 +70,68 @@ class TimePanel extends React.Component {
   }
   /* eslint-enable */
 
-  followMouse() {
-    select('.svgTime')
-      .on('mousemove', () => {
-        if (this.state.isDown) {
-          const rectId = this.svgTime.childNodes[1];
-          const mouseX = mouse(rectId)[0];
-          if (mouseX >= 0 && mouseX <= this.state.width) {
-            const now = Math.round(this.scale.invert(mouseX));
-            this.setState({ now });
-            this.updateClockPosition(now);
-          }
-          // for performance reasons this is commented
-          // this.props.setYearAction(Number(this.state.now));
-        }
-      })
-      .on('mouseup', () => {
-        this.setState({ isDown: false });
-        // selectAll('.arrow').classed('active', false);
-        // selectAll('.arrow').attr('fill', '');
-        // this.props.setYearAction(Number(this.state.now));
-      });
-  }
+  // followMouse() {
+  //   select('.svgTime')
+  //     .on('mousemove', () => {
+  //       if (this.state.isDown) {
+  //         const rectId = this.svgTime.childNodes[1];
+  //         const mouseX = mouse(rectId)[0];
+  //         if (mouseX >= 0 && mouseX <= this.state.width) {
+  //           const now = Math.round(this.scale.invert(mouseX));
+  //           this.setState({ now });
+  //           // this.updateClockPosition(now);
+  //         }
+  //         // for performance reasons this is commented
+  //         // this.props.setYearAction(Number(this.state.now));
+  //       }
+  //     })
+  //     .on('mouseup', () => {
+  //       this.setState({ isDown: false });
+  //       // selectAll('.arrow').classed('active', false);
+  //       // selectAll('.arrow').attr('fill', '');
+  //       // this.props.setYearAction(Number(this.state.now));
+  //     });
+  // }
 
-  updateClockPosition(now = this.state.now) {
-    const translate = `translate(${this.scale(now)},0)`;
-    this.setState({ arrow: translate });
-  }
+  // updateClockPosition(now = this.state.now) {
+    // const translate = `translate(${this.scale(now)},0)`;
+    // this.setState({ arrow: translate });
+    // this.setState({ position: this.scale(now) });
+  // }
 
   resize() {
     const width = this.width;
     this.setState({ width });
     const svgAxis = select(this.svgAxis);
     svgAxis.call(axisBottom(this.scale).ticks(parseInt(width / 45, 10), 'f'));
-    this.updateClockPosition();
+    // this.updateClockPosition();
   }
 
   render() {
-    const viewBox = `-15 -15 ${this.state.width + 30} 40`;
+    // const viewBox = `-15 -15 ${this.state.width + 30} 40`;
+    const viewBox = `-15 -25 ${this.state.width + 20} 20`;
     return (
-      <div id='timeline' className='row'>
-        <div className='col-sm-9 col-sm-push-3'>
+      <div id='timeline'>
+
+        <div className='col-sm-8 col-sm-push-4'>
           <svg
             className="svgTime"
             ref={(r) => { this.svgTime = r; }}
             width='100%'
             height='55px'
             viewBox={viewBox}
-            // preserveAspectRatio="xMaxYMin meet"
-            preserveAspectRatio="none"
+            preserveAspectRatio="xMaxYMin meet"
+            // preserveAspectRatio="none"
           >
             <g className="axisTime" strokeWidth="1" ref={(r) => { this.svgAxis = r; }} />
-            <rect x='0' y='-50' width={this.state.width + 50} height='55' fill='#ffffff' opacity='0' className='back' style={{ zIndex: -1 }} />
-            <g transform={this.state.arrow}>
+            <rect x='0' y='-25' width={this.state.width + 50} height='40' fill='#ffffff' opacity='0' className='back' style={{ zIndex: -1 }} />
+            <g transform={`translate(${this.scale(this.props.now)}, 0)`} >
+              {/*
+              <g transform={this.state.arrow}>
               <rect y='-2' width='1' height='12' opacity='1' className='arrow' style={{ fill: 'black', stroke: 'white', strokeWidth: 2 }} />
               <text x='-15' y='-5' style={{ fill: 'white' }}>{this.state.now}</text>
+              */}
+              <circle cx='0' r={4} style={{ fill: '#02364C', stroke: 'white', strokeWidth: 1.5 }} />
             </g>
           </svg>
         </div>

@@ -12,7 +12,7 @@ const info = {
 const Bio = () => (
   <div className='bio__container'>
     <div className='bio__data'>
-        <img src={`data:image/jpeg;base64, ${info.photo}`} />
+      <img src={`data:image/jpeg;base64, ${info.photo}`} />
       <div className='name'>
         <h2> {info.title} </h2>
         <h2> {info.subtitle} </h2>
