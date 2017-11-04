@@ -13,6 +13,7 @@ import CourseSelection from './containers/CourseSelection';
 // import CourseSelection from './containers/CourseSelection';
 import DevTools from './DevTools';
 import UI from './containers/UI';
+import NotFound from './components/ErrorPages/404';
 
 const AppSelect = () => (
   <div>
@@ -29,11 +30,11 @@ const AppSelect = () => (
   </div>
 );
 
-const NotFound = () => (
-  <div>
-    <h3> Not Found </h3>
-  </div>
-);
+// const NotFound = () => (
+//   <div>
+//     <h3> Not Found </h3>
+//   </div>
+// );
 
 // const Test = ({ match }) => {
 //   console.log(match);
