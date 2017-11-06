@@ -14,7 +14,7 @@ const dls = { current: [], byYear: {} };
 const inventionsDefaultState = { REDUCER_NAME: 'INVENTIONS_TIMELINE', ...dls };
 const layersDefaultState = {
   locations: { REDUCER_NAME: 'LOCATIONS_TIMELINE', ...dls },
-  borders: { REDUCER_NAME: 'BORDERS_TIMELINE', current: '' },
+  borders: { REDUCER_NAME: 'BORDERS_TIMELINE', ...dls, current: '' },
   geoEvents: { REDUCER_NAME: 'EVENTS_GEO_TIMELINE', ...dls, current: '' },
   personsAlive: { REDUCER_NAME: 'PERSONS_TIMELINE', ...dls },
   personsFacts: { REDUCER_NAME: 'PERSONS_FACTS_TIMELINE', ...dls }

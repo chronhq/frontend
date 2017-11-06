@@ -39,7 +39,7 @@ class RouterMiddleware extends Component {
     const notLoaded = this.state.course
       ? sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.courses)
       : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
-    if (notLoaded === 0) {
+    if (notLoaded === 0 && this.state.selected !== null) {
       const uiSettings = this.props.availableCourses[this.state.selected].config.settings;
       const mapDimensions = this.props.availableCourses[this.state.selected].projected;
       this.props.setMapDimensions(mapDimensions);

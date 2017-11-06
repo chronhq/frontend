@@ -47,7 +47,7 @@ function* loadGeoData(action) {
   const geoIds = getIdsFromTimeline('geo', dataToLoad, loadedGeometry);
   // Loading new geometry
   if (geoIds.length > 0 && geometryData.loading === false) {
-    console.log('Asking for geo ids', geoIds);
+    // console.log('Asking for geo ids', geoIds);
     yield put(loadData([{
       resource: 'BORDERS',
       req: {

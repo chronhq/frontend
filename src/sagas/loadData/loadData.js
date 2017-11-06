@@ -83,7 +83,7 @@ function* executeRequest({ resource, req }) {
     : `${prefix}/${uri}`;
 
     // yield put({ type: `${resource}_PENDING` });
-  console.log(url, resource);
+  // console.log(url, resource);
   const urlCb = resourceToCb[resource] ? resourceToCb[resource] : defaultGenCb;
   try {
     const resp = yield call(fetchResponse, url);

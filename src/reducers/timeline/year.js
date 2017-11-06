@@ -2,7 +2,7 @@ const DEFAULT_YEAR = 1783;
 const MAX_YEAR = 2017;
 const DEFAULT_TICK = 1;
 
-const initialState = {
+export const initialState = {
   now: DEFAULT_YEAR,
   max: MAX_YEAR,
   min: DEFAULT_YEAR,

@@ -7,7 +7,7 @@
 
 import { put, takeEvery, select } from 'redux-saga/effects';
 
-export const getYear = state => state.timeline.now;
+export const getYear = state => state.timeline.year.now;
 const TIMELINE_ACTIONS = [
   'BORDERS_TIMELINE_FULFILLED',
   'LOCATIONS_TIMELINE_FULFILLED',
