@@ -9,7 +9,7 @@ class GeoPoints extends Component {
           <use
             key={`mapPic_geo_key_${icon.id}_${icon.pic}`}
             xlinkHref={`#mapPic_${icon.pic}`}
-            transform={`translate(${icon.projected.x},${icon.projected.y}) rotate(-135)`}
+            transform={`translate(${icon.projected.x},${icon.projected.y}) scale(0.05) rotate(-135)`}
           />
         ))}
       </g>);
