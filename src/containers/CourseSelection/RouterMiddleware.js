@@ -13,7 +13,9 @@ import { loadDataForCourse,
   setVisibility,
   defaultScaleChange,
   setMapDimensions,
+  changeInitialYear,
 } from '../../reducers/actions';
+
 import RotatingLogo from './RotatingLogo';
 
 const sumLoading = obj =>
@@ -67,6 +69,8 @@ class RouterMiddleware extends Component {
     const course = Object.values(availableCourses).find(cur => cur.url === name);
     if (course !== undefined) {
       this.setState({ loading: true, course: Boolean(course.id), selected: course.id });
+
+      this.props.changeInitialYear(availableCourses[course.id].config.year);
 
       this.props.setProjection(availableCourses[course.id].config.projection);
 
@@ -140,6 +144,7 @@ function mapDispatchToProps(dispatch) {
     setVisibility: bindActionCreators(setVisibility, dispatch),
     defaultScaleChange: bindActionCreators(defaultScaleChange, dispatch),
     setMapDimensions: bindActionCreators(setMapDimensions, dispatch),
+    changeInitialYear: bindActionCreators(changeInitialYear, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RouterMiddleware));

@@ -36,6 +36,14 @@ const layerTimeline = (state = { REDUCER_NAME: 'layerName', loaded: false }, act
         loaded: false,
         error: true,
       };
+    case 'CLEAN_STATE':
+      return {
+        REDUCER_NAME: state.REDUCER_NAME,
+        byYear: {},
+        loading: false,
+        loaded: false,
+        error: false,
+      };
     default:
       return state;
   }
