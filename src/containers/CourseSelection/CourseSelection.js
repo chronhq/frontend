@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setFlagsAction } from 'flag';
 
-
+import { markItReady, cleanState } from '../../reducers/actions';
 import TilesScreen from './TilesScreen';
 
 class CourseSelection extends Component {
-  state = {
-    loading: false,
-    course: false,
-    selected: null,
+  componentWillMount() {
+    this.enableCourseSelector();
+  }
+
+  enableCourseSelector() {
+    this.props.markItReady(false);
+    this.props.cleanState();
+    this.props.setFlagAction({ CourseSelection: true });
   }
 
   render() {
     return (
       <TilesScreen
         courses={this.props.availableCourses}
-        loading={this.state.loading}
-        selected={this.state.selected}
       />
     );
   }
@@ -28,4 +32,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(CourseSelection);
+function mapDispatchToProps(dispatch) {
+  return {
+    setFlagAction: bindActionCreators(setFlagsAction, dispatch),
+    markItReady: bindActionCreators(markItReady, dispatch),
+    cleanState: bindActionCreators(cleanState, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseSelection);

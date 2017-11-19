@@ -51,7 +51,7 @@ import './TilesScreen.less';
 // }
 
 
-const TilesScreen = ({ courses, loading, selected, selectCourse }) => (
+const TilesScreen = ({ courses, selectCourse }) => (
   <div className='startpage__container parent'>
 
     <div className='starpage__title'>
@@ -63,8 +63,6 @@ const TilesScreen = ({ courses, loading, selected, selectCourse }) => (
           <Tile
             key={`courseSelector_id${c}`}
             course={courses[c]}
-            disabled={loading}
-            selected={selected === courses[c].id}
             selectCourse={id => selectCourse(id)}
           />
         ))

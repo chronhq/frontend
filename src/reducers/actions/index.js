@@ -27,3 +27,7 @@ export function setProjection({ rotate, name, clip, center }) {
 export function setVisibility(data) {
   return { type: 'CHANGE_VISIBILITY', data };
 }
+
+export function cleanState() {
+  return { type: 'CLEAN_STATE' };
+}

@@ -4,11 +4,10 @@ import {
 } from 'react-router-dom';
 
 function isOdd(n) {
-   return Math.abs(n % 2) === 1;
+  return Math.abs(n % 2) === 1;
 }
 
-const Tile = ({ course, disabled, selectCourse }) => {
-  // const className = selected ? 'courseTileSelected' : 'courseTileRegular';
+const Tile = ({ course, selectCourse }) => {
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
     <div className={isOdd(course.id) ? 'tile odd' : 'tile'}>
