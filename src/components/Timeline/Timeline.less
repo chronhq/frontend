@@ -107,7 +107,7 @@
 
 .timeline__entry {
   clear: both;
-  height: 12vh;
+  min-height: 12vh;
   text-align: left;
   position: relative;
   z-index: 6;
@@ -211,11 +211,13 @@
 
 .timeline__entry--selected {
   height: auto;
-  // overflow: hidden;
+  overflow: hidden;
+
+  // border-top: 1px black solid;
   border-right: 3px #0078d7 solid;
 
   .timeline__heading {
-
+    // left: -2%;
     &:before {
       width: @dot-diameter--selected;
       height: @dot-diameter--selected;

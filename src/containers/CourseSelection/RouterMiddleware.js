@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import 'font-awesome/less/font-awesome.less';
 import './RouterMiddleware.less';
+import ym from 'react-yandex-metrika';
 
 import { loadDataForCourse,
   markItReady,
@@ -52,6 +53,7 @@ class RouterMiddleware extends Component {
         SelectedCourseName: this.props.id,
         ...uiSettings.flags
       });
+      ym('hit', this.props.id);
       if ('visibility' in uiSettings) {
         this.props.setVisibility(uiSettings.visibility);
       }

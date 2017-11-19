@@ -1,7 +1,6 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip, ButtonToolbar, Button, FormControl, ControlLabel } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import ym from 'react-yandex-metrika';
 
 import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
@@ -25,10 +24,6 @@ class SidePanel extends React.Component {
       isIntroOn: (process.env.NODE_ENV === 'production'),
       isFeedbackOn: false,
     };
-  }
-
-  componentDidMount() {
-    ym('hit', 'world');
   }
 
   toggle = (id) => {
