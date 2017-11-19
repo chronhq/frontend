@@ -6,7 +6,7 @@ import ym from 'react-yandex-metrika';
 import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
 import Legend from '../containers/Legend';
-import Intro from './Intro';
+import Intro from './Intro/Carousel';
 import Feedback from './Feedback/';
 import ControlButtons from '../components/ControlButtons';
 import AlignToggler from './Debug';

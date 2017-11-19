@@ -1,0 +1,265 @@
+// SASS variable for media query breakpoint
+@breakpoint-desktop: 992px;
+
+// Resetting default styles
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+// Fix for jumping arrows
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // min-height: 210px;
+  padding: 10px 20px;
+  max-width: 1040px;
+}
+
+.carousel {
+  position: relative;
+  margin-top: 80px;
+  min-height: 350px;
+}
+// Carousel slides
+.carousel__slide {
+  margin-right: auto;
+  margin-left: auto;
+  display: none;
+  max-width: 900px;
+  list-style-type: none;
+  text-align: center;
+
+  margin: 0 auto;
+  min-height: 1px;
+  text-align: center;
+  vertical-align: middle;
+  text-align: center;
+  min-height: 30vh;
+
+  & p {
+      color:white;
+      font-weight: 400;
+      text-shadow: 2px 2px 4px #000000;
+      vertical-align: middle;
+  }
+
+  @media (max-width: 991px) {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+
+  &--active {
+    display: block;
+  }
+}
+
+// Content of slides
+.carousel-slide__content {
+  margin-bottom: 19px;
+  // font-family: 'Open Sans Light', sans-serif;
+  font-size: 18px;
+
+  @media (max-width: @breakpoint-desktop - 1px) {
+    font-size: 18px;
+  }
+}
+
+.carousel-slide__author,
+.carousel-slide__source {
+  font-family: 'Roboto', arial, sans-serif;
+  font-size: 14px;
+
+  @media (min-width: @breakpoint-desktop) {
+    font-size: 16px;
+  }
+}
+
+.carousel-slide__source {
+  font-style: italic;
+  color: #888;
+}
+
+// Carousel arrows
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  display: block;
+  color: #111;
+  cursor: pointer;
+  opacity: .75;
+  transform: translateY(-50%);
+  transition: opacity .15s cubic-bezier(.4, 0, 1, 1);
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    opacity: .5;
+  }
+
+  &--left {
+    left: 32px;
+  }
+
+  &--right {
+    right: 32px;
+  }
+}
+
+// Carousel indicators
+.carousel__indicators {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+
+  li {
+    &:nth-of-type(n + 2) {
+      margin-left: 9px;
+    }
+  }
+}
+
+// .carousel__indicator {
+//   display: block;
+//   width: 24px;
+//   height: 3px;
+//   background-color: #111;
+//   cursor: pointer;
+//   opacity: .15;
+//   transition: opacity .15s cubic-bezier(.4, 0, 1, 1);
+
+//   &:hover {
+//     opacity: .5;
+//   }
+
+//   &--active {
+//     &,
+//     &:hover {
+//       opacity: .75;
+//     }
+//   }
+// }
+
+.carousel__indicator {
+  content: ' \25CF';;
+  display: block;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  opacity: .15;
+  transition: opacity .15s cubic-bezier(.4, 0, 1, 1);
+
+  &:before {
+    content: ' \25CF';
+    color: white;
+  }
+  &:hover {
+    opacity: .5;
+  }
+
+  &--active {
+    &,
+    &:hover {
+      opacity: .75;
+    }
+  }
+}
+
+
+.overlay {
+  cursor: pointer;
+    position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.7);
+  // z-index: 3;
+  margin-right: 60px !important;
+  text-align: center;
+  & p {color: white; text-align: center;}
+  & h4 {
+    color:white;
+    text-align: center; margin:
+    50px 50px; font-weight: 400;
+    padding: 1% 1%; z-index: 13;
+    line-height: 1.5em;
+    // text-shadow: 0 0 3px #000;
+    text-shadow: 2px 2px 4px #000000;
+    min-height: 220px;
+  }
+  & circle {
+    position:absolute;
+  }
+  & svg {
+    position: absolute;
+  }
+  & .containter {
+    padding: 10px 20px;
+    max-width: 1040px;
+  }
+& .text-center {
+    display: block;
+    position: absolute;
+    line-height: 24px;
+    font-size: 24px;
+    margin-left: 5%;
+    margin-right: 5%;
+    top: 20%;
+    margin: 60px 60px;
+    z-index: 100;
+  }
+  & button {
+    margin-top: 0 20px;
+    display: inline-block;
+    margin: 20px;
+    white-space: nowrap;
+    height: 36px;
+    border-width: 1px;
+    outline-color: transparent !important;
+
+    font-size: 15px;
+    // max-width: 374px;
+    width: auto;
+    min-width: 120px;
+    display: inline-block;
+    // margin-top: 12px;
+    padding: 9px 12px 10px;
+    // background-color: rgba(0,0,0,.2);
+    color: #fff;
+    border: 1px solid transparent;
+    overflow: hidden;
+    line-height: 1;
+    text-align: center;
+    border-radius: 0;
+    white-space: nowrap;
+    vertical-align: bottom;
+    -webkit-transition: scale .2s ease-in-out;
+    -o-transition: scale .2s ease-in-out;
+    transition: scale .2s ease-in-out;
+    //ne nado
+  }
+}
+
+
+.overlay-timeline {position: fixed; bottom: 0; height: 55px; width: 100%;}
+
+.overlay-iconbar {position: fixed; right: 0; height: calc(~'100% - 55px'); width: 50px; z-index: 3; margin-right: 2px; }
+
+.overlay-survey {position: fixed; right: 0; top: 250px; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-invention {position: fixed; right: 0; top: 200px; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-feed {position: fixed; right: 0; top: 100px; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-home {position: fixed; right: 0; top: 0; height: 50px; width: 50px; z-index: 2;}
+
+.overlay-legend {position: fixed; left: 50px; top: 30px; height: 170px; width: 260px; z-index: 2; }
+
+.overlay-timecontrol { position: fixed; bottom: 0; height: 55px; width: 250px;}
