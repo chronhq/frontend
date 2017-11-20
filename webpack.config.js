@@ -26,7 +26,7 @@ const uglify = {
 
 const envPlugins = isProd()
   ? [new webpack.optimize.UglifyJsPlugin(uglify)]
-  : [new BundleAnalyzerPlugin({ analyzerHost: '0.0.0.0', analyzerPort: '3001' })];
+  : [new BundleAnalyzerPlugin({ analyzerHost: 'localhost', analyzerPort: '3001' })];
 
 module.exports = {
   devtool: 'source-map',

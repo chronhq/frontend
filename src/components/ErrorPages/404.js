@@ -14,7 +14,7 @@ const NotFound = () => (
     </Link>
       <h3 className='text-center'>404... Страница не найдена</h3>
     <div className='background'>
-      <img src={image} />
+      <img className='background__single' src={image} />
     </div>
   </div>
 );

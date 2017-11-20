@@ -14,6 +14,8 @@ import CourseSelection from './containers/CourseSelection';
 import DevTools from './DevTools';
 import UI from './containers/UI';
 import NotFound from './components/ErrorPages/404';
+import BadGateway from './components/ErrorPages/502';
+import GatewayTimeout from './components/ErrorPages/504';
 
 const AppSelect = () => (
   <div>
@@ -46,12 +48,16 @@ const AppSelect = () => (
 // };
 
 const AppRouter = () => (
-  <Switch>
-    <Route exact path='/' component={CourseSelection} />
-    <Route exact path='/404' component={NotFound} />
-    <Route path='/:id' component={App} />
-    <Route render={NotFound} />
-  </Switch>
+  <div>
+    <Switch>
+      <Route exact path='/' component={CourseSelection} />
+      <Route exact path='/404' component={NotFound} />
+      <Route path='/502' component={BadGateway} />
+      <Route path='/504' component={GatewayTimeout} />
+      <Route path='/:id' component={App} />
+      <Route render={NotFound} />
+    </Switch>
+  </div>
 );
 
 // class AppRouter extends AnotherClass {

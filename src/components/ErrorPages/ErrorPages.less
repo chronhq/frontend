@@ -12,22 +12,67 @@
   // }
 
 
+  // & .background {
+  //   min-width: 360px;
+    // width: 360px;
+  //   margin: 0 auto;
+  //   // padding-bottom: 220px;
+  //   & img {
+  //     // height: 100%;
+  //     // height: auto;
+  //     display: inline-block;
+  //     text-align: center;
+  //     margin: 0 auto;
+  //     @media screen and (max-width: 768px) {
+  //       width: 360px;
+  //     }
+  //   }
+  // }
+
   & .background {
     min-width: 360px;
-    width: 360px;
+    // width: 360px;
     margin: 0 auto;
     // padding-bottom: 220px;
-    & img {
-      // width: 400px;
-      // height: 100%;
+    &__single {
+      // width: 200px;
+      height: 300px;
       // height: auto;
+      display: inline-block;
       text-align: center;
       margin: 0 auto;
-      @media screen and (max-width: 768px) {
-        width: 360px;
+      @media screen and (max-width: 540px) {
+        height: 300px;
       }
     }
   }
+
+  .over {
+    position: absolute;
+    height: 300px;
+    top: 200px;
+    color: rgba(0, 0, 0, 0.8);
+    left: calc(~'50vw - 160px');
+    @media screen and (max-width: 540px) {
+      height: 250px;
+      left: calc(~'50vw - 140px');
+    }
+  }
+
+  .under {
+    position: absolute;
+    height: 300px;
+    top: 200px;
+    left: calc(~'50vw - 40px');
+    @media screen and (max-width: 540px) {
+      height: 250px;
+      left: calc(~'50vw - 40px');
+    }
+  }
+}
+
+.overlap {
+  position: absolute;
 }
 
 .errorPage__title {

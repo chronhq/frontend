@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
@@ -9,6 +10,20 @@ import TilesScreen from './TilesScreen';
 class CourseSelection extends Component {
   componentWillMount() {
     this.enableCourseSelector();
+
+  }
+
+  checkCourses() {
+    // e1!
+    if (Object.keys(this.props.availableCourses).length < 1) {
+      this.props.history.push('504');
+    }
+  }
+
+  componentWillReceiveProps(next) {
+    if (this.props.coursesLoading === false && this.props.errorCourses !== false) {
+      this.checkCourses();
+    }
   }
 
   enableCourseSelector() {
@@ -29,6 +44,8 @@ class CourseSelection extends Component {
 function mapStateToProps(state) {
   return {
     availableCourses: state.courses.list.byId || {},
+    coursesLoading: state.courses.list.loading,
+    errorCourses: state.courses.list.error,
   };
 }
 
@@ -40,4 +57,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseSelection);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CourseSelection));

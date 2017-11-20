@@ -33,11 +33,21 @@ class RouterMiddleware extends Component {
     this.startLoading(this.props.coursesLoaded, this.props.availableCourses);
   }
 
+  checkCourses() {
+    // lol
+    if (Object.keys(this.props.availableCourses).length < 1) {
+      this.props.history.push('504');
+    }
+  }
+
   componentWillReceiveProps(next) {
     if (next.coursesLoaded === true
       && this.state.loading !== true) {
       // we need to force loading, because 'nextProps' not yet installed
       this.startLoading(next.coursesLoaded, next.availableCourses);
+    }
+    if (next.errorCourses !== false) {
+      this.checkCourses();
     }
     const notLoaded = this.state.course
       ? sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.courses)
@@ -106,6 +116,7 @@ function mapStateToProps(state) {
   return {
     availableCourses: state.courses.list.byId || {},
     coursesLoaded: state.courses.list.loaded,
+    errorCourses: state.courses.list.error,
     flags: {
       SelectedCourse: state.flags.SelectedCourse,
       SelectedCourseName: state.flags.SelectedCourseName,
