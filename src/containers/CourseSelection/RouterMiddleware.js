@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setFlagsAction } from 'flag';
 import { withRouter } from 'react-router-dom';
+import ym from 'react-yandex-metrika';
 
 import 'font-awesome/less/font-awesome.less';
 import './RouterMiddleware.less';
-import ym from 'react-yandex-metrika';
 
 import { loadDataForCourse,
   markItReady,
@@ -16,7 +16,7 @@ import { loadDataForCourse,
   setMapDimensions,
   changeInitialYear,
 } from '../../reducers/actions';
-
+import checkCourses from './checkCourses';
 import RotatingLogo from './RotatingLogo';
 
 const sumLoading = obj =>
@@ -29,15 +29,8 @@ class RouterMiddleware extends Component {
     selected: null,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.startLoading(this.props.coursesLoaded, this.props.availableCourses);
-  }
-
-  checkCourses() {
-    // lol
-    if (Object.keys(this.props.availableCourses).length < 1) {
-      this.props.history.push('504');
-    }
   }
 
   componentWillReceiveProps(next) {
@@ -46,9 +39,7 @@ class RouterMiddleware extends Component {
       // we need to force loading, because 'nextProps' not yet installed
       this.startLoading(next.coursesLoaded, next.availableCourses);
     }
-    if (next.errorCourses !== false) {
-      this.checkCourses();
-    }
+    checkCourses(next);
     const notLoaded = this.state.course
       ? sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.courses)
       : sumLoading(next.timeline) + sumLoading(next.data) + sumLoading(next.full);
@@ -115,6 +106,7 @@ const getLoadedStatus = data => ({
 function mapStateToProps(state) {
   return {
     availableCourses: state.courses.list.byId || {},
+    coursesLoading: state.courses.list.loading,
     coursesLoaded: state.courses.list.loaded,
     errorCourses: state.courses.list.error,
     flags: {

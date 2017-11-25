@@ -6,24 +6,15 @@ import { setFlagsAction } from 'flag';
 
 import { markItReady, cleanState } from '../../reducers/actions';
 import TilesScreen from './TilesScreen';
+import checkCourses from './checkCourses';
 
 class CourseSelection extends Component {
   componentWillMount() {
     this.enableCourseSelector();
-
-  }
-
-  checkCourses() {
-    // e1!
-    if (Object.keys(this.props.availableCourses).length < 1) {
-      this.props.history.push('504');
-    }
   }
 
   componentWillReceiveProps(next) {
-    if (this.props.coursesLoading === false && this.props.errorCourses !== false) {
-      this.checkCourses();
-    }
+    checkCourses(next);
   }
 
   enableCourseSelector() {
@@ -45,6 +36,7 @@ function mapStateToProps(state) {
   return {
     availableCourses: state.courses.list.byId || {},
     coursesLoading: state.courses.list.loading,
+    coursesLoaded: state.courses.list.loaded,
     errorCourses: state.courses.list.error,
   };
 }
