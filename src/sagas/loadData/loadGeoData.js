@@ -23,6 +23,18 @@ export const getTimelineBorders = state => state.timeline.borders;
 export const getLoadedGeometry = state => state.data.borders;
 export const getCurrentYear = state => state.timeline.year.now;
 
+const separate = (arr) => {
+  // split array of geoIds into multiple arrays with setted max elements
+  const maxIdsInReq = 15;
+  const count = Math.ceil(arr.length / maxIdsInReq);
+  const s = new Array(count);
+  return s.map((cur, idx) => {
+    const start = maxIdsInReq * idx;
+    const stop = maxIdsInReq * (idx + 1);
+    return arr.slice(start, stop);
+  });
+};
+
 function* loadGeoData(action) {
   // console.time('Loading GeoData Saga');
   const geometryData = yield select(getLoadedGeometry);
@@ -48,15 +60,19 @@ function* loadGeoData(action) {
   // Loading new geometry
   if (geoIds.length > 0 && geometryData.loading === false) {
     // console.log('Asking for geo ids', geoIds);
-    yield put(loadData([{
-      resource: 'BORDERS',
-      req: {
-        cb: projection,
-        filter: JSON.stringify(
-          { where: { or: geoIds } }
-        )
-      } }]
-    ));
+    const listOfIds = separate(geoIds);
+    /* eslint-disable no-restricted-syntax */
+    for (const or of listOfIds) {
+      yield put(loadData([{
+        resource: 'BORDERS',
+        req: {
+          cb: projection,
+          filter: JSON.stringify({
+            where: { or }
+          })
+        }
+      }]));
+    }
   }
 
   // console.timeEnd('Loading GeoData Saga');
