@@ -1,4 +1,4 @@
-const defaultState = { colors: {}, auto: true, enabled: true, zoomPoint: 4, name: 'grouped' };
+const defaultState = { colors: {}, auto: false, enabled: true, zoomPoint: 4, name: 'grouped' };
 
 const getName = enabled => (enabled === true ? 'grouped' : 'separated');
 
