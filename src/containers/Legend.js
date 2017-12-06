@@ -53,6 +53,10 @@ class Legend extends Component {
       const scaleView = this.props.colorsData.enabled;
       return this.props.properties.reduce((prev, cur) => {
         const colors = cur.colors[this.props.colorsData.name];
+        // disable disputed territory
+        if (colors.length > 1) {
+          return prev;
+        }
         const mapcolor13 = `${colors}.join('_')}`;
         const name = scaleView === true
           ? `${mapcolor13}_${cur.sr_adm0_a3}`
@@ -69,7 +73,7 @@ class Legend extends Component {
       <div>
         <h3> Легенда </h3>
         <ul className='Legend'>
-          {Object.keys(uniqLegendItems).map(propId => (
+          {Object.keys(uniqLegendItems).sort().map(propId => (
             <LegendItem
               key={propId}
               properties={uniqLegendItems[propId]}
