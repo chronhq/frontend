@@ -13,7 +13,7 @@ const BadGateway  = () => (
       <h1>  Хронист </h1>
       </div>
     </Link>
-      <h3 className='text-center'>504... Bad Gateway </h3>
+      <h3 className='text-center'>502... Bad Gateway </h3>
     <div className='background'>
       <img className='over' src={image_2} />
       <img className='under' src={image} />

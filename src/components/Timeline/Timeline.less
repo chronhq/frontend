@@ -213,11 +213,14 @@
   height: auto;
   overflow: hidden;
 
-  // border-top: 1px black solid;
-  border-right: 3px #0078d7 solid;
+  // border-top: 1px gray solid;
+  // background: rgba(255, 255, 255, 0.8);
+  // border-bottom: 1px gray solid;
+  border-right: 5px #0078d7 solid;
 
   .timeline__heading {
     // left: -2%;
+    font-weight: 700;
     &:before {
       width: @dot-diameter--selected;
       height: @dot-diameter--selected;
@@ -225,9 +228,16 @@
     }
   }
 
+  .timeline__title {
+    font-size: 15px;
+    background: rgba(250, 250, 250, 0.6);
+  }
+
   .timeline__text {
+    background: rgba(250, 250, 250, 0.6);
     transition: height 1000ms 1000ms, opacity 1000ms 500ms;
     height: auto;
+    color: #222222;
     padding-bottom: 15px;
   }
 }

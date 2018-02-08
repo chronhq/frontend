@@ -13,7 +13,7 @@ const GatewayTimeout  = () => (
       <h1>  Хронист </h1>
       </div>
     </Link>
-      <h3 className='text-center'>504... GatewayTimeout </h3>
+      <h3 className='text-center'>504... Gateway Timeout </h3>
     <div className='background'>
       <img className='over' src={image_2} />
       <img className='under' src={image} />
