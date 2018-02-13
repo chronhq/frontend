@@ -27,7 +27,7 @@ const separate = (arr) => {
   // split array of geoIds into multiple arrays with setted max elements
   const maxIdsInReq = 15;
   const count = Math.ceil(arr.length / maxIdsInReq);
-  const s = new Array(count);
+  const s = new Array(count).fill(undefined);
   return s.map((cur, idx) => {
     const start = maxIdsInReq * idx;
     const stop = maxIdsInReq * (idx + 1);
