@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flag } from 'flag';
+import Flag from '../Flag';
 
 import MapViewport from '../containers/MapViewport';
 import SidePanel from '../components/SidePanel';
