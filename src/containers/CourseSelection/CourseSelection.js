@@ -31,7 +31,7 @@ class CourseSelection extends React.Component {
   render() {
     return (
       <TilesScreen
-        courses={this.props.store.bank.data.Courses}
+        courses={this.props.store.data.Courses.data}
       />
     );
   }

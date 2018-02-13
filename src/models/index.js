@@ -1,4 +1,4 @@
-import Bank from './BankModel';
+import Data from './DataModel';
 import Borders from './BordersModel';
 import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
@@ -10,7 +10,7 @@ export default class storeModel {
     this.app = {
       name: 'beta chronist',
     };
-    this.bank = new Bank(this);
+    this.data = new Data(this);
     this.borders = new Borders(this);
     this.flags = new Flags();
     this.projection = new Projection();

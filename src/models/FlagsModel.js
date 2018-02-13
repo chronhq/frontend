@@ -28,6 +28,6 @@ export default class FlagsModel {
     this.flags = mergeFlags(this.flags, f);
   }
   get(f) {
-    findFlag(this.flags, f);
+    return findFlag(this.flags, f);
   }
 }

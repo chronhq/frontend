@@ -16,7 +16,7 @@ import GatewayTimeout from './components/ErrorPages/504';
 class RouteWrapper extends React.Component {
   render() {
     const Component = this.props.component;
-    return (<Component {...this.props} />);
+    return (<Component {...this.props} component='' />);
   }
 }
 

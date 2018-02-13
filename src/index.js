@@ -9,7 +9,7 @@ import StoreModel from './models';
 import App from './App';
 
 window.store = new StoreModel();
-window.store.bank.get('Courses');
+window.store.data.Courses.get();
 
 function renderApp(component) {
   const Application = component;
