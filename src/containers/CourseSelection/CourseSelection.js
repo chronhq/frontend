@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { setFlagsAction } from 'flag';
+import { observer } from 'mobx-react';
 
-import { markItReady, cleanState } from '../../reducers/actions';
+// import { markItReady, cleanState } from '../../reducers/actions';
 import TilesScreen from './TilesScreen';
 import checkCourses from './checkCourses';
 
-class CourseSelection extends Component {
+@observer
+class CourseSelection extends React.Component {
   componentWillMount() {
     this.enableCourseSelector();
   }
@@ -18,35 +17,24 @@ class CourseSelection extends Component {
   }
 
   enableCourseSelector() {
-    this.props.markItReady(false);
-    this.props.cleanState();
-    this.props.setFlagAction({ CourseSelection: true });
+    this.props.store.flags.set({
+      runtime: {
+        CourseSelection: true,
+        Ready: false
+      }
+    });
+    // this.props.markItReady(false);
+    // this.props.cleanState();
+    // this.props.setFlagAction({ CourseSelection: true });
   }
 
   render() {
     return (
       <TilesScreen
-        courses={this.props.availableCourses}
+        courses={this.props.store.bank.data.Courses}
       />
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    availableCourses: state.courses.list.byId || {},
-    coursesLoading: state.courses.list.loading,
-    coursesLoaded: state.courses.list.loaded,
-    errorCourses: state.courses.list.error,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    setFlagAction: bindActionCreators(setFlagsAction, dispatch),
-    markItReady: bindActionCreators(markItReady, dispatch),
-    cleanState: bindActionCreators(cleanState, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CourseSelection));
+export default (withRouter(CourseSelection));
