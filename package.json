@@ -90,7 +90,6 @@
     "file-loader": "^1.1.6",
     "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
-    "konva": "^1.7.6",
     "less": "^3.0.0",
     "less-loader": "^4.0.5",
     "mobx": "^3.5.1",
