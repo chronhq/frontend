@@ -2,6 +2,7 @@
  */
 
 import React from 'react';
+import { observer } from 'mobx-react';
 
 export const getFillPatternId = (c, name = 'fill') => `${name}_${c}`;
 
@@ -33,24 +34,24 @@ export const SVGPattern = ({ id, c }) => {
           x2={`${5 * idx}`}
           y2="5"
           style={{ stroke: color, strokeWidth: 5 }}
-        />)
-      )}
+        />))
+      }
     </pattern>
   );
-}
+};
 
-const PatternsDefs = ({ bordersData, colorsData }) => {
-  if (typeof bordersData === 'undefined') return null;
-  if (!(Array.isArray(bordersData))) return null;
-  const patterns = bordersData.reduce(
-    (prev, cur) => {
-      const cVls = cur.colors[colorsData.name];
-      const key = getFillPatternId(cur.id);
-      const value = <SVGPattern key={key} id={key} c={cVls} />;
-      return { ...prev,
-        [key]: value
-      };
-    }, {});
+const PatternsDefs = ({ bordersColors }) => {
+  if (typeof bordersColors === 'undefined') return null;
+  if (!(Array.isArray(bordersColors))) return null;
+  const patterns = bordersColors.reduce((prev, cur) => {
+    const cVls = cur.colors;
+    const key = getFillPatternId(cur.id);
+    const value = <SVGPattern key={key} id={key} c={cVls} />;
+    return {
+      ...prev,
+      [key]: value
+    };
+  }, {});
   return (
     <g>
       {Object.keys(patterns).map(id => patterns[id])}
@@ -58,4 +59,4 @@ const PatternsDefs = ({ bordersData, colorsData }) => {
   );
 };
 
-export default PatternsDefs;
+export default observer(PatternsDefs);
