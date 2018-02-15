@@ -1,9 +1,10 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, toJS } from 'mobx';
 
 class FileModel {
   @observable model = '';
   @observable data = {};
   @observable status = { error: false, loading: false, loaded: false };
+  @observable filter = null;
   // This can be overwritten
   @observable saveDataCb = (json) => {
     console.log('Saving data', this.model);
@@ -11,6 +12,7 @@ class FileModel {
     console.time('Map timer');
     json.map((cur) => {
       data[cur.id] = cur;
+      return false;
     });
     this.data = data;
     console.timeEnd('Map timer');
@@ -29,17 +31,23 @@ class FileModel {
   }
 
   getLink(params = null, id = null) {
+    // if arguments not null ignore global this.filter
+    const filter = (params === null && id === null)
+      ? toJS(this.filter)
+      : params;
     if (id !== null) {
       return `/api/${this.model}/${id}`;
-    } else if (params !== null) {
-      return `/api/${this.model}?filter=${params}`;
+    } else if (filter !== null) {
+      return `/api/${this.model}?filter=${filter}`;
     }
     return `/api/${this.model}`;
   }
+
   @action wipe() {
     this.data = {};
     this.status = { error: false, loading: false, loaded: false };
   }
+
   @action setError = (err) => {
     this.status = { error: err, loading: false, loaded: true };
     console.error('Error in', 'method for model', this.model, err);
@@ -89,16 +97,26 @@ export default class DataModel {
     'Persons',
     'Properties',
     'Types',
+    'MapDecorations',
+    'MapPics',
+    'GeoEvents',
+    'CourseTimelines',
+    'CourseTraces',
+    'CourseGeopoints',
   ];
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor() {
     this.roster.map((model) => {
       this[model] = new FileModel(model);
+      return false;
     });
   }
 
   @action resolveDependencies(depend) {
-    return depend.map(model => this[model].downloadModel());
+    return depend.map((model) => {
+      console.log('using Model', toJS(model));
+      this[model].downloadModel();
+      return false;
+    });
   }
 }

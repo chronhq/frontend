@@ -3,17 +3,20 @@ import Borders from './BordersModel';
 import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
+import CourseSideEffects from './CourseSideEffects';
+import ColorsModel from './ColorsModel';
 
 export default class storeModel {
+  // Add here new models
   constructor() {
-    // Add here new models
-    this.app = {
-      name: 'beta chronist',
-    };
-    this.data = new Data(this);
-    this.borders = new Borders(this);
-    this.flags = new Flags();
+    this.data = new Data();
     this.projection = new Projection();
+    this.flags = new Flags();
     this.year = new Year();
+    this.effects = {
+      course: new CourseSideEffects(this),
+    };
+    this.borders = new Borders(this);
+    this.colors = new ColorsModel(this);
   }
 }

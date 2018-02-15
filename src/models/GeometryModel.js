@@ -1,13 +1,24 @@
-import { observable, when, action, computed } from 'mobx';
+import { observable, computed } from 'mobx';
 
 export default class GeometryModel {
-  @observable id;
-  @observable geometry;
+  id = 0;
+  geometry = {};
+
+  // toJS = data => JSON.parse(JSON.stringify(data));
+
   @computed get projected() {
-    return this.rootStore.projection.pathFn(this.geometry);
+    return this.path(this.geometry);
   }
+
   constructor(rootStore, geometry) {
+    this.path = rootStore.projection.path;
     this.id = geometry.id;
-    this.geometry = geometry.geometry;
+    if (typeof geometry.geometry !== 'undefined') {
+      this.geometry = geometry.geometry;
+    } else if (typeof geometry.contour !== 'undefined') {
+      this.geometry = geometry.contour;
+    } else {
+      console.log('Strange input to Geometry model', geometry);
+    }
   }
 }

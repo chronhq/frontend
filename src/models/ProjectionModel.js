@@ -36,7 +36,8 @@ export default class ProjectionModel {
 
   @computed get project() {
     const p = this.projection.center(this.center).rotate(this.rotate);
-    return p.clipExtent(p(this.clip[0]), p(this.clip[1]));
+    return p;
+    // return p.clipExtent(p(this.clip[0]), p(this.clip[1]));
   }
 
   @computed get path() {
