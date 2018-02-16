@@ -7,15 +7,12 @@ class FileModel {
   @observable filter = null;
   // This can be overwritten
   @observable saveDataCb = (json) => {
-    console.log('Saving data', this.model);
     const data = {};
-    console.time('Map timer');
     json.map((cur) => {
       data[cur.id] = cur;
       return false;
     });
     this.data = data;
-    console.timeEnd('Map timer');
   }
 
   @computed get keys() {
@@ -56,7 +53,6 @@ class FileModel {
   @action saveData(json) {
     this.saveDataCb(json);
     this.status = { error: null, loading: false, loaded: true };
-    console.log('Complete', this.model);
   }
 
   @action processData(res) {
@@ -70,14 +66,12 @@ class FileModel {
   @action get(params = null, id = null) {
     this.status = { error: null, loading: true, loaded: false };
     const url = this.getLink(params, id);
-    console.log('Fetching', url);
     fetch(url)
       .then(res => this.processData(res))
       .catch((e => this.setError(e)));
   }
 
   @action downloadModel(force = false) {
-    console.log('Downloading', this.model);
     if (this.length === 0 || force === true) {
       this.get();
     }
@@ -114,7 +108,6 @@ export default class DataModel {
 
   @action resolveDependencies(depend) {
     return depend.map((model) => {
-      console.log('using Model', toJS(model));
       this[model].downloadModel();
       return false;
     });

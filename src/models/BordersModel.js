@@ -20,13 +20,11 @@ export default class BordersModel {
 
   @observable saveDataCb = (type, json) => {
     const data = {};
-    console.time('Map timer');
     json.map((cur) => {
       data[cur.id] = new Geometry(this.rootStore, cur);
       return false;
     });
     this[type] = { ...this[type], ...data };
-    console.timeEnd('Map timer');
   }
 
   constructor(rootStore) {

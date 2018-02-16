@@ -1,10 +1,8 @@
-import { observable, computed } from 'mobx';
+import { computed } from 'mobx';
 
 export default class GeometryModel {
   id = 0;
   geometry = {};
-
-  // toJS = data => JSON.parse(JSON.stringify(data));
 
   @computed get projected() {
     return this.path(this.geometry);
