@@ -7,7 +7,7 @@ import { select, event, mouse } from 'd3-selection';
 import Locations from '../Locations';
 import Expeditions from '../Expeditions';
 import GeoPoints from '../GeoPoints';
-import PatternsDefs from '../../components/SVGPatternsDefs';
+import { PatternsDefs, MapPicsDefs } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
 import { Borders, Contour } from './Elements';
@@ -73,15 +73,15 @@ class Map extends React.Component {
   //   window.removeEventListener('resize', () => this.resize());
   // }
 
-  // onZoom = () => {
-  //   if (this.state.transform !== null
-  //   && Math.round(this.state.transform.k) !== Math.round(event.transform.k)) {
-  //     this.props.changeScale(Math.round(event.transform.k), false);
-  //   }
-  //   this.setState({
-  //     transform: event.transform
-  //   });
-  // }
+  onZoom = () => {
+    if (this.state.transform !== null
+    && Math.round(this.state.transform.k) !== Math.round(event.transform.k)) {
+      this.props.changeScale(Math.round(event.transform.k), false);
+    }
+    this.setState({
+      transform: event.transform
+    });
+  }
 
   // getTransformX = () => this.props.mapShift[0] * this.scale;
   // getTransformY = () => this.props.mapShift[1] * this.scale;
@@ -128,9 +128,12 @@ class Map extends React.Component {
   //   this.setState({ widgetTransform: `translate(${x}, ${y})` });
   // }
 
-  // zoom = zoom()
-  //   .scaleExtent([this.props.minScale, this.props.maxScale])
-  //   .on('zoom', this.onZoom);
+  zoom = zoom()
+    .scaleExtent([
+      this.props.store.flags.flags.zoom.minScale,
+      this.props.store.flags.flags.zoom.maxScale
+    ])
+    .on('zoom', this.onZoom);
 
   render() {
     return (
@@ -139,8 +142,7 @@ class Map extends React.Component {
           <PatternsDefs
             bordersColors={this.props.store.colors.colors}
           />
-          { // <SymbolsDefs symbols={this.props.mapPics} />
-          }
+          <MapPicsDefs symbols={this.props.store.data.MapPics.data} />
         </defs>
         <g transform={this.transform}>
           <Contour />
@@ -153,7 +155,7 @@ class Map extends React.Component {
               <Expeditions />
             </g>
           ) */}
-          {/* <Locations /> */}
+          <Locations />
         </g>
         {/*
         <g transform={this.state.widgetTransform}>

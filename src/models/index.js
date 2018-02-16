@@ -5,6 +5,7 @@ import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSideEffects from './CourseSideEffects';
 import ColorsModel from './ColorsModel';
+import Locations from './LocationsModel';
 
 export default class storeModel {
   // Add here new models
@@ -17,6 +18,7 @@ export default class storeModel {
       course: new CourseSideEffects(this),
     };
     this.borders = new Borders(this);
+    this.locations = new Locations(this);
     this.colors = new ColorsModel(this);
   }
 }
