@@ -30,4 +30,7 @@ export default class FlagsModel {
   get(f) {
     return findFlag(this.flags, f);
   }
+  print() {
+    console.log(JSON.parse(JSON.stringify(this.flags)));
+  }
 }

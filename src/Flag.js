@@ -6,14 +6,21 @@ import PropTypes from 'prop-types';
 @inject('store')
 @observer
 class Flag extends React.Component {
-  @computed get flag() {
-    return this.props.store.flags.get(this.props.name);
-  }
+
   @computed get component() {
     return this.flag
       ? this.props.render
       : this.props.fallbackRender;
   }
+
+  @computed get flag() {
+    const arr = this.props.name.split('.');
+    const flag = arr.reduce((prev, cur) => (
+      prev[cur]
+    ), this.props.store.flags.flags);
+    return flag;
+  }
+
   render() {
     const Component = this.component;
     return (<Component {...this.props} render='' name='' fallbackRender='' />);
