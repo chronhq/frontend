@@ -40,7 +40,7 @@ export const SVGPattern = ({ id, c }) => {
   );
 };
 
-const PatternsDefs = ({ bordersColors }) => {
+export const PatternsDefs = observer(({ bordersColors }) => {
   if (typeof bordersColors === 'undefined') return null;
   if (!(Array.isArray(bordersColors))) return null;
   const patterns = bordersColors.reduce((prev, cur) => {
@@ -57,6 +57,21 @@ const PatternsDefs = ({ bordersColors }) => {
       {Object.keys(patterns).map(id => patterns[id])}
     </g>
   );
-};
+});
 
-export default observer(PatternsDefs);
+/* eslint-disable react/no-array-index-key */
+// It's a static data it would not be changed
+export const MapPicsDefs = observer(({ symbols }) => ( // SymbolsDefs
+  <g className="symbolsDefs">
+    {Object.values(symbols).map(mapPic => (
+      <symbol id={`mapPic_${mapPic.id}`} key={`mapPic_key_${mapPic.id}`}>
+        {mapPic.g.map((g, idx) => (
+          <path
+            key={`mapPic_g_key_${mapPic.id}_${idx}`}
+            d={g.d}
+            style={g.style}
+          />))}
+      </symbol>
+    ))}
+  </g>
+));
