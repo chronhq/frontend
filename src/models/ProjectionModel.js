@@ -27,7 +27,8 @@ export default class ProjectionModel {
       topLeft: points[0],
       bottomRight: points[1],
       mapWidth: points[1][0] - points[0][0],
-      mapHeight: points[1][1] - points[0][1]
+      mapHeight: points[1][1] - points[0][1],
+      mapShift: points[0].map(a => a * -1), // Shifting viewport for custom crop
     };
   }
   @computed get projection() {
