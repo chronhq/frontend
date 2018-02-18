@@ -12,19 +12,19 @@ import Bio from '../components/Timeline/Bio';
 const UI = () => (
   <div className='content'>
     <Flag
-      name="UI.SidePanel"
+      name="UI.SidePanel-NotImplemented"
       render={() => <SidePanel />}
     />
     <Flag
-      name="UI.TimePanel"
+      name="UI.TimePanel-NotImplemented"
       render={() => <TimePanel />}
     />
     <Flag
-      name="UI.MiniSidebar"
+      name="UI.MiniSidebar-NotImplemented"
       render={() => <MiniSidebar />}
     />
     <Flag
-      name="UI.MapControls"
+      name="UI.MapControls-NotImplemented"
       render={() => <MapControls />}
     />
     <Flag
@@ -32,11 +32,11 @@ const UI = () => (
       render={() => <MapViewport />}
     />
     <Flag
-      name="UI.LegendHOC"
+      name="UI.LegendHOC-NotImplemented"
       render={() => <LegendHOC />}
     />
     <Flag
-      name="UI.Bio"
+      name="UI.Bio-NotImplemented"
       render={() => <Bio />}
     />
   </div>
