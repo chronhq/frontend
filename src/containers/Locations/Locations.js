@@ -32,7 +32,7 @@ class Locations extends React.Component {
             scale={this.props.store.view.preciseScale}
             key={`pin_list_${city.id}`}
             city={city}
-            // cb={() => this.props.setClickInfo('location', city)}
+            cb={() => this.props.store.clickInfo.selectLocation(city.id)}
             visible={this.props.store.locations.tooltips[id]}
             visibility={this.props.store.flags.flags.visibility}
           />

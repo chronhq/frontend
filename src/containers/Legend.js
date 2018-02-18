@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { inject, observer } from 'mobx-react';
 
 import { SVGPattern, getFillPatternId } from '../components/SVGPatternsDefs';
 
@@ -23,61 +23,46 @@ const detailedName = properties => (properties.type.ru === null
   ? `${properties.admin.ru}`
   : `[${properties.type.ru}] ${properties.admin.ru}`);
 
+
+const fullName = (scaleView, properties) => (
+  scaleView === true
+    ? properties.admin.ru
+    : detailedName(properties));
+
 const Description = ({ properties, scaleView }) => (
-  <span>{properties.disputed === ''
-    ? scaleView === true
-        && `${properties.admin.ru}`
-        || detailedName(properties)
-    : `${properties.nameru}`
-  }
+  <span>
+    {properties.disputed === ''
+      ? fullName(scaleView, properties)
+      : `${properties.nameru}`
+    }
   </span>
 );
 
-const LegendItem = ({ properties, colorsData }) => {
-  const vls = properties.colors[colorsData.name];
-  const boxId = getFillPatternId(properties.id, 'legend');
+const LegendItem = ({ colors, propId }) => {
+  const vls = colors.uniqLegendItems[propId].colors;
+  const boxId = getFillPatternId(colors.uniqLegendItems[propId].id, 'legend');
 
   return (
     <li>
       <ColorBox c={vls} p={boxId} />
-      <Description properties={properties} scaleView={colorsData.enabled} />
+      <Description properties={colors.uniqLegendItems[propId]} scaleView={colors.enabled} />
     </li>
   );
 };
 
-class Legend extends Component {
-  uniqLegendItems = () => {
-    if (this.props.visibility.borders
-          && this.props.bordersLoaded === true
-          && Array.isArray(this.props.borders)) {
-      const scaleView = this.props.colorsData.enabled;
-      return this.props.properties.reduce((prev, cur) => {
-        const colors = cur.colors[this.props.colorsData.name];
-        // disable disputed territory
-        if (colors.length > 1) {
-          return prev;
-        }
-        const mapcolor13 = `${colors}.join('_')}`;
-        const name = scaleView === true
-          ? `${mapcolor13}_${cur.sr_adm0_a3}`
-          : `${mapcolor13}_${cur.disputed}_${cur.type.en}_${cur.sr_adm0_a3}`;
-        return { ...prev, [name]: cur };
-      }, {});
-    }
-    return {};
-  }
-
+@inject('store')
+@observer
+class Legend extends React.Component {
   render() {
-    const uniqLegendItems = this.uniqLegendItems();
     return (
       <div>
         <h3> Легенда </h3>
         <ul className='Legend'>
-          {Object.keys(uniqLegendItems).sort().map(propId => (
+          {Object.keys(this.props.store.colors.uniqLegendItems).sort().map(propId => (
             <LegendItem
               key={propId}
-              properties={uniqLegendItems[propId]}
-              colorsData={this.props.colorsData}
+              propId={propId}
+              colors={this.props.store.colors}
             />
           ))
           }
@@ -87,14 +72,4 @@ class Legend extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    colorsData: state.runtime.colorsData,
-    bordersLoaded: state.data.borders.loaded,
-    borders: state.runtime.bordersData.borders,
-    properties: state.runtime.bordersData.properties,
-    visibility: state.runtime.visibility
-  };
-}
-
-export default connect(mapStateToProps)(Legend);
+export default Legend;

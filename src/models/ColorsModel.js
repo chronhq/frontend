@@ -38,9 +38,25 @@ export default class ColorsModel {
   @computed get colors() {
     const props = this.rootStore.borders.bordersProps;
     return props.map(prop => ({
+      ...prop,
       colors: this.getFillColors(prop, this.enabled),
-      id: prop.id,
+      // id: prop.id,
     }));
+  }
+
+  @computed get uniqLegendItems() {
+    return Object.values(this.colors).reduce((prev, cur) => {
+      // const colors = this.rootStore.colors.colors[idx];
+      // disable disputed territory
+      if (cur.colors.length > 1) {
+        return prev;
+      }
+      const mapcolor13 = `${cur.colors}.join('_')}`;
+      const name = this.rootStore.colors.enabled === true
+        ? `${mapcolor13}_${cur.sr_adm0_a3}`
+        : `${mapcolor13}_${cur.disputed}_${cur.type.en}_${cur.sr_adm0_a3}`;
+      return { ...prev, [name]: cur };
+    }, {});
   }
 
   getFillColors(property, enabled) {

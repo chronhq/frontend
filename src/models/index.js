@@ -7,6 +7,7 @@ import CourseSideEffects from './CourseSideEffects';
 import ColorsModel from './ColorsModel';
 import Locations from './LocationsModel';
 import View from './ViewModel';
+import ClickInfo from './ClickInfoModel';
 
 export default class storeModel {
   // Add here new models
@@ -22,5 +23,6 @@ export default class storeModel {
     this.locations = new Locations(this);
     this.colors = new ColorsModel(this);
     this.view = new View(this);
+    this.clickInfo = new ClickInfo(this);
   }
 }

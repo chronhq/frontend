@@ -32,7 +32,7 @@ const UI = () => (
       render={() => <MapViewport />}
     />
     <Flag
-      name="UI.LegendHOC-NotImplemented"
+      name="UI.LegendHOC"
       render={() => <LegendHOC />}
     />
     <Flag

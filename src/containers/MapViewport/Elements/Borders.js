@@ -17,6 +17,7 @@ class BordersMap extends React.Component {
   @computed get borders() {
     return this.props.store.borders.bordersPath;
   }
+
   render() {
     return (
       <g className='svgMapBorders'>
@@ -25,7 +26,7 @@ class BordersMap extends React.Component {
             key={`borders_na_${border.id}`}
             d={border.d}
             fill={`url(#${getFillPatternId(border.props)})`}
-            // onClick={() => setClickInfoCb('border', border.props)}
+            onClick={() => this.props.store.clickInfo.selectBorder(border.props)}
           />
         ))}
       </g>
