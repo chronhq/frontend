@@ -1,5 +1,5 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { observer, inject } from 'mobx-react';
+import { computed, observable } from 'mobx';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,23 +7,12 @@ import { select, mouse } from 'd3-selection';
 import { axisBottom } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 
-import { setYear } from '../reducers/actions';
 import './TimePanel.less';
 import ControlButtons from '../components/ControlButtons';
 
+@inject('store')
+@observer
 class TimePanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // arrow: 'translate(0,0)',
-      position: 0,
-      width: this.width,
-      now: this.props.now,
-      isDown: false
-    };
-  }
-
-
   componentDidMount() {
     window.addEventListener('resize', () => this.resize());
 
@@ -31,10 +20,10 @@ class TimePanel extends React.Component {
     svg.on('click', () => {
       const rectId = this.svgTime.childNodes[0];
       const mouseX = mouse(rectId)[0];
-      if (mouseX > 0 && mouseX < this.state.width) {
-        this.setState({ now: Math.round(this.scale.invert(mouseX)) });
+      if (mouseX > 0 && mouseX < this.width) {
+        this.now = Math.round(this.scale.invert(mouseX))
         // this.updateClockPosition();
-        this.props.setYearAction(Number(this.state.now));
+        this.props.store.year.setYear(Number(this.now));
       }
     // }).on('mousedown', () => {
     //   this.setState({ isDown: true });
@@ -46,29 +35,9 @@ class TimePanel extends React.Component {
     this.resize();
   }
 
-  componentWillReceiveProps(nextProps) {
-    // console.log(`timeline.now ${this.timeline.now}`);
-    this.setState({ now: nextProps.now });
-    // this.updateClockPosition(nextProps.now);
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize());
   }
-
-  get scale() {
-    return scaleLinear()
-      .domain([this.props.min, this.props.max])
-      .range([0, this.state.width]);
-  }
-
-  /* eslint-disable class-methods-use-this */
-  get width() {
-    return window.innerWidth < 768
-      ? window.innerWidth - 100
-      : window.innerWidth - 300;
-  }
-  /* eslint-enable */
 
   // followMouse() {
   //   select('.svgTime')
@@ -99,17 +68,33 @@ class TimePanel extends React.Component {
     // this.setState({ position: this.scale(now) });
   // }
 
+  /* eslint-disable class-methods-use-this */
+  @computed get width() {
+    return window.innerWidth < 768
+      ? window.innerWidth - 100
+      : window.innerWidth - 300;
+  }
+  /* eslint-enable */
+
+  @computed get scale() {
+    return scaleLinear()
+      .domain([this.props.store.year.min, this.props.store.year.max])
+      .range([0, this.width]);
+  }
+
   resize() {
-    const width = this.width;
-    this.setState({ width });
     const svgAxis = select(this.svgAxis);
-    svgAxis.call(axisBottom(this.scale).ticks(parseInt(width / 45, 10), 'f'));
+    svgAxis.call(axisBottom(this.scale).ticks(parseInt(this.width / 45, 10), 'f'));
     // this.updateClockPosition();
   }
 
+  @observable position = 0;
+  @observable isDown = false;
+  @observable now;
+
   render() {
     // const viewBox = `-15 -15 ${this.state.width + 30} 40`;
-    const viewBox = `-15 -25 ${this.state.width + 20} 20`;
+    const viewBox = `-15 -25 ${this.width + 20} 20`;
     return (
       <div id='timeline'>
 
@@ -124,8 +109,8 @@ class TimePanel extends React.Component {
             // preserveAspectRatio="none"
           >
             <g className="axisTime" strokeWidth="1" ref={(r) => { this.svgAxis = r; }} />
-            <rect x='0' y='-25' width={this.state.width + 50} height='40' fill='#ffffff' opacity='0' className='back' style={{ zIndex: -1 }} />
-            <g transform={`translate(${this.scale(this.props.now)}, 0)`} >
+            <rect x='0' y='-25' width={this.width + 50} height='40' fill='#ffffff' opacity='0' className='back' style={{ zIndex: -1 }} />
+            <g transform={`translate(${this.scale(this.props.store.year.now)}, 0)`} >
               {/*
               <g transform={this.state.arrow}>
               <rect y='-2' width='1' height='12' opacity='1' className='arrow' style={{ fill: 'black', stroke: 'white', strokeWidth: 2 }} />
@@ -141,25 +126,4 @@ class TimePanel extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    playing: state.timeline.intervalId,
-    now: state.timeline.year.now,
-    max: state.timeline.year.max,
-    min: state.timeline.year.min
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    setYearAction: bindActionCreators(setYear, dispatch),
-  };
-}
-
-
-TimePanel.propTypes = {
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  now: PropTypes.number.isRequired,
-  setYearAction: PropTypes.func.isRequired,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(TimePanel);
+export default TimePanel;

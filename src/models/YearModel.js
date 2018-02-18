@@ -5,6 +5,8 @@ export default class YearModel {
   @observable max;
   @observable now;
   @observable tick;
+  @observable playing = false;
+  @observable yearInterval = 1000;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -23,13 +25,28 @@ export default class YearModel {
       : year;
     this.rootStore.borders.loadGeometry();
   }
-  @action nextYear() {
+
+  nextYear() {
     this.setYear(this.now + 1);
   }
-  @action prevYear() {
+
+  prevYear() {
     this.setYear(this.now - 1);
   }
-  @action resetYear() {
+
+  resetYear() {
     this.setYear(this.min);
   }
+
+  play() {
+    if (this.playing === false) return;
+    this.nextYear();
+    setTimeout(() => this.play(), this.yearInterval);
+  }
+
+  @action togglePlay(playing = !this.playing) {
+    this.playing = playing;
+    this.play();
+  }
+
 }

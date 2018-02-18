@@ -16,7 +16,7 @@ const UI = () => (
       render={() => <SidePanel />}
     />
     <Flag
-      name="UI.TimePanel-NotImplemented"
+      name="UI.TimePanel"
       render={() => <TimePanel />}
     />
     <Flag

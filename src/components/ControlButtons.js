@@ -1,56 +1,43 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { nextYear, prevYear, resetYear, startPlaying, stopPlaying } from '../reducers/actions';
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+// import PropTypes from 'prop-types';
 import YearInput from './TimePanel-YearInput';
 
-class ControlButtons extends Component {
-  static propTypes = {
-    resetYear: PropTypes.func.isRequired,
-    nextYear: PropTypes.func.isRequired,
-    prevYear: PropTypes.func.isRequired,
-    startPlaying: PropTypes.func.isRequired,
-    stopPlaying: PropTypes.func.isRequired,
-    playing: PropTypes.bool.isRequired
-  }
+@inject('store')
+@observer
+class ControlButtons extends React.Component {
+  // static propTypes = {
+  //   resetYear: PropTypes.func.isRequired,
+  //   nextYear: PropTypes.func.isRequired,
+  //   prevYear: PropTypes.func.isRequired,
+  //   startPlaying: PropTypes.func.isRequired,
+  //   stopPlaying: PropTypes.func.isRequired,
+  //   playing: PropTypes.bool.isRequired
+  // }
 
   render() {
     return (
       <div className='playButton col-sm-4 col-sm-pull-8'>
-        <button onClick={this.props.resetYear}>
+        <button onClick={() => this.props.store.year.resetYear()}>
           <i className='fa fa-undo' aria-hidden='true' title='Restart' />
         </button>
-        <button onClick={this.props.prevYear}>
+        <button onClick={() => this.props.store.year.prevYear()}>
           <i className='fa fa-step-backward' aria-hidden='true' title='Previous Year' />
         </button>
-        {this.props.playing
-          ? <button onClick={this.props.stopPlaying} >
-            <i className='fa fa-pause' aria-hidden='true' title='Pause' />
-          </button>
-          : <button onClick={this.props.startPlaying} >
-            <i className='fa fa-play' aria-hidden='true' title='Play' />
-          </button>
-        }
-        <button onClick={this.props.nextYear}><i className='fa fa-step-forward' aria-hidden='true' title='Next Year' /></button>
+        <button onClick={() => this.props.store.year.togglePlay()} >
+          {this.props.store.year.playing
+            ? <i className='fa fa-pause' aria-hidden='true' title='Pause' />
+            : <i className='fa fa-play' aria-hidden='true' title='Play' />
+          }
+        </button>
+        <button onClick={() => this.props.store.year.nextYear()}>
+          <i className='fa fa-step-forward' aria-hidden='true' title='Next Year' />
+        </button>
         <YearInput />
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return { playing: state.runtime.status.playing };
-}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    nextYear: bindActionCreators(nextYear, dispatch),
-    prevYear: bindActionCreators(prevYear, dispatch),
-    resetYear: bindActionCreators(resetYear, dispatch),
-    startPlaying: bindActionCreators(startPlaying, dispatch),
-    stopPlaying: bindActionCreators(stopPlaying, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ControlButtons);
+export default ControlButtons;
