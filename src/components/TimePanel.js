@@ -1,7 +1,7 @@
 import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { select, mouse } from 'd3-selection';
 import { axisBottom } from 'd3-axis';
@@ -21,7 +21,7 @@ class TimePanel extends React.Component {
       const rectId = this.svgTime.childNodes[0];
       const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.width) {
-        this.now = Math.round(this.scale.invert(mouseX))
+        this.now = Math.round(this.scale.invert(mouseX));
         // this.updateClockPosition();
         this.props.store.year.setYear(Number(this.now));
       }
@@ -63,9 +63,9 @@ class TimePanel extends React.Component {
   // }
 
   // updateClockPosition(now = this.state.now) {
-    // const translate = `translate(${this.scale(now)},0)`;
-    // this.setState({ arrow: translate });
-    // this.setState({ position: this.scale(now) });
+  // const translate = `translate(${this.scale(now)},0)`;
+  // this.setState({ arrow: translate });
+  // this.setState({ position: this.scale(now) });
   // }
 
   /* eslint-disable class-methods-use-this */
@@ -113,7 +113,8 @@ class TimePanel extends React.Component {
             <g transform={`translate(${this.scale(this.props.store.year.now)}, 0)`} >
               {/*
               <g transform={this.state.arrow}>
-              <rect y='-2' width='1' height='12' opacity='1' className='arrow' style={{ fill: 'black', stroke: 'white', strokeWidth: 2 }} />
+              <rect y='-2' width='1' height='12' opacity='1' className='arrow'
+              style={{ fill: 'black', stroke: 'white', strokeWidth: 2 }} />
               <text x='-15' y='-5' style={{ fill: 'white' }}>{this.state.now}</text>
               */}
               <circle cx='0' r={4} style={{ fill: '#02364C', stroke: 'white', strokeWidth: 1.5 }} />

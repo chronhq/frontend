@@ -3,10 +3,12 @@ import { observer, inject } from 'mobx-react';
 
 import LocationDot from './LocationDot';
 import LocationDotLabel from './LocationDotLabel';
-import LocationFlag from './LocationFlag';
+// import LocationFlag from './LocationFlag';
 // import { setClickInfo } from '../../reducers/actions';
 
-const DrawLocationDot = observer(({ city, visibility, visible, scale, cb }) => (
+const DrawLocationDot = observer(({
+  city, visibility, visible, scale, cb
+}) => (
   <g
     onClick={cb}
   >
@@ -22,7 +24,6 @@ const DrawLocationDot = observer(({ city, visibility, visible, scale, cb }) => (
 @inject('store')
 @observer
 class Locations extends React.Component {
-
   render() {
     return (
       <g key='locations'>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed, observable } from 'mobx';
+import { observable } from 'mobx';
 import { zoom, zoomIdentity } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
 
 import Locations from '../Locations';
-import Expeditions from '../Expeditions';
-import GeoPoints from '../GeoPoints';
+// import Expeditions from '../Expeditions';
+// import GeoPoints from '../GeoPoints';
 import { PatternsDefs, MapPicsDefs } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
-import LoadingWidget from './LoadingWidget';
+// import LoadingWidget from './LoadingWidget';
 import { Borders, Contour } from './Elements';
 // import { setClickInfo, changeScale } from '../../reducers/actions';
 
@@ -18,7 +18,6 @@ import './MapViewport.less';
 @inject('store')
 @observer
 class Map extends React.Component {
-
   componentDidMount() {
     window.addEventListener('resize', () => this.resize());
     this.resize();
