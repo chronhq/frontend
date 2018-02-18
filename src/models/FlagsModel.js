@@ -31,9 +31,6 @@ export default class FlagsModel {
       locations: 1,
       tooltips: 1,
       scale: 5,
-    },
-    view: {
-      scale: 1
     }
   };
   @action set(f) {

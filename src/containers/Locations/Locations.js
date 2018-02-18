@@ -8,7 +8,6 @@ import LocationFlag from './LocationFlag';
 
 const DrawLocationDot = observer(({ city, visibility, visible, scale, cb }) => (
   <g
-    key={`pin_list_${city.id}`}
     onClick={cb}
   >
     {visibility.locations &&
@@ -29,8 +28,8 @@ class Locations extends React.Component {
       <g key='locations'>
         {this.props.store.locations.locations.map((city, id) => (
           <DrawLocationDot
-            scale={this.props.store.flags.flags.view.scale}
-            key={`pin_list_${city}`}
+            scale={this.props.store.view.preciseScale}
+            key={`pin_list_${city.id}`}
             city={city}
             // cb={() => this.props.setClickInfo('location', city)}
             visible={this.props.store.locations.tooltips[id]}

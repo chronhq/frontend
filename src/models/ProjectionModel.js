@@ -31,6 +31,7 @@ export default class ProjectionModel {
       mapShift: points[0].map(a => a * -1), // Shifting viewport for custom crop
     };
   }
+
   @computed get projection() {
     return this.projectionByName[this.name];
   }

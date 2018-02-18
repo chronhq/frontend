@@ -12,8 +12,10 @@ export default class GeometryModel {
     this.path = rootStore.projection.path;
     this.id = geometry.id;
     if (typeof geometry.geometry !== 'undefined') {
+      // Border
       this.geometry = geometry.geometry;
     } else if (typeof geometry.contour !== 'undefined') {
+      // Contour
       this.geometry = geometry.contour;
     } else {
       console.log('Strange input to Geometry model', geometry);

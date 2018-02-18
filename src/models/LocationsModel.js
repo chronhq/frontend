@@ -8,13 +8,11 @@ export default class LocationsModel {
 
   @observable saveDataCb = (type, json) => {
     const data = {};
-    console.time(`SAVING ${type}`);
     json.map((cur) => {
       data[cur.id] = new Point(this.rootStore, cur, type);
       return false;
     });
     this[type] = { ...this[type], ...data };
-    console.timeEnd(`SAVING ${type}`);
   }
 
   @computed get byYear() {
@@ -63,7 +61,7 @@ export default class LocationsModel {
   }
 
   @computed get scale() {
-    return Math.round(this.rootStore.flags.flags.view.scale);
+    return this.rootStore.view.roundScale;
   }
 
   @computed get tooltips() {

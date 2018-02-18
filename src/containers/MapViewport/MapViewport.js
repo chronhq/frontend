@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, observable } from 'mobx';
 import { zoom, zoomIdentity } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
 
@@ -18,94 +18,60 @@ import './MapViewport.less';
 @inject('store')
 @observer
 class Map extends React.Component {
-  // state = {
-  //   defaultZoom: () => {
-  //     const w = window.innerWidth / this.props.mapWidth;
-  //     const h = window.innerHeight / this.props.mapHeight;
-  //     return w > h ? h : w;
-  //   },
-  //   zoomInitSuccess: false,
-  //   widgetTransform: 'translate(0,0)',
-  //   transform: { k: 1, x: 0, y: 0 }
-  // }
 
-  // componentDidMount() {
-  //   window.addEventListener('resize', () => this.resize());
-  //   this.resize();
-  //   if (!this.state.zoomInitSuccess) {
-  //     const svg = select(this.svgMap);
-  //     const { projection } = this.props;
-  //     const that = this;
-  //     svg.on('mousedown.log', function () {
-  //       const mouseXY = mouse(this);
-  //       const coordinates = [
-  //         (mouseXY[0] - that.state.transform.x) / that.state.transform.k,
-  //         (mouseXY[1] - that.state.transform.y) / that.state.transform.k];
-  //       console.log('Projection calculated', projection.invert(coordinates));
-  //     });
-  //     svg.call(this.zoom);
-  //     svg.call(this.zoom.transform, zoomIdentity
-  //       .scale(this.state.defaultZoom())
-  //       .translate(this.getTransformX(), this.getTransformY()));
-  //     /* eslint-disable react/no-did-mount-set-state */
-  //     this.setState({
-  //       zoomInitSuccess: true,
-  //     });
-  //   }
-  // }
+  componentDidMount() {
+    window.addEventListener('resize', () => this.resize());
+    this.resize();
+    if (!this.zoomInitSuccess) {
+      const svg = select(this.svgMap);
+      const { projection } = this.props.store.projection;
+      const that = this;
+      /* eslint-disable func-names */
+      svg.on('mousedown.log', function () {
+        const mouseXY = mouse(this);
+        const coordinates = [
+          (mouseXY[0] - that.props.store.view.transform.x) / that.props.store.view.transform.k,
+          (mouseXY[1] - that.props.store.view.transform.y) / that.props.store.view.transform.k];
+        console.log('Click on map coordinates', projection.invert(coordinates));
+      });
+      svg.call(this.zoom);
+      svg.call(
+        this.zoom.transform,
+        zoomIdentity
+          .scale(this.props.store.view.defaultZoom)
+          .translate(
+            this.props.store.view.transformX,
+            this.props.store.view.transformY
+          )
+      );
 
-  // componentWillReceiveProps(nextProps) {
-  //   const nextState = this.state;
-
-  //   if (Math.round(this.state.transform.k) !== nextProps.scale
-  //   && nextProps.buttonZoom) {
-  //     nextState.transform.k = nextProps.scale;
-  //   }
-  //   if (nextProps.resetFlag === true) {
-  //     nextState.transform.x = this.getTransformX();
-  //     nextState.transform.y = this.getTransformY();
-  //     nextState.transform.k = this.state.defaultZoom();
-  //   }
-  //   this.setState({ ...nextState });
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('resize', () => this.resize());
-  // }
-
-  onZoom = () => {
-    if (this.state.transform !== null
-    && Math.round(this.state.transform.k) !== Math.round(event.transform.k)) {
-      this.props.changeScale(Math.round(event.transform.k), false);
+      this.zoomInitSuccess = true;
     }
-    this.setState({
-      transform: event.transform
-    });
   }
 
-  // getTransformX = () => this.props.mapShift[0] * this.scale;
-  // getTransformY = () => this.props.mapShift[1] * this.scale;
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.resize());
+  }
 
-  // get scale() {
-  //   if (this.state.transform) return this.state.transform.k;
-  //   return this.state.defaultZoom();
-  // }
+  onZoom = () => {
+    this.props.store.view.transform = event.transform;
+  }
 
-  // get height() {
-  //   if (typeof this.svgMap !== 'undefined' && this.svgMap !== null
-  //     && 'clientHeight' in this.svgMap) {
-  //     return this.svgMap.clientHeight;
-  //   }
-  //   return 0;
-  // }
+  get height() {
+    if (typeof this.svgMap !== 'undefined' && this.svgMap !== null
+      && 'clientHeight' in this.svgMap) {
+      return this.svgMap.clientHeight;
+    }
+    return 0;
+  }
 
-  // get width() {
-  //   if (typeof this.svgMap !== 'undefined' && this.svgMap !== null
-  //     && 'clientWidth' in this.svgMap) {
-  //     return this.svgMap.clientWidth;
-  //   }
-  //   return 0;
-  // }
+  get width() {
+    if (typeof this.svgMap !== 'undefined' && this.svgMap !== null
+      && 'clientWidth' in this.svgMap) {
+      return this.svgMap.clientWidth;
+    }
+    return 0;
+  }
 
   // get rotation() {
   //   // Do not try to rotate relying on transform x and y
@@ -114,19 +80,13 @@ class Map extends React.Component {
   //   return `${this.props.rotation} ${x} ${y}`;
   // }
 
-  // get transform() {
-  //   if (this.state.transform) {
-  //     const { x, y, k } = this.state.transform;
-  //     return `translate(${x}, ${y}) scale(${k}) rotate(${this.rotation})`;
-  //   }
-  //   return null;
-  // }
 
-  // resize = () => {
-  //   const x = this.width > 768 ? 100 : 60;
-  //   const y = this.width > 768 ? this.height - 100 : this.height - 100;
-  //   this.setState({ widgetTransform: `translate(${x}, ${y})` });
-  // }
+  @observable zoomInitSuccess = false;
+
+  resize = () => {
+    this.props.store.view.width = this.width;
+    this.props.store.view.height = this.height;
+  }
 
   zoom = zoom()
     .scaleExtent([
@@ -144,7 +104,7 @@ class Map extends React.Component {
           />
           <MapPicsDefs symbols={this.props.store.data.MapPics.data} />
         </defs>
-        <g transform={this.transform}>
+        <g transform={this.props.store.view.svgTransform}>
           <Contour />
           <Borders />
           {/* this.props.course !== 0 && (
@@ -157,12 +117,12 @@ class Map extends React.Component {
           ) */}
           <Locations />
         </g>
-        {/*
-        <g transform={this.state.widgetTransform}>
-          <ScaleWidget zoom={this.scale} height={this.height} />
+        <g transform={this.props.store.view.widgetTransform}>
+          <ScaleWidget zoom={this.props.store.view.preciseScale} height={this.height} />
+          {/*
           <LoadingWidget />
-        </g>
         */}
+        </g>
       </svg>
     );
   }
