@@ -113,7 +113,7 @@ export default class BordersModel {
     return Object.values(this.actualData).map(cur => ({
       id: cur.geo,
       props: cur.props,
-      d: this.geo[cur.geo].projected,
+      d: cur.geo in this.geo ? this.geo[cur.geo].projected : '',
     }));
   }
 }

@@ -14,7 +14,7 @@ export default class storeModel {
     this.data = new Data();
     this.projection = new Projection();
     this.flags = new Flags();
-    this.year = new Year();
+    this.year = new Year(this);
     this.effects = {
       course: new CourseSideEffects(this),
     };

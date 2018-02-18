@@ -6,6 +6,10 @@ export default class YearModel {
   @observable now;
   @observable tick;
 
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
+
   @action setup(year) {
     this.min = year.min;
     this.max = year.max;
@@ -17,6 +21,7 @@ export default class YearModel {
     this.now = (year > this.max || year < this.min)
       ? this.min
       : year;
+    this.rootStore.borders.loadGeometry();
   }
   @action nextYear() {
     this.setYear(this.now + 1);
