@@ -1,36 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-class LoadingStatus extends Component {
-  state = {
-    loaded: true
-  }
-  componentWillReceiveProps(nextProps) {
-    const loaded = Object.keys(nextProps.current).reduce((prev, curId) => (
-      prev !== false
-        ? nextProps.current[curId].geo in nextProps.borders
-        : false
-    ), true);
-    this.setState({ loaded });
-  }
-  render() {
-    return (<text stroke='transparent' >{(this.state.loaded) ? 'Карты загружены' : 'Загружаем карты'}</text>);
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    borders: state.data.borders.byId,
-    current: state.timeline.borders.current,
-    activeLoading: state.timeline.borders.loading
-  };
-}
-const LoadingStatusConnected = connect(mapStateToProps)(LoadingStatus);
+import React from 'react';
+import { observer } from 'mobx-react';
 
 
-const LoadingWidget = () => (
+const LoadingWidget = ({ borders }) => (
   <g className='sizeMeter' transform='translate(0,-40)' strokeWidth="1" stroke='black' >
-    <LoadingStatusConnected />
+    <text stroke='transparent' >{(borders.ready) ? 'Карты загружены' : 'Загружаем карты'}</text>
   </g>
 );
-export default LoadingWidget;
+export default observer(LoadingWidget);

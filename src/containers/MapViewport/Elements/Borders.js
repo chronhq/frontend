@@ -2,14 +2,6 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
 import { getFillPatternId } from '../../../components/SVGPatternsDefs';
-// import { setClickInfo, changeScale } from '../../reducers/actions';
-
-//     b: {
-//       visible: state.runtime.visibility.borders,
-//       loaded: state.data.borders.loaded,
-//       borders: state.runtime.bordersData.borders,
-//       properties: state.runtime.bordersData.properties
-//     }
 
 @inject('store')
 @observer
