@@ -27,13 +27,13 @@ class Locations extends React.Component {
   render() {
     return (
       <g key='locations'>
-        {this.props.store.locations.locations.map((city, id) => (
+        {this.props.store.prepared.locations.map((city, id) => (
           <DrawLocationDot
             scale={this.props.store.view.preciseScale}
             key={`pin_list_${city.id}`}
             city={city}
             cb={() => this.props.store.clickInfo.selectLocation(city.id)}
-            visible={this.props.store.locations.tooltips[id]}
+            visible={this.props.store.prepared.tooltips[id]}
             visibility={this.props.store.flags.flags.visibility}
           />
         ))}

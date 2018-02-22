@@ -58,4 +58,11 @@ export default class ProjectionModel {
       this.name = name;
     }
   }
+  inTheBox(x, y) {
+    return (!(x < this.clip[0][0] // Top
+        || x > this.clip[1][0] // Bottom
+        || y < this.clip[1][1] // Right
+        || y > this.clip[0][1]) // Left
+    );
+  }
 }

@@ -1,23 +1,12 @@
-import { observable, computed } from 'mobx';
-import { getActualData, getNextData } from '../reducers/actions';
-import Point from './PointModel';
-import { getTooltipSize } from '../containers/Locations/LocationDotLabel';
+import { computed } from 'mobx';
+import { getActualData, getNextData } from './_helper';
+import { getTooltipSize } from '../../containers/Locations/LocationDotLabel';
+import GenericPointProcessing from './GenericPointProcessing';
 
-export default class LocationsModel {
-  @observable cities = {};
-
-  @observable saveDataCb = (type, json) => {
-    const data = {};
-    json.map((cur) => {
-      data[cur.id] = new Point(this.rootStore, cur, type);
-      return false;
-    });
-    this[type] = { ...this[type], ...data };
-  }
-
+export default class LocationsModel extends GenericPointProcessing {
   @computed get byYear() {
-    const timeline = Object.keys(this.cities).reduce((prev, cur) => {
-      const place = this.cities[cur].data;
+    const timeline = Object.keys(this.points).reduce((prev, cur) => {
+      const place = this.points[cur].data;
       place.founded = place.founded === null ? '0000' : place.founded;
       if ('founded' in place && place.founded !== '' && place.founded !== null) {
         const year = Number(place.founded.split('-').shift());
@@ -51,8 +40,8 @@ export default class LocationsModel {
   @computed get locations() {
     const places = [];
     this.actualData.map((cur) => {
-      if (this.cities[cur].visible) {
-        places.push(this.cities[cur].location);
+      if (this.points[cur].visible) {
+        places.push(this.points[cur].location);
       }
       return false;
     });
@@ -82,11 +71,5 @@ export default class LocationsModel {
       });
     }
     return this.locations.map(() => false);
-  }
-
-  constructor(rootStore) {
-    this.rootStore = rootStore;
-    this.data = rootStore.data;
-    this.data.Cities.saveDataCb = json => this.saveDataCb('cities', json);
   }
 }

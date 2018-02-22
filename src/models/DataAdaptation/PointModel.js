@@ -1,8 +1,16 @@
-import { computed, observable, toJS } from 'mobx';
+import { computed, observable } from 'mobx';
 
 export default class PointModel {
   @observable data = {};
   @observable type = '';
+
+  @computed get projection() {
+    return this.rootStore.projection;
+  }
+
+  @computed get visibility() {
+    return this.rootStore.flags.flags.visibility;
+  }
 
   @computed get project() {
     return this.projection.project;
@@ -12,16 +20,8 @@ export default class PointModel {
     return this.project([this.point.x, this.point.y]);
   }
 
-  @computed get topLeft() {
-    return this.projection.clip[0];
-  }
-
-  @computed get bottomRight() {
-    return this.projection.clip[1];
-  }
-
   @computed get point() {
-    if (this.type === 'cities') {
+    if (this.type === 'Cities' || this.type === 'GeoEvents') {
       return {
         x: this.data.x,
         y: this.data.y,
@@ -34,12 +34,9 @@ export default class PointModel {
   }
   // Point will be in viewport area after clipping
   @computed get inTheBox() {
-    return (!(this.point.x < this.topLeft[0]
-        || this.point.x > this.bottomRight[0]
-        || this.point.y < this.bottomRight[1]
-        || this.point.y > this.topLeft[1])
-    );
+    return this.projection.inTheBox(this.point.x, this.point.y);
   }
+
   @computed get sizeIsOk() {
     return this.data.scalerank < this.visibility.scale;
   }
@@ -50,7 +47,7 @@ export default class PointModel {
 
   @computed get location() {
     return {
-      id: toJS(this.data.id),
+      id: this.data.id,
       x: this.projected[0],
       y: this.projected[1],
       name: this.data.nameRus,
@@ -59,8 +56,7 @@ export default class PointModel {
   }
 
   constructor(rootStore, point, type) {
-    this.projection = rootStore.projection;
-    this.visibility = rootStore.flags.flags.visibility;
+    this.rootStore = rootStore;
     this.data = point;
     this.type = type;
   }

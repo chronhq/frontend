@@ -1,9 +1,9 @@
 import { observable, when, computed, action } from 'mobx';
-import Geometry from './GeometryModel';
+import Geometry from './DataAdaptation/GeometryModel';
 import { getActualData, getNextData } from '../reducers/actions';
 
 const separate = (arr) => {
-  // split array of geoIds into multiple arrays with setted max elements
+  // split array of geoIds into multiple arrays with max elements
   const maxIdsInReq = 15;
   const count = Math.ceil(arr.length / maxIdsInReq);
   const s = new Array(count).fill(undefined);

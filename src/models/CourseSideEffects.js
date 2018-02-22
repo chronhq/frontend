@@ -85,8 +85,12 @@ export default class CourseSideEffects {
 
   @action configureCourseUI() {
     const uiSettings = this.courseInfo.config.settings;
+    const zoom = 'zoom' in this.courseInfo.config.settings
+      ? this.courseInfo.config.settings.zoom
+      : this.courseInfo.config.settings.flags.zoom;
     this.rootStore.flags.set({
-      ...uiSettings.flags
+      ...uiSettings.flags,
+      zoom
     });
   }
 

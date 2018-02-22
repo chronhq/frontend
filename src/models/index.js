@@ -5,7 +5,7 @@ import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSideEffects from './CourseSideEffects';
 import ColorsModel from './ColorsModel';
-import Locations from './LocationsModel';
+import Prepared from './PreparedData';
 import View from './ViewModel';
 import ClickInfo from './ClickInfoModel';
 
@@ -20,7 +20,7 @@ export default class storeModel {
       course: new CourseSideEffects(this),
     };
     this.borders = new Borders(this);
-    this.locations = new Locations(this);
+    this.prepared = new Prepared(this);
     this.colors = new ColorsModel(this);
     this.view = new View(this);
     this.clickInfo = new ClickInfo(this);

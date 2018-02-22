@@ -3,13 +3,10 @@ import { observer, inject } from 'mobx-react';
 import { zoom, zoomIdentity } from 'd3-zoom';
 import { select, event, mouse } from 'd3-selection';
 
-import Locations from '../Locations';
-// import Expeditions from '../Expeditions';
-// import GeoPoints from '../GeoPoints';
 import { PatternsDefs, MapPicsDefs } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
-import { Borders, Contour } from './Elements';
+import Elements from './Elements';
 
 import './MapViewport.less';
 
@@ -28,7 +25,7 @@ class Map extends React.Component {
       const coordinates = [
         (mouseXY[0] - that.props.store.view.transform.x) / that.props.store.view.transform.k,
         (mouseXY[1] - that.props.store.view.transform.y) / that.props.store.view.transform.k];
-      console.log('Click on map coordinates', projection.invert(coordinates));
+      console.info('Click on map coordinates', projection.invert(coordinates));
     });
     svg.call(this.zoom);
     svg.call(
@@ -78,6 +75,7 @@ class Map extends React.Component {
   //   this.props.store.view.height = this.height;
   // }
 
+
   zoom = zoom()
     .scaleExtent([
       this.props.store.flags.flags.zoom.minScale,
@@ -95,17 +93,7 @@ class Map extends React.Component {
           <MapPicsDefs symbols={this.props.store.data.MapPics.data} />
         </defs>
         <g transform={this.props.store.view.svgTransform}>
-          <Contour />
-          <Borders />
-          {/* this.props.course !== 0 && (
-            <g>
-              <MapDecorations decorations={this.props.mapDecorations} />
-              <MapLabels labels={this.props.mapLabels} />
-              <GeoPoints />
-              <Expeditions />
-            </g>
-          ) */}
-          <Locations />
+          <Elements />
         </g>
         <g transform={this.props.store.view.widgetTransform}>
           <ScaleWidget view={this.props.store.view} />

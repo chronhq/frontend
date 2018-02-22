@@ -1,24 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed } from 'mobx';
 import PathAnimation from './PathAnimation';
 
-class Expeditions extends Component {
+@inject('store')
+@observer
+class Expeditions extends React.Component {
+  @computed get traces() {
+    return this.props.store.prepared.expeditions;
+  }
   render() {
     return (
       <g>
-        {this.props.traces.map(trace =>
-          <PathAnimation key={trace.id} points={trace.projected} />
-        )}
+        {this.traces.map(trace =>
+          <PathAnimation key={trace.data.id} points={trace.projected} />)}
       </g>);
   }
 }
 
-function mapStateToProps(state) {
-  const tick = state.timeline.year.tick;
-  const tracesByTick = state.courses.traces.tick;
-  return tick in tracesByTick // List of different traces
-    ? { traces: tracesByTick[tick] }
-    : { traces: [] };
-}
-
-export default connect(mapStateToProps)(Expeditions);
+export default Expeditions;
