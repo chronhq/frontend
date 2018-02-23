@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+import { action } from 'mobx';
 
-import { changeScale, rotateProjection, resetRotation } from '../reducers/actions';
 import './MapControls.less';
 
 const VertButton = ({ cb, fa }) => (
@@ -14,25 +13,26 @@ const VertButton = ({ cb, fa }) => (
   </button>
 );
 
-class MapControls extends Component {
-  handleRotation = (step) => {
-    this.props.rotateProjection(this.props.rotation + step);
+@inject('store')
+@observer
+class MapControls extends React.Component {
+  @action handleReset() {
+    this.props.store.view.transform = this.props.store.view.defaultTransform;
   }
 
-  handleScale = (step) => {
-    this.props.changeScale(this.props.scale + step, true);
+  @action handleScale(step) {
+    this.props.store.view.transform.k += step;
   }
 
-  handleReset = () => {
-    this.props.resetRotation();
-  }
   render() {
     return (
       <div id='mapControls' className='btn-group-vertical'>
         <VertButton fa='home' cb={() => this.handleReset()} />
         <hr />
+        {/*
         <VertButton fa='rotate-left' cb={() => this.handleRotation(-15)} />
         <VertButton fa='rotate-right' cb={() => this.handleRotation(15)} />
+        */}
         <hr />
         <VertButton fa='plus' cb={() => this.handleScale(1)} />
         <VertButton fa='minus' cb={() => this.handleScale(-1)} />
@@ -41,18 +41,4 @@ class MapControls extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    scale: state.runtime.mapView.scale,
-    rotation: state.runtime.mapView.rotation
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    changeScale: bindActionCreators(changeScale, dispatch),
-    resetRotation: bindActionCreators(resetRotation, dispatch),
-    rotateProjection: bindActionCreators(rotateProjection, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MapControls);
+export default MapControls;

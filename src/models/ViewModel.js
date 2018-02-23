@@ -8,7 +8,11 @@ export default class ViewModel {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.transform = {
+    this.transform = this.defaultTransform;
+  }
+
+  @computed get defaultTransform() {
+    return {
       k: this.defaultZoom,
       x: this.mapDimensions.mapShift[0],
       y: this.mapDimensions.mapShift[1],
@@ -27,17 +31,6 @@ export default class ViewModel {
     return this.rootStore.projection.mapDimensions;
   }
 
-  // @computed get transformX() {
-  //   return typeof this.preciseScale === 'undefined'
-  //     ? this.mapDimensions.mapShift[0] * this.defaultZoom
-  //     : this.mapDimensions.mapShift[0] * this.preciseScale;
-  // }
-
-  // @computed get transformY() {
-  //   return typeof this.preciseScale === 'undefined'
-  //     ? this.mapDimensions.mapShift[1] * this.defaultZoom
-  //     : this.mapDimensions.mapShift[1] * this.preciseScale;
-  // }
 
   @computed get svgTransform() {
     const { x, y, k } = this.transform;
