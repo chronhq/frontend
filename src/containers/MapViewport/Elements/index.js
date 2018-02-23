@@ -13,8 +13,8 @@ import Expeditions from '../../Expeditions';
 
 const BasicElements = () => (
   <g id='basicElements'>
-    <Borders />
     <Contour />
+    <Borders />
     <Locations />
   </g>
 );
