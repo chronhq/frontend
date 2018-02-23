@@ -3,8 +3,7 @@ import { observer, inject } from 'mobx-react';
 
 import LocationDot from './LocationDot';
 import LocationDotLabel from './LocationDotLabel';
-// import LocationFlag from './LocationFlag';
-// import { setClickInfo } from '../../reducers/actions';
+import LocationFlag from './LocationFlag';
 
 const DrawLocationDot = observer(({
   city, visibility, visible, scale, cb
@@ -26,7 +25,7 @@ const DrawLocationDot = observer(({
 class Locations extends React.Component {
   render() {
     return (
-      <g key='locations'>
+      <g id='locations'>
         {this.props.store.prepared.locations.map((city, id) => (
           <DrawLocationDot
             scale={this.props.store.view.preciseScale}
@@ -37,13 +36,7 @@ class Locations extends React.Component {
             visibility={this.props.store.flags.flags.visibility}
           />
         ))}
-        {/*
-        <LocationFlag
-          enabled={this.state.locationFlag}
-          location={this.state.selectedLoc}
-          scale={this.props.scale}
-        />
-        */}
+        <LocationFlag />
       </g>
     );
   }

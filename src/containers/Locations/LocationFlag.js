@@ -1,4 +1,7 @@
 import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed } from 'mobx';
+
 import './LocationFlag.less';
 
 const path1 = 'm 0.17352555,-42.713983 c -3.54296195,-0.0811 -6.78588395,2.925177 -6.97954495,6.462311 -0.0069,3.516485 0.54854,7.010821 0.981531,10.494021 0.763151,5.073528 1.535042,10.198768 3.288624,15.041286 0.500223,1.100947 0.941835,2.529465 2.18125495,2.982789 1.36559205,0.01553 1.92313405,-1.578651 2.45974605,-2.598119 1.880987,-4.540888 2.767081,-9.412201 3.657148,-14.224182 0.607369,-3.757508 1.273119,-7.528485 1.40895,-11.338462 -0.02697,-3.698904 -3.295734,-6.888334 -6.99770905,-6.819644 z m 0,12 c -2.95378595,0.09298 -5.48472495,-2.853874 -4.94228295,-5.760429 0.35421,-2.832383 3.445057,-4.877934 6.190385,-4.081884 2.780471,0.635192 4.509998,3.907227 3.448003,6.559709 -0.684973,1.932688 -2.642285,3.310951 -4.69610505,3.282604 z';
@@ -9,16 +12,34 @@ const path4 = 'm -1.1001694,-30.944665 c -2.312633,-0.597673 -3.996898,-3.056179
 const shiftX = 0;
 const shiftY = 0;
 
-const LocationFlag = ({ enabled, location, scale = 1 }) => (
-  <g
-    visibility={enabled ? 'visible' : 'hidden'}
-    className='locationFlag'
-    transform={`translate(${location.x + shiftX},${location.y + shiftY}) scale(${(12 - scale) * 0.03})`}
-  >
-    <path d={path1} />
-    <path d={path2} />
-    <path d={path3} className='path3' />
-    <path d={path4} className='path4' />
-  </g>
-);
+@inject('store')
+@observer
+class LocationFlag extends React.Component {
+  @computed get flag() {
+    return this.props.store.clickInfo.locationFlagStatus;
+  }
+
+  @computed get transform() {
+    const x = this.flag.location.x + shiftX;
+    const y = this.flag.location.y + shiftY;
+    const scale = (12 - this.flag.scale) * 0.03;
+    return `translate(${x},${y}) scale(${scale})`;
+  }
+
+  render() {
+    return (
+      <g
+        visibility={this.flag.visibility}
+        className='locationFlag'
+        transform={this.transform}
+      >
+        <path d={path1} />
+        <path d={path2} />
+        <path d={path3} className='path3' />
+        <path d={path4} className='path4' />
+      </g>
+    );
+  }
+}
+
 export default LocationFlag;

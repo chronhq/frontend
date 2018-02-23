@@ -27,6 +27,23 @@ export default class ClickInfoModel {
     this.isOpen = false;
   }
 
+  @computed get locationFlagStatus() {
+    if (this.isOpen === true
+      && this.widgetType === false
+      && this.selected !== null) {
+      return {
+        visibility: 'visible',
+        scale: this.rootStore.view.preciseScale,
+        location: this.rootStore.prepared.data.cities.points[this.selected].location
+      };
+    }
+    return {
+      visibility: 'hidden',
+      scale: 1,
+      location: { x: 0, y: 0 }
+    };
+  }
+
   @computed get borderWidget() {
     const properties = this.rootStore.data.Properties.data;
     const border = properties[this.selected];
@@ -62,7 +79,7 @@ export default class ClickInfoModel {
   @computed get locationWidget() {
     return {
       widgetType: this.widgetType,
-      location: this.rootStore.locations.cities[this.selected].data,
+      location: this.rootStore.prepared.data.cities.points[this.selected].data,
     };
   }
 
