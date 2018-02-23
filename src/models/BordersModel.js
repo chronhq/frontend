@@ -16,7 +16,6 @@ const separate = (arr) => {
 export default class BordersModel {
   @observable geo = {};
   @observable contour = {};
-  @observable requested = [];
 
   @observable saveDataCb = (type, json) => {
     const data = {};
@@ -38,7 +37,6 @@ export default class BordersModel {
   @action wipe() {
     this.geo = {};
     this.contour = {};
-    this.requested = [];
   }
 
   @action loadGeometry() {
@@ -55,9 +53,14 @@ export default class BordersModel {
   }
 
   @computed get ready() {
-    return this.requested.length > 0
-      ? this.requested.every(cur => cur.id in this.geo)
-      : false;
+    const dataToLoad = [];
+    Object.keys(this.actualData).map((cur) => {
+      if (!(this.actualData[cur].geo in this.geo)) {
+        dataToLoad.push({ id: this.actualData[cur].geo });
+      }
+      return false;
+    });
+    return dataToLoad.length === 0;
   }
 
   @computed get actualData() {
@@ -78,7 +81,6 @@ export default class BordersModel {
       return false;
     });
     const arr = separate(dataToLoad);
-    this.requested = dataToLoad;
     return arr.map(or => JSON.stringify({ where: { or } }));
   }
 
