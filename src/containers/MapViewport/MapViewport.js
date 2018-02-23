@@ -33,8 +33,8 @@ class Map extends React.Component {
       zoomIdentity
         .scale(this.props.store.view.defaultZoom)
         .translate(
-          this.props.store.view.transformX,
-          this.props.store.view.transformY
+          this.props.store.projection.mapDimensions.mapShift[0],
+          this.props.store.projection.mapDimensions.mapShift[1]
         )
     );
   }

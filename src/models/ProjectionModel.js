@@ -5,6 +5,7 @@ export default class ProjectionModel {
   @observable name = 'Equirectangular';
   // [[Left, Top], [Right, Bottom]]
   @observable clip = [[-180, 90], [180, -90]];
+  @observable defaultClip = '[[-180,90],[180,-90]]';
   // https://en.wikipedia.org/wiki/Aircraft_principal_axes
   // https://github.com/d3/d3-geo/blob/master/README.md#projection_rotate
   @observable rotate = [0, 0, 0];
@@ -20,6 +21,10 @@ export default class ProjectionModel {
     .reduce((prev, cur, i) => (
       { ...prev, [i === 0 ? 'x' : 'y']: cur }
     ), {});
+
+  @computed get clipNotSet() {
+    return JSON.stringify(this.clip) === this.defaultClip;
+  }
 
   @computed get mapDimensions() {
     const points = this.clip.map(this.project);
@@ -38,8 +43,8 @@ export default class ProjectionModel {
 
   @computed get project() {
     const p = this.projection.center(this.center).rotate(this.rotate);
-    return p;
-    // return p.clipExtent(p(this.clip[0]), p(this.clip[1]));
+    return this.clipNotSet
+      ? p : p.clipExtent([p(this.clip[0]), p(this.clip[1])]);
   }
 
   @computed get path() {
