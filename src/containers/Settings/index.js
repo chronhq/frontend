@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import SetProjectionContainer from './SetProjectionContainer';
 import SetLayerVisibility from './SetLayerVisibility';
@@ -22,9 +21,5 @@ class Settings extends React.Component {
     );
   }
 }
-
-Settings.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
 
 export default Settings;

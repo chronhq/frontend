@@ -23,6 +23,8 @@ export default class FlagsModel {
       CourseSelection: true,
       Ready: false,
       alignPanel: 'right',
+      intro: (process.env.NODE_ENV === 'production'),
+      feedback: false,
     },
     UI: {
       MapViewport: true,

@@ -37,35 +37,15 @@ class SidePanel extends React.Component {
 
   @observable isOpen = false;
   @observable current = 0;
-  @observable isIntroOn = (process.env.NODE_ENV === 'production');
-  @observable isFeedbackOn = false;
-  @observable panelOnTheLeft = false;
 
   @action toggle(id) {
     this.isOpen = !(this.current === id && this.isOpen === true);
     this.current = id;
   }
 
-  @action changePanelAlignment() {
-    this.panelOnTheLeft = !this.panelOnTheLeft;
+  @action openIntro() {
+    this.props.store.flags.flags.runtime.intro = true;
   }
-
-  @action toggleIntro() {
-    this.isIntroOn = !this.isIntroOn;
-  }
-
-  @action toggleFeedback() {
-    console.log('toggleFeedback');
-    this.isFeedbackOn = !this.isFeedbackOn;
-  }
-
-  FeedbackButton = () => (
-    <div className='export-buttons'>
-      <Button bsStyle='default' onClick={() => this.toggleFeedback()}>
-        <i className='fa fa-comment fa-fw' />Кнопка
-      </Button>
-    </div>
-  );
 
   render() {
     return (
@@ -73,7 +53,7 @@ class SidePanel extends React.Component {
         <div className={this.iconBarAlign} >
           <ButtonToolbar>
             <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Интро')} >
-              <Button bsStyle='default' onClick={() => this.toggleIntro()}><i className='fa fa-home fa-fw' /> </Button>
+              <Button bsStyle='default' onClick={() => this.openIntro()}><i className='fa fa-home fa-fw' /> </Button>
             </OverlayTrigger>
             <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Поиск')}>
               <Button bsStyle='default' onClick={() => this.toggle(2)}><i className='fa fa-search fa-fw' /></Button>
@@ -94,17 +74,15 @@ class SidePanel extends React.Component {
           </ButtonToolbar>
         </div>
 
-        <Intro isOpen={this.isIntroOn} onClose={() => this.toggleIntro()} />
-        <Feedback isOpen={this.isFeedbackOn} onClose={() => this.toggleFeedback()} />
+        <Intro />
+        <Feedback />
 
         {this.isOpen &&
           <div className={this.sideNavAlign} >
             {this.current === 9 && <div> Empty</div> }
             {this.current === 2 && <SearchPanel /> }
             {this.current === 3 && <Feed /> }
-            {this.current === 4 &&
-              <Settings onClose={() => this.toggleFeedback()} />
-            }
+            {this.current === 4 && <Settings /> }
             {this.current === 7 && null }
             {this.current === 6 &&
               <div>

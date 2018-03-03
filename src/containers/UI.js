@@ -12,7 +12,7 @@ import Bio from '../components/Timeline/Bio';
 const UI = () => (
   <div className='content'>
     <Flag
-      name="UI.SidePanel-NotImplemented"
+      name="UI.SidePanel"
       render={() => <SidePanel />}
     />
     <Flag

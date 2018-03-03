@@ -1,28 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import { observer, inject } from 'mobx-react';
 
+@inject('store')
+@observer
 class FeedbackButtons extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showFeedback: true
-    };
-  }
-
-  componentDidMount() {
-    console.log(...this.props);
-  }
-
-  toggle() {
-    this.props.onClose();
+  openFeedback() {
+    this.props.store.flags.flags.runtime.feedback = true;
   }
 
   render() {
     return (
       <div className='export-buttons'>
         <ButtonGroup >
-          <Button bsStyle='default' onClick={() => this.toggle()}><i className='fa fa-exchange fa-fw' /> Сообщить об ошибке </Button>
+          <Button bsStyle='default' onClick={() => this.openFeedback()}><i className='fa fa-exchange fa-fw' /> Сообщить об ошибке </Button>
           <a
             href='https://chronist.ru/faq'
             target='_blank'
@@ -36,8 +28,8 @@ class FeedbackButtons extends React.Component {
   }
 }
 
-FeedbackButtons.propTypes = {
-  onClose: PropTypes.func.isRequired
-};
+// FeedbackButtons.propTypes = {
+//   onClose: PropTypes.func.isRequired
+// };
 
 export default FeedbackButtons;
