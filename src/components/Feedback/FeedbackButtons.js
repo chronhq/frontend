@@ -28,8 +28,4 @@ class FeedbackButtons extends React.Component {
   }
 }
 
-// FeedbackButtons.propTypes = {
-//   onClose: PropTypes.func.isRequired
-// };
-
 export default FeedbackButtons;
