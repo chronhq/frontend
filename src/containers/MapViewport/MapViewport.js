@@ -104,49 +104,4 @@ class Map extends React.Component {
   }
 }
 
-// Map.defaultProps = {
-//   b: {
-//     bordersData: { features: [] },
-//     borders: [],
-//     loaded: false,
-//     visible: false
-//   },
-//   terrain: [],
-//   terrainData: []
-// };
-
-// function mapStateToProps(state) {
-//   return {
-//     projection: state.runtime.projection.project,
-//     course: state.flags.SelectedCourse,
-//     terrain: state.data.terrain.projected,
-//     colorsData: state.runtime.colorsData,
-//     scale: state.runtime.mapView.scale,
-//     maxScale: state.runtime.mapView.maxScale,
-//     minScale: state.runtime.mapView.minScale,
-//     mapWidth: state.runtime.mapView.mapWidth,
-//     mapHeight: state.runtime.mapView.mapHeight,
-//     mapShift: state.runtime.mapView.mapShift,
-//     resetFlag: state.runtime.mapView.reset,
-//     rotation: state.runtime.mapView.rotation,
-//     buttonZoom: state.runtime.mapView.buttonZoom,
-//     mapPics: Object.values(state.data.mapPics.byId),
-//     mapDecorations: Object.values(state.data.mapDecorations.byId),
-//     mapLabels: Object.values(state.data.mapLabels.byId),
-//     b: {
-//       visible: state.runtime.visibility.borders,
-//       loaded: state.data.borders.loaded,
-//       borders: state.runtime.bordersData.borders,
-//       properties: state.runtime.bordersData.properties
-//     }
-//   };
-// }
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     changeScale: bindActionCreators(changeScale, dispatch),
-//     setClickInfo: bindActionCreators(setClickInfo, dispatch)
-//   };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Map);
 export default Map;

@@ -6,15 +6,6 @@ import YearInput from './TimePanel-YearInput';
 @inject('store')
 @observer
 class ControlButtons extends React.Component {
-  // static propTypes = {
-  //   resetYear: PropTypes.func.isRequired,
-  //   nextYear: PropTypes.func.isRequired,
-  //   prevYear: PropTypes.func.isRequired,
-  //   startPlaying: PropTypes.func.isRequired,
-  //   stopPlaying: PropTypes.func.isRequired,
-  //   playing: PropTypes.bool.isRequired
-  // }
-
   render() {
     return (
       <div className='playButton col-sm-4 col-sm-pull-8'>
@@ -38,6 +29,5 @@ class ControlButtons extends React.Component {
     );
   }
 }
-
 
 export default ControlButtons;
