@@ -25,6 +25,8 @@ export default class FlagsModel {
       alignPanel: 'right',
       intro: (process.env.NODE_ENV === 'production'),
       feedback: false,
+      SidePanelTab: 0,
+      SidePanelIsOpen: false,
     },
     UI: {
       MapViewport: true,

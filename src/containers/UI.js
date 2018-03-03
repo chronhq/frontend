@@ -2,15 +2,31 @@ import React from 'react';
 import Flag from '../Flag';
 
 import MapViewport from '../containers/MapViewport';
-import SidePanel from '../components/SidePanel';
+import SidePanel from '../containers/SidePanel';
 import TimePanel from '../components/TimePanel';
 import MapControls from '../components/MapControls';
 import MiniSidebar from '../components/Timeline/MiniSidebar';
 import LegendHOC from '../containers/LegendHOC';
 import Bio from '../components/Timeline/Bio';
 
+import Feedback from '../components/Feedback';
+import Intro from '../components/Intro/Carousel';
+
+
+const Overlays = () => (
+  <div id='overlays'>
+    <Intro />
+    <Feedback />
+  </div>
+);
+
 const UI = () => (
   <div className='content'>
+    <Flag
+      name='runtime.SelectedCourse'
+      render={() => ''}
+      fallbackRender={() => <Overlays />}
+    />
     <Flag
       name="UI.SidePanel"
       render={() => <SidePanel />}

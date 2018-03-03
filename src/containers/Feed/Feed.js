@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from 'react';
+import { inject, observer } from 'mobx-react';
 import { Panel } from 'react-bootstrap';
 
 import InventionsFeed from './InventionsFeed';
 import PersonsFeed from './PersonsFeed';
 import GeoEventsFeed from './GeoEventsFeed';
 import ExportFromFeed from './ExportFromFeed';
-import { selectLocation } from '../../reducers/actions';
+// import { selectLocation } from '../../reducers/actions';
 
 import './Feed.less';
 
@@ -20,7 +19,9 @@ export function exportFromFeed(filename, format, selected) {
   };
 }
 
-class Feed extends Component {
+@inject('store')
+@observer
+class Feed extends React.Component {
   state = {
     selected: { inventions: {}, geoEvents: {}, persons: {} },
   }
@@ -83,21 +84,23 @@ class Feed extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    inventions: state.data.inventions,
-    currentInventions: state.timeline.inventions.current,
-    geoEvents: state.data.geoEvents,
-    currentGeoEvents: state.timeline.geoEvents.current,
-    personsFacts: state.timeline.personsFacts.current,
-    persons: state.data.persons
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    selectLocation: bindActionCreators(selectLocation, dispatch),
-    exportFromFeed: bindActionCreators(exportFromFeed, dispatch)
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     inventions: state.data.inventions,
+//     currentInventions: state.timeline.inventions.current,
+//     geoEvents: state.data.geoEvents,
+//     currentGeoEvents: state.timeline.geoEvents.current,
+//     personsFacts: state.timeline.personsFacts.current,
+//     persons: state.data.persons
+//   };
+// }
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     selectLocation: bindActionCreators(selectLocation, dispatch),
+//     exportFromFeed: bindActionCreators(exportFromFeed, dispatch)
+//   };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+// export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+
+export default Feed;
