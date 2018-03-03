@@ -1,4 +1,4 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 export default class ColorsModel {
   constructor(rootStore) {
@@ -8,6 +8,48 @@ export default class ColorsModel {
   @observable auto = false;
   @observable enabled = true;
   @observable zoomPoint = 4;
+
+  @observable options = [
+    {
+      value: 'auto',
+      label: 'Auto'
+    },
+    {
+      value: 'on',
+      label: 'Always on'
+    },
+    {
+      value: 'off',
+      label: 'Always off'
+    }
+  ];
+
+  @observable values = {
+    auto: { auto: true, enabled: true },
+    on: { auto: false, enabled: true },
+    off: { auto: false, enabled: false }
+  };
+
+  @action selectMode(mode) {
+    this.auto = this.values[mode].auto;
+    this.enabled = this.values[mode].enabled;
+  }
+
+  @computed get value() {
+    return this.auto === true
+      ? 'auto'
+      : this.enabledValue;
+  }
+
+  @computed get status() {
+    return (this.auto === true)
+      ? (this.rootStore.view.roundScale < this.zoomPoint)
+      : this.enabled;
+  }
+
+  @computed get enabledValue() {
+    return this.enabled === true ? 'on' : 'off';
+  }
 
   @computed get data() {
     return this.rootStore.data.Properties.data;
@@ -39,7 +81,7 @@ export default class ColorsModel {
     const props = this.rootStore.borders.bordersProps;
     return props.map(prop => ({
       ...prop,
-      colors: this.getFillColors(prop, this.enabled),
+      colors: this.getFillColors(prop, this.status),
       // id: prop.id,
     }));
   }

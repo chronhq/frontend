@@ -1,68 +1,76 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip, ButtonToolbar, Button, FormControl, ControlLabel } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { OverlayTrigger, Tooltip, ButtonToolbar, Button } from 'react-bootstrap';
+import { inject, observer } from 'mobx-react';
+import { observable, computed, action } from 'mobx';
 
 import Settings from '../containers/Settings';
 import Feed from '../containers/Feed';
-import Legend from '../containers/Legend';
+// import Legend from '../containers/Legend';
 import Intro from './Intro/Carousel';
 import Feedback from './Feedback/';
 import ControlButtons from '../components/ControlButtons';
-import AlignToggler from './Debug';
+import AlignToggler from './AlignToggler';
 import './SidePanel.less';
 
 const tooltip = text => (
   <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
 );
 
+@inject('store')
+@observer
 class SidePanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-      current: 0,
-      isIntroOn: (process.env.NODE_ENV === 'production'),
-      isFeedbackOn: false,
-    };
+  @computed get alignPanel() {
+    return this.props.store.flags.flags.runtime.alignPanel;
   }
 
-  toggle = (id) => {
-    const isOpen = !(this.state.current === id && this.state.isOpen === true);
-    this.setState({ ...this.state, isOpen, current: id });
+  @computed get iconBarAlign() {
+    return this.alignPanel === 'left'
+      ? 'icon-bar--left icon-bar'
+      : 'icon-bar--right icon-bar';
   }
 
-  toggleIntro = () => {
-    this.setState({ isIntroOn: !this.state.isIntroOn });
+  @computed get sideNavAlign() {
+    return this.alignPanel === 'left'
+      ? 'sidenav--left sidenav'
+      : 'sidenav--right sidenav';
   }
 
-  toggleFeedback = () => {
+  @observable isOpen = false;
+  @observable current = 0;
+  @observable isIntroOn = (process.env.NODE_ENV === 'production');
+  @observable isFeedbackOn = false;
+  @observable panelOnTheLeft = false;
+
+  @action toggle(id) {
+    this.isOpen = !(this.current === id && this.isOpen === true);
+    this.current = id;
+  }
+
+  @action changePanelAlignment() {
+    this.panelOnTheLeft = !this.panelOnTheLeft;
+  }
+
+  @action toggleIntro() {
+    this.isIntroOn = !this.isIntroOn;
+  }
+
+  @action toggleFeedback() {
     console.log('toggleFeedback');
-    this.setState({ isFeedbackOn: !this.state.isFeedbackOn });
+    this.isFeedbackOn = !this.isFeedbackOn;
   }
-
-  handleChange = (type, data) => {
-    // console.log('have new data in handle change', data);
-    // const UI = {
-    //   ...this.props.facade,
-    // };
-    //   // [type]: { ...this.props.facade[type], ...data }
-    // UI[type] = data;
-    // // console.log(data);
-    // this.setState({ UI });
-    // this.forceUpdate();
-  }
-
 
   FeedbackButton = () => (
     <div className='export-buttons'>
-      <Button bsStyle='default' onClick={() => this.toggleFeedback()}><i className='fa fa-comment fa-fw' />Кнопка</Button>
+      <Button bsStyle='default' onClick={() => this.toggleFeedback()}>
+        <i className='fa fa-comment fa-fw' />Кнопка
+      </Button>
     </div>
   );
 
   render() {
     return (
       <div>
-        <div className={this.props.facade.alignPanel === 'left' ? 'icon-bar--left icon-bar' : 'icon-bar--right icon-bar'} >
+        <div className={this.iconBarAlign} >
           <ButtonToolbar>
             <OverlayTrigger placement='left' delayHide={0} overlay={tooltip('Интро')} >
               <Button bsStyle='default' onClick={() => this.toggleIntro()}><i className='fa fa-home fa-fw' /> </Button>
@@ -86,21 +94,21 @@ class SidePanel extends React.Component {
           </ButtonToolbar>
         </div>
 
-        <Intro isOpen={this.state.isIntroOn} onClose={() => this.toggleIntro()} />
-        <Feedback isOpen={this.state.isFeedbackOn} onClose={() => this.toggleFeedback()} />
+        <Intro isOpen={this.isIntroOn} onClose={() => this.toggleIntro()} />
+        <Feedback isOpen={this.isFeedbackOn} onClose={() => this.toggleFeedback()} />
 
-        {this.state.isOpen &&
-          <div className={this.props.facade.alignPanel === 'left' ? 'sidenav--left sidenav' : 'sidenav--right sidenav'} >
-            {this.state.current === 9 && <div> Empty</div> }
-            {this.state.current === 2 && <SearchPanel /> }
-            {this.state.current === 3 && <Feed /> }
-            {this.state.current === 4 &&
+        {this.isOpen &&
+          <div className={this.sideNavAlign} >
+            {this.current === 9 && <div> Empty</div> }
+            {this.current === 2 && <SearchPanel /> }
+            {this.current === 3 && <Feed /> }
+            {this.current === 4 &&
               <Settings onClose={() => this.toggleFeedback()} />
             }
-            {this.state.current === 7 && null }
-            {this.state.current === 6 &&
+            {this.current === 7 && null }
+            {this.current === 6 &&
               <div>
-                <AlignToggler cb={data => this.handleChange('alignPanel', data)} />
+                <AlignToggler />
                 <ControlButtons />
               </div>
             }
@@ -119,12 +127,9 @@ const SearchPanel = () => (
       <div className="col-md-12"><input type="text" disabled className="search" placeholder="Поиск" /></div>
     </div>
     <p> В скором времени в этой вкладке появится возможность
-      быстрого поиска по изобретениям и персонам. </p>
+      быстрого поиска по изобретениям и персонам.
+    </p>
   </div>
 );
 
-function mapStateToProps(state) {
-  return { facade: state.runtime.facade };
-}
-
-export default connect(mapStateToProps)(SidePanel);
+export default SidePanel;

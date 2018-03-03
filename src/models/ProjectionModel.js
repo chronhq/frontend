@@ -2,6 +2,7 @@ import { observable, action, computed } from 'mobx';
 import * as d3 from 'd3-geo';
 
 export default class ProjectionModel {
+  @observable version = 0;
   @observable name = 'Equirectangular';
   // [[Left, Top], [Right, Bottom]]
   @observable clip = [[-180, 90], [180, -90]];
@@ -22,9 +23,7 @@ export default class ProjectionModel {
       { ...prev, [i === 0 ? 'x' : 'y']: cur }
     ), {});
 
-  @computed get clipNotSet() {
-    return JSON.stringify(this.clip) === this.defaultClip;
-  }
+  @observable clipEnabled = false;
 
   @computed get mapDimensions() {
     const points = this.clip.map(this.project);
@@ -43,12 +42,20 @@ export default class ProjectionModel {
 
   @computed get project() {
     const p = this.projection.center(this.center).rotate(this.rotate);
-    return this.clipNotSet
-      ? p : p.clipExtent([p(this.clip[0]), p(this.clip[1])]);
+    return this.clipEnabled
+      ? p.clipExtent([p(this.clip[0]), p(this.clip[1])]) : p;
   }
 
   @computed get path() {
+    // listen for version update
+    // otherwise `path` won't be computed
+    if (this.version < 1) return false;
     return this.geoPath.projection(this.project);
+  }
+
+  @computed get options() {
+    const combineKeys = (prev, cur) => [...prev, { value: cur, label: cur }];
+    return Object.keys(this.projectionByName).reduce(combineKeys, []);
   }
 
   @action setup(projection) {
@@ -56,11 +63,15 @@ export default class ProjectionModel {
     this.rotate = projection.rotate;
     this.center = projection.center;
     this.name = projection.name;
+    this.clipEnabled = JSON.stringify(this.clip) !== this.defaultClip;
+
+    this.version += 1;
   }
 
   @action setProjection(name) {
     if (this.name !== name && name in this.projectionByName) {
       this.name = name;
+      this.version += 1;
     }
   }
   inTheBox(x, y) {

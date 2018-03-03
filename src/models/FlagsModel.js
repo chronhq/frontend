@@ -22,9 +22,11 @@ export default class FlagsModel {
     runtime: {
       CourseSelection: true,
       Ready: false,
+      alignPanel: 'right',
     },
     UI: {
       MapViewport: true,
+      devProjection: process.env.NODE_ENV !== 'production',
     },
     visibility: {
       borders: 1,

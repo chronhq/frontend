@@ -112,10 +112,17 @@ export default class BordersModel {
   }
 
   @computed get bordersPath() {
-    return Object.values(this.actualData).map(cur => ({
-      id: cur.geo,
-      props: cur.props,
-      d: cur.geo in this.geo ? this.geo[cur.geo].projected : '',
-    }));
+    const borders = [];
+    Object.values(this.actualData).map((cur) => {
+      if (cur.geo in this.geo) {
+        borders.push({
+          id: cur.geo,
+          props: cur.props,
+          geo: this.geo[cur.geo],
+        });
+      }
+      return false;
+    });
+    return borders;
   }
 }

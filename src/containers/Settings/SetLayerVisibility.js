@@ -1,70 +1,52 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
+import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { action } from 'mobx';
 import { InputCheckBox, InputRange } from '../../components/Input';
-import { setVisibility } from '../../reducers/actions';
 
-class SetLayerVisibility extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      borders: this.props.borders,
-      locations: this.props.locations,
-      tooltips: this.props.tooltips,
-      scale: this.props.scale
-    };
+@inject('store')
+@observer
+class SetLayerVisibility extends React.Component {
+  @action handleChange(data) {
+    Object.keys(data).map((cur) => {
+      this.props.store.flags.flags.visibility[cur] = data[cur];
+      return false;
+    });
   }
-  handleChange = (data) => {
-    this.setState({ ...this.state, ...data });
-    this.props.setVisibilityAction({ ...this.state, ...data });
-  }
+
   render() {
     return (
       <div className='layerControl'>
         <InputCheckBox
           name='borders'
           label="Границы"
-          checked={this.state.borders}
-          cb={this.handleChange}
+          checked={this.props.store.flags.flags.visibility.borders}
+          cb={d => this.handleChange(d)}
         />
         <InputCheckBox
           name='locations'
           label="Города"
-          checked={this.state.locations}
-          cb={this.handleChange}
+          checked={this.props.store.flags.flags.visibility.locations}
+          cb={d => this.handleChange(d)}
         />
         <InputCheckBox
           name='tooltips'
           label="Названия"
-          checked={this.state.tooltips}
-          cb={this.handleChange}
+          checked={this.props.store.flags.flags.visibility.tooltips}
+          cb={d => this.handleChange(d)}
         />
         <br />
         <InputRange
           className='detailSlider'
           name='scale'
           label='Детали'
-          value={this.state.scale}
+          value={this.props.store.flags.flags.visibility.scale}
           min='0'
           max='10'
-          cb={this.handleChange}
+          cb={d => this.handleChange(d)}
         />
       </div>
     );
   }
 }
-function mapStateToProps(state) {
-  return {
-    borders: state.runtime.visibility.borders,
-    locations: state.runtime.visibility.locations,
-    tooltips: state.runtime.visibility.tooltips,
-    scale: state.runtime.visibility.scale,
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    setVisibilityAction: bindActionCreators(setVisibility, dispatch),
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SetLayerVisibility);
+
+export default SetLayerVisibility;

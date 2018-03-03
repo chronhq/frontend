@@ -7,7 +7,13 @@ import { getFillPatternId } from '../../../components/SVGPatternsDefs';
 @observer
 class BordersMap extends React.Component {
   @computed get borders() {
-    return this.props.store.borders.bordersPath;
+    return this.visible
+      ? this.props.store.borders.bordersPath
+      : [];
+  }
+
+  @computed get visible() {
+    return this.props.store.flags.flags.visibility.borders;
   }
 
   render() {
@@ -16,7 +22,7 @@ class BordersMap extends React.Component {
         {this.borders.map(border => (
           <path
             key={`borders_na_${border.id}`}
-            d={border.d}
+            d={border.geo.projected}
             fill={`url(#${getFillPatternId(border.props)})`}
             onClick={() => this.props.store.clickInfo.selectBorder(border.props)}
           />

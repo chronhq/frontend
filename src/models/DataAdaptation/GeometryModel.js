@@ -5,11 +5,15 @@ export default class GeometryModel {
   geometry = {};
 
   @computed get projected() {
-    return this.path(this.geometry);
+    // listen for projection name
+    // otherwise geometry will be not projected
+    // after projection change
+    if (this.rootStore.projection.version < 0) return false;
+    return this.rootStore.projection.path(this.geometry);
   }
 
   constructor(rootStore, geometry) {
-    this.path = rootStore.projection.path;
+    this.rootStore = rootStore;
     this.id = geometry.id;
     if (typeof geometry.geometry !== 'undefined') {
       // Border

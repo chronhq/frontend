@@ -1,135 +1,133 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Flag } from 'flag';
+import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { action, computed, observable } from 'mobx';
 
 import { InputNumber, InputCheckBox, InputSelect } from '../../components/Input';
-import { setProjection } from '../../reducers/actions';
-import { defaultClip } from '../../reducers/runtime/projection';
 
 import './SetProjectionContainer.less'; // Styles for Select
 
-class SetProjectionContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: this.props.name,
-      yawn: this.props.rotate[0],
-      pitch: this.props.rotate[1],
-      roll: this.props.rotate[2],
-      centerLon: this.props.center[0],
-      centerLat: this.props.center[1],
-      clipLeft: this.props.clip[0][0],
-      clipTop: this.props.clip[0][1],
-      clipRight: this.props.clip[1][0],
-      clipBottom: this.props.clip[1][1],
-      clipEnabled: (JSON.stringify(this.props.clip) !== JSON.stringify(defaultClip)),
-    };
-  }
-  handleChange = (data) => {
-    this.setState({ ...this.state, ...data });
-  }
-  handleSelect = (val) => {
-    this.handleChange({ name: val.value });
-  }
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(e);
-    const rotate = [this.state.yawn, this.state.pitch, this.state.roll];
-    const clip = this.state.clipEnabled
-      ? [[this.state.clipLeft, this.state.clipTop],
-        [this.state.clipRight, this.state.clipBottom]]
-      : defaultClip;
-    const center = [this.state.centerLon, this.state.centerLat];
-    this.props.setProjectionAction({
-      rotate,
-      center,
-      clip,
-      name: this.state.name
-    });
-  }
-  devProjectionSettings() {
-    return (
-      <div>
-        <InputCheckBox
-          name='clipEnabled'
-          label="Обрезать контур карты"
-          checked={this.state.clipEnabled}
-          cb={this.handleChange}
-        />
-        {this.state.clipEnabled ?
-          <div>
-            <p>Установить значение граничных точек в градусах</p>
-            {'   Левая '}<InputNumber name='clipLeft' value={this.state.clipLeft} cb={this.handleChange} />
-            {' Верхняя '}<InputNumber name='clipTop' value={this.state.clipTop} cb={this.handleChange} />
-            <br />
-            {' Правая '}<InputNumber name='clipRight' value={this.state.clipRight} cb={this.handleChange} />
-            {' Нижняя '}<InputNumber name='clipBottom' value={this.state.clipBottom} cb={this.handleChange} />
-          </div>
-          : ''
-        }
-        <br />
-      </div>
-    );
+@inject('store')
+@observer
+class SetProjectionContainer extends React.Component {
+  @computed get clip() {
+    return [[this.clipLeft, this.clipTop], [this.clipRight, this.clipBottom]];
   }
 
+  @computed get rotate() {
+    return [this.yawn, this.pitch, this.roll];
+  }
+
+  @computed get center() {
+    return [this.centerLat, this.centerLon];
+  }
+
+  @computed get projection() {
+    return {
+      clip: this.clip,
+      rotate: this.rotate,
+      center: this.center,
+      name: this.name,
+      clipEnabled: this.clipEnabled,
+    };
+  }
+
+  @action handleChange(data) {
+    Object.keys(data).map((cur) => {
+      this[cur] = data[cur];
+      return false;
+    });
+  }
+
+  @action handleSelect(val) {
+    this.name = val.value;
+  }
+
+  @action validateClip() {
+    // wipe clip settings if clip is disabled
+    const { defaultClip } = this.props.store.projection;
+    if (JSON.stringify(this.clip) !== defaultClip
+    && Boolean(this.clipEnabled) !== true) {
+      const clip = JSON.parse(defaultClip);
+      const { 0: clipLeft, 1: clipTop } = clip[0];
+      const { 0: clipRight, 1: clipBottom } = clip[1];
+      this.clipLeft = clipLeft;
+      this.clipTop = clipTop;
+      this.clipRight = clipRight;
+      this.clipBottom = clipBottom;
+    }
+  }
+
+  @action handleSubmit() {
+    this.validateClip();
+    this.props.store.projection.setup(this.projection);
+  }
+
+  @observable clipEnabled = this.props.store.projection.clipEnabled;
+  @observable name = this.props.store.projection.name;
+  @observable clipLeft = this.props.store.projection.clip[0][0];
+  @observable clipTop = this.props.store.projection.clip[0][1];
+  @observable clipRight = this.props.store.projection.clip[1][0];
+  @observable clipBottom = this.props.store.projection.clip[1][1];
+  @observable yawn = this.props.store.projection.rotate[0];
+  @observable pitch = this.props.store.projection.rotate[1];
+  @observable roll = this.props.store.projection.rotate[2];
+  @observable centerLat = this.props.store.projection.center[0];
+  @observable centerLon = this.props.store.projection.center[1];
+
   render() {
+    const options = JSON.parse(JSON.stringify(this.props.store.projection.options));
+
     return (
       <div className='changeProjBtn'>
-        <form onSubmit={this.handleSubmit} className='test'>
-          <div className='form-group'>
-            <InputSelect
-              name='Select Projection'
-              value={this.state.name}
-              options={this.props.options}
-              onChange={this.handleSelect}
-            />
+        {this.props.store.flags.flags.UI.devProjection &&
+          <div className='test'>
+            <div className='form-group'>
+              <InputSelect
+                name='Select Projection'
+                value={this.name}
+                options={options}
+                onChange={d => this.handleSelect(d)}
+              />
+            </div>
+            <div className='yprControl'>
+              <p>Выполнить поворот</p>
+              {' Y'}<InputNumber name='yawn' value={this.yawn} cb={d => this.handleChange(d)} />
+              {' P'}<InputNumber name='pitch' value={this.pitch} cb={d => this.handleChange(d)} />
+              {' R'}<InputNumber name='roll' value={this.roll} cb={d => this.handleChange(d)} />
+            </div>
+            <div>
+              <p>Установить центр</p>
+              {' Долгота '}<InputNumber name='centerLon' value={this.centerLon} cb={d => this.handleChange(d)} />
+              {' Широта '}<InputNumber name='centerLat' value={this.centerLat} cb={d => this.handleChange(d)} />
+            </div>
+            <br />
+            <div>
+              <InputCheckBox
+                name='clipEnabled'
+                label="Обрезать контур карты"
+                checked={this.clipEnabled}
+                cb={d => this.handleChange(d)}
+              />
+              {Boolean(this.clipEnabled) === true ?
+                <div>
+                  <p>Установить значение граничных точек в градусах</p>
+                  {'   Левая '}<InputNumber name='clipLeft' value={this.clipLeft} cb={d => this.handleChange(d)} />
+                  {' Верхняя '}<InputNumber name='clipTop' value={this.clipTop} cb={d => this.handleChange(d)} />
+                  <br />
+                  {' Правая '}<InputNumber name='clipRight' value={this.clipRight} cb={d => this.handleChange(d)} />
+                  {' Нижняя '}<InputNumber name='clipBottom' value={this.clipBottom} cb={d => this.handleChange(d)} />
+                </div>
+                : ''
+              }
+              <br />
+              <button onClick={() => this.handleSubmit()} className='btn btn-default'>
+                Установить
+              </button>
+            </div>
           </div>
-          <div className='yprControl'>
-            <p>Выполнить поворот</p>
-            {' Y'}<InputNumber name='yawn' value={this.state.yawn} cb={this.handleChange} />
-            {' P'}<InputNumber name='pitch' value={this.state.pitch} cb={this.handleChange} />
-            {' R'}<InputNumber name='roll' value={this.state.roll} cb={this.handleChange} />
-          </div>
-          <div>
-            <p>Установить центр</p>
-            {' Долгота '}<InputNumber name='centerLon' value={this.state.centerLon} cb={this.handleChange} />
-            {' Широта '}<InputNumber name='centerLat' value={this.state.centerLat} cb={this.handleChange} />
-          </div>
-          <br />
-          <Flag
-            name="UI.devProjection"
-            render={() => this.devProjectionSettings()}
-          />
-          <button type='submit' className='btn btn-default'>
-            Установить {this.state.value}
-          </button>
-        </form>
+        }
       </div>
     );
   }
 }
-function mapStateToProps(state) {
-  return {
-    name: state.runtime.projection.name,
-    rotate: state.runtime.projection.rotate,
-    center: state.runtime.projection.center,
-    clip: state.runtime.projection.clip,
-    options: state.runtime.projection.options
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    setProjectionAction: bindActionCreators(setProjection, dispatch),
-  };
-}
-SetProjectionContainer.propTypes = {
-  name: PropTypes.string.isRequired,
-  rotate: PropTypes.array.isRequired,
-  center: PropTypes.array.isRequired,
-  clip: PropTypes.array.isRequired,
-  options: PropTypes.array.isRequired,
-  setProjectionAction: PropTypes.func.isRequired,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(SetProjectionContainer);
+export default SetProjectionContainer;
