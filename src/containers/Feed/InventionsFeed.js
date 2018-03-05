@@ -1,8 +1,13 @@
 import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed, action } from 'mobx';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 
-export const getInventors = (persons, inventors) => inventors.reduce(
-  (prev, p) => (typeof persons[p] === 'undefined' ? prev : [...prev, persons[p].nameRus]), []
-);
+export const getInventors = (persons, inventors) => inventors.reduce((prev, p) =>
+  (typeof persons[p] === 'undefined'
+    ? prev
+    : [...prev, persons[p].nameRus]), []);
 
 const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
@@ -21,20 +26,60 @@ const Invention = ({ fact, persons }) => (
   </div>
 );
 
-const InventionsFeed = ({ persons, inventions, current, selected, hoverCb, changeCb }) => (
-  <div className='InventionsFeed'>{current.map(year => year.map(invId =>
-    <div
-      key={`div_inv_${invId}`}
-      onMouseEnter={() => hoverCb(invId)}
-      onMouseLeave={() => hoverCb(null)}
-      onClick={() => changeCb({ [invId]: !selected[invId] })}
-      className={selected[invId] === true
-        ? 'selectedFact' : 'regularFact'}
-    >
-      <Invention fact={inventions.byId[invId]} persons={persons.byId} />
-    </div>
-  ))}
-  </div>
-);
+@inject('store')
+@observer
+export default class InventionsFeed extends React.Component {
+  @computed get persons() {
+    return this.props.store.data.Persons.data;
+  }
 
-export default InventionsFeed;
+  @computed get inventions() {
+    return this.props.store.data.Inventions.data;
+  }
+
+  @computed get selected() {
+    return this.props.store.feed.inventions;
+  }
+
+  @computed get current() {
+    return this.props.store.prepared.inventions.current;
+  }
+
+  @action select(v) {
+    this.props.store.feed.inventions[v] = !this.selected[v];
+  }
+
+  @action selectLocation(inv) {
+    const loc = this.inventions[inv].inventPlace;
+    if (loc !== 0) {
+      this.props.store.clickInfo.selectLocation(loc);
+    } else {
+      console.error(
+        'Unknown place of invention',
+        this.inventions[inv].id,
+        this.inventions[inv].nameEng
+      );
+    }
+  }
+
+  @action closeWidget() {
+    return this.props.store.clickInfo.closeWidget();
+  }
+
+  render() {
+    return (
+      <div className='InventionsFeed'>{this.current.map(invId => (
+        <div
+          key={`div_inv_${invId}`}
+          onMouseEnter={() => this.selectLocation(invId)}
+          onMouseLeave={() => this.closeWidget()}
+          onClick={() => { this.select(invId); return false; }}
+          className={this.selected[invId] === true
+            ? 'selectedFact' : 'regularFact'}
+        >
+          <Invention fact={this.inventions[invId]} persons={this.persons} />
+        </div>))}
+      </div>
+    );
+  }
+}

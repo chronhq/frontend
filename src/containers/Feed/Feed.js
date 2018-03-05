@@ -10,97 +10,29 @@ import ExportFromFeed from './ExportFromFeed';
 
 import './Feed.less';
 
-export function exportFromFeed(filename, format, selected) {
-  return {
-    type: 'FEED_EXPORT',
-    filename,
-    format,
-    selected,
-  };
-}
-
 @inject('store')
 @observer
 class Feed extends React.Component {
-  state = {
-    selected: { inventions: {}, geoEvents: {}, persons: {} },
-  }
-
-  handleChange = (type, data) => {
-    console.log('have new data in handle change', data);
-    const selected = {
-      ...this.state.selected,
-      [type]: { ...this.state.selected[type], ...data }
-    };
-    this.setState({ selected });
-  }
-
-  handleHover = (type, factId) => {
-    this.props.selectLocation(type, factId);
-  }
-
-  handleDownload = (filename, type) => {
-    this.props.exportFromFeed(filename, type, this.state.selected);
-  }
-
   render() {
     return (
       <div className='feed'>
         <h3> Лента событий </h3>
         <div className='feed-panel'>
-          <Panel collapsible defaultExpanded header="Люди" eventKey="1">
-            <PersonsFeed
-              persons={this.props.persons}
-              current={this.props.personsFacts}
-              selected={this.state.selected.persons}
-              hoverCb={data => this.handleHover('persons', data)}
-              changeCb={data => this.handleChange('persons', data)}
-            />
+          <Panel header="Люди" eventKey="1">
+            <PersonsFeed />
           </Panel>
-          <Panel collapsible defaultExpanded header="Геополитические события" eventKey="2">
-            <GeoEventsFeed
-              geoEvents={this.props.geoEvents}
-              current={this.props.currentGeoEvents}
-              selected={this.state.selected.geoEvents}
-              hoverCb={data => this.handleHover('geoEvents', data)}
-              changeCb={data => this.handleChange('geoEvents', data)}
-            />
+          <Panel header="Геополитические события" eventKey="2">
+            <GeoEventsFeed />
           </Panel>
-          <Panel collapsible defaultExpanded header="Изобретения" eventKey="3">
-            <InventionsFeed
-              persons={this.props.persons}
-              inventions={this.props.inventions}
-              current={this.props.currentInventions}
-              selected={this.state.selected.inventions}
-              hoverCb={data => this.handleHover('inventions', data)}
-              changeCb={data => this.handleChange('inventions', data)}
-            />
+          <Panel header="Изобретения" eventKey="3">
+            <InventionsFeed />
           </Panel>
         </div>
         <hr />
-        <ExportFromFeed cb={this.handleDownload} />
+        <ExportFromFeed />
       </div>
     );
   }
 }
-
-// function mapStateToProps(state) {
-//   return {
-//     inventions: state.data.inventions,
-//     currentInventions: state.timeline.inventions.current,
-//     geoEvents: state.data.geoEvents,
-//     currentGeoEvents: state.timeline.geoEvents.current,
-//     personsFacts: state.timeline.personsFacts.current,
-//     persons: state.data.persons
-//   };
-// }
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     selectLocation: bindActionCreators(selectLocation, dispatch),
-//     exportFromFeed: bindActionCreators(exportFromFeed, dispatch)
-//   };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Feed);
 
 export default Feed;

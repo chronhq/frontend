@@ -9,6 +9,7 @@ import Prepared from './PreparedData';
 import View from './ViewModel';
 import ClickInfo from './ClickInfoModel';
 import FeedbackForm from './FeedbackForm';
+import FeedModel from './FeedModel';
 
 export default class storeModel {
   // Add here new models
@@ -26,5 +27,6 @@ export default class storeModel {
     this.colors = new ColorsModel(this);
     this.view = new View(this);
     this.clickInfo = new ClickInfo(this);
+    this.feed = new FeedModel(this);
   }
 }

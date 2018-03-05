@@ -1,9 +1,15 @@
 import { observable, computed } from 'mobx';
 import Locations from './DataAdaptation/LocationsModel';
 import GenericPointProcessing from './DataAdaptation/GenericPointProcessing';
+import Persons from './DataAdaptation/PersonsList';
+import Inventions from './DataAdaptation/InventionsList';
+import GeoEvents from './DataAdaptation/GeoEventsList';
 
 export default class FinalDataModel {
   @observable data = {};
+  @observable persons;
+  @observable inventions;
+  @observable geoEventsList;
 
   @computed get locations() {
     return this.data.cities.locations;
@@ -54,5 +60,9 @@ export default class FinalDataModel {
     this.data.courseTraces = new GenericPointProcessing(rootStore, 'CourseTraces', 'courseTimelineId', true);
 
     // this.data.CourseGeopoints.saveDataCb = json => this.saveDataCb('courseGeoPoints', json);
+
+    this.persons = new Persons(rootStore);
+    this.inventions = new Inventions(rootStore);
+    this.geoEventsList = new GeoEvents(rootStore);
   }
 }

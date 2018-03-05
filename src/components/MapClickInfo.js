@@ -30,9 +30,11 @@ const BordersWidget = ({
 class MapClickInfo extends React.Component {
   @computed get widget() {
     if (this.props.store.clickInfo.selected !== null) {
-      return this.props.store.clickInfo.widget.widgetType === true
-        ? <BordersWidget {...this.props.store.clickInfo.widget} />
-        : <LocationWidget {...this.props.store.clickInfo.widget} />;
+      if (this.props.store.clickInfo.widgetType === 'border') {
+        return <BordersWidget {...this.props.store.clickInfo.widget} />;
+      } else if (this.props.store.clickInfo.widgetType === 'location') {
+        return <LocationWidget {...this.props.store.clickInfo.widget} />;
+      }
     }
     // Widget is closed
     return 'Кликните на карту, чтобы получить информацию';
@@ -40,6 +42,7 @@ class MapClickInfo extends React.Component {
 
   render() {
     if (this.props.store.clickInfo.isOpen === false) return '';
+    if (this.props.store.clickInfo.widgetType === 'geoEvent') return '';
     return (
       <div id='mapClickInfo'>
         <div>
