@@ -6,9 +6,9 @@ export default class FeedModel {
   }
 
   getLocationName = (id) => {
-    if (id in this.rootStore.prepared.locations) {
-      const loc = this.rootStore.prepared.locations[id];
-      return `${loc.nameRus} (${loc.nameEng}, ${loc.admin_1}, ${loc.adm_0})`;
+    if (id in this.rootStore.prepared.data.cities.points) {
+      const loc = this.rootStore.prepared.data.cities.points[id].data;
+      return `${loc.nameRus} (${loc.nameEng}, ${loc.admin1}, ${loc.adm0})`;
     }
     return 'Неизвестно';
   }
@@ -26,7 +26,7 @@ export default class FeedModel {
 
   getFactDescription = (factId) => {
     const fact = this.rootStore.prepared.inventions.data[factId];
-    const loc = this.getLocationName(fact.invent_place);
+    const loc = this.getLocationName(fact.inventPlace);
     const ppl = this.getInventors(fact.inventor);
     return [
       `Название: "${fact.nameRus}"`,
@@ -72,15 +72,12 @@ export default class FeedModel {
   @observable feedDownloadLinkId = 'exportFromFeedDownloadLink';
 
   @computed get selected() {
-    console.log('persons', this.persons);
     const persons = Object.keys(this.persons)
       .filter(c => this.persons[c] === true)
       .map(this.getPersonFacts);
-    console.log('inventions', this.inventions);
     const inventions = Object.keys(this.inventions)
       .filter(c => this.inventions[c] === true)
       .map(this.getFactDescription);
-    console.log('geoEvents', this.geoEvents);
     const geoEvents = Object.keys(this.geoEvents)
       .filter(c => this.geoEvents[c] === true)
       .map(this.getGeoEventsFact);
