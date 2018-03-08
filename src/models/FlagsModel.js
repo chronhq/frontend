@@ -27,6 +27,8 @@ export default class FlagsModel {
       feedback: false,
       SidePanelTab: 0,
       SidePanelIsOpen: false,
+      TimelineIsMinified: false,
+      BioIsOpen: false,
     },
     UI: {
       MapViewport: true,

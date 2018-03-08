@@ -4,28 +4,17 @@ import { line, curveCardinal } from 'd3-shape';
 import { select } from 'd3-selection';
 import { easeLinear } from 'd3-ease';
 // import { transition } from 'd3-transition';
-import './PathAnimation.less';
+// import './PathAnimation.less';
 
 class PathAnimation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      y: 25,
-      vy: 20,
-      animated: false,
-      pathPoints: this.props.points.reduce((prev, cur) => [...prev, ...cur.projected], []),
-    };
-    this.line = line().curve(curveCardinal);
-  }
-
   componentDidMount() {
+    this.line = line().curve(curveCardinal);
     this.container = select(this.container);
     this.renderPath();
     // comment this
     this.animateShip();
     this.animatePath();
   }
-
 
   animateShip() {
     const node = select(this.circle);
@@ -52,7 +41,7 @@ class PathAnimation extends React.Component {
       .style('stroke', '#00f')
       .style('fill', 'none')
       .style('stroke-width', '0.1px')
-      .data([this.state.pathPoints])
+      .data([this.props.points])
       .attr('d', this.line);
 
     this.transitionPath();
@@ -67,7 +56,7 @@ class PathAnimation extends React.Component {
       .duration(this.props.duration)
       .attr('stroke-dashoffset', 0)
       .ease(easeLinear)
-      .on('end', () => this.transitionPath()); //loop
+      .on('end', () => this.transitionPath()); // loop
   }
 
   animateAll() {
@@ -83,7 +72,7 @@ class PathAnimation extends React.Component {
       .style('fill', 'none')
       .style('stroke-width', '0.1px')
       .style('stroke-dasharray', '0.5, 0.5')
-      .data([this.state.pathPoints])
+      .data([this.props.points])
       .attr('d', this.line);
   }
 

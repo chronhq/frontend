@@ -4,6 +4,7 @@ import GenericPointProcessing from './DataAdaptation/GenericPointProcessing';
 import Persons from './DataAdaptation/PersonsList';
 import Inventions from './DataAdaptation/InventionsList';
 import GeoEvents from './DataAdaptation/GeoEventsList';
+import Courses from './DataAdaptation/CoursesModel';
 
 export default class FinalDataModel {
   @observable data = {};
@@ -64,5 +65,6 @@ export default class FinalDataModel {
     this.persons = new Persons(rootStore);
     this.inventions = new Inventions(rootStore);
     this.geoEventsList = new GeoEvents(rootStore);
+    this.courses = new Courses(rootStore);
   }
 }

@@ -14,20 +14,22 @@ export default class TraceModel {
 
   @computed get projected() {
     const points = [];
-    this.inTheBox.map((flag, idx) => {
-      if (flag) {
-        const point = this.point.path[idx];
-        points.push(this.project([point[0], point[1]]));
-      }
-      return false;
-    });
+    this.inTheBox.map((arr, pidx) =>
+      arr.map((flag, idx) => {
+        if (flag) {
+          const point = this.data.path[pidx].path[idx];
+          points.push(this.project([point[0], point[1]]));
+        }
+        return false;
+      }));
     return points;
   }
 
   // Point will be in viewport area after clipping
   @computed get inTheBox() {
-    return this.point.path.path.map(cur =>
-      this.projection.inTheBox(cur[0], cur[1]));
+    return this.data.path.map(cur =>
+      cur.path.map(point =>
+        this.projection.inTheBox(point[0], point[1])));
   }
 
   constructor(rootStore, point) {

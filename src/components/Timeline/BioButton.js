@@ -1,17 +1,17 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { setFlagsAction } from 'flag';
+import { inject, observer } from 'mobx-react';
 
 const tooltip = text => (
   <Tooltip id='tooltip'><strong>{text}</strong></Tooltip>
 );
 
-
+@inject('store')
+@observer
 class BioButton extends React.Component {
   bioToggle() {
-    this.props.setFlagsAction({ UI: { Bio: !this.props.isBioOn } });
+    const isBioOn = this.props.store.flags.flags.runtime.BioIsOpen;
+    this.props.store.flags.set({ runtime: { BioIsOpen: !isBioOn } });
   }
 
   render() {
@@ -24,16 +24,5 @@ class BioButton extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    isBioOn: state.flags.UI.Bio
-  };
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BioButton);
+export default BioButton;

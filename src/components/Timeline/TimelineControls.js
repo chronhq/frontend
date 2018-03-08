@@ -1,111 +1,113 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { inject, observer } from 'mobx-react';
+import { computed, action } from 'mobx';
 // import 'MiniSidebar.less';
 import './TimelineControls.less';
-import { changeTick } from '../../reducers/actions';
 import TimelineButtons from './TimelineButtons';
 
-function changeUI(data) {
-  return {
-    type: 'CHANGE_UI',
-    data
-  };
-}
 
 const tooltip = text => (
   <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
 );
 
-
-class NextComponent extends React.Component {
-  static propTypes = {
-    changeTick: PropTypes.func.isRequired,
-    tick: PropTypes.number.isRequired,
-    ticks: PropTypes.object.isRequired
-  }
-
-  handlePrevious() {
-    /* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
-    this.props.ticks[this.props.tick - 1] &&
-    this.props.changeTick(this.props.tick - 1);
-  }
-
-  render() {
-    return (
-      <div className='timeline__control control__up'>
-        <OverlayTrigger placement='left' delayShow={150} delayHide={5} overlay={tooltip('Предыдущий год')} >
-          <button onClick={() => this.handlePrevious()}>
-            <i className='fa fa-angle-up fa-fw' />
-            <hr />
-          </button>
-        </OverlayTrigger>
-      </div>
-    );
-  }
-}
-
-class PreviousComponent extends React.Component {
-  static propTypes = {
-    changeTick: PropTypes.func.isRequired,
-    tick: PropTypes.number.isRequired,
-    ticks: PropTypes.object.isRequired
-  }
-
-  handleNext() {
-    /* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
-    this.props.ticks[this.props.tick + 1] &&
-    this.props.changeTick(this.props.tick + 1);
-  }
-
-  render() {
-    return (
-      <div className='timeline__control control__down'>
-        <OverlayTrigger placement='left' delayShow={150} delayHide={5} overlay={tooltip('Следущий год')} >
-          <button onClick={() => this.handleNext()}>
-            <hr />
-            <i className='fa fa-angle-down fa-fw' />
-          </button>
-        </OverlayTrigger>
-      </div>
-    );
-  }
-}
-
-export const NavigationPan = ({ cb, isMin, cbbio }) => (
-  <div className='timeline__control control__home'>
-    <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip((isMin) ? 'Развернуть' : 'Свернуть')} >
+const ChangeTickButton = ({ direction, tip, cb }) => (
+  <div className={`timeline__control control__${direction}`}>
+    <OverlayTrigger placement='left' delayShow={150} delayHide={5} overlay={tooltip(tip)} >
       <button onClick={() => cb()}>
-        <i className='fa fa-bars fa-fw' />
+        <i className={`fa fa-angle-${direction} fa-fw`} />
+        <hr />
       </button>
     </OverlayTrigger>
-    {(isMin) ? null : <TimelineButtons cb={cbbio} />}
   </div>
 );
 
+@inject('store')
+@observer
+export default class TimelineControls extends React.Component {
+  @computed get className() {
+    return this.props.store.flags.flags.runtime.timelineIsMinified
+      ? ['timeline', 'timeline__minified'].join(' ')
+      : ['timeline'].join(' ');
+  }
 
-function mapStateToProps(state) {
-  return {
-    tick: state.timeline.year.tick,
-    ticks: state.courses.timeline.tick
-  };
+  handleWheel(event) {
+    if (event.deltaY > 0) {
+      this.props.store.year.nextTick();
+    } else if (event.deltaY < 0) {
+      this.props.store.year.prevTick();
+    }
+  }
+
+  handlePress(event) {
+    // console.log(e.keyCode);
+    event.preventDefault();
+    switch (event.keyCode) {
+      case 38: // Up arrow
+        this.props.store.year.prevTick();
+        break;
+      case 40: // Down arrow
+        this.props.store.year.nextTick();
+        break;
+      default:
+        break;
+    }
+  }
+
+  render() {
+    return (
+      <div
+        className={this.className}
+        id="keyboard"
+        role="button"
+        tabIndex='0'
+        onWheel={e => this.handleWheel(e)}
+        onKeyDown={e => this.handlePress(e)}
+      >
+        <NavigationPan />
+        <ChangeTickButton
+          tip='Предыдущий год'
+          direction='up'
+          cb={() => this.props.store.year.prevTick()}
+        />
+        {this.props.children}
+        <ChangeTickButton
+          tip='Следующий год'
+          direction='down'
+          cb={() => this.props.store.year.nextTick()}
+        />
+      </div>
+    );
+  }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    changeUI: bindActionCreators(changeUI, dispatch),
-    changeTick: bindActionCreators(changeTick, dispatch)
-  };
+@inject('store')
+@observer
+class NavigationPan extends React.Component {
+  @computed get tip() {
+    return this.props.store.flags.flags.runtime.TimelineIsMinified
+      ? 'Развернуть'
+      : 'Свернуть';
+  }
+  @computed get isMin() {
+    return this.props.store.flags.flags.runtime.TimelineIsMinified;
+  }
+
+  @action toggleTimepanel() {
+    this.props.store.flags.flags.runtime.TimelineIsMinified = !this.isMin;
+  }
+
+  render() {
+    return (
+      <div className='timeline__control control__home'>
+        <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip(this.tip)} >
+          <button onClick={() => this.toggleTimepanel()}>
+            <i className='fa fa-bars fa-fw' />
+          </button>
+        </OverlayTrigger>
+        {(!this.isMin) && <TimelineButtons />}
+      </div>
+    );
+  }
 }
-
-export const Next = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NextComponent);
-
-export const Previous = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PreviousComponent);

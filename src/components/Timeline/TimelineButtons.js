@@ -1,22 +1,19 @@
 import React from 'react';
-import './TimelineButtons.less';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { observer, inject } from 'mobx-react';
 import BioButton from './BioButton';
-import { withRouter } from 'react-router-dom'
-import { setFlagsAction } from 'flag';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import './TimelineButtons.less';
 
 const tooltip = text => (
   <Tooltip id='tooltip'><strong>{text}</strong></Tooltip>
 );
-
+@inject('store')
+@observer
 class ReturnButton extends React.Component {
   handleClick() {
-    this.props.setFlagsAction({ CourseSelection: true });
+    this.props.store.effects.course.toggleCourseSelection(true);
     this.props.history.push('/');
-    console.log('magic');
   }
 
   render() {
@@ -30,21 +27,13 @@ class ReturnButton extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    setFlagsAction: bindActionCreators(setFlagsAction, dispatch),
-  }
-}
+const ReturnButtonMagic = withRouter(ReturnButton);
 
-const ReturnButtonMagic = connect(null, mapDispatchToProps)(withRouter(ReturnButton));
-
-const TimelineButtons = (cb) => (
+const TimelineButtons = () => (
   <div className='timeline__buttons'>
     <BioButton />
     <ReturnButtonMagic />
   </div>
 );
-
-
 
 export default TimelineButtons;

@@ -38,6 +38,27 @@ export default class YearModel {
     this.setYear(this.min);
   }
 
+  @action setTick(tick) {
+    if (tick in this.rootStore.data.CourseTimelines.data) {
+      this.setYear(this.rootStore.data.CourseTimelines.data[tick].year);
+      this.tick = tick;
+      // Timeline hack: active event on center
+      if (this.rootStore.flags.flags.UI.MiniSidebar === true) {
+        const selectedNode = document.getElementsByClassName('timeline__entry--selected');
+        const containerNode = document.getElementsByClassName('event__container');
+        containerNode[0].scrollTop = selectedNode[0].offsetTop - 222; // HARDCODE
+      }
+    }
+  }
+
+  nextTick() {
+    this.setTick(this.tick + 1);
+  }
+
+  prevTick() {
+    this.setTick(this.tick - 1);
+  }
+
   play() {
     if (this.playing === false) return;
     this.nextYear();
@@ -48,6 +69,4 @@ export default class YearModel {
     this.playing = playing;
     this.play();
   }
-
 }
-

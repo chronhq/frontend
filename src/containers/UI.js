@@ -5,7 +5,7 @@ import MapViewport from '../containers/MapViewport';
 import SidePanel from '../containers/SidePanel';
 import TimePanel from '../components/TimePanel';
 import MapControls from '../components/MapControls';
-import MiniSidebar from '../components/Timeline/MiniSidebar';
+import Timeline from '../components/Timeline';
 import LegendHOC from '../containers/LegendHOC';
 import Bio from '../components/Timeline/Bio';
 
@@ -24,7 +24,7 @@ const UI = () => (
   <div className='content'>
     <Flag
       name='runtime.SelectedCourse'
-      render={() => ''}
+      render={() => <Bio />}
       fallbackRender={() => <Overlays />}
     />
     <Flag
@@ -36,8 +36,8 @@ const UI = () => (
       render={() => <TimePanel />}
     />
     <Flag
-      name="UI.MiniSidebar-NotImplemented"
-      render={() => <MiniSidebar />}
+      name="UI.MiniSidebar"
+      render={() => <Timeline />}
     />
     <Flag
       name="UI.MapControls-NotImplemented"
@@ -50,10 +50,6 @@ const UI = () => (
     <Flag
       name="UI.LegendHOC"
       render={() => <LegendHOC />}
-    />
-    <Flag
-      name="UI.Bio-NotImplemented"
-      render={() => <Bio />}
     />
   </div>
 );
