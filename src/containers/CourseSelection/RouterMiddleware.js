@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import ym from 'react-yandex-metrika';
 import { observer } from 'mobx-react';
 import { when } from 'mobx';
 
-
+import { ymHit } from '../../metrikaHelper';
 import 'font-awesome/less/font-awesome.less';
 import './RouterMiddleware.less';
 
@@ -14,8 +13,7 @@ import RotatingLogo from './RotatingLogo';
 @observer
 class RouterMiddleware extends Component {
   componentWillMount() {
-    // console.log('Router middleware', this.props);
-    // ym('hit', this.props.courseSelected);
+    ymHit(this.props.courseSelected);
     when( // validate course name and download data
       () => this.props.store.data.Courses.status.loaded,
       () => this.selectCourse()

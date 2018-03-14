@@ -2,13 +2,13 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
-// import { markItReady, cleanState } from '../../reducers/actions';
 import TilesScreen from './TilesScreen';
 import checkCourses from './checkCourses';
-
+import { ymHit } from '../../metrikaHelper';
 @observer
 class CourseSelection extends React.Component {
   componentWillMount() {
+    ymHit('courseSelection');
     this.enableCourseSelector();
   }
 

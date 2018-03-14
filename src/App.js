@@ -3,13 +3,9 @@ import { Provider, observer } from 'mobx-react';
 import { BrowserRouter as Router, hashHistory } from 'react-router-dom';
 import { YMInitializer } from 'react-yandex-metrika';
 
+import { YmId } from './metrikaHelper';
+
 import AppRouter from './routes';
-
-// Yandex Metrika id
-const YmId = (process.env.NODE_ENV === 'production') ? [42857239, 42866674] : [42866674];
-// ym.init([42857239]); <- Alice id
-// ym.init([42866674]); <- Padavan id
-
 
 @observer
 class App extends React.Component {
