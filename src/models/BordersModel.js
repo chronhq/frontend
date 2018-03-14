@@ -1,6 +1,6 @@
 import { observable, when, computed, action } from 'mobx';
 import Geometry from './DataAdaptation/GeometryModel';
-import { getActualData, getNextData } from '../reducers/actions';
+import { getActualData, getNextData } from './DataAdaptation/_helper';
 
 const separate = (arr) => {
   // split array of geoIds into multiple arrays with max elements
