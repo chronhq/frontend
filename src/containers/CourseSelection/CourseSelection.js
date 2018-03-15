@@ -23,9 +23,6 @@ class CourseSelection extends React.Component {
         Ready: false
       }
     });
-    // this.props.markItReady(false);
-    // this.props.cleanState();
-    // this.props.setFlagAction({ CourseSelection: true });
   }
 
   render() {
