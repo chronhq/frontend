@@ -10,6 +10,7 @@ import View from './ViewModel';
 import ClickInfo from './ClickInfoModel';
 import FeedbackForm from './FeedbackForm';
 import FeedModel from './FeedModel';
+import FeedPinsModel from './FeedPinsModel';
 
 export default class storeModel {
   // Add here new models
@@ -28,5 +29,6 @@ export default class storeModel {
     this.view = new View(this);
     this.clickInfo = new ClickInfo(this);
     this.feed = new FeedModel(this);
+    this.pins = new FeedPinsModel(this);
   }
 }

@@ -5,6 +5,7 @@ import { computed } from 'mobx';
 import Borders from './Borders';
 import Contour from './Contour';
 import Locations from '../../Locations';
+import FeedPins from './FeedPins';
 
 import Decorations from './Decorations';
 import GeoPoints from './GeoPoints';
@@ -16,6 +17,7 @@ const BasicElements = () => (
     <Contour />
     <Borders />
     <Locations />
+    <FeedPins />
   </g>
 );
 
