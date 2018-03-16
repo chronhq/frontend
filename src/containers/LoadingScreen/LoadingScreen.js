@@ -7,11 +7,15 @@ import { ymHit } from '../../metrikaHelper';
 import 'font-awesome/less/font-awesome.less';
 import './LoadingScreen.less';
 
-// import checkCourses from './checkCourses';
+import checkCourses from '../CourseSelection/checkCourses';
 import RotatingLogo from './RotatingLogo';
 
 @observer
 class LoadingScreen extends React.Component {
+  componentWillReceiveProps(next) {
+    checkCourses(next);
+  }
+
   componentWillMount() {
     ymHit(this.props.courseSelected);
     when( // validate course name and download data
