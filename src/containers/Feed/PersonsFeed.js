@@ -4,7 +4,7 @@ import { computed, action } from 'mobx';
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-const PersonFact = ({ person, fact }) => (
+export const PersonFact = ({ person, fact }) => (
   <div
     // className='factStillInFuture'
     key={`pf_${fact.id}`}

@@ -16,7 +16,14 @@ class FeedPins extends React.Component {
             key={icon.key}
             xlinkHref={`#mapPic_${icon.pic}`}
             transform={`translate(${icon.point.x},${icon.point.y}) scale(0.01) rotate(-135)`}
-            onMouseEnter={() => console.log('Hovering over pin', icon.key)}
+            onMouseEnter={() => {
+              this.props.store.pins.setActive(icon.key);
+              return false;
+            }}
+            onMouseLeave={() => {
+              this.props.store.pins.setActive(null);
+              return false;
+            }}
           />
         ))}
       </g>);

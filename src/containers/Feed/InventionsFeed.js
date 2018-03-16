@@ -9,7 +9,7 @@ export const getInventors = (persons, inventors) => inventors.reduce((prev, p) =
     ? prev
     : [...prev, persons[p].nameRus]), []);
 
-const Invention = ({ fact, persons }) => (
+export const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
     <div>
       <h5 className='factHeader'>{fact.nameRus}</h5>

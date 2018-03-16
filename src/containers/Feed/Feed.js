@@ -6,7 +6,7 @@ import InventionsFeed from './InventionsFeed';
 import PersonsFeed from './PersonsFeed';
 import GeoEventsFeed from './GeoEventsFeed';
 import ExportFromFeed from './ExportFromFeed';
-// import { selectLocation } from '../../reducers/actions';
+import Baloon from './Baloon';
 
 import './Feed.less';
 
@@ -16,6 +16,9 @@ class Feed extends React.Component {
   render() {
     return (
       <div className='feed'>
+        <h3> Выбранный пин </h3>
+        <Baloon />
+        <hr />
         <h3> Лента событий </h3>
         <div className='feed-panel'>
           <Panel header="Люди" eventKey="1">

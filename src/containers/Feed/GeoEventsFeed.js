@@ -4,7 +4,7 @@ import { computed, action } from 'mobx';
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-const GeoEvent = ({ fact }) => (
+export const GeoEvent = ({ fact }) => (
   <div className='factTest'>
     <div>
       {fact.description}

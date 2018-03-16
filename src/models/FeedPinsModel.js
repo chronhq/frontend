@@ -1,4 +1,4 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 class InteractivePin {
   @observable info = [];
@@ -10,10 +10,10 @@ class InteractivePin {
 
   @computed get pic() {
     switch(this.info[0].type) {
-      case 'birth': return 25; // starpin
+      case 'birth': return 25; // StarPin
       case 'death': return 25;
-      case 'geo': return 23; // infopin
-      case 'inv': return 24; // bulbpin
+      case 'geo': return 23; // InfoPin
+      case 'inv': return 24; // BulbPin
       default: return 23;
     }
   }
@@ -27,6 +27,14 @@ class InteractivePin {
 export default class FeedPinsModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
+  }
+  @observable active = null;
+  @action setActive(a) {
+    this.active = a;
+  }
+
+  @computed get selected() {
+    return this.pins.find((pin) => pin.key === this.active);
   }
 
   @computed get persons() {
