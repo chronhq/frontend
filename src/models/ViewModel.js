@@ -45,8 +45,8 @@ export default class ViewModel {
   }
 
   @computed get widgetTransform() {
-    const x = this.width > 768 ? 100 : 60;
-    const y = this.width > 768 ? this.height - 100 : this.height - 100;
+    const x = window.innerWidth > 768 ? 100 : 60;
+    const y = window.innerHeight - 100;
     return `translate(${x}, ${y})`;
   }
 }

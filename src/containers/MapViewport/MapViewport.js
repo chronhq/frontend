@@ -7,6 +7,7 @@ import { PatternsDefs, MapPicsDefs } from '../../components/SVGPatternsDefs';
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
 import Elements from './Elements';
+import FreePinsWiget from './FreePinsWidget';
 
 import './MapViewport.less';
 
@@ -98,6 +99,7 @@ class Map extends React.Component {
         <g transform={this.props.store.view.widgetTransform}>
           <ScaleWidget view={this.props.store.view} />
           <LoadingWidget borders={this.props.store.borders} />
+          <FreePinsWiget />
         </g>
       </svg>
     );

@@ -1,5 +1,24 @@
 import { observable, computed, action } from 'mobx';
 
+function getIcon(info) {
+  switch(info.type) {
+    case 'birth': return 25; // StarPin
+    case 'death': return 25;
+    case 'geo': return 23; // InfoPin
+    case 'inv': return 24; // BulbPin
+    default: return 23;
+  }
+}
+
+function getKey(info) {
+  switch(info.type) {
+    case 'birth': return `P_${info.person.id}_${info.type}`;
+    case 'death': return `P_${info.person.id}_${info.type}`;
+    case 'geo': return `P_${info.geoEvent.id}`;
+    case 'inv': return `P_${info.invention.id}`;
+  }
+}
+
 class InteractivePin {
   @observable info = [];
   @observable key;
@@ -9,13 +28,7 @@ class InteractivePin {
   }
 
   @computed get pic() {
-    switch(this.info[0].type) {
-      case 'birth': return 25; // StarPin
-      case 'death': return 25;
-      case 'geo': return 23; // InfoPin
-      case 'inv': return 24; // BulbPin
-      default: return 23;
-    }
+    return getIcon(this.info[0]);
   }
 
   constructor(info, key) {
@@ -29,12 +42,17 @@ export default class FeedPinsModel {
     this.rootStore = rootStore;
   }
   @observable active = null;
-  @action setActive(a) {
+  @observable selectedFreePin = false;
+
+  @action setActive(a, free = false) {
+    this.selectedFreePin = free;
     this.active = a;
   }
 
   @computed get selected() {
-    return this.pins.find((pin) => pin.key === this.active);
+    return this.selectedFreePin
+      ? this.freePins.find(pin => pin.key === this.active)    
+      : this.pins.find(pin => pin.key === this.active);
   }
 
   @computed get persons() {
@@ -139,4 +157,11 @@ export default class FeedPinsModel {
       new InteractivePin(this.combineRawPins[d], d));
   }
 
+  @computed get freePins() {
+    return [
+      ...this.geoEventsRawPins.free,
+      ...this.inventionsRawPins.free,
+      ...this.personsRawPins.free,
+    ].map(p => new InteractivePin([p], getKey(p)));
+  }
 }
