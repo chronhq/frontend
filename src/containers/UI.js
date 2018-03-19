@@ -11,12 +11,13 @@ import Bio from '../components/Timeline/Bio';
 
 import Feedback from '../components/Feedback';
 import Intro from '../components/Intro/Carousel';
-
+import Baloon from './Feed/Baloon';
 
 const Overlays = () => (
   <div id='overlays'>
     <Intro />
     <Feedback />
+    <Baloon />
   </div>
 );
 

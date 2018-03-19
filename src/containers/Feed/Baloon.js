@@ -6,6 +6,7 @@ import { PersonFact } from './PersonsFeed';
 import { Invention } from './InventionsFeed';
 import { GeoEvent } from './GeoEventsFeed';
 
+import './Baloon.less';
 @inject('store')
 @observer
 export default class Baloon extends React.Component {
@@ -14,6 +15,20 @@ export default class Baloon extends React.Component {
   }
   @computed get pin() {
     return this.props.store.pins.selected;
+  }
+
+  @computed get opacity() {
+    return (this.pin === null || typeof this.pin === 'undefined')
+      ? 0
+      : 1;
+  }
+
+  @computed get style() {
+    return {
+      opacity: this.opacity,
+      top: `${this.props.store.pins.pageY}px`,
+      left: `${this.props.store.pins.pageX}px`,
+    };
   }
 
   @computed get news() {
@@ -46,7 +61,7 @@ export default class Baloon extends React.Component {
 
   render() {
     return (
-      <div className='BaloonNews'>
+      <div style={this.style} className='baloonNews'>
         {this.news}
       </div>
     );

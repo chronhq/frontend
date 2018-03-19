@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 
 function getIcon(info) {
-  switch(info.type) {
+  switch (info.type) {
     case 'birth': return 25; // StarPin
     case 'death': return 25;
     case 'geo': return 23; // InfoPin
@@ -11,11 +11,12 @@ function getIcon(info) {
 }
 
 function getKey(info) {
-  switch(info.type) {
+  switch (info.type) {
     case 'birth': return `P_${info.person.id}_${info.type}`;
     case 'death': return `P_${info.person.id}_${info.type}`;
     case 'geo': return `P_${info.geoEvent.id}`;
     case 'inv': return `P_${info.invention.id}`;
+    default: return 'P_default';
   }
 }
 
@@ -43,6 +44,13 @@ export default class FeedPinsModel {
   }
   @observable active = null;
   @observable selectedFreePin = false;
+  @observable pageX = 0;
+  @observable pageY = 1;
+
+  @action setPosition(x, y) {
+    this.pageX = x;
+    this.pageY = y;
+  }
 
   @action setActive(a, free = false) {
     this.selectedFreePin = free;
