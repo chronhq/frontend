@@ -1,5 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import MessagesI18n from './MessagesI18n';
+import IntroI18n from './IntroI18n';
 
 export default class Internationalization {
   constructor(rootStore) {
@@ -7,6 +8,7 @@ export default class Internationalization {
   }
 
   @observable messages = new MessagesI18n(this.rootStore);
+  @observable intro = new IntroI18n(this.rootStore);
   @observable languages = {
     ru: 'Русский',
     en: 'English',

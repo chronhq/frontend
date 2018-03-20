@@ -4,41 +4,6 @@ import { observable, action, computed } from 'mobx';
 
 import './Carousel.less';
 
-// Data for carousel
-const carouselSlidesData = [
-  {
-    key: '0',
-    overlay: 'overlay-none',
-    content:
-      'Добро пожаловать в демо-версию мультимедийного атласа "Хронист", благодаря которому вы сами выбираете типы данных, которые хотите отобразить и сами настраиваете хронологию, которая вам интересна. Наша команда верит, что изучение истории становится очень занимательным, когда вы изучаете не один регион, а всю планету. История всего мира взаимосвязана и здесь вы сможете самостоятельно находить и изучать эти взаимосвязи.'
-  }, {
-    key: '1',
-    overlay: 'overlay-none',
-    content:
-    'В демо версии вы найдёте лишь небольшую активную часть карты (она обозначена цветом) и отрезок времени, который сможете использовать. Мы планируем, что хронология будет начинаться от разделения материков и доходить до XXI века. В дальнейшем мы усложним интерфейс: добавим в хронологию этапы в зависимости от регионов, возможность ввода собственных данных и, таким образом, создания собственных курсов, экспорт данных в удобные форматы для создания интерактивной презентации при помощи пары кликов, и многое другое. ',
-  }, {
-    key: '2',
-    overlay: 'overlay-legend',
-    content:
-      'Легенда находится на боковой панели, но вы также можете получить краткую справку по территориям и городам, просто кликнув на них.  ',
-  }, {
-    key: '3',
-    overlay: 'overlay-timeline',
-    content:
-      'Следить за изменениями можно перемещая указатель по временной шкале как самостоятельно, так и при помощи кнопок управления.',
-  }, {
-    key: '4',
-    overlay: 'overlay-feed',
-    content:
-      'Мы также работаем над добавлением «слоёв». Слой - это набор данных определённого типа - население, стихийные бедствия, религиозные направления, политическое устройство и тд. Сейчас мы предлагаем всего два слоя: города и политические границы. Слой «изобретения» по умолчанию включен и отображается как лента событий. При наведении курсора на событие оно отмечается в городе, в котором произошло. Изобретения также можно выделить щелчком и экспортировать в текстовый формат. Их также можно будет сортировать, экспортировать в различном варианте и переходить к полной версии со ссылками на научные материалы.  ',
-  }, {
-    key: '5',
-    overlay: 'overlay-home',
-    content:
-      'Вы можете вернуться к интро, нажав "домой" на боковой панели.',
-  }
-];
-
 // {
 //     content:
 //       'Нам важно, чтобы вы оценили свой опыт от использования сервиса.
@@ -129,11 +94,19 @@ class CarouselSlide extends React.Component {
 }
 
 // Carousel component
+@inject('store')
 @observer
-class Carousel extends React.Component {
+export default class Carousel extends React.Component {
   @computed get overlay() {
-    return this.props.slides[this.activeIndex].overlay;
+    return this.slides[this.activeIndex].overlay;
   }
+  @computed get slides() {
+    return this.props.store.i18n.intro.carousel;
+  }
+  @action closeIntro() {
+    this.props.store.flags.flags.runtime.intro = false;
+  }
+
 
   @observable activeIndex = 0;
   highlightDiv = {
@@ -150,7 +123,7 @@ class Carousel extends React.Component {
   goToPrevSlide(e) {
     e.preventDefault();
     if (this.activeIndex < 1) {
-      this.activeIndex = this.props.slides.length;
+      this.activeIndex = this.slides.length;
     } else {
       this.activeIndex -= 1;
     }
@@ -158,7 +131,7 @@ class Carousel extends React.Component {
 
   goToNextSlide(e) {
     e.preventDefault();
-    if (this.activeIndex === this.props.slides.length - 1) {
+    if (this.activeIndex === this.slides.length - 1) {
       this.activeIndex = 0;
     } else {
       this.activeIndex += 1;
@@ -166,12 +139,13 @@ class Carousel extends React.Component {
   }
 
   render() {
+    if (this.props.store.flags.flags.runtime.intro === false) return '';
     return (
       <div className='overlay'>
         <div className="carousel">
 
           <ul className="carousel__slides">
-            {this.props.slides.map((slide, index) => (
+            {this.slides.map((slide, index) => (
               <CarouselSlide
                 key={`slide_${slide.key}`}
                 index={index}
@@ -181,7 +155,7 @@ class Carousel extends React.Component {
           </ul>
 
           <ul className="carousel__indicators">
-            {this.props.slides.map((slide, index) => (
+            {this.slides.map((slide, index) => (
               <CarouselIndicator
                 key={`indicator_${slide.key}`}
                 index={index}
@@ -191,7 +165,7 @@ class Carousel extends React.Component {
           </ul>
 
           <div>
-            <button onClick={() => this.props.cb()} className='btn btn-primary'> Закрыть </button>
+            <button onClick={() => this.closeIntro()} className='btn btn-primary'> Закрыть </button>
             <button onClick={e => this.goToNextSlide(e)} className='btn btn-primary'> Далее </button>
           </div>
         </div>
@@ -205,19 +179,3 @@ class Carousel extends React.Component {
     );
   }
 }
-
-// Render Carousel component
-@inject('store')
-@observer
-class Intro extends React.Component {
-  @action closeIntro() {
-    this.props.store.flags.flags.runtime.intro = false;
-  }
-  render() {
-    return this.props.store.flags.flags.runtime.intro === true
-      ? <Carousel slides={carouselSlidesData} cb={() => this.closeIntro()} />
-      : '';
-  }
-}
-
-export default Intro;
