@@ -1,14 +1,20 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 export default class ViewModel {
   // this will be overwritten by MapView d3.event
   @observable transform = {};
-  @observable width = 0;
-  @observable height = 0;
+  // changed after resize event
+  @observable width = window.innerWidth;
+  @observable height = window.innerHeight;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.transform = this.defaultTransform;
+  }
+
+  @action setSize(w, h) {
+    this.width = w;
+    this.height = h;
   }
 
   @computed get defaultTransform() {
@@ -45,8 +51,8 @@ export default class ViewModel {
   }
 
   @computed get widgetTransform() {
-    const x = window.innerWidth > 768 ? 100 : 60;
-    const y = window.innerHeight - 100;
+    const x = this.width > 768 ? 100 : 60;
+    const y = this.height - 100;
     return `translate(${x}, ${y})`;
   }
 }

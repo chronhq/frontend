@@ -38,7 +38,7 @@ export default class Elements extends React.Component {
   }
   render() {
     return (
-      <g>
+      <g transform={this.props.store.view.svgTransform}>
         <BasicElements />
         {this.courseId !== 0 &&
           <CourseElements />
