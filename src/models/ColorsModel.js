@@ -93,10 +93,10 @@ export default class ColorsModel {
       if (cur.colors.length > 1) {
         return prev;
       }
-      const mapcolor13 = `${cur.colors}.join('_')}`;
+      const mapcolor13 = cur.colors.join('_');
       const name = this.rootStore.colors.enabled === true
-        ? `${mapcolor13}_${cur.sr_adm0_a3}`
-        : `${mapcolor13}_${cur.disputed}_${cur.type.en}_${cur.sr_adm0_a3}`;
+        ? `${mapcolor13}_${cur.admin.srAdm0A3}`
+        : `${mapcolor13}_${cur.disputed}_${cur.type.en}_${cur.admin.srAdm0A3}`;
       return { ...prev, [name]: cur };
     }, {});
   }
