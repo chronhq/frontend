@@ -2,14 +2,12 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import { PersonFact } from './PersonsFeed';
-import { Invention } from './InventionsFeed';
-import { GeoEvent } from './GeoEventsFeed';
+import { PersonFact, Invention, GeoEvent } from './Messages';
 
-import './Baloon.less';
+import './Balloon.less';
 @inject('store')
 @observer
-export default class Baloon extends React.Component {
+export default class Balloon extends React.Component {
   @computed get persons() {
     return this.props.store.data.Persons.data;
   }
@@ -38,7 +36,7 @@ export default class Baloon extends React.Component {
         case 'geo': return (
           <GeoEvent
             fact={pin.geoEvent.data}
-            key={`baloon_geo_${pin.geoEvent.id}`}
+            key={`balloon_geo_${pin.geoEvent.id}`}
           />);
 
         case 'inv':
@@ -46,14 +44,13 @@ export default class Baloon extends React.Component {
             <Invention
               fact={pin.invention}
               persons={this.persons}
-              key={`baloon_inv_${pin.invention.id}`}
+              key={`balloon_inv_${pin.invention.id}`}
             />);
         default:
           return (
             <PersonFact
               person={pin.person}
-              fact={{ id: `person_${pin.type}_${pin.person.id}` }}
-              key={`baloon_person_${pin.type}_${pin.person.id}`}
+              key={`balloon_person_${pin.type}_${pin.person.id}`}
             />);
       }
     });
@@ -61,7 +58,7 @@ export default class Baloon extends React.Component {
 
   render() {
     return (
-      <div style={this.style} className='baloonNews'>
+      <div style={this.style} className='balloonNews'>
         {this.news}
       </div>
     );

@@ -59,7 +59,7 @@ export default class FeedPinsModel {
 
   @computed get selected() {
     return this.selectedFreePin
-      ? this.freePins.find(pin => pin.key === this.active)    
+      ? this.freePins.find(pin => pin.key === this.active)
       : this.pins.find(pin => pin.key === this.active);
   }
 
@@ -83,7 +83,7 @@ export default class FeedPinsModel {
           const loc = this.rootStore.prepared.data.cities.points[locId].location;
           pins.push({ type, loc, person });
         } else {
-          free.push ({ type, person });
+          free.push({ type, person });
         }
         return false;
       })
@@ -108,7 +108,7 @@ export default class FeedPinsModel {
       const locId = invention.inventPlace;
       if (locId !== 0) {
         const loc = this.rootStore.prepared.data.cities.points[locId].location;
-        pins.push({ type, loc, invention })
+        pins.push({ type, loc, invention });
       } else {
         free.push({ type, invention });
       }
@@ -153,7 +153,7 @@ export default class FeedPinsModel {
       if (!(locKey in pins)) pins[locKey] = [];
       pins[locKey].push(pin);
       return false;
-    }
+    };
     this.geoEventsRawPins.pins.map(combine);
     this.inventionsRawPins.pins.map(combine);
     this.personsRawPins.pins.map(combine);
