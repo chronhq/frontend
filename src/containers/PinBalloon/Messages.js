@@ -11,38 +11,30 @@ export const GeoEvent = ({ fact }) => (
   </div>
 );
 
-export const PersonFact = ({ person, type }) => (
-  <div
-    key={`person_${type}_${person.id}`}
-  >
+export const PersonFact = ({ person }) => (
+  <div key={person.key}>
     <div className='factTest'>
-      <h5 className='factHeader'> {type === 'birth' ? 'Рождение' : 'Смерть'} {person.nameRus} </h5>
+      <h5 className='factHeader'> {person.occasion} </h5>
       <h5 className='factDate'>
-        {person.birthDate ? person.birthDate : '????'} <br /> {person.deathDate ? person.deathDate : '????'}
+        {person.birthDate} <br />
+        {person.deathDate}
       </h5>
     </div>
   </div>
 );
 
-
-export const getInventors = (persons, inventors) => inventors.reduce((prev, p) =>
-  (typeof persons[p] === 'undefined'
-    ? prev
-    : [...prev, persons[p].nameRus]), []);
-
-export const Invention = ({ fact, persons }) => (
-  <div key={`in_${fact.id}`}>
+export const Invention = ({ fact }) => (
+  <div key={fact.key}>
     <div>
-      <h5 className='factHeader'>{fact.nameRus}</h5>
+      <h5 className='factHeader'>{fact.name}</h5>
       <h5 className='factDate'> {fact.inventDate} </h5>
     </div>
     <br />
     <div className='factDescription'>
-      {fact.description.replace(/\u00a0/g, ' ')}
+      {fact.description}
     </div>
     <p className='factAuthor'>
-      <i>{getInventors(persons, fact.inventor).join(', ')}
-      </i>
+      <i>{fact.inventors}</i>
     </p>
   </div>
 );

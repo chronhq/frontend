@@ -45,12 +45,16 @@ export default class PointModel {
     return (this.sizeIsOk && this.inTheBox);
   }
 
+  @computed get nameSelector() {
+    return this.rootStore.i18n.nameSelector;
+  }
+
   @computed get location() {
     return {
       id: this.data.id,
       x: this.projected[0],
       y: this.projected[1],
-      name: this.data.nameRus,
+      name: this.data[this.nameSelector],
       scaleRank: this.data.scalerank,
     };
   }

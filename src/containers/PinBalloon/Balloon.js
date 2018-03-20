@@ -29,6 +29,10 @@ export default class Balloon extends React.Component {
     };
   }
 
+  @computed get i18n() {
+    return this.props.store.i18n.messages;
+  }
+
   @computed get news() {
     if (this.pin === null || typeof this.pin === 'undefined') return null;
     return this.pin.info.map((pin) => {
@@ -42,14 +46,13 @@ export default class Balloon extends React.Component {
         case 'inv':
           return (
             <Invention
-              fact={pin.invention}
-              persons={this.persons}
+              fact={this.i18n.invention(pin.invention)}
               key={`balloon_inv_${pin.invention.id}`}
             />);
         default:
           return (
             <PersonFact
-              person={pin.person}
+              person={this.i18n.person(pin.person, pin.type)}
               key={`balloon_person_${pin.type}_${pin.person.id}`}
             />);
       }

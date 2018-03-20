@@ -11,6 +11,7 @@ import ClickInfo from './ClickInfoModel';
 import FeedbackForm from './FeedbackForm';
 import FeedModel from './FeedModel';
 import FeedPinsModel from './FeedPinsModel';
+import Internationalization from './i18n';
 
 export default class storeModel {
   // Add here new models
@@ -30,5 +31,6 @@ export default class storeModel {
     this.clickInfo = new ClickInfo(this);
     this.feed = new FeedModel(this);
     this.pins = new FeedPinsModel(this);
+    this.i18n = new Internationalization(this);
   }
 }
