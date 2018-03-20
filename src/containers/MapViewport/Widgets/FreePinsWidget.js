@@ -32,6 +32,11 @@ export default class FreePinsWidget extends React.Component {
               this.props.store.pins.setActive(null);
               return false;
             }}
+            onMouseMove={(e) => {
+              e.preventDefault();
+              const { pageX, pageY } = e;
+              this.props.store.pins.setPosition(pageX, pageY);
+            }}
           />
         ))}
       </g>);
