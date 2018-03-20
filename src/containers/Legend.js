@@ -40,7 +40,6 @@ class Description extends React.Component {
   }
 
   @computed get fullName() {
-    console.log('Full name', this.props.store.colors.status);
     return this.props.store.colors.status
       ? this.adminName
       : this.detailedName;
