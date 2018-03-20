@@ -11,8 +11,8 @@ export default class Widgets extends React.Component {
   render() {
     return (
       <g transform={this.props.store.view.widgetTransform}>
-        <ScaleWidget view={this.props.store.view} />
-        <LoadingWidget borders={this.props.store.borders} />
+        <ScaleWidget />
+        <LoadingWidget />
         <FreePinsWidget />
       </g>
     );

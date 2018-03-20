@@ -125,4 +125,11 @@ export default class BordersModel {
     });
     return borders;
   }
+
+  @computed get loadingStatus() {
+    switch (this.rootStore.i18n.lng) {
+      case 'en': return this.ready ? 'Loading complete' : 'Loading...';
+      default: return this.ready ? 'Карты загружены' : 'Загружаем карты';
+    }
+  }
 }

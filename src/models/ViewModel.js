@@ -7,6 +7,9 @@ export default class ViewModel {
   @observable width = window.innerWidth;
   @observable height = window.innerHeight;
 
+  @observable kmPerPx = 32;
+  @observable milesPerPx = 20;
+
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.transform = this.defaultTransform;
@@ -15,6 +18,21 @@ export default class ViewModel {
   @action setSize(w, h) {
     this.width = w;
     this.height = h;
+  }
+
+  @computed get scaleWidget() {
+    switch (this.rootStore.i18n.lng) {
+      case 'en':
+        return {
+          value: Math.round(((1 / this.preciseScale) * this.milesPerPx) * 100),
+          units: 'Miles'
+        };
+      default:
+        return {
+          value: Math.round(((1 / this.preciseScale) * this.kmPerPx) * 100),
+          units: 'Км',
+        };
+    }
   }
 
   @computed get defaultTransform() {
