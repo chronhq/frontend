@@ -16,6 +16,10 @@ const FatButton = ({ text, cb, icon }) => (
 @inject('store')
 @observer
 export default class CollapsedView extends React.Component {
+  @computed get tooltips() {
+    return this.props.store.i18n.tooltips;
+  }
+
   @computed get alignPanel() {
     return this.props.store.flags.flags.runtime.alignPanel;
   }
@@ -55,13 +59,13 @@ export default class CollapsedView extends React.Component {
     return (
       <div className={this.iconBarAlign} >
         <ButtonToolbar>
-          <FatButton text='Интро' icon='fa-home' cb={() => this.openIntro()} />
-          <FatButton text='Поиск' icon='fa-search' cb={() => this.toggle('search')} />
-          <FatButton text='Лента событий' icon='fa-list-ul' cb={() => this.toggle('feed')} />
-          <FatButton text='Настройки' icon='fa-cog' cb={() => this.toggle('settings')} />
+          <FatButton text={this.tooltips.intro} icon='fa-home' cb={() => this.openIntro()} />
+          <FatButton text={this.tooltips.search} icon='fa-search' cb={() => this.toggle('search')} />
+          <FatButton text={this.tooltips.feed} icon='fa-list-ul' cb={() => this.toggle('feed')} />
+          <FatButton text={this.tooltips.settings} icon='fa-cog' cb={() => this.toggle('settings')} />
 
           {(process.env.NODE_ENV !== 'production') &&
-            <FatButton text='Отладка' icon='fa-cog' cb={() => this.toggle('align')} />
+            <FatButton text={this.tooltips.debug} icon='fa-cog' cb={() => this.toggle('align')} />
           }
         </ButtonToolbar>
       </div>

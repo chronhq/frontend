@@ -28,8 +28,67 @@ export default class Internationalization {
   }
 
   @computed get title() {
-    return this.lng === 'ru'
-      ? 'Хронист, интерактивный атлас'
-      : 'Chronist, interactive atlas';
+    switch (this.lng) {
+      case 'en': return 'Chronist, interactive atlas';
+      default: return 'Хронист, интерактивный атлас';
+    }
+  }
+
+  @computed get buttons() {
+    switch (this.lng) {
+      case 'en':
+        return {
+          apply: 'Apply',
+          close: 'Close',
+          faq: 'FAQ',
+          next: 'Next',
+          mistake: 'Found a mistake',
+          send: 'Send',
+          export: 'Save to txt',
+        };
+      default:
+        return {
+          apply: 'Применить',
+          close: 'Закрыть',
+          faq: 'FAQ',
+          mistake: 'Сообщить об ошибке',
+          next: 'Далее',
+          send: 'Отправить',
+          export: 'Экспорт в txt',
+        };
+    }
+  }
+
+  @computed get tooltips() {
+    switch (this.lng) {
+      case 'en':
+        return {
+          intro: 'Intro',
+          search: 'Search',
+          feed: 'Feed',
+          settings: 'Settings',
+          debug: 'Debug',
+          author: 'About author',
+          home: 'Course selection',
+          nextYear: 'Next year',
+          prevYear: 'Previous year',
+          collapse: 'Collapse',
+          expand: 'Expand',
+        };
+      default:
+        return {
+          intro: 'Интро',
+          search: 'Поиск',
+          feed: 'Лента событий',
+          settings: 'Настройки',
+          debug: 'Отладка',
+          author: 'Информация об авторе',
+          home: 'К выбору курса',
+          nextYear: 'Следующий год',
+          prevYear: 'Предыдущий год',
+          collapse: 'Свернуть',
+          expand: 'Развернуть',
+        };
+    }
   }
 }

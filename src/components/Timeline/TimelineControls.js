@@ -26,6 +26,10 @@ const ChangeTickButton = ({ direction, tip, cb }) => (
 @inject('store')
 @observer
 export default class TimelineControls extends React.Component {
+  @computed get tooltips() {
+    return this.props.store.i18n.tooltips;
+  }
+
   @computed get className() {
     return this.props.store.flags.flags.runtime.timelineIsMinified
       ? ['timeline', 'timeline__minified'].join(' ')
@@ -67,13 +71,13 @@ export default class TimelineControls extends React.Component {
       >
         <NavigationPan />
         <ChangeTickButton
-          tip='Предыдущий год'
+          tip={this.tooltips.prevYear}
           direction='up'
           cb={() => this.props.store.year.prevTick()}
         />
         {this.props.children}
         <ChangeTickButton
-          tip='Следующий год'
+          tip={this.tooltips.nextYear}
           direction='down'
           cb={() => this.props.store.year.nextTick()}
         />
@@ -85,10 +89,14 @@ export default class TimelineControls extends React.Component {
 @inject('store')
 @observer
 class NavigationPan extends React.Component {
+  @computed get tooltips() {
+    return this.props.store.i18n.tooltips;
+  }
+
   @computed get tip() {
     return this.props.store.flags.flags.runtime.TimelineIsMinified
-      ? 'Развернуть'
-      : 'Свернуть';
+      ? this.tooltips.expand
+      : this.tooltips.collapse;
   }
   @computed get isMin() {
     return this.props.store.flags.flags.runtime.TimelineIsMinified;

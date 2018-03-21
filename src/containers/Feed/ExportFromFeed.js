@@ -13,6 +13,10 @@ const DownloadButton = ({
 @inject('store')
 @observer
 class ExportFromFeed extends React.Component {
+  @computed get buttons() {
+    return this.props.store.i18n.buttons;
+  }
+
   @computed get exportCb() {
     return f => this.props.store.feed.export(f);
   }
@@ -30,13 +34,8 @@ class ExportFromFeed extends React.Component {
           style={{ display: 'none' }}
         />
         <DownloadButton
-          label="Экспорт в txt"
+          label={this.buttons.export}
           cb={() => this.exportCb('facts.txt')}
-        />
-        <DownloadButton
-          label="Экспорт в pdf"
-          cb={() => this.exportCb('facts.txt')}
-          disabled
         />
       </div>
     );

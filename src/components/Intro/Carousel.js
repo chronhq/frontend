@@ -100,8 +100,13 @@ export default class Carousel extends React.Component {
   @computed get overlay() {
     return this.slides[this.activeIndex].overlay;
   }
+
   @computed get slides() {
     return this.props.store.i18n.intro.carousel;
+  }
+
+  @computed get buttons() {
+    return this.props.store.i18n.buttons;
   }
   @action closeIntro() {
     this.props.store.flags.flags.runtime.intro = false;
@@ -165,8 +170,8 @@ export default class Carousel extends React.Component {
           </ul>
 
           <div>
-            <button onClick={() => this.closeIntro()} className='btn btn-primary'> Закрыть </button>
-            <button onClick={e => this.goToNextSlide(e)} className='btn btn-primary'> Далее </button>
+            <button onClick={() => this.closeIntro()} className='btn btn-primary'> {this.buttons.close} </button>
+            <button onClick={e => this.goToNextSlide(e)} className='btn btn-primary'> {this.buttons.next} </button>
           </div>
         </div>
         <div style={this.highlightDiv} className={this.overlay} />
