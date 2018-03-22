@@ -48,7 +48,7 @@ export default class FinalDataModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
 
-    this.data.cities = new Locations(rootStore, 'Cities');
+    this.data.cities = new Locations(rootStore, 'CityLocs');
 
     this.data.decorations = new GenericPointProcessing(rootStore, 'MapDecorations');
 
