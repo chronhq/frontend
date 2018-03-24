@@ -65,8 +65,14 @@ export default class PointModel {
       answer.name = this.data[this.nameSelector];
       answer.scaleRank = this.data.scalerank;
     } else if (this.type === 'CityLocs') {
-      answer.name = this.currentLoc.props[this.nameSelector];
-      answer.scaleRank = this.currentLoc.props.scalerank;
+      try {
+        answer.name = this.currentLoc.props[this.nameSelector];
+        answer.scaleRank = this.currentLoc.props.scalerank;
+      } catch (e) {
+        console.error('Something wrong with ', e, this, this.data, this.currentLoc);
+        answer.name = 'Undefined';
+        answer.scaleRank = '2';
+      }
     }
     return answer;
   }
