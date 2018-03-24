@@ -8,6 +8,11 @@ class MapLabels extends React.Component {
   @computed get labels() {
     return Object.values(this.props.store.prepared.labels);
   }
+
+  @computed get lng() {
+    return this.props.store.i18n.lng;
+  }
+
   render() {
     return (
       <g className="mapLabels">
@@ -17,7 +22,7 @@ class MapLabels extends React.Component {
             className={`mapLabels ${text.data.style}`}
             transform={`translate(${text.projected[0]},${text.projected[1]})`}
           >
-            {text.data.string}
+            {text.data.string[this.lng]}
           </text>))
         }
       </g>
