@@ -21,6 +21,7 @@
   text-align: center;
   z-index: 9;
   //background-color: #123f42;
+  color: red;
   background-color: #e9dcc9;
   right: 0;
   position: fixed;
@@ -38,6 +39,7 @@
     font-size: 16px;
     &:hover {background-color: #d4e1e9;}
   }
+
   & .fa {color:black}
   &.active {
     background-color: #4CAF50 !important;
@@ -54,16 +56,25 @@
   height: -webkit-calc(~'100% - 55px');
   height:    -moz-calc(~'100% - 55px');
   height:         calc(~'100% - 55px');
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   & button {
     border: none;
     width: 50px;
     background-color: #e9dcc9;
+
     padding: 14px;
     display: block;
     transition: all 0.3s ease;
     color: white;
     font-size: 16px;
+    & i {color: black;}
     &:hover {background-color: #d4e1e9;}
+  }
+  & button:hover i {
+    color: black;
+    text-shadow: 2px 2px 5px black;
   }
   & .fa {color:black}
   &.active {
@@ -245,4 +256,15 @@ select {
     height:    -moz-calc(~'100% - 85px');
     height:         calc(~'100% - 85px');
   }
+}
+
+
+.vertical--logo {
+  writing-mode: tb-rl;
+  transform: rotate(180deg);
+  margin: 0;
+  font-weight: 700px;
+  line-height: 50px;
+  // align-self: flex-end;
+  padding: 20px 0;
 }
