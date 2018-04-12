@@ -4,6 +4,14 @@ import { computed, action } from 'mobx';
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
+const showDescription = (fact) => {
+  if (typeof fact.description === 'string') {
+    return fact.description.replace(/\u00a0/g, ' ');
+  }
+  console.error('Missing fact description', fact);
+  return 'Missing fact description';
+};
+
 export const getInventors = (persons, inventors) => inventors.reduce((prev, p) =>
   (typeof persons[p] === 'undefined'
     ? prev
@@ -17,7 +25,7 @@ export const Invention = ({ fact, persons }) => (
     </div>
     <br />
     <div className='factDescription'>
-      {fact.description.replace(/\u00a0/g, ' ')}
+      {showDescription(fact)}
     </div>
     <p className='factAuthor'>
       <i>{getInventors(persons, fact.inventor).join(', ')}
