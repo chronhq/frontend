@@ -7,12 +7,15 @@ export default class MessagesI18n extends BaseI18n {
       : [...prev, this.persons[p][this.nameSelector]]), []);
 
   invention(fact) {
+    const description = typeof fact.description === 'string'
+      ? fact.description.replace(/\u00a0/g, ' ')
+      : 'Missing fact description';
     return {
       id: fact.id,
       key: `in_${fact.id}`,
       name: fact[this.nameSelector],
       inventDate: fact.inventDate,
-      description: fact.description.replace(/\u00a0/g, ' '),
+      description,
       inventors: this.getInventors(fact.inventor).join(', '),
     };
   }
