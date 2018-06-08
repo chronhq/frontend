@@ -1,7 +1,7 @@
 import React from 'react';
 import Flag from '../Flag';
 
-import MapViewport from '../containers/MapViewport';
+import MapViewport from '../containers/GeoLayers';
 import SidePanel from '../containers/SidePanel';
 import TimePanel from '../components/TimePanel';
 import MapControls from '../components/MapControls';
