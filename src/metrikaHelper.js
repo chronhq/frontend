@@ -7,11 +7,11 @@ export const YmId = (process.env.NODE_ENV === 'production')
 
 export function ymHit(link) {
   setTimeout(() => {
-      try {
-        ym('hit', link);
-      } catch (e) {
-        console.error('YM Metrika error', e);
-        ymHit(link);
-      }
-    }, 1000);
+    try {
+      ym('hit', link);
+    } catch (e) {
+      console.error('YM Metrika error', e);
+      ymHit(link);
+    }
+  }, 1000);
 }
