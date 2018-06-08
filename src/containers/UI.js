@@ -3,7 +3,7 @@ import Flag from '../Flag';
 
 import MapViewport from '../containers/MapViewport';
 import SidePanel from '../containers/SidePanel';
-import TimePanel from '../components/TimePanel';
+import TimePanel from '../components/TimePanel/TimePanel';
 import MapControls from '../components/MapControls';
 import Timeline from '../components/Timeline';
 import LegendHOC from '../containers/LegendHOC';
