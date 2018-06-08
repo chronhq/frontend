@@ -7,9 +7,6 @@ import { Tooltip } from '../../components/Input';
 @inject('store')
 @observer
 class FatButton extends React.Component {
-  componentDidMount() {
-    console.log('placement', this.props.store.flags.flags.runtime.alignPanel);
-  }
   render() {
     return (
       <Tooltip
