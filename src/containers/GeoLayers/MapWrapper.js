@@ -1,6 +1,9 @@
 import React from 'react';
-import DeckGL, { MapController, GeoJsonLayer, WebMercatorViewport } from 'deck.gl';
-// import DeckGLLayers from './Layers';
+import DeckGL, {
+  MapController,
+  GeoJsonLayer,
+  WebMercatorViewport
+} from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
@@ -20,30 +23,49 @@ class MapWrapper extends React.Component {
     },
   }
   componentDidMount() {
-    // fetch('http://enjalot.github.io/wwsd/data/world/world-110m.geojson')
-    //   .then(response => {
-    //     if (response.status !== 200) {
-    //       console.log(`There was a problem: ${response.status}`);
-    //       return;
-    //     }
-    //     response.json().then(data => {
-    //       this.setState({ data: data });
-    //     });
-    //   });
-    window.addEventListener('resize', () => this.resize());
+    window.addEventListener('resize', () => this.resize(), false);
     this.resize();
   }
   componentWillUnmount() {
-    window.removeEventListener('resize');
+    window.removeEventListener('resize', () => this.resize(), false);
   }
   onViewportChange(viewport) {
     this.setState({
       viewport: { ...this.state.viewport, ...viewport }
     });
   }
+
   @computed get terrain() {
     return Object.values(this.props.store.borders.contour);
   }
+
+  @computed get visible() {
+    return this.props.store.flags.flags.visibility.borders;
+  }
+
+  @computed get borders() {
+    const rgbColor = (pid) => {
+      // const hex = getFillPatternId(props);
+      const props = this.props.store.data.Properties.data[pid];
+      const hex = props.color || '#d34df0';
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16)
+      ] : [13, 244, 61]; // #0df43d
+    };
+    return !this.visible
+      ? []
+      :
+      this.props.store.borders.bordersPath.map(cur => ({
+        geometry: cur.geo.geometry,
+        color: rgbColor(cur.props),
+        id: cur.id,
+        props: cur.props,
+      }));
+  }
+
   resize() {
     this.onViewportChange({
       width: window.innerWidth,
@@ -54,6 +76,7 @@ class MapWrapper extends React.Component {
 
   render() {
     const viewport = new WebMercatorViewport({ ...this.state.viewport });
+    const opColor = (f, op) => (f.color || f.feature.color).concat(op);
     const layers = [
       new GeoJsonLayer({
         id: 'land-contour',
@@ -66,6 +89,20 @@ class MapWrapper extends React.Component {
         lineWidthMinPixels: 0.5,
         getLineColor: f => [128, 128, 128],
         getFillColor: f => [234, 234, 234],
+        stroked: true,
+        extruded: false
+      }),
+      new GeoJsonLayer({
+        id: 'borders-layer',
+        data: this.borders,
+        visible: true,
+        filled: true,
+        pickable: true,
+        wireframe: true,
+        width: 0.1,
+        lineWidthMinPixels: 0.5,
+        getLineColor: f => opColor(f, 255),
+        getFillColor: f => opColor(f, 208),
         stroked: true,
         extruded: false
       }),
