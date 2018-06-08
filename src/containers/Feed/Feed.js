@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Panel } from 'react-bootstrap';
+// import { Panel } from 'react-bootstrap';
 
 import InventionsFeed from './InventionsFeed';
 import PersonsFeed from './PersonsFeed';
@@ -14,18 +14,18 @@ import './Feed.less';
 class Feed extends React.Component {
   render() {
     return (
-      <div className='feed'>
+      <div className='sidepanel--content'>
         <h3> Лента событий </h3>
         <div className='feed-panel'>
-          <Panel header="Люди" eventKey="1">
+          <div header="Люди" eventKey="1">
             <PersonsFeed />
-          </Panel>
-          <Panel header="Геополитические события" eventKey="2">
+          </div>
+          <div header="Геополитические события" eventKey="2">
             <GeoEventsFeed />
-          </Panel>
-          <Panel header="Изобретения" eventKey="3">
+          </div>
+          <div header="Изобретения" eventKey="3">
             <InventionsFeed />
-          </Panel>
+          </div>
         </div>
         <hr />
         <ExportFromFeed />

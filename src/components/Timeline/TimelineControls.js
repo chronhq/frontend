@@ -1,6 +1,5 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
 // import 'MiniSidebar.less';
@@ -8,18 +7,16 @@ import './TimelineControls.less';
 import TimelineButtons from './TimelineButtons';
 
 
-const tooltip = text => (
-  <Tooltip id="tooltip"><strong>{text}</strong></Tooltip>
+const Tooltip = () => (
+  <div></div>
 );
 
 const ChangeTickButton = ({ direction, tip, cb }) => (
   <div className={`timeline__control control__${direction}`}>
-    <OverlayTrigger placement='left' delayShow={150} delayHide={5} overlay={tooltip(tip)} >
       <button onClick={() => cb()}>
         <i className={`fa fa-angle-${direction} fa-fw`} />
         <hr />
       </button>
-    </OverlayTrigger>
   </div>
 );
 
@@ -109,11 +106,9 @@ class NavigationPan extends React.Component {
   render() {
     return (
       <div className='timeline__control control__home'>
-        <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip(this.tip)} >
           <button onClick={() => this.toggleTimepanel()}>
             <i className='fa fa-bars fa-fw' />
           </button>
-        </OverlayTrigger>
         {(!this.isMin) && <TimelineButtons />}
       </div>
     );

@@ -7,7 +7,7 @@
   text-transform: uppercase;
   border-left: 1px rgba(238, 238, 238, 0.3) solid;
   margin: 0 40px;
-  padding: 40px 0 20px;
+  padding: 40px 0 10px;
   color: white;
   text-align: left;
   padding-left: 40px;
@@ -15,6 +15,7 @@
   & h3 {
     font-weight: 200;
     font-size: 40px;
+    // margin: 10px;
   }
 
   @media screen and (max-width: 725px) {
@@ -33,6 +34,25 @@
   width: 500px;
   height: 150px;
   border-bottom: 1px rgba(238, 238, 238, 0.3) solid;
+  @media screen and (max-width: 725px) {
+    width: 95%;
+  }
+}
+
+.startpage__langswitch {
+  margin: auto 20px auto 40px;
+  text-align: right;
+  // padding-left: 40px;
+  border-left: 1px rgba(238, 238, 238, 0.3) solid;
+  & button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+  }
+  @media screen and (max-width: 725px) {
+    margin: auto 20px auto 10px;
+  }
 }
 
 .startpage__container {
@@ -53,6 +73,7 @@
   line-height: 33px;
   text-align: center;
   min-width: 360px;
+  // display: flex;
 }
 
 .tile__container {

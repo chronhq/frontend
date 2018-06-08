@@ -78,7 +78,8 @@ class SetProjectionContainer extends React.Component {
     const options = JSON.parse(JSON.stringify(this.props.store.projection.options));
 
     return (
-      <div className='changeProjBtn'>
+      <div className='layerControl'>
+      <h5>Настройки проекции </h5>
         {this.props.store.flags.flags.UI.devProjection &&
           <div className='test'>
             <div className='form-group'>
@@ -120,7 +121,7 @@ class SetProjectionContainer extends React.Component {
                 : ''
               }
               <br />
-              <button onClick={() => this.handleSubmit()} className='btn btn-default'>
+              <button onClick={() => this.handleSubmit()} className='btn'>
                 Установить
               </button>
             </div>

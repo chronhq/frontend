@@ -4,6 +4,7 @@ import { computed } from 'mobx';
 
 import Tile from './Tile';
 import './TilesScreen.less';
+import SetLocalizationToggle from './SetLocalizationToggle';
 
 @inject('store')
 @observer
@@ -23,6 +24,9 @@ class TilesScreen extends React.Component {
       <div className='startpage__container parent'>
         <div className='starpage__title'>
           <h3> {this.title} </h3>
+        </div>
+        <div className='startpage__langswitch'>
+          <SetLocalizationToggle />
         </div>
         <div className='tile__container'>
           <div className='hex-row'>

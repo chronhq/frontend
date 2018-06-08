@@ -1,6 +1,7 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+// import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { inject, observer } from 'mobx-react';
+import { Tooltip } from '../Input';
 
 const tooltip = text => (
   <Tooltip id='tooltip'><strong>{text}</strong></Tooltip>
@@ -16,11 +17,11 @@ class BioButton extends React.Component {
 
   render() {
     return (
-      <OverlayTrigger placement='bottom' delayShow={150} delayHide={5} overlay={tooltip('Информация об авторе')} >
+      <Tooltip content={'Информация об авторе'} >
         <button onClick={() => this.bioToggle()}>
-          <i className='fa fa-user-circle' aria-hidden='true' />
+          <i className='lnr lnr-persona' aria-hidden='true' />
         </button>
-      </OverlayTrigger>
+      </Tooltip>
     );
   }
 }

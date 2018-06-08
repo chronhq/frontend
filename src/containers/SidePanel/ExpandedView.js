@@ -4,7 +4,7 @@ import { computed } from 'mobx';
 
 import Settings from '../Settings';
 import Feed from '../Feed';
-import ControlButtons from '../../components/ControlButtons';
+import ControlButtons from '../../components/TimePanel/ControlButtons';
 import AlignToggler from '../../components/AlignToggler';
 
 const SearchPanel = () => (

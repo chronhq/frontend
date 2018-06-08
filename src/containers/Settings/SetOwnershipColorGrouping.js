@@ -20,6 +20,7 @@ class SetOwnershipGrouping extends React.Component {
 
     return (
       <div className='layerControl'>
+        <h5> Группировка территорий </h5>
         <InputSelect
           name='Change grouping'
           value={this.props.store.colors.value}
@@ -30,7 +31,6 @@ class SetOwnershipGrouping extends React.Component {
         <InputRange
           className='detailSlider'
           name='zoomPoint'
-          label='Уровень переключения'
           value={this.props.store.colors.zoomPoint}
           min='0'
           max='10'

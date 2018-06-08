@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 
-import { FormControl, ControlLabel } from 'react-bootstrap';
+// import { FormControl, ControlLabel } from 'react-bootstrap';
 
 @inject('store')
 @observer
@@ -20,15 +20,14 @@ class AlignToggler extends React.Component {
 
   render() {
     return (
-      <div className='text-center'>
+      <div className='sidepanel--content'>
         <h3> Debug </h3>
         <form onSubmit={e => this.handleSubmit(e)}>
-          <ControlLabel>UI Align</ControlLabel>
-          <FormControl componentClass="select" placeholder="select" onChange={e => this.handleChange(e)}>
+          <h5>UI Align</h5>
+          <select placeholder="select" onChange={e => this.handleChange(e)}>
             <option value='right'>Правое</option>
             <option value='left'>Левое</option>
-            <option value='none'>none</option>
-          </FormControl>
+          </select>
           <input type="submit" value="Submit" />
         </form>
       </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Modal, Button, Row, Form } from 'react-bootstrap';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
 import './Feedback.less';
@@ -121,18 +120,21 @@ class Feedback extends React.Component {
     if (this.isOpen === false) {
       return null;
     }
+    // return (
+    //   <Modal.Dialog>
+    //     <Modal.Header>
+    //       <Button className='close float-left' onClick={() => this.close()} > &times; </Button>
+    //       <Modal.Title> Обратная связь </Modal.Title>
+    //     </Modal.Header>
+    //     <Modal.Body>
+    //       Нашли ошибку?
+    //       <FeedbackForm />
+    //     </Modal.Body>
+    //   </Modal.Dialog>
+    // );
     return (
-      <Modal.Dialog>
-        <Modal.Header>
-          <Button className='close float-left' onClick={() => this.close()} > &times; </Button>
-          <Modal.Title> Обратная связь </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Нашли ошибку?
-          <FeedbackForm />
-        </Modal.Body>
-      </Modal.Dialog>
-    );
+      <div> Todo MODAL обратная связь </div>
+    )
   }
 }
 

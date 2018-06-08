@@ -4,17 +4,16 @@ import SetProjectionContainer from './SetProjectionContainer';
 import SetLayerVisibility from './SetLayerVisibility';
 import FeedbackButtons from '../../components/Feedback/FeedbackButtons';
 import SetOwnershipColorGrouping from './SetOwnershipColorGrouping';
+import SetLocalization from './SetLocalization';
 
 class Settings extends React.Component {
   render() {
     return (
-      <div className='projectionSettings center'>
-        <h3> Настройка проекции </h3>
+      <div className='sidepanel--content'>
+        <h3> Настройки</h3>
         <SetProjectionContainer />
-        <hr />
         <SetLayerVisibility />
-        <br />
-        <h3> Группировка территорий </h3>
+        <SetLocalization />
         <SetOwnershipColorGrouping />
         <FeedbackButtons onClose={this.props.onClose} />
       </div>

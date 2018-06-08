@@ -16,6 +16,7 @@ class SetLayerVisibility extends React.Component {
   render() {
     return (
       <div className='layerControl'>
+        <h5> Метки </h5>
         <InputCheckBox
           name='borders'
           label="Границы"
@@ -34,11 +35,11 @@ class SetLayerVisibility extends React.Component {
           checked={this.props.store.flags.flags.visibility.tooltips}
           cb={d => this.handleChange(d)}
         />
-        <br />
+        <h5>Детали</h5>
         <InputRange
           className='detailSlider'
           name='scale'
-          label='Детали'
+          // label={}
           value={this.props.store.flags.flags.visibility.scale}
           min='0'
           max='10'

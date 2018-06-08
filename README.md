@@ -81,16 +81,17 @@ npm run dev
 #Project todo
 ----------------
 ## UI
-- [ ] добавить сетку на море
-- [ ] reduce amount css {C}
-- [ ] less cleaning {C}
+- [ ] New Map UI with Lnr icons.
+  - [ ] Rework with timeline stuff
+  - [ ] Rework with mobile UI for map
+  - [ ] Cry. Cry a lot.
+  - [
+]- [ ] добавить сетку на море
 - [ ] Filters {C}
 - [ ] Запилить настроечки с цветовым темами {B}
 - [ ] Dynamic legend #big {C}
 - [ ] Мобильные евенты {A}
 - [ ] feed unresponsive когда play
-- [ ] сменить шрифты
-- [ ]
 - [ ] Changelog #7
 - [ ] Кука аналитика #20
 - [ ] Extend functionality with brush and expandent stuff {C}
@@ -99,6 +100,9 @@ npm run dev
 - [ ] animation of expedition and stuff.
 
 ##DONE
+- [x] сменить шрифты
+- [x] reduce amount css {C}
+- [x] less cleaning {C}
 - [x] Форма обратной связи #19
 - [x] Форма подписи внутри демо #18
 - [x] Настройку положения icon-bar и side-bar {B}
@@ -149,7 +153,7 @@ npm run dev
 - [x] Mobile friendly markup
 
 
-##WARNINGS: 
+##WARNINGS:
 
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules/chokidar/node_modules/fsevents):
 npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
@@ -176,3 +180,17 @@ offsetTop
 offsetTop
 :
 716
+
+
+-[x] выделить в отдельный комп SeekBar
+-[x] event listener на ресайз
+-[] проверить rAF на пустом компоненте
+-[] забацать заменут тултипам
+-[] заменить часть бутстрапа на глагне
+
+
+
+- кнопка перключения языка на главно
+- и в панеле
+- в курсе икноки новые вытащить
+- без бутстрапа
