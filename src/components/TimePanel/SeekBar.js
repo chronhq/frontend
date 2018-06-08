@@ -1,6 +1,7 @@
 import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { select, mouse } from 'd3-selection';
 import { axisBottom } from 'd3-axis';
@@ -9,13 +10,12 @@ import { scaleLinear } from 'd3-scale';
 @inject('store')
 @observer
 class SeekBar extends React.Component {
-
   componentDidMount() {
     const svg = select(this.svgTime);
-    svg.on('click', () => {
+    svg.on('mouseup', () => {
       const rectId = this.svgTime.childNodes[0];
       const mouseX = mouse(rectId)[0];
-      if (mouseX > 0 && mouseX < this.width) {
+      if (mouseX > 0 && mouseX < this.props.width) {
         this.now = Math.round(this.scale.invert(mouseX));
         // this.updateClockPosition();
         this.props.store.year.setYear(Number(this.now));
@@ -115,5 +115,9 @@ class SeekBar extends React.Component {
     );
   }
 }
+
+SeekBar.propTypes = {
+  width: PropTypes.number.isRequired,
+};
 
 export default SeekBar;
