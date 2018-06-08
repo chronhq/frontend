@@ -5,6 +5,7 @@ import { computed } from 'mobx';
 import Settings from '../Settings';
 import Feed from '../Feed';
 import ControlButtons from '../../components/TimePanel/ControlButtons';
+import LayerControl from './LayerControl';
 import AlignToggler from '../../components/AlignToggler';
 
 const SearchPanel = () => (
@@ -59,6 +60,8 @@ export default class ExpandedView extends React.Component {
         return Settings;
       case 'align':
         return AlignDebug;
+      case 'layerscontrol':
+        return LayerControl;
       default:
         return Empty;
     }

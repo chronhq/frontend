@@ -48,10 +48,12 @@ const UI = () => (
       name="UI.MapViewport"
       render={() => <MapViewport />}
     />
+  {/*
     <Flag
       name="UI.LegendHOC"
       render={() => <LegendHOC />}
     />
+  */}
   </div>
 );
 
