@@ -13,6 +13,18 @@ import { computed } from 'mobx';
 import mapDecorAtlas from './geoAssets/map-decor.png';
 import mapDecorMAPPING from './geoAssets/map-decor.json';
 
+const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ','ь', 'ы', 'ъ', 'э', 'ю', 'я'];
+
+const charsEn = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+const special = ['-', ',', '.', '+', '=', '_', '?', ':', '"', '\'', '[', ']', '{', '}', '/', '|', '\\'];
+
+const chars = [
+  ...charsRu, ...charsRu.map(c => c.toUpperCase()),
+  ...charsEn, ...charsEn.map(c => c.toUpperCase()),
+  ...special,
+];
+
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
@@ -54,6 +66,9 @@ class MapWrapper extends React.Component {
   }
   @computed get decorations() {
     return Object.values(this.props.store.prepared.decorations);
+  }
+  @computed get cities() {
+    return this.props.store.prepared.locations;
   }
   @computed get borders() {
     const rgbColor = (pid) => {
@@ -122,7 +137,7 @@ class MapWrapper extends React.Component {
       new TextLayer({
         id: 'label-layer',
         data: this.labels,
-        pickable: true,
+        pickable: false,
         visible: this.options.labels,
         getText: d => d.data.string.en,
         getPosition: d => [d.point.x, d.point.y],
@@ -130,6 +145,21 @@ class MapWrapper extends React.Component {
         sizeScale: 1,
         getTextAnchor: 'middle',
         fontFamily: 'OpenSans-Light',
+        characterSet: chars,
+        getAlignmentBaseline: 'center'
+      }),
+      new TextLayer({
+        id: 'cities-layer',
+        data: this.cities,
+        pickable: true,
+        visible: this.options.cities,
+        getText: d => d.name,
+        getPosition: d => [d.x, d.y],
+        getSize: 32,
+        sizeScale: 1,
+        getTextAnchor: 'middle',
+        fontFamily: 'OpenSans-Light',
+        characterSet: chars,
         getAlignmentBaseline: 'center'
       }),
       new IconLayer({

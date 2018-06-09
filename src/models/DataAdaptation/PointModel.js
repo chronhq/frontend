@@ -58,8 +58,9 @@ export default class PointModel {
   @computed get location() {
     const answer = {
       id: this.data.id,
-      x: this.projected[0],
-      y: this.projected[1],
+      ...this.point,
+      // x: this.projected[0],
+      // y: this.projected[1],
     };
     if (this.type === 'Cities') {
       answer.name = this.data[this.nameSelector];
