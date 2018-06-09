@@ -1,7 +1,4 @@
-// import { observer, inject } from 'mobx-react';
-// import { computed, observable } from 'mobx';
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 import ControlButtons from './ControlButtons';
 import SeekBar from './SeekBar';
@@ -12,10 +9,10 @@ class TimePanel extends React.Component {
     width: this.width
   }
   componentDidMount() {
-    window.addEventListener('resize', () => this.resize());
+    window.addEventListener('resize', () => this.resize(), false);
   }
   componentWillUnmount() {
-    window.removeEventListener('resize', () => this.resize());
+    window.removeEventListener('resize', () => this.resize(), false);
   }
   get width() {
     return window.innerWidth < 600

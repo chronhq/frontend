@@ -1,12 +1,17 @@
 import React from 'react';
 import DeckGL, {
   MapController,
+  WebMercatorViewport,
   GeoJsonLayer,
-  WebMercatorViewport
+  TextLayer,
+  IconLayer
 } from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
+
+import mapDecorAtlas from './geoAssets/map-decor.png';
+import mapDecorMAPPING from './geoAssets/map-decor.json';
 
 @inject('store')
 @observer
@@ -38,11 +43,18 @@ class MapWrapper extends React.Component {
   @computed get terrain() {
     return Object.values(this.props.store.borders.contour);
   }
-
+  @computed get labels() {
+    return Object.values(this.props.store.prepared.labels);
+  }
   @computed get visible() {
     return this.props.store.flags.flags.visibility.borders;
   }
-
+  @computed get options() {
+    return this.props.store.flags.flags.layer;
+  }
+  @computed get decorations() {
+    return Object.values(this.props.store.prepared.decorations);
+  }
   @computed get borders() {
     const rgbColor = (pid) => {
       // const hex = getFillPatternId(props);
@@ -87,25 +99,52 @@ class MapWrapper extends React.Component {
         wireframe: true,
         width: 0.1,
         lineWidthMinPixels: 0.5,
-        getLineColor: f => [128, 128, 128],
-        getFillColor: f => [234, 234, 234],
+        getLineColor: () => [128, 128, 128],
+        getFillColor: () => [234, 234, 234],
         stroked: true,
         extruded: false
       }),
       new GeoJsonLayer({
         id: 'borders-layer',
         data: this.borders,
-        visible: true,
+        visible: this.options.borders,
         filled: true,
         pickable: true,
-        wireframe: true,
+        wireframe: false,
         width: 0.1,
         lineWidthMinPixels: 0.5,
         getLineColor: f => opColor(f, 255),
         getFillColor: f => opColor(f, 208),
         stroked: true,
-        extruded: false
+        extruded: false,
+        lineJointRounded: true
       }),
+      new TextLayer({
+        id: 'label-layer',
+        data: this.labels,
+        pickable: true,
+        visible: this.options.labels,
+        getText: d => d.data.string.en,
+        getPosition: d => [d.point.x, d.point.y],
+        getSize: 32,
+        sizeScale: 1,
+        getTextAnchor: 'middle',
+        fontFamily: 'OpenSans-Light',
+        getAlignmentBaseline: 'center'
+      }),
+      new IconLayer({
+        id: 'map-decoration-layer',
+        data: this.decorations,
+        visible: this.options.mapDecorations,
+        pickable: true,
+        iconAtlas: mapDecorAtlas,
+        iconMapping: mapDecorMAPPING,
+        sizeScale: 15,
+        getPosition: d => [d.point.x, d.point.y],
+        getIcon: () => 'marker',
+        getSize: () => 5,
+        getColor: () => [66, 66, 66]
+      })
     ];
     return (
       <DeckGL

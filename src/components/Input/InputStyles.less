@@ -215,3 +215,104 @@ button.btn {
   border-radius: 3px;
   padding: 3px;
 }
+
+.fancy-checkbox {
+  & input[type="checkbox"] {
+    display: none;
+  }
+
+  & input[type="checkbox"] + span {
+
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    // width: 20px;
+    // height: 20px;
+    margin: -1px 4px 0 0px;
+    vertical-align: middle;
+    background: white left top no-repeat;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 50%;
+    border-color: #d9d9d9;
+    // background-color: #ffffff;
+    // transition: border-color 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), background-color 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transition: 0.3s all;
+    background-color: #3df6bc;
+    &:before,
+    &:after {
+      transform: rotate(0deg);
+      content: "";
+      position: absolute;
+      height: 10px;
+      width: 10px;
+    }
+    &:before {
+      // border-bottom-width: 2px;
+      // border-bottom-style: solid;
+      border-left-width: 2px;
+      border-left-style: solid;
+      left: 8px;
+      top: 4px;
+    }
+    &:after {
+      border-top-width: 2px;
+      border-top-style: solid;
+      // border-right-width: 2px;
+      // border-right-style: solid;
+      left: 4px;
+      top: 8px;
+    }
+    &:hover {
+      border-color: #3dbcf6;
+    };
+  }
+
+  & input[type="checkbox"]:checked + span {
+    // background: #D9534F -19px top no-repeat;
+    // border-color: #3dbcf6;
+    background-color: #f63dbc;
+    &:after,
+    &:before {
+      border: none;
+      content: "";
+      position: absolute;
+      height: 10px;
+      width: 10px;
+      content: ' ';
+
+      animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      animation-duration: 0.3s;
+      animation-name: amCheckboxOut;
+    }
+    &:before {
+      // border-bottom-width: 2px;
+      // border-bottom-style: solid;
+      border-left-width: 2px;
+      border-left-style: solid;
+      left: 6.5px;
+      top: 7.5px;
+      transform: rotate(45deg);
+    }
+    &:after {
+      border-top-width: 2px;
+      border-top-style: solid;
+      // border-top-color: blue;
+      // border-right-width: 2px;
+      // border-right-style: solid;
+      transform: rotate(45deg);
+      left: 0.5px;
+      top: 6.5px;
+    }
+
+  }
+}

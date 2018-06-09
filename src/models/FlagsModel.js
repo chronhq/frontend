@@ -39,6 +39,14 @@ export default class FlagsModel {
       locations: 1,
       tooltips: 1,
       scale: 5,
+    },
+    layer: {
+      borders: 1,
+      labels: 1,
+      mapDecorations: 1,
+      cities: 1,
+      inventions: 0,
+      somethingsomething: 0
     }
   };
   @action set(f) {

@@ -7,18 +7,7 @@ import Feed from '../Feed';
 import ControlButtons from '../../components/TimePanel/ControlButtons';
 import LayerControl from './LayerControl';
 import AlignToggler from '../../components/AlignToggler';
-
-const SearchPanel = () => (
-  <div className='search'>
-    <h3> Поиск </h3>
-    <div className="row">
-      <div className="col-md-12"><input type="text" disabled className="search" placeholder="Поиск" /></div>
-    </div>
-    <p> В скором времени в этой вкладке появится возможность
-      быстрого поиска по изобретениям и персонам.
-    </p>
-  </div>
-);
+import SearchPanel from './SearchPanel';
 
 const AlignDebug = () => (
   <div>
