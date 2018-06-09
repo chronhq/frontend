@@ -1,19 +1,18 @@
 import React from 'react';
 import DeckGL, {
   MapController,
-  WebMercatorViewport,
   GeoJsonLayer,
   TextLayer,
   IconLayer
 } from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, observable } from 'mobx';
 
 import mapDecorAtlas from './geoAssets/map-decor.png';
 import mapDecorMAPPING from './geoAssets/map-decor.json';
 
-const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ','ь', 'ы', 'ъ', 'э', 'ю', 'я'];
+const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я'];
 
 const charsEn = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
@@ -28,28 +27,12 @@ const chars = [
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
-  state = {
-    viewport: {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      longitude: 0,
-      latitude: 0,
-      zoom: 1,
-      bearing: 0,
-      pitch: 0
-    },
-  }
   componentDidMount() {
     window.addEventListener('resize', () => this.resize(), false);
     this.resize();
   }
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize(), false);
-  }
-  onViewportChange(viewport) {
-    this.setState({
-      viewport: { ...this.state.viewport, ...viewport }
-    });
   }
 
   @computed get terrain() {
@@ -92,17 +75,16 @@ class MapWrapper extends React.Component {
         props: cur.props,
       }));
   }
+  @observable width = window.innerWidth
+  @observable height = window.innerHeight
 
   resize() {
-    this.onViewportChange({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
   }
 
 
   render() {
-    const viewport = new WebMercatorViewport({ ...this.state.viewport });
     const opColor = (f, op) => (f.color || f.feature.color).concat(op);
     const layers = [
       new GeoJsonLayer({
@@ -181,11 +163,11 @@ class MapWrapper extends React.Component {
         controller={MapController}
         // views={[viewport]}
         // viewstate={this.state.viewport}
-        initialViewState={viewport}
-        onViewportChange={v => this.setState({ viewport: v })}
+        initialViewState={this.props.store.deck.viewport}
+        onViewportChange={v => this.props.store.deck.updateViewport(v)}
         layers={layers}
-        width={this.state.width}
-        height={this.state.height}
+        width={this.width}
+        height={this.height}
       />
     );
   }
