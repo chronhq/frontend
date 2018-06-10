@@ -49,7 +49,7 @@ class MapWrapper extends React.Component {
     return this.props.store.flags.flags.layer;
   }
   @computed get decorations() {
-    return Object.values(this.props.store.prepared.decorations);
+    return Object.values(this.props.store.data.MapDecorations.data);
   }
   @computed get cities() {
     return this.props.store.prepared.locations;
@@ -156,8 +156,8 @@ class MapWrapper extends React.Component {
         iconAtlas: mapDecorAtlas,
         iconMapping: mapDecorMAPPING,
         sizeScale: 15,
-        getPosition: d => [d.point.x, d.point.y],
-        getIcon: d => `marker-${d.data.picId}`,
+        getPosition: d => [d.geopoint[0], d.geopoint[1]],
+        getIcon: d => `marker-${d.picId}`,
         getSize: () => 5,
         getColor: () => [66, 66, 66]
       }),

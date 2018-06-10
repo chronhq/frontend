@@ -20,9 +20,6 @@ export default class FinalDataModel {
     return this.data.cities.tooltips;
   }
 
-  @computed get decorations() {
-    return this.data.decorations.points;
-  }
 
   @computed get labels() {
     return this.data.labels.points;
@@ -49,8 +46,6 @@ export default class FinalDataModel {
     this.rootStore = rootStore;
 
     this.data.cities = new Locations(rootStore, 'CityLocs');
-
-    this.data.decorations = new GenericPointProcessing(rootStore, 'MapDecorations');
 
     this.data.labels = new GenericPointProcessing(rootStore, 'MapLabels');
 
