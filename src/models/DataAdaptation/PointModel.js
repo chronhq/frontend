@@ -12,13 +12,13 @@ export default class PointModel {
     return this.rootStore.flags.flags.visibility;
   }
 
-  @computed get project() {
-    return this.projection.project;
-  }
+  // @computed get project() {
+  //   return this.projection.project;
+  // }
 
-  @computed get projected() {
-    return this.project([this.point.x, this.point.y]);
-  }
+  // @computed get projected() {
+  //   return this.project([this.point.x, this.point.y]);
+  // }
 
   @computed get point() {
     if (this.type === 'Cities' || this.type === 'GeoEvents') {

@@ -135,8 +135,8 @@ export default class FeedPinsModel {
         free.push({ type, geoEvent });
       } else {
         const loc = {
-          x: geoEvent.projected[0],
-          y: geoEvent.projected[1],
+          x: geoEvent.point.x,
+          y: geoEvent.point.y,
         };
         pins.push({ type, geoEvent, loc });
       }

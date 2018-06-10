@@ -20,28 +20,28 @@ export default class ViewModel {
     this.height = h;
   }
 
-  @computed get scaleWidget() {
-    switch (this.rootStore.i18n.lng) {
-      case 'en':
-        return {
-          value: Math.round(((1 / this.preciseScale) * this.milesPerPx) * 100),
-          units: 'Miles'
-        };
-      default:
-        return {
-          value: Math.round(((1 / this.preciseScale) * this.kmPerPx) * 100),
-          units: 'Км',
-        };
-    }
-  }
+  // @computed get scaleWidget() {
+  //   switch (this.rootStore.i18n.lng) {
+  //     case 'en':
+  //       return {
+  //         value: Math.round(((1 / this.preciseScale) * this.milesPerPx) * 100),
+  //         units: 'Miles'
+  //       };
+  //     default:
+  //       return {
+  //         value: Math.round(((1 / this.preciseScale) * this.kmPerPx) * 100),
+  //         units: 'Км',
+  //       };
+  //   }
+  // }
 
-  @computed get defaultTransform() {
-    return {
-      k: this.defaultZoom,
-      x: this.mapDimensions.mapShift[0],
-      y: this.mapDimensions.mapShift[1],
-    };
-  }
+  // @computed get defaultTransform() {
+  //   return {
+  //     k: this.defaultZoom,
+  //     x: this.mapDimensions.mapShift[0],
+  //     y: this.mapDimensions.mapShift[1],
+  //   };
+  // }
 
   @computed get preciseScale() {
     return this.transform.k;
@@ -51,9 +51,9 @@ export default class ViewModel {
     return Math.round(this.transform.k);
   }
 
-  @computed get mapDimensions() {
-    return this.rootStore.projection.mapDimensions;
-  }
+  // @computed get mapDimensions() {
+  //   return this.rootStore.projection.mapDimensions;
+  // }
 
 
   @computed get svgTransform() {
@@ -62,11 +62,11 @@ export default class ViewModel {
     return `translate(${x}, ${y}) scale(${k})`;
   }
 
-  @computed get defaultZoom() {
-    const w = window.innerWidth / this.mapDimensions.mapWidth;
-    const h = window.innerHeight / this.mapDimensions.mapHeight;
-    return w > h ? h : w;
-  }
+  // @computed get defaultZoom() {
+  //   const w = window.innerWidth / this.mapDimensions.mapWidth;
+  //   const h = window.innerHeight / this.mapDimensions.mapHeight;
+  //   return w > h ? h : w;
+  // }
 
   @computed get widgetTransform() {
     const x = this.width > 768 ? 100 : 60;
