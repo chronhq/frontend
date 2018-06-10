@@ -17,7 +17,7 @@ const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й
 
 const charsEn = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-const special = ['-', ',', '.', '+', '=', '_', '?', ':', '"', '\'', '[', ']', '{', '}', '/', '|', '\\'];
+const special = ['-', ',', '.', '+', '=', '_', '?', ':', '"', '\'', '[', ']', '{', '}', '/', '|', '\\', ' '];
 
 const chars = [
   ...charsRu, ...charsRu.map(c => c.toUpperCase()),
@@ -93,9 +93,13 @@ class MapWrapper extends React.Component {
     this.height = window.innerHeight;
   }
 
-
   render() {
     const opColor = (f, op) => (f.color || f.feature.color).concat(op);
+    const decorScale = str => (
+      str.split(' ').map(cur =>
+        Number(cur.replace('scale', '').replace(/([()])/g, '')))
+        .find(c => !Number.isNaN(c))
+    );
     const layers = [
       new GeoJsonLayer({
         id: 'land-contour',
@@ -161,11 +165,16 @@ class MapWrapper extends React.Component {
         pickable: true,
         iconAtlas: mapDecorAtlas,
         iconMapping: mapDecorMAPPING,
-        sizeScale: 15,
+        sizeScale: 16,
+        getSize: d => (
+          16 * (this.props.store.deck.zoom * 2) * decorScale(d.transform)
+        ),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
         getIcon: d => `marker-${d.picId}`,
-        getSize: () => 5,
-        getColor: () => [66, 66, 66]
+        getColor: () => [66, 66, 66],
+        updateTriggers: {
+          getSize: this.props.store.deck.zoom,
+        },
       }),
       new PathLayer({
         id: 'static-traces-layer',
