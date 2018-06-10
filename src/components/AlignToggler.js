@@ -20,10 +20,8 @@ class AlignToggler extends React.Component {
 
   render() {
     return (
-      <div className='sidepanel--content'>
-        <h3> Debug </h3>
+      <div>
         <form onSubmit={e => this.handleSubmit(e)}>
-          <h5>UI Align</h5>
           <select placeholder="select" onChange={e => this.handleChange(e)}>
             <option value='right'>Правое</option>
             <option value='left'>Левое</option>

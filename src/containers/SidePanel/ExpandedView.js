@@ -4,17 +4,11 @@ import { computed } from 'mobx';
 
 import Settings from '../Settings';
 import Feed from '../Feed';
-import ControlButtons from '../../components/TimePanel/ControlButtons';
+
 import LayerControl from './LayerControl';
-import AlignToggler from '../../components/AlignToggler';
+import Debug from './Debug';
 import SearchPanel from './SearchPanel';
 
-const AlignDebug = () => (
-  <div>
-    <AlignToggler />
-    <ControlButtons />
-  </div>
-);
 
 const Empty = () => ('');
 
@@ -48,7 +42,7 @@ export default class ExpandedView extends React.Component {
       case 'settings':
         return Settings;
       case 'align':
-        return AlignDebug;
+        return Debug;
       case 'layerscontrol':
         return LayerControl;
       default:
