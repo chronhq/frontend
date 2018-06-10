@@ -43,7 +43,10 @@ class MapWrapper extends React.Component {
     return Object.values(this.props.store.borders.contour);
   }
   @computed get labels() {
-    return Object.values(this.props.store.data.MapLabels.data);
+    return Object.values(this.props.store.data.MapLabels.data).map(cur => ({
+      ...cur,
+      string: cur.string[this.lng],
+    }));
   }
   @computed get visible() {
     return this.props.store.flags.flags.visibility.borders;
@@ -128,7 +131,7 @@ class MapWrapper extends React.Component {
         data: this.labels,
         pickable: false,
         visible: this.options.labels,
-        getText: d => d.string[this.lng],
+        getText: d => d.string,
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
         getSize: 32,
         sizeScale: 1,
