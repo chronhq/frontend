@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 // import external styles
 import 'font-awesome/less/font-awesome.less';
-// import 'bootstrap/less/bootstrap.less';
+import 'bootstrap/less/bootstrap.less';
 
 import './LineIcon.less';
 

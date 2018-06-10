@@ -29,6 +29,7 @@ export default class FlagsModel {
       SidePanelIsOpen: false,
       TimelineIsMinified: false,
       BioIsOpen: false,
+      animation: false,
     },
     UI: {
       MapViewport: true,
@@ -45,6 +46,7 @@ export default class FlagsModel {
       labels: 1,
       mapDecorations: 1,
       cities: 1,
+      traces: 1,
       inventions: 0,
       somethingsomething: 0
     }

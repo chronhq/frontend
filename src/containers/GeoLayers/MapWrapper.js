@@ -3,14 +3,15 @@ import DeckGL, {
   MapController,
   GeoJsonLayer,
   TextLayer,
-  IconLayer
+  IconLayer,
+  PathLayer
 } from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
 
-import mapDecorAtlas from './geoAssets/map-decor.png';
-import mapDecorMAPPING from './geoAssets/map-decor.json';
+import mapDecorAtlas from './geoAssets/test.png';
+import mapDecorMAPPING from './geoAssets/test.json';
 
 const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я'];
 
@@ -52,6 +53,9 @@ class MapWrapper extends React.Component {
   }
   @computed get cities() {
     return this.props.store.prepared.locations;
+  }
+  @computed get traces() {
+    return this.props.store.prepared.expeditions;
   }
   @computed get borders() {
     const rgbColor = (pid) => {
@@ -153,10 +157,23 @@ class MapWrapper extends React.Component {
         iconMapping: mapDecorMAPPING,
         sizeScale: 15,
         getPosition: d => [d.point.x, d.point.y],
-        getIcon: () => 'marker',
+        getIcon: d => `marker-${d.data.picId}`,
         getSize: () => 5,
         getColor: () => [66, 66, 66]
-      })
+      }),
+      new PathLayer({
+        id: 'static-traces-layer',
+        data: this.traces,
+        visible: this.options.traces,
+        getPath: (d) => d.data.path[0].path,
+        getColor: () => [65, 140, 171],
+        getWidth: () => 5,
+        rounded: true,
+        widthScale: 3,
+        widthMinPixels: 2,
+        getDashArray: (d) => [10, 10],
+        onClick: d => console.log(d.data.id),
+      }),
     ];
     return (
       <DeckGL
