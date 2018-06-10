@@ -13,6 +13,7 @@ import FeedModel from './FeedModel';
 import FeedPinsModel from './FeedPinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
+import AnimationFrame from './AnimationFrame';
 
 export default class storeModel {
   // Add here new models
@@ -22,6 +23,7 @@ export default class storeModel {
     this.projection = new Projection();
     this.flags = new Flags();
     this.deck = new DeckViewport();
+    this.animation = new AnimationFrame();
 
     this.year = new Year(this);
     this.effects = {

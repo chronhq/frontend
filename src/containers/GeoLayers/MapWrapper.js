@@ -13,6 +13,8 @@ import { computed, observable } from 'mobx';
 import mapDecorAtlas from './geoAssets/test.png';
 import mapDecorMAPPING from './geoAssets/test.json';
 
+import TripsLayer from './trips-layer';
+
 const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я'];
 
 const charsEn = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -179,7 +181,7 @@ class MapWrapper extends React.Component {
       new PathLayer({
         id: 'static-traces-layer',
         data: this.traces,
-        visible: this.options.traces,
+        visible: this.options.traces && !this.props.store.flags.flags.runtime.animation,
         getPath: d => d.data.path[0].path,
         getColor: () => [65, 140, 171],
         getWidth: () => 5,
@@ -187,7 +189,18 @@ class MapWrapper extends React.Component {
         widthScale: 3,
         widthMinPixels: 2,
         getDashArray: () => [10, 10],
-        onClick: d => console.log(d.data.id),
+        // onClick: d => console.log(d.data.id),
+      }),
+      new TripsLayer({
+        id: 'animated-trace-layer',
+        data: this.traces,
+        visible: this.options.traces && this.props.store.flags.flags.runtime.animation,
+        getPath: d => d.timedTraces,
+        getColor: () => [65, 140, 171],
+        opacity: 1,
+        strokeWidth: 10,
+        trailLength: 180,
+        currentTime: this.props.store.animation.time
       }),
     ];
     return (

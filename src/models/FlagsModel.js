@@ -29,7 +29,7 @@ export default class FlagsModel {
       SidePanelIsOpen: false,
       TimelineIsMinified: false,
       BioIsOpen: false,
-      animation: false,
+      animation: true,
     },
     UI: {
       MapViewport: true,
