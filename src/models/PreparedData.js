@@ -20,11 +20,6 @@ export default class FinalDataModel {
     return this.data.cities.tooltips;
   }
 
-
-  @computed get labels() {
-    return this.data.labels.points;
-  }
-
   @computed get geoEvents() {
     return this.data.geoEvents.points;
   }
@@ -46,8 +41,6 @@ export default class FinalDataModel {
     this.rootStore = rootStore;
 
     this.data.cities = new Locations(rootStore, 'CityLocs');
-
-    this.data.labels = new GenericPointProcessing(rootStore, 'MapLabels');
 
     this.data.geoEvents = new GenericPointProcessing(rootStore, 'GeoEvents');
 

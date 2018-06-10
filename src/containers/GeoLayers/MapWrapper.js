@@ -35,12 +35,15 @@ class MapWrapper extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize(), false);
   }
+  @computed get lng() {
+    return this.props.store.i18n.lng;
+  }
 
   @computed get terrain() {
     return Object.values(this.props.store.borders.contour);
   }
   @computed get labels() {
-    return Object.values(this.props.store.prepared.labels);
+    return Object.values(this.props.store.data.MapLabels.data);
   }
   @computed get visible() {
     return this.props.store.flags.flags.visibility.borders;
@@ -125,8 +128,8 @@ class MapWrapper extends React.Component {
         data: this.labels,
         pickable: false,
         visible: this.options.labels,
-        getText: d => d.data.string.en,
-        getPosition: d => [d.point.x, d.point.y],
+        getText: d => d.string[this.lng],
+        getPosition: d => [d.geopoint[0], d.geopoint[1]],
         getSize: 32,
         sizeScale: 1,
         getTextAnchor: 'middle',
@@ -165,13 +168,13 @@ class MapWrapper extends React.Component {
         id: 'static-traces-layer',
         data: this.traces,
         visible: this.options.traces,
-        getPath: (d) => d.data.path[0].path,
+        getPath: d => d.data.path[0].path,
         getColor: () => [65, 140, 171],
         getWidth: () => 5,
         rounded: true,
         widthScale: 3,
         widthMinPixels: 2,
-        getDashArray: (d) => [10, 10],
+        getDashArray: () => [10, 10],
         onClick: d => console.log(d.data.id),
       }),
     ];
