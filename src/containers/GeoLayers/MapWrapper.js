@@ -10,8 +10,11 @@ import DeckGL, {
 import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
 
-import mapDecorAtlas from './geoAssets/test.png';
-import mapDecorMAPPING from './geoAssets/test.json';
+import mapDecorAtlas from './geoAssets/map-decoration.png';
+import mapDecorMAPPING from './geoAssets/map-decoration.json';
+
+import testingAtlas from './geoAssets/testing.png';
+import testingMapping from './geoAssets/testing.json';
 
 import TripsLayer from './trips-layer';
 
@@ -25,6 +28,11 @@ const chars = [
   ...charsRu, ...charsRu.map(c => c.toUpperCase()),
   ...charsEn, ...charsEn.map(c => c.toUpperCase()),
   ...special,
+];
+
+const testData = [
+  {coord: [0, 0], icon: 'marker-1', size: 30},
+  {coord: [0, 0], icon: 'marker-2', size: 5}
 ];
 
 @inject('store')
@@ -202,6 +210,19 @@ class MapWrapper extends React.Component {
         trailLength: 180,
         currentTime: this.props.store.animation.time
       }),
+      new IconLayer({
+        id: 'test-layer',
+        data: testData,
+        visible: true,
+        pickable: false,
+        iconAtlas: testingAtlas,
+        iconMapping: testingMapping,
+        sizeScale: 3,
+        getSize: (d) => d.size,
+        getPosition: d => d.coord,
+        getIcon: d => d.icon,
+        getColor: () => [66, 66, 66],
+      })
     ];
     return (
       <DeckGL
