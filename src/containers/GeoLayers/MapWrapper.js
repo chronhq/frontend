@@ -105,11 +105,6 @@ class MapWrapper extends React.Component {
 
   render() {
     const opColor = (f, op) => (f.color || f.feature.color).concat(op);
-    const decorScale = str => (
-      str.split(' ').map(cur =>
-        Number(cur.replace('scale', '').replace(/([()])/g, '')))
-        .find(c => !Number.isNaN(c))
-    );
     const layers = [
       new GeoJsonLayer({
         id: 'land-contour',
