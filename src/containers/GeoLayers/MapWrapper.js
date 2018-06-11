@@ -175,10 +175,9 @@ class MapWrapper extends React.Component {
         pickable: true,
         iconAtlas: mapDecorAtlas,
         iconMapping: mapDecorMAPPING,
-        sizeScale: 16,
-        getSize: d => (
-          16 * (this.props.store.deck.zoom * 2) * decorScale(d.transform)
-        ),
+        getAngle: d => d.transform.rotate,
+        sizeScale: 3,
+        getSize: d => (this.props.store.deck.zoom * d.transform.scale),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
         getIcon: d => `marker-${d.picId}`,
         getColor: () => [66, 66, 66],
