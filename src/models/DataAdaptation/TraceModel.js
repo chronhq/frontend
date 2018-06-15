@@ -12,9 +12,8 @@ export default class TraceModel {
         n[1] - this.data.path[0].path[i][1]
       );
       fullPath += lastPath;
-      return [...n, (fullPath / 100)];
+      return [...n, (fullPath)];
     });
-    dataWithTime.unshift(this.data.path[0].path[0].concat(0));
     return [[...this.data.path[0].path[0], 0], ...dataWithTime];
   }
 

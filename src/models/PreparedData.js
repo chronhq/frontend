@@ -16,6 +16,10 @@ export default class FinalDataModel {
     return this.data.cities.locations;
   }
 
+  @computed get clusteredLocations() {
+    return this.data.cities.clusteredLocations;
+  }
+
   @computed get tooltips() {
     return this.data.cities.tooltips;
   }

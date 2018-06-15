@@ -13,8 +13,8 @@ import { computed, observable } from 'mobx';
 import mapDecorAtlas from './geoAssets/map-decoration.png';
 import mapDecorMAPPING from './geoAssets/map-decoration.json';
 
-import testingAtlas from './geoAssets/testing.png';
-import testingMapping from './geoAssets/testing.json';
+import testingAtlas from './geoAssets/location-icon.png';
+import testingMapping from './geoAssets/location-icon.json';
 
 import TripsLayer from './trips-layer';
 
@@ -22,7 +22,7 @@ const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й
 
 const charsEn = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-const special = ['-', ',', '.', '+', '=', '_', '?', ':', '"', '\'', '[', ']', '{', '}', '/', '|', '\\', ' '];
+const special = ['-', ',', '.', '+', '=', '_', '?', ':', '"', '\'', '[', ']', '{', '}', '/', '|', '\\', ' ', '(', ')'];
 
 const chars = [
   ...charsRu, ...charsRu.map(c => c.toUpperCase()),
@@ -68,7 +68,7 @@ class MapWrapper extends React.Component {
     return Object.values(this.props.store.data.MapDecorations.data);
   }
   @computed get cities() {
-    return this.props.store.prepared.locations;
+    return this.props.store.prepared.clusteredLocations;
   }
   @computed get traces() {
     return this.props.store.prepared.expeditions;
@@ -105,6 +105,15 @@ class MapWrapper extends React.Component {
 
   render() {
     const opColor = (f, op) => (f.color || f.feature.color).concat(op);
+    const ICON_SIZE = 60;
+
+    // cluster thing
+    // const showCluster = this.props.store.flags.flags.runtime.cluster;
+    const showCluster = true;
+    const z = Math.floor(this.props.store.deck.zoom);
+    const size = showCluster ? 1 : Math.min(Math.pow(1.5, this.props.store.deck.zoom - 10), 1);
+    const updateTrigger = z * showCluster;
+
     const layers = [
       new GeoJsonLayer({
         id: 'land-contour',
@@ -162,6 +171,25 @@ class MapWrapper extends React.Component {
         fontFamily: 'OpenSans-Light',
         characterSet: chars,
         getAlignmentBaseline: 'center'
+      }),
+      new IconLayer({
+        id: 'city-points-layer',
+        data: this.cities,
+        // visible: this.options.cities,
+        visible: true,
+        pickable: true,
+        iconAtlas: testingAtlas,
+        iconMapping: testingMapping,
+        // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
+        sizeScale: 4*size*window.devicePixelRatio,
+        getPosition: d => [d.x, d.y],
+        getIcon: d => (showCluster ? d.zoomLevels[z] && d.zoomLevels[z].icon : 'marker'),
+        getSize: d => (showCluster ? d.zoomLevels[z] && d.zoomLevels[z].size : 1),
+        updateTriggers: {
+          getIcon: updateTrigger,
+          getSize: updateTrigger
+        },
+        onClick: d => console.log('info:', d)
       }),
       new IconLayer({
         id: 'map-decoration-layer',

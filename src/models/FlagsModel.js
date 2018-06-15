@@ -30,6 +30,7 @@ export default class FlagsModel {
       TimelineIsMinified: false,
       BioIsOpen: false,
       animation: false,
+      cluster: true,
     },
     UI: {
       MapViewport: true,
