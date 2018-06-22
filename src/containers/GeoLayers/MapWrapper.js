@@ -33,8 +33,8 @@ const chars = [
 ];
 
 const testData = [
-  {coord: [0, 0], icon: 'marker-1', size: 30},
-  {coord: [0, 0], icon: 'marker-2', size: 5}
+  { coord: [0, 0], icon: 'marker-1', size: 30 },
+  { coord: [0, 0], icon: 'marker-2', size: 5 }
 ];
 
 @inject('store')
@@ -92,14 +92,14 @@ class MapWrapper extends React.Component {
   }
 
   render() {
-    const opColor = (f, op) => (f.color || f.feature.color).concat(op);
-    const ICON_SIZE = 60;
+    // const opColor = (f, op) => (f.color || f.feature.color).concat(op);
+    // const ICON_SIZE = 60;
 
     // cluster thing
     // const showCluster = this.props.store.flags.flags.runtime.cluster;
     const showCluster = true;
     const z = Math.floor(this.props.store.deck.zoom);
-    const size = showCluster ? 1 : Math.min(Math.pow(1.5, this.props.store.deck.zoom - 10), 1);
+    const size = showCluster ? 1 : Math.min(1.5 ** (this.props.store.deck.zoom - 10), 1);
     const updateTrigger = z * showCluster;
 
     const layers = [
@@ -142,7 +142,7 @@ class MapWrapper extends React.Component {
         iconAtlas: testingAtlas,
         iconMapping: testingMapping,
         // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
-        sizeScale: 4*size*window.devicePixelRatio,
+        sizeScale: 4 * size * window.devicePixelRatio,
         getPosition: d => [d.x, d.y],
         getIcon: d => (showCluster ? d.zoomLevels[z] && d.zoomLevels[z].icon : 'marker'),
         getSize: d => (showCluster ? d.zoomLevels[z] && d.zoomLevels[z].size : 1),
@@ -201,7 +201,7 @@ class MapWrapper extends React.Component {
         iconAtlas: testingAtlas,
         iconMapping: testingMapping,
         sizeScale: 3,
-        getSize: (d) => d.size,
+        getSize: d => d.size,
         getPosition: d => d.coord,
         getIcon: d => d.icon,
         getColor: () => [66, 66, 66],
