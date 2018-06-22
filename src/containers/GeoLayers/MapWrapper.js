@@ -1,7 +1,6 @@
 import React from 'react';
 import DeckGL, {
   MapController,
-  GeoJsonLayer,
   TextLayer,
   IconLayer,
   PathLayer
@@ -9,6 +8,9 @@ import DeckGL, {
 
 import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
+
+import bordersLayer from './Layers/BordersLayer';
+import contourLayer from './Layers/ContourLayer';
 
 import mapDecorAtlas from './geoAssets/map-decoration.png';
 import mapDecorMAPPING from './geoAssets/map-decoration.json';
@@ -50,7 +52,8 @@ class MapWrapper extends React.Component {
   }
 
   @computed get terrain() {
-    return Object.values(this.props.store.borders.contour);
+    const terrain = Object.values(this.props.store.borders.contour);
+    return contourLayer(terrain);
   }
   @computed get labels() {
     return Object.values(this.props.store.data.MapLabels.data).map(cur => ({
@@ -74,27 +77,12 @@ class MapWrapper extends React.Component {
     return this.props.store.prepared.expeditions;
   }
   @computed get borders() {
-    const rgbColor = (pid) => {
-      // const hex = getFillPatternId(props);
-      const props = this.props.store.data.Properties.data[pid];
-      const hex = props.color || '#d34df0';
-      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? [
-        parseInt(result[1], 16),
-        parseInt(result[2], 16),
-        parseInt(result[3], 16)
-      ] : [13, 244, 61]; // #0df43d
-    };
-    return !this.visible
-      ? []
-      :
-      this.props.store.borders.bordersPath.map(cur => ({
-        geometry: cur.geo.geometry,
-        color: rgbColor(cur.props),
-        id: cur.id,
-        props: cur.props,
-      }));
+    const properties = this.props.store.data.Properties.data;
+    const borders = this.props.store.borders.bordersPath;
+    const visible = this.options.borders;
+    return bordersLayer(borders, properties, visible);
   }
+
   @observable width = window.innerWidth
   @observable height = window.innerHeight
 
@@ -115,35 +103,8 @@ class MapWrapper extends React.Component {
     const updateTrigger = z * showCluster;
 
     const layers = [
-      new GeoJsonLayer({
-        id: 'land-contour',
-        data: this.terrain,
-        visible: true,
-        filled: true,
-        pickable: true,
-        wireframe: true,
-        width: 0.1,
-        lineWidthMinPixels: 0.5,
-        getLineColor: () => [128, 128, 128],
-        getFillColor: () => [234, 234, 234],
-        stroked: true,
-        extruded: false
-      }),
-      new GeoJsonLayer({
-        id: 'borders-layer',
-        data: this.borders,
-        visible: this.options.borders,
-        filled: true,
-        pickable: true,
-        wireframe: false,
-        width: 0.1,
-        lineWidthMinPixels: 0.5,
-        getLineColor: f => opColor(f, 255),
-        getFillColor: f => opColor(f, 208),
-        stroked: true,
-        extruded: false,
-        lineJointRounded: true
-      }),
+      this.terrain,
+      this.borders,
       new TextLayer({
         id: 'label-layer',
         data: this.labels,
