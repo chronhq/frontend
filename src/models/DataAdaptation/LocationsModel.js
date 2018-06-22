@@ -1,18 +1,38 @@
 import { observable, computed } from 'mobx';
-import { WebMercatorViewport } from 'deck.gl';
+// import { WebMercatorViewport } from 'deck.gl';
 import rbush from 'rbush';
+
+import CityModel from './CityModel';
 
 import { getTooltipSize } from '../../containers/Locations/LocationDotLabel';
 import GenericPointProcessing from './GenericPointProcessing';
 
-export default class LocationsModel extends GenericPointProcessing {
+export default class LocationsModel {
   @observable tree = rbush(9, ['.x', '.y', '.x', '.y']);
   @observable clusterization = true;
+
+  @computed get points() {
+    const cities = Object.keys(this.rootStore.data.CityLocs.data);
+    return cities.map(city => new CityModel(this.rootStore, city));
+  }
+
+  @computed get visiblePoints() {
+    const places = [];
+    Object.keys(this.points).map((cur) => {
+      if (this.points[cur].visible) {
+        places.push(this.points[cur].location);
+      }
+      return false;
+    });
+    return places;
+  }
 
   @computed get locations() {
     const places = [];
     Object.keys(this.points).map((cur) => {
-      places.push(this.points[cur].location);
+      if (this.points[cur].visible) {
+        places.push(this.points[cur].location);
+      }
       return false;
     });
     return places;
@@ -42,11 +62,7 @@ export default class LocationsModel extends GenericPointProcessing {
     //   zoom: 0
     // });
 
-    const places = [];
-    Object.keys(this.points).map((cur) => {
-      places.push(this.points[cur].location);
-      return false;
-    });
+    const places = this.locations;
     places.forEach((p) => {
       p.zoomLevels = [];
     });
@@ -56,7 +72,7 @@ export default class LocationsModel extends GenericPointProcessing {
     // return places;
 
     for (let z = 0; z <= 20; z++) {
-      const radius = ICON_SIZE / 2 / Math.pow(2, z);
+      const radius = ICON_SIZE / 2 / (2 ** z);
 
       places.forEach((p) => {
         if (p.zoomLevels[z] === undefined) {
@@ -114,5 +130,9 @@ export default class LocationsModel extends GenericPointProcessing {
       });
     }
     return this.locations.map(() => false);
+  }
+
+  constructor(rootStore) {
+    this.rootStore = rootStore;
   }
 }
