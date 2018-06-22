@@ -5,7 +5,6 @@ import rbush from 'rbush';
 import CityModel from './CityModel';
 
 import { getTooltipSize } from '../../containers/Locations/LocationDotLabel';
-import GenericPointProcessing from './GenericPointProcessing';
 
 export default class LocationsModel {
   @observable tree = rbush(9, ['.x', '.y', '.x', '.y']);
@@ -20,19 +19,17 @@ export default class LocationsModel {
     const places = [];
     Object.keys(this.points).map((cur) => {
       if (this.points[cur].visible) {
-        places.push(this.points[cur].location);
+        places.push(this.points[cur]);
       }
       return false;
     });
-    return places;
+    return places.sort((a, b) => a.location.scaleRank - b.location.scaleRank);
   }
 
   @computed get locations() {
     const places = [];
-    Object.keys(this.points).map((cur) => {
-      if (this.points[cur].visible) {
-        places.push(this.points[cur].location);
-      }
+    Object.keys(this.visiblePoints).map((cur) => {
+      places.push(this.visiblePoints[cur].location);
       return false;
     });
     return places;
@@ -71,7 +68,7 @@ export default class LocationsModel {
     this.tree.load(places);
     // return places;
 
-    for (let z = 0; z <= 20; z++) {
+    for (let z = 0; z <= 20; z += 1) {
       const radius = ICON_SIZE / 2 / (2 ** z);
 
       places.forEach((p) => {
