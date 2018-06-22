@@ -7,6 +7,10 @@ export default class DeckViewportModel {
   @observable pitch = 0;
   @observable bearing = 0;
 
+  @computed get rZoom() {
+    return Math.floor(this.zoom);
+  }
+
   @computed get viewport() {
     return {
       longitude: this.longitude,

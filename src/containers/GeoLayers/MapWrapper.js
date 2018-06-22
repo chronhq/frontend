@@ -98,7 +98,7 @@ class MapWrapper extends React.Component {
     // cluster thing
     // const showCluster = this.props.store.flags.flags.runtime.cluster;
     const showCluster = true;
-    const z = Math.floor(this.props.store.deck.zoom);
+    const z = this.props.store.deck.rZoom;
     const size = showCluster ? 1 : Math.min(1.5 ** (this.props.store.deck.zoom - 10), 1);
     const updateTrigger = z * showCluster;
 
@@ -124,14 +124,17 @@ class MapWrapper extends React.Component {
         data: this.cities,
         pickable: true,
         visible: this.options.cities,
-        getText: d => d.name,
+        getText: d => (showCluster ? d.zoomLevels[z] && d.name : ''),
         getPosition: d => [d.x, d.y],
         getSize: 32,
         sizeScale: 1,
         getTextAnchor: 'middle',
         fontFamily: 'OpenSans-Light',
         characterSet: chars,
-        getAlignmentBaseline: 'center'
+        getAlignmentBaseline: 'center',
+        updateTriggers: {
+          getText: updateTrigger,
+        },
       }),
       new IconLayer({
         id: 'city-points-layer',
