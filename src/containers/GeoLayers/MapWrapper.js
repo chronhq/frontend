@@ -11,26 +11,14 @@ import { computed, observable } from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
 import contourLayer from './Layers/ContourLayer';
+import toponymsLayer from './Layers/ToponymsLayer';
 
-import mapDecorAtlas from './geoAssets/map-decoration.png';
-import mapDecorMAPPING from './geoAssets/map-decoration.json';
+import chars from './Layers/VisibleCharacters';
 
 import testingAtlas from './geoAssets/location-icon.png';
 import testingMapping from './geoAssets/location-icon.json';
 
 import TripsLayer from './trips-layer';
-
-const charsRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я'];
-
-const charsEn = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-const special = ['-', ',', '.', '+', '=', '_', '?', ':', '"', '\'', '[', ']', '{', '}', '/', '|', '\\', ' ', '(', ')'];
-
-const chars = [
-  ...charsRu, ...charsRu.map(c => c.toUpperCase()),
-  ...charsEn, ...charsEn.map(c => c.toUpperCase()),
-  ...special,
-];
 
 const testData = [
   { coord: [0, 0], icon: 'marker-1', size: 30 },
@@ -47,19 +35,10 @@ class MapWrapper extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize(), false);
   }
-  @computed get lng() {
-    return this.props.store.i18n.lng;
-  }
 
   @computed get terrain() {
     const terrain = Object.values(this.props.store.borders.contour);
     return contourLayer(terrain);
-  }
-  @computed get labels() {
-    return Object.values(this.props.store.data.MapLabels.data).map(cur => ({
-      ...cur,
-      string: cur.string[this.lng],
-    }));
   }
   @computed get visible() {
     return this.props.store.flags.flags.visibility.borders;
@@ -83,8 +62,19 @@ class MapWrapper extends React.Component {
     return bordersLayer(borders, properties, visible);
   }
 
+  @computed get toponyms() {
+    return toponymsLayer(this.props.store.prepared.toponyms, this.options.labels);
+  }
+  @computed get size() {
+    return this.showCluster
+      ? 1
+      : Math.min(1.5 ** (this.props.store.deck.zoom - 10), 1);
+  }
+
   @observable width = window.innerWidth
   @observable height = window.innerHeight
+
+  @observable showCluster = true;
 
   resize() {
     this.width = window.innerWidth;
@@ -92,39 +82,27 @@ class MapWrapper extends React.Component {
   }
 
   render() {
-    // const opColor = (f, op) => (f.color || f.feature.color).concat(op);
     // const ICON_SIZE = 60;
 
     // cluster thing
     // const showCluster = this.props.store.flags.flags.runtime.cluster;
-    const showCluster = true;
+
     const z = this.props.store.deck.rZoom;
-    const size = showCluster ? 1 : Math.min(1.5 ** (this.props.store.deck.zoom - 10), 1);
-    const updateTrigger = z * showCluster;
+    const updateTrigger = z * this.showCluster;
+
+    const decorAtlas = this.props.store.prepared.mapPics.decorations;
+    const decorMapping = this.props.store.prepared.mapPics.decorationsJSON;
 
     const layers = [
       this.terrain,
       this.borders,
-      new TextLayer({
-        id: 'label-layer',
-        data: this.labels,
-        pickable: false,
-        visible: this.options.labels,
-        getText: d => d.string,
-        getPosition: d => [d.geopoint[0], d.geopoint[1]],
-        getSize: 32,
-        sizeScale: 1,
-        getTextAnchor: 'middle',
-        fontFamily: 'OpenSans-Light',
-        characterSet: chars,
-        getAlignmentBaseline: 'center'
-      }),
+      this.toponyms,
       new TextLayer({
         id: 'cities-layer',
         data: this.cities,
         pickable: true,
         visible: this.options.cities,
-        getText: d => (showCluster ? d.zoomLevels[z] && d.name : ''),
+        getText: d => (this.showCluster ? d.zoomLevels[z] && d.name : ''),
         getPosition: d => [d.x, d.y],
         getSize: 32,
         sizeScale: 1,
@@ -145,10 +123,10 @@ class MapWrapper extends React.Component {
         iconAtlas: testingAtlas,
         iconMapping: testingMapping,
         // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
-        sizeScale: 4 * size * window.devicePixelRatio,
+        sizeScale: 4 * this.size * window.devicePixelRatio,
         getPosition: d => [d.x, d.y],
-        getIcon: d => (showCluster ? d.zoomLevels[z] && d.zoomLevels[z].icon : 'marker'),
-        getSize: d => (showCluster ? d.zoomLevels[z] && d.zoomLevels[z].size : 1),
+        getIcon: d => (this.showCluster ? d.zoomLevels[z] && d.zoomLevels[z].icon : 'marker'),
+        getSize: d => (this.showCluster ? d.zoomLevels[z] && d.zoomLevels[z].size : 1),
         updateTriggers: {
           getIcon: updateTrigger,
           getSize: updateTrigger
@@ -160,17 +138,18 @@ class MapWrapper extends React.Component {
         data: this.decorations,
         visible: this.options.mapDecorations,
         pickable: true,
-        iconAtlas: mapDecorAtlas,
-        iconMapping: mapDecorMAPPING,
+        iconAtlas: decorAtlas,
+        iconMapping: decorMapping,
         getAngle: d => d.transform.rotate,
         sizeScale: 3,
         getSize: d => (this.props.store.deck.zoom * d.transform.scale),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
-        getIcon: d => `marker-${d.picId}`,
+        getIcon: d => `decoration-${d.picId}`,
         getColor: () => [66, 66, 66],
         updateTriggers: {
           getSize: this.props.store.deck.zoom,
         },
+        onClick: d => console.log('decor:', d)
       }),
       new PathLayer({
         id: 'static-traces-layer',

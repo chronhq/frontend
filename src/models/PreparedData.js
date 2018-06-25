@@ -5,6 +5,7 @@ import Persons from './DataAdaptation/PersonsList';
 import Inventions from './DataAdaptation/InventionsList';
 import GeoEvents from './DataAdaptation/GeoEventsList';
 import Courses from './DataAdaptation/CoursesModel';
+import MapPics from './DataAdaptation/MapPicsModel';
 
 export default class FinalDataModel {
   @observable data = {};
@@ -20,8 +21,11 @@ export default class FinalDataModel {
     return this.data.cities.clusteredLocations;
   }
 
-  @computed get tooltips() {
-    return this.data.cities.tooltips;
+  @computed get toponyms() {
+    return Object.values(this.rootStore.data.MapLabels.data).map(cur => ({
+      ...cur,
+      string: cur.string[this.rootStore.i18n.lng],
+    }));
   }
 
   @computed get geoEvents() {
@@ -52,8 +56,7 @@ export default class FinalDataModel {
 
     this.data.courseTraces = new GenericPointProcessing(rootStore, 'CourseTraces', 'courseTimelineId', true);
 
-    // this.data.CourseGeopoints.saveDataCb = json => this.saveDataCb('courseGeoPoints', json);
-
+    this.mapPics = new MapPics(rootStore);
     this.persons = new Persons(rootStore);
     this.inventions = new Inventions(rootStore);
     this.geoEventsList = new GeoEvents(rootStore);
