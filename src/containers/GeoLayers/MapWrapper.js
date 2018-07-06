@@ -15,8 +15,8 @@ import toponymsLayer from './Layers/ToponymsLayer';
 
 import chars from './Layers/VisibleCharacters';
 
-import testingAtlas from './geoAssets/location-icon.png';
-import testingMapping from './geoAssets/location-icon.json';
+import testingAtlas from './geoAssets/cities2.svg';
+import testingMapping from './geoAssets/cities2.json';
 
 import TripsLayer from './trips-layer';
 
@@ -71,6 +71,36 @@ class MapWrapper extends React.Component {
       : Math.min(1.5 ** (this.props.store.deck.zoom - 10), 1);
   }
 
+  @computed get cityPoints() {
+    const z = this.props.store.deck.rZoom;
+    return new IconLayer({
+      id: 'city-points-layer',
+      data: this.cities,
+      // visible: this.options.cities,
+      visible: true,
+      pickable: true,
+      iconAtlas: testingAtlas,
+      iconMapping: testingMapping,
+      // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
+      sizeScale: 4 * this.size * window.devicePixelRatio,
+      getPosition: d => [d.x, d.y],
+      getIcon: (d) => {
+        if (d.zoomLevels[z] !== null) {
+          // console.log('Zoom', z, d, d.zoomLevels[z].icon);
+          // console.log('Getting icon', z, d.zoomLevels[z].icon);
+          return d.zoomLevels[z].icon;
+        }
+        return null;
+      },
+      getSize: d => (this.showCluster ? d.zoomLevels[z] && d.zoomLevels[z].size : 1),
+      updateTriggers: {
+        getIcon: z,
+        getSize: z
+      },
+      onClick: d => console.log('info:', d)
+    });
+  }
+
   @observable width = window.innerWidth
   @observable height = window.innerHeight
 
@@ -97,42 +127,7 @@ class MapWrapper extends React.Component {
       this.terrain,
       this.borders,
       this.toponyms,
-      new TextLayer({
-        id: 'cities-layer',
-        data: this.cities,
-        pickable: true,
-        visible: this.options.cities,
-        getText: d => (this.showCluster ? d.zoomLevels[z] && d.name : ''),
-        getPosition: d => [d.x, d.y],
-        getSize: 32,
-        sizeScale: 1,
-        getTextAnchor: 'middle',
-        fontFamily: 'OpenSans-Light',
-        characterSet: chars,
-        getAlignmentBaseline: 'center',
-        updateTriggers: {
-          getText: updateTrigger,
-        },
-      }),
-      new IconLayer({
-        id: 'city-points-layer',
-        data: this.cities,
-        // visible: this.options.cities,
-        visible: true,
-        pickable: true,
-        iconAtlas: testingAtlas,
-        iconMapping: testingMapping,
-        // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
-        sizeScale: 4 * this.size * window.devicePixelRatio,
-        getPosition: d => [d.x, d.y],
-        getIcon: d => (this.showCluster ? d.zoomLevels[z] && d.zoomLevels[z].icon : 'marker'),
-        getSize: d => (this.showCluster ? d.zoomLevels[z] && d.zoomLevels[z].size : 1),
-        updateTriggers: {
-          getIcon: updateTrigger,
-          getSize: updateTrigger
-        },
-        onClick: d => console.log('info:', d)
-      }),
+      this.cityPoints,
       new IconLayer({
         id: 'map-decoration-layer',
         data: this.decorations,
@@ -140,7 +135,10 @@ class MapWrapper extends React.Component {
         pickable: true,
         iconAtlas: decorAtlas,
         iconMapping: decorMapping,
-        getAngle: d => d.transform.rotate,
+        getAngle: (d) => {
+          // console.log('Angle', d, d.transform.rotate);
+          return d.transform.rotate;
+        },
         sizeScale: 3,
         getSize: d => (this.props.store.deck.zoom * d.transform.scale),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
@@ -174,6 +172,25 @@ class MapWrapper extends React.Component {
         strokeWidth: 10,
         trailLength: 180,
         currentTime: this.props.store.animation.time
+      }),
+      new TextLayer({
+        id: 'cities-layer',
+        data: this.cities,
+        pickable: true,
+        visible: this.options.cities,
+        getText: d => (this.showCluster ? d.zoomLevels[z] && d.name : ''),
+        getPosition: d => [d.x, d.y],
+        getPixelOffset: [0, 10],
+        getSize: 32,
+        fp64: true,
+        sizeScale: 1,
+        getTextAnchor: 'middle',
+        fontFamily: 'OpenSans-Light',
+        characterSet: chars,
+        getAlignmentBaseline: 'top',
+        updateTriggers: {
+          getText: updateTrigger,
+        },
       }),
       new IconLayer({
         id: 'test-layer',

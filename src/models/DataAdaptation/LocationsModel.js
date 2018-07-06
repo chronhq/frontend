@@ -32,26 +32,8 @@ export default class LocationsModel {
     return places;
   }
 
-  getIconName = (size) => {
-    if (size === 0) {
-      return '';
-    }
-    if (size < 10) {
-      return `marker-${size}`;
-    }
-    if (size < 100) {
-      return `marker-${Math.floor(size / 10)}0`;
-    }
-    return 'marker-100';
-  }
-
-  getIconSize = () => {
-    // return Math.min(100, size) / 100 * 0.5 + 0.5;
-    return 30;
-  }
-
   @computed get clusteredLocations() {
-    const ICON_SIZE = 64;
+    const ICON_SIZE = 32;
     //   ...this.rootStore.deck.viewport,
     //   zoom: 0
     // });
@@ -83,12 +65,15 @@ export default class LocationsModel {
             })
             .filter(neighbor => neighbor.zoomLevels[z] === undefined);
 
+          const iconPrefix = neighbors.length > 1 ? 'cluster' : 'city';
           // only show the center point at this zoom level
           neighbors.forEach((neighbor) => {
             if (neighbor === p) {
               p.zoomLevels[z] = {
-                icon: this.getIconName(neighbors.length),
-                size: this.getIconSize(neighbors.length),
+                // icon: this.getIconName(neighbors.length),
+                icon: `${iconPrefix}-${p.scaleRank}`,
+                size: 10,
+                // size: this.getIconSize(neighbors.length),
                 points: neighbors
               };
             } else {
