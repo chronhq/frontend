@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import 'font-awesome/less/font-awesome.less';
 import 'bootstrap/less/bootstrap.less';
 
+import './style.less';
 import './LineIcon.less';
 
 import StoreModel from './models';

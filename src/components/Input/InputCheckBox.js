@@ -7,20 +7,18 @@ export default class InputCheckBox extends Component {
   }
   render() {
     return (
-      <label
-        htmlFor={ this.props.name }
-      >
+      <label htmlFor={this.props.name} >
         <span>
           <input
+            id={this.props.name}
             type='checkbox'
-            className='checkbox'
             checked={this.state.checked}
             onChange={(e) => {
               this.setState({ checked: Number(e.target.checked) });
               this.props.cb({ [this.props.name]: Number(e.target.checked) });
             }}
           />
-          <span></span>
+          <span />
         </span>
         {this.props.label}
       </label>
