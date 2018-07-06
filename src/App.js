@@ -3,6 +3,8 @@ import { Provider, observer } from 'mobx-react';
 import { BrowserRouter as Router, hashHistory } from 'react-router-dom';
 import { YMInitializer } from 'react-yandex-metrika';
 
+// import './style.less';
+
 import { YmId } from './metrikaHelper';
 
 import AppRouter from './routes';

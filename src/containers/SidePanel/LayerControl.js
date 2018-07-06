@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed, action } from 'mobx';
-import { FancyCheckbox } from '../../components/Input';
+// import { FancyCheckbox } from '../../components/Input';
+import { InputCheckBox } from '../../components/Input';
 
 @inject('store')
 @observer
@@ -21,7 +22,7 @@ class LayerControl extends React.Component {
         <h3> Управление слоями </h3>
         {
           Object.keys(this.options).map((item, id) => (
-            <FancyCheckbox
+            <InputCheckBox
               key={id}
               name={item}
               label={item}

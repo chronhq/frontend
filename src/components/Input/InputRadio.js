@@ -10,15 +10,15 @@ const RadioText = ({ ids, value, data, cb }) => (
 );
 
 export default class InputRadio extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
-      <label >
+      <label htmlFor={this.props.name} >
         <span>
-          <input type="radio" checked={this.props.checked} onChange={() => this.toggleCheck()} {...this.props}/>
+          <input
+            id={this.props.name}
+            type="radio"
+            checked={this.props.checked}
+            onChange={() => this.toggleCheck()} {...this.props}/>
           <span />
         </span>
         {this.props.label}

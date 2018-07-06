@@ -22,11 +22,11 @@ class TilesScreen extends React.Component {
     const { courses } = this.props;
     return (
       <div className='startpage__container parent'>
-        <div className='starpage__title'>
-          <h3> {this.title} </h3>
-        </div>
         <div className='startpage__langswitch'>
           <SetLocalizationToggle />
+        </div>
+        <div className='starpage__title'>
+          <h3> {this.title} </h3>
         </div>
         <div className='tile__container'>
           <div className='hex-row'>

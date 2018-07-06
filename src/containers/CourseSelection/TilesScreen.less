@@ -1,11 +1,17 @@
 // @import "../../colors.less";
 
+
 @base01: #222; //
 @base02: #000;
+@border-decor: rgba(238, 238, 238, 0.3); // Head decor
+
+@hex--div: 340px;
 
 .starpage__title {
   text-transform: uppercase;
-  border-left: 1px rgba(238, 238, 238, 0.3) solid;
+  box-sizing: border-box;
+  position: relative;
+  border-left: 1px @border-decor solid;
   margin: 0 40px;
   padding: 40px 0 10px;
   color: white;
@@ -18,32 +24,35 @@
     // margin: 10px;
   }
 
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: -40px;
+    width: 600px;
+    height: 0;
+    border-bottom: 1px @border-decor solid;
+    @media screen and (max-width: 725px) {
+      width: 100%;
+      left: -10px;
+    }
+  }
+
   @media screen and (max-width: 725px) {
     text-align: center;
     margin: auto 20px auto 10px;
+    padding: 10px 0 10px;
   }
 }
 
-.starpage__title::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 500px;
-  height: 150px;
-  border-bottom: 1px rgba(238, 238, 238, 0.3) solid;
-  @media screen and (max-width: 725px) {
-    width: 95%;
-  }
-}
+
 
 .startpage__langswitch {
   margin: auto 20px auto 40px;
   text-align: right;
   // padding-left: 40px;
-  border-left: 1px rgba(238, 238, 238, 0.3) solid;
+  border-left: 1px @border-decor solid;
   & button {
     background: none;
     border: none;
@@ -66,49 +75,51 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-  // width: 100%;
-  // height: 100%;
   overflow: auto;
   background-color: gray;
   line-height: 33px;
   text-align: center;
-  min-width: 360px;
-  // display: flex;
+  min-width: 280px;
 }
 
 .tile__container {
-  overflow: visible;
   padding-top: 20px;
   margin: auto 40px;
-  border-left: 1px solid rgba(238, 238, 238, 0.3);
-  min-height: 60%;
+  border-left: 1px @border-decor solid;
 
   @media screen and (max-width: 725px) {
     margin: 0 10px;
   }
 }
 
-@hex--height: 308px;
-@hex--width: 180px;
-@hex--med: 30px;
-@hex--mod: 120px;
-
 .tile {
-  width: @hex--width;
-  margin-right: calc(@hex--width/2 ~'+ 5px');
-  margin-left: 0;
-  margin-bottom: calc(-@hex--height/2 ~'- 10px');
-  margin-top: 0;
-  height: @hex--height;
-  float: right;
-  padding-left: 0;
   background-color: rgba(255, 255, 255, 0.5);
   position: relative;
   box-sizing: border-box;
-  // outline: 1px solid rgba(255, 255, 255, 0.5);
+  margin-right: calc(-@hex--div*0.25 ~'+ 7px');
+  width: @hex--div;
+  height: @hex--div;
+  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+  transition: all 0.2s ease-in;
+  box-shadow: 0 12px 24px 0 rgba(0,0,0,0.50);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media screen and (max-width: 725px) {
+    float: none;
+    margin-bottom: 10px;
+    // margin-left: 20px;
+    width: 100%;
+    height: 200px;
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+  }
 
   & h3 {
     margin: 0;
+    font-weight: 400;
+    font-size: 20px;
     color: red;
     text-transform: uppercase;
   }
@@ -118,12 +129,13 @@
     text-decoration: inherit;
   }
 
-  @media screen and (max-width: 725px) {
-    float: left;
-    clear: left;
-    margin-bottom: 10px;
-    // padding-left: 10px;
-    margin-left: 5px;
+  & p {
+    font-size: 14px;
+    color: white;
+    font-style: italic;
+    padding: 3px;
+    line-height: 1.1em;
+    text-align: left;
   }
 
   &:first-child {
@@ -139,113 +151,47 @@
   }
 }
 
-.tile::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: -@hex--width / 2;
-  width: 0;
-  height: 0;
-  border-right: @hex--width/2 solid rgba(255, 255, 255, 0.5);
-  border-bottom: @hex--height/2 solid transparent;
-  border-top: @hex--height/2 solid transparent;
-
-  @media screen and (max-width: 725px) {
-    top: -@hex--height/2;
-    left: auto;
-    right: -@hex--mod;
-    width: 0;
-    height: 0;
-    border-right: @hex--mod solid rgba(255, 255, 255, 0.5);
-    border-bottom: @hex--height/2 solid transparent;
-    border-top: @hex--height/2 solid transparent;
-  }
-}
-
-.tile::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  bottom: 0;
-  right: -@hex--width/2;
-  width: 0;
-  height: 0;
-  border-left: @hex--width/2 solid rgba(255, 255, 255, 0.5);
-  border-bottom: @hex--height/2 solid transparent;
-  border-top: @hex--height/2 solid transparent;
-
-  @media screen and (max-width: 725px) {
-    right: -@hex--mod;
-    border-left: @hex--mod solid rgba(255, 255, 255, 0.5);
-    border-bottom: @hex--height/2 solid transparent;
-    border-top: @hex--height/2 solid transparent;
-  }
-}
-
 .hex-row {
-  clear: right;
-  display: inline-block;
-  margin-left: @hex--width/2;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  margin-right: calc(@hex--div*0.25);
 
   @media screen and (max-width: 725px) {
-    margin-right: @hex--width/2;
+    flex-direction: column;
+    margin-right: 40px;
     margin-left: 10px;
   }
 }
 
 .hex-row.odd {
-  margin-top: @hex--width/2;
-
+  margin-top: calc(-@hex--div/2 ~'- 12px');
   @media screen and (max-width: 725px) {
     margin-top: 0;
   }
 }
 
 .tile.odd {
-  margin-top: calc(@hex--height/2 ~'+ 3px');
-
+  margin-top: calc(@hex--div*0.5 ~'- 10px');
   @media screen and (max-width: 725px) {
     margin-top: 0;
   }
 }
 
+
 .tile__content {
   vertical-align: middle;
-  margin: auto;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: @hex--height;
+  width: 75%;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   z-index: 20;
-  width: 1.4*@hex--width;
-  transform: translate(-0.2*@hex--width, 0);
 
   @media screen and (max-width: 725px) {
-    transform: none;
+    text-align: left;
   }
-}
-
-.tile__icon {
-  font-size: 70px;
-  color: white;
-
-  @media screen and (max-width: 725px) {
-    font-size: 50px;
-  }
-}
-
-.tile__title {
-  font-weight: 400;
-  font-size: 20px;
-}
-
-.tile__description {
-  font-size: 14px;
-  color: white;
-  font-style: italic;
-  padding: 3px;
-  line-height: 1.1em;
-  text-align: left;
 }
