@@ -14,8 +14,16 @@ export default class CityModel {
     };
   }
 
+  @computed get exists() {
+    return this.properties.some(c => c.year < this.now);
+  }
+
   @computed get currentLoc() {
     const answer = { pop: null, props: null };
+    if (!this.exists) {
+      // console.error('City not exists', this);
+      return answer;
+    }
     const getCurrent = (data) => {
       const passed = data.filter(p => p.year <= this.now);
       if (passed.length > 0) {
@@ -79,28 +87,9 @@ export default class CityModel {
     }));
   }
 
-  @computed get populationRaw() {
+  @computed get population() {
     return Object.values(this.rootStore.data.CityPops.data)
       .filter(c => this.data.id === c.cityId);
-  }
-
-  @computed get population() {
-    return this.populationRaw.map((p) => {
-      try {
-        const json = JSON.parse(p.json);
-        return {
-          ...p,
-          year: json.year,
-          pop: json.pop,
-        };
-      } catch (e) {
-        console.error('Error in population JSON parsing', p);
-        console.error(e);
-        return {
-          ...p, year: 0, pop: 0
-        };
-      }
-    });
   }
 
   constructor(rootStore, cityId) {

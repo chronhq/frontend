@@ -33,7 +33,7 @@ export default class LocationsModel {
   }
 
   @computed get clusteredLocations() {
-    const ICON_SIZE = 32;
+    const ICON_SIZE = 48;
     //   ...this.rootStore.deck.viewport,
     //   zoom: 0
     // });

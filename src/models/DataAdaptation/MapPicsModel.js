@@ -47,7 +47,7 @@ export default class MapPics {
     return svg.join('\n');
   }
 
-  jsonGen(type, store) {
+  jsonGen(type, store, anchor = {}) {
     const data = Object.values(store).filter(c => c.type === type);
     const json = data.reduce((prev, cur, idx) => (
       {
@@ -57,21 +57,22 @@ export default class MapPics {
           y: this.tileSize * idx,
           width: this.tileSize,
           height: this.tileSize,
+          ...anchor,
         }
       }), {});
     return json;
   }
 
-  @computed get citySVG() {
-    const svg = [];
+  // @computed get citySVG() {
+  //   const svg = [];
 
-    svg.push([
-      ...this.svgHeaders,
-      `width="${this.cityTileSize}"`,
-      `height="${this.cityTileSize * 10}"`,
-      '>'
-    ].join(' '));
-  }
+  //   svg.push([
+  //     ...this.svgHeaders,
+  //     `width="${this.cityTileSize}"`,
+  //     `height="${this.cityTileSize * 10}"`,
+  //     '>'
+  //   ].join(' '));
+  // }
 
   @computed get tileDimensions() {
     return `width="${this.tileSize}" height="${this.tileSize}"`;
@@ -104,6 +105,10 @@ export default class MapPics {
   }
 
   @computed get pinsJSON() {
-    return this.jsonGen('pin', this.rootStore.data.MapPics.data);
+    const anc = {
+      anchorY: 0,
+      anchorX: 0
+    };
+    return this.jsonGen('pin', this.rootStore.data.MapPics.data, anc);
   }
 }

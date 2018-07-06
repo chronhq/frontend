@@ -86,8 +86,6 @@ class MapWrapper extends React.Component {
       getPosition: d => [d.x, d.y],
       getIcon: (d) => {
         if (d.zoomLevels[z] !== null) {
-          // console.log('Zoom', z, d, d.zoomLevels[z].icon);
-          // console.log('Getting icon', z, d.zoomLevels[z].icon);
           return d.zoomLevels[z].icon;
         }
         return null;
@@ -98,6 +96,29 @@ class MapWrapper extends React.Component {
         getSize: z
       },
       onClick: d => console.log('info:', d)
+    });
+  }
+  @computed get feedPins() {
+    const pinsAtlas = this.props.store.prepared.mapPics.pins;
+    const pinsMapping = this.props.store.prepared.mapPics.pinsJSON;
+
+    return new IconLayer({
+      id: 'map-pins-layer',
+      data: this.props.store.pins.pins,
+      // visible: this.options.mapDecorations,
+      pickable: true,
+      getAngle: 135,
+      iconAtlas: pinsAtlas,
+      iconMapping: pinsMapping,
+      sizeScale: 3,
+      getSize: () => (this.props.store.deck.zoom * 10),
+      getPosition: d => [d.point.x, d.point.y],
+      getIcon: d => `pin-${d.pic}`,
+      getColor: () => [66, 66, 66],
+      updateTriggers: {
+        getSize: this.props.store.deck.zoom,
+      },
+      onClick: d => console.log('pin:', d)
     });
   }
 
@@ -135,10 +156,7 @@ class MapWrapper extends React.Component {
         pickable: true,
         iconAtlas: decorAtlas,
         iconMapping: decorMapping,
-        getAngle: (d) => {
-          // console.log('Angle', d, d.transform.rotate);
-          return d.transform.rotate;
-        },
+        getAngle: d => d.transform.rotate,
         sizeScale: 3,
         getSize: d => (this.props.store.deck.zoom * d.transform.scale),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
@@ -162,6 +180,7 @@ class MapWrapper extends React.Component {
         getDashArray: () => [10, 10],
         // onClick: d => console.log(d.data.id),
       }),
+      this.feedPins,
       new TripsLayer({
         id: 'animated-trace-layer',
         data: this.traces,
@@ -178,10 +197,10 @@ class MapWrapper extends React.Component {
         data: this.cities,
         pickable: true,
         visible: this.options.cities,
-        getText: d => (this.showCluster ? d.zoomLevels[z] && d.name : ''),
+        getText: d => (d.zoomLevels[z] ? d.name : ''),
         getPosition: d => [d.x, d.y],
         getPixelOffset: [0, 10],
-        getSize: 32,
+        getSize: d => (40 - (1.5 * d.scaleRank)),
         fp64: true,
         sizeScale: 1,
         getTextAnchor: 'middle',
@@ -190,6 +209,7 @@ class MapWrapper extends React.Component {
         getAlignmentBaseline: 'top',
         updateTriggers: {
           getText: updateTrigger,
+          getSize: updateTrigger,
         },
       }),
       new IconLayer({
