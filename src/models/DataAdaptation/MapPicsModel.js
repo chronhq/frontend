@@ -63,17 +63,6 @@ export default class MapPics {
     return json;
   }
 
-  // @computed get citySVG() {
-  //   const svg = [];
-
-  //   svg.push([
-  //     ...this.svgHeaders,
-  //     `width="${this.cityTileSize}"`,
-  //     `height="${this.cityTileSize * 10}"`,
-  //     '>'
-  //   ].join(' '));
-  // }
-
   @computed get tileDimensions() {
     return `width="${this.tileSize}" height="${this.tileSize}"`;
   }
