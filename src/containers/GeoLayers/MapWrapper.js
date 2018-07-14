@@ -7,7 +7,7 @@ import DeckGL, {
 } from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
-import { computed, observable } from 'mobx';
+import { computed, observable, action } from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
 import contourLayer from './Layers/ContourLayer';
@@ -118,26 +118,31 @@ class MapWrapper extends React.Component {
       updateTriggers: {
         getSize: this.props.store.deck.zoom,
       },
-      onClick: d => console.log('pin:', d)
+      onClick: d => console.log('pin:', d),
+      onHover: (d) => {
+        // if image contains transparent parts disable drawing tooltip
+        const key = d.color === null ? null : d.object.key;
+        this.props.store.pins.setActive(key, false);
+        this.props.store.pins.setPosition(d.x, d.y);
+      },
     });
   }
 
-  @observable width = window.innerWidth
-  @observable height = window.innerHeight
+  @computed get width() {
+    return this.props.store.view.width;
+  }
+  @computed get height() {
+    return this.props.store.view.height;
+  }
 
   @observable showCluster = true;
 
-  resize() {
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+  @action resize() {
+    this.props.store.view.width = window.innerWidth;
+    this.props.store.view.height = window.innerHeight;
   }
 
   render() {
-    // const ICON_SIZE = 60;
-
-    // cluster thing
-    // const showCluster = this.props.store.flags.flags.runtime.cluster;
-
     const z = this.props.store.deck.rZoom;
     const updateTrigger = z * this.showCluster;
 
@@ -234,6 +239,7 @@ class MapWrapper extends React.Component {
         initialViewState={this.props.store.deck.viewport}
         onViewportChange={v => this.props.store.deck.updateViewport(v)}
         layers={layers}
+        style={{ zIndex: -1 }}
         width={this.width}
         height={this.height}
       />
