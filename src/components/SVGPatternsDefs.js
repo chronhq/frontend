@@ -64,7 +64,11 @@ export const PatternsDefs = observer(({ bordersColors }) => {
 export const MapPicsDefs = observer(({ symbols }) => ( // SymbolsDefs
   <g className="symbolsDefs">
     {Object.values(symbols).map(mapPic => (
-      <symbol id={`mapPic_${mapPic.id}`} key={`mapPic_key_${mapPic.id}`}>
+      <symbol
+        id={`mapPic_${mapPic.id}`}
+        key={`mapPic_key_${mapPic.id}`}
+        viewBox={mapPic.viewbox}
+      >
         {mapPic.g.map((g, idx) => (
           <path
             key={`mapPic_g_key_${mapPic.id}_${idx}`}

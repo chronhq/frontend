@@ -18,12 +18,15 @@ export default class FreePinsWidget extends React.Component {
 
   render() {
     return (
-      <g className="freePinsBar" transform='translate(0, -90)'>
+      <g className="freePinsBar" transform='translate(90, 90)'>
         {this.pins.map((icon, idx) => (
           <use
+            style={{ pointerEvents: 'all' }}
             key={icon.key}
+            width='20px'
+            height='20px'
             xlinkHref={`#mapPic_${icon.pic}`}
-            transform={`translate(${this.translate(idx)}) scale(0.04) rotate(-135)`}
+            transform={`translate(${this.translate(idx)}) rotate(-135)`}
             onMouseEnter={() => {
               this.props.store.pins.setActive(icon.key, true);
               return false;
