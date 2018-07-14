@@ -89,7 +89,7 @@ export default class CityModel {
 
   @computed get population() {
     return Object.values(this.rootStore.data.CityPops.data)
-      .filter(c => this.data.id === c.cityId);
+      .find(c => this.data.id === c.cityId).json;
   }
 
   constructor(rootStore, cityId) {
