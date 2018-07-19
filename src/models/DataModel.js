@@ -91,6 +91,7 @@ export default class DataModel {
     'Geometries',
     'Inventions',
     'MapLabels',
+    'MapColors',
     'Persons',
     'Properties',
     'Types',

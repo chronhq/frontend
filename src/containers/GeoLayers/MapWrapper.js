@@ -57,9 +57,10 @@ class MapWrapper extends React.Component {
   }
   @computed get borders() {
     const properties = this.props.store.data.Properties.data;
+    const colors = this.props.store.data.MapColors.data;
     const borders = this.props.store.borders.bordersPath;
     const visible = this.options.borders;
-    return bordersLayer(borders, properties, visible);
+    return bordersLayer(borders, properties, colors, visible);
   }
 
   @computed get toponyms() {

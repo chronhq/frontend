@@ -1,29 +1,33 @@
 import { GeoJsonLayer } from 'deck.gl';
 
-const opColor = (f, op) => (f.color || f.feature.color).concat(op);
-
-const rgbColor = (pid, pData) => {
-  const props = pData[pid];
-  const hex = props.color || '#d34df0';
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? [
-    parseInt(result[1], 16),
-    parseInt(result[2], 16),
-    parseInt(result[3], 16)
-  ] : [13, 244, 61]; // #0df43d
-};
-
-function getBorders(borders, pData) {
-  return borders.map(cur => ({
-    geometry: cur.geo.geometry,
-    color: rgbColor(cur.props, pData),
-    id: cur.id,
-    props: cur.props,
-  }));
+function getBorders(borders, properties, colors) {
+  return borders.map((cur) => {
+    const colorId = properties[cur.props].color;
+    try {
+      const color = colors[colorId].color1;
+      // console.log('Trying to get color', colorId, cur);
+      // console.log(color, colorId, colors[colorId]);
+      return {
+        geometry: cur.geo.geometry,
+        color: [color[0], color[1], color[2]],
+        id: cur.id,
+        props: cur.props,
+      };
+    } catch (e) {
+      // console.error('ColorID', colorId, 'Border ID', cur.id);
+      // Probably colorID === -99 -- Disputed territory
+      return {
+        geometry: cur.geo.geometry,
+        color: [13, 244, 61],
+        id: cur.id,
+        props: cur.props,
+      };
+    }
+    });
 }
 
-function bordersLayer(borders, pData, visible) {
-  const data = getBorders(borders, pData);
+function bordersLayer(borders, properties, colors, visible) {
+  const data = getBorders(borders, properties, colors);
   return new GeoJsonLayer({
     id: 'borders-layer',
     data,
@@ -33,8 +37,8 @@ function bordersLayer(borders, pData, visible) {
     wireframe: false,
     width: 0.1,
     lineWidthMinPixels: 0.5,
-    getLineColor: f => opColor(f, 255),
-    getFillColor: f => opColor(f, 208),
+    getLineColor: f => (f.color || f.feature.color),
+    getFillColor: f => (f.color || f.feature.color),
     stroked: true,
     extruded: false,
     lineJointRounded: true

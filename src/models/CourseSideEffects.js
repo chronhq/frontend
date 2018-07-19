@@ -22,6 +22,7 @@ export default class CourseSideEffects {
       'Types',
       'MapDecorations',
       'MapPics',
+      'MapColors',
     ],
     course: [
       'CourseTimelines',
