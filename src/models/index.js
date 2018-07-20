@@ -4,7 +4,7 @@ import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSideEffects from './CourseSideEffects';
-import ColorsModel from './ColorsModel';
+// import ColorsModel from './ColorsModel';
 import Prepared from './PreparedData';
 import View from './ViewModel';
 import ClickInfo from './ClickInfoModel';
@@ -31,7 +31,7 @@ export default class storeModel {
     };
     this.borders = new Borders(this);
     this.prepared = new Prepared(this);
-    this.colors = new ColorsModel(this);
+    // this.colors = new ColorsModel(this);
     this.view = new View(this);
     this.clickInfo = new ClickInfo(this);
     this.feed = new FeedModel(this);

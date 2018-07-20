@@ -57,10 +57,45 @@ class MapWrapper extends React.Component {
   }
   @computed get borders() {
     const properties = this.props.store.data.Properties.data;
+
+    const admins = this.props.store.data.Admins.data;
+    const types = this.props.store.data.Types.data;
     const colors = this.props.store.data.MapColors.data;
+
     const borders = this.props.store.borders.bordersPath;
     const visible = this.options.borders;
-    return bordersLayer(borders, properties, colors, visible);
+    const showInfo = (clickInfo) => {
+      const propId = clickInfo.object.props;
+      const props = properties[propId];
+      props.admin = admins[props.admin];
+      props.type = types[props.type];
+
+      console.group();
+      console.info('Border click info', clickInfo, props);
+      console.group();
+      console.info('Props ID:', props.id);
+      console.info('Color:', props.color, 'Disputed:', props.disputed);
+      console.info('Name:',props.name);
+      console.info('NameRu:', props.nameru);
+      console.info('wikipedia:', props.wikipedia);
+      console.groupEnd();
+
+      console.group();
+      console.info('Admin ID:', props.admin.id);
+      console.info('En:', props.admin.en);
+      console.info('Ru:', props.admin.ru);
+      console.groupEnd();
+
+      console.group();
+      console.info('Type ID:', props.type.id);
+      console.info('En:', props.type.en);
+      console.info('Ru:', props.type.ru);
+      console.info('Orig:', props.type.orig);
+      console.groupEnd();
+      console.groupEnd();
+
+    }
+    return bordersLayer(borders, properties, colors, visible, showInfo);
   }
 
   @computed get toponyms() {
