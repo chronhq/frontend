@@ -73,7 +73,7 @@ export const MapPicsDefs = observer(({ symbols }) => ( // SymbolsDefs
           <path
             key={`mapPic_g_key_${mapPic.id}_${idx}`}
             d={g.d}
-            style={g.style}
+            style={{...g.style}}
           />))}
       </symbol>
     ))}

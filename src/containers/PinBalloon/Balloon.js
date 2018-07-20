@@ -61,7 +61,7 @@ export default class Balloon extends React.Component {
 
   render() {
     return (
-      <div style={this.style} className='balloonNews'>
+      <div style={{ ...this.style }} className='balloonNews'>
         {this.news}
       </div>
     );
