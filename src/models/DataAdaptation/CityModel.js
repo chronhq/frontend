@@ -50,7 +50,7 @@ export default class CityModel {
       answer.name = this.currentLoc.props[this.nameSelector];
       answer.scaleRank = this.currentLoc.props.scalerank;
     } catch (e) {
-      console.error('Something wrong with ', e, this, this.data, this.currentLoc);
+      console.error('City error', ...this.properties, this, { e });
       answer.name = 'Undefined';
       answer.scaleRank = '2';
     }
