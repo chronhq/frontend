@@ -21,10 +21,11 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    inline: false,
+    inline: true,
     host: '0.0.0.0',
     port: 3000,
     hot: true,
+    hotOnly: true,
     compress: true,
     https: false,
     proxy: {
@@ -66,15 +67,7 @@ module.exports = {
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
-      },
-      {
-        test: /\.(mp4|m4v)$/,
-        loader: 'file-loader'
-      },
-      {
-        test: /\.md$/,
-        loader: 'markdown-with-front-matter-loader'
-      },
+      }
     ]
   },
   plugins:
