@@ -28,7 +28,7 @@ module.exports = {
     compress: true,
     https: false,
     proxy: {
-      '/api': 'http://localhost:3333/',
+      '/api': 'http://api:3333/',
       '/shared': 'https://chronist.ru/',
     }
   },
