@@ -21,18 +21,15 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    inline: true,
-    // port: 3000,
+    inline: false,
+    host: '0.0.0.0',
+    port: 3000,
     hot: true,
     compress: true,
     https: false,
     proxy: {
       '/api': 'http://localhost:3333/',
-      //   target: ,
-      //   pathRewrite: { '^/api': '' }
-      // },
       '/shared': 'https://chronist.ru/',
-
     }
   },
   target: 'web',
