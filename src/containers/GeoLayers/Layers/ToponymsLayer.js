@@ -9,7 +9,7 @@ export default function toponyms(labels, visible) {
     visible,
     getText: d => d.string,
     getPosition: d => [d.geopoint[0], d.geopoint[1]],
-    getSize: 32,
+    getSize: 12,
     sizeScale: 1,
     getTextAnchor: 'middle',
     fontFamily: 'OpenSans-Light',

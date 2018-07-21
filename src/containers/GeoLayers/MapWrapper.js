@@ -32,6 +32,7 @@ class MapWrapper extends React.Component {
     window.addEventListener('resize', () => this.resize(), false);
     this.resize();
   }
+
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize(), false);
   }
@@ -40,21 +41,27 @@ class MapWrapper extends React.Component {
     const terrain = Object.values(this.props.store.borders.contour);
     return contourLayer(terrain);
   }
+
   @computed get visible() {
     return this.props.store.flags.flags.visibility.borders;
   }
+
   @computed get options() {
     return this.props.store.flags.flags.layer;
   }
+
   @computed get decorations() {
     return Object.values(this.props.store.data.MapDecorations.data);
   }
+
   @computed get cities() {
     return this.props.store.prepared.clusteredLocations;
   }
+
   @computed get traces() {
     return this.props.store.prepared.expeditions;
   }
+
   @computed get borders() {
     const properties = this.props.store.data.Properties.data;
 
@@ -65,7 +72,7 @@ class MapWrapper extends React.Component {
     const borders = this.props.store.borders.bordersPath;
     const visible = this.options.borders;
     const showInfo = (clickInfo) => {
-      if(process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === 'production') {
         return '';
       }
       const propId = clickInfo.object.props;
@@ -78,7 +85,7 @@ class MapWrapper extends React.Component {
       console.group();
       console.info('Props ID:', props.id);
       console.info('Color:', props.color, 'Disputed:', props.disputed);
-      console.info('Name:',props.name);
+      console.info('Name:', props.name);
       console.info('NameRu:', props.nameru);
       console.info('wikipedia:', props.wikipedia);
       console.groupEnd();
@@ -96,14 +103,14 @@ class MapWrapper extends React.Component {
       console.info('Orig:', type.orig);
       console.groupEnd();
       console.groupEnd();
-
-    }
+    };
     return bordersLayer(borders, properties, colors, visible, showInfo);
   }
 
   @computed get toponyms() {
     return toponymsLayer(this.props.store.prepared.toponyms, this.options.labels);
   }
+
   @computed get size() {
     return this.showCluster
       ? 1
@@ -121,7 +128,7 @@ class MapWrapper extends React.Component {
       iconAtlas: testingAtlas,
       iconMapping: testingMapping,
       // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
-      sizeScale: 4 * this.size * window.devicePixelRatio,
+      sizeScale: this.size * window.devicePixelRatio,
       getPosition: d => [d.x, d.y],
       getIcon: (d) => {
         if (d.zoomLevels[z] !== null) {
@@ -137,6 +144,7 @@ class MapWrapper extends React.Component {
       onClick: d => console.log('info:', d)
     });
   }
+
   @computed get feedPins() {
     const pinsAtlas = this.props.store.prepared.mapPics.pins;
     const pinsMapping = this.props.store.prepared.mapPics.pinsJSON;
@@ -170,6 +178,7 @@ class MapWrapper extends React.Component {
   @computed get width() {
     return this.props.store.view.width;
   }
+
   @computed get height() {
     return this.props.store.view.height;
   }
@@ -246,7 +255,7 @@ class MapWrapper extends React.Component {
         getPixelOffset: [0, 10],
         getSize: d => (40 - (1.5 * d.scaleRank)),
         fp64: true,
-        sizeScale: 1,
+        sizeScale: 0.5,
         getTextAnchor: 'middle',
         fontFamily: 'OpenSans-Light',
         characterSet: chars,
