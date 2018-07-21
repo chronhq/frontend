@@ -2,10 +2,15 @@ import { observable, action } from 'mobx';
 
 export default class YearModel {
   @observable min;
+
   @observable max;
+
   @observable now;
+
   @observable tick;
+
   @observable playing = false;
+
   @observable yearInterval = 1000;
 
   constructor(rootStore) {

@@ -6,4 +6,6 @@ import InputRadio from './InputRadio';
 import Tooltip from './Tooltip';
 import './InputStyles.less';
 
-export { InputCheckBox, InputNumber, InputRange, InputSelect, InputRadio, Tooltip };
+export {
+  InputCheckBox, InputNumber, InputRange, InputSelect, InputRadio, Tooltip
+};

@@ -15,13 +15,13 @@ export default class FeedModel {
 
   getInventors = (inventors) => {
     const persons = this.rootStore.prepared.persons.data;
-    return inventors.reduce((prev, p) =>
-      (typeof persons[p] === 'undefined'
-        ? prev
-        : [...prev, persons[p].nameRus]), []);
+    return inventors.reduce((prev, p) => (typeof persons[p] === 'undefined'
+      ? prev
+      : [...prev, persons[p].nameRus]), []);
   }
 
   getDate = date => (date || '????');
+
   newLine = window.navigator.platform === 'Win32' ? '\r\n' : '\n';
 
   getFactDescription = (factId) => {
@@ -66,7 +66,9 @@ export default class FeedModel {
   }
 
   @observable persons = {};
+
   @observable inventions = {};
+
   @observable geoEvents = {};
 
   @observable feedDownloadLinkId = 'exportFromFeedDownloadLink';

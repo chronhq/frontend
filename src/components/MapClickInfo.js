@@ -6,10 +6,17 @@ import './MapClickInfo.less';
 
 const LocationWidget = ({ location }) => (
   <div>
-  Название: {location.nameRus}<br />
-  Основан: {location.founded || 'Неизвестно'}<br />
-  Население: {location.population || 'Неизвестно'}<br />
-  (По последней переписи)
+    { 'Название:' }
+    {location.nameRus}
+    <br />
+    { 'Основан:' }
+    {' '}
+    {location.founded || 'Неизвестно'}
+    <br />
+    { 'Население:' }
+    {location.population || 'Неизвестно'}
+    <br />
+    { '(По последней переписи)' }
   </div>
 );
 
@@ -17,8 +24,13 @@ const BordersWidget = ({
   border, type, disputed, admin
 }) => (
   <div>
-    Название: {border.nameru}<br />
-    Тип: {type}<br />
+    { 'Название:' }
+    {border.nameru}
+    <br />
+    { 'Тип:' }
+    {' '}
+    {type}
+    <br />
     {disputed.length !== 0
       ? `Спор между: ${disputed.join(', ')}`
       : `Принадлежит: ${admin}`}
@@ -32,7 +44,7 @@ class MapClickInfo extends React.Component {
     if (this.props.store.clickInfo.selected !== null) {
       if (this.props.store.clickInfo.widgetType === 'border') {
         return <BordersWidget {...this.props.store.clickInfo.widget} />;
-      } else if (this.props.store.clickInfo.widgetType === 'location') {
+      } if (this.props.store.clickInfo.widgetType === 'location') {
         return <LocationWidget {...this.props.store.clickInfo.widget} />;
       }
     }
@@ -46,11 +58,12 @@ class MapClickInfo extends React.Component {
     return (
       <div id='mapClickInfo'>
         <div>
-        Информация
+          { 'Информация' }
           <button
             className='close'
             onClick={() => this.props.store.clickInfo.closeWidget()}
-          >&times;
+          >
+&times;
           </button>
         </div>
 

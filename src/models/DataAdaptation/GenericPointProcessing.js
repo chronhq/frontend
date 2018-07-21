@@ -46,6 +46,7 @@ export default class GenericPointProcessing {
   @computed get points() {
     return this[this.type];
   }
+
   @computed get cbName() {
     if (this.type === 'CourseTraces') return 'arrayTraceCb';
     return this.arrFlag ? 'arrayGenCb' : 'saveDataCb';

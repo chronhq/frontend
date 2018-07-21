@@ -80,7 +80,9 @@ class SeekBar extends React.Component {
   // }
 
   @observable position = 0;
+
   @observable isDown = false;
+
   @observable now;
 
   renderBar() {
@@ -104,7 +106,7 @@ class SeekBar extends React.Component {
           // preserveAspectRatio="none"
         >
           <g className="axisTime" strokeWidth="1" ref={(r) => { this.svgAxis = r; }} />
-          <g transform={`translate(${this.scale(this.props.store.year.now)}, 0)`} >
+          <g transform={`translate(${this.scale(this.props.store.year.now)}, 0)`}>
             <circle cx='0' r={4} style={{ fill: '#02364C', stroke: 'white', strokeWidth: 1.5 }} />
           </g>
           <rect x='0' y='-25' width={this.props.width + 50} height='40' fill='#ffffff' opacity='0' className='back' style={{ zIndex: -1 }} />

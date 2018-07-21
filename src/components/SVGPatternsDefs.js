@@ -12,29 +12,30 @@ export const SVGPattern = ({ id, c }) => {
   return (
     <pattern
       id={id}
-      width={`${disputed.length > 1 ?
-        5 + (disputed.length * 2.5)
+      width={`${disputed.length > 1
+        ? 5 + (disputed.length * 2.5)
         : 5}`}
       height="5"
       patternTransform="rotate(45 0 0)"
       patternUnits="userSpaceOnUse"
     >
       <rect
-        width={`${disputed.length > 1 ?
-          5 + (disputed.length * 2.5)
+        width={`${disputed.length > 1
+          ? 5 + (disputed.length * 2.5)
           : 5}`}
         height="5"
         fill={rectColor}
       />
-      { disputed.map((color, idx) =>
-        (<line
+      { disputed.map((color, idx) => (
+        <line
           key={`${id}_line_${color}`}
           x1={`${5 * idx}`}
           y1="0"
           x2={`${5 * idx}`}
           y2="5"
           style={{ stroke: color, strokeWidth: 5 }}
-        />))
+        />
+      ))
       }
     </pattern>
   );
@@ -73,7 +74,7 @@ export const MapPicsDefs = observer(({ symbols }) => ( // SymbolsDefs
           <path
             key={`mapPic_g_key_${mapPic.id}_${idx}`}
             d={g.d}
-            style={{...g.style}}
+            style={{ ...g.style }}
           />))}
       </symbol>
     ))}

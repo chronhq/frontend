@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import TilesScreen from './TilesScreen';
 import checkCourses from './checkCourses';
 import { ymHit } from '../../metrikaHelper';
+
 @observer
 class CourseSelection extends React.Component {
   componentWillMount() {

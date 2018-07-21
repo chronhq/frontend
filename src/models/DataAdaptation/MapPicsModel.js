@@ -2,6 +2,7 @@ import { observable, computed } from 'mobx';
 
 export default class MapPics {
   @observable tileSize = 256;
+
   @observable cityTileSize = 32;
 
   @observable svgHeaders = [

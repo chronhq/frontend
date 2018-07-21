@@ -1,6 +1,6 @@
-import {Layer} from 'deck.gl';
+import { Layer } from 'deck.gl';
 
-import {Model, Geometry} from 'luma.gl';
+import { Model, Geometry } from 'luma.gl';
 
 import tripsVertex from './trips-layer-vertex.glsl';
 import tripsFragment from './trips-layer-fragment.glsl';
@@ -14,22 +14,22 @@ const defaultProps = {
 
 export default class TripsLayer extends Layer {
   initializeState() {
-    const {gl} = this.context;
-    const {attributeManager} = this.state;
+    const { gl } = this.context;
+    const { attributeManager } = this.state;
 
     const model = this.getModel(gl);
 
     attributeManager.add({
-      indices: {size: 1, update: this.calculateIndices, isIndexed: true},
-      positions: {size: 3, update: this.calculatePositions},
-      colors: {size: 3, update: this.calculateColors}
+      indices: { size: 1, update: this.calculateIndices, isIndexed: true },
+      positions: { size: 3, update: this.calculatePositions },
+      colors: { size: 3, update: this.calculateColors }
     });
 
     gl.getExtension('OES_element_index_uint');
-    this.setState({model});
+    this.setState({ model });
   }
 
-  updateState({props, changeFlags: {dataChanged}}) {
+  updateState({ props, changeFlags: { dataChanged } }) {
     if (dataChanged) {
       this.countVertices(props.data);
       this.state.attributeManager.invalidateAll();
@@ -68,18 +68,18 @@ export default class TripsLayer extends Layer {
       return;
     }
 
-    const {getPath} = this.props;
+    const { getPath } = this.props;
     let vertexCount = 0;
     const pathLengths = data.reduce((acc, d) => {
       const l = getPath(d).length;
       vertexCount += l;
       return [...acc, l];
     }, []);
-    this.setState({pathLengths, vertexCount});
+    this.setState({ pathLengths, vertexCount });
   }
 
-  draw({uniforms}) {
-    const {trailLength, currentTime} = this.props;
+  draw({ uniforms }) {
+    const { trailLength, currentTime } = this.props;
     this.state.model.render(
       Object.assign({}, uniforms, {
         trailLength,
@@ -89,7 +89,7 @@ export default class TripsLayer extends Layer {
   }
 
   calculateIndices(attribute) {
-    const {pathLengths, vertexCount} = this.state;
+    const { pathLengths, vertexCount } = this.state;
 
     const indicesCount = (vertexCount - pathLengths.length) * 2;
     const indices = new Uint32Array(indicesCount);
@@ -111,8 +111,8 @@ export default class TripsLayer extends Layer {
   }
 
   calculatePositions(attribute) {
-    const {data, getPath} = this.props;
-    const {vertexCount} = this.state;
+    const { data, getPath } = this.props;
+    const { vertexCount } = this.state;
     const positions = new Float32Array(vertexCount * 3);
 
     let index = 0;
@@ -129,8 +129,8 @@ export default class TripsLayer extends Layer {
   }
 
   calculateColors(attribute) {
-    const {data, getColor} = this.props;
-    const {pathLengths, vertexCount} = this.state;
+    const { data, getColor } = this.props;
+    const { pathLengths, vertexCount } = this.state;
     const colors = new Float32Array(vertexCount * 3);
 
     let index = 0;

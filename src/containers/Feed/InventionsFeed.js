@@ -12,23 +12,29 @@ const showDescription = (fact) => {
   return 'Missing fact description';
 };
 
-export const getInventors = (persons, inventors) => inventors.reduce((prev, p) =>
-  (typeof persons[p] === 'undefined'
-    ? prev
-    : [...prev, persons[p].nameRus]), []);
+export const getInventors = (persons, inventors) => inventors.reduce((prev, p) => (typeof persons[p] === 'undefined'
+  ? prev
+  : [...prev, persons[p].nameRus]), []);
 
 export const Invention = ({ fact, persons }) => (
   <div key={`in_${fact.id}`}>
     <div>
-      <h5 className='factHeader'>{fact.nameRus}</h5>
-      <h5 className='factDate'> {fact.inventDate} </h5>
+      <h5 className='factHeader'>
+        {fact.nameRus}
+      </h5>
+      <h5 className='factDate'>
+        {' '}
+        {fact.inventDate}
+        {' '}
+      </h5>
     </div>
     <br />
     <div className='factDescription'>
       {showDescription(fact)}
     </div>
     <p className='factAuthor'>
-      <i>{getInventors(persons, fact.inventor).join(', ')}
+      <i>
+        {getInventors(persons, fact.inventor).join(', ')}
       </i>
     </p>
   </div>
@@ -76,17 +82,18 @@ export default class InventionsFeed extends React.Component {
 
   render() {
     return (
-      <div className='InventionsFeed'>{this.current.map(invId => (
-        <div
-          key={`div_inv_${invId}`}
-          onMouseEnter={() => this.selectLocation(invId)}
-          onMouseLeave={() => this.closeWidget()}
-          onClick={() => { this.select(invId); return false; }}
-          className={this.selected[invId] === true
-            ? 'selectedFact' : 'regularFact'}
-        >
-          <Invention fact={this.inventions[invId]} persons={this.persons} />
-        </div>))}
+      <div className='InventionsFeed'>
+        {this.current.map(invId => (
+          <div
+            key={`div_inv_${invId}`}
+            onMouseEnter={() => this.selectLocation(invId)}
+            onMouseLeave={() => this.closeWidget()}
+            onClick={() => { this.select(invId); return false; }}
+            className={this.selected[invId] === true
+              ? 'selectedFact' : 'regularFact'}
+          >
+            <Invention fact={this.inventions[invId]} persons={this.persons} />
+          </div>))}
       </div>
     );
   }

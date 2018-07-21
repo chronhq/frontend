@@ -28,6 +28,8 @@ const testData = [
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
+  @observable showCluster = true;
+
   componentDidMount() {
     window.addEventListener('resize', () => this.resize(), false);
     this.resize();
@@ -103,6 +105,7 @@ class MapWrapper extends React.Component {
       console.info('Orig:', type.orig);
       console.groupEnd();
       console.groupEnd();
+      return null;
     };
     return bordersLayer(borders, properties, colors, visible, showInfo);
   }
@@ -182,8 +185,6 @@ class MapWrapper extends React.Component {
   @computed get height() {
     return this.props.store.view.height;
   }
-
-  @observable showCluster = true;
 
   @action resize() {
     this.props.store.view.width = window.innerWidth;

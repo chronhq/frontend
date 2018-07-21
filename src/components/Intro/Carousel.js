@@ -75,7 +75,9 @@ class CarouselSlide extends React.Component {
       <li
         className={this.className}
       >
-        <p className="carousel-slide__content">{this.props.slide.content}</p>
+        <p className="carousel-slide__content">
+          {this.props.slide.content}
+        </p>
 
         {/*
         <p>
@@ -108,12 +110,14 @@ export default class Carousel extends React.Component {
   @computed get buttons() {
     return this.props.store.i18n.buttons;
   }
+
   @action closeIntro() {
     this.props.store.flags.flags.runtime.intro = false;
   }
 
 
   @observable activeIndex = 0;
+
   highlightDiv = {
     backgroundColor: 'rgba(0,0,0,0.0)',
     borderColor: '#9ecaed',
@@ -170,8 +174,16 @@ export default class Carousel extends React.Component {
           </ul>
 
           <div>
-            <button onClick={() => this.closeIntro()} className='btn btn-primary'> {this.buttons.close} </button>
-            <button onClick={e => this.goToNextSlide(e)} className='btn btn-primary'> {this.buttons.next} </button>
+            <button onClick={() => this.closeIntro()} className='btn btn-primary'>
+              {' '}
+              {this.buttons.close}
+              {' '}
+            </button>
+            <button onClick={e => this.goToNextSlide(e)} className='btn btn-primary'>
+              {' '}
+              {this.buttons.next}
+              {' '}
+            </button>
           </div>
         </div>
         <div style={this.highlightDiv} className={this.overlay} />

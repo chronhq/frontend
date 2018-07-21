@@ -79,24 +79,31 @@ class FeedbackForm extends React.Component {
             />
           </Row>
           <Row>
-            <button type='submit' className='btn btn-empty'>Отправить</button>
+            <button type='submit' className='btn btn-empty'>
+              { 'Отправить' }
+            </button>
             <span
               key='result'
               style={this.infoBlockStyle}
               className={this.feedback.glyph}
             >
-              {' '}{this.infoMessage}<br />
+              {' '}
+              {this.infoMessage}
+              <br />
             </span>
           </Row>
           <Row className='text-center'>
-            <p>Нажимая на кнопку, вы даете согласие на обработку своих персональных данных <br />
+            <p>
+              { 'Нажимая на кнопку, вы даете согласие на обработку своих персональных данных' }
+              <br />
 
               <a
                 href='https://chronist.ru/privacy'
                 target='_blank'
                 rel='noopener noreferrer'
               >
-              Политика конфиденциальности
+
+              { 'Политика конфиденциальности' }
               </a>
             </p>
           </Row>
@@ -112,6 +119,7 @@ class Feedback extends React.Component {
   @computed get isOpen() {
     return this.props.store.flags.flags.runtime.feedback;
   }
+
   @action close() {
     this.props.store.flags.flags.runtime.feedback = false;
   }
@@ -133,8 +141,12 @@ class Feedback extends React.Component {
     //   </Modal.Dialog>
     // );
     return (
-      <div> Todo MODAL обратная связь </div>
-    )
+      <div>
+        {' '}
+Todo MODAL обратная связь
+        {' '}
+      </div>
+    );
   }
 }
 

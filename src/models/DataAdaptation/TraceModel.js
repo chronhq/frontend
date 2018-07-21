@@ -2,6 +2,7 @@ import { computed, observable } from 'mobx';
 
 export default class TraceModel {
   @observable data = {};
+
   @observable type = '';
 
   @computed get timedTraces() {
@@ -19,9 +20,7 @@ export default class TraceModel {
 
   // Point will be in viewport area after clipping
   @computed get inTheBox() {
-    return this.data.path.map(cur =>
-      cur.path.map(point =>
-        this.projection.inTheBox(point[0], point[1])));
+    return this.data.path.map(cur => cur.path.map(point => this.projection.inTheBox(point[0], point[1])));
   }
 
   constructor(rootStore, point) {

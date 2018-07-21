@@ -25,9 +25,13 @@ export default class FeedbackForm {
   }
 
   @observable visible = false;
+
   @observable success = false;
+
   @observable name = '';
+
   @observable email = '';
+
   @observable text = '';
 
   @action wipe() {

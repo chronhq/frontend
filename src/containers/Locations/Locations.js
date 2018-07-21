@@ -11,11 +11,11 @@ const DrawLocationDot = observer(({
   <g
     onClick={cb}
   >
-    {visibility.locations &&
-      <LocationDot location={city} scale={scale} />
+    {visibility.locations
+      && <LocationDot location={city} scale={scale} />
     }
-    {(visibility.tooltips && visible) &&
-      <LocationDotLabel location={city} scale={scale} />
+    {(visibility.tooltips && visible)
+      && <LocationDotLabel location={city} scale={scale} />
     }
   </g>
 ));

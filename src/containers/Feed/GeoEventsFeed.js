@@ -10,7 +10,9 @@ export const GeoEvent = ({ fact }) => (
       {fact.description}
     </div>
     <div>
-      <h5 className='factDate'>{fact.date}</h5>
+      <h5 className='factDate'>
+        {fact.date}
+      </h5>
     </div>
   </div>
 );
@@ -34,6 +36,7 @@ export default class GeoEventsFeed extends React.Component {
   @action select(v) {
     this.props.store.feed.geoEvents[v] = !this.selected[v];
   }
+
   @action selectLocation(gev) {
     this.props.store.clickInfo.selectGeoEvent(gev);
   }
@@ -44,17 +47,18 @@ export default class GeoEventsFeed extends React.Component {
 
   render() {
     return (
-      <div className='geoEventsFeed'>{this.current.map(gevId => (
-        <div
-          key={`div_inv_${gevId}`}
-          onMouseEnter={() => this.selectLocation(gevId)}
-          onMouseLeave={() => this.closeWidget(null)}
-          onClick={() => { this.select(gevId); return false; }}
-          className={this.selected[gevId] === true
-            ? 'selectedFact' : 'regularFact'}
-        >
-          <GeoEvent fact={this.geoEvents[gevId].data} />
-        </div>))}
+      <div className='geoEventsFeed'>
+        {this.current.map(gevId => (
+          <div
+            key={`div_inv_${gevId}`}
+            onMouseEnter={() => this.selectLocation(gevId)}
+            onMouseLeave={() => this.closeWidget(null)}
+            onClick={() => { this.select(gevId); return false; }}
+            className={this.selected[gevId] === true
+              ? 'selectedFact' : 'regularFact'}
+          >
+            <GeoEvent fact={this.geoEvents[gevId].data} />
+          </div>))}
       </div>
     );
   }

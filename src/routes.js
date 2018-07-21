@@ -33,8 +33,8 @@ class AppRouter extends React.Component {
           <Route render={NotFound} />
         </Switch>
       </div>
-    )
+    );
   }
-};
+}
 
 export default AppRouter;

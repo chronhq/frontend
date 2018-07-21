@@ -21,7 +21,11 @@ class Select extends React.PureComponent {
   render() {
     return (
       <span className='inputSelect'>
-        <p>{this.props.name}: </p>
+        <p>
+          {this.props.name}
+:
+          {' '}
+        </p>
         <select value={this.props.value} onChange={this.handleChange}>
           {this.renderOptions()}
         </select>

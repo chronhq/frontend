@@ -4,7 +4,11 @@ import { inject, observer } from 'mobx-react';
 import { Tooltip } from '../Input';
 
 const tooltip = text => (
-  <Tooltip id='tooltip'><strong>{text}</strong></Tooltip>
+  <Tooltip id='tooltip'>
+    <strong>
+      {text}
+    </strong>
+  </Tooltip>
 );
 
 @inject('store')
@@ -17,7 +21,7 @@ class BioButton extends React.Component {
 
   render() {
     return (
-      <Tooltip content={'Информация об авторе'} >
+      <Tooltip content="Информация об авторе">
         <button onClick={() => this.bioToggle()}>
           <i className='lnr lnr-persona' aria-hidden='true' />
         </button>

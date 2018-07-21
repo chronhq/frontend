@@ -5,9 +5,10 @@ export default class InputCheckBox extends Component {
     super(props);
     this.state = { checked: props.checked };
   }
+
   render() {
     return (
-      <label htmlFor={this.props.name} >
+      <label htmlFor={this.props.name}>
         <span>
           <input
             id={this.props.name}

@@ -11,7 +11,9 @@ class Settings extends React.Component {
   render() {
     return (
       <div className='sidepanel--content'>
-        <h3> Настройки</h3>
+        <h3>
+          { ' Настройки' }
+        </h3>
         <SetLayerVisibility />
         <SetLocalization />
         <SetOwnershipColorGrouping />

@@ -10,8 +10,11 @@ export default class ClickInfoModel {
   }
 
   @observable widgetType = LOCATION;
+
   @observable selected = null;
+
   @observable isOpen = true;
+
   @observable hiddenFlag = {
     visibility: 'hidden',
     scale: 1,
@@ -50,7 +53,7 @@ export default class ClickInfoModel {
         scale: this.rootStore.view.preciseScale,
         location: this.rootStore.prepared.data.cities.points[this.selected].location
       };
-    } else if (this.widgetType === GEO) {
+    } if (this.widgetType === GEO) {
       const geoEvent = this.rootStore.prepared.geoEvents[this.selected];
       return (geoEvent.point.x === null || geoEvent.point.y === null)
         ? this.hiddenFlag
@@ -71,23 +74,21 @@ export default class ClickInfoModel {
     const properties = this.rootStore.data.Properties.data;
     const border = properties[this.selected];
     const disputed = border.disputed !== ''
-      ? border.disputed.split(';').map(mapColor => // map over mapcolor13 of admin
-        // console.log('disputed', border.disputed, mapColor);
-        Object.keys(properties).reduce((prev, propId) => {
-          // console.log(prev, properties[propId].disputed === "",
-          // Number(properties[propId].mapcolor13) === Number(mapColor),
-          // properties[propId].admin
-          // );
-          if (prev === '?') {
-            if (properties[propId].disputed === ''
+      ? border.disputed.split(';').map(mapColor => Object.keys(properties).reduce((prev, propId) => {
+        // console.log(prev, properties[propId].disputed === "",
+        // Number(properties[propId].mapcolor13) === Number(mapColor),
+        // properties[propId].admin
+        // );
+        if (prev === '?') {
+          if (properties[propId].disputed === ''
                 && properties[propId].color === mapColor) {
-              const id = properties[propId].admin;
-              // console.log('returning', this.rootStore.admin[id].ru);
-              return this.rootStore.data.Admins.data[id].ru;
-            }
+            const id = properties[propId].admin;
+            // console.log('returning', this.rootStore.admin[id].ru);
+            return this.rootStore.data.Admins.data[id].ru;
           }
-          return prev;
-        }, '?'))
+        }
+        return prev;
+      }, '?'))
       : [];
     const admin = this.rootStore.data.Admins.data[border.admin].ru;
     return {

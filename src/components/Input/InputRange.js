@@ -5,6 +5,7 @@ export default class InputRange extends Component {
     super(props);
     this.state = { value: props.value };
   }
+
   render() {
     return (
       <label htmlFor={this.props.name}>

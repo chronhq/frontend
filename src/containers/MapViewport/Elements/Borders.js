@@ -33,4 +33,3 @@ class BordersMap extends React.Component {
 }
 
 export default BordersMap;
-

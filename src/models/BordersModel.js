@@ -1,4 +1,6 @@
-import { observable, when, computed, action } from 'mobx';
+import {
+  observable, when, computed, action
+} from 'mobx';
 import Geometry from './DataAdaptation/GeometryModel';
 import { getActualData, getNextData } from './DataAdaptation/_helper';
 
@@ -15,6 +17,7 @@ const separate = (arr) => {
 };
 export default class BordersModel {
   @observable geo = {};
+
   @observable contour = {};
 
   @observable saveDataCb = (type, json) => {

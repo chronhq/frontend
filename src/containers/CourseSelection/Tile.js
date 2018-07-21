@@ -11,8 +11,14 @@ const Tile = ({ course, lng }) => (
   <div className={isOdd(course.id) ? 'tile odd' : 'tile'}>
     <Link to={`${course.url}`}>
       <div className='tile__content'>
-        <h3 className='tile__title'> {course.name[lng]} </h3>
-        <p className='tile__description'>{course.description[lng]}</p>
+        <h3 className='tile__title'>
+          {' '}
+          {course.name[lng]}
+          {' '}
+        </h3>
+        <p className='tile__description'>
+          {course.description[lng]}
+        </p>
       </div>
     </Link>
   </div>

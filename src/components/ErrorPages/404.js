@@ -7,12 +7,16 @@ import logo from '../../img/logo.png';
 const NotFound = () => (
   <div className='errorPage' id='NotFound'>
     <Link to='/'>
-    <div className='errorPage__title'>
-      <img src={logo} />
-      <h1>  Хронист </h1>
+      <div className='errorPage__title'>
+        <img src={logo} />
+        <h1>
+          { ' Хронист ' }
+        </h1>
       </div>
     </Link>
-      <h3 className='text-center'>404... Страница не найдена</h3>
+    <h3 className='text-center'>
+      { '404... Страница не найдена' }
+    </h3>
     <div className='background'>
       <img className='background__single' src={image} />
     </div>

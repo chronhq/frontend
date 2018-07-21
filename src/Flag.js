@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 @inject('store')
 @observer
 class Flag extends React.Component {
-
   @computed get component() {
     return this.flag
       ? this.props.render

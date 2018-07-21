@@ -14,9 +14,9 @@ class ReturnButton extends React.Component {
 
   render() {
     return (
-        <button onClick={() => this.handleClick()}>
-          <i className='fa fa-reply' aria-hidden='true' />
-        </button>
+      <button onClick={() => this.handleClick()}>
+        <i className='fa fa-reply' aria-hidden='true' />
+      </button>
     );
   }
 }

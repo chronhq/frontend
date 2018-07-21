@@ -52,12 +52,15 @@ export default class FlagsModel {
       somethingsomething: 0
     }
   };
+
   @action set(f) {
     this.flags = mergeFlags(this.flags, f);
   }
+
   get(f) {
     return findFlag(this.flags, f);
   }
+
   print() {
     console.log(JSON.parse(JSON.stringify(this.flags)));
   }

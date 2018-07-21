@@ -5,6 +5,7 @@ export default class InputNumber extends Component {
     super(props);
     this.state = { value: props.value };
   }
+
   render() {
     return (
       <input

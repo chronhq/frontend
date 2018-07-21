@@ -8,15 +8,15 @@ import TimelineButtons from './TimelineButtons';
 
 
 const Tooltip = () => (
-  <div></div>
+  <div />
 );
 
 const ChangeTickButton = ({ direction, tip, cb }) => (
   <div className={`timeline__control control__${direction}`}>
-      <button onClick={() => cb()}>
-        <i className={`fa fa-angle-${direction} fa-fw`} />
-        <hr />
-      </button>
+    <button onClick={() => cb()}>
+      <i className={`fa fa-angle-${direction} fa-fw`} />
+      <hr />
+    </button>
   </div>
 );
 
@@ -95,6 +95,7 @@ class NavigationPan extends React.Component {
       ? this.tooltips.expand
       : this.tooltips.collapse;
   }
+
   @computed get isMin() {
     return this.props.store.flags.flags.runtime.TimelineIsMinified;
   }
@@ -106,9 +107,9 @@ class NavigationPan extends React.Component {
   render() {
     return (
       <div className='timeline__control control__home'>
-          <button onClick={() => this.toggleTimepanel()}>
-            <i className='fa fa-bars fa-fw' />
-          </button>
+        <button onClick={() => this.toggleTimepanel()}>
+          <i className='fa fa-bars fa-fw' />
+        </button>
         {(!this.isMin) && <TimelineButtons />}
       </div>
     );

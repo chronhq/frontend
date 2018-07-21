@@ -1,10 +1,9 @@
 import BaseI18n from './BaseI18n';
 
 export default class MessagesI18n extends BaseI18n {
-  getInventors = inventors => inventors.reduce((prev, p) =>
-    (typeof this.persons[p] === 'undefined'
-      ? prev
-      : [...prev, this.persons[p][this.nameSelector]]), []);
+  getInventors = inventors => inventors.reduce((prev, p) => (typeof this.persons[p] === 'undefined'
+    ? prev
+    : [...prev, this.persons[p][this.nameSelector]]), []);
 
   invention(fact) {
     const description = typeof fact.description === 'string'

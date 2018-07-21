@@ -5,6 +5,7 @@ import CityModel from './CityModel';
 
 export default class LocationsModel {
   @observable tree = rbush(9, ['.x', '.y', '.x', '.y']);
+
   @observable clusterization = true;
 
   @computed get points() {

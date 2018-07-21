@@ -3,13 +3,18 @@ import { observable, action, computed } from 'mobx';
 
 export default class ProjectionModel {
   @observable version = 0;
+
   @observable name = 'Mercator';
+
   // [[Left, Top], [Right, Bottom]]
   @observable clip = [[-180, 90], [180, -90]];
+
   @observable defaultClip = '[[-180,90],[180,-90]]';
+
   // https://en.wikipedia.org/wiki/Aircraft_principal_axes
   // https://github.com/d3/d3-geo/blob/master/README.md#projection_rotate
   @observable rotate = [0, 0, 0];
+
   @observable center = [0, 0];
   // @observable projectionByName = {
   //   Mercator: d3.geoMercator(),

@@ -10,9 +10,17 @@ export const PersonFact = ({ person, fact }) => (
     key={`pf_${fact.id}`}
   >
     <div className='factTest'>
-      <h5 className='factHeader'> {person.nameRus} </h5>
+      <h5 className='factHeader'>
+        {' '}
+        {person.nameRus}
+        {' '}
+      </h5>
       <h5 className='factDate'>
-        {person.birthDate ? person.birthDate : '????'} <br /> {person.deathDate ? person.deathDate : '????'}
+        {person.birthDate ? person.birthDate : '????'}
+        {' '}
+        <br />
+        {' '}
+        {person.deathDate ? person.deathDate : '????'}
       </h5>
     </div>
   </div>
@@ -36,6 +44,7 @@ export default class PersonFeed extends React.Component {
   @action select(v) {
     this.props.store.feed.persons[v] = !this.selected[v];
   }
+
   @action selectLocation(person, type) {
     const typePlace = `${type}Place`;
     const loc = person[typePlace];

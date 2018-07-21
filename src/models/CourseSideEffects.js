@@ -1,4 +1,6 @@
-import { observable, computed, action, when } from 'mobx';
+import {
+  observable, computed, action, when
+} from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
@@ -53,8 +55,7 @@ export default class CourseSideEffects {
   }
 
   @computed get loadingIsComplete() {
-    return this.listOfDeps.every(d =>
-      this.rootStore.data[d].status.loaded)
+    return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded)
       && this.rootStore.borders.ready;
   }
 
@@ -65,6 +66,7 @@ export default class CourseSideEffects {
       }
     });
   }
+
   @computed get courseInfo() {
     return this.rootStore.data.Courses.data[this.courseId];
   }
@@ -80,8 +82,7 @@ export default class CourseSideEffects {
 
     if (toggle === true) {
       // Wipe data except courses list
-      this.rootStore.data.roster.filter(c => c !== 'Courses').map(d =>
-        this.rootStore.data[d].wipe());
+      this.rootStore.data.roster.filter(c => c !== 'Courses').map(d => this.rootStore.data[d].wipe());
       // Wipe geometry
       this.rootStore.borders.wipe();
     }

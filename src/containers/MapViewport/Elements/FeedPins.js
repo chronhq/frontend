@@ -8,6 +8,7 @@ class FeedPins extends React.Component {
   @computed get pins() {
     return this.props.store.pins.pins;
   }
+
   render() {
     return (
       <g className="mapFeedPins">

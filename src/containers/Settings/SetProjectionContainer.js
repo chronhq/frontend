@@ -63,15 +63,25 @@ class SetProjectionContainer extends React.Component {
   }
 
   @observable clipEnabled = this.props.store.projection.clipEnabled;
+
   @observable name = this.props.store.projection.name;
+
   @observable clipLeft = this.props.store.projection.clip[0][0];
+
   @observable clipTop = this.props.store.projection.clip[0][1];
+
   @observable clipRight = this.props.store.projection.clip[1][0];
+
   @observable clipBottom = this.props.store.projection.clip[1][1];
+
   @observable yawn = this.props.store.projection.rotate[0];
+
   @observable pitch = this.props.store.projection.rotate[1];
+
   @observable roll = this.props.store.projection.rotate[2];
+
   @observable centerLat = this.props.store.projection.center[0];
+
   @observable centerLon = this.props.store.projection.center[1];
 
   render() {
@@ -79,53 +89,76 @@ class SetProjectionContainer extends React.Component {
 
     return (
       <div className='layerControl'>
-      <h5>Настройки проекции </h5>
-        {this.props.store.flags.flags.UI.devProjection &&
-          <div className='test'>
-            <div className='form-group'>
-              <InputSelect
-                name='Select Projection'
-                value={this.name}
-                options={options}
-                onChange={d => this.handleSelect(d)}
-              />
-            </div>
-            <div className='yprControl'>
-              <p>Выполнить поворот</p>
-              {' Y'}<InputNumber name='yawn' value={this.yawn} cb={d => this.handleChange(d)} />
-              {' P'}<InputNumber name='pitch' value={this.pitch} cb={d => this.handleChange(d)} />
-              {' R'}<InputNumber name='roll' value={this.roll} cb={d => this.handleChange(d)} />
-            </div>
-            <div>
-              <p>Установить центр</p>
-              {' Долгота '}<InputNumber name='centerLon' value={this.centerLon} cb={d => this.handleChange(d)} />
-              {' Широта '}<InputNumber name='centerLat' value={this.centerLat} cb={d => this.handleChange(d)} />
-            </div>
-            <br />
-            <div>
-              <InputCheckBox
-                name='clipEnabled'
-                label="Обрезать контур карты"
-                checked={this.clipEnabled}
-                cb={d => this.handleChange(d)}
-              />
-              {Boolean(this.clipEnabled) === true ?
-                <div>
-                  <p>Установить значение граничных точек в градусах</p>
-                  {'   Левая '}<InputNumber name='clipLeft' value={this.clipLeft} cb={d => this.handleChange(d)} />
-                  {' Верхняя '}<InputNumber name='clipTop' value={this.clipTop} cb={d => this.handleChange(d)} />
-                  <br />
-                  {' Правая '}<InputNumber name='clipRight' value={this.clipRight} cb={d => this.handleChange(d)} />
-                  {' Нижняя '}<InputNumber name='clipBottom' value={this.clipBottom} cb={d => this.handleChange(d)} />
-                </div>
-                : ''
-              }
+        <h5>
+Настройки проекции
+          {' '}
+        </h5>
+        {this.props.store.flags.flags.UI.devProjection
+          && (
+            <div className='test'>
+              <div className='form-group'>
+                <InputSelect
+                  name='Select Projection'
+                  value={this.name}
+                  options={options}
+                  onChange={d => this.handleSelect(d)}
+                />
+              </div>
+              <div className='yprControl'>
+                <p>
+                  { 'Выполнить поворот' }
+                </p>
+                {' Y'}
+                <InputNumber name='yawn' value={this.yawn} cb={d => this.handleChange(d)} />
+                {' P'}
+                <InputNumber name='pitch' value={this.pitch} cb={d => this.handleChange(d)} />
+                {' R'}
+                <InputNumber name='roll' value={this.roll} cb={d => this.handleChange(d)} />
+              </div>
+              <div>
+                <p>
+                  { 'Установить центр' }
+                </p>
+                {' Долгота '}
+                <InputNumber name='centerLon' value={this.centerLon} cb={d => this.handleChange(d)} />
+                {' Широта '}
+                <InputNumber name='centerLat' value={this.centerLat} cb={d => this.handleChange(d)} />
+              </div>
               <br />
-              <button onClick={() => this.handleSubmit()} className='btn'>
+              <div>
+                <InputCheckBox
+                  name='clipEnabled'
+                  label="Обрезать контур карты"
+                  checked={this.clipEnabled}
+                  cb={d => this.handleChange(d)}
+                />
+                {Boolean(this.clipEnabled) === true
+                  ? (
+                    <div>
+                      <p>
+                        { 'Установить значение граничных точек в градусах' }
+                      </p>
+                      {'   Левая '}
+                      <InputNumber name='clipLeft' value={this.clipLeft} cb={d => this.handleChange(d)} />
+                      {' Верхняя '}
+                      <InputNumber name='clipTop' value={this.clipTop} cb={d => this.handleChange(d)} />
+                      <br />
+                      {' Правая '}
+                      <InputNumber name='clipRight' value={this.clipRight} cb={d => this.handleChange(d)} />
+                      {' Нижняя '}
+                      <InputNumber name='clipBottom' value={this.clipBottom} cb={d => this.handleChange(d)} />
+                    </div>
+                  )
+                  : ''
+                }
+                <br />
+                <button onClick={() => this.handleSubmit()} className='btn'>
+
                 Установить
-              </button>
+                </button>
+              </div>
             </div>
-          </div>
+          )
         }
       </div>
     );

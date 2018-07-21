@@ -18,7 +18,9 @@ const LocationDot = ({ location, scale }) => (
     r={sizeOfALocationDot(location.scaleRank, scale)}
     key={`pin_${location.id}`}
   >
-    <title>{location.name}</title>
+    <title>
+      {location.name}
+    </title>
   </circle>
 );
 export default LocationDot;

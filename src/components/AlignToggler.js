@@ -23,8 +23,12 @@ class AlignToggler extends React.Component {
       <div>
         <form onSubmit={e => this.handleSubmit(e)}>
           <select placeholder="select" onChange={e => this.handleChange(e)}>
-            <option value='right'>Правое</option>
-            <option value='left'>Левое</option>
+            <option value='right'>
+              { 'Правое' }
+            </option>
+            <option value='left'>
+              { 'Левое' }
+            </option>
           </select>
           <input type="submit" value="Submit" />
         </form>

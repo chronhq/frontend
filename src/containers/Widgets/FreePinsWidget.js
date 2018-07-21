@@ -8,12 +8,17 @@ export default class FreePinsWidget extends React.Component {
   @computed get pins() {
     return this.props.store.pins.freePins;
   }
+
   rowCapasity = 8;
+
   xShift = 20;
+
   yShift = 30;
 
   translateX = idx => (idx % this.rowCapasity) * this.xShift;
+
   translateY = idx => Math.floor(idx / this.rowCapasity) * this.yShift;
+
   translate = idx => [this.translateX(idx), this.translateY(idx)].join(',');
 
   render() {

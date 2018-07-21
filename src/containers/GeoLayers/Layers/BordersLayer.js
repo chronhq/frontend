@@ -23,7 +23,7 @@ function getBorders(borders, properties, colors) {
         props: cur.props,
       };
     }
-    });
+  });
 }
 
 function bordersLayer(borders, properties, colors, visible, showInfo) {
@@ -42,7 +42,7 @@ function bordersLayer(borders, properties, colors, visible, showInfo) {
     stroked: true,
     extruded: false,
     lineJointRounded: true,
-    onClick: (f) => showInfo(f),
+    onClick: f => showInfo(f),
   });
 }
 

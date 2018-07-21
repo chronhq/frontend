@@ -9,8 +9,11 @@ import MapPics from './DataAdaptation/MapPicsModel';
 
 export default class FinalDataModel {
   @observable data = {};
+
   @observable persons;
+
   @observable inventions;
+
   @observable geoEventsList;
 
   @computed get locations() {

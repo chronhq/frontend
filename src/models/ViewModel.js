@@ -3,11 +3,14 @@ import { observable, computed, action } from 'mobx';
 export default class ViewModel {
   // this will be overwritten by MapView d3.event
   @observable transform = {};
+
   // changed after resize event
   @observable width = window.innerWidth;
+
   @observable height = window.innerHeight;
 
   @observable kmPerPx = 32;
+
   @observable milesPerPx = 20;
 
   constructor(rootStore) {

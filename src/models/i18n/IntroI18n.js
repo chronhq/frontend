@@ -29,6 +29,7 @@ export default class Intro extends BaseI18n {
       en: 'You can always switch to intro again on the side panel.'
     }
   }
+
   @computed get carousel() {
     return [
       {

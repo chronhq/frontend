@@ -78,6 +78,7 @@ export default class PersonsList {
   @computed get alive() {
     return getActualData(Object.keys(this.timeline), this.timeline, this.year);
   }
+
   @computed get current() {
     const { deathFacts } = this.facts;
     return (this.year in deathFacts)

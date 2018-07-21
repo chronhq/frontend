@@ -78,7 +78,7 @@ class PathAnimation extends React.Component {
 
   render() {
     return (
-      <g ref={(r) => { this.container = r; }} >
+      <g ref={(r) => { this.container = r; }}>
         <circle
           ref={(c) => { this.circle = c; }}
           r={0.2}

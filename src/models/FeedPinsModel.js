@@ -22,6 +22,7 @@ function getKey(info) {
 
 class InteractivePin {
   @observable info = [];
+
   @observable key;
 
   @computed get point() {
@@ -42,9 +43,13 @@ export default class FeedPinsModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
+
   @observable active = null;
+
   @observable selectedFreePin = false;
+
   @observable pageX = 0;
+
   @observable pageY = 1;
 
   @action setPosition(x, y) {
@@ -161,8 +166,7 @@ export default class FeedPinsModel {
   }
 
   @computed get pins() {
-    return Object.keys(this.combineRawPins).map(d =>
-      new InteractivePin(this.combineRawPins[d], d));
+    return Object.keys(this.combineRawPins).map(d => new InteractivePin(this.combineRawPins[d], d));
   }
 
   @computed get freePins() {

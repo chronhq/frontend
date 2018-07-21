@@ -10,16 +10,20 @@ class LayerControl extends React.Component {
   @computed get options() {
     return this.props.store.flags.flags.layer;
   }
+
   @action handleChange(data) {
     Object.keys(data).map((cur) => {
       this.options[cur] = data[cur];
       return false;
     });
   }
+
   render() {
     return (
       <div className='sidepanel--content'>
-        <h3> Управление слоями </h3>
+        <h3>
+          { 'Управление слоями' }
+        </h3>
         {
           Object.keys(this.options).map((item, id) => (
             <InputCheckBox

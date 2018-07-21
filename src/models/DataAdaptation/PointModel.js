@@ -2,6 +2,7 @@ import { computed, observable } from 'mobx';
 
 export default class PointModel {
   @observable data = {};
+
   @observable type = '';
 
   @computed get projection() {
@@ -32,6 +33,7 @@ export default class PointModel {
       y: this.data.geopoint[1],
     };
   }
+
   // Point will be in viewport area after clipping
   @computed get inTheBox() {
     return this.projection.inTheBox(this.point.x, this.point.y);

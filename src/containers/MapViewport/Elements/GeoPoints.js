@@ -8,6 +8,7 @@ class GeoPoints extends React.Component {
   @computed get geoPoints() {
     return this.props.store.prepared.geoPoints;
   }
+
   render() {
     return (
       <g className="mapGeoPoints">

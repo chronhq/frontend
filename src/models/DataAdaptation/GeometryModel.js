@@ -2,6 +2,7 @@ import { computed } from 'mobx';
 
 export default class GeometryModel {
   id = 0;
+
   geometry = {};
 
   @computed get projected() {

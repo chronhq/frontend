@@ -55,7 +55,7 @@ export default class ExpandedView extends React.Component {
 
     const Component = this.component;
     return (
-      <div className={this.sideNavAlign} >
+      <div className={this.sideNavAlign}>
         <Component />
       </div>
     );

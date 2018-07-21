@@ -11,7 +11,7 @@ import Defs from './Defs';
 export default class Widgets extends React.Component {
   render() {
     return (
-      <svg width={this.props.store.view.width} height={this.props.store.view.height} style={{ pointerEvents: 'none', position: 'absolute' }} >
+      <svg width={this.props.store.view.width} height={this.props.store.view.height} style={{ pointerEvents: 'none', position: 'absolute' }}>
         <Defs />
         <g id='svgWidgets'>
           {/* <ScaleWidget /> */}

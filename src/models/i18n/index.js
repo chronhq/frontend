@@ -8,12 +8,16 @@ export default class Internationalization {
   }
 
   @observable messages = new MessagesI18n(this.rootStore);
+
   @observable intro = new IntroI18n(this.rootStore);
+
   @observable languages = {
     ru: 'Русский',
     en: 'English',
   }
+
   @observable lng = 'ru';
+
   @action select(languages) {
     if (languages in this.languages) {
       this.lng = languages;

@@ -12,11 +12,13 @@ class MapDecorations extends React.Component {
   render() {
     return (
       <g className="mapDecorations">
-        {this.decorations.map(icon => (<use
-          key={`mapPic_key_${icon.data.id}_${icon.data.picId}`}
-          xlinkHref={`#mapPic_${icon.data.picId}`}
-          transform={`translate(${icon.projected[0]},${icon.projected[1]}) ${icon.data.transform}`}
-        />))
+        {this.decorations.map(icon => (
+          <use
+            key={`mapPic_key_${icon.data.id}_${icon.data.picId}`}
+            xlinkHref={`#mapPic_${icon.data.picId}`}
+            transform={`translate(${icon.projected[0]},${icon.projected[1]}) ${icon.data.transform}`}
+          />
+        ))
         }
       </g>
     );

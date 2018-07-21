@@ -15,7 +15,11 @@ class Feed extends React.Component {
   render() {
     return (
       <div className='sidepanel--content'>
-        <h3> Лента событий </h3>
+        <h3>
+          {' '}
+          { 'Лента событий' }
+          {' '}
+        </h3>
         <div className='feed-panel'>
           <div header="Люди" eventKey="1">
             <PersonsFeed />

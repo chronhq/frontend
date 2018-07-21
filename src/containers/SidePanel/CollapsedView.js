@@ -13,7 +13,10 @@ class FatButton extends React.Component {
         content={this.props.text}
         placement={(this.props.store.flags.flags.runtime.alignPanel === 'left') ? 'right' : 'left'}
       >
-        <button onClick={() => this.props.cb()}><i className={`lnr ${this.props.icon}`} /> </button>
+        <button onClick={() => this.props.cb()}>
+          <i className={`lnr ${this.props.icon}`} />
+          {' '}
+        </button>
       </Tooltip>
     );
   }
@@ -76,17 +79,19 @@ export default class CollapsedView extends React.Component {
 
   render() {
     return (
-      <div className={this.iconBarAlign} >
+      <div className={this.iconBarAlign}>
         <FatButton text={this.tooltips.intro} icon='lnr-home' cb={() => this.openIntro()} />
         <FatButton text={this.tooltips.search} icon='lnr-magnifier' cb={() => this.toggle('search')} />
         <FatButton text={this.tooltips.feed} icon='lnr-list' cb={() => this.toggle('feed')} />
         <FatButton text={this.tooltips.settings} icon='lnr-layers' cb={() => this.toggle('settings')} />
         <FatButton text={this.tooltips.settings} icon='lnr-layers' cb={() => this.toggle('layerscontrol')} />
 
-        {(process.env.NODE_ENV !== 'production') &&
-          <FatButton text={this.tooltips.debug} icon='lnr-cog' cb={() => this.toggle('align')} />
+        {(process.env.NODE_ENV !== 'production')
+          && <FatButton text={this.tooltips.debug} icon='lnr-cog' cb={() => this.toggle('align')} />
         }
-        <h3 className='vertical--logo'> ХРОНИСТ </h3>
+        <h3 className='vertical--logo'>
+          { ' ХРОНИСТ ' }
+        </h3>
       </div>
     );
   }

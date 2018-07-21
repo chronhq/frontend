@@ -1,10 +1,16 @@
-import { observable, computed, action, toJS } from 'mobx';
+import {
+  observable, computed, action, toJS
+} from 'mobx';
 
 class FileModel {
   @observable model = '';
+
   @observable data = {};
+
   @observable status = { error: false, loading: false, loaded: false };
+
   @observable filter = null;
+
   // This can be overwritten
   @observable saveDataCb = (json) => {
     const data = {};
@@ -34,7 +40,7 @@ class FileModel {
       : params;
     if (id !== null) {
       return `/api/${this.model}/${id}`;
-    } else if (filter !== null) {
+    } if (filter !== null) {
       return `/api/${this.model}?filter=${filter}`;
     }
     return `/api/${this.model}`;

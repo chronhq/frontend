@@ -20,10 +20,22 @@ class Bio extends React.Component {
         <div className='bio__data'>
           <img alt='Course Author' src={`data:image/jpeg;base64, ${info.photo}`} />
           <div className='name'>
-            <h2> {info.title} </h2>
-            <h2> {info.subtitle} </h2>
+            <h2>
+              {' '}
+              {info.title}
+              {' '}
+            </h2>
+            <h2>
+              {' '}
+              {info.subtitle}
+              {' '}
+            </h2>
           </div>
-          <p> {info.text} </p>
+          <p>
+            {' '}
+            {info.text}
+            {' '}
+          </p>
         </div>
       </div>
     );

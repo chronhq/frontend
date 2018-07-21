@@ -20,6 +20,7 @@ class ExportFromFeed extends React.Component {
   @computed get exportCb() {
     return f => this.props.store.feed.export(f);
   }
+
   @computed get feedDownloadLinkId() {
     return this.props.store.feed.feedDownloadLinkId;
   }

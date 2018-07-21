@@ -58,7 +58,11 @@ class Description extends React.Component {
   }
 
   render() {
-    return (<span>{this.name}</span>);
+    return (
+      <span>
+        {this.name}
+      </span>
+    );
   }
 }
 
@@ -69,6 +73,7 @@ class LegendItem extends React.Component {
   @computed get colors() {
     return this.props.store.colors;
   }
+
   render() {
     const { propId } = this.props;
     const vls = this.colors.uniqLegendItems[propId].colors;

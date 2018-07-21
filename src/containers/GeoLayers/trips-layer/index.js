@@ -1,1 +1,1 @@
-export {default} from './trips-layer';
+export { default } from './trips-layer';

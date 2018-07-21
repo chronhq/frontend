@@ -36,12 +36,13 @@ export default class Elements extends React.Component {
   @computed get courseId() {
     return this.props.store.flags.flags.runtime.SelectedCourse;
   }
+
   render() {
     return (
       <g transform={this.props.store.view.svgTransform}>
         <BasicElements />
-        {this.courseId !== 0 &&
-          <CourseElements />
+        {this.courseId !== 0
+          && <CourseElements />
         }
       </g>
     );

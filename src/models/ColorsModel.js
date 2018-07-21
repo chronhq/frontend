@@ -6,7 +6,9 @@ export default class ColorsModel {
   }
 
   @observable auto = false;
+
   @observable enabled = true;
+
   @observable zoomPoint = 4;
 
   @observable options = [
@@ -69,10 +71,9 @@ export default class ColorsModel {
   @computed get topColors() {
     // Find the most common color for this 'admin'
     return Object.keys(this.ranking).reduce((prev, admin) => {
-      const adminMax = Object.keys(this.ranking[admin]).reduce((color, curColor) =>
-        (this.ranking[admin][curColor] > color.value
-          ? { value: this.ranking[admin][curColor], id: curColor }
-          : color), { value: 0, id: 1 });
+      const adminMax = Object.keys(this.ranking[admin]).reduce((color, curColor) => (this.ranking[admin][curColor] > color.value
+        ? { value: this.ranking[admin][curColor], id: curColor }
+        : color), { value: 0, id: 1 });
       return { ...prev, [admin]: adminMax.id };
     }, {});
   }

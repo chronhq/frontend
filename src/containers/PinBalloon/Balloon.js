@@ -11,6 +11,7 @@ export default class Balloon extends React.Component {
   @computed get persons() {
     return this.props.store.data.Persons.data;
   }
+
   @computed get pin() {
     return this.props.store.pins.selected;
   }
