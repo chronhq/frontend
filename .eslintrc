@@ -6,6 +6,7 @@
     "node": true
   },
   "rules": {
+    "react/destructuring-assignment": "off",
     "new-cap": [2, { "capIsNewExceptions": ["List", "Map", "Set"] }],
     "react/no-multi-comp": 0,
     "import/no-named-as-default": 2,
