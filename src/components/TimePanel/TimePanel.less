@@ -90,26 +90,57 @@
 }
 
 .yearInput {
-  box-sizing: border-box;
-  vertical-align: middle;
-  background: transparent;
-  outline: none;
-  border: none;
-  text-align: center;
+//   //   height: 25px;
+//   // // min-width: 200px;
+//   // border-style: solid;
+//   // border-width: 1px;
+//   // border-radius: 2px;
+//   // border-color: @border;
+//   // padding: 0 5px;
+//   // font-size: 14px;
+//   // margin-bottom: 6px;
+//   // display: block;
+
+//   display: inline-block;
+//   box-sizing: border-box;
+//   border: none;
+//   vertical-align: middle;
+//   background: transparent;
+//   display: flex;
+//   margin: 0;
+//   padding: 0;
+//   outline: none;
+//   border: none;
+//   text-align: center;
   width: 60px;
-  height: 35px;
-  // float: right;
-  color: transparent;
-  text-shadow: 0 0 0 white;
-  letter-spacing: 0.5px;
-  font-size: 24px;
-  font-weight: 200;
-  &:hover {
-    color: #bbb;
-  }
-  &:focus {
-    outline: none;
-}
+//   height: 35px;
+//   // float: right;
+//   color: transparent;
+//   text-shadow: 0 0 0 white;
+//   letter-spacing: 0.5px;
+//   font-size: 24px;
+//   font-weight: 200;
+
+//   height: 35px;
+//   padding: 0;
+//   margin: 0;
+//   font-size: 25px;
+//   line-height: 25px;
+//   display: inline-block;
+//   vertical-align: middle;
+//   background: none;
+//   box-sizing: border-box;
+//   border: none;
+//   outline: none;
+//   min-width: 0;
+//   width: auto;
+//   height: auto;
+//   &:hover {
+//     color: #bbb;
+//   }
+//   &:focus {
+//     outline: none;
+// }
 }
 
 .error.yearInput { border-bottom: 2px solid red; }
@@ -172,17 +203,25 @@
   // line-height: 55px;
   text-align: center;
   //width: 10px;
-  & button {
+  & button, & input {
   //   // float: right;
+    display: inline-block;
     height: 35px;
+    font-size: 26px;
+    line-height: 26px;
     padding: 0;
     vertical-align: middle;
     background: none;
     box-sizing: border-box;
     border: none;
     min-width: 0;
-    width: auto;
-    height: auto;
+    // width: auto;
+    // height: auto;
+    color: white;
+    text-shadow: 0 0 0 white;
+    letter-spacing: -0.5px;
+    font-weight: 300;
+    font-family: 'OpenSans-Light';
     &:hover i {
       text-shadow: 2px 2px 2px black;
       opacity: 0.7;

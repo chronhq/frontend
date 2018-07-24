@@ -60,19 +60,19 @@ class ControlButtons extends React.Component {
   render() {
     return (
       <div className='timepanel__controls'>
-        <button onClick={() => this.props.store.year.resetYear()}>
+        <button type='button' onClick={() => this.props.store.year.resetYear()}>
           <Reset />
         </button>
-        <button onClick={() => this.props.store.year.prevYear()}>
+        <button type='button' onClick={() => this.props.store.year.prevYear()}>
           <Prev />
         </button>
-        <button onClick={() => this.props.store.year.togglePlay()}>
+        <button type='button' onClick={() => this.props.store.year.togglePlay()}>
           {this.props.store.year.playing
             ? <Pause />
             : <Play />
           }
         </button>
-        <button onClick={() => this.props.store.year.nextYear()}>
+        <button type='button' onClick={() => this.props.store.year.nextYear()}>
           <Next />
         </button>
         <YearInput />

@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import { when } from 'mobx';
 
 import { ymHit } from '../../metrikaHelper';
-import 'font-awesome/less/font-awesome.less';
 import './LoadingScreen.less';
 
 import checkCourses from '../CourseSelection/checkCourses';

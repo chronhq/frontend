@@ -9,7 +9,7 @@ const VertButton = ({ cb, fa }) => (
     className='btn btn-default'
     onClick={cb}
   >
-    <i className={`fa fa-${fa}`} />
+    <span className={`lnr lnr-${fa}-circle`} />
   </button>
 );
 

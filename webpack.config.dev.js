@@ -73,13 +73,6 @@ module.exports = {
   plugins:
   [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        WEBPACK: true,
-      },
-    }),
     new HtmlWebpackPlugin({ template: './index.html' }),
-    // new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
-    // new webpack.optimize.ModuleConcatenationPlugin()
   ]
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
 
@@ -43,6 +42,7 @@ class YearInput extends React.Component {
       <input
         type="text"
         pattern="[0-9]*"
+        length='4'
         value={this.now}
         onKeyDown={event => this.handlePress(event)}
         onChange={event => this.handleChange(event)}

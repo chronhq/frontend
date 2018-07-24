@@ -1,10 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import external styles
-import 'font-awesome/less/font-awesome.less';
-import 'bootstrap/less/bootstrap.less';
-
 import './style.less';
 import './LineIcon.less';
 
@@ -22,7 +18,6 @@ function renderApp(component) {
 renderApp(App);
 
 if (module.hot) {
-  // new components
   module.hot.accept(['./App'], () => {
     // eslint-disable-next-line global-require
     const NextApp = require('./App').default;
