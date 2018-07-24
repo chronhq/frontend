@@ -7,7 +7,7 @@
 }
 .tooltip {
   position: absolute;
-  z-index: 99;
+  z-index: 9999;
   min-width: 50px;
   max-width: 420px;
   background: #000;
@@ -15,6 +15,7 @@
   border-radius: 3px;
   // bottom: 0%;
   // left: 50%;
+  opacity: 1;
   margin-bottom: 10px;
   padding: 5px;
   // transform: translateX(-150%);
@@ -23,8 +24,10 @@
   background: #000;
   color: #fff;
   display: inline;
+  font-size: 10px;
   text-align: center;
-  font-size: .8em;
+  // font-size: .8em;
+  letter-spacing: -0.5px;
   padding: .3em 1em;
 }
 .tooltip--arrow {

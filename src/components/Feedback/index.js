@@ -1,11 +1,14 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { computed, action } from 'mobx';
+import { computed, action, observable } from 'mobx';
 import './Feedback.less';
+import { InputCheckBox } from '../Input';
 
 @inject('store')
 @observer
 class FeedbackForm extends React.Component {
+  @observable agreement = false;
+
   @computed get feedback() {
     return this.props.store.feedback;
   }
@@ -22,10 +25,19 @@ class FeedbackForm extends React.Component {
       : 'Произошла ошибка';
   }
 
+  @action closeFeedback() {
+    this.props.store.flags.flags.runtime.intro = false;
+  }
+
+  @action handleCheckbox() {
+    this.agreement = !this.agreement;
+  }
+
+
   render() {
     return (
       <div id='feedback' className='container-fluid'>
-        <Form
+        <form
           horizontal
           className='form-inline'
           onSubmit={(e) => {
@@ -34,53 +46,83 @@ class FeedbackForm extends React.Component {
             return false;
           }}
         >
-          <Row>
-            <textarea
-              className='long-input'
-              type='text'
-              value={this.feedback.text}
-              rows='7'
-              maxLength='2000'
-              required
-              // onInvalid={alert('Заполните это поле')}
-              style={{ height: 200 }}
-              placeholder='Опишите ситуацию *'
-              onChange={(e) => {
-                this.feedback.text = e.target.value;
-                return false;
-              }}
-            />
-          </Row>
-          <Row>
+          <div style={{display: 'flex', justifyContent: 'left'}}>
             <input
-              className='short-input'
               type='text'
               value={this.feedback.name}
-              // size='40'
-              placeholder='Имя'
-              maxLength='20'
+              placeholder={this.props.store.i18n.feedback.name}
               onChange={(e) => {
                 this.feedback.name = e.target.value;
                 return false;
               }}
             />
-          </Row>
-          <Row>
             <input
               type='email'
               value={this.feedback.email}
-              // size='20'
-              maxLength='100'
-              placeholder='Электронная почта'
+              placeholder={this.props.store.i18n.feedback.email}
               onChange={(e) => {
                 this.feedback.email = e.target.value;
                 return false;
               }}
             />
-          </Row>
-          <Row>
-            <button type='submit' className='btn btn-empty'>
-              { 'Отправить' }
+          </div>
+          <div style={{display: 'flex', justifyContent: 'left'}}>
+            <input
+              type='number'
+              value={this.feedback.year}
+              placeholder={this.props.store.i18n.feedback.year}
+              onChange={(e) => {
+                this.feedback.year = e.target.value;
+                return false;
+              }}
+            />
+            <select
+              type='number'
+              value={this.feedback.layer}
+              placeholder={this.props.store.i18n.feedback.layer}
+              onChange={(e) => {
+                this.feedback.year = e.target.value;
+                return false;
+              }}
+            >
+              {this.props.store.i18n.feedback.layers.map(
+                // TODO replace array with object and get value from object.keys
+                (value, i) => (<option value={value} key={`option_${i}`}>
+                  {value}
+                </option>)
+              )}
+            </select>
+          </div>
+          <textarea
+            type='text'
+            value={this.feedback.text}
+            required
+            // onInvalid={alert('Заполните это поле')}
+            style={{ height: 200 }}
+            placeholder={this.props.store.i18n.feedback.desc}
+            onChange={(e) => {
+              this.feedback.text = e.target.value;
+              return false;
+            }}
+          />
+          <input
+            type='text'
+            value={this.feedback.ref}
+            placeholder={this.props.store.i18n.feedback.ref}
+            onChange={(e) => {
+              this.feedback.ref = e.target.value;
+              return false;
+            }}
+          />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <InputCheckBox
+              name='test'
+              label={this.props.store.i18n.feedback.ToS}
+              checked={this.agreement}
+              cb={() => this.handleCheckbox()}
+            />
+            <button type='submit' disable={this.agreement ? true : undefined} className={this.agreement ? '' : 'disabled'}>
+              {this.props.store.i18n.feedback.button}
             </button>
             <span
               key='result'
@@ -91,23 +133,8 @@ class FeedbackForm extends React.Component {
               {this.infoMessage}
               <br />
             </span>
-          </Row>
-          <Row className='text-center'>
-            <p>
-              { 'Нажимая на кнопку, вы даете согласие на обработку своих персональных данных' }
-              <br />
-
-              <a
-                href='https://chronist.ru/privacy'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-
-              { 'Политика конфиденциальности' }
-              </a>
-            </p>
-          </Row>
-        </Form>
+          </div>
+        </form>
       </div>
     );
   }
@@ -120,7 +147,7 @@ class Feedback extends React.Component {
     return this.props.store.flags.flags.runtime.feedback;
   }
 
-  @action close() {
+  @action closeFeedback() {
     this.props.store.flags.flags.runtime.feedback = false;
   }
 
@@ -128,23 +155,18 @@ class Feedback extends React.Component {
     if (this.isOpen === false) {
       return null;
     }
-    // return (
-    //   <Modal.Dialog>
-    //     <Modal.Header>
-    //       <Button className='close float-left' onClick={() => this.close()} > &times; </Button>
-    //       <Modal.Title> Обратная связь </Modal.Title>
-    //     </Modal.Header>
-    //     <Modal.Body>
-    //       Нашли ошибку?
-    //       <FeedbackForm />
-    //     </Modal.Body>
-    //   </Modal.Dialog>
-    // );
     return (
-      <div>
-        {' '}
-Todo MODAL обратная связь
-        {' '}
+      <div className='mistake-report layer-3'>
+        <h2>
+          {this.props.store.i18n.feedback.title}
+        </h2>
+        <h5>
+          {this.props.store.i18n.feedback.subtitle}
+        </h5>
+        <button onClick={() => this.closeFeedback()} className='close-window' type='button'>
+          <span className="lnr lnr-cross" />
+        </button>
+        <FeedbackForm />
       </div>
     );
   }

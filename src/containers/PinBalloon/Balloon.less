@@ -1,17 +1,58 @@
 .balloonNews {
-  pointer-events: none;
-  transition: opacity 0.3s;
-  background: lightblue;
-  border: solid gray;
   position: absolute;
-  max-width: 20em;
-  text-align: center;
-  z-index: 1;
+  z-index: 100;
+  padding: 3px;
+  transform: translate(-50%, 10px);
+  // border: 1px solid @border;
+  border-radius: 2px;
+  max-width: 370px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.50);
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
+  -webkit-user-select: none;  Safari
   -khtml-user-select: none; /* Konqueror HTML */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                      supported by Chrome and Opera */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+  // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.10)
+  & h6 {
+    text-align: center;
+  }
+  & p {
+    font-size: 10px;
+  }
+  & span.decal {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 2px;
+    height: 10px;
+    width: 10px !important;
+    min-width: 10px;
+    margin: 0 2px;
+  }
+
+  .factHeader {
+    display: block;
+    font-family: 'OpenSans-SemiBold';
+    font-size: 14px;
+  }
+  .factDate {
+    display: block;
+    font-size: 14px;
+  }
+  .factDescription {
+    display: block;
+    font-size: 14px;
+  }
+  .factAuthor {
+    display: block;
+    font-size: 14px;
+  }
+  .factTest {
+    display: block;
+    font-family: 'OpenSans-LightItalic';
+    font-size: 14px;
+  }
 }

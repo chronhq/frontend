@@ -85,6 +85,7 @@ export default class Internationalization {
           search: 'Поиск',
           feed: 'Лента событий',
           settings: 'Настройки',
+          layers: 'Слои',
           debug: 'Отладка',
           author: 'Информация об авторе',
           home: 'К выбору курса',
@@ -92,6 +93,39 @@ export default class Internationalization {
           prevYear: 'Предыдущий год',
           collapse: 'Свернуть',
           expand: 'Развернуть',
+        };
+    }
+  }
+
+  @computed get feedback() {
+    switch (this.lng) {
+      case 'en':
+        return {
+          title: "There's a mistake!",
+          subtitle: 'Data accuracy is our priority. We greatly appreciate any submitted reports.',
+          name: 'Name',
+          email: 'email',
+          year: 'Year',
+          layer: 'Layer',
+          desc: 'Description',
+          ref: 'Reference',
+          layers: ['Select layer:', 'Borders', 'Inventions', 'Wars', 'Events'],
+          ToS: 'I agree to the Privacy Policy',
+          button: 'Bug report'
+        };
+      default:
+        return {
+          title: 'Здесь ошибка',
+          subtitle: 'Точность данных наш приоритет.  Благодарим за все найденные и указанные ошибки.',
+          name: 'Имя',
+          email: 'email',
+          year: 'Год',
+          layer: 'Тип данных',
+          desc: 'Комментарий',
+          ref: 'Ссылка на источник',
+          layers: ['Тип данных:', 'Borders', 'Inventions', 'Wars', 'Events'],
+          ToS: 'Я принимаю условия пользовательского соглашения',
+          button: 'Сообщить'
         };
     }
   }

@@ -10,18 +10,20 @@ class FeedbackButtons extends React.Component {
     this.props.store.flags.flags.runtime.feedback = true;
   }
 
+
   render() {
     return (
       <div className='export-buttons'>
-        <button onClick={() => this.openFeedback()}>
+        <button type="button" onClick={() => this.openFeedback()}>
           {this.props.store.i18n.buttons.mistake}
         </button>
         <a
           href='https://chronist.ru/faq'
+          className='decorless'
           target='_blank'
           rel='noopener noreferrer'
         >
-          <button>
+          <button type="button">
             {this.props.store.i18n.buttons.faq}
           </button>
         </a>
