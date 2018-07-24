@@ -34,7 +34,6 @@ export default class FlagsModel {
     },
     UI: {
       MapViewport: true,
-      devProjection: process.env.NODE_ENV !== 'production',
     },
     visibility: {
       borders: 1,

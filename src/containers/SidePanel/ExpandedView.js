@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import Settings from '../Settings';
-import Feed from '../Feed';
+// import Feed from '../Feed';
 
 import LayerControl from './LayerControl';
 import Debug from './Debug';
@@ -38,7 +38,7 @@ export default class ExpandedView extends React.Component {
       case 'search':
         return SearchPanel;
       case 'feed':
-        return Feed;
+        return Settings;
       case 'settings':
         return Settings;
       case 'align':

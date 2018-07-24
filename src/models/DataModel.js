@@ -88,7 +88,6 @@ export default class DataModel {
   @observable roster = [
     'Admins',
     'Borders',
-    'Cities',
     'CityLocs',
     'CityPops',
     'CityProperties',

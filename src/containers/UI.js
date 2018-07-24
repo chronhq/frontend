@@ -4,9 +4,8 @@ import Flag from '../Flag';
 import MapViewport from './GeoLayers';
 import SidePanel from './SidePanel';
 import TimePanel from '../components/TimePanel/TimePanel';
-import MapControls from '../components/MapControls';
 import Timeline from '../components/Timeline';
-// import LegendHOC from '../containers/LegendHOC';
+
 import Bio from '../components/Timeline/Bio';
 import Widgets from './Widgets';
 
@@ -41,10 +40,6 @@ const UI = () => (
     <Flag
       name="UI.MiniSidebar"
       render={() => <Timeline />}
-    />
-    <Flag
-      name="UI.MapControls-NotImplemented"
-      render={() => <MapControls />}
     />
     <Flag
       name="UI.MapViewport"
