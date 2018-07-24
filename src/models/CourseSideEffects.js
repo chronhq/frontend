@@ -12,7 +12,6 @@ export default class CourseSideEffects {
     base: [
       'Admins',
       'Borders',
-      'Cities',
       'CityLocs',
       'CityPops',
       'CityProperties',
