@@ -3,11 +3,9 @@ import React from 'react';
 // import SetProjectionContainer from './SetProjectionContainer';
 import SetLayerVisibility from './SetLayerVisibility';
 import FeedbackButtons from '../../components/Feedback/FeedbackButtons';
-import SetOwnershipColorGrouping from './SetOwnershipColorGrouping';
 import SetLocalization from './SetLocalization';
 
 class Settings extends React.Component {
-  // <SetProjectionContainer />
   render() {
     return (
       <div className='sidepanel--content'>
@@ -16,7 +14,6 @@ class Settings extends React.Component {
         </h3>
         <SetLayerVisibility />
         <SetLocalization />
-        <SetOwnershipColorGrouping />
         <FeedbackButtons onClose={this.props.onClose} />
       </div>
     );

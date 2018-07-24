@@ -3,12 +3,9 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import Settings from '../Settings';
-// import Feed from '../Feed';
 
 import LayerControl from './LayerControl';
 import Debug from './Debug';
-import SearchPanel from './SearchPanel';
-
 
 const Empty = () => ('');
 
@@ -35,10 +32,6 @@ export default class ExpandedView extends React.Component {
 
   @computed get component() {
     switch (this.flags.SidePanelTab) {
-      case 'search':
-        return SearchPanel;
-      case 'feed':
-        return Settings;
       case 'settings':
         return Settings;
       case 'align':
