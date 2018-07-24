@@ -2,11 +2,11 @@ import { observable, computed, action } from 'mobx';
 
 function getIcon(info) {
   switch (info.type) {
-    case 'birth': return 25; // StarPin
-    case 'death': return 25;
-    case 'geo': return 23; // InfoPin
-    case 'inv': return 24; // BulbPin
-    default: return 23;
+    case 'birth': return 26; // Birth
+    case 'death': return 28; // Death
+    case 'geo': return 30; // SimpleInfoPin
+    case 'inv': return 27; // SimpleBulb
+    default: return 31; // SimpleStar
   }
 }
 
