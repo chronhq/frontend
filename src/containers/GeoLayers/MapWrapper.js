@@ -288,7 +288,7 @@ class MapWrapper extends React.Component {
         initialViewState={this.props.store.deck.viewport}
         onViewportChange={v => this.props.store.deck.updateViewport(v)}
         layers={layers}
-        style={{ zIndex: -1 }}
+        style={{ zIndex: 1 }}
         width={this.width}
         height={this.height}
       />
