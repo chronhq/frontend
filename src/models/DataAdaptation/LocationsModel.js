@@ -10,7 +10,10 @@ export default class LocationsModel {
 
   @computed get points() {
     const cities = Object.keys(this.rootStore.data.CityLocs.data);
-    return cities.map(city => new CityModel(this.rootStore, city));
+    return cities.reduce((prev, city) => ({
+      ...prev,
+      [city]: new CityModel(this.rootStore, city)
+    }), {});
   }
 
   @computed get visiblePoints() {
