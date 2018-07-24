@@ -1,15 +1,8 @@
 import React from 'react';
-// import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { inject, observer } from 'mobx-react';
 import { Tooltip } from '../Input';
 
-const tooltip = text => (
-  <Tooltip id='tooltip'>
-    <strong>
-      {text}
-    </strong>
-  </Tooltip>
-);
+// #TODO localization tooltip
 
 @inject('store')
 @observer
@@ -21,9 +14,9 @@ class BioButton extends React.Component {
 
   render() {
     return (
-      <Tooltip content="Информация об авторе">
-        <button onClick={() => this.bioToggle()}>
-          <i className='lnr lnr-persona' aria-hidden='true' />
+      <Tooltip content='Информация об авторе' placement='bottom'>
+        <button onClick={() => this.bioToggle()} type='button'>
+          <span className='lnr lnr-user' />
         </button>
       </Tooltip>
     );

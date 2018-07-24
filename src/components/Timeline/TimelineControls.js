@@ -1,22 +1,19 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
-// import 'MiniSidebar.less';
 import './TimelineControls.less';
 import TimelineButtons from './TimelineButtons';
-
-
-const Tooltip = () => (
-  <div />
-);
+import { Tooltip } from '../Input';
 
 const ChangeTickButton = ({ direction, tip, cb }) => (
   <div className={`timeline__control control__${direction}`}>
-    <button onClick={() => cb()}>
-      <i className={`fa fa-angle-${direction} fa-fw`} />
-      <hr />
-    </button>
+    <Tooltip content={tip} placement='left'>
+      <button onClick={() => cb()} type='button'>
+        {direction === 'down' ? <hr /> : null}
+        <span className={`lnr lnr-chevron-${direction}`} />
+        {direction === 'up' ? <hr /> : null}
+      </button>
+    </Tooltip>
   </div>
 );
 
@@ -28,7 +25,7 @@ export default class TimelineControls extends React.Component {
   }
 
   @computed get className() {
-    return this.props.store.flags.flags.runtime.timelineIsMinified
+    return this.props.store.flags.flags.runtime.TimelineIsMinified
       ? ['timeline', 'timeline__minified'].join(' ')
       : ['timeline'].join(' ');
   }
@@ -66,7 +63,7 @@ export default class TimelineControls extends React.Component {
         onWheel={e => this.handleWheel(e)}
         onKeyDown={e => this.handlePress(e)}
       >
-        <NavigationPan />
+        <TimelineButtons />
         <ChangeTickButton
           tip={this.tooltips.prevYear}
           direction='up'
@@ -78,39 +75,6 @@ export default class TimelineControls extends React.Component {
           direction='down'
           cb={() => this.props.store.year.nextTick()}
         />
-      </div>
-    );
-  }
-}
-
-@inject('store')
-@observer
-class NavigationPan extends React.Component {
-  @computed get tooltips() {
-    return this.props.store.i18n.tooltips;
-  }
-
-  @computed get tip() {
-    return this.props.store.flags.flags.runtime.TimelineIsMinified
-      ? this.tooltips.expand
-      : this.tooltips.collapse;
-  }
-
-  @computed get isMin() {
-    return this.props.store.flags.flags.runtime.TimelineIsMinified;
-  }
-
-  @action toggleTimepanel() {
-    this.props.store.flags.flags.runtime.TimelineIsMinified = !this.isMin;
-  }
-
-  render() {
-    return (
-      <div className='timeline__control control__home'>
-        <button onClick={() => this.toggleTimepanel()}>
-          <i className='fa fa-bars fa-fw' />
-        </button>
-        {(!this.isMin) && <TimelineButtons />}
       </div>
     );
   }

@@ -1,33 +1,21 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import BioButton from './BioButton';
-import './TimelineButtons.less';
+import ButtonBio from './ButtonBio';
+import ButtonReturn from './ButtonReturn';
+import ButtonMenu from './ButtonMenu';
 
 @inject('store')
 @observer
-class ReturnButton extends React.Component {
-  handleClick() {
-    this.props.store.effects.course.toggleCourseSelection(true);
-    this.props.history.push('/');
-  }
-
+class TimelineButtons extends React.Component {
   render() {
     return (
-      <button onClick={() => this.handleClick()}>
-        <i className='fa fa-reply' aria-hidden='true' />
-      </button>
+      <div className='timeline__control control__home'>
+        {this.props.store.flags.flags.runtime.TimelineIsMinified ? null : <ButtonReturn />}
+        {this.props.store.flags.flags.runtime.TimelineIsMinified ? null : <ButtonBio />}
+        <ButtonMenu />
+      </div>
     );
   }
 }
-
-const ReturnButtonMagic = withRouter(ReturnButton);
-
-const TimelineButtons = () => (
-  <div className='timeline__buttons'>
-    <BioButton />
-    <ReturnButtonMagic />
-  </div>
-);
 
 export default TimelineButtons;

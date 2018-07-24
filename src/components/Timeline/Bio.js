@@ -1,5 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { computed, action, observable } from 'mobx';
 import './Bio.less';
 
 
@@ -13,12 +14,19 @@ const info = {
 @inject('store')
 @observer
 class Bio extends React.Component {
+
+  @action closeBio() {
+    this.props.store.flags.flags.runtime.BioIsOpen = false;
+  }
+
   render() {
     if (this.props.store.flags.flags.runtime.BioIsOpen === false) return '';
     return (
-      <div className='bio__container'>
+      <div className='bio__container layer-3'>
         <div className='bio__data'>
-          <img alt='Course Author' src={`data:image/jpeg;base64, ${info.photo}`} />
+          <div className='photo'>
+            <img alt='Course Author' src={`data:image/jpeg;base64, ${info.photo}`} />
+          </div>
           <div className='name'>
             <h2>
               {' '}
@@ -36,6 +44,9 @@ class Bio extends React.Component {
             {info.text}
             {' '}
           </p>
+          <button onClick={() => this.closeBio()} className='close-window' type='button'>
+            <span className="lnr lnr-cross" />
+          </button>
         </div>
       </div>
     );
