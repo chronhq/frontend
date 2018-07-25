@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Motion, spring } from 'react-motion';
 
 import './RotatingLogo.less';
 
@@ -31,40 +30,28 @@ class RotatingLogo extends Component {
           <path className='stb0' d={ringBorder} />
           <path className='stb1' d={ringCenter} />
         </g>
-        <Motion
-          defaultStyle={{ r1: 0, r2: 0 }}
-          style={{
-            r1: spring(360, { stiffness: 1, damping: 0 }),
-            r2: spring(360, { stiffness: 1, damping: 0 }),
-          }}
-        >
-          {value => (
-            <g>
-              <g transform={`rotate(${value.r1}, 105, 105)`}>
-                <path className='st0' d='M66.5,120.8' />
-                <path className='st1' d={ring1Arc} />
-                <path className='st1' d={ring1Arc2} />
-                <path className='st2' d={ring1Arc3} />
-                <circle className='st3' cx='136.6' cy='165.8' r='2.5' />
-              </g>
-              <g transform={`rotate(${0 - value.r2}, 105, 105)`}>
-                <path className='st0' d='M66.5,120.8' />
-                <path className='st4' d={ring2Arc} />
-                <path className='st4' d={ring2Arc2} />
-                <path className='st4' d={ring2Arc3} />
-                <path className='st4' d={ring2Arc4} />
-                <path className='st5' d={ring2Arc5} />
-                <path className='st5' d={ring2Arc6} />
+        <g>
+          <g>
+            <path className='st0' d='M66.5,120.8' />
+            <path className='st1' d={ring1Arc} />
+            <path className='st1' d={ring1Arc2} />
+            <path className='st2' d={ring1Arc3} />
+            <circle className='st3' cx='136.6' cy='165.8' r='2.5' />
+          </g>
+          <g>
+            <path className='st0' d='M66.5,120.8' />
+            <path className='st4' d={ring2Arc} />
+            <path className='st4' d={ring2Arc2} />
+            <path className='st4' d={ring2Arc3} />
+            <path className='st4' d={ring2Arc4} />
+            <path className='st5' d={ring2Arc5} />
+            <path className='st5' d={ring2Arc6} />
 
-                <circle className='st3' cx='144.5' cy='72.7' r='2.5' />
-                <circle className='st3' cx='22.2' cy='86' r='3' />
-                <circle className='st3' cx='119.2' cy='20.4' r='2.5' />
-
-              </g>
-            </g>
-          )
-          }
-        </Motion>
+            <circle className='st3' cx='144.5' cy='72.7' r='2.5' />
+            <circle className='st3' cx='22.2' cy='86' r='3' />
+            <circle className='st3' cx='119.2' cy='20.4' r='2.5' />
+          </g>
+        </g>
       </svg>
     );
   }
