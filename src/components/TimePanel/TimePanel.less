@@ -1,35 +1,5 @@
-
-@base00: white;
-@base01: #eee;
-
-// #timeline {
-// 	font-size: 12px;
-// 	position: fixed;
-// 	bottom: 0px;
-// 	width: 100%;
-
-// 	// margin-left: 0px;
-// 	// margin-right: 0px;
-//   margin: 0;
-// 	padding: 0;
-// 	z-index: 8;
-// 	color: white;
-// 	height: 55px;
-// 	background: #02364C;
-// 	opacity: 0.95;
-// 	&.svgTime {
-//     display: inline-block;
-//    	vertical-align: middle;
-//     // left: 50%;
-//     border: none;
-//     // transform: translateX(-50%);
-//     position: relative;
-// 	}
-// }
-
 .axisTime {
 	color:white;
-
 	& line {stroke:white;}
 	& path {stroke:white;}
 	& text {fill: white; stroke:none;}
@@ -46,43 +16,11 @@
   	text-decoration: underline;
   }
 }
+
 // disable selectable text
 .svgTime text {
 	pointer-events: none;
-  height: 55px;
 }
-
- .playButton {
-  // height: 55px;
-  text-align: right;
-  margin: 0;
-    display: inline-block;
-    // float: left;
-    //height: 55px;
-    // padding-left: 50px;
-    font-size: 12px;
-    vertical-align: middle;
-    // height: 55px;
-    line-height: 55px;
-    text-align: center;
-    //width: 10px;
-    & button {
-      // float: right;
-      background: none;
-      border: none;
-      margin-right: 10px;
-      // border-radius: 5px;
-      // width: 20px;
-
-      &:hover {
-        color: #bbb;
-      }
-      & .active {
-        border-color: red;
-      }
-    }
-  }
-
 
 @media screen and (max-width:600px) {
   #timeline {height: 85px;}
@@ -145,16 +83,6 @@
 
 .error.yearInput { border-bottom: 2px solid red; }
 
-.col-sm-4,
-.col-sm-pull-8,
-.col-sm-8,
-.col-sm-push-4
-{
-  margin: 0;
-  // height: 55px;
-}
-
-
 .timepanel {
   display: flex;
   flex-direction: column;
@@ -171,14 +99,7 @@
   // height: 55px;
   background: #02364C;
   opacity: 0.95;
-  // &.svgTime {
-  //   display: inline-block;
-  //   vertical-align: middle;
-  //   // left: 50%;
-  //   border: none;
-  //   // transform: translateX(-50%);
-  //   position: relative;
-  // }
+
   @media screen and (min-width: 600px) {
     flex-direction: row-reverse;
   }
@@ -257,13 +178,3 @@
     color: red;
   }
 }
-
-/*.axisTime {
-  & g text {
-    display: none;
-  }
-  & g line {
-    display: none;
-  }
-}
-*/
