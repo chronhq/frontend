@@ -11,16 +11,16 @@ import RotatingLogo from './RotatingLogo';
 
 @observer
 class LoadingScreen extends React.Component {
-  componentWillReceiveProps(next) {
-    checkCourses(next);
-  }
-
   componentWillMount() {
     ymHit(this.props.courseSelected);
     when( // validate course name and download data
       () => this.props.store.data.Courses.status.loaded,
       () => this.selectCourse()
     );
+  }
+
+  componentWillReceiveProps(next) {
+    checkCourses(next);
   }
 
   selectCourse() {
