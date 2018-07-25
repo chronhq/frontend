@@ -21,6 +21,7 @@ class RotatingLogo extends Component {
   render() {
     return (
       <svg
+        style={{ zIndex: 3 }}
         width='220'
         height='220'
         viewBox="0 0 220 220"

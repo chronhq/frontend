@@ -9,6 +9,8 @@ import App from './App';
 
 window.store = new StoreModel();
 window.store.data.Courses.get();
+window.store.effects.course.loadBaseData();
+window.store.effects.course.loadContourInfo();
 
 function renderApp(component) {
   const Application = component;

@@ -11,12 +11,9 @@ export default class CourseSideEffects {
   @observable deps = {
     base: [
       'Admins',
-      'Borders',
       'CityLocs',
       'CityPops',
       'CityProperties',
-      'Contours',
-      'Geometries',
       'MapLabels',
       'Persons',
       'Properties',
@@ -34,6 +31,11 @@ export default class CourseSideEffects {
       'Inventions',
       'GeoEvents',
     ],
+    heavy: [
+      'Borders',
+      'Contours',
+      'Geometries',
+    ]
   };
 
   @observable activeCourses = JSON.stringify({ where: { active: true } });
@@ -42,16 +44,12 @@ export default class CourseSideEffects {
     return this.rootStore.flags.flags.runtime.SelectedCourse;
   }
 
-  @computed get depend() {
+  @computed get listOfDeps() {
     return this.courseId === 0
       ? [...this.deps.base, ...this.deps.world]
       : [...this.deps.base, ...this.deps.course];
   }
 
-  @computed get listOfDeps() {
-    return this.depend.filter(c => (
-      c !== 'Geometries'));
-  }
 
   @computed get loadingIsComplete() {
     return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded)
@@ -109,9 +107,54 @@ export default class CourseSideEffects {
     this.rootStore.data.CourseTimelines.filter = this.courseFilter;
   }
 
+  @action loadBaseData() {
+    this.rootStore.data.resolveDependencies(this.deps.base);
+  }
+
+  @action loadContourInfo() {
+    const contourFilter = {
+      fields: {
+        courseId: true,
+        id: true,
+        name: true,
+      }
+    };
+    this.rootStore.data.ContoursList.get(contourFilter);
+  }
+
   @action loadCourseData() {
-    this.rootStore.borders.loadGeometry();
+    // Load heavy data
+    const bordersFilter = {
+      where: {
+        and: [
+          { year: this.rootStore.year.now },
+          { courseId: this.courseId }
+        ]
+      }
+    };
+    this.rootStore.data.Borders.get(bordersFilter);
+    const contourList = Object.values(this.rootStore.data.ContoursList.data);
+    if (contourList.length > 0) {
+    // Download each contour part in separate queries
+      contourList.filter(c => this.courseId === c.courseId)
+        .map((c) => {
+          console.log('Loading contour', c);
+          this.rootStore.data.Contours.get({
+            where: {
+              or: [{ id: c.id }]
+            }
+          });
+          return '';
+        });
+    } else {
+      this.rootStore.data.Contours.get();
+    }
+    // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
+
+    this.rootStore.borders.loadGeometry();
+    // reload all borders
+    this.rootStore.data.Borders.get();
   }
 
   find(name) {

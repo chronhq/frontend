@@ -1,7 +1,6 @@
 import {
   observable, when, computed, action
 } from 'mobx';
-import Geometry from './DataAdaptation/GeometryModel';
 import { getActualData, getNextData } from './DataAdaptation/_helper';
 
 const separate = (arr) => {
@@ -15,18 +14,25 @@ const separate = (arr) => {
     return arr.slice(start, stop);
   });
 };
+
+class GeometryModel {
+  geometry = {};
+
+  constructor(data) {
+    this.geometry = data.geometry;
+  }
+}
 export default class BordersModel {
   @observable geo = {};
 
   @observable contour = {};
 
   @observable saveDataCb = (type, json) => {
-    const data = {};
     json.map((cur) => {
-      data[cur.id] = new Geometry(this.rootStore, cur);
+      // data[cur.id] = new GeometryModel(cur);
+      this[type][cur.id] = new GeometryModel(cur);
       return false;
     });
-    this[type] = { ...this[type], ...data };
   }
 
   constructor(rootStore) {
@@ -84,7 +90,7 @@ export default class BordersModel {
       return false;
     });
     const arr = separate(dataToLoad);
-    return arr.map(or => JSON.stringify({ where: { or } }));
+    return arr.map(or => ({ where: { or } }));
   }
 
   // Borders Timeline

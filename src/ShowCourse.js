@@ -8,7 +8,6 @@ import './ShowCourse.less';
 @observer
 class ShowCourse extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <Flag

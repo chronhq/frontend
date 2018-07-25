@@ -2,8 +2,8 @@ import { GeoJsonLayer } from 'deck.gl';
 
 function getBorders(borders, properties, colors) {
   return borders.map((cur) => {
-    const colorId = properties[cur.props].color;
     try {
+      const colorId = properties[cur.props].color;
       const color = colors[colorId].color1;
       // console.log('Trying to get color', colorId, cur);
       // console.log(color, colorId, colors[colorId]);

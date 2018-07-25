@@ -32,9 +32,14 @@ export default class CityModel {
       }
       return null;
     };
-    answer.pop = getCurrent(this.population);
-    answer.props = getCurrent(this.properties);
-    return answer;
+    try {
+      answer.pop = getCurrent(this.population);
+      answer.props = getCurrent(this.properties);
+      return answer;
+    } catch (e) {
+      // console.log('Can not get current loc', this);
+      return answer;
+    }
   }
 
   @computed get visible() {
@@ -88,8 +93,13 @@ export default class CityModel {
   }
 
   @computed get population() {
-    return Object.values(this.rootStore.data.CityPops.data)
-      .find(c => this.data.id === c.cityId).json;
+    try {
+      return Object.values(this.rootStore.data.CityPops.data)
+        .find(c => this.data.id === c.cityId).json;
+    } catch (e) {
+      // console.log('Error in population', this, e);
+      return {};
+    }
   }
 
   constructor(rootStore, cityId) {

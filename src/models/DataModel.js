@@ -37,8 +37,9 @@ class FileModel {
     // if arguments not null ignore global this.filter
     const filter = (params === null && id === null)
       ? toJS(this.filter)
-      : params;
+      : JSON.stringify(params);
     if (id !== null) {
+      console.log('get', this.model, params, id);
       return `/api/${this.model}/${id}`;
     } if (filter !== null) {
       return `/api/${this.model}?filter=${filter}`;
@@ -113,6 +114,7 @@ export default class DataModel {
       this[model] = new FileModel(model);
       return false;
     });
+    this.ContoursList = new FileModel('Contours');
   }
 
   @action resolveDependencies(depend) {
