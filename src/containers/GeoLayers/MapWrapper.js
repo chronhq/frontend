@@ -201,7 +201,7 @@ class MapWrapper extends React.Component {
     const layers = [
       this.terrain,
       this.borders,
-      this.toponyms,
+      ...this.toponyms,
       this.cityPoints,
       new IconLayer({
         id: 'map-decoration-layer',
