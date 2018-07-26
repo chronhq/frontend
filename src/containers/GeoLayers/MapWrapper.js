@@ -7,7 +7,9 @@ import DeckGL, {
 } from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
-import { computed, observable, action } from 'mobx';
+import {
+  computed, observable, action, toJS
+} from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
 import contourLayer from './Layers/ContourLayer';
@@ -225,7 +227,7 @@ class MapWrapper extends React.Component {
         id: 'static-traces-layer',
         data: this.traces,
         visible: this.options.traces && !this.props.store.flags.flags.runtime.animation,
-        getPath: d => d.data.path[0].path,
+        getPath: d => toJS(d.data.path[0].path),
         getColor: () => [65, 140, 171],
         getWidth: () => 5,
         rounded: true,
@@ -239,7 +241,7 @@ class MapWrapper extends React.Component {
         id: 'animated-trace-layer',
         data: this.traces,
         visible: this.options.traces && this.props.store.flags.flags.runtime.animation,
-        getPath: d => d.timedTraces,
+        getPath: d => toJS(d.timedTraces),
         getColor: () => [65, 140, 171],
         opacity: 1,
         strokeWidth: 10,
