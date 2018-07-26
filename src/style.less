@@ -267,6 +267,10 @@ input[type='email'] {
   &:required {
     box-shadow: none;
   }
+  &:focus {
+    border-color: @main-blue;
+    box-shadow: 0 0 0 2px rgba(250,250,250,.2);
+  }
 }
 
 textarea {
@@ -300,18 +304,18 @@ input[type='text'] {
   }
 }
 
-input[type='number'] {
-  height: 25px;
-  width: auto;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 2px;
-  border-color: @border;
-  padding: 0 5px;
-  font-size: 14px;
-  margin-bottom: 6px;
-  display: block;
-}
+// input[type='number'] {
+//   height: 25px;
+//   width: auto;
+//   border-style: solid;
+//   border-width: 1px;
+//   border-radius: 2px;
+//   border-color: @border;
+//   padding: 0 5px;
+//   font-size: 14px;
+//   margin-bottom: 6px;
+//   display: block;
+// }
 
 select {
   height: 25px;
@@ -405,7 +409,6 @@ input[type="checkbox"] + span {
   top: -2px;
   width: 12px;
   height: 12px;
-  margin: -1px 12px 0px 12px;
   vertical-align: middle;
   background: white left top no-repeat;
   border: 1px solid @border;
@@ -456,9 +459,6 @@ input[type="radio"] + span
 
 input[type="radio"] {
   display: none;
-  // position: absolute;
-  // opacity: 0;
-  // cursor: pointer;
 }
 
 input[type="radio"] + span {
@@ -471,7 +471,8 @@ input[type="radio"] + span {
   border: 1px solid #ccc;
   cursor: pointer;
   //
-   position: relative;
+  margin-right: 4px;
+  position: relative;
   top: 0;
   left: 0;
   display: inline-block;

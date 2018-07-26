@@ -80,6 +80,8 @@
     "postcss-loader": "^2.1.6",
     "prop-types": "^15.6.2",
     "rbush": "^2.0.2",
+    "rc-input-number": "^4.0.12",
+    "rc-slider": "^8.6.1",
     "react": "^16.4.1",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.4.1",

@@ -80,117 +80,101 @@ npm run dev
 
 #Project todo
 ----------------
-## UI
-- [ ] New Map UI with Lnr icons.
-  - [ ] Rework with timeline stuff
-  - [ ] Rework with mobile UI for map
-  - [ ] Cry. Cry a lot.
-  - [
-]- [ ] добавить сетку на море
-- [ ] Filters {C}
-- [ ] Запилить настроечки с цветовым темами {B}
-- [ ] Dynamic legend #big {C}
-- [ ] Мобильные евенты {A}
-- [ ] feed unresponsive когда play
-- [ ] Changelog #7
-- [ ] Кука аналитика #20
-- [ ] Extend functionality with brush and expandent stuff {C}
-- [ ] as
-- [ ] Mouse interference make sync off slide with id {C}
-- [ ] animation of expedition and stuff.
+
+## All
+
+
+##BUGS
+ - [x] In timeline seekbar some time show wrong year
+ - [] MapWrapper lost all contours
+ - [] Course crashed in the end ticks. Missed traces (@morlov)
+ - [] ainu - назад - в карту - ожидается @morlov
+ - [] при питчинге карты  съедаются строчки от TextLayer
+
+## Problems
+  - getFilledColor паттерны всякие для разукрашивания в три цвета не работают
+  - traces data хранятся в жопке (?спорно) path.
+  - объединить эвент лисенер на ресайз из таймпанели и МапВраппера
+
+#Current
+ - [] SplitCodeChunks
+ - [] позицию и масштаб и ограничение для курса
+ - [] настроить минимальный и максимальный зум для карты.
+      Ограничения городов для курса, и изменение вьюпорта
+ - [] поведение карты на краях. не прыгала. или замощение.
+ - [] baloons-upы к пинам. поведения на краях
+ - [] Пины (inventions and stuff).
+    - [х] реализация
+    - [] стили
+
+ - [] кластеризация эвентов
+ - [] фиксированный тултип для геолайера с указанием страны, населения, чонить ещё
+ - [] year input
+
+#TODO
+ - [] пины для городов изменить.
+ - [] Пины слепые
+ - [] Кластаризация топонимов
+ - [] Feed Pins, подсветка по эвентам ленты
+ - [] стили для топонимов (кластеризация для топонимов).
+ - [] noscript добавить. browser recomendation
+ - [] галку в интро, кукисы к ним, перенос настроечек из кукисов в мобх
+ - [] пофиксить в разные стили,
+    - [] унифицировать кнопки для мапа
+  -[] Favicon plugin search and destroy
 
 ##DONE
-- [x] сменить шрифты
-- [x] reduce amount css {C}
-- [x] less cleaning {C}
-- [x] Форма обратной связи #19
-- [x] Форма подписи внутри демо #18
-- [x] Настройку положения icon-bar и side-bar {B}
-- [x] Shadows for map {B}
-- [x] Тултипы для меню #21
-- [x] Форма подписи внутри демо #18
-- [x] Починить обводку событий #16
-- [x] FAQ #17
-- [x] Shadows for map labels {B}
-- [x] React LifeCycle
-- [x] Feed
-- [x] Исправить интро. ДОбавить туда надписи обучающие.
-- [x] Убрать спагетти для интро
-- [x] Всё залинтить
-- [x] Субскрайб кнопки в Survey
-- [x] Починить YM [URGENT]
-- [x] запилить кнопки перехода
-- [x] убрать яндекс метрику для дева
-- [x] Исправить вьюпорт
-- [x] Сделать евенты он ховер и прочее чтоб смотрелось ок  в ведре
-- [x] исправить корячующуюся картинку сергея
-- [x] сделать роутер
-- [x]  adjust sidenav height for mobile too
-- [x] fix abomination in settings
-- [x] В ленте кнопки экспорта стоит зафиксировать для быстрого доступа, так как когда много информации они уезжают очень низко и до них не долистывают.
-- [x] сделать нормальные контайнеры в которые влезают всё. Т.е. сделать ужее.
-- [x] уменьшить шрифты вместе с сужением.
-- [x] Make all pics in svg.co
-- [x] fix ym
-- [x] fix console.log(ym)
-- [x] ?_ym_debug=0
-- [x] Adapting to mobile
-- [x] починить timeline responsivness
-- [x] тама надо цсс править будет в интро и ещё тут там. ширина будет менятся
-- [x] и надо будет элемент запилить который всплывашку с годами будет показывать
-- [x] и ещё где то отображение года постоянное
-- [x] переписать с нормальными реакторовскими лисенерами и чтоб <g transform> можно было
-- [x] поправить шрифты
-- [x] key={option} is harmful. learn why and fix
-- [x] Intro autoscroll speed set to 4000
-- [x] в анкете где "контакт для связи" надо поле сделать для почты
-- [x] сделать универсальный json based опросник
-- [x] Full width on mobile
-- [x] BUG Autoscroll stop randomly when pauseOnHover: true
-- [x] увеличить задержу.
-- [x] проследить чтоб совпадало подсветка с описание
-- [x] увеличить кнопку OK в интро
-- [x] Mobile friendly markup
+    - [x] убрать маргин у чекбокса слева
+    - [x] пофиксить z-index у карт/слоев/тултипов/всплываешк
+    - [x] кастомный селект инпут
+    - [x] кастомный input[type=Number] инпут
+    - [x] заюзать нормальные иконки
+    - [x] запилить кастомный range селект
+ - [x] кросплатформенность
+ - [x] pop-upы к пинам(стили)
+ - [x] импортнуть лору в демку и запилить лого на ней
+ - [x] localization (window.store.i18n.lng='en')
+ - [x] однородность
+ - [x] убрать gap. (Edge compatibility broken)
+ - [x] Box-shadows for stuf
+ - [x] AlignToggle пришить к мобх/пришить направление тултипов к мобх
+ - [x] Повернутые декорации
+ - [x] selectы и радиожажа по лабелу должны тугглиться
+ - [x] Выпилить бутстрап
+      - переделать курсы с бутстрапа на норм
+ - [x] поменять пины для городов на кругляши
 
 
-##WARNINGS:
+##Release notes (до релиза 17 дней)
+Mini
+  1. привести весь интерфейс в соответствие с UI kit, (in progress)
+  8. убрать дергания карты при максимальном зуме (in progress)
+  3. кластеризировать пины и топонимы
+  5. Новый движок, рабочий таймлайн с выбором года для мобил и для десктопа
+  6. Перепозиционировать топонимы
+  7. Viewport для курса изменить
+  9. Починить базу городов
+  10. починить ошибку из-за которой всё падает <-?
+  11. Ускорить загрузку UI ?
+    - [] рисовать контур до. контур загружать в
+    - []
+  12. Изменить уровень упрощения карты
+  13. Все карты с 1783 по 2000
+  14. База для цветов карты
 
-npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules/chokidar/node_modules/fsevents):
-npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
-npm WARN less-loader@4.0.5 requires a peer of less@^2.3.1 but none was installed.
-npm WARN flag@2.0.4 requires a peer of react@^15.5.4 but none was installed.
-npm WARN react-dom@15.6.2 requires a peer of react@^15.6.2 but none was installed.
-npm WARN slick-carousel@1.8.1 requires a peer of jquery@>=1.8.0 but none was installed.
-npm WARN react-addons-css-transition-group@15.6.2 requires a peer of react@^15.4.2 but none was installed.
-npm WARN react-slick@0.15.4 requires a peer of react@^0.14.0 || ^15.0.1 but none was installed.
-npm WARN react-slick@0.15.4 requires a peer of react-dom@^0.14.0 || ^15.0.1 but none was installed.
-npm WARN redux-devtools@3.4.0 requires a peer of react@^0.14.9 || ^15.3.0 but none was installed.
-npm WARN redux-devtools-log-monitor@1.3.0 requires a peer of react@^0.14.9 || ^15.3.0 but none was installed.
-npm WARN redux-devtools-dock-monitor@1.1.2 requires a peer of react@^0.14.9 || ^15.3.0 but none was installed.
-npm WARN react-json-tree@0.10.9 requires a peer of react@^15.0.0 but none was installed.
-npm WARN react-json-tree@0.10.9 requires a peer of react-dom@^15.0.0 but none was installed.
+  16. Яндекс.директ и google adwords настройки.
+  15. релиз на русском и на английском
+Opti
+  17. Расставить Map decorations
+  18. дописать топонимы
+  19. Экспедиции в курсе (а что с ними вообще?) (check)
+  20. Отловить ошибки по картам
+  21. Проверить координаты городов
+  22. Перевести недопереведённое
+  23. купить домен chron.ist
+  24. сделать тестовый контур
+  25. Начать работу над админкой (конец августа)
 
-
-offsetHeight
-:
-209
-offsetTop
-:
-381
-offsetTop
-:
-716
-
-
--[x] выделить в отдельный комп SeekBar
--[x] event listener на ресайз
--[] проверить rAF на пустом компоненте
--[] забацать заменут тултипам
--[] заменить часть бутстрапа на глагне
-
-
-
-- кнопка перключения языка на главно
-- и в панеле
-- в курсе икноки новые вытащить
-- без бутстрапа
+##Done
+  2. перерисовать баллоны (тултипы) (in progress)
+  4. Переехать на vps

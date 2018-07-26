@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import './style.less';
 import './LineIcon.less';
+import './img/favicon.ico';
+import './img/richpreview.jpg';
 
 import StoreModel from './models';
 import App from './App';

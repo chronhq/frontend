@@ -1,15 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+// const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   devtool: 'eval',
   entry: {
-    client: path.resolve(__dirname, 'src'),
-    vendor: ['react', 'react-dom'],
+    main: path.resolve(__dirname, 'src'),
   },
   output: {
     filename: '[name].bundle-[hash].js',
@@ -22,7 +21,28 @@ module.exports = {
   },
   optimization: {
     noEmitOnErrors: true,
-    nodeEnv: 'production'
+    nodeEnv: 'production',
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 2,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
   },
   stats: {
     assets: true,
@@ -42,14 +62,6 @@ module.exports = {
       'process.env': {
         WEBPACK: true
       }
-    }),
-    new FaviconsWebpackPlugin({
-      logo: './src/img/favicon.png',
-      prefix: 'icons-[hash]/',
-      emitStats: true,
-      persisentCache: true,
-      background: '#000',
-      inject: true
     }),
     new MiniCssExtractPlugin({
       filename: 'style.bundle-[hash].css',
@@ -96,15 +108,7 @@ module.exports = {
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
-      },
-      {
-        test: /\.(mp4|m4v)$/,
-        loader: 'file-loader'
-      },
-      {
-        test: /\.md$/,
-        loader: 'markdown-with-front-matter-loader'
-      },
+      }
     ]
   },
 };
