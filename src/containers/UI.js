@@ -11,13 +11,13 @@ import Widgets from './Widgets';
 
 import Feedback from '../components/Feedback';
 import Intro from '../components/Intro/Carousel';
-import PinBalloon from './PinBalloon';
+import Balloon from './Balloon';
 
 const Overlays = () => (
   <div id='overlays'>
     <Intro />
     <Feedback />
-    <PinBalloon />
+    <Balloon />
   </div>
 );
 

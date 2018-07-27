@@ -44,6 +44,8 @@ export default class FeedPinsModel {
 
   @observable pageY = 1;
 
+  @observable countryHover = null;
+
   @action setPosition(x, y) {
     this.pageX = x;
     this.pageY = y;
@@ -52,6 +54,12 @@ export default class FeedPinsModel {
   @action setActive(a, free = false) {
     this.selectedFreePin = free;
     this.active = a;
+  }
+
+  @action setCountryActive(c) {
+    // console.log('Selecting country', c);
+    this.countryHover = c;
+    this.active = Boolean(c);
   }
 
   @computed get selected() {

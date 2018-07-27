@@ -109,7 +109,13 @@ class MapWrapper extends React.Component {
       console.groupEnd();
       return null;
     };
-    return bordersLayer(borders, properties, colors, visible, showInfo);
+    const hoverCb = (d) => {
+      // if image contains transparent parts disable drawing tooltip
+      const key = d.color === null ? null : d.object.props;
+      this.props.store.pins.setCountryActive(key);
+      this.props.store.pins.setPosition(d.x, d.y);
+    };
+    return bordersLayer(borders, properties, colors, visible, showInfo, hoverCb);
   }
 
   @computed get toponyms() {

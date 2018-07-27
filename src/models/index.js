@@ -10,7 +10,7 @@ import View from './ViewModel';
 import ClickInfo from './ClickInfoModel';
 import FeedbackForm from './FeedbackForm';
 import FeedModel from './FeedModel';
-import FeedPinsModel from './FeedPinsModel';
+import PinsModel from './PinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
 import AnimationFrame from './AnimationFrame';
@@ -35,7 +35,7 @@ export default class storeModel {
     this.view = new View(this);
     this.clickInfo = new ClickInfo(this);
     this.feed = new FeedModel(this);
-    this.pins = new FeedPinsModel(this);
+    this.pins = new PinsModel(this);
     this.i18n = new Internationalization(this);
   }
 }

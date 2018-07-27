@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import { PersonFact, Invention, GeoEvent } from './Messages';
+import CountryHover from './CountryHover';
 
 import './Balloon.less';
 @inject('store')
@@ -16,10 +17,18 @@ export default class Balloon extends React.Component {
     return this.props.store.pins.selected;
   }
 
+  @computed get countryHover() {
+    return this.props.store.pins.countryHover;
+    // return null;
+  }
+
   @computed get opacity() {
-    return (this.pin === null || typeof this.pin === 'undefined')
-      ? 0
-      : 1;
+    if (this.countryHover === null) {
+      return (this.pin === null || typeof this.pin === 'undefined')
+        ? 0
+        : 1;
+    }
+    return 1;
   }
 
   @computed get style() {
@@ -35,7 +44,11 @@ export default class Balloon extends React.Component {
   }
 
   @computed get news() {
+    if (this.countryHover !== null) {
+      return <CountryHover id={this.countryHover} />;
+    }
     if (this.pin === null || typeof this.pin === 'undefined') return null;
+
     return this.pin.info.map((pin) => {
       switch (pin.type) {
         case 'geo': return (

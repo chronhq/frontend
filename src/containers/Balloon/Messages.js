@@ -36,9 +36,9 @@ export const Invention = ({ fact }) => (
       <p className='factHeader'>
         {fact.name}
       </p>
-    <div className='factDescription'>
-      {fact.description}
-    </div>
+      <div className='factDescription'>
+        {fact.description}
+      </div>
       <p className='factDate'>
         {' '}
         {fact.inventDate}
