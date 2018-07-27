@@ -1,4 +1,80 @@
 /* Styles for UI components */
+@black: #000000;
+@main-blue: #013243;
+@base02: #2c393f;
+@base03: #576872;
+@link: #8aaddb;
+@border: #707880;
+@red: #ea4544;
+
+@dark-grey: #979797;
+@grey: #7f7f7f;
+@disable: #d5d5d5;
+@sidebar: #e9dac5;
+@light-grey: #fafafa;
+@button-text-inverse: #aaaaaa;
+@white: #ffffff;
+
+
+
+button {
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: @main-blue;
+  color: @dark-grey;
+  display: inline-block;
+  // margin: 20px;
+  display: inline-block;
+  border: 1px solid #888;
+  border-radius: 2px;
+  padding: 3px;
+  background: none;
+  margin: 0 10px;
+  // margin: 0 auto;
+  // margin-right: auto;
+  height: 36px;
+  // outline-color: transparent !important;
+  // font-size: 15px;
+  // width: auto;
+  min-width: 120px;
+  // display: inline-block;
+  // padding: 9px 12px 10px;
+  padding: 3px 15px;
+  // background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid @border;
+  // overflow: hidden;
+  // line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  outline:none;
+  // vertical-align: bottom;
+  transition: scale 0.2s ease-in-out;
+  &::-moz-focus-inner {
+   border: 0;
+  }
+  // margin-right: 5px;
+
+  &.disabled {
+    background-color: @disable;
+    color: @light-grey;
+  }
+
+  &:hover {
+    outline: none !important;
+    // opacity: 0.9;
+    box-shadow: 0 0 0 2px rgba(250,250,250,.2);
+  }
+
+  &:focus {
+    outline: none !important;
+    border: none !important;
+  }
+
+  &:active {
+    outline: 0 !important;
+    border: none !important;
+  }
+}
 
 .icon-bar--left {
   left: 0;

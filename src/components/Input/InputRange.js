@@ -16,6 +16,7 @@ export default class InputRange extends Component {
           value={this.state.value}
           step='1'
           onChange={(e) => {
+            console.log('slider value:', e.target.value);
             this.setState({ value: Number(e.target.value) });
             this.props.cb({ [this.props.name]: Number(e.target.value) });
           }}
