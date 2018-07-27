@@ -29,7 +29,7 @@ export default class FlagsModel {
       SidePanelIsOpen: false,
       TimelineIsMinified: false,
       BioIsOpen: false,
-      animation: false,
+      animation: true,
       cluster: true,
     },
     UI: {
@@ -47,8 +47,7 @@ export default class FlagsModel {
       mapDecorations: 1,
       cities: 1,
       traces: 1,
-      inventions: 0,
-      somethingsomething: 0
+      inventions: 0
     }
   };
 

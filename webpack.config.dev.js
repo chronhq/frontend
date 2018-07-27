@@ -1,14 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    path.resolve(__dirname, 'src'),
-  ],
+  entry: {
+    main: './src/index.js',
+  },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
@@ -19,6 +19,25 @@ module.exports = {
       path.join(__dirname, 'src'),
       'node_modules'
     ]
+  },
+  optimization: {
+    nodeEnv: 'development',
+    splitChunks: {
+      chunks: 'async',
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 4,
+      name: true,
+      automaticNameDelimiter: '.',
+      cacheGroups: {
+        node_vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'initial',
+          maxSize: 1000000,
+          priority: 1
+        }
+      },
+    }
   },
   devServer: {
     historyApiFallback: true,
@@ -63,18 +82,18 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
-        loader: 'url-loader?limit=100000&name=[name].[ext]'
+        loader: 'url-loader?limit=20000&name=[name].[ext]'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader?limit=10000&name=[name].[ext]'
       }
     ]
   },
   plugins:
   [
     new webpack.HotModuleReplacementPlugin(),
-    // new BundleAnalyzerPlugin({analyzerPort: '3001'}),
+    new BundleAnalyzerPlugin({ analyzerPort: '3001' }),
     new HtmlWebpackPlugin({ template: './index.html' }),
   ]
 };

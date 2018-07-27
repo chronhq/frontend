@@ -40,15 +40,17 @@ class SetLayerVisibility extends React.Component {
         <h5>
           { 'Детали' }
         </h5>
+        <div style={{width: '60%', height: 'auto', margin: 'auto', padding: '10px 0'}} >
         <InputRange
           className='detailSlider'
           name='scale'
           // label={}
           value={this.props.store.flags.flags.visibility.scale}
-          min='0'
-          max='10'
+          min={0}
+          max={10}
           cb={d => this.handleChange(d)}
         />
+        </div>
       </div>
     );
   }

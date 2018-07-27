@@ -1,7 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -11,8 +9,9 @@ module.exports = {
     main: path.resolve(__dirname, 'src'),
   },
   output: {
-    filename: '[name].bundle-[hash].js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    chunkFilename: '[name].bundle.js',
     publicPath: '/'
   },
   performance: {
@@ -24,24 +23,18 @@ module.exports = {
     nodeEnv: 'production',
     splitChunks: {
       chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 2,
       maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
+      maxInitialRequests: 4,
       name: true,
+      automaticNameDelimiter: '.',
       cacheGroups: {
-        vendors: {
+        node_vendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
+          chunks: 'initial',
+          maxSize: 1000000,
+          priority: 1
         }
-      }
+      },
     }
   },
   stats: {
@@ -58,13 +51,8 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        WEBPACK: true
-      }
-    }),
     new MiniCssExtractPlugin({
-      filename: 'style.bundle-[hash].css',
+      filename: 'style.bundle.css',
     }),
     new HtmlWebpackPlugin({
       template: './index.html',
@@ -103,11 +91,11 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
-        loader: 'url-loader?limit=100000&name=[name].[ext]'
+        loader: 'url-loader?limit=20000&name=[name].[ext]'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader?limit=10000&name=[name].[ext]'
       }
     ]
   },
