@@ -1,4 +1,6 @@
-import { observable, computed, action } from 'mobx';
+import {
+  observable, computed, action, toJS
+} from 'mobx';
 
 function getIcon(info) {
   switch (info.type) {
@@ -21,21 +23,11 @@ function getKey(info) {
 }
 
 class InteractivePin {
-  @observable info = [];
-
-  @observable key;
-
-  @computed get point() {
-    return this.info[0].loc;
-  }
-
-  @computed get pic() {
-    return getIcon(this.info[0]);
-  }
-
   constructor(info, key) {
     this.key = key;
     this.info = info;
+    this.point = this.info[0].loc;
+    this.pic = getIcon(this.info[0]);
   }
 }
 
@@ -166,7 +158,8 @@ export default class FeedPinsModel {
   }
 
   @computed get pins() {
-    return Object.keys(this.combineRawPins).map(d => new InteractivePin(this.combineRawPins[d], d));
+    return toJS(Object.keys(this.combineRawPins)
+      .map(d => new InteractivePin(toJS(this.combineRawPins[d]), d)));
   }
 
   @computed get freePins() {
