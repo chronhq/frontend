@@ -1,6 +1,8 @@
 import { observable, computed } from 'mobx';
 import Locations from './DataAdaptation/LocationsModel';
-import GenericPointProcessing from './DataAdaptation/GenericPointProcessing';
+// import GenericPointProcessing from './DataAdaptation/GenericPointProcessing';
+import CourseGeopoints from './DataAdaptation/CourseGeopoint';
+import Expeditions from './DataAdaptation/ExpeditionsModel';
 import Persons from './DataAdaptation/PersonsList';
 import Inventions from './DataAdaptation/InventionsList';
 import GeoEvents from './DataAdaptation/GeoEventsList';
@@ -25,14 +27,30 @@ export default class FinalDataModel {
   }
 
   @computed get toponyms() {
-    return Object.values(this.rootStore.data.MapLabels.data).map(cur => ({
-      ...cur,
-      string: cur.string[this.rootStore.i18n.lng],
-    }));
+    const toponyms = {};
+    Object.values(this.mapLabels).map((cur) => {
+      const label = {
+        ...cur,
+        string: cur.string[this.rootStore.i18n.lng],
+      };
+      toponyms[label.style.font] = label.style.font in toponyms
+        ? [
+          ...toponyms[label.style.font],
+          label,
+        ] : [label];
+      return true;
+    });
+    return toponyms;
+  }
+
+  @computed get mapLabels() {
+    return Object.values(this.rootStore.data.MapLabels.data)
+      .filter(c => c.courseId === this.rootStore.flags.flags.runtime.SelectedCourse);
   }
 
   @computed get geoEvents() {
-    return this.data.geoEvents.points;
+    return {};
+    // return this.data.geoEvents.points;
   }
 
   @computed get geoPoints() {
@@ -53,12 +71,10 @@ export default class FinalDataModel {
 
     this.data.cities = new Locations(rootStore, 'CityLocs');
 
-    this.data.geoEvents = new GenericPointProcessing(rootStore, 'GeoEvents');
+    // this.data.geoEvents = new GenericPointProcessing(rootStore, 'GeoEvents');
 
-    this.data.courseGeoPoints = new GenericPointProcessing(rootStore, 'CourseGeopoints', 'courseTimelineId', true);
-
-    this.data.courseTraces = new GenericPointProcessing(rootStore, 'CourseTraces', 'courseTimelineId', true);
-
+    this.data.courseTraces = new Expeditions(rootStore);
+    this.data.courseGeoPoints = new CourseGeopoints(rootStore);
     this.mapPics = new MapPics(rootStore);
     this.persons = new Persons(rootStore);
     this.inventions = new Inventions(rootStore);
