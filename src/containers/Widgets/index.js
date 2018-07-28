@@ -10,6 +10,7 @@ import Defs from './Defs';
 @observer
 export default class Widgets extends React.Component {
   render() {
+    const freePinsEnabled = !this.props.store.projection.clipEnabled;
     return (
       <svg
         width={this.props.store.view.width}
@@ -20,7 +21,7 @@ export default class Widgets extends React.Component {
         <g id='svgWidgets'>
           {/* <ScaleWidget /> */}
           {/* <LoadingWidget /> */}
-          <FreePinsWidget />
+          {freePinsEnabled && <FreePinsWidget /> }
         </g>
       </svg>
     );
