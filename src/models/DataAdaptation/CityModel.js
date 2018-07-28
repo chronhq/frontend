@@ -42,8 +42,12 @@ export default class CityModel {
     }
   }
 
+  @computed get inTheBox() {
+    return this.rootStore.projection.inTheBox(this.point.x, this.point.y);
+  }
+
   @computed get visible() {
-    return (this.currentLoc.props !== null);
+    return (this.currentLoc.props !== null && this.inTheBox === true);
   }
 
   @computed get location() {

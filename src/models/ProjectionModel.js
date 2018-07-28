@@ -1,9 +1,6 @@
-import { observable, action, computed } from 'mobx';
-// import * as d3 from 'd3-geo';
+import { observable, action } from 'mobx';
 
 export default class ProjectionModel {
-  @observable version = 0;
-
   @observable name = 'Mercator';
 
   // [[Left, Top], [Right, Bottom]]
@@ -19,19 +16,12 @@ export default class ProjectionModel {
 
   @observable clipEnabled = false;
 
-  @computed get options() {
-    const combineKeys = (prev, cur) => [...prev, { value: cur, label: cur }];
-    return Object.keys(this.projectionByName).reduce(combineKeys, []);
-  }
-
   @action setup(projection) {
     this.clip = projection.clip;
     this.rotate = projection.rotate;
     this.center = projection.center;
     this.name = projection.name;
     this.clipEnabled = JSON.stringify(this.clip) !== this.defaultClip;
-
-    this.version += 1;
   }
 
   inTheBox(x, y) {
