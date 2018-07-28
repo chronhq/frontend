@@ -55,7 +55,16 @@ class MapWrapper extends React.Component {
   }
 
   @computed get decorations() {
-    return Object.values(this.props.store.data.MapDecorations.data);
+    const decor = [];
+    Object.values(this.props.store.data.MapDecorations.data).map((d) => {
+      const x = d.geopoint[0];
+      const y = d.geopoint[1];
+      if (this.props.store.projection.inTheBox(x, y)) {
+        decor.push(d);
+      }
+      return false;
+    });
+    return decor;
   }
 
   @computed get cities() {
