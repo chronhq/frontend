@@ -37,7 +37,6 @@ function bordersLayer(borders, properties, colors, visible, showInfo, hoverCb) {
     wireframe: false,
     width: 0.1,
     lineWidthMinPixels: 0.5,
-    // getLineColor: f => (f.color || f.feature.color),
     getLineColor: () => [128, 128, 128],
     getFillColor: f => (f.color || f.feature.color),
     stroked: true,

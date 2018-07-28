@@ -93,7 +93,10 @@ module.exports = {
   plugins:
   [
     new webpack.HotModuleReplacementPlugin(),
-    new BundleAnalyzerPlugin({ analyzerPort: '3001' }),
+    new BundleAnalyzerPlugin({
+      analyzerPort: '3001',
+      openAnalyzer: false,
+    }),
     new HtmlWebpackPlugin({ template: './index.html' }),
   ]
 };
