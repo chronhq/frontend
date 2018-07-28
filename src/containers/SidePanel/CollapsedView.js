@@ -68,10 +68,6 @@ export default class CollapsedView extends React.Component {
     this.props.store.flags.flags.runtime.SidePanelTab = val;
   }
 
-  @action openIntro() {
-    this.props.store.flags.flags.runtime.intro = true;
-  }
-
   @action toggle(name) {
     this.isOpen = !(this.currentTab === name && this.isOpen === true);
     this.currentTab = name;
@@ -80,7 +76,6 @@ export default class CollapsedView extends React.Component {
   render() {
     return (
       <div className={this.iconBarAlign}>
-        <FatButton text={this.tooltips.intro} icon='lnr-home' cb={() => this.openIntro()} />
         <FatButton text={this.tooltips.settings} icon='lnr-cog' cb={() => this.toggle('settings')} />
         <FatButton text={this.tooltips.layers} icon='lnr-layers' cb={() => this.toggle('layerscontrol')} />
 

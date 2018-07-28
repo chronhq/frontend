@@ -10,12 +10,10 @@ import Bio from '../components/Timeline/Bio';
 import Widgets from './Widgets';
 
 import Feedback from '../components/Feedback';
-import Intro from '../components/Intro/Carousel';
 import Balloon from './Balloon';
 
 const Overlays = () => (
   <div id='overlays'>
-    <Intro />
     <Feedback />
     <Balloon />
   </div>
