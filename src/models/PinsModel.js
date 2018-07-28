@@ -166,8 +166,18 @@ export default class FeedPinsModel {
   }
 
   @computed get pins() {
-    return toJS(Object.keys(this.combineRawPins)
-      .map(d => new InteractivePin(toJS(this.combineRawPins[d]), d)));
+    const p = [];
+    Object.keys(this.combineRawPins)
+      .map((d) => {
+        const pin = toJS(this.combineRawPins[d]);
+        const inTheBox = this.rootStore
+          .projection.inTheBox(pin[0].loc.x, pin[0].loc.y);
+        if (inTheBox) {
+          p.push(new InteractivePin(pin, d));
+        }
+        return false;
+      });
+    return p;
   }
 
   @computed get freePins() {

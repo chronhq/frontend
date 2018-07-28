@@ -6,7 +6,7 @@ export default function toponyms(labels, visible) {
   Object.keys(labels).map(l => (
     tops.push(new TextLayer(
       {
-        id: 'label-layer',
+        id: `label-layer-${l}`,
         data: labels[l],
         pickable: false,
         visible,
