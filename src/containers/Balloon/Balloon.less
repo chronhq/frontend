@@ -1,25 +1,45 @@
+@black: #000000;
+@main-blue: #013243;
+@base02: #2c393f;
+@text: #576872;
+@link: #8aaddb;
+@border: #707880;
+@red: #ea4544;
+
+@dark-grey: #979797;
+@grey: #7f7f7f;
+@disable: #d5d5d5;
+@sidebar: #e9dac5;
+@light-grey: #fafafa;
+@button-text-inverse: #aaaaaa;
+@white: #ffffff;
+
+.balloonTopLeft {transform: translate(-10%, 20px);}
+.balloonTopRight {transform: translate(-90%, 20px);}
+.balloonBottomLeft {transform: translate(-10%, calc(-100% - 20px));}
+.balloonBottomRight {transform: translate(-90%, calc(-100% - 20px));}
+
 .balloonNews {
   position: absolute;
   z-index: 100;
   padding: 3px;
-  transform: translate(-50%, 10px);
-  // border: 1px solid @border;
+
   border-radius: 2px;
   max-width: 370px;
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 12px 0 rgba(0,0,0,0.50);
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;  Safari
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-  // boxShadow: '0 4px 8px 0 rgba(0,0,0,0.10)
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   & h6 {
     text-align: center;
   }
   & p {
-    font-size: 10px;
+    font-size: 14px;
   }
   & span.decal {
     position: relative;
@@ -32,27 +52,50 @@
     min-width: 10px;
     margin: 0 2px;
   }
-
   .factHeader {
     display: block;
     font-family: 'OpenSans-SemiBold';
     font-size: 14px;
+    margin: 3px 0;
   }
   .factDate {
     display: block;
     font-size: 14px;
+    margin: 2px 0;
   }
   .factDescription {
     display: block;
     font-size: 14px;
+    margin: 3px 0;
   }
   .factAuthor {
     display: block;
+    margin: 3px 0;
     font-size: 14px;
   }
   .factTest {
     display: block;
     font-family: 'OpenSans-LightItalic';
     font-size: 14px;
+    & p {
+      margin: 3px 0;
+    }
+  }
+  .factInner {
+    display: block;
+    margin: 0;
+    font-size: 14px;
+    & p {
+      margin: 3px 0;
+    }
+  }
+  .ballon-title {
+    font-size: 14px;
+    font-family: 'OpenSans-SemiBold';
+    color: @red;
+    text-align: left;
+    margin: 3px 0;
   }
 }
+
+

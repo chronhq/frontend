@@ -50,12 +50,16 @@ export default class CountryHover extends React.Component {
 
   render() {
     return (
-      <div className='factTest'>
-        {this.name}
-        <br />
-        {this.type}
-        <br />
-        {this.admin}
+      <div className='factInner'>
+        <p className='factHeader'>
+          {this.name}
+        </p>
+        <p>
+          {this.type}
+        </p>
+        <p>
+          {this.admin}
+        </p>
       </div>
     );
   }

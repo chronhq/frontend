@@ -9,13 +9,9 @@ import { Tooltip } from '../../components/Input';
 class FatButton extends React.Component {
   render() {
     return (
-      <Tooltip
-        content={this.props.text}
-        placement={(this.props.store.flags.flags.runtime.alignPanel === 'left') ? 'right' : 'left'}
-      >
-        <button onClick={() => this.props.cb()}>
+      <Tooltip placement='left' content={this.props.text}>
+        <button onClick={() => this.props.cb()} type='button'>
           <i className={`lnr ${this.props.icon}`} />
-          {' '}
         </button>
       </Tooltip>
     );
@@ -27,13 +23,6 @@ FatButton.propTypes = {
   icon: PropTypes.string.isRequired,
   cb: PropTypes.func.isRequired
 };
-
-
-// const FatButton = ({ text, cb, icon }) => (
-//   <Tooltip content={text} placement={this.props.store.flags.flags.runtime.alignPanel}>
-//     <button onClick={() => cb()}><i className={`lnr ${icon}`} /> </button>
-//   </Tooltip>
-// );
 
 @inject('store')
 @observer

@@ -1,50 +1,49 @@
 import React from 'react';
 
 export const GeoEvent = ({ fact }) => (
-  <div className='factTest'>
-    <div>
+  <div className='factInner'>
+    <p className='ballon-title'>
+      Справка
+    </p>
+    <p className='factDescription'>
       {fact.description}
-    </div>
-    <div>
-      <p className='factDate'>
-        {fact.date}
-      </p>
-    </div>
+    </p>
+    <p className='factDate'>
+      {fact.date}
+    </p>
   </div>
 );
 
 export const PersonFact = ({ person }) => (
   <div key={person.key}>
-    <div className='factTest'>
-      <p className='factHeader'>
-        {' '}
-        {person.occasion}
-        {' '}
-      </p>
-      <p className='factDate'>
-        {person.birthDate}
-        {' - '}
-        {person.deathDate}
-      </p>
-    </div>
+    <p className='ballon-title'>
+      Люди
+    </p>
+    <p className='factHeader'>
+      {person.occasion}
+    </p>
+    <p className='factDate'>
+      {person.birthDate}
+      <br />
+      {person.deathDate}
+    </p>
   </div>
 );
 
 export const Invention = ({ fact }) => (
   <div key={fact.key}>
-    <div>
-      <p className='factHeader'>
-        {fact.name}
-      </p>
-      <div className='factDescription'>
-        {fact.description}
-      </div>
-      <p className='factDate'>
-        {' '}
-        {fact.inventDate}
-        {' '}
-      </p>
-    </div>
+    <p className='ballon-title'>
+      Изобретения
+    </p>
+    <p className='factHeader'>
+      {fact.name}
+    </p>
+    <p className='factDescription'>
+      {fact.description}
+    </p>
+    <p className='factDate'>
+      {fact.inventDate}
+    </p>
     <p className='factAuthor'>
       <i>
         {fact.inventors}

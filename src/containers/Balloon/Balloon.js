@@ -39,6 +39,30 @@ export default class Balloon extends React.Component {
     };
   }
 
+  @computed get classNames() {
+    const classes = ['balloonNews'];
+    if (this.props.store.pins.pageX > 0.5 * window.innerWidth) {
+      if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
+        classes.push('balloonTopRight');
+      } else {
+        classes.push('balloonBottomRight');
+      }
+    } else {
+      if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
+        classes.push('balloonTopLeft');
+      } else {
+        classes.push('balloonBottomLeft');
+      }
+    }
+
+    // if (this.props.store.pins.pageY > 0.7*window.innerHeight) {
+    //   classes.push('balloonBottom');
+    // } else {
+    //   classes.push('balloonTop');
+    // }
+    return classes;
+  }
+
   @computed get i18n() {
     return this.props.store.i18n.messages;
   }
@@ -75,7 +99,7 @@ export default class Balloon extends React.Component {
 
   render() {
     return (
-      <div style={{ ...this.style }} className='balloonNews'>
+      <div style={{ ...this.style }} className={this.classNames.join(' ')}>
         {this.news}
       </div>
     );
