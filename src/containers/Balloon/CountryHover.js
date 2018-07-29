@@ -48,18 +48,42 @@ export default class CountryHover extends React.Component {
     }
   }
 
+  @computed get short() {
+    return (
+      <p>
+        {' ['}
+        {this.type}
+        {']'}
+      </p>
+    );
+  }
+
+  @computed get long() {
+    return (
+      <p>
+        {this.admin}
+        {' ['}
+        {this.type}
+        {']'}
+      </p>
+    );
+  }
+
+  @computed get message() {
+    if (this.name === this.admin && this.admin !== '') {
+      return this.short;
+    }
+    return this.long;
+  }
+
+
   render() {
     return (
       <div className='factInner'>
         <p className='factHeader'>
           {this.name}
         </p>
-        <p>
-          {this.type}
-        </p>
-        <p>
-          {this.admin}
-        </p>
+        {this.message}
       </div>
     );
   }
