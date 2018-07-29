@@ -301,9 +301,8 @@ class MapWrapper extends React.Component {
       <DeckGL
         controller={MapController}
         // views={[viewport]}
-        // viewstate={this.state.viewport}
         initialViewState={this.props.store.deck.viewport}
-        onViewportChange={v => this.props.store.deck.updateViewport(v)}
+        onViewStateChange={v => this.props.store.deck.updateViewport(v.viewState)}
         layers={layers}
         style={{ zIndex: 1 }}
         width={this.width}
