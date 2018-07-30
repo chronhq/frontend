@@ -29,7 +29,6 @@ class YearInput extends React.Component {
   handleChange(event) {
     console.log(`change: ${event.target.value}`);
     if (isNaN(event.target.value)) {
-      console.log('shit');
     } else {
       this.localNow = event.target.value;
     }

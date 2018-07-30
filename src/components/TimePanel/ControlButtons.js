@@ -1,7 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 // import PropTypes from 'prop-types';
-import YearInput from './TimePanel-YearInput';
+import YearInput from './YearSelect-Type1';
+import YearButton from './YearSelect-Type2';
+import YearSelect from './YearSelect-Type3';
 
 import svgIconMap from './LineIconSet.svg';
 
@@ -76,6 +78,8 @@ class ControlButtons extends React.Component {
           <Next />
         </button>
         <YearInput />
+        <YearButton />
+        <YearSelect />
       </div>
     );
   }

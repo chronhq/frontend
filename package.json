@@ -82,6 +82,7 @@
     "prop-types": "^15.6.2",
     "rbush": "^2.0.2",
     "rc-input-number": "^4.0.12",
+    "rc-select": "^8.1.1",
     "rc-slider": "^8.6.1",
     "rc-tooltip": "^3.7.2",
     "react": "^16.4.1",
@@ -91,6 +92,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-yandex-metrika": "^2.4.1",
+    "rmc-picker": "^5.0.5",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1"
   }
