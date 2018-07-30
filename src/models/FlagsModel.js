@@ -24,6 +24,7 @@ export default class FlagsModel {
       Ready: false,
       alignPanel: 'right',
       feedback: false,
+      yearInput: false,
       SidePanelTab: 0,
       SidePanelIsOpen: false,
       TimelineIsMinified: false,

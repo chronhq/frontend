@@ -7,6 +7,14 @@ import ButtonMenu from './ButtonMenu';
 @inject('store')
 @observer
 class TimelineButtons extends React.Component {
+  componentDidMount() {
+    this.props.store.animation.startAnimation();
+  }
+
+  componentWillUnmount() {
+    this.props.store.animation.stopAnimation();
+  }
+
   render() {
     return (
       <div className='timeline__control control__home'>

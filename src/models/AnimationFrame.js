@@ -5,11 +5,9 @@ export default class AnimationFrameModel {
 
   fps = 10;
 
-  loopLength = 50;
-
   loopTime = 5000;
 
-  running = false
+  running = false;
 
   step() {
     if (this.running) {
