@@ -66,7 +66,7 @@ class FileModel {
     if (res.status === 200) {
       res.json().then(json => this.saveData(json));
     } else {
-      res.json().then(json => this.setError(json));
+      this.setError(res);
     }
   }
 
@@ -75,7 +75,7 @@ class FileModel {
     const url = this.getLink(params, id);
     fetch(url)
       .then(res => this.processData(res))
-      .catch((e => this.setError(e)));
+      .catch(res => this.setError(res));
   }
 
   @action downloadModel(force = false) {
