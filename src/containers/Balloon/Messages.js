@@ -3,7 +3,7 @@ import React from 'react';
 export const GeoEvent = ({ fact }) => (
   <div className='factInner'>
     <p className='ballon-title'>
-      Справка
+      {'Справка'}
     </p>
     <p className='factDescription'>
       {fact.description}
@@ -17,7 +17,7 @@ export const GeoEvent = ({ fact }) => (
 export const PersonFact = ({ person }) => (
   <div key={person.key}>
     <p className='ballon-title'>
-      Люди
+      {'Люди'}
     </p>
     <p className='factHeader'>
       {person.occasion}
@@ -33,7 +33,7 @@ export const PersonFact = ({ person }) => (
 export const Invention = ({ fact }) => (
   <div key={fact.key}>
     <p className='ballon-title'>
-      Изобретения
+      {'Изобретения'}
     </p>
     <p className='factHeader'>
       {fact.name}

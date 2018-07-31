@@ -127,7 +127,7 @@ export default class FeedPinsModel {
   }
 
   @computed get geoEvents() {
-    return this.rootStore.prepared.geoEvents;
+    return this.rootStore.prepared.geoEventsList.data;
   }
 
   @computed get geoEventsFeed() {
@@ -139,13 +139,13 @@ export default class FeedPinsModel {
     const free = [];
     const type = 'geo';
     this.geoEventsFeed.map((gevId) => {
-      const geoEvent = this.rootStore.prepared.geoEvents[gevId];
-      if (geoEvent.point.x === null || geoEvent.point.y === null) {
+      const geoEvent = this.geoEvents[gevId];
+      if (geoEvent.geopoint[0] === null || geoEvent.geopoint[1] === null) {
         free.push({ type, geoEvent });
       } else {
         const loc = {
-          x: geoEvent.point.x,
-          y: geoEvent.point.y,
+          x: geoEvent.geopoint[0],
+          y: geoEvent.geopoint[1],
         };
         pins.push({ type, geoEvent, loc });
       }
