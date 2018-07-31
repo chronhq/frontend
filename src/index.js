@@ -14,6 +14,16 @@ window.store.data.Courses.get();
 window.store.effects.course.loadBaseData();
 window.store.effects.course.loadContourInfo();
 
+document.fonts.onloadingdone = (fontFaceSetEvent) => {
+  fontFaceSetEvent.fontfaces.map((f) => {
+    window.store.view.fonts = {
+      ...window.store.view.fonts,
+      [f.family]: f,
+    }
+    return null;
+  });
+};
+
 function renderApp(component) {
   const Application = component;
   ReactDOM.render(<Application store={window.store} />, document.getElementById('root'));

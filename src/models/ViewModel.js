@@ -6,6 +6,8 @@ export default class ViewModel {
 
   @observable height = window.innerHeight;
 
+  @observable fonts = {};
+
   // @observable kmPerPx = 32;
 
   // @observable milesPerPx = 20;

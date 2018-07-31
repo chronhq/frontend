@@ -26,7 +26,7 @@ export default class FinalDataModel {
     return this.data.cities.clusteredLocations;
   }
 
-  @computed get toponyms() {
+  @computed get toponymsRaw() {
     const toponyms = {};
     Object.values(this.mapLabels).map((cur) => {
       const label = {
@@ -38,9 +38,20 @@ export default class FinalDataModel {
           ...toponyms[label.style.font],
           label,
         ] : [label];
-      return true;
+      return null;
     });
     return toponyms;
+  }
+
+  @computed get toponyms() {
+    const available = {};
+    Object.keys(this.toponymsRaw).map((f) => {
+      if (f in this.rootStore.view.fonts) {
+        available[f] = this.toponymsRaw[f];
+      }
+      return null;
+    });
+    return available;
   }
 
   @computed get mapLabels() {

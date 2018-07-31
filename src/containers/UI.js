@@ -12,6 +12,8 @@ import Widgets from './Widgets';
 import Feedback from '../components/Feedback';
 import Balloon from './Balloon';
 
+import FontLoader from './FontLoader';
+
 const Overlays = () => (
   <div id='overlays'>
     <Feedback />
@@ -22,6 +24,7 @@ const Overlays = () => (
 const UI = () => (
   <div className='content'>
     <Widgets />
+    <FontLoader />
     <Flag
       name='runtime.SelectedCourse'
       render={() => <Bio />}
