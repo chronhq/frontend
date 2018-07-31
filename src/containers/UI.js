@@ -11,11 +11,13 @@ import Widgets from './Widgets';
 
 import Feedback from '../components/Feedback';
 import Balloon from './Balloon';
+import YearInput from '../components/TimePanel/YearInput';
 
 const Overlays = () => (
   <div id='overlays'>
     <Feedback />
     <Balloon />
+    <YearInput />
   </div>
 );
 
