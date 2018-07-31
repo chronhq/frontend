@@ -55,31 +55,11 @@ class MapWrapper extends React.Component {
   }
 
   @computed get decorations() {
-    const decor = [];
-    const courseId = this.props.store.flags.flags.runtime.SelectedCourse;
-    Object.values(this.props.store.data.MapDecorations.data).map((d) => {
-      const x = d.geopoint[0];
-      const y = d.geopoint[1];
-      if (d.courseId === courseId
-        && this.props.store.projection.inTheBox(x, y)) {
-        decor.push(d);
-      }
-      return false;
-    });
-    return decor;
+    return this.props.store.prepared.decor.decorations;
   }
 
   @computed get oceans() {
-    const decor = [];
-    Object.values(this.props.store.prepared.mapLabelsPics).map((d) => {
-      const x = d.geopoint[0];
-      const y = d.geopoint[1];
-      if (this.props.store.projection.inTheBox(x, y)) {
-        decor.push(d);
-      }
-      return false;
-    });
-    return decor;
+    return this.props.store.prepared.decor.oceans;
   }
 
   @computed get cities() {
@@ -143,7 +123,11 @@ class MapWrapper extends React.Component {
   }
 
   @computed get toponyms() {
-    return toponymsLayer(this.props.store.prepared.toponyms, this.options.labels);
+    return toponymsLayer(
+      this.props.store.prepared.decor.toponyms,
+      this.options.labels,
+      this.props.store.deck.rZoom
+    );
   }
 
   @computed get size() {
@@ -233,7 +217,6 @@ class MapWrapper extends React.Component {
     const oceanAtlas = this.props.store.prepared.mapPics.oceans;
     const oceanMapping = this.props.store.prepared.mapPics.oceansJSON;
 
-  
     const layers = [
       this.terrain,
       this.borders,
@@ -248,7 +231,7 @@ class MapWrapper extends React.Component {
         iconMapping: oceanMapping,
         getAngle: 0,
         sizeScale: 3,
-        getSize: d => (this.props.store.deck.zoom * d.transform.scale),
+        getSize: d => (this.props.store.deck.zoom * d.size),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
         getIcon: d => `ocean-${d.picId}`,
         updateTriggers: {

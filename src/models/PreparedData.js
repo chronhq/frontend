@@ -8,6 +8,7 @@ import Inventions from './DataAdaptation/InventionsList';
 import GeoEvents from './DataAdaptation/GeoEventsList';
 import Courses from './DataAdaptation/CoursesModel';
 import MapPics from './DataAdaptation/MapPicsModel';
+import Decor from './DataAdaptation/Decor';
 
 export default class FinalDataModel {
   @observable data = {};
@@ -24,60 +25,6 @@ export default class FinalDataModel {
 
   @computed get clusteredLocations() {
     return this.data.cities.clusteredLocations;
-  }
-
-  @computed get mapLabels() {
-    const pics = {};
-    const toponyms = {};
-    Object.values(this.mapLabelsRaw).map((cur) => {
-      if (cur.style.pic === true) {
-        // mimic map decorations
-        const pic = {
-          courseId: cur.courseId,
-          picId: cur.string[this.rootStore.i18n.lng],
-          geopoint: cur.geopoint,
-          transform: { scale: cur.style.size, rotate: 0 },
-        };
-        pics[cur.id] = pic;
-      } else {
-        console.log('else toponym', cur);
-        const label = {
-          ...cur,
-          string: cur.string[this.rootStore.i18n.lng],
-        };
-        toponyms[label.style.font] = label.style.font in toponyms
-          ? [
-            ...toponyms[label.style.font],
-            label,
-          ] : [label];
-      }
-      return null;
-    });
-    return { toponyms, pics };
-  }
-
-  @computed get mapLabelsPics() {
-    return this.mapLabels.pics;
-  }
-
-  @computed get toponymsRaw() {
-    return this.mapLabels.toponyms;
-  }
-
-  @computed get toponyms() {
-    const available = {};
-    Object.keys(this.toponymsRaw).map((f) => {
-      if (f in this.rootStore.view.fonts) {
-        available[f] = this.toponymsRaw[f];
-      }
-      return null;
-    });
-    return available;
-  }
-
-  @computed get mapLabelsRaw() {
-    return Object.values(this.rootStore.data.MapLabels.data)
-      .filter(c => c.courseId === this.rootStore.flags.flags.runtime.SelectedCourse);
   }
 
   @computed get geoEvents() {
@@ -97,11 +44,15 @@ export default class FinalDataModel {
       : [];
   }
 
+  @computed get decor() {
+    return this.data.decor;
+  }
+
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-
-    this.data.cities = new Locations(rootStore, 'CityLocs');
+    this.data.decor = new Decor(rootStore);
+    this.data.cities = new Locations(rootStore);
 
     // this.data.geoEvents = new GenericPointProcessing(rootStore, 'GeoEvents');
 

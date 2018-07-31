@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react';
 @observer
 export default class FontLoader extends React.Component {
   render() {
-    const fonts = Object.keys(this.props.store.prepared.toponymsRaw);
+    const fonts = Object.keys(this.props.store.prepared.decor.mapLabels.fonts);
     const display = this.props.store.flags.flags.runtime.Ready === true
       ? 'none' : 'inline';
     return (
