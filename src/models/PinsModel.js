@@ -62,6 +62,10 @@ export default class FeedPinsModel {
     this.active = Boolean(c);
   }
 
+  @computed get visibility() {
+    return this.rootStore.flags.flags.pins;
+  }
+
   @computed get selected() {
     return this.selectedFreePin
       ? this.freePins.find(pin => pin.key === this.active)
@@ -159,9 +163,13 @@ export default class FeedPinsModel {
       pins[locKey].push(pin);
       return false;
     };
-    this.geoEventsRawPins.pins.map(combine);
-    this.inventionsRawPins.pins.map(combine);
-    this.personsRawPins.pins.map(combine);
+    if (this.visibility.geoEvents) {
+      this.geoEventsRawPins.pins.map(combine);
+    } if (this.visibility.inventions) {
+      this.inventionsRawPins.pins.map(combine);
+    } if (this.visibility.persons) {
+      this.personsRawPins.pins.map(combine);
+    }
     return pins;
   }
 
@@ -181,10 +189,14 @@ export default class FeedPinsModel {
   }
 
   @computed get freePins() {
-    return [
-      ...this.geoEventsRawPins.free,
-      ...this.inventionsRawPins.free,
-      ...this.personsRawPins.free,
-    ].map(p => new InteractivePin([p], getKey(p)));
+    const pins = [];
+    if (this.visibility.geoEvents) {
+      pins.push(...this.geoEventsRawPins.free);
+    } if (this.visibility.inventions) {
+      pins.push(...this.inventionsRawPins.free);
+    } if (this.visibility.persons) {
+      pins.push(...this.personsRawPins.free);
+    }
+    return pins.map(p => new InteractivePin([p], getKey(p)));
   }
 }

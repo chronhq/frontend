@@ -47,7 +47,11 @@ export default class FlagsModel {
       mapDecorations: 1,
       cities: 1,
       traces: 1,
-      inventions: 0
+    },
+    pins: {
+      inventions: 1,
+      persons: 1,
+      geoEvents: 1,
     }
   };
 
