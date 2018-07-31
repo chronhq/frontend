@@ -56,10 +56,12 @@ class MapWrapper extends React.Component {
 
   @computed get decorations() {
     const decor = [];
+    const courseId = this.props.store.flags.flags.runtime.SelectedCourse;
     Object.values(this.props.store.data.MapDecorations.data).map((d) => {
       const x = d.geopoint[0];
       const y = d.geopoint[1];
-      if (this.props.store.projection.inTheBox(x, y)) {
+      if (d.courseId === courseId
+        && this.props.store.projection.inTheBox(x, y)) {
         decor.push(d);
       }
       return false;
