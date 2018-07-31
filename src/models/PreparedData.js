@@ -8,6 +8,7 @@ import Inventions from './DataAdaptation/InventionsList';
 import GeoEvents from './DataAdaptation/GeoEventsList';
 import Courses from './DataAdaptation/CoursesModel';
 import MapPics from './DataAdaptation/MapPicsModel';
+import Decor from './DataAdaptation/Decor';
 
 export default class FinalDataModel {
   @observable data = {};
@@ -24,28 +25,6 @@ export default class FinalDataModel {
 
   @computed get clusteredLocations() {
     return this.data.cities.clusteredLocations;
-  }
-
-  @computed get toponyms() {
-    const toponyms = {};
-    Object.values(this.mapLabels).map((cur) => {
-      const label = {
-        ...cur,
-        string: cur.string[this.rootStore.i18n.lng],
-      };
-      toponyms[label.style.font] = label.style.font in toponyms
-        ? [
-          ...toponyms[label.style.font],
-          label,
-        ] : [label];
-      return true;
-    });
-    return toponyms;
-  }
-
-  @computed get mapLabels() {
-    return Object.values(this.rootStore.data.MapLabels.data)
-      .filter(c => c.courseId === this.rootStore.flags.flags.runtime.SelectedCourse);
   }
 
   @computed get geoEvents() {
@@ -65,11 +44,15 @@ export default class FinalDataModel {
       : [];
   }
 
+  @computed get decor() {
+    return this.data.decor;
+  }
+
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-
-    this.data.cities = new Locations(rootStore, 'CityLocs');
+    this.data.decor = new Decor(rootStore);
+    this.data.cities = new Locations(rootStore);
 
     // this.data.geoEvents = new GenericPointProcessing(rootStore, 'GeoEvents');
 

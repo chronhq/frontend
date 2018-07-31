@@ -55,16 +55,11 @@ class MapWrapper extends React.Component {
   }
 
   @computed get decorations() {
-    const decor = [];
-    Object.values(this.props.store.data.MapDecorations.data).map((d) => {
-      const x = d.geopoint[0];
-      const y = d.geopoint[1];
-      if (this.props.store.projection.inTheBox(x, y)) {
-        decor.push(d);
-      }
-      return false;
-    });
-    return decor;
+    return this.props.store.prepared.decor.decorations;
+  }
+
+  @computed get oceans() {
+    return this.props.store.prepared.decor.oceans;
   }
 
   @computed get cities() {
@@ -128,7 +123,11 @@ class MapWrapper extends React.Component {
   }
 
   @computed get toponyms() {
-    return toponymsLayer(this.props.store.prepared.toponyms, this.options.labels);
+    return toponymsLayer(
+      this.props.store.prepared.decor.toponyms,
+      this.options.labels,
+      this.props.store.deck.rZoom
+    );
   }
 
   @computed get size() {
@@ -215,11 +214,31 @@ class MapWrapper extends React.Component {
     const decorAtlas = this.props.store.prepared.mapPics.decorations;
     const decorMapping = this.props.store.prepared.mapPics.decorationsJSON;
 
+    const oceanAtlas = this.props.store.prepared.mapPics.oceans;
+    const oceanMapping = this.props.store.prepared.mapPics.oceansJSON;
+
     const layers = [
       this.terrain,
       this.borders,
       ...this.toponyms,
       this.cityPoints,
+      new IconLayer({
+        id: 'map-oceans-layer',
+        data: this.oceans,
+        visible: this.options.mapDecorations,
+        pickable: true,
+        iconAtlas: oceanAtlas,
+        iconMapping: oceanMapping,
+        getAngle: 0,
+        sizeScale: 3,
+        getSize: d => (this.props.store.deck.zoom * d.size),
+        getPosition: d => [d.geopoint[0], d.geopoint[1]],
+        getIcon: d => `ocean-${d.picId}`,
+        updateTriggers: {
+          getSize: this.props.store.deck.zoom,
+        },
+        onClick: d => console.log('ocean:', d)
+      }),
       new IconLayer({
         id: 'map-decoration-layer',
         data: this.decorations,

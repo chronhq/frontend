@@ -21,7 +21,6 @@ export default class CityModel {
   @computed get currentLoc() {
     const answer = { pop: null, props: null };
     if (!this.exists) {
-      // console.error('City not exists', this);
       return answer;
     }
     const getCurrent = (data) => {
@@ -37,7 +36,6 @@ export default class CityModel {
       answer.props = getCurrent(this.properties);
       return answer;
     } catch (e) {
-      // console.log('Can not get current loc', this);
       return answer;
     }
   }
