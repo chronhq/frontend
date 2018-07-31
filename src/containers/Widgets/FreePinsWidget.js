@@ -5,25 +5,25 @@ import { computed } from 'mobx';
 @inject('store')
 @observer
 export default class FreePinsWidget extends React.Component {
-  @computed get pins() {
-    return this.props.store.pins.freePins;
-  }
-
   rowCapasity = 8;
 
   xShift = 20;
 
   yShift = 30;
 
+  @computed get pins() {
+    return this.props.store.pins.freePins;
+  }
+
   translateX = idx => (idx % this.rowCapasity) * this.xShift;
 
   translateY = idx => Math.floor(idx / this.rowCapasity) * this.yShift;
 
-  translate = idx => [this.translateX(idx), this.translateY(idx)].join(',');
+  translate = idx => [this.translateX(idx), -this.translateY(idx)].join(',');
 
   render() {
     return (
-      <g className="freePinsBar" transform='translate(90, 90)'>
+      <g className="freePinsBar" transform='translate(0, -60)'>
         {this.pins.map((icon, idx) => (
           <use
             style={{ pointerEvents: 'all' }}
