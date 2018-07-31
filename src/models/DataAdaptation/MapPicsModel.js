@@ -78,6 +78,16 @@ export default class MapPics {
     return this.jsonGen('decoration', this.rootStore.data.MapPics.data);
   }
 
+  @computed get oceans() {
+    const data = this.svgGen('ocean', this.rootStore.data.MapPics.data);
+    const blob = new Blob([data], { type: 'image/svg+xml' });
+    return window.URL.createObjectURL(blob);
+  }
+
+  @computed get oceansJSON() {
+    return this.jsonGen('ocean', this.rootStore.data.MapPics.data);
+  }
+
   @computed get events() {
     const data = this.svgGen('event', this.rootStore.data.MapPics.data);
     const blob = new Blob([data], { type: 'image/svg+xml' });
