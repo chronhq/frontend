@@ -246,15 +246,15 @@ class MapWrapper extends React.Component {
           getSize: updateTrigger,
         },
       }),
-      new LineLayer({
-        id: 'debug-line-layer',
-        data: debugData,
-        pickable: false,
-        getStrokeWidth: 20,
-        getSourcePosition: d => d.from.coordinates,
-        getTargetPosition: d => d.to.coordinates,
-        getColor: () => [0, 0, 140]
-      })
+      // new LineLayer({
+      //   id: 'debug-line-layer',
+      //   data: debugData,
+      //   pickable: false,
+      //   getStrokeWidth: 20,
+      //   getSourcePosition: d => d.from.coordinates,
+      //   getTargetPosition: d => d.to.coordinates,
+      //   getColor: () => [0, 0, 140]
+      // })
     ];
     return (
       <DeckGL
