@@ -62,12 +62,10 @@ export default class DeckViewportModel {
 
     if (this.clipEnabled) {
       console.log('fitBounds');
-      console.log(JSON.stringify(this.rootStore.projection.data));
       return this.view.makeViewport(vState)
         .fitBounds(this.rootStore.projection.clip);
     }
     console.log('clip disabled');
-    console.log(JSON.stringify(this.rootStore.projection.data));
     return this.view.makeViewport(vState);
   }
 
@@ -84,8 +82,18 @@ export default class DeckViewportModel {
   }
 
   @computed get metersPerPixel() {
-    return 40;
-    // return this.viewport.distanceScales.metersPerPixel[0];
+    const vState = {
+      width: this.width,
+      height: this.height,
+      viewState: this.viewState,
+    };
+    const viewport = this.clipEnabled
+      ? this.view.makeViewport(vState)
+        .fitBounds(this.rootStore.projection.clip)
+      : this.view.makeViewport(vState);
+    console.log(viewport.distanceScales);
+    console.log(viewport);
+    return viewport.distanceScales.metersPerPixel[0];
   }
 
   @observable longitude = this.viewport.longitude + this.offsetDegree[0];
@@ -93,14 +101,6 @@ export default class DeckViewportModel {
   @observable latitude = this.viewport.latitude + this.offsetDegree[1];
 
   @observable zoom = this.viewport.zoom;
-
-  // @observable latitude = 0;
-  // @observable longitude = 0;
-  // @observable latitude = this.rootStore.projection.center[0];
-  // @observable longitude = this.rootStore.projection.center[1];
-  // @observable init = false;
-  // @observable zoom = this.rootStore.flags.flags.zoom.minScale;
-  // @observable zoom = 2
 
   @observable pitch = 0;
 
@@ -110,15 +110,6 @@ export default class DeckViewportModel {
 
   @observable minZoom = 1;
 
-  // @action initViewport(force = false) {
-  //   if (this.init === true || force === false) return false;
-  //   this.longitude = this.viewport.longitude;
-  //   this.latitude = this.viewport.latitude;
-  //   this.zoom = this.viewport.zoom;
-  //   this.init = true;
-  //   return true;
-  // }
-  // @observable initialViewState = INITIAL_VIEW_STATE;
 
 
   @computed get rZoom() {

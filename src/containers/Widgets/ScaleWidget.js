@@ -9,22 +9,19 @@ export default class ScaleWidget extends React.Component {
   @observable milesInKm = 0.621371;
 
   @computed get scaleRaw() {
-    const earth = 40075; // in km
-    const pixels = (1024 * this.props.store.deck.zoom);
-    const pxPerKm = earth / pixels;
-    return pxPerKm;
+    return this.props.store.deck.metersPerPixel / 10;
   }
 
   @computed get scaleWidget() {
     switch (this.props.store.i18n.lng) {
       case 'ru':
         return {
-          value: Math.round(this.scaleRaw * 100),
+          value: Math.round(this.scaleRaw),
           units: 'Km'
         };
       default:
         return {
-          value: Math.round(this.scaleRaw * this.milesInKm * 100),
+          value: Math.round(this.scaleRaw * this.milesInKm),
           units: 'Miles'
         };
     }
