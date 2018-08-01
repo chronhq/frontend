@@ -1,6 +1,5 @@
 import React from 'react';
 import DeckGL, {
-  MapController,
   TextLayer,
   IconLayer,
   PathLayer
@@ -19,13 +18,12 @@ import chars from './Layers/VisibleCharacters';
 
 import testingAtlas from './geoAssets/cities2.svg';
 import testingMapping from './geoAssets/cities2.json';
+// const testData = [
+//   { coord: [0, 0], icon: 'marker-1', size: 30 },
+//   { coord: [0, 0], icon: 'marker-2', size: 5 }
+// ];
 
 import TripsLayer from './trips-layer';
-
-const testData = [
-  { coord: [0, 0], icon: 'marker-1', size: 30 },
-  { coord: [0, 0], icon: 'marker-2', size: 5 }
-];
 
 @inject('store')
 @observer
@@ -301,31 +299,15 @@ class MapWrapper extends React.Component {
           getText: updateTrigger,
           getSize: updateTrigger,
         },
-      }),
-      new IconLayer({
-        id: 'test-layer',
-        data: testData,
-        visible: true,
-        pickable: false,
-        iconAtlas: testingAtlas,
-        iconMapping: testingMapping,
-        sizeScale: 3,
-        getSize: d => d.size,
-        getPosition: d => d.coord,
-        getIcon: d => d.icon,
-        getColor: () => [66, 66, 66],
       })
     ];
     return (
       <DeckGL
-        controller={MapController}
-        // views={[viewport]}
-        initialViewState={this.props.store.deck.viewport}
-        onViewStateChange={v => this.props.store.deck.updateViewport(v.viewState)}
-        layers={layers}
+        views={this.props.store.deck.view}
+        viewState={this.props.store.deck.viewState}
+        onViewStateChange={v => this.props.store.deck.updateViewState(v.viewState)}
         style={{ zIndex: 1 }}
-        width={this.width}
-        height={this.height}
+        layers={layers}
       />
     );
   }
