@@ -26,7 +26,7 @@ function getBorders(borders, properties, colors) {
   });
 }
 
-function bordersLayer(borders, properties, colors, visible, showInfo, hoverCb) {
+function bordersLayer(borders, properties, colors, visible, hoverCb) {
   const data = getBorders(borders, properties, colors);
   return new GeoJsonLayer({
     id: 'borders-layer',
@@ -42,7 +42,6 @@ function bordersLayer(borders, properties, colors, visible, showInfo, hoverCb) {
     stroked: true,
     extruded: false,
     lineJointRounded: true,
-    onClick: f => showInfo(f),
     onHover: hoverCb,
   });
 }

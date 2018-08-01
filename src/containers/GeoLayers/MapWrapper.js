@@ -73,53 +73,17 @@ class MapWrapper extends React.Component {
   @computed get borders() {
     const properties = this.props.store.data.Properties.data;
 
-    const admins = this.props.store.data.Admins.data;
-    const types = this.props.store.data.Types.data;
     const colors = this.props.store.data.MapColors.data;
 
     const borders = this.props.store.borders.bordersPath;
     const visible = this.options.borders;
-    const showInfo = (clickInfo) => {
-      if (process.env.NODE_ENV === 'production') {
-        return '';
-      }
-      const propId = clickInfo.object.props;
-      const props = properties[propId];
-      const admin = admins[props.admin];
-      const type = types[props.type];
-
-      console.group();
-      console.info('Border click info', clickInfo, props);
-      console.group();
-      console.info('Props ID:', props.id);
-      console.info('Color:', props.color, 'Disputed:', props.disputed);
-      console.info('Name:', props.name);
-      console.info('NameRu:', props.nameru);
-      console.info('wikipedia:', props.wikipedia);
-      console.groupEnd();
-
-      console.group();
-      console.info('Admin ID:', admin.id);
-      console.info('En:', admin.en);
-      console.info('Ru:', admin.ru);
-      console.groupEnd();
-
-      console.group();
-      console.info('Type ID:', type.id);
-      console.info('En:', type.en);
-      console.info('Ru:', type.ru);
-      console.info('Orig:', type.orig);
-      console.groupEnd();
-      console.groupEnd();
-      return null;
-    };
     const hoverCb = (d) => {
       // if image contains transparent parts disable drawing tooltip
       const key = d.color === null ? null : d.object.props;
       this.props.store.pins.setCountryActive(key);
       this.props.store.pins.setPosition(d.x, d.y);
     };
-    return bordersLayer(borders, properties, colors, visible, showInfo, hoverCb);
+    return bordersLayer(borders, properties, colors, visible, hoverCb);
   }
 
   @computed get toponyms() {
