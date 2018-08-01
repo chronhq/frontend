@@ -5,17 +5,31 @@ export default class GeoEventsList {
     this.rootStore = rootStore;
   }
 
+  @computed get lng() {
+    return this.rootStore.i18n.lng;
+  }
+
   @computed get data() {
-    return this.rootStore.prepared.geoEvents;
+    const data = {};
+    Object.values(this.rootStore.data.GeoEvents.data).map((d) => {
+      data[d.id] = { ...d, description: [d.description[this.lng]] };
+      return null;
+    });
+    return data;
   }
 
   @computed get timeline() {
     return Object.keys(this.data).reduce((prev, curId) => {
-      const cur = this.data[curId].data;
-      const year = Number(cur.date.replace(/-.*/g, ''));
-      return cur.inventDate in prev
-        ? { ...prev, [year]: [...prev[year], cur.id] }
-        : { ...prev, [year]: [cur.id] };
+      const cur = this.data[curId];
+      try {
+        const year = Number(cur.date.replace(/-.*/g, ''));
+        return cur.inventDate in prev
+          ? { ...prev, [year]: [...prev[year], cur.id] }
+          : { ...prev, [year]: [cur.id] };
+      } catch (e) {
+        console.error('Processing GeoEventsList', cur);
+        return prev;
+      }
     }, {});
   }
 

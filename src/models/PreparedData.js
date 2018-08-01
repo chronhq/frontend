@@ -27,11 +27,6 @@ export default class FinalDataModel {
     return this.data.cities.clusteredLocations;
   }
 
-  @computed get geoEvents() {
-    return {};
-    // return this.data.geoEvents.points;
-  }
-
   @computed get geoPoints() {
     return this.rootStore.year.tick in this.data.courseGeoPoints.points
       ? this.data.courseGeoPoints.points[this.rootStore.year.tick]
@@ -53,8 +48,6 @@ export default class FinalDataModel {
     this.rootStore = rootStore;
     this.data.decor = new Decor(rootStore);
     this.data.cities = new Locations(rootStore);
-
-    // this.data.geoEvents = new GenericPointProcessing(rootStore, 'GeoEvents');
 
     this.data.courseTraces = new Expeditions(rootStore);
     this.data.courseGeoPoints = new CourseGeopoints(rootStore);

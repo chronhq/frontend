@@ -47,12 +47,10 @@ export default class Balloon extends React.Component {
       } else {
         classes.push('balloonBottomRight');
       }
+    } else if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
+      classes.push('balloonTopLeft');
     } else {
-      if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
-        classes.push('balloonTopLeft');
-      } else {
-        classes.push('balloonBottomLeft');
-      }
+      classes.push('balloonBottomLeft');
     }
 
     // if (this.props.store.pins.pageY > 0.7*window.innerHeight) {
@@ -77,7 +75,7 @@ export default class Balloon extends React.Component {
       switch (pin.type) {
         case 'geo': return (
           <GeoEvent
-            fact={pin.geoEvent.data}
+            fact={pin.geoEvent}
             key={`balloon_geo_${pin.geoEvent.id}`}
           />);
 
