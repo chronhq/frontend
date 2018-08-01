@@ -1,23 +1,17 @@
 import { computed, observable } from 'mobx';
 
 class Point {
-  @observable data = {};
 
-  @computed get point() {
-    return {
-      x: this.data.geopoint[0],
-      y: this.data.geopoint[1],
+  @observable pic;
+
+  @observable point;
+
+  constructor(point) {
+    this.point = {
+      x: point.geopoint[0],
+      y: point.geopoint[1],
     };
-  }
-
-  // Point will be in viewport area after clipping
-  @computed get inTheBox() {
-    return this.projection.inTheBox(this.point.x, this.point.y);
-  }
-
-  constructor(rootStore, point) {
-    this.rootStore = rootStore;
-    this.data = point;
+    this.pic = point.pic;
   }
 }
 
@@ -36,11 +30,27 @@ export default class CourseGeopoints {
       if (!(cur[this.key] in data)) {
         data[cur[this.key]] = [];
       }
-      const point = new Point(this.rootStore, cur);
+      const point = new Point(cur);
       data[cur[this.key]].push(point);
       return false;
     }, {});
     this.points = { ...this.points, ...data };
+  }
+
+  @computed get tick() {
+    return this.rootStore.year.tick;
+  }
+
+  @computed get current() {
+    const arr = [];
+    if (this.tick in this.points) {
+      Object.values(this.points[this.tick]).map((p) => {
+        if (this.rootStore.projection
+          .inTheBox(p.point.x, p.point.y)) arr.push(p);
+        return null;
+      });
+    }
+    return arr;
   }
 
   constructor(rootStore) {

@@ -22,6 +22,7 @@ import testingMapping from './geoAssets/cities2.json';
 import debugData from './geoAssets/debugData.json';
 
 import TripsLayer from './trips-layer';
+import pinsLayer from './Layers/PinsLayer';
 
 @inject('store')
 @observer
@@ -127,33 +128,23 @@ class MapWrapper extends React.Component {
   @computed get feedPins() {
     const pinsAtlas = this.props.store.prepared.mapPics.pins;
     const pinsMapping = this.props.store.prepared.mapPics.pinsJSON;
+    const { pins } = { ...this.props.store.pins };
+    const id = 'map-pins-layer';
+    const cid = 'course-pins-layer'
+    const { zoom } = { ...this.props.store.deck };
+    const coursePins = this.props.store.prepared.data.courseGeoPoints.current;
 
-    return new IconLayer({
-      id: 'map-pins-layer',
-      data: this.props.store.pins.pins,
-      // visible: this.options.mapDecorations,
-      pickable: true,
-      getAngle: 135,
-      iconAtlas: pinsAtlas,
-      iconMapping: pinsMapping,
-      sizeScale: 3,
-      getSize: () => (this.props.store.deck.zoom * 10),
-      getPosition: d => [d.point.x, d.point.y],
-      getIcon: d => `pin-${d.pic}`,
-      getColor: () => [66, 66, 66],
-      updateTriggers: {
-        getSize: this.props.store.deck.zoom,
-      },
-      onClick: d => console.log('pin:', d),
-      onHover: (d) => {
-        // if image contains transparent parts disable drawing tooltip
-        const key = d.color === null ? null : d.object.key;
-        this.props.store.pins.setActive(key, false);
-        this.props.store.pins.setPosition(d.x, d.y);
-      },
-    });
+    const onHover = (d) => {
+      // if image contains transparent parts disable drawing tooltip
+      const key = d.color === null ? null : d.object.key;
+      this.props.store.pins.setActive(key, false);
+      this.props.store.pins.setPosition(d.x, d.y);
+    }
+    return [
+      pinsLayer(pinsAtlas, pinsMapping, pins, id, zoom, true, onHover),
+      pinsLayer(pinsAtlas, pinsMapping, coursePins, cid, zoom, false),
+    ];
   }
-
 
   @action resize() {
     this.props.store.deck.width = window.innerWidth;
@@ -223,7 +214,7 @@ class MapWrapper extends React.Component {
         getDashArray: () => [10, 10],
         // onClick: d => console.log(d.data.id),
       }),
-      this.feedPins,
+      ...this.feedPins,
       new TripsLayer({
         id: 'animated-trace-layer',
         data: this.traces,

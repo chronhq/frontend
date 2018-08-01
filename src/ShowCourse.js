@@ -11,8 +11,8 @@ import './ShowCourse.less';
 @observer
 class ShowCourse extends React.Component {
   @computed get courseDataIsOk() {
-    if (this.props.store.projection.enabled) {
-      console.log('Enabled', this.props.store.projection.enabled);
+    if (this.props.store.projection.enabled
+      && this.props.store.flags.flags.runtime.Setup === false) {
       return true;
     }
     return false;
