@@ -1,0 +1,110 @@
+[
+  {
+    "name": "north",
+    "from": {
+      "coordinates": [-179, 89]
+    },
+    "to": {
+      "coordinates": [179, 89]
+    }
+  },
+  {
+    "name": "south",
+    "from": {
+      "coordinates": [-179, -89]
+    },
+    "to": {
+      "coordinates": [179, -89]
+    }
+  },
+  {
+    "name": "west",
+    "from": {
+      "coordinates": [-179, -89]
+    },
+    "to": {
+      "coordinates": [-179, 89]
+    }
+  },
+  {
+    "name": "east",
+    "from": {
+      "coordinates": [179, -89]
+    },
+    "to": {
+      "coordinates": [179, 89]
+    }
+  },
+  {
+    "name": "center-horizontal",
+    "from": {
+      "coordinates": [-179, 0]
+    },
+    "to": {
+      "coordinates": [179, 0]
+    }
+  },
+  {
+    "name": "center-vertical",
+    "from": {
+      "coordinates": [0, -89]
+    },
+    "to": {
+      "coordinates": [0, 89]
+    }
+  },
+  {
+    "name": "courseTop",
+    "from": {
+      "coordinates": [110, 65]
+    },
+    "to": {
+      "coordinates": [170, 65]
+    }
+  },
+  {
+    "name": "courseBottom",
+    "from": {
+      "coordinates": [110, 35]
+    },
+    "to": {
+      "coordinates": [170, 35]
+    }
+  },
+  {
+    "name": "courseLeft",
+    "from": {
+      "coordinates": [110, 35]
+    },
+    "to": {
+      "coordinates": [110, 65]
+    }
+  },
+  {
+    "name": "courseRight",
+    "from": {
+      "coordinates": [170, 35]
+    },
+    "to": {
+      "coordinates": [170, 65]
+    }
+  },
+  {
+    "name": "courseSlide",
+    "from": {
+      "coordinates": [110, 65]
+    },
+    "to": {
+      "coordinates": [170, 35]
+    }
+  },
+  {
+    "name": "courseMount",
+    "from": {
+      "coordinates": [110, 35]
+    },
+    "to": {
+      "coordinates": [170, 65]
+    }
+  }
+]

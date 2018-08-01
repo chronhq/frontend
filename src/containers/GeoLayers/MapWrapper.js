@@ -2,7 +2,8 @@ import React from 'react';
 import DeckGL, {
   TextLayer,
   IconLayer,
-  PathLayer
+  PathLayer,
+  LineLayer
 } from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
@@ -18,6 +19,7 @@ import chars from './Layers/VisibleCharacters';
 
 import testingAtlas from './geoAssets/cities2.svg';
 import testingMapping from './geoAssets/cities2.json';
+import debugData from './geoAssets/debugData.json';
 // const testData = [
 //   { coord: [0, 0], icon: 'marker-1', size: 30 },
 //   { coord: [0, 0], icon: 'marker-2', size: 5 }
@@ -299,6 +301,15 @@ class MapWrapper extends React.Component {
           getText: updateTrigger,
           getSize: updateTrigger,
         },
+      }),
+      new LineLayer({
+        id: 'debug-line-layer',
+        data: debugData,
+        pickable: false,
+        getStrokeWidth: 20,
+        getSourcePosition: d => d.from.coordinates,
+        getTargetPosition: d => d.to.coordinates,
+        getColor: () => [0, 0, 140]
       })
     ];
     return (
