@@ -8,7 +8,7 @@ import DeckGL, {
 
 import { observer, inject } from 'mobx-react';
 import {
-  computed, observable, toJS
+  computed, observable, toJS, action
 } from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
@@ -28,6 +28,14 @@ import TripsLayer from './trips-layer';
 class MapWrapper extends React.Component {
   @observable showCluster = true;
 
+  componentDidMount() {
+    window.addEventListener('resize', () => this.resize(), false);
+    this.resize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.resize(), false);
+  }
 
   @computed get terrain() {
     const terrain = Object.values(this.props.store.borders.contour);
@@ -146,12 +154,10 @@ class MapWrapper extends React.Component {
     });
   }
 
-  @computed get width() {
-    return this.props.store.deck.innerWidth;
-  }
 
-  @computed get height() {
-    return this.props.store.deck.innerHeight;
+  @action resize() {
+    this.props.store.deck.width = window.innerWidth;
+    this.props.store.deck.height = window.innerHeight;
   }
 
   render() {

@@ -25,17 +25,10 @@ document.fonts.onloadingdone = (fontFaceSetEvent) => {
 };
 
 
-function resize() {
-  window.store.deck.setSize(window.innerWidth, window.innerHeight);
-}
-
 function renderApp(component) {
   const Application = component;
   ReactDOM.render(<Application store={window.store} />, document.getElementById('root'));
 }
-
-window.addEventListener('resize', () => resize(), false);
-resize();
 
 renderApp(App);
 

@@ -8,7 +8,9 @@ import ButtonMenu from './ButtonMenu';
 @observer
 class TimelineButtons extends React.Component {
   componentDidMount() {
-    this.props.store.animation.startAnimation();
+    this.props.store.flags.flags.runtime.animation ?
+    this.props.store.animation.startAnimation() :
+    null;
   }
 
   componentWillUnmount() {
