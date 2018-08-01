@@ -42,4 +42,8 @@ export default class GeoEventsList {
       ? this.timeline[this.year]
       : [];
   }
+
+  @computed get currentData() {
+    return this.current.map(id => this.data[id]);
+  }
 }

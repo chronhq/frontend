@@ -127,19 +127,14 @@ export default class FeedPinsModel {
   }
 
   @computed get geoEvents() {
-    return this.rootStore.prepared.geoEventsList.data;
-  }
-
-  @computed get geoEventsFeed() {
-    return this.rootStore.prepared.geoEventsList.current;
+    return this.rootStore.prepared.geoEventsList.currentData;
   }
 
   @computed get geoEventsRawPins() {
     const pins = [];
     const free = [];
     const type = 'geo';
-    this.geoEventsFeed.map((gevId) => {
-      const geoEvent = this.geoEvents[gevId];
+    this.geoEvents.map((geoEvent) => {
       if (geoEvent.geopoint[0] === null || geoEvent.geopoint[1] === null) {
         free.push({ type, geoEvent });
       } else {
@@ -182,6 +177,8 @@ export default class FeedPinsModel {
           .projection.inTheBox(pin[0].loc.x, pin[0].loc.y);
         if (inTheBox) {
           p.push(new InteractivePin(pin, d));
+        } else {
+          console.log('Not In the Box', JSON.stringify(pin), pin[0].loc.x, pin[0].loc.y);
         }
         return false;
       });
