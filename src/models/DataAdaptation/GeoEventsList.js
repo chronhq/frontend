@@ -23,7 +23,7 @@ export default class GeoEventsList {
       const cur = this.data[curId];
       try {
         const year = Number(cur.date.replace(/-.*/g, ''));
-        return cur.inventDate in prev
+        return year in prev
           ? { ...prev, [year]: [...prev[year], cur.id] }
           : { ...prev, [year]: [cur.id] };
       } catch (e) {
