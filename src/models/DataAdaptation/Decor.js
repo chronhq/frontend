@@ -112,7 +112,7 @@ export default class Decor {
   @computed get toponyms() {
     const available = {};
     Object.keys(this.toponymsClustered).map((f) => {
-      if (f in this.rootStore.view.fonts) {
+      if (f in this.rootStore.fonts) {
         available[f] = this.toponymsClustered[f];
       }
       return null;

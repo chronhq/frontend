@@ -11,14 +11,14 @@ import Defs from './Defs';
 export default class Widgets extends React.Component {
   render() {
     const freePinsEnabled = !this.props.store.projection.clipEnabled;
-    const showWidgets = this.props.store.view.width > 600;
-    const shiftHeight = this.props.store.view.height - 100;
+    const showWidgets = this.props.store.deck.innerWidth > 600;
+    const shiftHeight = this.props.store.deck.innerHeight - 100;
     const shiftX = 50;
     const translate = `translate(${shiftX}, ${shiftHeight})`;
     return (
       <svg
-        width={this.props.store.view.width}
-        height={this.props.store.view.height}
+        width={this.props.store.deck.innerWidth}
+        height={this.props.store.deck.innerHeight}
         style={{ zIndex: 2, pointerEvents: 'none', position: 'absolute' }}
       >
         <Defs />

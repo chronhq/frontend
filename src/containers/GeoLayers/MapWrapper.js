@@ -8,7 +8,7 @@ import DeckGL, {
 
 import { observer, inject } from 'mobx-react';
 import {
-  computed, observable, action, toJS
+  computed, observable, toJS
 } from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
@@ -20,10 +20,6 @@ import chars from './Layers/VisibleCharacters';
 import testingAtlas from './geoAssets/cities2.svg';
 import testingMapping from './geoAssets/cities2.json';
 import debugData from './geoAssets/debugData.json';
-// const testData = [
-//   { coord: [0, 0], icon: 'marker-1', size: 30 },
-//   { coord: [0, 0], icon: 'marker-2', size: 5 }
-// ];
 
 import TripsLayer from './trips-layer';
 
@@ -32,14 +28,6 @@ import TripsLayer from './trips-layer';
 class MapWrapper extends React.Component {
   @observable showCluster = true;
 
-  componentDidMount() {
-    window.addEventListener('resize', () => this.resize(), false);
-    this.resize();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', () => this.resize(), false);
-  }
 
   @computed get terrain() {
     const terrain = Object.values(this.props.store.borders.contour);
@@ -159,16 +147,11 @@ class MapWrapper extends React.Component {
   }
 
   @computed get width() {
-    return this.props.store.view.width;
+    return this.props.store.deck.innerWidth;
   }
 
   @computed get height() {
-    return this.props.store.view.height;
-  }
-
-  @action resize() {
-    this.props.store.view.width = window.innerWidth;
-    this.props.store.view.height = window.innerHeight;
+    return this.props.store.deck.innerHeight;
   }
 
   render() {

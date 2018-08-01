@@ -1,12 +1,23 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
+import { computed } from 'mobx';
+
 import LoadingScreen from './containers/LoadingScreen';
 import UI from './containers/UI';
 import Flag from './Flag';
 import './ShowCourse.less';
 
+@inject('store')
 @observer
 class ShowCourse extends React.Component {
+  @computed get courseDataIsOk() {
+    if (this.props.store.projection.enabled) {
+      console.log('Enabled', this.props.store.projection.enabled);
+      return true;
+    }
+    return false;
+  }
+
   render() {
     return (
       <div>
@@ -16,7 +27,7 @@ class ShowCourse extends React.Component {
           courseSelected={this.props.computedMatch.params.id}
           fallbackRender={() => ''}
         />
-        <UI />
+        {this.courseDataIsOk === true && <UI />}
       </div>
     );
   }

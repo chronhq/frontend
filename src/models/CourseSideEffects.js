@@ -98,7 +98,7 @@ export default class CourseSideEffects {
 
   @action configureCourseEnv() {
     this.rootStore.year.setup(this.courseInfo.config.year);
-    this.rootStore.projection.setup(this.courseInfo.config.projection);
+    // this.rootStore.projection.setup(this.courseInfo.config.projection);
   }
 
   @action configureDataFilters() {
@@ -174,6 +174,11 @@ export default class CourseSideEffects {
     this.configureCourseUI();
     this.loadCourseData();
 
+    this.rootStore.flags.set({
+      runtime: {
+        Setup: false,
+      }
+    });
     // Close course selection screen after loading is complete
     when(
       () => this.loadingIsComplete,

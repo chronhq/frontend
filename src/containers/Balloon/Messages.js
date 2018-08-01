@@ -101,4 +101,3 @@ export class Invention extends React.Component {
     );
   }
 }
-

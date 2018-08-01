@@ -37,6 +37,8 @@ class CourseSelection extends React.Component {
     this.props.store.flags.set({
       runtime: {
         CourseSelection: true,
+        SelectedCourse: null,
+        Setup: true,
         Ready: false
       }
     });

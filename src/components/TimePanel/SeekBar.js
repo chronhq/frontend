@@ -62,9 +62,9 @@ class SeekBar extends React.Component {
   }
 
   @computed get width() {
-    return this.props.store.view.width < 600
-      ? this.props.store.view.width
-      : this.props.store.view.width - 400;
+    return this.props.store.deck.innerWidth < 600
+      ? this.props.store.deck.innerWidth
+      : this.props.store.deck.innerWidth - 400;
   }
 
   @computed get scale() {

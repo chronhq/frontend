@@ -16,18 +16,26 @@ window.store.effects.course.loadContourInfo();
 
 document.fonts.onloadingdone = (fontFaceSetEvent) => {
   fontFaceSetEvent.fontfaces.map((f) => {
-    window.store.view.fonts = {
-      ...window.store.view.fonts,
+    window.store.fonts = {
+      ...window.store.fonts,
       [f.family]: f,
-    }
+    };
     return null;
   });
 };
+
+
+function resize() {
+  window.store.deck.setSize(window.innerWidth, window.innerHeight);
+}
 
 function renderApp(component) {
   const Application = component;
   ReactDOM.render(<Application store={window.store} />, document.getElementById('root'));
 }
+
+window.addEventListener('resize', () => resize(), false);
+resize();
 
 renderApp(App);
 

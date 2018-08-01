@@ -3,6 +3,7 @@ import {
   computed,
   action
 } from 'mobx';
+
 import {
   MapView,
   MapController
@@ -13,36 +14,55 @@ const INITIAL_VIEW_STATE = {
   longitude: 0,
   zoom: 1,
   bearing: 0,
-  pitch: 0,
-  maxZoom: 5,
-  minZoom: 0.5
+  pitch: 0
 };
 
 export default class DeckViewportModel {
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
+
+  @computed get enabled() {
+    return this.rootStore.projection.enabled;
+  }
+
   @computed get view() {
+    // if (!this.enabled) return null;
+    console.log('Building view');
     return new MapView({
       id: 'id-view',
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: this.width,
+      height: this.height,
       controller: { type: MapController, dragRotate: false }
     });
   }
 
-  @computed get clipArray() {
-    // if (this.rootStore.flags.flags.runtime.SelectedCourse === 0) {
-    // if (false) {
-      return [[110, 65], [170, 35]];
-    // }
-    // return [[-179, 89], [179, -85]];
-    // return null;
+  @computed get clipEnabled() {
+    return this.rootStore.projection.clipEnabled === true;
   }
 
   @computed get viewport() {
-    return this.view.makeViewport({
-      width: window.innerWidth,
-      height: window.innerHeight,
-      viewState: INITIAL_VIEW_STATE
-    }).fitBounds(this.clipArray);
+    console.log('Building viewport');
+    console.trace('viewport');
+    // if (!this.enabled) return null;
+    const vState = {
+      width: this.width,
+      height: this.height,
+      viewState: {
+        ...INITIAL_VIEW_STATE,
+        maxZoom: this.rootStore.flags.flags.zoom.maxScale,
+        minZoom: this.rootStore.flags.flags.zoom.minScale,
+      },
+    };
+    if (this.clipEnabled) {
+      console.log('fitBounds');
+      console.log(JSON.stringify(this.rootStore.projection.data));
+      return this.view.makeViewport(vState)
+        .fitBounds(this.rootStore.projection.clip);
+    }
+    console.log('clip disabled');
+    console.log(JSON.stringify(this.rootStore.projection.data));
+    return this.view.makeViewport(vState);
   }
 
   @computed get offsetDegree() {
@@ -57,11 +77,24 @@ export default class DeckViewportModel {
     return [offsetXdegree, offsetYdegree];
   }
 
-  @observable longitude = this.viewport.longitude + this.offsetDegree[0];
+  @computed get metersPerPixel() {
+    return 40;
+    // return this.viewport.distanceScales.metersPerPixel[0];
+  }
 
-  @observable latitude = this.viewport.latitude + this.offsetDegree[1];
+  // @observable longitude = this.viewport.longitude + this.offsetDegree[0];
+  @observable longitude = this.rootStore.projection.center[1];
 
-  @observable zoom = this.viewport.zoom;
+  // @observable latitude = this.viewport.latitude + this.offsetDegree[1];
+  @observable latitude = this.rootStore.projection.center[0];
+  // @observable init = false;
+
+  // @observable latitude = 0;
+
+  // @observable longitude = 0;
+
+  // @observable zoom = this.viewport.zoom;
+  @observable zoom = this.rootStore.flags.flags.zoom.minScale;
 
   @observable pitch = 0;
 
@@ -69,13 +102,32 @@ export default class DeckViewportModel {
 
   @observable maxZoom = 5;
 
-  @observable minZoom = 0.5;
+  @observable minZoom = 1;
+
+  @observable innerWidth = window.innerWidth;
+
+  @observable innerHeight = window.innerHeight;
+
+  @action setSize(w, h) {
+    this.innerWidth = w;
+    this.innerHeight = h;
+  }
+
+  // @action initViewport(force = false) {
+  //   if (this.init === true || force === false) return false;
+  //   this.longitude = this.viewport.longitude;
+  //   this.latitude = this.viewport.latitude;
+  //   this.zoom = this.viewport.zoom;
+  //   this.init = true;
+  //   return true;
+  // }
 
   @computed get rZoom() {
     return Math.floor(this.zoom);
   }
 
   @computed get viewState() {
+    console.log('Building viewstate');
     return {
       longitude: this.longitude,
       latitude: this.latitude,

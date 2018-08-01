@@ -20,7 +20,9 @@ function findFlag(source, target) {
 export default class FlagsModel {
   @observable flags = {
     runtime: {
+      Setup: true,
       CourseSelection: true,
+      SelectedCourse: null,
       Ready: false,
       alignPanel: 'right',
       feedback: false,
@@ -52,6 +54,10 @@ export default class FlagsModel {
       inventions: 1,
       persons: 1,
       geoEvents: 1,
+    },
+    zoom: {
+      minScale: 1,
+      maxScale: 20,
     }
   };
 
