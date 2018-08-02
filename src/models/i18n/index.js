@@ -71,6 +71,7 @@ export default class Internationalization {
           search: 'Search',
           feed: 'Feed',
           settings: 'Settings',
+          layers: 'Layers',
           debug: 'Debug',
           author: 'About author',
           home: 'Course selection',
@@ -78,6 +79,7 @@ export default class Internationalization {
           prevYear: 'Previous year',
           collapse: 'Collapse',
           expand: 'Expand',
+          soon: 'Not available yet'
         };
       default:
         return {
@@ -93,6 +95,7 @@ export default class Internationalization {
           prevYear: 'Предыдущий год',
           collapse: 'Свернуть',
           expand: 'Развернуть',
+          soon: 'Скоро'
         };
     }
   }
@@ -126,6 +129,19 @@ export default class Internationalization {
           layers: ['Тип данных:', 'Borders', 'Inventions', 'Wars', 'Events'],
           ToS: 'Я принимаю условия пользовательского соглашения',
           button: 'Сообщить'
+        };
+    }
+  }
+
+  @computed get ballonsNaming() {
+    switch (this.lng) {
+      case 'en':
+        return {
+          title: "There's a mistake!"
+        };
+      default:
+        return {
+          title: 'Здесь ошибка'
         };
     }
   }

@@ -46,10 +46,11 @@ export class PersonFact extends React.Component {
 
   render() {
     const { person } = { ...this.props };
+    console.log('person,', person);
     return (
       <div key={person.key}>
         <p className='ballon-title'>
-          {this.title}
+          {person.title}
         </p>
         <p className='factHeader'>
           {person.occasion}
@@ -58,6 +59,9 @@ export class PersonFact extends React.Component {
           {person.birthDate}
           <br />
           {person.deathDate}
+        </p>
+        <p className='factDescription'>
+          {person.location}
         </p>
       </div>
     );
