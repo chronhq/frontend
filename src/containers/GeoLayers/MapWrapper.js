@@ -128,9 +128,9 @@ class MapWrapper extends React.Component {
   @computed get feedPins() {
     const pinsAtlas = this.props.store.prepared.mapPics.pins;
     const pinsMapping = this.props.store.prepared.mapPics.pinsJSON;
-    const { pins } = { ...this.props.store.pins };
+    const { pins } = this.props.store.pins;
     const id = 'map-pins-layer';
-    const cid = 'course-pins-layer'
+    const cid = 'course-pins-layer';
     const { zoom } = { ...this.props.store.deck };
     const coursePins = this.props.store.prepared.data.courseGeoPoints.current;
 
@@ -139,7 +139,7 @@ class MapWrapper extends React.Component {
       const key = d.color === null ? null : d.object.key;
       this.props.store.pins.setActive(key, false);
       this.props.store.pins.setPosition(d.x, d.y);
-    }
+    };
     return [
       pinsLayer(pinsAtlas, pinsMapping, pins, id, zoom, true, onHover),
       pinsLayer(pinsAtlas, pinsMapping, coursePins, cid, zoom, false),
