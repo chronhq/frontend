@@ -2,7 +2,7 @@ import { observable, action, computed } from 'mobx';
 
 export default class FeedbackForm {
   @computed get glyph() {
-    return this.success ? 'fa icon-check ' : 'fa icon-cancel';
+    return this.success ? 'lnr lnr-checkmark-circle' : 'lnr lnr-cross';
   }
 
   @computed get secret() {

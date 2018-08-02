@@ -140,6 +140,14 @@ button {
   }
 }
 
+.icon-bar button:disabled i{
+  color: @grey;
+}
+
+.icon-bar button.active {
+  text-shadow: 2px 2px 2px @black;
+}
+
 .icon-bar {
   position: fixed;
   top: 0;
@@ -399,16 +407,21 @@ select {
 
 
 .vertical--logo {
-  font-family: Lora-Regular;
-  writing-mode: tb-rl;
-  transform: rotate(180deg);
-  user-select: none;
   align-self: flex-end;
-  margin-top: auto;
-  letter-spacing: 2px;
+  user-select: none;
   line-height: 50px;
-  margin: auto 0 20px;
-  padding: 0;
+  margin-top: auto;
+  margin-bottom: 20px;
+  margin-right: 0;
+  margin-left: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  & img {
+    display: block;
+    width: 42px;
+    margin: 0 4px;
+  }
   @media screen and (max-width:600px) {
     display: none;
   }
