@@ -24,17 +24,19 @@ class LayerControl extends React.Component {
         <h3>
           { 'Управление слоями' }
         </h3>
-        {
-          Object.keys(this.options).map((item, id) => (
-            <InputCheckBox
-              key={id}
-              name={item}
-              label={item}
-              checked={this.options[item]}
-              cb={e => this.handleChange(e)}
-            />
-          ))
-        }
+        <div className='layerControl'>
+          {
+            Object.keys(this.options).map((item, id) => (
+              <InputCheckBox
+                key={`layer_${id}`}
+                name={item}
+                label={item}
+                checked={this.options[item]}
+                cb={e => this.handleChange(e)}
+              />
+            ))
+          }
+        </div>
       </div>
     );
   }
