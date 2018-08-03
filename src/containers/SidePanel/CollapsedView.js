@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
 import { Tooltip } from '../../components/Input';
+import ButtonReturn from '../../components/Timeline/ButtonReturn';
 
-import logo_ru from '../../img/name_logo.svg';
-import logo_eng from '../../img/name_logo_eng.svg';
+import logoRu from '../../img/name_logo.svg';
+import logoEn from '../../img/name_logo_eng.svg';
 
 @inject('store')
 @observer
@@ -35,16 +36,16 @@ class VerticalLogo extends React.Component {
   get logo() {
     switch (this.props.store.i18n.lng) {
       case 'ru':
-        return logo_ru;
+        return logoRu;
       default:
-        return logo_eng;
+        return logoEn;
     }
   }
 
   render() {
     return (
       <div className='vertical--logo'>
-         <img src={this.logo} />
+        <img src={this.logo} />
       </div>
     );
   }
@@ -98,6 +99,7 @@ export default class CollapsedView extends React.Component {
   render() {
     return (
       <div className={this.iconBarAlign}>
+        <ButtonReturn />
         <FatButton
           text={this.tooltips.settings}
           icon='lnr-cog'
