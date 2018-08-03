@@ -18,7 +18,8 @@ function getBorders(borders, properties, colors) {
       // Probably colorID === -99 -- Disputed territory
       return {
         geometry: cur.geo.geometry,
-        color: [13, 244, 61],
+        // color: [13, 244, 61],
+        color: [127, 127, 127],
         id: cur.id,
         props: cur.props,
       };
