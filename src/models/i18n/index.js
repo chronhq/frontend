@@ -67,6 +67,7 @@ export default class Internationalization {
     switch (this.lng) {
       case 'en':
         return {
+          back: 'Go to main screen',
           intro: 'Intro',
           search: 'Search',
           feed: 'Feed',
@@ -83,6 +84,7 @@ export default class Internationalization {
         };
       default:
         return {
+          back: 'Вернутся в основное меню',
           intro: 'Интро',
           search: 'Поиск',
           feed: 'Лента событий',
@@ -133,15 +135,31 @@ export default class Internationalization {
     }
   }
 
-  @computed get ballonsNaming() {
+  @computed get layerNames() {
     switch (this.lng) {
       case 'en':
         return {
-          title: "There's a mistake!"
+          title: 'Layers',
+          borders: 'State Borders',
+          labels: 'Map Labels',
+          mapDecorations: 'Map Decorations',
+          cities: 'Cities',
+          traces: 'Expeditions',
+          inventions: 'Inventions',
+          persons: 'Persons',
+          geoEvents: 'Events',
         };
       default:
         return {
-          title: 'Здесь ошибка'
+          title: 'Управление слоями',
+          borders: 'Политические границы',
+          labels: 'Подписи',
+          mapDecorations: 'Декорации',
+          cities: 'Города',
+          traces: 'Экспедиции',
+          inventions: 'Изобретения',
+          persons: 'Персоны',
+          geoEvents: 'События',
         };
     }
   }

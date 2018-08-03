@@ -102,6 +102,7 @@ npm run dev
  - [x] ErrorPages.less
  - [x] FontAwesome legacy:
     - [x] FeedBackForm
+ - [x] SidePanel slightly new look
 
 
  - [x] добавить цднки шрифтов
