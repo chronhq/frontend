@@ -6,6 +6,7 @@ export default class CourseSideEffects {
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.rootStore.data.Courses.filter = this.activeCourses;
+    this.rootStore.data.Borders.sortId = 'year';
   }
 
   @observable deps = {
@@ -138,7 +139,6 @@ export default class CourseSideEffects {
     // Download each contour part in separate queries
       contourList.filter(c => this.courseId === c.courseId)
         .map((c) => {
-          console.log('Loading contour', c);
           this.rootStore.data.Contours.get({
             where: {
               or: [{ id: c.id }]

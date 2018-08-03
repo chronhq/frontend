@@ -1,7 +1,7 @@
 import {
   observable, when, computed, action
 } from 'mobx';
-import { getActualData, getNextData } from './DataAdaptation/_helper';
+import { getActualData } from './DataAdaptation/_helper';
 
 const separate = (arr) => {
   // split array of geoIds into multiple arrays with max elements
@@ -63,9 +63,9 @@ export default class BordersModel {
 
   @computed get ready() {
     const dataToLoad = [];
-    Object.keys(this.actualData).map((cur) => {
-      if (!(this.actualData[cur].geo in this.geo)) {
-        dataToLoad.push({ id: this.actualData[cur].geo });
+    this.actualData.map((cur) => {
+      if (!(cur.geo in this.geo)) {
+        dataToLoad.push({ id: cur.geo });
       }
       return false;
     });
@@ -73,15 +73,19 @@ export default class BordersModel {
   }
 
   @computed get actualData() {
-    return getActualData(this.allYears, this.byYear, this.rootStore.year.now);
-  }
-
-  @computed get nextData() {
-    return getNextData(this.allYears, this.byYear, this.rootStore.year.now);
+    const data = getActualData(
+      this.allYears,
+      this.byYear,
+      this.rootStore.year.now
+    );
+    if (Array.isArray(data)) {
+      return data;
+    }
+    return data.geoProps;
   }
 
   @computed get fetchParams() {
-    const futureBorders = { ...this.actualData, ...this.nextData };
+    const futureBorders = this.actualData;
     const dataToLoad = [];
     Object.keys(futureBorders).map((cur) => {
       if (!(futureBorders[cur].geo in this.geo)) {
@@ -95,17 +99,7 @@ export default class BordersModel {
 
   // Borders Timeline
   @computed get byYear() {
-    return Object.keys(this.data.Borders.data).reduce((prev, r) => {
-      const row = this.data.Borders.data[r];
-      const d = { [row.id]: { geo: row.geo, props: row.props } };
-      if (row.year in prev) {
-        return {
-          ...prev,
-          [row.year]: { ...prev[row.year], ...d }
-        };
-      }
-      return { ...prev, [row.year]: d };
-    }, {});
+    return this.rootStore.data.Borders.data;
   }
 
   @computed get allYears() {
@@ -113,7 +107,7 @@ export default class BordersModel {
   }
 
   @computed get bordersProps() {
-    return Object.values(this.actualData).map(cur => ({
+    return this.actualData.map(cur => ({
       ...this.data.Properties.data[cur.props],
       type: this.data.Types.data[this.data.Properties.data[cur.props].type],
       admin: this.data.Admins.data[this.data.Properties.data[cur.props].admin],
@@ -122,7 +116,7 @@ export default class BordersModel {
 
   @computed get bordersPath() {
     const borders = [];
-    Object.values(this.actualData).map((cur) => {
+    this.actualData.map((cur) => {
       if (cur.geo in this.geo) {
         borders.push({
           id: cur.geo,

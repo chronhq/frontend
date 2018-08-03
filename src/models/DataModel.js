@@ -11,11 +11,13 @@ class FileModel {
 
   @observable filter = null;
 
+  @observable sortId = 'id';
+
   // This can be overwritten
   @observable saveDataCb = (json) => {
     const data = {};
     json.map((cur) => {
-      data[cur.id] = cur;
+      data[cur[this.sortId]] = cur;
       return false;
     });
     this.data = data;
