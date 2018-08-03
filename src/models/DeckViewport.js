@@ -106,11 +106,13 @@ export default class DeckViewportModel {
 
   @observable bearing = 0;
 
-  @observable maxZoom = 5;
+  @computed get maxZoom() {
+    return this.rootStore.flags.flags.zoom.maxScale;
+  }
 
-  @observable minZoom = 1;
-
-
+  @computed get minZoom() {
+    return this.rootStore.flags.flags.zoom.minScale;
+  }
 
   @computed get rZoom() {
     return Math.floor(this.zoom);
