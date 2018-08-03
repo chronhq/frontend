@@ -110,8 +110,16 @@ export default class DeckViewportModel {
     return this.rootStore.flags.flags.zoom.maxScale;
   }
 
+  set maxZoom(z) {
+    this.rootStore.flags.flags.zoom.maxScale = z;
+  }
+
   @computed get minZoom() {
     return this.rootStore.flags.flags.zoom.minScale;
+  }
+
+  set minZoom(z) {
+    this.rootStore.flags.flags.zoom.minScale = z;
   }
 
   @computed get rZoom() {
