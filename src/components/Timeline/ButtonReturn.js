@@ -13,7 +13,7 @@ class ButtonReturn extends React.Component {
 
   render() {
     return (
-      <Tooltip content={this.props.store.i18n.tooltips.back} placement='bottom'>
+      <Tooltip content={this.props.store.i18n.tooltips.back} placement='left'>
         <button onClick={() => this.handleClick()} type='button'>
           <i className='lnr lnr-undo' />
         </button>

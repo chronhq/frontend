@@ -37,12 +37,6 @@ export default class FlagsModel {
     UI: {
       MapViewport: true,
     },
-    visibility: {
-      borders: 1,
-      locations: 1,
-      tooltips: 1,
-      scale: 5,
-    },
     layer: {
       borders: 1,
       labels: 1,
