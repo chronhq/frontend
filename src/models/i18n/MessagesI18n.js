@@ -42,7 +42,7 @@ export default class MessagesI18n extends BaseI18n {
     if (type === 'birth') {
       occasion = this.welcomePerson(person);
       location = this.cities[person.birthPlace]
-        ? this.cities[person.birthPlace].location.name : '????';
+        ? this.cities[person.birthPlace].location.name : '';
       switch (this.lng) {
         case 'en': title = 'Born';
           break;
@@ -51,7 +51,7 @@ export default class MessagesI18n extends BaseI18n {
     } else {
       occasion = this.welcomePerson(person);
       location = this.cities[person.deathPlace]
-        ? this.cities[person.deathPlace].location.name : '????';
+        ? this.cities[person.deathPlace].location.name : '';
       switch (this.lng) {
         case 'en': title = 'Passed';
           break;
