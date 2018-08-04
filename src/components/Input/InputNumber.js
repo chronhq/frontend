@@ -1,49 +1,33 @@
 import React from 'react';
 import InputNumber from 'rc-input-number';
-
 import './InputNumber.less';
 
-export default class Component extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      disabled: false,
-      readOnly: false,
-      value: 5
-    }
-  };
-  toggleDisabled() {
-    this.setState({
-      disabled: !this.state.disabled,
-    });
-  }
-  toggleReadOnly() {
-    this.setState({
-      readOnly: !this.state.readOnly,
-    });
-  }
+class Component extends React.Component {
   render() {
-    const upHandler = (<div><span className="lnr lnr-chevron-up" /></div>);
-    const downHandler = (<div><span className="lnr lnr-chevron-down" /></div>);
-    return (
+    const upHandler = (
       <div>
-        <InputNumber
-          min={-8}
-          max={10}
-          value={this.state.value}
-          style={{ width: 100 }}
-          readOnly={this.state.readOnly}
-          onChange={(e) => {
-            this.setState({ value: Number(e.target.value) });
-            this.props.cb({ [this.props.name]: Number(e.target.value) });
-          }}
-          disabled={this.state.disabled}
-          upHandler={upHandler}
-          downHandler={downHandler}
-        />
+        <span className="lnr lnr-chevron-up" />
       </div>
+    );
+    const downHandler = (
+      <div>
+        <span className="lnr lnr-chevron-down" />
+      </div>
+    );
+    return (
+      <InputNumber
+        min={this.props.min}
+        max={this.props.max}
+        value={this.props.value}
+        placeholder={this.props.placeholder}
+        style={{ width: 100 }}
+        onChange={v => this.props.cb(v)}
+        disabled={this.props.disabled}
+        upHandler={upHandler}
+        downHandler={downHandler}
+      />
     );
   }
 }
 
-
+export default Component;

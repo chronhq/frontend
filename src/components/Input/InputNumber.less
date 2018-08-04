@@ -18,14 +18,16 @@
 
 
 .@{inputNumberPrefixCls} {
-  margin: 0;
+  box-sizing: border-box;
+  // margin: 0;
   padding: 0;
-  line-height: 25px;
+  line-height: 24px;
   font-size: 12px;
-  height: 25px;
+  height: 24px;
   display: inline-block;
   vertical-align: middle;
   border: 1px solid @border;
+  margin: 0 2px;
   border-radius: 2px;
 
   &-focused {
@@ -35,8 +37,8 @@
 
   &-handler {
     text-align: center;
-    line-height: 4.4px;
-    height: 12px;
+    line-height: 4.3px;
+    height: 11px;
     overflow: hidden;
     display:block;
     touch-action: none;
@@ -73,11 +75,13 @@
   &-input-wrap {
     overflow: hidden;
     height: 100%;
+    // width: 98%;
   }
 
   &-input {
     width: 100%;
-    text-align: center;
+    text-align: left;
+    margin-left: 4px;
     outline: 0;
     -moz-appearance: textfield;
     line-height: 25px;

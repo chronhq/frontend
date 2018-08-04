@@ -40,6 +40,10 @@ export default class FeedbackForm {
 
   @observable text = '';
 
+  @observable layer;
+
+  @observable year;
+
   @action wipe() {
     this.name = '';
     this.text = '';

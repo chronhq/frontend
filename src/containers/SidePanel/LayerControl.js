@@ -14,6 +14,10 @@ class LayerControl extends React.Component {
     return this.props.store.flags.flags.pins;
   }
 
+  @computed get upcominglayer() {
+    return this.props.store.flags.flags.upcominglayer;
+  }
+
   @computed get layerNames() {
     return this.props.store.i18n.layerNames;
   }
@@ -32,13 +36,22 @@ class LayerControl extends React.Component {
     });
   }
 
+  @action handleCities(data) {
+    Object.keys(data).map((cur) => {
+      this.layer[cur] = data[cur];
+      this.layer.labels = data[cur];
+      return false;
+    });
+  }
+
   render() {
     return (
       <div className='sidepanel--content'>
         <h3>
-          {this.layerNames.title}
+          {this.props.store.i18n.tooltips.layers}
         </h3>
         <div className='layerControl'>
+          {/*
           {
             Object.keys(this.layer).map(item => (
               <InputCheckBox
@@ -61,6 +74,59 @@ class LayerControl extends React.Component {
               />
             ))
           }
+          */}
+          <InputCheckBox
+            key={`layer_${this.layerNames.borders}`}
+            name='borders'
+            label={this.layerNames.borders}
+            checked={this.layer.borders}
+            cb={e => this.handleLayers(e)}
+          />
+          <InputCheckBox
+            key={`layer_${this.layerNames.cities}`}
+            name='cities'
+            label={this.layerNames.cities}
+            checked={this.layer.cities}
+            cb={e => this.handleCities(e)}
+          />
+          <InputCheckBox
+            key={`layer_${this.layerNames.inventions}`}
+            name='inventions'
+            label={this.layerNames.inventions}
+            checked={this.pins.inventions}
+            cb={e => this.handlePins(e)}
+          />
+          <InputCheckBox
+            key={`layer_${this.layerNames.persons}`}
+            name='persons'
+            label={this.layerNames.persons}
+            checked={this.pins.persons}
+            cb={e => this.handlePins(e)}
+          />
+          <InputCheckBox
+            key={`layer_${this.layerNames.geoEvents}`}
+            name='geoEvents'
+            label={this.layerNames.geoEvents}
+            checked={this.pins.geoEvents}
+            cb={e => this.handlePins(e)}
+          />
+          <InputCheckBox
+            key={`layer_${this.layerNames.traces}`}
+            name='traces'
+            label={this.layerNames.traces}
+            checked={false}
+            disabled="disabled"
+            cb={e => this.handleLayers(e)}
+          />
+          <InputCheckBox
+            key={`layer_${this.layerNames.wars}`}
+            name={this.layer.wars}
+            label={this.layerNames.wars}
+            checked={false}
+            disabled="disabled"
+            cb={e => this.handleLayers(e)}
+          />
+
         </div>
       </div>
     );

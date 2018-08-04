@@ -1,47 +1,29 @@
-
 import React from 'react';
-import PropTypes from 'prop-types';
+import Select, { Option } from 'rc-select';
+import './Select.less';
 
-class Select extends React.PureComponent {
-  handleChange = (e) => {
-    this.props.onChange(e.target);
-  }
-
-  renderOptions() {
-    return this.props.options.map((x, i) => (
-      <option
-        key={`inputSelect_${i}`}
-        value={x.value}
-      >
-        {x.label}
-      </option>
-    ));
-  }
-
+class InputSelect extends React.Component {
   render() {
+    console.log('placeholder:', this.props.placeholder);
     return (
-      <span className='inputSelect'>
-        <p>
-          {this.props.name}
-          {': '}
-        </p>
-        <select value={this.props.value} onChange={this.handleChange}>
-          {this.renderOptions()}
-        </select>
-      </span>
+      <Select
+        // disabled={this.state.disabled}
+        style={{ width: '180px' }}
+        onSelect={v => this.props.cb(v)}
+        notFoundContent={false}
+        dropdownMenuStyle={{ maxHeight: 400 }}
+        placeholder={this.props.placeholder}
+        value={this.props.value}
+        backfill
+      >
+        {Object.keys(this.props.options).map(key => (
+          <Option value={this.props.options[key]} key={key} text={this.props.options[key]}>
+            {this.props.options[key]}
+          </Option>
+        ))
+        }
+      </Select>
     );
   }
 }
-
-Select.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired
-  })),
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
-  name: PropTypes.string
-};
-
-export default Select;
+export default InputSelect;

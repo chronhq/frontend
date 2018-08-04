@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 // import PropTypes from 'prop-types';
-import YearInput from './YearSelect-Type1';
+// import YearInput from './YearSelect-Type1';
 import YearButton from './YearSelect-Type2';
-import YearSelect from './YearSelect-Type3';
+// import YearSelect from './YearSelect-Type3';
 
 import svgIconMap from './LineIconSet.svg';
 
@@ -77,9 +77,7 @@ class ControlButtons extends React.Component {
         <button type='button' onClick={() => this.props.store.year.nextYear()}>
           <Next />
         </button>
-        <YearInput />
         <YearButton />
-        <YearSelect />
       </div>
     );
   }
