@@ -18,7 +18,6 @@ import FontLoader from './FontLoader';
 const Overlays = () => (
   <div id='overlays'>
     <Feedback />
-    <Balloon />
     <YearInput />
   </div>
 );
@@ -31,6 +30,10 @@ const UI = () => (
       name='runtime.SelectedCourse'
       render={() => <Bio />}
       fallbackRender={() => <Overlays />}
+    />
+    <Flag
+      name="UI.Balloon"
+      render={() => <Balloon />}
     />
     <Flag
       name="UI.SidePanel"

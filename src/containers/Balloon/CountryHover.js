@@ -59,6 +59,15 @@ export default class CountryHover extends React.Component {
   }
 
   @computed get long() {
+    if (this.type === null) {
+      // for ainu course
+      return (
+        <p>
+          {this.admin}
+        </p>
+      );
+    }
+
     return (
       <p>
         {this.admin}

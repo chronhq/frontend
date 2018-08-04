@@ -36,6 +36,7 @@ export default class FlagsModel {
     },
     UI: {
       MapViewport: true,
+      Balloon: true,
     },
     layer: {
       borders: 1,
