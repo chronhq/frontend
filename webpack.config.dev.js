@@ -50,7 +50,7 @@ module.exports = {
     https: false,
     proxy: {
       '/api': 'http://api:3333/',
-      '/shared': 'https://chronist.ru/',
+      '/shared': 'http://api:3333/',
     }
   },
   target: 'web',

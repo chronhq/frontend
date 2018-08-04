@@ -46,7 +46,7 @@ class FeedbackForm extends React.Component {
             return false;
           }}
         >
-          <div style={{display: 'flex', justifyContent: 'left'}}>
+          <div style={{ display: 'flex', justifyContent: 'left' }}>
             <input
               type='text'
               value={this.feedback.name}
@@ -66,7 +66,7 @@ class FeedbackForm extends React.Component {
               }}
             />
           </div>
-          <div style={{display: 'flex', justifyContent: 'left'}}>
+          <div style={{ display: 'flex', justifyContent: 'left' }}>
             <input
               type='number'
               value={this.feedback.year}
@@ -81,15 +81,17 @@ class FeedbackForm extends React.Component {
               value={this.feedback.layer}
               placeholder={this.props.store.i18n.feedback.layer}
               onChange={(e) => {
-                this.feedback.year = e.target.value;
+                this.feedback.layer = e.target.value;
                 return false;
               }}
             >
               {this.props.store.i18n.feedback.layers.map(
                 // TODO replace array with object and get value from object.keys
-                (value, i) => (<option value={value} key={`option_${i}`}>
-                  {value}
-                </option>)
+                (value, i) => (
+                  <option value={value} key={`option_${i}`}>
+                    {value}
+                  </option>
+                )
               )}
             </select>
           </div>

@@ -17,9 +17,11 @@ export default class FeedbackForm {
   @computed get body() {
     return [
       this.secret,
-      'demo=1',
-      `email=${this.email}`,
-      `name=${encodeURI(this.name)}`,
+      'type=MapMistake',
+      `email=${encodeURI(this.email)}`,
+      `ref=${encodeURI(this.ref)}`,
+      `year=${encodeURI(this.year)}`,
+      `layer=${encodeURI(this.layer)}`,
       `text=${encodeURI(this.text)}`
     ].join('&');
   }
@@ -28,16 +30,20 @@ export default class FeedbackForm {
 
   @observable success = false;
 
-  @observable name = '';
+  @observable layer = '';
+
+  @observable year = '';
+
+  @observable ref = '';
 
   @observable email = '';
 
   @observable text = '';
 
   @action wipe() {
-    this.email = '';
     this.name = '';
     this.text = '';
+    this.ref = '';
   }
 
   @action result(val) {
@@ -46,7 +52,7 @@ export default class FeedbackForm {
   }
 
   @action submit() {
-    const url = '/shared/contact.php';
+    const url = '/shared/feedback';
     const req = {
       method: 'POST',
       credentials: 'same-origin',
@@ -59,16 +65,10 @@ export default class FeedbackForm {
         this.wipe();
       }
       this.result(success);
-      // this.visible = true;
-      // this.success = success;
-      // this.setState({ ...this.state, ...wipe, visibile: true, success });
       console.log('resp', response);
     }))
       .catch(action((error) => {
         this.result(false);
-        // this.setState({ ...this.state, visibile: true, success: false });
-        // this.success = false;
-        // this.visible = true;
         console.log('err', error);
       }));
   }
