@@ -7,6 +7,7 @@ import { observer, inject } from 'mobx-react';
 @observer
 class FeedbackButtons extends React.Component {
   openFeedback() {
+    this.props.store.feedback.year = this.props.store.year.now;
     this.props.store.flags.flags.runtime.feedback = true;
   }
 
