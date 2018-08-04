@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class InputCheckBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { checked: props.checked };
-  }
+const InputCheckBox = ({name, checked, label, cb, disabled = false }) => (
+  <label
+    htmlFor={name}
+    className={disabled ? 'checkbox--disabled' : ''}
+    onChange={(e) => {
+      cb({ [name]: Number(e.target.checked) });
+    }}
+  >
+    <span>
+      <input
+        id={name}
+        type='checkbox'
+        checked={checked}
+        disabled={disabled}
+        onChange={(e) => {
+          cb({ [name]: Number(e.target.checked) });
+        }}
+      />
+      <span />
+    </span>
+    {label}
+  </label>
+);
 
-  render() {
-    return (
-      <label htmlFor={this.props.name}>
-        <span>
-          <input
-            id={this.props.name}
-            type='checkbox'
-            checked={this.state.checked}
-            onChange={(e) => {
-              this.setState({ checked: Number(e.target.checked) });
-              this.props.cb({ [this.props.name]: Number(e.target.checked) });
-            }}
-          />
-          <span />
-        </span>
-        {this.props.label}
-      </label>
-    );
-  }
-}
+export default InputCheckBox;

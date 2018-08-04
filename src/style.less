@@ -235,6 +235,8 @@ button {
 
   &:hover {
     outline: none !important;
+    border-color: @dark-grey;
+    box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
     opacity: 0.9;
   }
 
@@ -244,7 +246,7 @@ button {
 
   &:active {
     outline: 0 !important;
-    border: none !important;
+    // border: none !important;
   }
 }
 
@@ -256,6 +258,7 @@ input {
 input[type='text'],
 input[type='password'],
 input[type='email'] {
+  box-sizing: border-box;
   height: 25px;
   // min-width: 200px;
   border-style: solid;
@@ -273,6 +276,21 @@ input[type='email'] {
     border-color: @main-blue;
     box-shadow: 0 0 0 2px rgba(250,250,250,.2);
   }
+}
+input, select, textarea {
+    font-family: 'OpenSans-Light';
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-family: 'OpenSans-Light';
+}
+::-moz-placeholder { /* Firefox 19+ */
+  font-family: 'OpenSans-Light';
+}
+:-ms-input-placeholder { /* IE 10+ */
+  font-family: 'OpenSans-Light';
+}
+:-moz-placeholder { /* Firefox 18- */
+  font-family: 'OpenSans-Light';
 }
 
 textarea {
@@ -401,6 +419,16 @@ a.decorless {
 
 }
 
+label {
+  cursor: pointer;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 input[type="checkbox"] {
   display: none;
 }
@@ -453,10 +481,21 @@ input[type="checkbox"]:checked + span {
   }
 }
 
+input[type="checkbox"]:disabled + span {
+  // &:after {
+    color: #ccc;
+    background-color: @light-grey;
+    border: 1px solid @disable;
+}
+
+.checkbox--disabled {
+  color: @dark-grey;
+}
+
 input[type="checkbox"] + span,
 input[type="radio"] + span
 {
-  margin-right: 4px;
+  margin-right: 15px;
 }
 
 input[type="radio"] {

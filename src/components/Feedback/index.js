@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed, action, observable } from 'mobx';
 import './Feedback.less';
-import { InputCheckBox } from '../Input';
+import { InputCheckBox, InputNumber, InputSelect } from '../Input';
 
 @inject('store')
 @observer
@@ -36,17 +36,15 @@ class FeedbackForm extends React.Component {
 
   render() {
     return (
-      <div id='feedback' className='container-fluid'>
+      <div>
         <form
-          horizontal
-          className='form-inline'
           onSubmit={(e) => {
             e.preventDefault();
             this.feedback.submit();
             return false;
           }}
         >
-          <div style={{display: 'flex', justifyContent: 'left'}}>
+          <div className='feedback--line'>
             <input
               type='text'
               value={this.feedback.name}
@@ -66,32 +64,28 @@ class FeedbackForm extends React.Component {
               }}
             />
           </div>
-          <div style={{display: 'flex', justifyContent: 'left'}}>
-            <input
-              type='number'
+          <div className='feedback--line'>
+            <InputNumber
+              min={this.props.store.year.min}
+              max={this.props.store.year.max}
               value={this.feedback.year}
               placeholder={this.props.store.i18n.feedback.year}
-              onChange={(e) => {
-                this.feedback.year = e.target.value;
+              cb={(value) => {
+                console.log('inpute number value', value);
+                this.feedback.year = value;
                 return false;
               }}
             />
-            <select
-              type='number'
+            <InputSelect
               value={this.feedback.layer}
-              placeholder={this.props.store.i18n.feedback.layer}
-              onChange={(e) => {
-                this.feedback.year = e.target.value;
+              placeholder={this.props.store.i18n.tooltips.layers}
+              options={this.props.store.i18n.layerNames}
+              cb={(value) => {
+                console.log('cb value', value);
+                this.feedback.layer = value;
                 return false;
               }}
-            >
-              {this.props.store.i18n.feedback.layers.map(
-                // TODO replace array with object and get value from object.keys
-                (value, i) => (<option value={value} key={`option_${i}`}>
-                  {value}
-                </option>)
-              )}
-            </select>
+            />
           </div>
           <textarea
             type='text'

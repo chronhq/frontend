@@ -49,6 +49,8 @@ export default class Internationalization {
           mistake: 'Found a mistake',
           send: 'Send',
           export: 'Save to txt',
+          set: 'Set',
+          dismiss: 'Dismiss',
         };
       default:
         return {
@@ -59,6 +61,8 @@ export default class Internationalization {
           next: 'Далее',
           send: 'Отправить',
           export: 'Экспорт в txt',
+          set: 'Выбрать',
+          dismiss: 'Отмена',
         };
     }
   }
@@ -139,24 +143,24 @@ export default class Internationalization {
     switch (this.lng) {
       case 'en':
         return {
-          title: 'Layers',
           borders: 'State Borders',
-          labels: 'Map Labels',
-          mapDecorations: 'Map Decorations',
-          cities: 'Cities',
+          // labels: 'Map Labels',
+          // mapDecorations: 'Map Decorations',
           traces: 'Expeditions',
+          cities: 'Cities',
+          wars: 'Wars',
           inventions: 'Inventions',
           persons: 'Persons',
           geoEvents: 'Events',
         };
       default:
         return {
-          title: 'Управление слоями',
           borders: 'Политические границы',
-          labels: 'Подписи',
-          mapDecorations: 'Декорации',
-          cities: 'Города',
+          // labels: 'Подписи',
+          // mapDecorations: 'Декорации',
           traces: 'Экспедиции',
+          cities: 'Города',
+          wars: 'Войны',
           inventions: 'Изобретения',
           persons: 'Персоны',
           geoEvents: 'События',
