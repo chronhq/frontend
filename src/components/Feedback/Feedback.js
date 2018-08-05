@@ -1,38 +1,39 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { computed, action, observable } from 'mobx';
+import { computed, action } from 'mobx';
 import './Feedback.less';
 import { InputCheckBox, InputNumber, InputSelect } from '../Input';
 
 @inject('store')
 @observer
 class FeedbackForm extends React.Component {
-  @observable agreement = false;
-
   @computed get feedback() {
     return this.props.store.feedback;
   }
 
   @computed get infoBlockStyle() {
     return this.props.store.feedback.visible === true
-      ? {}
+      ? { display: 'block', textAlign: 'right' }
       : { display: 'none' };
   }
 
   @computed get infoMessage() {
     return this.props.store.feedback.success === true
-      ? 'Ваше сообщение успешно отправлено'
-      : 'Произошла ошибка';
+      ? this.props.store.i18n.feedback.success
+      : this.props.store.i18n.feedback.error;
   }
 
   @action closeFeedback() {
     this.props.store.flags.flags.runtime.intro = false;
   }
 
-  @action handleCheckbox() {
-    this.agreement = !this.agreement;
-  }
 
+  @action handleData(data) {
+    Object.keys(data).map((cur) => {
+      this.feedback[cur] = data[cur];
+      return false;
+    });
+  }
 
   render() {
     return (
@@ -47,29 +48,14 @@ class FeedbackForm extends React.Component {
           <div className='feedback--line'>
             <input
               type='text'
-              value={this.feedback.name}
+              value={this.feedback.title}
               placeholder={this.props.store.i18n.feedback.name}
               onChange={(e) => {
-                this.feedback.name = e.target.value;
+                this.feedback.title = e.target.value;
                 return false;
               }}
             />
-          </div>
-          <div className='feedback--line'>
-            <bold> Когда </bold>
-            <InputNumber
-              min={this.props.store.year.min}
-              max={this.props.store.year.max}
-              value={this.feedback.year}
-              placeholder={this.props.store.i18n.feedback.year}
-              cb={(value) => {
-                console.log('inpute number value', value);
-                this.feedback.year = value;
-                return false;
-              }}
-            />
-            <bold> Как связаться </bold>
-           <input
+            <input
               type='email'
               value={this.feedback.email}
               placeholder={this.props.store.i18n.feedback.email}
@@ -78,7 +64,18 @@ class FeedbackForm extends React.Component {
                 return false;
               }}
             />
-          {/*
+          </div>
+          <div className='feedback--line'>
+            <InputNumber
+              min={this.props.store.year.min}
+              max={this.props.store.year.max}
+              value={this.feedback.year}
+              placeholder={this.props.store.i18n.feedback.year}
+              cb={(value) => {
+                this.feedback.year = value;
+                return false;
+              }}
+            />
             <InputSelect
               value={this.feedback.layer}
               placeholder={this.props.store.i18n.tooltips.layers}
@@ -89,13 +86,11 @@ class FeedbackForm extends React.Component {
                 return false;
               }}
             />
-          */}
           </div>
           <textarea
             type='text'
             value={this.feedback.text}
             required
-            // onInvalid={alert('Заполните это поле')}
             style={{ height: 200 }}
             placeholder={this.props.store.i18n.feedback.desc}
             onChange={(e) => {
@@ -103,34 +98,27 @@ class FeedbackForm extends React.Component {
               return false;
             }}
           />
-          <input
-            type='text'
-            value={this.feedback.ref}
-            placeholder={this.props.store.i18n.feedback.ref}
-            onChange={(e) => {
-              this.feedback.ref = e.target.value;
-              return false;
-            }}
-          />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <InputCheckBox
-              name='test'
+              name='agreement'
               label={this.props.store.i18n.feedback.ToS}
-              checked={this.agreement}
-              cb={() => this.handleCheckbox()}
+              checked={this.feedback.agreement}
+              cb={e => this.handleData(e)}
             />
-            <button type='submit' disable={this.agreement ? true : undefined} className={this.agreement ? '' : 'disabled'}>
+            <button
+              type='submit'
+              disable={this.feedback.validation ? undefined : 'disabled'}
+              className={this.feedback.validation ? '' : 'disabeld'}
+            >
               {this.props.store.i18n.feedback.button}
             </button>
-            <span
-              key='result'
-              style={this.infoBlockStyle}
-              className={this.feedback.glyph}
-            >
-              {' '}
-              {this.infoMessage}
-              <br />
-            </span>
+          </div>
+          <div
+            key='result'
+            style={this.infoBlockStyle}
+            className={this.feedback.glyph}
+          >
+            {this.infoMessage}
           </div>
         </form>
       </div>

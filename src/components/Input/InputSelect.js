@@ -4,11 +4,10 @@ import './Select.less';
 
 class InputSelect extends React.Component {
   render() {
-    console.log('placeholder:', this.props.placeholder);
     return (
       <Select
         // disabled={this.state.disabled}
-        style={{ width: '180px' }}
+        style={{ width: '220px' }}
         onSelect={v => this.props.cb(v)}
         notFoundContent={false}
         dropdownMenuStyle={{ maxHeight: 400 }}

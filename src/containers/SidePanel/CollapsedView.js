@@ -100,8 +100,14 @@ export default class CollapsedView extends React.Component {
   }
 
   @action toggle(name) {
-    this.isOpen = !(this.currentTab === name && this.isOpen === true);
-    this.currentTab = name;
+    // this.isOpen = !(this.currentTab === name && this.isOpen === true);
+    if (this.currentTab === name) {
+      this.currentTab = '';
+      this.isOpen = false;
+    } else {
+      this.currentTab = name;
+      this.isOpen = true;
+    }
   }
 
   render() {
@@ -147,13 +153,15 @@ export default class CollapsedView extends React.Component {
           disabled={true}
         />
         {(process.env.NODE_ENV !== 'production')
-          && <FatButton
-            text={this.tooltips.debug}
-            icon='lnr-bug'
-            cb={() => this.toggle('align')}
-            name='align'
-            disabled={false}
-          />
+          && (
+            <FatButton
+              text={this.tooltips.debug}
+              icon='lnr-bug'
+              cb={() => this.toggle('align')}
+              name='align'
+              disabled={false}
+            />
+          )
         }
         <VerticalLogo />
       </div>

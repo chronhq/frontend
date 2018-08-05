@@ -112,29 +112,31 @@ export default class Internationalization {
         return {
           title: "There's a mistake!",
           subtitle: 'Data accuracy is our priority. We greatly appreciate any submitted reports.',
-          name: 'Name',
-          email: 'email',
+          name: 'Title',
+          email: 'Email',
           year: 'Year',
           layer: 'Layer',
-          desc: 'Description',
+          desc: 'Describe a problem. If our data incorrect please provide links to bake it up',
           ref: 'Reference',
-          layers: ['Select layer:', 'Borders', 'Inventions', 'Wars', 'Events'],
           ToS: 'I agree to the Privacy Policy',
-          button: 'Bug report'
+          button: 'Bug report',
+          success: 'Your message has been succesfully sent',
+          error: 'Error occurred',
         };
       default:
         return {
-          title: 'Здесь ошибка',
+          title: 'Расскажите нам',
           subtitle: 'Точность данных наш приоритет.  Благодарим за все найденные и указанные ошибки.',
-          name: 'Имя',
-          email: 'email',
+          name: 'Заголовок',
+          email: 'Email',
           year: 'Год',
           layer: 'Тип данных',
-          desc: 'Комментарий',
+          desc: 'Опишите ситуацию. Если вы заметили несоответствие данны, предоставьте пожалуйста ссылки на источники.',
           ref: 'Ссылка на источник',
-          layers: ['Тип данных:', 'Borders', 'Inventions', 'Wars', 'Events'],
           ToS: 'Я принимаю условия пользовательского соглашения',
-          button: 'Сообщить'
+          button: 'Сообщить',
+          success: 'Ваше сообщение успешно отправлено',
+          error: 'Произошла ошибка',
         };
     }
   }
@@ -152,6 +154,7 @@ export default class Internationalization {
           inventions: 'Inventions',
           persons: 'Persons',
           geoEvents: 'Events',
+          other: 'Other',
         };
       default:
         return {
@@ -164,6 +167,7 @@ export default class Internationalization {
           inventions: 'Изобретения',
           persons: 'Персоны',
           geoEvents: 'События',
+          other: 'Другое'
         };
     }
   }

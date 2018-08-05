@@ -19,7 +19,6 @@ export default class FeedbackForm {
       this.secret,
       'type=MapMistake',
       `email=${encodeURI(this.email)}`,
-      `ref=${encodeURI(this.ref)}`,
       `year=${encodeURI(this.year)}`,
       `layer=${encodeURI(this.layer)}`,
       `text=${encodeURI(this.text)}`
@@ -34,15 +33,23 @@ export default class FeedbackForm {
 
   @observable year = '';
 
+  @observable title = '';
+
   @observable ref = '';
 
   @observable email = '';
 
   @observable text = '';
 
+  @observable agreement = 0;
+
   @observable layer;
 
   @observable year;
+
+  @computed get validation() {
+    return this.agreement && this.layer && this.year && this.text && this.email;
+  }
 
   @action wipe() {
     this.name = '';

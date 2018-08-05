@@ -33,7 +33,6 @@ export default class DeckViewportModel {
 
   @computed get view() {
     // if (!this.enabled) return null;
-    // console.log('-- view --');
     return new MapView({
       id: 'id-view',
       width: this.width,
@@ -47,9 +46,6 @@ export default class DeckViewportModel {
   }
 
   @computed get viewport() {
-    console.log(' -- viewport -- ');
-    console.log(' clipsEnabled:', this.clipEnabled);
-    console.trace('viewport');
     const vState = {
       width: this.width,
       height: this.height,
@@ -61,11 +57,9 @@ export default class DeckViewportModel {
     };
 
     if (this.clipEnabled) {
-      // console.log('fitBounds');
       return this.view.makeViewport(vState)
         .fitBounds(this.rootStore.projection.clip);
     }
-    // console.log('clip disabled');
     return this.view.makeViewport(vState);
   }
 
@@ -77,7 +71,6 @@ export default class DeckViewportModel {
       offsetXdegree = offsetXpixels * this.viewport.distanceScales.degreesPerPixel[0];
       offsetYdegree = offsetYpixels * this.viewport.distanceScales.degreesPerPixel[1];
     }
-    // console.log('offsets:', [offsetXdegree, offsetYdegree]);
     return [offsetXdegree, offsetYdegree];
   }
 
@@ -91,8 +84,6 @@ export default class DeckViewportModel {
       ? this.view.makeViewport(vState)
         .fitBounds(this.rootStore.projection.clip)
       : this.view.makeViewport(vState);
-    // console.log(viewport.distanceScales);
-    // console.log(viewport);
     return viewport.distanceScales.metersPerPixel[0];
   }
 
