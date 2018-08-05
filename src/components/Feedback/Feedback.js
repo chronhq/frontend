@@ -98,13 +98,21 @@ class FeedbackForm extends React.Component {
               return false;
             }}
           />
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <InputCheckBox
-              name='agreement'
-              label={this.props.store.i18n.feedback.ToS}
-              checked={this.feedback.agreement}
-              cb={e => this.handleData(e)}
-            />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', verticalAlign: 'middle' }}>
+            <div style={{ verticalAlign: 'middle' }}>
+              <InputCheckBox
+                name='agreement'
+                label=''
+                checked={this.feedback.agreement}
+                cb={e => this.handleData(e)}
+              />
+              <p style={{ display: 'inline-block' }}>
+                {this.props.store.i18n.feedback.ToS} {' '}
+                <a className='decorless' href='https://chronist.ru/privacy'>
+                  {this.props.store.i18n.feedback.ToSlink}
+                </a>
+              </p>
+            </div>
             <button
               type='submit'
               disable={this.feedback.validation ? undefined : 'disabled'}
