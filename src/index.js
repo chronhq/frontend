@@ -27,7 +27,7 @@ document.fonts.onloadingdone = (fontFaceSetEvent) => {
 
 function renderApp(component) {
   const Application = component;
-  ReactDOM.render(<Application store={window.store} />, document.getElementById('root'));
+  ReactDOM.render(<Application store={window.store} />, document.body.appendChild(document.createElement('div')));
 }
 
 renderApp(App);

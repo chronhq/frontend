@@ -97,6 +97,6 @@ module.exports = {
       analyzerPort: '3001',
       openAnalyzer: false,
     }),
-    new HtmlWebpackPlugin({ template: './index.html' }),
+    new HtmlWebpackPlugin({ title: 'Chronist Development' }),
   ]
 };
