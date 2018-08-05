@@ -78,7 +78,7 @@ class FeedbackForm extends React.Component {
             />
             <InputSelect
               value={this.feedback.layer}
-              placeholder={this.props.store.i18n.tooltips.layers}
+              placeholder={this.props.store.i18n.feedback.layer}
               options={this.props.store.i18n.layerNames}
               cb={(value) => {
                 console.log('cb value', value);

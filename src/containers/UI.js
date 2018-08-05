@@ -1,5 +1,6 @@
 import React from 'react';
 import Flag from '../Flag';
+import { observer, inject } from 'mobx-react';
 
 import MapViewport from './GeoLayers';
 import SidePanel from './SidePanel';
@@ -15,12 +16,18 @@ import YearInput from '../components/TimePanel/YearInput';
 
 import FontLoader from './FontLoader';
 
-const Overlays = () => (
-  <div id='overlays'>
-    <Feedback />
-    <YearInput />
-  </div>
-);
+@inject('store')
+@observer
+class Overlays extends React.Component {
+  render() {
+    return (
+      <div id='overlays'>
+        <Feedback />
+        {this.props.store.flags.flags.runtime.yearInput ? <YearInput /> : null}
+      </div>
+    );
+  }
+}
 
 const UI = () => (
   <div className='content'>

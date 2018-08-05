@@ -40,18 +40,18 @@ class YearInput extends React.Component {
     super(props);
     this.state = {
       disabled: false,
-      value: this.props.store.year.now,
+      value: 0,
     };
+  }
+
+  componentDidMount() {
+    this.setState({ value: this.props.store.year.now });
   }
 
   onChange(value) {
     this.setState({
       value,
     });
-  }
-
-  @computed get isOpen() {
-    return this.props.store.flags.flags.runtime.yearInput;
   }
 
   @computed get isValid() {
@@ -97,9 +97,6 @@ class YearInput extends React.Component {
   }
 
   render() {
-    if (this.isOpen === false) {
-      return null;
-    }
     return (
       <div className='yearinput__window layer-3'>
         <div className={this.isValid ? 'yearinput__title' : 'yearinput__title yearinput__error'}>

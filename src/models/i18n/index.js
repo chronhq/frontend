@@ -115,7 +115,7 @@ export default class Internationalization {
           name: 'Title',
           email: 'Email',
           year: 'Year',
-          layer: 'Layer',
+          layer: 'Type of Data',
           desc: 'Describe a problem. If our data incorrect please provide links to bake it up',
           ref: 'Reference',
           ToS: 'I agree to the Privacy Policy',
