@@ -5,7 +5,7 @@ import './Tooltip.less';
 const Component = ({ children, placement = 'left', dark = false, content }) => (
   <Tooltip
     placement={placement}
-    trigger={['hover', 'focus']}
+    trigger={['hover']}
     overlay={() => (
       <span>
         {content}

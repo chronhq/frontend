@@ -117,36 +117,13 @@ button {
     white-space: nowrap;
     transition: scale 0.2s ease-in-out;
 
-    // background-color: @main-blue;
-    // color: @white;
-    // display: inline-block;
-    // margin-right: auto;
-    // outline-color: transparent !important;
-    // font-size: 15px;
-    // width: auto;
-    // display: inline-block;
-    // padding: 9px 12px 10px;
-    // background-color: rgba(0, 0, 0, 0.2);
-    // overflow: hidden;
-    // line-height: 1;
-    // vertical-align: bottom;
-
     &:hover {background-color: #d4e1e9;}
   }
-
-  & .fa {color:black}
   &.active {
     background-color: #4CAF50 !important;
   }
 }
 
-.icon-bar button:disabled i{
-  color: @grey;
-}
-
-.icon-bar button.active {
-  text-shadow: 2px 2px 2px @black;
-}
 
 .icon-bar {
   position: fixed;
@@ -154,12 +131,8 @@ button {
   width: 50px;
   text-align: center;
   z-index: 30;
-  //background-color: #123f42;
-  // background-color: #e9dcc9;
   background-color: #E9DAC5;
   color: black;
-  // box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
-  // height: 100%;
   height: -ms-viewport-calc(~'100% - 55px');
   height: -webkit-calc(~'100% - 55px');
   height:    -moz-calc(~'100% - 55px');
@@ -176,8 +149,6 @@ button {
     height: 50px !important;
     position: flex;
     flex-direction: row;
-
-    // justify-content: flex-start;
   }
   & button {
     border: none;
@@ -207,15 +178,22 @@ button {
     white-space: nowrap;
     transition: scale 0.2s ease-in-out;
     & i {color: black;}
-    &:hover {background-color: #d4e1e9;}
+  }
+  & button:hover {
+    background-color: #d4e1e9;
   }
   & button:hover i {
     color: black;
     text-shadow: 2px 2px 5px black;
   }
-  & .fa {color:black}
+  & button.active {
+    text-shadow: 2px 2px 2px @black;
+  }
   &.active {
     background-color: #4CAF50 !important;
+  }
+  & button.disabled i {
+    color: @grey;
   }
 }
 

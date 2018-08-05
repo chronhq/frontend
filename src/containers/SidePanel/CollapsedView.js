@@ -11,17 +11,25 @@ import logoEn from '../../img/name_logo_eng.svg';
 @inject('store')
 @observer
 class FatButton extends React.Component {
+  get classes() {
+    let classes = [];
+    if (this.props.name === this.props.store.flags.flags.runtime.SidePanelTab) {
+      classes.push('active');
+    }
+    if (this.props.disabled === true) {
+      classes.push('disabled');
+    }
+    return classes.join(' ');
+  }
+
   render() {
     return (
       <Tooltip placement='left' content={this.props.text}>
         <button
           onClick={() => this.props.cb()}
-          className={
-            this.props.name === this.props.store.flags.flags.runtime.SidePanelTab
-              ? 'active' : ''
-          }
+          className={this.classes}
           type='button'
-          disabled={this.props.disabled}
+          // disabled={this.props.disabled}
         >
           <i className={`lnr ${this.props.icon}`} />
         </button>
@@ -45,7 +53,7 @@ class VerticalLogo extends React.Component {
   render() {
     return (
       <div className='vertical--logo'>
-        <img src={this.logo} />
+        <img src={this.logo} alt='logo' />
       </div>
     );
   }
