@@ -18,6 +18,7 @@ export default class FeedbackForm {
     return [
       this.secret,
       'type=MapMistake',
+      `title=${encodeURI(this.title)}`,
       `email=${encodeURI(this.email)}`,
       `year=${encodeURI(this.year)}`,
       `layer=${encodeURI(this.layer)}`,
@@ -53,6 +54,7 @@ export default class FeedbackForm {
 
   @action wipe() {
     this.name = '';
+    this.title = '';
     this.text = '';
     this.ref = '';
   }
@@ -71,12 +73,17 @@ export default class FeedbackForm {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     };
     fetch(url, req).then(action((response) => {
-      const success = response.status === 200;
-      if (success) {
-        this.wipe();
+      try {
+        response.json().then((j) => {
+          this.result(j.success);
+          if (j.success) {
+            this.wipe();
+          }
+        });
+      } catch (e) {
+        this.result(false);
+        console.log('err', e, response);
       }
-      this.result(success);
-      console.log('resp', response);
     }))
       .catch(action((error) => {
         this.result(false);
