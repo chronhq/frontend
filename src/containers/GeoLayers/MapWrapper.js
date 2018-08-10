@@ -3,7 +3,6 @@ import DeckGL, {
   TextLayer,
   IconLayer,
   PathLayer,
-  LineLayer
 } from 'deck.gl';
 
 import { observer, inject } from 'mobx-react';
@@ -19,7 +18,6 @@ import chars from './Layers/VisibleCharacters';
 
 import testingAtlas from './geoAssets/cities2.svg';
 import testingMapping from './geoAssets/cities2.json';
-import debugData from './geoAssets/debugData.json';
 
 import TripsLayer from './trips-layer';
 import pinsLayer from './Layers/PinsLayer';
@@ -235,7 +233,6 @@ class MapWrapper extends React.Component {
         getPosition: d => [d.x, d.y],
         getPixelOffset: [0, 10],
         getSize: d => (40 - (1.5 * d.scaleRank)),
-        fp64: true,
         sizeScale: 0.5,
         getTextAnchor: 'middle',
         fontFamily: 'OpenSans-Light',
