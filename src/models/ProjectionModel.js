@@ -23,7 +23,7 @@ export default class ProjectionModel {
       clip: [[-180, 90], [180, -90]],
       rotate: [0, 0, 0],
       name: 'Undefined',
-    }
+    };
   }
 
   @computed get enabled() {

@@ -1,4 +1,4 @@
-import { computed, observable } from 'mobx';
+import { computed, observable, action } from 'mobx';
 
 class TraceModel {
   @observable data = {};
@@ -42,6 +42,10 @@ export default class Expeditions {
       return false;
     }, {});
     this.points = { ...this.points, ...data };
+  }
+
+  @action wipe() {
+    this.points = {};
   }
 
   constructor(rootStore) {

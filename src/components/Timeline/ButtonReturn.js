@@ -7,7 +7,7 @@ import { Tooltip } from '../Input';
 @observer
 class ButtonReturn extends React.Component {
   handleClick() {
-    this.props.store.effects.course.toggleCourseSelection(true);
+    this.props.store.effects.course.enableCourseSelection();
     this.props.history.push('/');
   }
 

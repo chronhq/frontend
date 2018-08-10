@@ -1,7 +1,6 @@
-import { computed, observable } from 'mobx';
+import { computed, observable, action } from 'mobx';
 
 class Point {
-
   @observable pic;
 
   @observable point;
@@ -51,6 +50,10 @@ export default class CourseGeopoints {
       });
     }
     return arr;
+  }
+
+  @action wipe() {
+    this.points = {};
   }
 
   constructor(rootStore) {

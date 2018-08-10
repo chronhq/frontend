@@ -11,7 +11,7 @@ import { ymHit } from '../../metrikaHelper';
 class CourseSelection extends React.Component {
   componentWillMount() {
     ymHit('courseSelection');
-    this.enableCourseSelector();
+    this.props.store.effects.course.enableCourseSelection();
     when( // validate course name and download data
       () => this.props.store.data.Courses.status.loaded,
       () => this.validateCourses()
@@ -31,17 +31,6 @@ class CourseSelection extends React.Component {
       && typeof errorPages[toJS(error.status)] !== 'undefined') {
       this.props.history.push(`${toJS(error.status)}`);
     }
-  }
-
-  enableCourseSelector() {
-    this.props.store.flags.set({
-      runtime: {
-        CourseSelection: true,
-        SelectedCourse: null,
-        Setup: true,
-        Ready: false
-      }
-    });
   }
 
   render() {

@@ -2,6 +2,13 @@ import { observable, action } from 'mobx';
 
 const isObject = item => (item && typeof item === 'object' && !Array.isArray(item));
 
+const courseSelectionDefault = {
+  Setup: true,
+  CourseSelection: true,
+  SelectedCourse: null,
+  Ready: false,
+};
+
 function mergeFlags(source, target) {
   const flags = { ...source, ...target };
   const deep = Object.keys(flags).reduce((prev, flag) => (
@@ -20,10 +27,7 @@ function findFlag(source, target) {
 export default class FlagsModel {
   @observable flags = {
     runtime: {
-      Setup: true,
-      CourseSelection: true,
-      SelectedCourse: null,
-      Ready: false,
+      ...courseSelectionDefault,
       alignPanel: 'right',
       feedback: false,
       yearInput: false,

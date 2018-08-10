@@ -69,6 +69,28 @@ export default class CourseSideEffects {
     return this.rootStore.data.Courses.data[this.courseId];
   }
 
+  @action enableCourseSelection() {
+    this.rootStore.flags.set({
+      runtime: {
+        CourseSelection: true,
+        SelectedCourse: null,
+        Setup: true,
+        Ready: false
+      }
+    });
+
+    const wipe = d => this.rootStore.data[d].wipe();
+
+    // Wipe data except base deps
+    this.deps.course.map(wipe);
+    this.deps.world.map(wipe);
+    this.deps.heavy.map(wipe);
+    // Wipe geometry
+    this.rootStore.borders.wipe();
+    this.rootStore.prepared.data.courseGeoPoints.wipe();
+    this.rootStore.prepared.data.courseTraces.wipe();
+  }
+
   @action toggleCourseSelection(toggle) {
     // toggle === true - courseSelection enabled
     this.rootStore.flags.set({
@@ -77,13 +99,6 @@ export default class CourseSideEffects {
         CourseSelection: toggle,
       }
     });
-
-    if (toggle === true) {
-      // Wipe data except courses list
-      this.rootStore.data.roster.filter(c => c !== 'Courses').map(d => this.rootStore.data[d].wipe());
-      // Wipe geometry
-      this.rootStore.borders.wipe();
-    }
   }
 
   @action configureCourseUI() {
@@ -161,7 +176,12 @@ export default class CourseSideEffects {
     return Object.values(this.rootStore.data.Courses.data).find(cur => cur.url === name);
   }
 
+  /* eslint-disable consistent-return */
   @action select(id, name) {
+    if (id === this.rootStore.flags.flags.runtime.SelectedCourse) {
+      console.log('Course already selected', id, name);
+      return null;
+    }
     this.rootStore.flags.set({
       runtime: {
         SelectedCourse: id,

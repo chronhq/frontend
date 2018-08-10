@@ -41,7 +41,8 @@ function renderApp(component) {
   const Application = component;
   ReactDOM.render(
     <Application store={window.store} />,
-    document.body.appendChild(document.createElement('div')));
+    document.body.appendChild(document.createElement('div'))
+  );
 }
 
 renderApp(App);
