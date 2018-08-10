@@ -194,11 +194,15 @@ export default class CourseSideEffects {
     this.configureCourseUI();
     this.loadCourseData();
 
+    // update viewport position
+    this.rootStore.deck.initLatLon();
+
     this.rootStore.flags.set({
       runtime: {
         Setup: false,
       }
     });
+
     // Close course selection screen after loading is complete
     when(
       () => this.loadingIsComplete,

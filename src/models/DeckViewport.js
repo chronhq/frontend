@@ -139,4 +139,10 @@ export default class DeckViewportModel {
   @action updateViewState(viewState) {
     this.viewState = viewState;
   }
+
+  @action initLatLon() {
+    this.longitude = this.viewport.longitude + this.offsetDegree[0];
+    this.latitude = this.viewport.latitude + this.offsetDegree[1];
+    this.zoom = this.viewport.zoom;
+  }
 }
