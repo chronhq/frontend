@@ -14,15 +14,27 @@ window.store.data.Courses.get();
 window.store.effects.course.loadBaseData();
 window.store.effects.course.loadContourInfo();
 
-document.fonts.onloadingdone = (fontFaceSetEvent) => {
-  fontFaceSetEvent.fontfaces.map((f) => {
-    window.store.fonts = {
-      ...window.store.fonts,
-      [f.family]: f,
-    };
-    return null;
-  });
-};
+if ('fonts' in document) {
+  document.fonts.onloadingdone = (fontFaceSetEvent) => {
+    fontFaceSetEvent.fontfaces.map((f) => {
+      window.store.fonts = {
+        ...window.store.fonts,
+        [f.family]: f,
+      };
+      return null;
+    });
+  };
+} else {
+  // Edge browser
+  console.log('Fallback fonts loading');
+  const w8 = 10000; // 10 sec
+  setTimeout(() => {
+    Object.keys(window.store.prepared.decor.mapLabels.fonts).map((f) => {
+      window.store.fonts[f] = f;
+      return null;
+    });
+  }, w8);
+}
 
 
 function renderApp(component) {
