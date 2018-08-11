@@ -1,7 +1,7 @@
 import { observable, computed } from 'mobx';
 
 export default class MapPics {
-  @observable tileSize = 768;
+  @observable tileSize = 1024;
 
   @observable cityTileSize = 32;
 
