@@ -1,9 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-// import PropTypes from 'prop-types';
-// import YearInput from './YearSelect-Type1';
 import YearButton from './YearSelect-Type2';
-// import YearSelect from './YearSelect-Type3';
 
 import svgIconMap from './LineIconSet.svg';
 
@@ -68,7 +65,7 @@ class ControlButtons extends React.Component {
         <button type='button' onClick={() => this.props.store.year.prevYear()}>
           <Prev />
         </button>
-        <button type='button' onClick={() => this.props.store.year.togglePlay()}>
+        <button type='button' onClick={() => { this.props.store.year.togglePlay(); this.props.store.control.sync = true; }}>
           {this.props.store.year.playing
             ? <Pause />
             : <Play />

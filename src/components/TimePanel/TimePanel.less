@@ -1,26 +1,21 @@
 .axisTime {
-	color:white;
-	& line {stroke:white;}
-	& path {stroke:white;}
-	& text {fill: white; stroke:none;}
+  color: white;
+  & line {
+    stroke: white;
+  }
+	& path {
+    stroke: white;
+  }
+	& text {
+    fill: white;
+    pointer-events: none;
+    stroke: none;
+    @media screen and (max-width: 400px) {
+      display: none;
+    }
+  }
 }
 
-.arrow {
-	fill: white;
-  pointer-events: none;
-  & polyline {
-  	fill: none;
-  	opacity: 0;
-  }
-  & text {
-  	text-decoration: underline;
-  }
-}
-
-// disable selectable text
-.svgTime text {
-	pointer-events: none;
-}
 
 @media screen and (max-width:600px) {
   #timeline {height: 85px;}
@@ -88,6 +83,7 @@
   flex-direction: column;
   // font-size: 12px;
   justify-content: space-around;
+  align-content: center;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -112,8 +108,10 @@
   padding: auto;
   text-align: right;
   margin: 0;
-
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  vertical-align: middle;
   // float: left;
   //height: 55px;
   // padding-left: 50px;
@@ -122,22 +120,23 @@
   vertical-align: middle;
   // height: 55px;
   // line-height: 55px;
-  text-align: center;
-  //width: 10px;
-  & button, & input {
-  //   // float: right;
+
+  & button,
+  & input {
     display: inline-block;
-    height: 35px;
+    height: 40px;
     font-size: 26px;
     line-height: 26px;
     // width: 20px;
+    border-radius: 2px;
     margin: 0;
     padding: 0;
     vertical-align: middle;
-    background: none;
+    // background: none;
     box-sizing: border-box;
     border: none;
     min-width: 0;
+    background-color: #02364c;
     // width: auto;
     // height: auto;
     color: white;
@@ -145,10 +144,17 @@
     letter-spacing: -0.5px;
     font-weight: 300;
     font-family: 'OpenSans-Light';
-    &:hover i {
-      // text-shadow: 2px 2px 2px @white;
-      text-shadow: 0 4px 8px 0 rgba(255,255,255,0.20);
-      opacity: 0.7;
+
+    &:hover {
+      // background-color: rgba(2, 54, 76, 0.4);
+      background-color: #1b4A5d;
+      color: rgba(255, 255, 255, 0.5);
+      & i, & svg {
+
+        // text-shadow: 2px 2px 2px @white;
+        text-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2);
+        opacity: 0.5;
+      }
     }
     &:hover {
       box-shadow: none;
@@ -163,12 +169,7 @@
   //   & .active {
   //     border-color: red;
   //   }
-
 }}
-
-.timepanel__slider {
-
-}
 
 .timepanel__feedbutton {
   background: none;
@@ -182,5 +183,20 @@
   @media screen and (min-width: 600px) {
     display: none;
     color: red;
+  }
+}
+
+.inner-circle {
+  color: grey;
+  fill: #02364c;
+  stroke: white;
+  stroke-width: 1.5;
+  transition: fill 300ms;
+  &:hover {
+    stroke: grey;
+  }
+  &--active {
+    stroke: white;
+    fill: white;
   }
 }

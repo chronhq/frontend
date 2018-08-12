@@ -6,6 +6,8 @@ import Picker from 'rmc-picker';
 import './Picker.less';
 import './YearInput.less';
 
+@inject('store')
+@observer
 class TypeOne extends React.Component {
   handlePress(event) {
     switch (event.key) {
@@ -39,24 +41,22 @@ class YearInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      disabled: false,
-      value: 0,
+      disabled: false
     };
   }
 
   componentDidMount() {
-    this.setState({ value: this.props.store.year.now });
+    this.props.store.control.nowState = this.props.store.year.now;
   }
 
   onChange(value) {
-    this.setState({
-      value,
-    });
+    this.props.store.control.sync = false;
+    this.props.store.control.nowState = value;
   }
 
   @computed get isValid() {
-    if (this.state.value >= this.props.store.year.min
-        && this.state.value <= this.props.store.year.max) {
+    if (this.props.store.control.nowState >= this.props.store.year.min
+        && this.props.store.control.nowState <= this.props.store.year.max) {
       return true;
     }
     return false;
@@ -65,7 +65,7 @@ class YearInput extends React.Component {
   getItems(start, end) {
     const items: any[] = [];
     const len = end - start + 1;
-    for (let i = start; i < start + len; i++) {
+    for (let i = start; i < start + len; i += 1) {
       items.push(
         <Picker.Item value={i} key={i} text={i}>
           {i}
@@ -76,23 +76,28 @@ class YearInput extends React.Component {
   }
 
   handleWheel(event) {
-    const currentYear = this.state.value;
-    event.stopPropagation();
-    if (event.deltaY > 0) {
-      (this.state.value <= this.props.store.year.max - 1)
-        ? this.setState({ value: (currentYear + 1) }) : null;
-    } else if (event.deltaY < 0) {
-      (this.state.value > this.props.store.year.min)
-        ? this.setState({ value: (currentYear - 1) }) : null;
+    // event.stopPropagation();
+
+    this.props.store.control.sync = false;
+    if (event.deltaY > 1) {
+      // this.props.store.control.nowState += 1;
+      (this.props.store.control.nowState <= this.props.store.year.max - 1)
+        ? this.props.store.control.nowState += 1 : null;
+    } else if (event.deltaY < 1) {
+      // this.props.store.control.nowState -= 1;
+      (this.props.store.control.nowState > this.props.store.year.min)
+        ? this.props.store.control.nowState -= 1 : null;
     }
   }
 
   @action close() {
     this.props.store.flags.flags.runtime.yearInput = false;
+    this.props.store.control.sync = true;
   }
 
   handleSet() {
-    this.props.store.year.setYear(Number(this.state.value));
+    this.props.store.year.setYear(Number(this.props.store.control.nowState));
+    this.props.store.control.sync = true;
     this.close();
   }
 
@@ -101,17 +106,18 @@ class YearInput extends React.Component {
       <div className='yearinput__window layer-3'>
         <div className={this.isValid ? 'yearinput__title' : 'yearinput__title yearinput__error'}>
           <TypeOne
-            now={this.state.value}
+            now={this.props.store.control.now}
             cb={value => this.onChange(value)}
           />
         </div>
-        <div onWheel={e => this.handleWheel(e)}>
+        <div
+          onWheel={e => this.handleWheel(e)}
+        >
           <Picker
-            selectedValue={this.state.value}
+            selectedValue={this.props.store.control.nowState}
             disabled={this.state.disabled}
-            defaultSelectedValue={this.state.value}
+            defaultSelectedValue={this.props.store.control.now}
             onValueChange={v => this.onChange(v)}
-            // onScrollChange={v => this.onScrollChange(v)}
           >
             {this.getItems(this.props.store.year.min, this.props.store.year.max)}
           </Picker>

@@ -21,7 +21,6 @@ class Axis extends React.Component {
       .tickPadding([6])
       .tickSize(10)
       .ticks(parseInt(this.props.width / 45, 10), 'f');
-
     select(this.svgAxis).call(axis);
   }
 
@@ -36,28 +35,42 @@ class Axis extends React.Component {
   }
 }
 
+
+const Cursor = ({ translate, active }) => (
+  <g>
+    <circle
+      cx='0'
+      r={active ? 7 : 5}
+      className={active ? 'inner-circle inner-circle--active' : 'inner-circle'}
+      transform={`translate(${translate}, 0)`}
+    />
+  </g>
+);
+
 @inject('store')
 @observer
 class SeekBar extends React.Component {
-  @observable position = 0;
-
   @observable isDown = false;
 
   componentDidMount() {
     const svg = select(this.svgTime);
     svg.on('mouseup', () => {
+      this.isDown = false;
+      this.unfollowMouse();
       const rectId = this.svgTime.childNodes[0];
       const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.width) {
-        this.now = Math.round(this.scale.invert(mouseX));
-        // this.updateClockPosition();
-        this.props.store.year.setYear(Number(this.now));
+        this.props.store.control.nowState = Math.round(this.scale.invert(mouseX));
+        // this.setState({ now: Math.round(this.scale.invert(mouseX)) });
+        this.props.store.year.setYear(Number(this.props.store.control.nowState));
+        this.props.store.control.sync = true;
       }
-    // }).on('mousedown', () => {
-    //   this.setState({ isDown: true });
-    //   // selectAll('.arrow').classed('active', true);
-    //   select('.triangle').attr('fill', '#2f2f2f');
-    //   // this.followMouse();
+    });
+    svg.on('mousedown', () => {
+      this.props.store.control.sync = false;
+      this.isDown = true;
+      // this.setState({ now: this.props.store.year.now });
+      this.followMouse();
     });
   }
 
@@ -73,39 +86,24 @@ class SeekBar extends React.Component {
       .range([0, this.width]);
   }
 
-  @observable now;
-  // this is functions used to drag seeker circle and update info on the fly
-  // disabled for performance reasons
 
-  // followMouse() {
-  //   select('.svgTime')
-  //     .on('mousemove', () => {
-  //       if (this.state.isDown) {
-  //         const rectId = this.svgTime.childNodes[1];
-  //         const mouseX = mouse(rectId)[0];
-  //         if (mouseX >= 0 && mouseX <= this.state.width) {
-  //           const now = Math.round(this.scale.invert(mouseX));
-  //           this.setState({ now });
-  //           // this.updateClockPosition(now);
-  //         }
-  //         // for performance reasons this is commented
-  //         // this.props.setYearAction(Number(this.state.now));
-  //       }
-  //     })
-  //     .on('mouseup', () => {
-  //       this.setState({ isDown: false });
-  //       // selectAll('.arrow').classed('active', false);
-  //       // selectAll('.arrow').attr('fill', '');
-  //       // this.props.setYearAction(Number(this.state.now));
-  //     });
-  // }
+  followMouse() {
+    select(this.svgTime)
+      .on('mousemove', () => {
+        const rectId = this.svgTime.childNodes[0];
+        const mouseX = mouse(rectId)[0];
+        if (mouseX >= 0 && mouseX <= this.width) {
+          const now = Math.round(this.scale.invert(mouseX));
+          // this.setState({ now });
+          this.props.store.control.nowState = now;
+        }
+      });
+  }
 
-  // updateClockPosition(now = this.state.now) {
-  // const translate = `translate(${this.scale(now)},0)`;
-  // this.setState({ arrow: translate });
-  // this.setState({ position: this.scale(now) });
-  // }
-
+  unfollowMouse() {
+    select(this.svgTime)
+      .on('mousemove', null);
+  }
 
   render() {
     const viewBox = `-15 -15 ${this.width + 30} 50`;
@@ -119,20 +117,17 @@ class SeekBar extends React.Component {
           preserveAspectRatio="xMaxYMin meet"
         >
           <Axis width={this.width} scale={this.scale} />
-          <circle
-            cx='0'
-            r={4}
-            style={{ fill: '#02364C', stroke: 'white', strokeWidth: 1.5 }}
-            transform={`translate(${this.scale(this.props.store.year.now)}, 0)`}
-          />
-          <rect
-            x='0'
-            y='-10'
-            width={this.width + 50}
-            height='30'
-            opacity='0'
-            style={{ zIndex: -1 }}
-          />
+          <Cursor translate={this.scale(this.props.store.control.now)} active={this.isDown} />
+          {/*
+            <rect
+              x='0'
+              y='-15'
+              width={this.width}
+              height='50'
+              opacity='0'
+              style={{ zIndex: -1 }}
+            />
+          */}
         </svg>
       </div>
     );
