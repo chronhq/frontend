@@ -88,7 +88,7 @@ export default class MapPics {
       return {
         ...prev,
         [cur]: {
-          img: (window.URL ? URL : webkitURL).createObjectURL(blob),
+          img: (window.URL ? window.URL : window.webkitURL).createObjectURL(blob),
           map: this.jsonGen(cur, store, this.settings[cur])
         }
       };
