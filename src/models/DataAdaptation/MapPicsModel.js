@@ -1,6 +1,21 @@
 import { observable, computed } from 'mobx';
 
 export default class MapPics {
+  @observable powFactor = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    .map(p => 2 ** p);
+
+  @observable settings = {
+    ocean: {},
+    event: {},
+    pin: {
+      anchorY: 0,
+      anchorX: 0
+    },
+    decoration: {},
+  }
+
+  @observable filters = Object.keys(this.settings);
+
   @observable tileSize = 1024;
 
   @observable cityTileSize = 32;
@@ -21,18 +36,78 @@ export default class MapPics {
     this.rootStore = rootStore;
   }
 
-  svgGen(type, store) {
-    const data = Object.values(store).filter(c => c.type === type);
-    const svg = [];
+  findFactor(c) {
+    // Looking for a power coefficient with min overhead
+    return this.powFactor.findIndex(p => p >= c);
+  }
 
+  findGrid(f) {
+    if (f === 0) return [1, 1];
+    if (f === 1) return [2, 1];
+
+
+    const factors = this.powFactor.slice(0, f);
+    const v = Math.floor(factors.length / 2);
+    if ((factors.length % 2) === 1) {
+      return [this.powFactor[v + 1], this.powFactor[v]];
+    }
+    return [this.powFactor[v], this.powFactor[v]];
+  }
+
+  configureGrid(type) {
+    const store = this.picsByType[type];
+    const f = this.findFactor(store.length);
+    const g = this.findGrid(f);
+    return {
+      grid: g,
+      pow: f,
+    };
+  }
+
+  @computed get picsByType() {
+    const { data } = this.rootStore.data.MapPics;
+    return this.filters.reduce((prev, cur) => ({
+      ...prev,
+      [cur]: Object.values(data).filter(c => c.type === cur),
+    }), {});
+  }
+
+  @computed get gridByType() {
+    return this.filters.reduce((prev, cur) => ({
+      ...prev,
+      [cur]: this.configureGrid(cur)
+    }), {});
+  }
+
+  @computed get texture() {
+    return this.filters.reduce((prev, cur) => {
+      const store = this.picsByType[cur];
+      const { grid } = this.gridByType[cur];
+      const data = this.svgGen(store, grid);
+      const blob = new Blob([data], { type: 'image/svg+xml' });
+      return {
+        ...prev,
+        [cur]: {
+          img: window.URL.createObjectURL(blob),
+          map: this.jsonGen(cur, store, this.settings[cur])
+        }
+      };
+    }, {});
+  }
+
+  svgGen(data, grid) {
+    const svg = [];
     svg.push([
       ...this.svgHeaders,
-      `width="${this.tileSize}"`,
-      `height="${this.tileSize * data.length}"`,
+      `width="${this.tileSize * grid[0]}"`, // x
+      `height="${this.tileSize * grid[1]}"`, // y
       '>'
     ].join(' '));
+    const cell = [0, 0];
     data.map((s, idx) => {
-      const position = `x="0" y="${idx * this.tileSize}"`;
+      cell[0] = (idx) % grid[1];
+      cell[1] = Math.floor((idx) / grid[1]);
+      const position = `x="${cell[0] * this.tileSize}" y="${cell[1] * this.tileSize}"`;
       svg.push(['\t', '<svg', position, this.tileDimensions, `viewBox="${s.viewbox}"`,
         'preserveAspectRatio="xMinYMid meet"', '>'].join(' '));
       s.g.map((g) => {
@@ -48,19 +123,24 @@ export default class MapPics {
     return svg.join('\n');
   }
 
-  jsonGen(type, store, anchor = {}) {
-    const data = Object.values(store).filter(c => c.type === type);
-    const json = data.reduce((prev, cur, idx) => (
-      {
+  jsonGen(type, data, anchor = {}) {
+    const { grid } = this.gridByType[type];
+    const cell = [0, 0];
+    const json = data.reduce((prev, cur, idx) => {
+      cell[0] = (idx) % grid[1];
+      cell[1] = Math.floor((idx) / grid[1]);
+      const res = {
+        x: cell[0] * this.tileSize,
+        y: cell[1] * this.tileSize,
+        width: this.tileSize,
+        height: this.tileSize,
+        ...anchor,
+      };
+      return {
         ...prev,
-        [`${type}-${cur.id}`]: {
-          x: 0,
-          y: this.tileSize * idx,
-          width: this.tileSize,
-          height: this.tileSize,
-          ...anchor,
-        }
-      }), {});
+        [`${type}-${cur.id}`]: res
+      }
+    }, {});
     return json;
   }
 
@@ -69,46 +149,34 @@ export default class MapPics {
   }
 
   @computed get decorations() {
-    const data = this.svgGen('decoration', this.rootStore.data.MapPics.data);
-    const blob = new Blob([data], { type: 'image/svg+xml' });
-    return window.URL.createObjectURL(blob);
+    return this.texture.decoration.img;
   }
 
   @computed get decorationsJSON() {
-    return this.jsonGen('decoration', this.rootStore.data.MapPics.data);
+    return this.texture.decoration.map;
   }
 
   @computed get oceans() {
-    const data = this.svgGen('ocean', this.rootStore.data.MapPics.data);
-    const blob = new Blob([data], { type: 'image/svg+xml' });
-    return window.URL.createObjectURL(blob);
+    return this.texture.ocean.img;
   }
 
   @computed get oceansJSON() {
-    return this.jsonGen('ocean', this.rootStore.data.MapPics.data);
+    return this.texture.ocean.map;
   }
 
   @computed get events() {
-    const data = this.svgGen('event', this.rootStore.data.MapPics.data);
-    const blob = new Blob([data], { type: 'image/svg+xml' });
-    return window.URL.createObjectURL(blob);
+    return this.texture.event.img;
   }
 
   @computed get eventsJSON() {
-    return this.jsonGen('event', this.rootStore.data.MapPics.data);
+    return this.texture.event.map;
   }
 
   @computed get pins() {
-    const data = this.svgGen('pin', this.rootStore.data.MapPics.data);
-    const blob = new Blob([data], { type: 'image/svg+xml' });
-    return window.URL.createObjectURL(blob);
+    return this.texture.pin.img;
   }
 
   @computed get pinsJSON() {
-    const anc = {
-      anchorY: 0,
-      anchorX: 0
-    };
-    return this.jsonGen('pin', this.rootStore.data.MapPics.data, anc);
+    return this.texture.pin.map;
   }
 }
