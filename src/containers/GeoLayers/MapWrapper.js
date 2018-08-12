@@ -29,11 +29,13 @@ class MapWrapper extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', () => this.resize(), false);
+    window.addEventListener('orientationchange', () => this.resize(), false);
     this.resize();
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize(), false);
+    window.removeEventListener('orientationchange', () => this.resize(), false);
   }
 
   @computed get terrain() {
