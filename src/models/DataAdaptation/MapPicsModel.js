@@ -147,36 +147,4 @@ export default class MapPics {
   @computed get tileDimensions() {
     return `width="${this.tileSize}" height="${this.tileSize}"`;
   }
-
-  @computed get decorations() {
-    return this.texture.decoration.img;
-  }
-
-  @computed get decorationsJSON() {
-    return this.texture.decoration.map;
-  }
-
-  @computed get oceans() {
-    return this.texture.ocean.img;
-  }
-
-  @computed get oceansJSON() {
-    return this.texture.ocean.map;
-  }
-
-  @computed get events() {
-    return this.texture.event.img;
-  }
-
-  @computed get eventsJSON() {
-    return this.texture.event.map;
-  }
-
-  @computed get pins() {
-    return this.texture.pin.img;
-  }
-
-  @computed get pinsJSON() {
-    return this.texture.pin.map;
-  }
 }

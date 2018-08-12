@@ -124,8 +124,7 @@ class MapWrapper extends React.Component {
   }
 
   @computed get feedPins() {
-    const pinsAtlas = this.props.store.prepared.mapPics.pins;
-    const pinsMapping = this.props.store.prepared.mapPics.pinsJSON;
+    const pinsT = this.props.store.prepared.mapPics.texture.pin;
     const { pins } = this.props.store.pins;
     const id = 'map-pins-layer';
     const cid = 'course-pins-layer';
@@ -138,10 +137,11 @@ class MapWrapper extends React.Component {
       this.props.store.pins.setActive(key, false);
       this.props.store.pins.setPosition(d.x, d.y);
     };
-    return [
-      pinsLayer(pinsAtlas, pinsMapping, pins, id, zoom, true, onHover),
-      pinsLayer(pinsAtlas, pinsMapping, coursePins, cid, zoom, false),
-    ];
+    return Object.keys(pinsT.map).length > 0
+      ? [
+        pinsLayer(pinsT.img, pinsT.map, pins, id, zoom, true, onHover),
+        pinsLayer(pinsT.img, pinsT.map, coursePins, cid, zoom, false),
+      ] : [];
   }
 
   @action resize() {
@@ -153,11 +153,8 @@ class MapWrapper extends React.Component {
     const z = this.props.store.deck.rZoom;
     const updateTrigger = z * this.showCluster;
 
-    const decorAtlas = this.props.store.prepared.mapPics.decorations;
-    const decorMapping = this.props.store.prepared.mapPics.decorationsJSON;
-
-    const oceanAtlas = this.props.store.prepared.mapPics.oceans;
-    const oceanMapping = this.props.store.prepared.mapPics.oceansJSON;
+    const decorT = this.props.store.prepared.mapPics.texture.decoration;
+    const oceanT = this.props.store.prepared.mapPics.texture.ocean;
 
     const layers = [
       this.terrain,
@@ -169,8 +166,8 @@ class MapWrapper extends React.Component {
         data: this.oceans,
         visible: this.options.mapDecorations,
         pickable: true,
-        iconAtlas: oceanAtlas,
-        iconMapping: oceanMapping,
+        iconAtlas: oceanT.img,
+        iconMapping: oceanT.map,
         getAngle: 0,
         sizeScale: 3,
         getSize: d => (this.props.store.deck.zoom * d.size),
@@ -186,8 +183,8 @@ class MapWrapper extends React.Component {
         data: this.decorations,
         visible: this.options.mapDecorations,
         pickable: true,
-        iconAtlas: decorAtlas,
-        iconMapping: decorMapping,
+        iconAtlas: decorT.img,
+        iconMapping: decorT.map,
         getAngle: d => d.transform.rotate,
         sizeScale: 3,
         getSize: d => (this.props.store.deck.zoom * d.transform.scale),
