@@ -88,7 +88,7 @@ export default class MapPics {
       return {
         ...prev,
         [cur]: {
-          img: window.URL.createObjectURL(blob),
+          img: (window.URL ? URL : webkitURL).createObjectURL(blob),
           map: this.jsonGen(cur, store, this.settings[cur])
         }
       };
@@ -139,7 +139,7 @@ export default class MapPics {
       return {
         ...prev,
         [`${type}-${cur.id}`]: res
-      }
+      };
     }, {});
     return json;
   }
