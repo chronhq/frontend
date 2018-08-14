@@ -43,10 +43,6 @@ class MapWrapper extends React.Component {
     return contourLayer(terrain);
   }
 
-  @computed get visible() {
-    return this.props.store.flags.flags.visibility.borders;
-  }
-
   @computed get options() {
     return this.props.store.flags.flags.layer;
   }
@@ -68,11 +64,11 @@ class MapWrapper extends React.Component {
   }
 
   @computed get borders() {
-    const properties = this.props.store.data.Properties.data;
+    // const properties = this.props.store.data.Properties.data;
 
-    const colors = this.props.store.data.MapColors.data;
+    // const colors = this.props.store.data.MapColors.data;
 
-    const borders = this.props.store.borders.bordersPath;
+    const data = this.props.store.borders.features;
     const visible = this.options.borders;
     const hoverCb = (d) => {
       // if image contains transparent parts disable drawing tooltip
@@ -80,7 +76,7 @@ class MapWrapper extends React.Component {
       this.props.store.pins.setCountryActive(key);
       this.props.store.pins.setPosition(d.x, d.y);
     };
-    return bordersLayer(borders, properties, colors, visible, hoverCb);
+    return bordersLayer(data, visible, hoverCb);
   }
 
   @computed get toponyms() {
