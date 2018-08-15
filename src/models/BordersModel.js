@@ -106,23 +106,12 @@ export default class BordersModel {
     return Object.keys(this.byYear);
   }
 
-  @computed get bordersProps() {
-    return this.actualData.map(cur => ({
-      ...this.data.Properties.data[cur.props],
-      type: this.data.Types.data[this.data.Properties.data[cur.props].type],
-      admin: this.data.Admins.data[this.data.Properties.data[cur.props].admin],
-    }));
-  }
 
   @computed get bordersPath() {
     const borders = [];
     this.actualData.map((cur) => {
       if (cur.geo in this.geo) {
-        borders.push({
-          id: cur.geo,
-          props: cur.props,
-          geo: this.geo[cur.geo],
-        });
+        borders.push(cur);
       }
       return false;
     });
@@ -130,33 +119,15 @@ export default class BordersModel {
   }
 
   @computed get features() {
-    const properties = this.rootStore.data.Properties.data;
-    const colors = this.rootStore.data.MapColors.data;
-
-    return this.bordersPath.map((cur) => {
-      try {
-        const colorId = properties[cur.props].color;
-        const color = colors[colorId].color1;
-        // console.log('Trying to get color', colorId, cur);
-        // console.log(color, colorId, colors[colorId]);
-        return {
-          geometry: cur.geo.geometry,
-          color: [color[0], color[1], color[2]],
-          id: cur.id,
-          props: cur.props,
-        };
-      } catch (e) {
-        // console.error('ColorID', colorId, 'Border ID', cur.id);
-        // Probably colorID === -99 -- Disputed territory
-        return {
-          geometry: cur.geo.geometry,
-          // color: [13, 244, 61],
-          color: [127, 127, 127],
-          id: cur.id,
-          props: cur.props,
-        };
-      }
-    });
+    const properties = this.rootStore.properties.data;
+    return this.bordersPath.map(cur => ({
+      geometry: this.geo[cur.geo].geometry,
+      color: (cur.props in properties
+        ? properties[cur.props].color
+        : [0, 0, 0, 0]),
+      id: cur.geo,
+      props: cur.props,
+    }));
   }
 
   @computed get loadingStatus() {

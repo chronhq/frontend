@@ -15,6 +15,7 @@ import PinsModel from './PinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
 import AnimationFrame from './AnimationFrame';
+import Properties from './PropertiesModel';
 
 export default class storeModel {
   @observable fonts = {};
@@ -33,6 +34,7 @@ export default class storeModel {
       course: new CourseSideEffects(this),
     };
     this.borders = new Borders(this);
+    this.properties = new Properties(this);
     this.prepared = new Prepared(this);
     // this.view = new View(this);
     // this.feed = new FeedModel(this);
