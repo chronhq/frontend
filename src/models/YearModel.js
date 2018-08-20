@@ -7,6 +7,8 @@ export default class YearModel {
 
   @observable now;
 
+  @observable prev;
+
   @observable tick;
 
   @observable playing = false;
@@ -21,10 +23,12 @@ export default class YearModel {
     this.min = year.min;
     this.max = year.max;
     this.now = year.now;
+    this.prev = year.now;
     this.tick = year.tick;
   }
 
   @action setYear(year) {
+    this.prev = this.now;
     this.now = (year > this.max || year < this.min)
       ? this.min
       : year;

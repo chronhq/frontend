@@ -16,10 +16,6 @@ function bordersLayer(data, visible, hoverCb) {
     extruded: false,
     lineJointRounded: true,
     onHover: hoverCb,
-    transitions: {
-      getFillColor: 1000,
-      geometry: 3000,
-    }
   });
 }
 
