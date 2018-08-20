@@ -22,7 +22,7 @@ const isSafari = navigator.vendor
   && navigator.userAgent.indexOf('FxiOS') === -1;
 
 // Disable grid for safari because of image ghosting
-window.store.prepared.mapPics.disabledGrid = isSafari;
+window.store.prepared.mapPics.disableGrid = isSafari;
 
 if ('fonts' in document && !isSafari) {
   document.fonts.onloadingdone = (fontFaceSetEvent) => {
