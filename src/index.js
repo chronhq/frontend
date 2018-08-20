@@ -14,7 +14,17 @@ window.store.data.Courses.get();
 window.store.effects.course.loadBaseData();
 window.store.effects.course.loadContourInfo();
 
-if ('fonts' in document) {
+// https://stackoverflow.com/questions/7944460/detect-safari-browser
+const isSafari = navigator.vendor
+  && navigator.vendor.indexOf('Apple') > -1
+  && navigator.userAgent
+  && navigator.userAgent.indexOf('CriOS') === -1
+  && navigator.userAgent.indexOf('FxiOS') === -1;
+
+// Disable grid for safari because of image ghosting
+window.store.prepared.mapPics.disabledGrid = isSafari;
+
+if ('fonts' in document && !isSafari) {
   document.fonts.onloadingdone = (fontFaceSetEvent) => {
     fontFaceSetEvent.fontfaces.map((f) => {
       window.store.fonts = {
@@ -24,8 +34,8 @@ if ('fonts' in document) {
       return null;
     });
   };
-} else {
-  // Edge browser
+} else { // kludge for toponyms
+  // Edge browser and Safari
   console.log('Fallback fonts loading');
   const w8 = 10000; // 10 sec
   setTimeout(() => {

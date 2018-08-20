@@ -1,6 +1,8 @@
 import { observable, computed } from 'mobx';
 
 export default class MapPics {
+  @observable disableGrid = false;
+
   @observable powFactor = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
     .map(p => 2 ** p);
 
@@ -42,6 +44,7 @@ export default class MapPics {
   }
 
   findGrid(f) {
+    if (this.disableGrid) return [2 ** f, 1];
     if (f === 0) return [1, 1];
     if (f === 1) return [2, 1];
 
