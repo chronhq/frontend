@@ -123,6 +123,9 @@ export default class Internationalization {
           button: 'Bug report',
           success: 'Your message has been succesfully sent',
           error: 'Error occurred',
+          emailInvalid: 'Email Address not valid',
+          textInvalid: 'Text required.',
+          textareaInvalid: 'Message required',
         };
       default:
         return {
@@ -139,6 +142,9 @@ export default class Internationalization {
           button: 'Сообщить',
           success: 'Ваше сообщение успешно отправлено',
           error: 'Произошла ошибка',
+          emailInvalid: 'Неверный формат адреса электронной почты',
+          textInvalid: 'Необходимо ввести текст',
+          textareaInvalid: 'Необходимо ввести сообщение',
         };
     }
   }
