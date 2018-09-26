@@ -164,6 +164,10 @@ npm run dev
   - [x] объединить эвент лисенер на ресайз из таймпанели и мапвраппера
 
 
+## Metriks
+SetLocalization.js - ym('reachGoal', 'locale', e.target.value);
+
+
 
 ##Release notes (до релиза 17 дней)
 Mini

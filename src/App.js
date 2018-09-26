@@ -7,6 +7,15 @@ import { YmId } from './metrikaHelper';
 
 import AppRouter from './routes';
 
+const YM_CONFIG = {
+  defer: true,
+  clickmap: true,
+  trackLinks: true
+  // accurateTrackBounce: true,
+  // webvisor: true,
+  // trackHash: true,
+};
+
 @observer
 class App extends React.Component {
   render() {
@@ -14,16 +23,8 @@ class App extends React.Component {
       <Provider store={this.props.store}>
         <Router history={hashHistory}>
           <YMInitializer
-            accounts={YmId}
-            version="2"
-            options={{
-              defer: true,
-              clickmap: true,
-              trackLinks: true,
-              // accurateTrackBounce: true,
-              // webvisor: true,
-              // trackHash: true,
-            }}
+            accounts={[50501221]}
+            options={YM_CONFIG}
           >
             <AppRouter />
           </YMInitializer>
