@@ -3,17 +3,15 @@ import { Provider, observer } from 'mobx-react';
 import { BrowserRouter as Router, hashHistory } from 'react-router-dom';
 import { YMInitializer } from 'react-yandex-metrika';
 
-import { YmId } from './metrikaHelper';
-
 import AppRouter from './routes';
 
 const YM_CONFIG = {
-  defer: true,
+  defer: false,
   clickmap: true,
-  trackLinks: true
+  trackLinks: true,
   // accurateTrackBounce: true,
   // webvisor: true,
-  // trackHash: true,
+  trackHash: false
 };
 
 @observer
