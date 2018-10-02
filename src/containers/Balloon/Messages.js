@@ -35,15 +35,6 @@ export class GeoEvent extends React.Component {
 @inject('store')
 @observer
 export class PersonFact extends React.Component {
-  @computed get title() {
-    switch (this.props.store.i18n.lng) {
-      case 'ru':
-        return 'Люди';
-      default:
-        return 'Person';
-    }
-  }
-
   render() {
     const { person } = { ...this.props };
     console.log('person,', person);

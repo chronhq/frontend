@@ -2,11 +2,13 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { action } from 'mobx';
 import { InputRadio } from '../../components/Input';
+import ym from 'react-yandex-metrika';
 
 
 class SetLocalization extends React.Component {
   handleOptionChange(e) {
     window.store.i18n.lng = e.target.value;
+    ym('reachGoal', 'locale', e.target.value);
     this.forceUpdate();
   }
 

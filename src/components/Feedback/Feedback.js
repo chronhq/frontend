@@ -1,8 +1,16 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
+
+import {
+  InputCheckBox,
+  InputNumber,
+  InputSelect,
+  MailInput,
+  TextInput,
+  TextareaInput
+} from '../Input';
 import './Feedback.less';
-import { InputCheckBox, InputNumber, InputSelect } from '../Input';
 
 @inject('store')
 @observer
@@ -46,24 +54,21 @@ class FeedbackForm extends React.Component {
           }}
         >
           <div className='feedback--line'>
-            <input
-              type='text'
+            <TextInput
               value={this.feedback.title}
+              name='title'
               placeholder={this.props.store.i18n.feedback.name}
-              onChange={(e) => {
-                this.feedback.title = e.target.value;
-                return false;
-              }}
+              invalid={this.props.store.i18n.feedback.textInvalid}
+              cb={e => this.handleData(e)}
             />
-            <input
-              type='email'
+            <MailInput
               value={this.feedback.email}
+              name='email'
               placeholder={this.props.store.i18n.feedback.email}
-              onChange={(e) => {
-                this.feedback.email = e.target.value;
-                return false;
-              }}
+              invalid={this.props.store.i18n.feedback.emailInvalid}
+              cb={e => this.handleData(e)}
             />
+
           </div>
           <div className='feedback--line'>
             <InputNumber
@@ -87,16 +92,13 @@ class FeedbackForm extends React.Component {
               }}
             />
           </div>
-          <textarea
-            type='text'
+
+          <TextareaInput
             value={this.feedback.text}
-            required
-            style={{ height: 200 }}
+            name='text'
             placeholder={this.props.store.i18n.feedback.desc}
-            onChange={(e) => {
-              this.feedback.text = e.target.value;
-              return false;
-            }}
+            invalid={this.props.store.i18n.feedback.textareaInvalid}
+            cb={e => this.handleData(e)}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', verticalAlign: 'middle' }}>
             <div style={{ verticalAlign: 'middle' }}>

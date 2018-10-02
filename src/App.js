@@ -3,9 +3,16 @@ import { Provider, observer } from 'mobx-react';
 import { BrowserRouter as Router, hashHistory } from 'react-router-dom';
 import { YMInitializer } from 'react-yandex-metrika';
 
-import { YmId } from './metrikaHelper';
-
 import AppRouter from './routes';
+
+const YM_CONFIG = {
+  defer: false,
+  clickmap: true,
+  trackLinks: true,
+  // accurateTrackBounce: true,
+  // webvisor: true,
+  trackHash: false
+};
 
 @observer
 class App extends React.Component {
@@ -14,16 +21,8 @@ class App extends React.Component {
       <Provider store={this.props.store}>
         <Router history={hashHistory}>
           <YMInitializer
-            accounts={YmId}
-            version="2"
-            options={{
-              defer: true,
-              clickmap: true,
-              trackLinks: true,
-              // accurateTrackBounce: true,
-              // webvisor: true,
-              // trackHash: true,
-            }}
+            accounts={[50501221]}
+            options={YM_CONFIG}
           >
             <AppRouter />
           </YMInitializer>
