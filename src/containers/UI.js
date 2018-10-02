@@ -1,6 +1,6 @@
 import React from 'react';
-import Flag from '../Flag';
 import { observer, inject } from 'mobx-react';
+import Flag from '../Flag';
 
 import MapViewport from './GeoLayers';
 import SidePanel from './SidePanel';
@@ -28,6 +28,15 @@ class Overlays extends React.Component {
     );
   }
 }
+
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+const MapPicsDownloadLink = () => (process.env.NODE_ENV === 'production'
+  ? ''
+  : (<a href='' visibility='hidden' id='mapPicsDownloadLink' />));
+/* eslint-enable jsx-a11y/anchor-has-content */
+/* eslint-enable jsx-a11y/anchor-is-valid */
+
 
 const UI = () => (
   <div className='content'>
@@ -58,6 +67,7 @@ const UI = () => (
       name="UI.MapViewport"
       render={() => <MapViewport />}
     />
+    <MapPicsDownloadLink />
   </div>
 );
 
