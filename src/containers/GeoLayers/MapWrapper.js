@@ -16,8 +16,7 @@ import toponymsLayer from './Layers/ToponymsLayer';
 
 import chars from './Layers/VisibleCharacters';
 
-import testingAtlas from './geoAssets/cities2.svg';
-import testingMapping from './geoAssets/cities2.json';
+import textures from './Textures';
 
 import TripsLayer from './trips-layer';
 import pinsLayer from './Layers/PinsLayer';
@@ -101,8 +100,8 @@ class MapWrapper extends React.Component {
       // visible: this.options.cities,
       visible: true,
       pickable: true,
-      iconAtlas: testingAtlas,
-      iconMapping: testingMapping,
+      iconAtlas: textures.cities.img,
+      iconMapping: textures.cities.map,
       // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
       sizeScale: this.size * window.devicePixelRatio,
       getPosition: d => [d.x, d.y],
@@ -122,7 +121,7 @@ class MapWrapper extends React.Component {
   }
 
   @computed get feedPins() {
-    const pinsT = this.props.store.prepared.mapPics.texture.pin;
+    const pinsT = textures.pin;
     const { pins } = this.props.store.pins;
     const id = 'map-pins-layer';
     const cid = 'course-pins-layer';
@@ -151,8 +150,8 @@ class MapWrapper extends React.Component {
     const z = this.props.store.deck.rZoom;
     const updateTrigger = z * this.showCluster;
 
-    const decorT = this.props.store.prepared.mapPics.texture.decoration;
-    const oceanT = this.props.store.prepared.mapPics.texture.ocean;
+    const decorT = textures.decoration;
+    const oceanT = textures.ocean;
 
     const layers = [
       this.terrain,
