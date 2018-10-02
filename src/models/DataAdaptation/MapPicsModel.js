@@ -3,6 +3,8 @@ import { observable, computed } from 'mobx';
 export default class MapPics {
   @observable disableGrid = false;
 
+  @observable downloadLinkId = 'mapPicsDownloadLink';
+
   @observable powFactor = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
     .map(p => 2 ** p);
 
@@ -86,13 +88,21 @@ export default class MapPics {
     return this.filters.reduce((prev, cur) => {
       const store = this.picsByType[cur];
       const { grid } = this.gridByType[cur];
+
       const data = this.svgGen(store, grid);
-      const blob = new Blob([data], { type: 'image/svg+xml' });
+      const map = this.jsonGen(cur, store, this.settings[cur]);
+
+      const img = new Blob([data], { type: 'image/svg+xml' });
+      const mapBlob = new Blob([JSON.stringify(map)], { type: 'text/json;charset=UTF-8' });
+
+      const { createObjectURL } = (window.URL ? window.URL : window.webkitURL);
       return {
         ...prev,
         [cur]: {
-          img: (window.URL ? window.URL : window.webkitURL).createObjectURL(blob),
-          map: this.jsonGen(cur, store, this.settings[cur])
+          img: createObjectURL(img),
+          map,
+          json: createObjectURL(mapBlob)
+
         }
       };
     }, {});
@@ -145,6 +155,28 @@ export default class MapPics {
       };
     }, {});
     return json;
+  }
+
+  download(type, map = true) {
+    const key = map === true ? 'json' : 'img';
+    // key === map | img
+    const fileData = this.texture[type][key];
+
+    const filename = key === 'img' ? `${type}.svg` : `${type}.json`;
+
+    // Not working in IE (it's a debug only feature)
+    const targetA = document.getElementById(this.downloadLinkId);
+    targetA.href = fileData;
+    targetA.download = filename;
+    targetA.click();
+  }
+
+  downloadAll() {
+    Object.keys(this.texture).map((t) => {
+      this.download(t, false);
+      this.download(t, true);
+      return null;
+    });
   }
 
   @computed get tileDimensions() {

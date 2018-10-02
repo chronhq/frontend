@@ -51,7 +51,10 @@ export default class FinalDataModel {
 
     this.data.courseTraces = new Expeditions(rootStore);
     this.data.courseGeoPoints = new CourseGeopoints(rootStore);
-    this.mapPics = new MapPics(rootStore);
+    // for svg and json generation
+    if (process.env.NODE_ENV !== 'production') {
+      this.mapPics = new MapPics(rootStore);
+    }
     this.persons = new Persons(rootStore);
     this.inventions = new Inventions(rootStore);
     this.geoEventsList = new GeoEvents(rootStore);

@@ -9,6 +9,8 @@ export default class CourseSideEffects {
     this.rootStore.data.Borders.sortId = 'year';
   }
 
+  @observable devDeps = process.env.NODE_ENV === 'production' ? [] : ['MapPics'];
+
   @observable deps = {
     base: [
       'Admins',
@@ -20,8 +22,8 @@ export default class CourseSideEffects {
       'Properties',
       'Types',
       'MapDecorations',
-      'MapPics',
       'MapColors',
+      ...this.devDeps,
     ],
     course: [
       'CourseTimelines',
