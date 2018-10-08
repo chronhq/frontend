@@ -63,7 +63,7 @@ class YearInput extends React.Component {
   }
 
   getItems(start, end) {
-    const items: any[] = [];
+    const items = [];
     const len = end - start + 1;
     for (let i = start; i < start + len; i += 1) {
       items.push(
