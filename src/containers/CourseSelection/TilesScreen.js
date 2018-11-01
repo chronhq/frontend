@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import Tile from './Tile';
+import Tile from '../../components/Tile/Tile';
 import './TilesScreen.less';
 import SetLocalizationToggle from './SetLocalizationToggle';
 
