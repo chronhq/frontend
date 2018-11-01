@@ -1,17 +1,16 @@
 // @import "../../colors.less";
 
-
 @base01: #222; //
 @base02: #000;
 @border-decor: rgba(238, 238, 238, 0.3); // Head decor
 
 @hex--height: 20em;
-@hex--height_modile: 16em;
+@hex--height_modile: 12em;
 @hex--width: 11em;
 @hex--med: 2em;
 @hex--mod: 2em;
 @hex--color: rgba(255, 255, 255, 0.6);
-@hex-color-hover: rgba(255, 255, 255, 0.3);;
+@hex-color-hover: rgba(255, 255, 255, 0.3);
 
 .starpage__title {
   text-transform: uppercase;
@@ -23,12 +22,10 @@
   color: white;
   text-align: left;
   padding-left: 40px;
-
   & h3 {
-    font-weight: 200;
-    font-size: 40px;
+    font-weight: 300;
+    font-size: 2rem;
   }
-
   &::before {
     content: "";
     position: absolute;
@@ -61,7 +58,7 @@
     background: none;
     border: none;
     color: #fff;
-    font-size: 16px;
+    font-size: 1rem;
   }
   @media screen and (max-width: 725px) {
     margin: auto 20px auto 10px;
@@ -83,7 +80,7 @@
   background-color: gray;
   line-height: 33px;
   text-align: center;
-  min-width: 280px;
+  min-width: 320px;
 }
 
 .tile__container {
@@ -130,29 +127,25 @@
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  text-align: center;
   width: 150%;
   height: 60%;
   transform: translate(-16%, 30%);
   text-align: center;
   z-index: 20;
-
   & h3 {
     margin: 0;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 1.125rem;
     line-height: 20px;
     color: red;
     text-transform: uppercase;
   }
-
   & a {
     color: inherit;
     text-decoration: inherit;
   }
-
   & p {
-    font-size: 14px;
+    font-size: 0.9rem;
     color: white;
     font-style: italic;
     padding: 3px;
@@ -166,21 +159,41 @@
     height: 100%;
     align-self: center;
     transform: none;
-    padding-left: 20px;
+    padding-left: 0.5rem;
   }
 }
 
-.tile {
-  &:first-child {
-    &::before {
-      @media screen and (max-width: 725px) {
-        border: none;
-      }
-    }
+.tile-left {
+  border-right: @hex--width/2 solid @hex--color;
+  border-top: @hex--height/2 solid transparent;
+  border-bottom: @hex--height/2 solid transparent;
+  transition : border 500ms ease-out;
+  @media screen and (max-width: 725px) {
+    display: none;
+  }
+}
 
-    h3 {
-      color: white;
-    }
+.tile-center {
+  width: @hex--width;
+  height: @hex--height;
+  background-color: @hex--color;
+  transition : background-color 500ms ease-out;
+  @media screen and (max-width: 725px) {
+    margin-bottom: 10px;
+    width: 100%;
+    height: @hex--height_modile;
+  }
+}
+
+.tile-right {
+  border-left: @hex--width/2 solid @hex--color;
+  border-top: @hex--height/2 solid transparent;
+  border-bottom: @hex--height/2 solid transparent;
+  transition : border 500ms ease-out;
+  @media screen and (max-width: 725px) {
+    border-left: @hex--mod solid @hex--color;
+    border-bottom: @hex--height_modile/2 solid transparent;
+    border-top: @hex--height_modile/2 solid transparent;
   }
 }
 
@@ -208,37 +221,16 @@
   }
 }
 
-.tile-left {
-  border-right: @hex--width/2 solid @hex--color;
-  border-top: @hex--height/2 solid transparent;
-  border-bottom: @hex--height/2 solid transparent;
-  transition : border 500ms ease-out;
-  @media screen and (max-width: 725px) {
-    display: none;
-  }
-
-}
-.tile-center {
-  width: @hex--width;
-  height: @hex--height;
-  background-color: @hex--color;
-  transition : background-color 500ms ease-out;
-  @media screen and (max-width: 725px) {
-    margin-bottom: 10px;
-    width: 100%;
-    height: @hex--height_modile;
+.tile {
+  &:first-child {
+    &::before {
+      @media screen and (max-width: 725px) {
+        border: none;
+      }
+    }
+    h3 {
+      color: white;
+    }
   }
 }
 
-.tile-right {
-  border-left: @hex--width/2 solid @hex--color;
-  border-top: @hex--height/2 solid transparent;
-  border-bottom: @hex--height/2 solid transparent;
-  transition : border 500ms ease-out;
-  @media screen and (max-width: 725px) {
-    border-left: @hex--mod solid @hex--color;
-    border-bottom: @hex--height_modile/2 solid transparent;
-    border-top: @hex--height_modile/2 solid transparent;
-  }
-
-}
