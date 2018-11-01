@@ -4,6 +4,8 @@ import DeckGL, {
   IconLayer,
   PathLayer,
 } from 'deck.gl';
+import { MapboxLayer } from '@deck.gl/mapbox';
+import { StaticMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
@@ -21,9 +23,16 @@ import textures from './Textures';
 import TripsLayer from './trips-layer';
 import pinsLayer from './Layers/PinsLayer';
 
+
+const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlrbGVyZ20iLCJhIjoiY2pueWVqcGhzMDRnczNrbzI2NzIxMDAzMyJ9.gtQYtN2oRxlEF_s_PRhTOQ';
+
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
+  state = {
+    gl: null
+  }
+
   @observable showCluster = true;
 
   componentDidMount() {
@@ -35,6 +44,11 @@ class MapWrapper extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
+  }
+
+  _onWebGLInitialized(gl) {
+    // console.log('_onWebGLInitialized', gl);
+    this.setState({ gl });
   }
 
   @computed get terrain() {
@@ -154,7 +168,7 @@ class MapWrapper extends React.Component {
     const oceanT = textures.ocean;
 
     const layers = [
-      this.terrain,
+      // this.terrain,
       this.borders,
       ...this.toponyms,
       this.cityPoints,
@@ -254,7 +268,19 @@ class MapWrapper extends React.Component {
         onViewStateChange={v => this.props.store.deck.updateViewState(v.viewState)}
         style={{ zIndex: 1 }}
         layers={layers}
-      />
+        onWebGLInitialized={g => this._onWebGLInitialized(g)}
+      >
+        {this.state.gl && (
+          <StaticMap
+            ref={(ref) => {
+              this._map = ref && ref.getMap();
+            }}
+            gl={this.state.gl}
+            mapStyle="mapbox://styles/mapbox/outdoors-v10"
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+          />
+        )}
+      </DeckGL>
     );
   }
 }

@@ -51,6 +51,11 @@ module.exports = {
     proxy: {
       '/api': 'http://api:3333/',
       '/shared': 'http://api:3333/',
+    },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
     }
   },
   target: 'web',
