@@ -6,6 +6,7 @@ import { PersonFact, Invention, GeoEvent } from '../../components/Messages/Messa
 import CountryHover from '../../components/Messages/CountryHover';
 
 import './Balloon.less';
+
 @inject('store')
 @observer
 class Balloon extends React.Component {

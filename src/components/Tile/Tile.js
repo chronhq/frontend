@@ -11,7 +11,7 @@ function isOdd(n) {
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const Tile = ({ course, lng }) => (
   <div className={isOdd(course.id) ? 'tile odd' : 'tile'}>
-  {/*
+    {/*
   <div className='tile-wrapper'>
 */}
     <div className='tile-left' />

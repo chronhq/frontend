@@ -10,7 +10,8 @@ import { InputCheckBox } from '../../components/Input';
 @observer
 class Animation extends React.Component {
   @action handleChange() {
-    this.props.store.flags.flags.runtime.animation = !this.props.store.flags.flags.runtime.animation;
+    const toggledAnimation = !this.props.store.flags.flags.runtime.animation;
+    this.props.store.flags.flags.runtime.animation = toggledAnimation;
   }
 
   render() {
@@ -18,17 +19,18 @@ class Animation extends React.Component {
       <div>
         <div style={{ display: 'flex', flexDirection: 'row', justfyContent: 'space-between' }}>
           <button onClick={() => this.props.store.animation.startAnimation()} type='button'>
-            Start Animation
+            {'Start Animation'}
           </button>
           <button onClick={() => this.props.store.animation.stopAnimation()} type='button'>
-            Stop Animation
+            {'Stop Animation'}
           </button>
           <button onClick={() => this.props.store.animation.resetAnimation()} type='button'>
-            Reset Animation
+
+            {'Reset Animation'}
           </button>
         </div>
         <p>
-          Time:
+          {'Time:'}
           {this.props.store.animation.time}
         </p>
         <InputCheckBox

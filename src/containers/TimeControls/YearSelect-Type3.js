@@ -32,7 +32,7 @@ class YearSelect extends React.Component {
           {i}
         </Option>
       );
-    };
+    }
     return options;
   }
 

@@ -7,7 +7,7 @@ import { Tooltip } from '../Input';
 @observer
 class FatButton extends React.Component {
   get classes() {
-    let classes = [];
+    const classes = [];
     if (this.props.active === true) {
       classes.push('active');
     }

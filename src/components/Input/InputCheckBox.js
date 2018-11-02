@@ -1,6 +1,8 @@
 import React from 'react';
 
-const InputCheckBox = ({name, checked, label, cb, disabled = false }) => (
+const InputCheckBox = ({
+  name, checked, label, cb, disabled = false
+}) => (
   <label
     htmlFor={name}
     className={disabled ? 'checkbox--disabled' : ''}

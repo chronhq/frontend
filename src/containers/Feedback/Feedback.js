@@ -100,7 +100,10 @@ class FeedbackForm extends React.Component {
             invalid={this.props.store.i18n.feedback.textareaInvalid}
             cb={e => this.handleData(e)}
           />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', verticalAlign: 'middle' }}>
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignContent: 'center', verticalAlign: 'middle'
+          }}
+          >
             <div style={{ verticalAlign: 'middle' }}>
               <InputCheckBox
                 name='agreement'
@@ -109,7 +112,9 @@ class FeedbackForm extends React.Component {
                 cb={e => this.handleData(e)}
               />
               <p style={{ display: 'inline-block' }}>
-                {this.props.store.i18n.feedback.ToS} {' '}
+                {this.props.store.i18n.feedback.ToS}
+                {' '}
+                {' '}
                 <a className='decorless' href='https://chronist.ru/privacy'>
                   {this.props.store.i18n.feedback.ToSlink}
                 </a>

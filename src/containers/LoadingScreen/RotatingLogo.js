@@ -27,7 +27,7 @@ class RotatingLogo extends Component {
             alt='logo'
           />
           <h2>
-            загружается...
+            {'загружается...'}
           </h2>
         </div>
       </div>
