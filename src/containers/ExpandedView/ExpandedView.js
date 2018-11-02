@@ -5,7 +5,7 @@ import { computed } from 'mobx';
 import Settings from '../ExpandedViewModules/Settings';
 
 import LayerControl from '../ExpandedViewModules/LayerControl';
-import Debug from '../ExpandedViewModules/Debug';
+import AnimationTestTools from '../ExpandedViewModules/AnimationTestTools';
 
 const Empty = () => ('');
 
@@ -35,7 +35,7 @@ class ExpandedView extends React.Component {
       case 'settings':
         return Settings;
       case 'align':
-        return Debug;
+        return AnimationTestTools;
       case 'layerscontrol':
         return LayerControl;
       default:
