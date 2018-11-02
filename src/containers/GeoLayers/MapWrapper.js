@@ -276,7 +276,7 @@ class MapWrapper extends React.Component {
               this._map = ref && ref.getMap();
             }}
             gl={this.state.gl}
-            mapStyle="mapbox://styles/mapbox/outdoors-v10"
+            mapStyle="mapbox://styles/miklergm/cjnz3lyi26zu32sofcdrnxfnv"
             mapboxApiAccessToken={MAPBOX_TOKEN}
           />
         )}
