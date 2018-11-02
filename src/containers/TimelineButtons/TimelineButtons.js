@@ -1,0 +1,75 @@
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
+import { computed, action } from 'mobx';
+
+import FatButton from '../../components/FatButton/FatButton';
+
+import './TimelineButtons.less';
+
+@inject('store')
+@observer
+class TimelineButtons extends React.Component {
+  @computed get tooltips() {
+    return this.props.store.i18n.tooltips;
+  }
+
+  @computed get isMin() {
+    return this.props.store.flags.flags.runtime.TimelineIsMinified;
+  }
+
+  @computed get tip() {
+    return this.props.store.flags.flags.runtime.TimelineIsMinified
+      ? this.tooltips.expand
+      : this.tooltips.collapse;
+  }
+
+  @action handleReturn() {
+    this.props.store.effects.course.enableCourseSelection();
+    this.props.history.push('/');
+  }
+
+  @action toggleTimepanel() {
+    this.props.store.flags.flags.runtime.TimelineIsMinified = !this.isMin;
+  }
+
+  @action bioToggle() {
+    const isBioOn = this.props.store.flags.flags.runtime.BioIsOpen;
+    this.props.store.flags.set({ runtime: { BioIsOpen: !isBioOn } });
+  }
+
+  // #TODO localization tooltip for BioButton
+  render() {
+    return (
+      <div className='timeline__control control__home'>
+        {this.isMin ? null : (
+          <FatButton
+            text={this.props.store.i18n.tooltips.back}
+            icon='lnr-home'
+            cb={() => this.handleReturn()}
+            name='home'
+            disabled={false}
+          />
+        )}
+        {this.isMin ? null : (
+          <FatButton
+            text={this.props.store.i18n.tooltips.back}
+            icon='lnr-user'
+            cb={() => this.bioToggle()}
+            name='bio'
+            disabled={false}
+          />
+        )}
+        <FatButton
+          text={this.tip}
+          icon='lnr-menu'
+          cb={() => this.toggleTimepanel()}
+          name='hamburger'
+          disabled={false}
+        />
+      </div>
+    );
+  }
+}
+
+export default withRouter(TimelineButtons);

@@ -3,6 +3,8 @@ import { observer, inject } from 'mobx-react';
 import { computed, action } from 'mobx';
 import { Tooltip } from '../Input';
 
+
+// will be removed and replaced with FatButton Component
 @inject('store')
 @observer
 class ButtonMenu extends React.Component {

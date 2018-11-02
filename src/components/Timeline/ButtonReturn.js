@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Tooltip } from '../Input';
 
+
+// will be removed and replaced with FatButton Component
 @inject('store')
 @observer
 class ButtonReturn extends React.Component {

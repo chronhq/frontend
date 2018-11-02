@@ -2,11 +2,11 @@ import React from 'react';
 import Flag from '../Flag';
 
 import MapViewport from './GeoLayers';
-import Timeline from '../components/Timeline';
 
 import TimePanel from '../templates/TimePanel/TimePanel';
 import SidePanel from '../templates/SidePanel/SidePanel';
 import Overlays from '../templates/Overlays/Overlays';
+import Timeline from '../templates/Timeline/Timeline';
 
 import Bio from '../components/Timeline/Bio';
 import Widgets from './Widgets';

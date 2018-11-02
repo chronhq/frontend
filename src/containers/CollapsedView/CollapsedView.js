@@ -59,10 +59,11 @@ class CollapsedView extends React.Component {
       <div className={this.iconBarAlign}>
         <ButtonReturn />
         <FatButton
-          text={this.tooltips.settings}
+          text={'Информация об авторе'}
           icon='lnr-cog'
           cb={() => this.toggle('settings')}
           name='settings'
+          active={'settings' === this.props.store.flags.flags.runtime.SidePanelTab}
           disabled={false}
         />
         <FatButton
@@ -70,6 +71,7 @@ class CollapsedView extends React.Component {
           icon='lnr-layers'
           cb={() => this.toggle('layerscontrol')}
           name='layerscontrol'
+          active={'layerscontrol' === this.props.store.flags.flags.runtime.SidePanelTab}
           disabled={false}
         />
         <FatButton
@@ -78,6 +80,7 @@ class CollapsedView extends React.Component {
           // cb={() => this.toggle('search')}
           cb={() => console.log('Option not available yet')}
           name='search'
+          active={'search' === this.props.store.flags.flags.runtime.SidePanelTab}
           disabled={true}
         />
         <FatButton
@@ -86,6 +89,7 @@ class CollapsedView extends React.Component {
           cb={() => console.log('Option not available yet')}
           // cb={() => this.toggle('edit')}
           name='search'
+          active={'search' === this.props.store.flags.flags.runtime.SidePanelTab}
           disabled={true}
         />
         <FatButton
@@ -94,6 +98,7 @@ class CollapsedView extends React.Component {
           cb={() => console.log('Option not available yet')}
           // cb={() => this.toggle('export')}
           name='export'
+          active={'export' === this.props.store.flags.flags.runtime.SidePanelTab}
           disabled={true}
         />
         {(process.env.NODE_ENV !== 'production')
@@ -103,6 +108,7 @@ class CollapsedView extends React.Component {
               icon='lnr-bug'
               cb={() => this.toggle('align')}
               name='align'
+              active={'align' === this.props.store.flags.flags.runtime.SidePanelTab}
               disabled={false}
             />
           )
