@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import YearButton from './YearSelect-Type2';
+import YearSelectButton from './YearSelectButton';
 
 import './TimeControls.less';
 
@@ -74,7 +74,7 @@ class TimeControls extends React.Component {
         <button type='button' onClick={() => this.props.store.year.nextYear()}>
           <Next />
         </button>
-        <YearButton />
+        <YearSelectButton />
       </div>
     );
   }
