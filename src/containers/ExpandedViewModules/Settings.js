@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FeedbackButtons from '../../components/Feedback/FeedbackButtons';
+import FeedbackButtons from './FeedbackButtons';
 import SetLocalization from './SetLocalization';
 
 class Settings extends React.Component {

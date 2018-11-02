@@ -2,8 +2,8 @@ import React from 'react';
 
 import { inject, observer } from 'mobx-react';
 
-import ControlButtons from './ControlButtons';
-import SeekBar from './SeekBar';
+import ControlButtons from '../../containers/TimeControls/TimeControls';
+import SeekBar from '../../containers/SeekBar/SeekBar';
 import './TimePanel.less';
 
 @inject('store')

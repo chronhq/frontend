@@ -9,7 +9,7 @@ import {
   MailInput,
   TextInput,
   TextareaInput
-} from '../Input';
+} from '../../components/Input';
 import './Feedback.less';
 
 @inject('store')

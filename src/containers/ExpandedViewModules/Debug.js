@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { action } from 'mobx';
-import ControlButtons from '../../components/TimePanel/ControlButtons';
+
+import TimeControls from '../TimeControls/TimeControls';
 import AlignToggler from '../../components/AlignToggler';
 import { InputCheckBox } from '../../components/Input';
 
@@ -26,7 +27,8 @@ class Animation extends React.Component {
             Reset Animation
           </button>
         </div>
-        <p> Time:
+        <p>
+          Time:
           {this.props.store.animation.time}
         </p>
         <InputCheckBox
@@ -44,7 +46,7 @@ const Debug = () => (
   <div className='sidepanel--content'>
     <h3>Debug</h3>
     <AlignToggler />
-    <ControlButtons />
+    <TimeControls />
     <Animation />
   </div>
 );

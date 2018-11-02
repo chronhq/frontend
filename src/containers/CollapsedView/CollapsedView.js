@@ -1,76 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
-import { Tooltip } from '../../components/Input';
+
 import ButtonReturn from '../../components/Timeline/ButtonReturn';
-
-import logoRu from '../../img/name_logo.svg';
-import logoEn from '../../img/name_logo_eng.svg';
-
-@inject('store')
-@observer
-class FatButton extends React.Component {
-  get classes() {
-    let classes = [];
-    if (this.props.name === this.props.store.flags.flags.runtime.SidePanelTab) {
-      classes.push('active');
-    }
-    if (this.props.disabled === true) {
-      classes.push('disabled');
-    }
-    return classes.join(' ');
-  }
-
-  render() {
-    return (
-      <Tooltip placement='left' content={this.props.text}>
-        <button
-          onClick={() => this.props.cb()}
-          className={this.classes}
-          type='button'
-          // disabled={this.props.disabled}
-        >
-          <i className={`lnr ${this.props.icon}`} />
-        </button>
-      </Tooltip>
-    );
-  }
-}
+import VerticalLogo from '../../components/VerticalLogo/VerticalLogo';
+import FatButton from '../../components/FatButton/FatButton';
 
 @inject('store')
 @observer
-class VerticalLogo extends React.Component {
-  get logo() {
-    switch (this.props.store.i18n.lng) {
-      case 'ru':
-        return logoRu;
-      default:
-        return logoEn;
-    }
-  }
-
-  render() {
-    return (
-      <div className='vertical--logo'>
-        <img src={this.logo} alt='logo' />
-      </div>
-    );
-  }
-}
-
-
-FatButton.propTypes = {
-  text: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  cb: PropTypes.func.isRequired
-};
-
-@inject('store')
-@observer
-export default class CollapsedView extends React.Component {
+class CollapsedView extends React.Component {
   @computed get tooltips() {
     return this.props.store.i18n.tooltips;
+  }
+
+  @computed get lng() {
+    return this.props.store.i18n.lng;
   }
 
   @computed get alignPanel() {
@@ -163,8 +107,10 @@ export default class CollapsedView extends React.Component {
             />
           )
         }
-        <VerticalLogo />
+        <VerticalLogo lng={this.lng} />
       </div>
     );
   }
 }
+
+export default CollapsedView;

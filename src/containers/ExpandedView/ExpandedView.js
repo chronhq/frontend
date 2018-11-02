@@ -2,16 +2,16 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import Settings from '../Settings';
+import Settings from '../ExpandedViewModules/Settings';
 
-import LayerControl from './LayerControl';
-import Debug from './Debug';
+import LayerControl from '../ExpandedViewModules/LayerControl';
+import Debug from '../ExpandedViewModules/Debug';
 
 const Empty = () => ('');
 
 @inject('store')
 @observer
-export default class ExpandedView extends React.Component {
+class ExpandedView extends React.Component {
   @computed get alignPanel() {
     return this.props.store.flags.flags.runtime.alignPanel;
   }
@@ -54,3 +54,5 @@ export default class ExpandedView extends React.Component {
     );
   }
 }
+
+export default ExpandedView;

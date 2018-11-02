@@ -5,6 +5,7 @@ import renderer from 'react-test-renderer';
 
 import Tile from './Tile';
 
+// current
 const course = {
   url: {
     ru: 'урл',
@@ -18,6 +19,23 @@ const course = {
     ru: 'desc',
     en: 'desc'
   },
+};
+
+// proposed
+const data = {
+  ru: {
+    course: {
+      url: 'url',
+      name: 'name',
+      description: 'desc'
+    },
+    settings: {},
+  },
+  en: {
+    course: {},
+    settings: {},
+    intro: {}
+  }
 };
 
 const TestComponent = () => (

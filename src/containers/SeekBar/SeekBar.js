@@ -3,49 +3,12 @@ import { computed, observable } from 'mobx';
 import React from 'react';
 
 import { select, mouse } from 'd3-selection';
-import { axisBottom } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 
-class Axis extends React.Component {
-  componentDidMount() {
-    this.renderAxis();
-  }
+import Axis from '../../components/Axis/Axis';
+import Cursor from '../../components/Axis/AxisCircle';
 
-  componentDidUpdate() {
-    this.renderAxis();
-  }
-
-  renderAxis() {
-    const axis = axisBottom()
-      .scale(this.props.scale)
-      .tickPadding([6])
-      .tickSize(10)
-      .ticks(parseInt(this.props.width / 45, 10), 'f');
-    select(this.svgAxis).call(axis);
-  }
-
-  render() {
-    return (
-      <g
-        className="axisTime"
-        strokeWidth="1"
-        ref={(r) => { this.svgAxis = r; }}
-      />
-    );
-  }
-}
-
-
-const Cursor = ({ translate, active }) => (
-  <g>
-    <circle
-      cx='0'
-      r={active ? 7 : 5}
-      className={active ? 'inner-circle inner-circle--active' : 'inner-circle'}
-      transform={`translate(${translate}, 0)`}
-    />
-  </g>
-);
+import './SeekBar.less';
 
 @inject('store')
 @observer

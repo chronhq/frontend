@@ -37,7 +37,6 @@ export class GeoEvent extends React.Component {
 export class PersonFact extends React.Component {
   render() {
     const { person } = { ...this.props };
-    console.log('person,', person);
     return (
       <div key={person.key}>
         <p className='ballon-title'>

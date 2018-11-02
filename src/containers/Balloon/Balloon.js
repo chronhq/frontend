@@ -2,13 +2,13 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import { PersonFact, Invention, GeoEvent } from './Messages';
-import CountryHover from './CountryHover';
+import { PersonFact, Invention, GeoEvent } from '../../components/Messages/Messages';
+import CountryHover from '../../components/Messages/CountryHover';
 
 import './Balloon.less';
 @inject('store')
 @observer
-export default class Balloon extends React.Component {
+class Balloon extends React.Component {
   @computed get persons() {
     return this.props.store.data.Persons.data;
   }
@@ -103,3 +103,5 @@ export default class Balloon extends React.Component {
     );
   }
 }
+
+export default Balloon;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider, observer } from 'mobx-react';
-import { BrowserRouter as Router, hashHistory } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { YMInitializer } from 'react-yandex-metrika';
 
 import AppRouter from './routes';
@@ -19,7 +19,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={this.props.store}>
-        <Router history={hashHistory}>
+        <Router>
           <YMInitializer
             accounts={[50501221]}
             options={YM_CONFIG}

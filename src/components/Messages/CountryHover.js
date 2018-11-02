@@ -2,6 +2,8 @@ import React from 'react';
 import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
+// language, properties, type
+
 @inject('store')
 @observer
 export default class CountryHover extends React.Component {

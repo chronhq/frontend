@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import YearButton from './YearSelect-Type2';
 
-import svgIconMap from './LineIconSet.svg';
+import './TimeControls.less';
 
 const Play = () => (
   <svg width='32px' height='32px' viewBox='0 0 32 32'>
@@ -55,7 +55,7 @@ const Reset = () => (
 
 @inject('store')
 @observer
-class ControlButtons extends React.Component {
+class TimeControls extends React.Component {
   render() {
     return (
       <div className='timepanel__controls'>
@@ -80,4 +80,4 @@ class ControlButtons extends React.Component {
   }
 }
 
-export default ControlButtons;
+export default TimeControls;
