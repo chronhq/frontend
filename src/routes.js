@@ -6,7 +6,7 @@ import {
 import { observer, inject } from 'mobx-react';
 
 import ShowCourse from './ShowCourse';
-import CourseSelection from './containers/CourseSelection';
+import CourseSelection from './pages/CourseSelection';
 import NotFound from './components/ErrorPages/404';
 import BadGateway from './components/ErrorPages/502';
 import GatewayTimeout from './components/ErrorPages/504';

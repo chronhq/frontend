@@ -3,8 +3,8 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import Tile from '../../components/Tile/Tile';
+import SetLocalizationToggle from '../../components/SetLocalizationToggle';
 import './TilesScreen.less';
-import SetLocalizationToggle from './SetLocalizationToggle';
 
 @inject('store')
 @observer

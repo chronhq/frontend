@@ -1,13 +1,6 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
-import { action } from 'mobx';
-import { InputRadio } from '../../components/Input';
 
 class SetLocalizationToggle extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   toggleLanguage() {
     if (window.store.i18n.lng === 'ru') {
       window.store.i18n.lng = 'en';
@@ -19,7 +12,7 @@ class SetLocalizationToggle extends React.Component {
 
   render() {
     return (
-      <button className='decorless' onClick={() => this.toggleLanguage()}>
+      <button type='button' className='decorless' onClick={() => this.toggleLanguage()}>
         {
           (window.store.i18n.lng === 'en') ? 'Русский' : 'English'
         }
@@ -27,10 +20,5 @@ class SetLocalizationToggle extends React.Component {
     );
   }
 }
-
-
-// const SetLocalizationToggle = () => (
-//   <button />
-// );
 
 export default SetLocalizationToggle;

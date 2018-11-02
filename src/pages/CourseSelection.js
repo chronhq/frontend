@@ -3,9 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { when, toJS } from 'mobx';
 
-import TilesScreen from './TilesScreen';
-import checkCourses from './checkCourses';
-import { ymHit } from '../../metrikaHelper';
+import TilesScreen from '../templates/TilesScreen/TilesScreen';
+import checkCourses from '../components/checkCourses';
+import { ymHit } from '../metrikaHelper';
 
 @observer
 class CourseSelection extends React.Component {

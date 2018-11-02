@@ -6,7 +6,7 @@ import { when, toJS } from 'mobx';
 import { ymHit } from '../../metrikaHelper';
 import './LoadingScreen.less';
 
-import checkCourses from '../CourseSelection/checkCourses';
+import checkCourses from '../../components/checkCourses';
 import RotatingLogo from './RotatingLogo';
 
 @observer
