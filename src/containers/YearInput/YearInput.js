@@ -62,17 +62,17 @@ class YearInput extends React.Component {
     return false;
   }
 
-  getItems(start, end) {
-    const items = [];
-    const len = end - start + 1;
-    for (let i = start; i < start + len; i += 1) {
-      items.push(
-        <Picker.Item value={i} key={i} text={i}>
-          {i}
+  @computed get items() {
+    const { min: start, max: end } = this.props.store.year;
+    const len = end - start;
+    return new Array(len).fill(start).map((v, i) => {
+      const y = v + i;
+      return (
+        <Picker.Item value={y} key={y} text={y}>
+          {y}
         </Picker.Item>
       );
-    }
-    return items;
+    });
   }
 
   handleWheel(event) {
@@ -80,13 +80,13 @@ class YearInput extends React.Component {
 
     this.props.store.control.sync = false;
     if (event.deltaY > 1) {
-      // this.props.store.control.nowState += 1;
-      (this.props.store.control.nowState <= this.props.store.year.max - 1)
-        ? this.props.store.control.nowState += 1 : null;
+      if (this.props.store.control.nowState < this.props.store.year.max) {
+        this.props.store.control.nowState += 1;
+      }
     } else if (event.deltaY < 1) {
-      // this.props.store.control.nowState -= 1;
-      (this.props.store.control.nowState > this.props.store.year.min)
-        ? this.props.store.control.nowState -= 1 : null;
+      if (this.props.store.control.nowState > this.props.store.year.min) {
+        this.props.store.control.nowState -= 1;
+      }
     }
   }
 
@@ -119,7 +119,7 @@ class YearInput extends React.Component {
             defaultSelectedValue={this.props.store.control.now}
             onValueChange={v => this.onChange(v)}
           >
-            {this.getItems(this.props.store.year.min, this.props.store.year.max)}
+            {this.items}
           </Picker>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
