@@ -4,12 +4,12 @@ import DeckGL, {
   IconLayer,
   PathLayer,
 } from 'deck.gl';
-import { MapboxLayer } from '@deck.gl/mapbox';
+// import { MapboxLayer } from '@deck.gl/mapbox';
 import { StaticMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
-  computed, observable, toJS, action
+  computed, toJS, action
 } from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
@@ -23,18 +23,9 @@ import textures from './Textures';
 import TripsLayer from './trips-layer';
 import pinsLayer from './Layers/PinsLayer';
 
-
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlrbGVyZ20iLCJhIjoiY2pueWVqcGhzMDRnczNrbzI2NzIxMDAzMyJ9.gtQYtN2oRxlEF_s_PRhTOQ';
-
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
-  state = {
-    gl: null
-  }
-
-  @observable showCluster = true;
-
   componentDidMount() {
     window.addEventListener('resize', () => this.resize(), false);
     window.addEventListener('orientationchange', () => this.resize(), false);
@@ -42,13 +33,21 @@ class MapWrapper extends React.Component {
   }
 
   componentWillUnmount() {
+    this.onWebGLInitialized(null);
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
   }
 
-  _onWebGLInitialized(gl) {
-    // console.log('_onWebGLInitialized', gl);
-    this.setState({ gl });
+  @action onWebGLInitialized(gl) {
+    this.props.store.deck.gl = gl;
+  }
+
+  @computed get deck() {
+    return this.props.store.deck;
+  }
+
+  @computed get showCluster() {
+    return this.deck.showCluster;
   }
 
   @computed get terrain() {
@@ -96,18 +95,18 @@ class MapWrapper extends React.Component {
     return toponymsLayer(
       this.props.store.prepared.decor.toponyms,
       this.options.labels,
-      this.props.store.deck.rZoom
+      this.deck.rZoom
     );
   }
 
   @computed get size() {
     return this.showCluster
       ? 1
-      : Math.min(1.5 ** (this.props.store.deck.zoom - 10), 1);
+      : Math.min(1.5 ** (this.deck.zoom - 10), 1);
   }
 
   @computed get cityPoints() {
-    const z = this.props.store.deck.rZoom;
+    const z = this.deck.rZoom;
     return new IconLayer({
       id: 'city-points-layer',
       data: this.cities,
@@ -161,7 +160,7 @@ class MapWrapper extends React.Component {
   }
 
   render() {
-    const z = this.props.store.deck.rZoom;
+    const z = this.deck.rZoom;
     const updateTrigger = z * this.showCluster;
 
     const decorT = textures.decoration;
@@ -181,11 +180,11 @@ class MapWrapper extends React.Component {
         iconMapping: oceanT.map,
         getAngle: 0,
         sizeScale: 3,
-        getSize: d => (this.props.store.deck.zoom * d.size),
+        getSize: d => (this.deck.zoom * d.size),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
         getIcon: d => `ocean-${d.picId}`,
         updateTriggers: {
-          getSize: this.props.store.deck.zoom,
+          getSize: this.deck.zoom,
         },
         onClick: d => console.log('ocean:', d)
       }),
@@ -198,12 +197,12 @@ class MapWrapper extends React.Component {
         iconMapping: decorT.map,
         getAngle: d => d.transform.rotate,
         sizeScale: 3,
-        getSize: d => (this.props.store.deck.zoom * d.transform.scale),
+        getSize: d => (this.deck.zoom * d.transform.scale),
         getPosition: d => [d.geopoint[0], d.geopoint[1]],
         getIcon: d => `decoration-${d.picId}`,
         getColor: () => [66, 66, 66],
         updateTriggers: {
-          getSize: this.props.store.deck.zoom,
+          getSize: this.deck.zoom,
         },
         onClick: d => console.log('decor:', d)
       }),
@@ -251,33 +250,24 @@ class MapWrapper extends React.Component {
           getSize: updateTrigger,
         },
       }),
-      // new LineLayer({
-      //   id: 'debug-line-layer',
-      //   data: debugData,
-      //   pickable: false,
-      //   getStrokeWidth: 20,
-      //   getSourcePosition: d => d.from.coordinates,
-      //   getTargetPosition: d => d.to.coordinates,
-      //   getColor: () => [0, 0, 140]
-      // })
     ];
     return (
       <DeckGL
-        views={this.props.store.deck.view}
-        viewState={this.props.store.deck.viewState}
-        onViewStateChange={v => this.props.store.deck.updateViewState(v.viewState)}
+        views={this.deck.view}
+        viewState={this.deck.viewState}
+        onViewStateChange={v => this.deck.updateViewState(v.viewState)}
         style={{ zIndex: 1 }}
         layers={layers}
-        onWebGLInitialized={g => this._onWebGLInitialized(g)}
+        onWebGLInitialized={gl => this.onWebGLInitialized(gl)}
       >
-        {this.state.gl && (
+        {this.deck.gl && (
           <StaticMap
-            ref={(ref) => {
-              this._map = ref && ref.getMap();
-            }}
-            gl={this.state.gl}
-            mapStyle="mapbox://styles/miklergm/cjnz3lyi26zu32sofcdrnxfnv"
-            mapboxApiAccessToken={MAPBOX_TOKEN}
+            // ref={(ref) => {
+            //   this.map = ref && ref.getMap();
+            // }}
+            gl={this.deck.gl}
+            mapStyle={this.deck.mapBox.style}
+            mapboxApiAccessToken={this.deck.mapBox.token}
           />
         )}
       </DeckGL>
