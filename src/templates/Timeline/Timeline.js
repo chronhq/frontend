@@ -11,8 +11,9 @@ import './Timeline.less';
 @observer
 class Timeline extends React.Component {
   componentDidMount() {
-    this.props.store.flags.flags.runtime.animation
-      && this.props.store.animation.startAnimation();
+    if (this.props.store.flags.flags.runtime.animation) {
+      this.props.store.animation.startAnimation();
+    }
   }
 
   componentWillUnmount() {

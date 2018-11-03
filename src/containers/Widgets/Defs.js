@@ -1,10 +1,10 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { PatternsDefs, MapPicsDefs } from '../../components/SVGPatternsDefs';
+import { MapPicsDefs } from '../../components/SVGPatternsDefs';
 
 @inject('store')
 @observer
-export default class Defs extends React.Component {
+class Defs extends React.Component {
   render() {
     return (
       <defs>
@@ -13,3 +13,5 @@ export default class Defs extends React.Component {
     );
   }
 }
+
+export default Defs;

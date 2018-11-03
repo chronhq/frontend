@@ -4,7 +4,7 @@ import { computed } from 'mobx';
 
 @inject('store')
 @observer
-export class GeoEvent extends React.Component {
+class GeoEvent extends React.Component {
   @computed get title() {
     switch (this.props.store.i18n.lng) {
       case 'ru':
@@ -34,7 +34,7 @@ export class GeoEvent extends React.Component {
 
 @inject('store')
 @observer
-export class PersonFact extends React.Component {
+class PersonFact extends React.Component {
   render() {
     const { person } = { ...this.props };
     return (
@@ -60,7 +60,7 @@ export class PersonFact extends React.Component {
 
 @inject('store')
 @observer
-export class Invention extends React.Component {
+class Invention extends React.Component {
   @computed get title() {
     switch (this.props.store.i18n.lng) {
       case 'ru':
@@ -95,3 +95,9 @@ export class Invention extends React.Component {
     );
   }
 }
+
+export {
+  Invention,
+  PersonFact,
+  GeoEvent
+};

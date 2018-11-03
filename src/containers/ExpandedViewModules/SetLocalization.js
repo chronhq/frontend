@@ -1,6 +1,6 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
-import { action } from 'mobx';
+// import { inject, observer } from 'mobx-react';
+// import { action } from 'mobx';
 import ym from 'react-yandex-metrika';
 import { InputRadio } from '../../components/Input';
 

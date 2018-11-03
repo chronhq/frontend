@@ -8,7 +8,7 @@ import Defs from './Defs';
 
 @inject('store')
 @observer
-export default class Widgets extends React.Component {
+class Widgets extends React.Component {
   render() {
     const freePinsEnabled = !this.props.store.projection.clipEnabled;
     const showWidgets = this.props.store.deck.width > 600;
@@ -31,3 +31,5 @@ export default class Widgets extends React.Component {
     );
   }
 }
+
+export default Widgets;

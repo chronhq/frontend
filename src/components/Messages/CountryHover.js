@@ -6,7 +6,7 @@ import { observer, inject } from 'mobx-react';
 
 @inject('store')
 @observer
-export default class CountryHover extends React.Component {
+class CountryHover extends React.Component {
   @computed get lng() {
     return this.props.store.i18n.lng;
   }
@@ -99,3 +99,5 @@ export default class CountryHover extends React.Component {
     );
   }
 }
+
+export default CountryHover;

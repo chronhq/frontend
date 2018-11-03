@@ -2,10 +2,9 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
 
-
 @inject('store')
 @observer
-export default class ScaleWidget extends React.Component {
+class ScaleWidget extends React.Component {
   @observable milesInKm = 0.621371;
 
   @computed get scaleRaw() {
@@ -43,3 +42,5 @@ export default class ScaleWidget extends React.Component {
     );
   }
 }
+
+export default ScaleWidget;

@@ -4,7 +4,7 @@ import { computed } from 'mobx';
 
 @inject('store')
 @observer
-export default class FreePinsWidget extends React.Component {
+class FreePinsWidget extends React.Component {
   rowCapasity = 8;
 
   xShift = 20;
@@ -50,3 +50,5 @@ export default class FreePinsWidget extends React.Component {
       </g>);
   }
 }
+
+export default FreePinsWidget;
