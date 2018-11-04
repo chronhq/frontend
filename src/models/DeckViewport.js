@@ -52,6 +52,12 @@ export default class DeckViewportModel {
     });
   }
 
+  @computed get sizeScale() {
+    return this.showCluster
+      ? 1 * window.devicePixelRatio
+      : Math.min(1.5 ** (this.zoom - 10), 1) * window.devicePixelRatio;
+  }
+
   @computed get clipEnabled() {
     return this.rootStore.projection.clipEnabled === true;
   }

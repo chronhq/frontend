@@ -1,26 +1,21 @@
 import React from 'react';
-import DeckGL, {
-  TextLayer,
-  IconLayer,
-  PathLayer,
-} from 'deck.gl';
-// import { MapboxLayer } from '@deck.gl/mapbox';
+import DeckGL from 'deck.gl';
+
 import { StaticMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
-  computed, toJS, action
+  computed, action
 } from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
 import contourLayer from './Layers/ContourLayer';
 import toponymsLayer from './Layers/ToponymsLayer';
-
-import chars from './Layers/VisibleCharacters';
-
-import textures from './Textures';
-
-import TripsLayer from './trips-layer';
+import cityPointsLayer from './Layers/CityPointsLayer';
+import cityTextLayer from './Layers/CityTextLayer';
+import oceanDecorationLayer from './Layers/OceanDecorationLayer';
+import mapDecorationsLayer from './Layers/MapDecorationsLayer';
+import expeditionsLayer from './Layers/ExpeditionsLayer';
 import pinsLayer from './Layers/PinsLayer';
 
 @inject('store')
@@ -46,10 +41,6 @@ class MapWrapper extends React.Component {
     return this.props.store.deck;
   }
 
-  @computed get showCluster() {
-    return this.deck.showCluster;
-  }
-
   @computed get terrain() {
     const terrain = Object.values(this.props.store.borders.contour);
     return contourLayer(terrain);
@@ -59,27 +50,7 @@ class MapWrapper extends React.Component {
     return this.props.store.flags.flags.layer;
   }
 
-  @computed get decorations() {
-    return this.props.store.prepared.decor.decorations;
-  }
-
-  @computed get oceans() {
-    return this.props.store.prepared.decor.oceans;
-  }
-
-  @computed get cities() {
-    return this.props.store.prepared.clusteredLocations;
-  }
-
-  @computed get traces() {
-    return this.props.store.prepared.expeditions;
-  }
-
   @computed get borders() {
-    // const properties = this.props.store.data.Properties.data;
-
-    // const colors = this.props.store.data.MapColors.data;
-
     const data = this.props.store.borders.features;
     const visible = this.options.borders;
     const hoverCb = (d) => {
@@ -99,60 +70,75 @@ class MapWrapper extends React.Component {
     );
   }
 
-  @computed get size() {
-    return this.showCluster
-      ? 1
-      : Math.min(1.5 ** (this.deck.zoom - 10), 1);
+  @computed get cityPoints() {
+    return cityPointsLayer(
+      this.props.store.prepared.clusteredLocations,
+      this.deck
+    );
   }
 
-  @computed get cityPoints() {
-    const z = this.deck.rZoom;
-    return new IconLayer({
-      id: 'city-points-layer',
-      data: this.cities,
-      // visible: this.options.cities,
-      visible: true,
-      pickable: true,
-      iconAtlas: textures.cities.img,
-      iconMapping: textures.cities.map,
-      // sizeScale: ICON_SIZE * size * window.devicePixelRatio,
-      sizeScale: this.size * window.devicePixelRatio,
-      getPosition: d => [d.x, d.y],
-      getIcon: (d) => {
-        if (d.zoomLevels[z] !== null) {
-          return d.zoomLevels[z].icon;
-        }
-        return null;
-      },
-      getSize: d => (this.showCluster ? d.zoomLevels[z] && d.zoomLevels[z].size : 1),
-      updateTriggers: {
-        getIcon: z,
-        getSize: z
-      },
-      onClick: d => console.log('info:', d)
-    });
+  @computed get cityText() {
+    return cityTextLayer(
+      this.props.store.prepared.clusteredLocations,
+      this.deck
+    );
+  }
+
+  @computed get oceanDecorations() {
+    return oceanDecorationLayer(
+      this.props.store.prepared.decor.oceans,
+      this.options.mapDecorations,
+      this.deck
+    );
+  }
+
+  @computed get mapDecorations() {
+    return mapDecorationsLayer(
+      this.props.store.prepared.decor.decorations,
+      this.options.mapDecorations,
+      this.deck
+    );
+  }
+
+  @computed get expeditions() {
+    return expeditionsLayer(
+      this.props.store.prepared.expeditions,
+      this.options.traces,
+      this.props.store.flags.flags.runtime.animation,
+      this.props.store.animation.time
+    );
   }
 
   @computed get feedPins() {
-    const pinsT = textures.pin;
     const { pins } = this.props.store.pins;
-    const id = 'map-pins-layer';
-    const cid = 'course-pins-layer';
-    const { zoom } = { ...this.props.store.deck };
+    const { zoom } = this.deck;
     const coursePins = this.props.store.prepared.data.courseGeoPoints.current;
 
-    const onHover = (d) => {
-      // if image contains transparent parts disable drawing tooltip
-      const key = d.color === null ? null : d.object.key;
-      this.props.store.pins.setActive(key, false);
-      this.props.store.pins.setPosition(d.x, d.y);
-    };
-    return Object.keys(pinsT.map).length > 0
-      ? [
-        pinsLayer(pinsT.img, pinsT.map, pins, id, zoom, true, onHover),
-        pinsLayer(pinsT.img, pinsT.map, coursePins, cid, zoom, false),
-      ] : [];
+    return [
+      pinsLayer(pins, 'map', zoom, true, this.onMapPinHover),
+      pinsLayer(coursePins, 'course', zoom, false),
+    ];
   }
+
+  @computed get layers() {
+    return [
+      this.borders,
+      ...this.toponyms,
+      this.cityPoints,
+      this.oceanDecorations,
+      this.mapDecorations,
+      this.expeditions,
+      ...this.feedPins,
+      this.cityText,
+    ];
+  }
+
+  onMapPinHover = (d) => {
+    // if image contains transparent parts disable drawing tooltip
+    const key = d.color === null ? null : d.object.key;
+    this.props.store.pins.setActive(key, false);
+    this.props.store.pins.setPosition(d.x, d.y);
+  };
 
   @action resize() {
     this.props.store.deck.width = window.innerWidth;
@@ -160,104 +146,13 @@ class MapWrapper extends React.Component {
   }
 
   render() {
-    const z = this.deck.rZoom;
-    const updateTrigger = z * this.showCluster;
-
-    const decorT = textures.decoration;
-    const oceanT = textures.ocean;
-
-    const layers = [
-      // this.terrain,
-      this.borders,
-      ...this.toponyms,
-      this.cityPoints,
-      new IconLayer({
-        id: 'map-oceans-layer',
-        data: this.oceans,
-        visible: this.options.mapDecorations,
-        pickable: true,
-        iconAtlas: oceanT.img,
-        iconMapping: oceanT.map,
-        getAngle: 0,
-        sizeScale: 3,
-        getSize: d => (this.deck.zoom * d.size),
-        getPosition: d => [d.geopoint[0], d.geopoint[1]],
-        getIcon: d => `ocean-${d.picId}`,
-        updateTriggers: {
-          getSize: this.deck.zoom,
-        },
-        onClick: d => console.log('ocean:', d)
-      }),
-      new IconLayer({
-        id: 'map-decoration-layer',
-        data: this.decorations,
-        visible: this.options.mapDecorations,
-        pickable: true,
-        iconAtlas: decorT.img,
-        iconMapping: decorT.map,
-        getAngle: d => d.transform.rotate,
-        sizeScale: 3,
-        getSize: d => (this.deck.zoom * d.transform.scale),
-        getPosition: d => [d.geopoint[0], d.geopoint[1]],
-        getIcon: d => `decoration-${d.picId}`,
-        getColor: () => [66, 66, 66],
-        updateTriggers: {
-          getSize: this.deck.zoom,
-        },
-        onClick: d => console.log('decor:', d)
-      }),
-      new PathLayer({
-        id: 'static-traces-layer',
-        data: this.traces,
-        visible: this.options.traces && !this.props.store.flags.flags.runtime.animation,
-        getPath: d => toJS(d.data.path[0].path),
-        getColor: () => [65, 140, 171],
-        getWidth: () => 5,
-        rounded: true,
-        widthScale: 3,
-        widthMinPixels: 2,
-        getDashArray: () => [10, 10],
-        // onClick: d => console.log(d.data.id),
-      }),
-      ...this.feedPins,
-      new TripsLayer({
-        id: 'animated-trace-layer',
-        data: this.traces,
-        visible: this.options.traces && this.props.store.flags.flags.runtime.animation,
-        getPath: d => toJS(d.timedTraces),
-        getColor: () => [65, 140, 171],
-        opacity: 1,
-        strokeWidth: 10,
-        trailLength: 180,
-        currentTime: this.props.store.animation.time
-      }),
-      new TextLayer({
-        id: 'cities-layer',
-        data: this.cities,
-        pickable: true,
-        visible: this.options.cities,
-        getText: d => (d.zoomLevels[z] ? d.name : ''),
-        getPosition: d => [d.x, d.y],
-        getPixelOffset: [0, 10],
-        getSize: d => (40 - (1.5 * d.scaleRank)),
-        sizeScale: 0.5,
-        getTextAnchor: 'middle',
-        fontFamily: 'OpenSans-Light',
-        characterSet: chars,
-        getAlignmentBaseline: 'top',
-        updateTriggers: {
-          getText: updateTrigger,
-          getSize: updateTrigger,
-        },
-      }),
-    ];
     return (
       <DeckGL
         views={this.deck.view}
         viewState={this.deck.viewState}
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
         style={{ zIndex: 1 }}
-        layers={layers}
+        layers={this.layers}
         onWebGLInitialized={gl => this.onWebGLInitialized(gl)}
       >
         {this.deck.gl && (

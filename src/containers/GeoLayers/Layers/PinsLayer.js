@@ -1,16 +1,18 @@
 import { IconLayer } from 'deck.gl';
+import Textures from '../Textures';
 
 function pinsLayer(
-  pinsAtlas, pinsMapping, pins, id, zoom, pickable, onHover = () => ''
+  pins, name, zoom, pickable, onHover = () => ''
 ) {
+  const id = `${name}-pins-layer`;
   return new IconLayer({
     id,
     data: pins,
     // visible: this.options.mapDecorations,
     pickable,
     getAngle: 135,
-    iconAtlas: pinsAtlas,
-    iconMapping: pinsMapping,
+    iconAtlas: Textures.pin.img,
+    iconMapping: Textures.pin.map,
     sizeScale: 3,
     getSize: () => (zoom * 10),
     getPosition: d => [d.point.x, d.point.y],
