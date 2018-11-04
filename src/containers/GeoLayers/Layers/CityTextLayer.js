@@ -1,13 +1,13 @@
 import { TextLayer } from 'deck.gl';
 import chars from './VisibleCharacters';
 
-function cityTextLayer(cities, deck) {
+function cityTextLayer(cities, visible, deck) {
   const { rZoom: z } = deck;
   return new TextLayer({
     id: 'cities-layer',
     data: cities,
     pickable: true,
-    visible: true,
+    visible,
     getText: d => (d.zoomLevels[z] ? d.name : ''),
     getPosition: d => [d.x, d.y],
     getPixelOffset: [0, 10],

@@ -1,12 +1,12 @@
 import { IconLayer } from 'deck.gl';
 import Textures from '../Textures';
 
-function cityPointsLayer(cities, deck) {
+function cityPointsLayer(cities, visible, deck) {
   const { showCluster, sizeScale, rZoom: z } = deck;
   return new IconLayer({
     id: 'city-points-layer',
     data: cities,
-    visible: true,
+    visible,
     pickable: true,
     iconAtlas: Textures.cities.img,
     iconMapping: Textures.cities.map,

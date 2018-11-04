@@ -53,13 +53,7 @@ class MapWrapper extends React.Component {
   @computed get borders() {
     const data = this.props.store.borders.features;
     const visible = this.options.borders;
-    const hoverCb = (d) => {
-      // if image contains transparent parts disable drawing tooltip
-      const key = d.color === null ? null : d.object.props;
-      this.props.store.pins.setCountryActive(key);
-      this.props.store.pins.setPosition(d.x, d.y);
-    };
-    return bordersLayer(data, visible, hoverCb);
+    return bordersLayer(data, visible, this.onBorderHoverCb);
   }
 
   @computed get toponyms() {
@@ -73,6 +67,7 @@ class MapWrapper extends React.Component {
   @computed get cityPoints() {
     return cityPointsLayer(
       this.props.store.prepared.clusteredLocations,
+      this.options.cities,
       this.deck
     );
   }
@@ -80,6 +75,7 @@ class MapWrapper extends React.Component {
   @computed get cityText() {
     return cityTextLayer(
       this.props.store.prepared.clusteredLocations,
+      this.options.cities,
       this.deck
     );
   }
@@ -132,6 +128,13 @@ class MapWrapper extends React.Component {
       this.cityText,
     ];
   }
+
+  onBorderHoverCb = (d) => {
+    // if image contains transparent parts disable drawing tooltip
+    const key = d.color === null ? null : d.object.props;
+    this.props.store.pins.setCountryActive(key);
+    this.props.store.pins.setPosition(d.x, d.y);
+  };
 
   onMapPinHover = (d) => {
     // if image contains transparent parts disable drawing tooltip
