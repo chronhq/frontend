@@ -25,8 +25,6 @@ class GeometryModel {
 export default class BordersModel {
   @observable geo = {};
 
-  @observable contour = {};
-
   @observable saveDataCb = (type, json) => {
     json.map((cur) => {
       // data[cur.id] = new GeometryModel(cur);
@@ -40,12 +38,10 @@ export default class BordersModel {
     this.data = this.rootStore.data;
 
     this.data.Geometries.saveDataCb = json => this.saveDataCb('geo', json);
-    this.data.Contours.saveDataCb = json => this.saveDataCb('contour', json);
   }
 
   @action wipe() {
     this.geo = {};
-    this.contour = {};
   }
 
   @action loadGeometry() {

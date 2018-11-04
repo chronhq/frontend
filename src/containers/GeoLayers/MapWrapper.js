@@ -9,7 +9,6 @@ import {
 } from 'mobx';
 
 import bordersLayer from './Layers/BordersLayer';
-import contourLayer from './Layers/ContourLayer';
 import toponymsLayer from './Layers/ToponymsLayer';
 import cityPointsLayer from './Layers/CityPointsLayer';
 import cityTextLayer from './Layers/CityTextLayer';
@@ -39,11 +38,6 @@ class MapWrapper extends React.Component {
 
   @computed get deck() {
     return this.props.store.deck;
-  }
-
-  @computed get terrain() {
-    const terrain = Object.values(this.props.store.borders.contour);
-    return contourLayer(terrain);
   }
 
   @computed get options() {

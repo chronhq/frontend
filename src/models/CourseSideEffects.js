@@ -36,7 +36,6 @@ export default class CourseSideEffects {
     ],
     heavy: [
       'Borders',
-      'Contours',
       'Geometries',
     ]
   };
@@ -121,23 +120,11 @@ export default class CourseSideEffects {
 
   @action configureDataFilters() {
     this.rootStore.data.Borders.filter = this.courseFilter;
-    this.rootStore.data.Contours.filter = this.courseFilter;
     this.rootStore.data.CourseTimelines.filter = this.courseFilter;
   }
 
   @action loadBaseData() {
     this.rootStore.data.resolveDependencies(this.deps.base);
-  }
-
-  @action loadContourInfo() {
-    const contourFilter = {
-      fields: {
-        courseId: true,
-        id: true,
-        name: true,
-      }
-    };
-    this.rootStore.data.ContoursList.get(contourFilter);
   }
 
   @action loadCourseData() {
@@ -151,21 +138,6 @@ export default class CourseSideEffects {
       }
     };
     this.rootStore.data.Borders.get(bordersFilter);
-    const contourList = Object.values(this.rootStore.data.ContoursList.data);
-    if (contourList.length > 0) {
-    // Download each contour part in separate queries
-      contourList.filter(c => this.courseId === c.courseId)
-        .map((c) => {
-          this.rootStore.data.Contours.get({
-            where: {
-              or: [{ id: c.id }]
-            }
-          });
-          return '';
-        });
-    } else {
-      this.rootStore.data.Contours.get();
-    }
     // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
 

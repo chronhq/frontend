@@ -94,7 +94,6 @@ export default class DataModel {
     'CityLocs',
     'CityPops',
     'CityProperties',
-    'Contours',
     'Courses',
     'Geometries',
     'Inventions',
@@ -116,7 +115,6 @@ export default class DataModel {
       this[model] = new FileModel(model);
       return false;
     });
-    this.ContoursList = new FileModel('Contours');
   }
 
   @action resolveDependencies(depend) {
