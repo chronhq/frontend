@@ -19,13 +19,16 @@ class Property {
 
   @computed get color() {
     const colors = this.rootStore.data.MapColors.data;
+    // MapOpacity range from 0 to 255;
+    // 64 from 255 is 25% for opacity
+    const mapsOpacity = 64;
     try {
       const color = colors[this.data.color].color1;
-      return [color[0], color[1], color[2]];
+      return [color[0], color[1], color[2], mapsOpacity];
     } catch (e) {
       // console.error('ColorID', this.data.color, 'Props', this.data);
       // Probably colorID === -99 -- Disputed territory
-      return [127, 127, 127];
+      return [127, 127, 127, mapsOpacity];
     }
   }
 
