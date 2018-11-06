@@ -8,14 +8,16 @@ import {
   computed, action
 } from 'mobx';
 
-import bordersLayer from './Layers/BordersLayer';
-import toponymsLayer from './Layers/ToponymsLayer';
-import cityPointsLayer from './Layers/CityPointsLayer';
-import cityTextLayer from './Layers/CityTextLayer';
-import oceanDecorationLayer from './Layers/OceanDecorationLayer';
-import mapDecorationsLayer from './Layers/MapDecorationsLayer';
-import expeditionsLayer from './Layers/ExpeditionsLayer';
-import pinsLayer from './Layers/PinsLayer';
+import {
+  bordersLayer,
+  toponymsLayer,
+  cityPointsLayer,
+  cityTextLayer,
+  oceanDecorationLayer,
+  mapDecorationsLayer,
+  expeditionsLayer,
+  pinsLayer
+} from '../../components/Layers';
 
 @inject('store')
 @observer

@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { inject, observer } from 'mobx-react';
 import { Tooltip } from '../Input';
 
-@inject('store')
-@observer
 class FatButton extends React.Component {
   get classes() {
     const classes = [];

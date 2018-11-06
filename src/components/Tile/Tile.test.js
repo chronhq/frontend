@@ -21,23 +21,6 @@ const course = {
   },
 };
 
-// proposed
-const data = {
-  ru: {
-    course: {
-      url: 'url',
-      name: 'name',
-      description: 'desc'
-    },
-    settings: {},
-  },
-  en: {
-    course: {},
-    settings: {},
-    intro: {}
-  }
-};
-
 const TestComponent = () => (
   <Router>
     <Tile course={course} lng='ru' />

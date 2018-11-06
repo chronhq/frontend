@@ -20,6 +20,10 @@ class TimelineEvents extends React.Component {
     }
   }
 
+  @computed get tick() {
+    return this.props.store.year.tick;
+  }
+
   render() {
     return (
       <div
@@ -30,7 +34,9 @@ class TimelineEvents extends React.Component {
           event !== null && (
             <Event
               key={`events_${event}`}
-              eventId={event}
+              event={this.timeline[event]}
+              cb={v => this.props.store.year.setTick(v)} // event.tick in value
+              currentTick={this.tick}
             />
           )))}
       </div>

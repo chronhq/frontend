@@ -1,5 +1,5 @@
 import { IconLayer } from 'deck.gl';
-import Textures from '../Textures';
+import Textures from './Textures';
 
 function cityPointsLayer(cities, visible, deck) {
   const { showCluster, sizeScale, rZoom: z } = deck;
