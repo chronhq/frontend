@@ -6,12 +6,7 @@ import { computed } from 'mobx';
 @observer
 class GeoEvent extends React.Component {
   @computed get title() {
-    switch (this.props.store.i18n.lng) {
-      case 'ru':
-        return 'Справка';
-      default:
-        return 'Event';
-    }
+    return this.props.store.i18n.data.messages.GeoEventTitle;
   }
 
   render() {

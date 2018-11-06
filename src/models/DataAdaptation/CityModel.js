@@ -54,11 +54,11 @@ export default class CityModel {
       ...this.point,
     };
     try {
-      answer.name = this.currentLoc.props[this.nameSelector];
+      answer.name = this.currentLoc.props[this.rootStore.i18n.nameSelector];
       answer.scaleRank = this.currentLoc.props.scalerank;
     } catch (e) {
       console.error('City error', ...this.properties, this, { e });
-      answer.name = 'Undefined';
+      answer.name = this.rootStore.i18n.data.unknown.place;
       answer.scaleRank = '2';
     }
     return answer;
@@ -66,17 +66,6 @@ export default class CityModel {
 
   @computed get now() {
     return this.rootStore.year.now;
-  }
-
-  @computed get i18nDate() {
-    switch (this.rootStore.i18n.lng) {
-      case 'en': return 'Unknown';
-      default: return 'Неизвестно';
-    }
-  }
-
-  @computed get nameSelector() {
-    return this.rootStore.i18n.nameSelector;
   }
 
   @computed get propertiesRaw() {
@@ -87,7 +76,9 @@ export default class CityModel {
   @computed get properties() {
     return this.propertiesRaw.map(p => ({
       ...p,
-      date: p.year === null ? this.i18nDate : p.year,
+      date: p.year === null
+        ? this.rootStore.i18n.data.unknown.year
+        : p.year,
       year: p.year !== null
         ? Number(p.year.split('-').shift())
         : 0

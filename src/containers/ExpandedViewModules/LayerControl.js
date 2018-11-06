@@ -19,7 +19,7 @@ class LayerControl extends React.Component {
   }
 
   @computed get layerNames() {
-    return this.props.store.i18n.layerNames;
+    return this.props.store.i18n.data.layerNames;
   }
 
   @action handleLayers(data) {
@@ -48,7 +48,7 @@ class LayerControl extends React.Component {
     return (
       <div className='sidepanel--content'>
         <h3>
-          {this.props.store.i18n.tooltips.layers}
+          {this.props.store.i18n.data.tooltips.layers}
         </h3>
         <div className='layerControl'>
           {/*

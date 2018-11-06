@@ -13,13 +13,6 @@ class TilesScreen extends React.Component {
     return this.props.store.i18n.lng;
   }
 
-  @computed get title() {
-    switch (this.lng) {
-      case 'en': return 'Choose type';
-      default: return 'Выберите режим';
-    }
-  }
-
   render() {
     const { courses } = this.props;
     return (
@@ -30,7 +23,7 @@ class TilesScreen extends React.Component {
         <div className='starpage__title'>
           <h3>
             {' '}
-            {this.title}
+            {this.props.store.i18n.data.courseSelection.title}
             {' '}
           </h3>
         </div>

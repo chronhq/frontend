@@ -15,7 +15,7 @@ class ButtonReturn extends React.Component {
 
   render() {
     return (
-      <Tooltip content={this.props.store.i18n.tooltips.back} placement='left'>
+      <Tooltip content={this.props.store.i18n.data.tooltips.back} placement='left'>
         <button onClick={() => this.handleClick()} type='button'>
           <span className='lnr lnr-home' />
         </button>

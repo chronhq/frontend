@@ -19,44 +19,18 @@ export default class MessagesI18n extends BaseI18n {
     };
   }
 
-  welcomePerson(person) {
-    const name = person[this.nameSelector];
-    switch (this.lng) {
-      case 'en': return `${name}`;
-      default: return `${name}`;
-    }
-  }
-
-  farewellPerson(person) {
-    const name = person[this.nameSelector];
-    switch (this.lng) {
-      case 'en': return `${name}`;
-      default: return `${name}`;
-    }
-  }
-
   person(person, type) {
-    let occasion;
+    const occasion = person[this.nameSelector];
     let location;
     let title;
     if (type === 'birth') {
-      occasion = this.welcomePerson(person);
       location = this.cities[person.birthPlace]
         ? this.cities[person.birthPlace].location.name : '';
-      switch (this.lng) {
-        case 'en': title = 'Born';
-          break;
-        default: title = 'Рождение';
-      }
+      title = this.data.messages.personBirth;
     } else {
-      occasion = this.welcomePerson(person);
       location = this.cities[person.deathPlace]
         ? this.cities[person.deathPlace].location.name : '';
-      switch (this.lng) {
-        case 'en': title = 'Passed';
-          break;
-        default: title = 'Смерть';
-      }
+      title = this.data.messages.personDeath;
     }
 
     return {
@@ -64,8 +38,8 @@ export default class MessagesI18n extends BaseI18n {
       key: `person_${type}_${person.id}`,
       title,
       occasion,
-      birthDate: person.birthDate ? person.birthDate : '????',
-      deathDate: person.deathDate ? person.deathDate : '????',
+      birthDate: person.birthDate ? person.birthDate : this.data.unknown.year,
+      deathDate: person.deathDate ? person.deathDate : this.data.unknown.year,
       location
     };
   }

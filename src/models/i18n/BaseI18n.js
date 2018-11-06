@@ -9,6 +9,10 @@ export default class BaseI18N {
     return this.rootStore.i18n.lng;
   }
 
+  @computed get data() {
+    return this.rootStore.i18n.data;
+  }
+
   @computed get nameSelector() {
     return this.rootStore.i18n.nameSelector;
   }

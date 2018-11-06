@@ -9,7 +9,7 @@ import { Tooltip } from '../Input';
 @observer
 class ButtonMenu extends React.Component {
   @computed get tooltips() {
-    return this.props.store.i18n.tooltips;
+    return this.props.store.i18n.data.tooltips;
   }
 
   @computed get tip() {

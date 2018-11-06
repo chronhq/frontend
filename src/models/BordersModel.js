@@ -127,9 +127,8 @@ export default class BordersModel {
   }
 
   @computed get loadingStatus() {
-    switch (this.rootStore.i18n.lng) {
-      case 'en': return this.ready ? 'Loading complete' : 'Loading...';
-      default: return this.ready ? 'Карты загружены' : 'Загружаем карты';
-    }
+    return this.ready
+      ? this.rootStore.i18n.data.loadingWidget.loaded
+      : this.rootStore.i18n.data.loadingWidget.loading;
   }
 }

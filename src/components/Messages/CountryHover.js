@@ -11,43 +11,24 @@ class CountryHover extends React.Component {
     return this.props.store.i18n.lng;
   }
 
+  @computed get selectors() {
+    return this.props.store.i18n.data.selectors;
+  }
+
   @computed get properties() {
     return this.props.store.data.Properties.data[this.props.id];
   }
 
   @computed get name() {
-    switch (this.lng) {
-      case 'ru': {
-        return this.properties.nameru;
-      }
-      default: {
-        return this.properties.name;
-      }
-    }
+    return this.properties[this.selectors.properties];
   }
 
   @computed get admin() {
-    const admin = this.props.store.data.Admins.data[this.properties.admin];
-    switch (this.lng) {
-      case 'ru': {
-        return admin.ru;
-      }
-      default: {
-        return admin.en;
-      }
-    }
+    return this.props.store.data.Admins.data[this.properties.admin][this.lng];
   }
 
   @computed get type() {
-    const type = this.props.store.data.Types.data[this.properties.type];
-    switch (this.lng) {
-      case 'ru': {
-        return type.ru;
-      }
-      default: {
-        return type.en;
-      }
-    }
+    return this.props.store.data.Types.data[this.properties.type][this.lng];
   }
 
   @computed get short() {

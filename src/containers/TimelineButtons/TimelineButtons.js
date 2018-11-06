@@ -11,7 +11,7 @@ import './TimelineButtons.less';
 @observer
 class TimelineButtons extends React.Component {
   @computed get tooltips() {
-    return this.props.store.i18n.tooltips;
+    return this.props.store.i18n.data.tooltips;
   }
 
   @computed get isMin() {
@@ -44,7 +44,7 @@ class TimelineButtons extends React.Component {
       <div className='timeline__control control__home'>
         {this.isMin ? null : (
           <FatButton
-            text={this.props.store.i18n.tooltips.back}
+            text={this.tooltips.back}
             icon='lnr-home'
             cb={() => this.handleReturn()}
             name='home'
@@ -53,7 +53,7 @@ class TimelineButtons extends React.Component {
         )}
         {this.isMin ? null : (
           <FatButton
-            text={this.props.store.i18n.tooltips.back}
+            text={this.tooltips.back}
             icon='lnr-user'
             cb={() => this.bioToggle()}
             name='bio'

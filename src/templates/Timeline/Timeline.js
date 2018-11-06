@@ -28,7 +28,7 @@ class Timeline extends React.Component {
 
 
   @computed get tooltips() {
-    return this.props.store.i18n.tooltips;
+    return this.props.store.i18n.data.tooltips;
   }
 
   handlePress(event) {

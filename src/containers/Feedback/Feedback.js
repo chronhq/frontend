@@ -19,6 +19,10 @@ class FeedbackForm extends React.Component {
     return this.props.store.feedback;
   }
 
+  @computed get i18n() {
+    return this.props.store.i18n.data.feedback;
+  }
+
   @computed get infoBlockStyle() {
     return this.props.store.feedback.visible === true
       ? { display: 'block', textAlign: 'right' }
@@ -27,8 +31,8 @@ class FeedbackForm extends React.Component {
 
   @computed get infoMessage() {
     return this.props.store.feedback.success === true
-      ? this.props.store.i18n.feedback.success
-      : this.props.store.i18n.feedback.error;
+      ? this.i18n.success
+      : this.i18n.error;
   }
 
   @action closeFeedback() {
@@ -57,15 +61,15 @@ class FeedbackForm extends React.Component {
             <TextInput
               value={this.feedback.title}
               name='title'
-              placeholder={this.props.store.i18n.feedback.name}
-              invalid={this.props.store.i18n.feedback.textInvalid}
+              placeholder={this.i18n.name}
+              invalid={this.i18n.textInvalid}
               cb={e => this.handleData(e)}
             />
             <MailInput
               value={this.feedback.email}
               name='email'
-              placeholder={this.props.store.i18n.feedback.email}
-              invalid={this.props.store.i18n.feedback.emailInvalid}
+              placeholder={this.i18n.email}
+              invalid={this.i18n.emailInvalid}
               cb={e => this.handleData(e)}
             />
 
@@ -75,7 +79,7 @@ class FeedbackForm extends React.Component {
               min={this.props.store.year.min}
               max={this.props.store.year.max}
               value={this.feedback.year}
-              placeholder={this.props.store.i18n.feedback.year}
+              placeholder={this.i18n.year}
               cb={(value) => {
                 this.feedback.year = value;
                 return false;
@@ -83,7 +87,7 @@ class FeedbackForm extends React.Component {
             />
             <InputSelect
               value={this.feedback.layer}
-              placeholder={this.props.store.i18n.feedback.layer}
+              placeholder={this.i18n.layer}
               options={this.props.store.i18n.layerNames}
               cb={(value) => {
                 console.log('cb value', value);
@@ -96,8 +100,8 @@ class FeedbackForm extends React.Component {
           <TextareaInput
             value={this.feedback.text}
             name='text'
-            placeholder={this.props.store.i18n.feedback.desc}
-            invalid={this.props.store.i18n.feedback.textareaInvalid}
+            placeholder={this.i18n.desc}
+            invalid={this.i18n.textareaInvalid}
             cb={e => this.handleData(e)}
           />
           <div style={{
@@ -112,11 +116,11 @@ class FeedbackForm extends React.Component {
                 cb={e => this.handleData(e)}
               />
               <p style={{ display: 'inline-block' }}>
-                {this.props.store.i18n.feedback.ToS}
+                {this.i18n.ToS}
                 {' '}
                 {' '}
                 <a className='decorless' href='https://chronist.ru/privacy'>
-                  {this.props.store.i18n.feedback.ToSlink}
+                  {this.i18n.ToSlink}
                 </a>
               </p>
             </div>
@@ -125,7 +129,7 @@ class FeedbackForm extends React.Component {
               disable={this.feedback.validation ? undefined : 'disabled'}
               className={this.feedback.validation ? '' : 'disabeld'}
             >
-              {this.props.store.i18n.feedback.button}
+              {this.i18n.button}
             </button>
           </div>
           <div
@@ -159,11 +163,11 @@ class Feedback extends React.Component {
     return (
       <div className='mistake-report layer-3'>
         <h2>
-          {this.props.store.i18n.feedback.title}
+          {this.i18n.title}
         </h2>
         <FeedbackForm />
         <p>
-          {this.props.store.i18n.feedback.subtitle}
+          {this.i18n.subtitle}
         </p>
         <button onClick={() => this.closeFeedback()} className='close-window' type='button'>
           <span className="lnr lnr-cross" />

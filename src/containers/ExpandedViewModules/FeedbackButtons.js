@@ -16,7 +16,7 @@ class FeedbackButtons extends React.Component {
     return (
       <div className='export-buttons'>
         <button type="button" onClick={() => this.openFeedback()}>
-          {this.props.store.i18n.buttons.mistake}
+          {this.props.store.i18n.data.buttons.mistake}
         </button>
         <a
           href='https://chronist.ru/faq'
@@ -25,7 +25,7 @@ class FeedbackButtons extends React.Component {
           rel='noopener noreferrer'
         >
           <button type="button">
-            {this.props.store.i18n.buttons.faq}
+            {this.props.store.i18n.data.buttons.faq}
           </button>
         </a>
       </div>
