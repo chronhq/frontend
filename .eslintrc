@@ -3,7 +3,8 @@
 "extends": "eslint-config-airbnb",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "rules": {
     "react/destructuring-assignment": "off",
@@ -23,7 +24,7 @@
     "no-param-reassign": "warn"
   },
   "plugins": [
-    "react", "import"
+    "react", "import", "jest"
   ],
     "settings": {
     "import/parser": "babel-eslint",
