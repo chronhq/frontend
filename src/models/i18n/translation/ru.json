@@ -8,6 +8,10 @@
   "courseSelection": {
     "title": "Выберите режим"
   },
+  "settings": {
+    "title": "Настройки",
+    "language": "Язык"
+  },
   "buttons": {
     "apply": "Применить",
     "close": "Закрыть",
@@ -21,7 +25,6 @@
   },
   "tooltips": {
     "back": "Вернутся в основное меню",
-    "intro": "Интро",
     "search": "Поиск",
     "feed": "Лента событий",
     "settings": "Настройки",

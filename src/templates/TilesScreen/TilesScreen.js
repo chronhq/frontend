@@ -18,7 +18,7 @@ class TilesScreen extends React.Component {
     return (
       <div className='startpage__container parent'>
         <div className='startpage__langswitch'>
-          <SetLocalizationToggle />
+          <SetLocalizationToggle i18n={this.props.store.i18n} />
         </div>
         <div className='starpage__title'>
           <h3>

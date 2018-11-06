@@ -1,21 +1,26 @@
 import React from 'react';
 
 class SetLocalizationToggle extends React.Component {
-  toggleLanguage() {
-    if (window.store.i18n.lng === 'ru') {
-      window.store.i18n.lng = 'en';
-    } else {
-      window.store.i18n.lng = 'ru';
-    }
-    this.forceUpdate();
+  get next() {
+    return (this.props.i18n.lng === 'en')
+      ? {
+        key: 'ru',
+        text: this.props.i18n.languages.ru,
+      }
+      : {
+        key: 'en',
+        text: this.props.i18n.languages.en,
+      };
+  }
+
+  toggleLanguage = () => {
+    this.props.i18n.select(this.next.key);
   }
 
   render() {
     return (
-      <button type='button' className='decorless' onClick={() => this.toggleLanguage()}>
-        {
-          (window.store.i18n.lng === 'en') ? 'Русский' : 'English'
-        }
+      <button type='button' className='decorless' onClick={this.toggleLanguage}>
+        {this.next.text}
       </button>
     );
   }

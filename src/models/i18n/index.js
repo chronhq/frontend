@@ -9,7 +9,7 @@ export default class Internationalization {
 
   @observable messages = new MessagesI18n(this.rootStore);
 
-  languages =
+  @observable languages =
     Object.keys(AvailableLanguages)
       .reduce((prev, cur) => ({
         ...prev,

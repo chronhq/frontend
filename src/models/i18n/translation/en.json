@@ -8,6 +8,10 @@
   "courseSelection": {
     "title": "Choose type"
   },
+  "settings": {
+    "title": "Settings",
+    "language": "Language"
+  },
   "buttons": {
     "apply": "Apply",
     "close": "Close",
@@ -21,7 +25,6 @@
   },
   "tooltips": {
     "back": "Go to main screen",
-    "intro": "Intro",
     "search": "Search",
     "feed": "Feed",
     "settings": "Settings",
