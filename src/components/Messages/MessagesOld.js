@@ -13,7 +13,7 @@ class GeoEvent extends React.Component {
     const { fact } = { ...this.props };
     return (
       <div className='factInner'>
-        <p className='ballon-title'>
+        <p className='balloon-title'>
           {this.title}
         </p>
         <p className='factDescription'>
@@ -34,7 +34,7 @@ class PersonFact extends React.Component {
     const { person } = { ...this.props };
     return (
       <div key={person.key}>
-        <p className='ballon-title'>
+        <p className='balloon-title'>
           {person.title}
         </p>
         <p className='factHeader'>
@@ -64,7 +64,7 @@ class Invention extends React.Component {
     const { fact } = { ...this.props };
     return (
       <div key={fact.key}>
-        <p className='ballon-title'>
+        <p className='balloon-title'>
           {this.title}
         </p>
         <p className='factHeader'>

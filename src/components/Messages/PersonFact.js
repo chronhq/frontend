@@ -1,7 +1,5 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
-
 
 @inject('store')
 @observer
@@ -10,7 +8,7 @@ class PersonFact extends React.Component {
     const { person } = { ...this.props };
     return (
       <div key={person.key}>
-        <p className='ballon-title'>
+        <p className='balloon-title'>
           {person.title}
         </p>
         <p className='factHeader'>

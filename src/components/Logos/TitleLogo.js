@@ -15,10 +15,10 @@ const TitleLogo = ({ lng }) => {
       />
     </Link>
   );
-}
+};
 
 TitleLogo.propTypes = {
   lng: PropTypes.string.isRequired
-}
+};
 
 export default TitleLogo;

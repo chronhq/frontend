@@ -13,7 +13,7 @@ class GeoEvent extends React.Component {
     const { fact } = { ...this.props };
     return (
       <div className='factInner'>
-        <p className='ballon-title'>
+        <p className='balloon-title'>
           {this.title}
         </p>
         <p className='factDescription'>

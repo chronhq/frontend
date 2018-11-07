@@ -13,7 +13,7 @@ class Invention extends React.Component {
     const { fact } = { ...this.props };
     return (
       <div key={fact.key}>
-        <p className='ballon-title'>
+        <p className='balloon-title'>
           {this.title}
         </p>
         <p className='factHeader'>

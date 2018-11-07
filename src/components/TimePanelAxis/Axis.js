@@ -38,6 +38,6 @@ class Axis extends React.Component {
 Axis.propTypes = {
   width: PropTypes.number.isRequired,
   scale: PropTypes.func.isRequired
-}
+};
 
 export default Axis;

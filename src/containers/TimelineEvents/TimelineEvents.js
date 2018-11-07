@@ -12,7 +12,11 @@ class TimelineEvents extends React.Component {
     return this.props.store.data.CourseTimelines.data;
   }
 
-  handleWheel(event) {
+  @computed get tick() {
+    return this.props.store.year.tick;
+  }
+
+  handleWheel = (event) => {
     if (event.deltaY > 1) {
       this.props.store.year.nextTick();
     } else if (event.deltaY < -1) {
@@ -20,15 +24,11 @@ class TimelineEvents extends React.Component {
     }
   }
 
-  @computed get tick() {
-    return this.props.store.year.tick;
-  }
-
   render() {
     return (
       <div
         className='event__container'
-        onWheel={e => this.handleWheel(e)}
+        onWheel={this.handleWheel}
       >
         {Object.keys(this.timeline).map(event => (
           event !== null && (
