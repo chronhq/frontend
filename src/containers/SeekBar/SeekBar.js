@@ -5,8 +5,8 @@ import React from 'react';
 import { select, mouse } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 
-import Axis from '../../components/Axis/Axis';
-import Cursor from '../../components/Axis/AxisCircle';
+import Axis from '../../components/TimePanelAxis/Axis';
+import Cursor from '../../components/TimePanelAxis/AxisCircle';
 
 import './SeekBar.less';
 

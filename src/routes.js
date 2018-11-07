@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import {
   Route,
   Switch
 } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 
+import Spinner from './components/Spinner/Spinner';
+
 import ShowCourse from './ShowCourse';
 import CourseSelection from './pages/CourseSelection';
-import NotFound from './components/ErrorPages/404';
-import BadGateway from './components/ErrorPages/502';
-import GatewayTimeout from './components/ErrorPages/504';
+// const NotFound = lazy(() => import('./pages/404'));
+// const BadGateway = lazy(() => import('./pages/502'));
+// const GatewayTimeout = lazy(() => import('./pages/504'));
+
+import NotFound from './pages/404';
+import BadGateway from './pages/502';
+import GatewayTimeout from './pages/504';
+
+// const SuspenseWrapper = (component) => {
+//   const Component = component;
+//   return (
+//     <Suspense fallback={<Spinner />}>
+//       <Component />
+//     </Suspense>
+//   );
+// }
 
 @inject('store')
 @observer
@@ -26,9 +41,9 @@ class AppRouter extends React.Component {
       <div>
         <Switch>
           <RouteWrapper exact path='/' component={CourseSelection} />
-          <Route exact path='/404' component={NotFound} />
-          <Route path='/502' component={BadGateway} />
-          <Route path='/504' component={GatewayTimeout} />
+            <Route path='/404' component={NotFound} />
+            <Route path='/502' component={BadGateway} />
+            <Route path='/504' component={GatewayTimeout} />
           <RouteWrapper path='/:id' component={ShowCourse} />
           <Route render={NotFound} />
         </Switch>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Tooltip } from '../Input';
 
 class FatButton extends React.Component {

@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import TimelineEvents from '../../containers/TimelineEvents/TimelineEvents';
-import ChangeTickButton from '../../components/ChangeTickButton/ChangeTickButton';
+import ChangeTickButton from '../../components/TimelineChangeTickButton/ChangeTickButton';
 import TimelineButtons from '../../containers/TimelineButtons/TimelineButtons';
 import './Timeline.less';
 

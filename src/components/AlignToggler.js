@@ -2,8 +2,6 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 
-// import { FormControl, ControlLabel } from 'react-bootstrap';
-
 @inject('store')
 @observer
 class AlignToggler extends React.Component {
@@ -24,10 +22,10 @@ class AlignToggler extends React.Component {
         <form onSubmit={e => this.handleSubmit(e)}>
           <select placeholder="select" onChange={e => this.handleChange(e)}>
             <option value='right'>
-              { 'Правое' }
+              { 'Right' }
             </option>
             <option value='left'>
-              { 'Левое' }
+              { 'Left' }
             </option>
           </select>
           <input type="submit" value="Submit" />

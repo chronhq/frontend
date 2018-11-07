@@ -2,6 +2,8 @@ import React from 'react';
 import { select } from 'd3-selection';
 import { axisBottom } from 'd3-axis';
 
+import PropTypes from 'prop-types';
+
 import './Axis.less';
 
 class Axis extends React.Component {
@@ -31,6 +33,11 @@ class Axis extends React.Component {
       />
     );
   }
+}
+
+Axis.propTypes = {
+  width: PropTypes.number.isRequired,
+  scale: PropTypes.func.isRequired
 }
 
 export default Axis;

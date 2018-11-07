@@ -1,6 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { action } from 'mobx';
+
 import './Bio.less';
 
 const photo = require('./candidat.jpg');

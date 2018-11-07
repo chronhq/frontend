@@ -31,6 +31,6 @@
     "selector-type-no-unknown": true,
     "string-no-newline": true,
     "unit-no-unknown": true,
-    "unit-whitelist": ["em", "px", "rem", "%", "ms", "vh", "vw"]
+    "unit-whitelist": ["em", "px", "rem", "%", "ms", "vh", "vw", "deg"]
   }
 }

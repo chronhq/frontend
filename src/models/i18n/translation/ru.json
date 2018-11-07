@@ -80,6 +80,12 @@
     "year": "????",
     "fact": "Отсутствует описание факта",
     "place": "Неизвестно"
+  },
+  "error": {
+    "message": "Произошла ошибка",
+    "404": "Page not found",
+    "502": "Bad Gateway",
+    "504": "Gateway timeout"
   }
 
 }

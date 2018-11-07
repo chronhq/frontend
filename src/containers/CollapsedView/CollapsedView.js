@@ -2,8 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
 
-import ButtonReturn from '../../components/Timeline/ButtonReturn';
-import VerticalLogo from '../../components/VerticalLogo/VerticalLogo';
+import VerticalLogo from '../../components/Logos/VerticalLogo';
 import FatButton from '../../components/FatButton/FatButton';
 
 @inject('store')
@@ -54,12 +53,23 @@ class CollapsedView extends React.Component {
     }
   }
 
+  @action handleReturn() {
+    this.props.store.effects.course.enableCourseSelection();
+    this.props.history.push('/');
+  }
+
   render() {
     return (
       <div className={this.iconBarAlign}>
-        <ButtonReturn />
         <FatButton
-          text="Информация об авторе"
+          text={this.tooltips.back}
+          icon='lnr-home'
+          cb={() => this.handleReturn()}
+          name='home'
+          disabled={false}
+        />
+        <FatButton
+          text={this.tooltips.settings}
           icon='lnr-cog'
           cb={() => this.toggle('settings')}
           name='settings'

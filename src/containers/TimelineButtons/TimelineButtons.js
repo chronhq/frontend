@@ -53,7 +53,7 @@ class TimelineButtons extends React.Component {
         )}
         {this.isMin ? null : (
           <FatButton
-            text={this.tooltips.back}
+            text='Информация об авторе'
             icon='lnr-user'
             cb={() => this.bioToggle()}
             name='bio'

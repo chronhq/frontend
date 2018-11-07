@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './AxisCircle.less';
 
@@ -12,5 +13,10 @@ const Cursor = ({ translate, active }) => (
     />
   </g>
 );
+
+Cursor.propTypes = {
+  translate: PropTypes.number.isRequired,
+  active: PropTypes.bool.isRequired
+};
 
 export default Cursor;

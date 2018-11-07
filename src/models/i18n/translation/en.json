@@ -80,5 +80,11 @@
     "year": "????",
     "fact": "Missing fact description",
     "place": "Unknown"
+  },
+  "error": {
+    "message": "Error occurred",
+    "404": "Page not found",
+    "502": "Bad Gateway",
+    "504": "Gateway timeout"
   }
 }
