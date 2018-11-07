@@ -8,7 +8,7 @@ import SidePanel from '../templates/SidePanel/SidePanel';
 import Overlays from '../templates/Overlays/Overlays';
 import Timeline from '../templates/Timeline/Timeline';
 
-import Bio from '../components/Timeline/Bio';
+import Bio from '../components/TimelineBio/Bio';
 import Widgets from './Widgets';
 import Balloon from './Balloon';
 import FontLoader from './FontLoader';
