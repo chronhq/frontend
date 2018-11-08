@@ -1,53 +1,14 @@
-@black: #000000;
-@main-blue: #013243;
-@base02: #2c393f;
-@text: #576872;
-@link: #8aaddb;
-@border: #707880;
-@red: #ea4544;
-
-@dark-grey: #979797;
-@grey: #7f7f7f;
-@disable: #d5d5d5;
-@sidebar: #e9dac5;
-@light-grey: #fafafa;
-@button-text-inverse: #aaaaaa;
-@white: #ffffff;
-
-@font-face {
-  font-family: 'Lora-Regular';
-  src: url(./assets/Lora-Regular.ttf);
-}
-
-@font-face {
-  font-family: 'OpenSans-SemiBold';
-  src: url(./assets/OpenSans-SemiBold.ttf);
-}
-
-@font-face {
-  font-family: 'OpenSans-Regular';
-  src: url(./assets/OpenSans-Regular.ttf);
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'OpenSans-Italic';
-  src: url(./assets/OpenSans-Italic.ttf);
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'OpenSans-Light';
-  src: url(./assets/OpenSans-Light.ttf);
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'OpenSans-LightItalic';
-  src: url(./assets/OpenSans-LightItalic.ttf);
-  font-weight: 400;
-}
-
+@import './styles/colors.less';
+// @import './styles/baloons.less';
+// @import './styles/checkbox.less';
+@import './styles/LineIcon.less';
+// @import './styles/fontello.less';
+// @import './styles/number.less';
+// @import './styles/radio.less';
+// @import './styles/select.less';
+// @import './styles/slider.less';
+// @import './styles/tooltip.less';
+@import './styles/typography.less';
 
 html,
 body {
@@ -56,17 +17,16 @@ body {
   height: 100%;
   font-size: 16px;
   color: @text;
-  font-family: 'OpenSans-Light', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
   min-height: 100vh;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   // line-height: 1.8;
   text-rendering: optimizeLegibility;
-  font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
   font-feature-settings: "kern", "liga", "clig", "calt";
-  min-height: 100vh;
 }
 
 .section {
@@ -189,13 +149,16 @@ a {
   }
 }
 
-
 .bold {
-  font-family: OpenSans-SemiBold;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
 .italic {
-  font-family: OpenSans-LightItalic;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-style: italic;
 }
 
 button {

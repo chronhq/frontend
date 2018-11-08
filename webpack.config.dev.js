@@ -53,9 +53,7 @@ module.exports = {
       '/shared': 'http://api:3333/',
     },
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      // 'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+      'Access-Control-Allow-Origin': '*'
     }
   },
   target: 'web',
@@ -87,7 +85,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
-        loader: 'url-loader?limit=20000&name=[name].[ext]'
+        loader: 'url-loader?limit=100000&name=[name].[ext]'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './style.less';
-import './LineIcon.less';
 import './img/favicon.ico';
 import './img/richpreview.jpg';
 
