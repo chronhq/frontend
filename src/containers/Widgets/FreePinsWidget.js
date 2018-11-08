@@ -5,7 +5,7 @@ import { computed } from 'mobx';
 @inject('store')
 @observer
 class FreePinsWidget extends React.Component {
-  rowCapasity = 8;
+  rowCapacity = 8;
 
   xShift = 20;
 
@@ -15,9 +15,9 @@ class FreePinsWidget extends React.Component {
     return this.props.store.pins.freePins;
   }
 
-  translateX = idx => (idx % this.rowCapasity) * this.xShift;
+  translateX = idx => (idx % this.rowCapacity) * this.xShift;
 
-  translateY = idx => Math.floor(idx / this.rowCapasity) * this.yShift;
+  translateY = idx => Math.floor(idx / this.rowCapacity) * this.yShift;
 
   translate = idx => [this.translateX(idx), -this.translateY(idx)].join(',');
 
