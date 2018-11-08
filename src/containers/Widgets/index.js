@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
 import FreePinsWidget from './FreePinsWidget';
+import Defs from './Defs'
 
 @inject('store')
 @observer
@@ -20,6 +21,7 @@ class Widgets extends React.Component {
         height={this.props.store.deck.height}
         style={{ zIndex: 2, pointerEvents: 'none', position: 'absolute' }}
       >
+        <Defs MapPics={this.props.store.data.MapPics} />
         <g id='svgWidgets' transform={translate}>
           {showWidgets && <ScaleWidget />}
           {showWidgets && <LoadingWidget />}
