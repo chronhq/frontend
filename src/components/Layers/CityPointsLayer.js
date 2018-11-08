@@ -1,4 +1,4 @@
-import { IconLayer } from 'deck.gl';
+import { IconLayer } from '@deck.gl/layers';
 import Textures from './Textures';
 
 function cityPointsLayer(cities, visible, deck) {

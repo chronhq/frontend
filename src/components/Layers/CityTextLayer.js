@@ -1,4 +1,4 @@
-import { TextLayer } from 'deck.gl';
+import { TextLayer } from '@deck.gl/layers';
 import chars from './VisibleCharacters';
 
 function cityTextLayer(cities, visible, deck) {

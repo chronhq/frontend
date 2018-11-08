@@ -1,4 +1,4 @@
-import { GeoJsonLayer } from 'deck.gl';
+import { GeoJsonLayer } from '@deck.gl/layers';
 
 function bordersLayer(data, visible, hoverCb) {
   return new GeoJsonLayer({

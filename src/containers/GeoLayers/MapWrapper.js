@@ -1,5 +1,5 @@
 import React from 'react';
-import DeckGL from 'deck.gl';
+import DeckGL from '@deck.gl/react';
 
 import { StaticMap } from 'react-map-gl';
 
@@ -32,10 +32,6 @@ class MapWrapper extends React.Component {
     this.onWebGLInitialized(null);
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
-  }
-
-  @action onWebGLInitialized(gl) {
-    this.props.store.deck.gl = gl;
   }
 
   @computed get deck() {
@@ -152,18 +148,11 @@ class MapWrapper extends React.Component {
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
         style={{ zIndex: 1 }}
         layers={this.layers}
-        onWebGLInitialized={gl => this.onWebGLInitialized(gl)}
       >
-        {this.deck.gl && (
-          <StaticMap
-            // ref={(ref) => {
-            //   this.map = ref && ref.getMap();
-            // }}
-            gl={this.deck.gl}
-            mapStyle={this.deck.mapBox.style}
-            mapboxApiAccessToken={this.deck.mapBox.token}
-          />
-        )}
+        <StaticMap
+          mapStyle={this.deck.mapBox.style}
+          mapboxApiAccessToken={this.deck.mapBox.token}
+        />
       </DeckGL>
     );
   }

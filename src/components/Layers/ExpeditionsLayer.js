@@ -1,7 +1,7 @@
-import { PathLayer } from 'deck.gl';
+import { PathLayer } from '@deck.gl/layers';
 import { toJS } from 'mobx';
 
-import TripsLayer from './trips-layer';
+import { TripsLayer } from '@deck.gl/experimental-layers';
 
 function expeditionsLayer(traces, visible, animation, time) {
   return (new PathLayer({

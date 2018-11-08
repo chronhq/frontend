@@ -7,7 +7,7 @@ import {
 import {
   MapView,
   MapController
-} from 'deck.gl';
+} from '@deck.gl/core';
 
 const INITIAL_VIEW_STATE = {
   latitude: 0,
@@ -30,8 +30,6 @@ export default class DeckViewportModel {
   @observable height = window.innerHeight;
 
   @observable showCluster = true;
-
-  @observable gl = null;
 
   @observable mapBox = {
     token: MAPBOX_TOKEN,
