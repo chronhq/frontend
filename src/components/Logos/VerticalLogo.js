@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import logoRu from '../../img/name_logo.svg';
-import logoEn from '../../img/name_logo_eng.svg';
-
-const VerticalLogo = ({ lng }) => (
+const VerticalLogo = ({ logo }) => (
   <div className='vertical--logo'>
-    <img src={(lng === 'ru') ? logoRu : logoEn} alt='logo' />
+    <img src={logo} alt='logo' />
   </div>
 );
 
 VerticalLogo.propTypes = {
-  lng: PropTypes.string.isRequired,
+  logo: PropTypes.string.isRequired,
 };
 
 export default VerticalLogo;

@@ -1,6 +1,7 @@
 {
   "language": "English",
   "title": "Chronist, interactive atlas",
+  "loading": "loading...",
   "selectors": {
     "name": "nameEng",
     "properties": "name"

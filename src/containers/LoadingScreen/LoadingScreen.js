@@ -7,7 +7,7 @@ import { ymHit } from '../../metrikaHelper';
 import './LoadingScreen.less';
 
 import checkCourses from '../../components/checkCourses';
-import RotatingLogo from './RotatingLogo';
+import LoadingLogo from './LoadingLogo';
 
 @observer
 class LoadingScreen extends React.Component {
@@ -44,7 +44,7 @@ class LoadingScreen extends React.Component {
   render() {
     return (
       <div className='loading-screen'>
-        <RotatingLogo />
+        <LoadingLogo i18n={this.props.store.i18n} />
       </div>
     );
   }

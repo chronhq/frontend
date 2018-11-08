@@ -12,10 +12,6 @@ class CollapsedView extends React.Component {
     return this.props.store.i18n.data.tooltips;
   }
 
-  @computed get lng() {
-    return this.props.store.i18n.lng;
-  }
-
   @computed get alignPanel() {
     return this.props.store.flags.flags.runtime.alignPanel;
   }
@@ -123,7 +119,7 @@ class CollapsedView extends React.Component {
             />
           )
         }
-        <VerticalLogo lng={this.lng} />
+        <VerticalLogo logo={this.props.store.i18n.logo} />
       </div>
     );
   }

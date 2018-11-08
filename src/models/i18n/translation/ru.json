@@ -1,6 +1,7 @@
 {
   "language": "Русский",
   "title": "Хронист, интерактивный атлас",
+  "loading": "загружается...",
   "selectors": {
     "name": "nameRus",
     "properties": "nameru"
