@@ -29,7 +29,6 @@ class MapWrapper extends React.Component {
   }
 
   componentWillUnmount() {
-    this.onWebGLInitialized(null);
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
   }
