@@ -1,6 +1,5 @@
 import React from 'react';
 import Tooltip from 'rc-tooltip';
-import './Tooltip.less';
 
 const Component = ({
   children, placement = 'left', dark = false, content

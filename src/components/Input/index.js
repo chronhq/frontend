@@ -7,7 +7,6 @@ import Tooltip from './Tooltip';
 import MailInput from './MailInput';
 import TextInput from './TextInput';
 import TextareaInput from './TextareaInput';
-import './InputStyles.less';
 
 
 export {
