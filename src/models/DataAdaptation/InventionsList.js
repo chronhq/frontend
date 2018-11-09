@@ -1,22 +1,8 @@
-import { observable, computed } from 'mobx';
+import { computed } from 'mobx';
 
 export default class InventionsList {
-  @observable saveDataCb = (json) => {
-    const data = {};
-    json.map((cur) => {
-      data[cur.id] = {
-        ...cur,
-        // Inventor field before looks like "{1,3}" => now it's an array
-        inventor: cur.inventor.replace(/{|}/g, '').split(','),
-      };
-      return false;
-    });
-    this.rootStore.data.Inventions.data = data;
-  }
-
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.rootStore.data.Inventions.saveDataCb = json => this.saveDataCb(json);
   }
 
   @computed get data() {

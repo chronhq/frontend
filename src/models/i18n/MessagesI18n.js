@@ -6,9 +6,9 @@ export default class MessagesI18n extends BaseI18n {
     : [...prev, this.persons[p][this.nameSelector]]), []);
 
   invention(fact) {
-    const description = typeof fact.description === 'string'
-      ? fact.description.replace(/\u00a0/g, ' ')
-      : 'Missing fact description';
+    const description = typeof fact.description[this.lng] === 'string'
+      ? fact.description[this.lng].replace(/\u00a0/g, ' ')
+      : this.data.unknown.fact;
     return {
       id: fact.id,
       key: `in_${fact.id}`,
