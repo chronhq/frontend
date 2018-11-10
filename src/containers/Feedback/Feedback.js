@@ -88,9 +88,8 @@ class FeedbackForm extends React.Component {
             <InputSelect
               value={this.feedback.layer}
               placeholder={this.i18n.layer}
-              options={this.props.store.i18n.layerNames}
+              options={this.props.store.i18n.data.layerNames}
               cb={(value) => {
-                console.log('cb value', value);
                 this.feedback.layer = value;
                 return false;
               }}
@@ -154,6 +153,10 @@ class Feedback extends React.Component {
 
   @action closeFeedback() {
     this.props.store.flags.flags.runtime.feedback = false;
+  }
+
+  @computed get i18n() {
+    return this.props.store.i18n.data.feedback;
   }
 
   render() {

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Select, { Option } from 'rc-select';
-import './Select.less';
+import PropTypes from 'prop-types';
 
-class InputSelect extends React.Component {
+class InputSelect extends Component {
+  defaultProps = {
+    value: this.props.placeholder
+  }
+
   render() {
     return (
       <Select
@@ -25,4 +29,13 @@ class InputSelect extends React.Component {
     );
   }
 }
+
+InputSelect.propTypes = {
+  value: PropTypes.string, //TODO
+  placeholder: PropTypes.string.isRequired,
+  options: PropTypes.object.isRequired,
+  cb: PropTypes.func.isRequired
+};
+
+
 export default InputSelect;
