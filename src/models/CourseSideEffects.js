@@ -23,6 +23,7 @@ export default class CourseSideEffects {
       'Types',
       'MapDecorations',
       'MapColors',
+      'GeomBBoxes',
       ...this.devDeps,
     ],
     course: [
@@ -36,7 +37,6 @@ export default class CourseSideEffects {
     ],
     heavy: [
       'Borders',
-      'Geometries',
     ]
   };
 
@@ -87,7 +87,7 @@ export default class CourseSideEffects {
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
     // Wipe geometry
-    this.rootStore.borders.wipe();
+    // this.rootStore.borders.wipe();
     this.rootStore.prepared.data.courseGeoPoints.wipe();
     this.rootStore.prepared.data.courseTraces.wipe();
   }
@@ -128,6 +128,7 @@ export default class CourseSideEffects {
   }
 
   @action loadCourseData() {
+    // return;
     // Load heavy data
     const bordersFilter = {
       where: {
@@ -141,7 +142,7 @@ export default class CourseSideEffects {
     // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
 
-    this.rootStore.borders.loadGeometry();
+    // this.rootStore.borders.loadGeometry();
     // reload all borders
     this.rootStore.data.Borders.get();
   }

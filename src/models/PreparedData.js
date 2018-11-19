@@ -43,7 +43,6 @@ export default class FinalDataModel {
     return this.data.decor;
   }
 
-
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.data.decor = new Decor(rootStore);

@@ -5,8 +5,6 @@ export default class ProjectionModel {
     this.rootStore = rootStore;
   }
 
-  // @observable clip = [[-180, 90], [180, -90]];
-
   // [[Left, Top], [Right, Bottom]]
   @observable defaultClip = '[[-180,90],[180,-90]]';
 
@@ -43,17 +41,6 @@ export default class ProjectionModel {
     return this.data.center;
   }
 
-  // @computed get rotate() {
-  //   return this.data.rotate;
-  // }
-
-  // @action setup(projection) {
-  //   this.clip = projection.clip;
-  //   this.rotate = projection.rotate;
-  //   this.center = projection.center;
-  //   this.name = projection.name;
-  //   // this.clipEnabled = JSON.stringify(this.clip) !== this.defaultClip;
-  // }
 
   inTheBox(x, y) {
     return (!(x < this.clip[0][0] // Top

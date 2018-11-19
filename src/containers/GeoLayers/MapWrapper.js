@@ -1,7 +1,7 @@
 import React from 'react';
 import DeckGL from '@deck.gl/react';
 
-import { StaticMap } from 'react-map-gl';
+import { StaticMap, InteractiveMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
@@ -109,7 +109,6 @@ class MapWrapper extends React.Component {
 
   @computed get layers() {
     return [
-      this.borders,
       ...this.toponyms,
       this.cityPoints,
       this.oceanDecorations,
@@ -151,6 +150,14 @@ class MapWrapper extends React.Component {
         <StaticMap
           mapStyle={this.deck.mapBox.style}
           mapboxApiAccessToken={this.deck.mapBox.token}
+        />
+        <InteractiveMap
+          mapStyle={this.props.store.borders.style}
+          mapboxApiAccessToken={this.deck.mapBox.token}
+          pickable
+          onClick={(a) => {
+            console.log('Interactive click', a);
+          }}
         />
       </DeckGL>
     );
