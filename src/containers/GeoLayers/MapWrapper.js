@@ -100,7 +100,7 @@ class MapWrapper extends React.Component {
   @computed get feedPins() {
     const { pins } = this.props.store.pins;
     const { zoom } = this.deck;
-    const coursePins = this.props.store.prepared.data.courseGeoPoints.current;
+    const coursePins = this.props.store.prepared.geoPoints;
 
     return [
       pinsLayer(pins, 'map', zoom, true, this.onMapPinHover),

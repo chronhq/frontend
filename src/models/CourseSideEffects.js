@@ -55,9 +55,6 @@ export default class CourseSideEffects {
     this.deps.course.map(wipe);
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
-
-    this.rootStore.prepared.data.courseGeoPoints.wipe();
-    this.rootStore.prepared.data.courseTraces.wipe();
   }
 
   @action toggleCourseSelection(toggle) {
