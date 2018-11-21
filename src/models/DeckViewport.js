@@ -36,12 +36,7 @@ export default class DeckViewportModel {
     style: MAPBOX_STYLE,
   };
 
-  @computed get enabled() {
-    return this.rootStore.projection.enabled;
-  }
-
   @computed get view() {
-    // if (!this.enabled) return null;
     return new MapView({
       id: 'id-view',
       width: this.width,

@@ -13,20 +13,15 @@ export default class ProjectionModel {
   }
 
   @computed get data() {
-    if (this.enabled) {
-      return this.rootStore.data.Courses.data[this.courseId].config.projection;
-    }
-    return {
-      center: [0, 0],
-      clip: [[-180, 90], [180, -90]],
-      rotate: [0, 0, 0],
-      name: 'Undefined',
-    };
-  }
-
-  @computed get enabled() {
     return (this.courseId !== null
-      && this.courseId in this.rootStore.data.Courses.data);
+      && this.courseId in this.rootStore.data.Courses.data)
+      ? this.rootStore.data.Courses.data[this.courseId].config.projection
+      : {
+        center: [0, 0],
+        clip: [[-180, 90], [180, -90]],
+        rotate: [0, 0, 0],
+        name: 'Undefined',
+      };
   }
 
   @computed get clipEnabled() {

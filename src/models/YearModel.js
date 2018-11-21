@@ -32,7 +32,6 @@ export default class YearModel {
     this.now = (year > this.max || year < this.min)
       ? this.min
       : year;
-    // this.rootStore.borders.loadGeometry();
   }
 
   nextYear() {
