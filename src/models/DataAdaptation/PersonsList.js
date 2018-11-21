@@ -1,6 +1,25 @@
 
 import { computed } from 'mobx';
-import { getBirthAndDeath, getActualData } from './_helper';
+
+function getBirthAndDeath(cur) {
+  let birth = null;
+  let death = null;
+  if (cur.birthDate !== null) {
+    try {
+      birth = Number(cur.birthDate.replace(/-.*/g, ''));
+    } catch (e) {
+      console.log('Failed to generate timeline data for', cur.id, e);
+    }
+  }
+  if (cur.deathDate !== null) {
+    try {
+      death = Number(cur.deathDate.replace(/-.*/g, ''));
+    } catch (e) {
+      console.log('Failed to generate timeline data for', cur.id, e);
+    }
+  }
+  return [birth, death];
+}
 
 export default class PersonsList {
   constructor(rootStore) {
@@ -73,10 +92,6 @@ export default class PersonsList {
 
   @computed get year() {
     return this.rootStore.year.now;
-  }
-
-  @computed get alive() {
-    return getActualData(Object.keys(this.timeline), this.timeline, this.year);
   }
 
   @computed get current() {
