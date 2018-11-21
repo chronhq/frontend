@@ -6,7 +6,6 @@ import Expeditions from './DataAdaptation/ExpeditionsModel';
 import Persons from './DataAdaptation/PersonsList';
 import Inventions from './DataAdaptation/InventionsList';
 import GeoEvents from './DataAdaptation/GeoEventsList';
-import Courses from './DataAdaptation/CoursesModel';
 import MapPics from './DataAdaptation/MapPicsModel';
 import Decor from './DataAdaptation/Decor';
 
@@ -57,6 +56,5 @@ export default class FinalDataModel {
     this.persons = new Persons(rootStore);
     this.inventions = new Inventions(rootStore);
     this.geoEventsList = new GeoEvents(rootStore);
-    this.courses = new Courses(rootStore);
   }
 }

@@ -88,33 +88,53 @@ class FileModel {
 }
 
 export default class DataModel {
-  @observable roster = [
-    'Admins',
-    'Borders',
-    'CityLocs',
-    'CityPops',
-    'CityProperties',
-    'Courses',
-    'Inventions',
-    'MapLabels',
-    'MapColors',
-    'Persons',
-    'Properties',
-    'Types',
-    'MapDecorations',
-    'MapPics',
-    'GeoEvents',
-    'GeomBBoxes',
-    'CourseTimelines',
-    'CourseTraces',
-    'CourseGeopoints',
-  ];
+  @observable activeCourses = JSON.stringify({ where: { active: true } });
+
+  @observable devDeps = process.env.NODE_ENV === 'production' ? [] : ['MapPics'];
+
+  @observable deps = {
+    special: [
+      'Courses'
+    ],
+    base: [
+      'Admins',
+      'CityLocs',
+      'CityPops',
+      'CityProperties',
+      'MapLabels',
+      'Persons',
+      'Properties',
+      'Types',
+      'MapDecorations',
+      'MapColors',
+      'GeomBBoxes',
+      ...this.devDeps,
+    ],
+    course: [
+      'CourseTimelines',
+      'CourseTraces',
+      'CourseGeopoints',
+    ],
+    world: [
+      'Inventions',
+      'GeoEvents',
+    ],
+    heavy: [
+      'Borders',
+    ]
+  };
+
+  @observable roster = Object.keys(this.deps)
+    .reduce((prev, cur) => ([...prev, ...this.deps[cur]]), []);
 
   constructor() {
     this.roster.map((model) => {
       this[model] = new FileModel(model);
       return false;
     });
+    this.Courses.filter = this.activeCourses;
+    this.Borders.sortId = 'year';
+    this.CourseTimelines.sortId = 'tick';
   }
 
   @action resolveDependencies(depend) {

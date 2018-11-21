@@ -1,46 +1,16 @@
 import {
-  observable, computed, action, when
+  computed, action, when
 } from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.rootStore.data.Courses.filter = this.activeCourses;
-    this.rootStore.data.Borders.sortId = 'year';
   }
 
-  @observable devDeps = process.env.NODE_ENV === 'production' ? [] : ['MapPics'];
+  @computed get deps() {
+    return this.rootStore.data.deps;
+  }
 
-  @observable deps = {
-    base: [
-      'Admins',
-      'CityLocs',
-      'CityPops',
-      'CityProperties',
-      'MapLabels',
-      'Persons',
-      'Properties',
-      'Types',
-      'MapDecorations',
-      'MapColors',
-      'GeomBBoxes',
-      ...this.devDeps,
-    ],
-    course: [
-      'CourseTimelines',
-      'CourseTraces',
-      'CourseGeopoints',
-    ],
-    world: [
-      'Inventions',
-      'GeoEvents',
-    ],
-    heavy: [
-      'Borders',
-    ]
-  };
-
-  @observable activeCourses = JSON.stringify({ where: { active: true } });
 
   @computed get courseId() {
     return this.rootStore.flags.flags.runtime.SelectedCourse;
@@ -85,8 +55,7 @@ export default class CourseSideEffects {
     this.deps.course.map(wipe);
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
-    // Wipe geometry
-    // this.rootStore.borders.wipe();
+
     this.rootStore.prepared.data.courseGeoPoints.wipe();
     this.rootStore.prepared.data.courseTraces.wipe();
   }
@@ -127,7 +96,6 @@ export default class CourseSideEffects {
   }
 
   @action loadCourseData() {
-    // return;
     // Load heavy data
     const bordersFilter = {
       where: {
@@ -141,7 +109,6 @@ export default class CourseSideEffects {
     // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
 
-    // this.rootStore.borders.loadGeometry();
     // reload all borders
     this.rootStore.data.Borders.get();
   }
