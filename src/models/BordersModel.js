@@ -1,8 +1,17 @@
 import {
   computed
 } from 'mobx';
-import { getActualData } from './DataAdaptation/_helper';
 
+function getActualData(years, data, target) {
+  if (typeof (years) === 'undefined') {
+    return [];
+  }
+  const res = Math.max(...years.filter(y => y <= target));
+  if (Number.isFinite(res)) {
+    return data[res];
+  }
+  return [];
+}
 
 export default class BordersModel {
   constructor(rootStore) {
@@ -22,7 +31,6 @@ export default class BordersModel {
     return data.geoProps;
   }
 
-  // Borders Timeline
   @computed get byYear() {
     return this.rootStore.data.Borders.data;
   }
@@ -44,15 +52,6 @@ export default class BordersModel {
       id: cur.geo,
       props: cur.props,
     }));
-  }
-
-  @computed get loadingStatus() {
-    return true;
-    // should use some triggers from mapbox api
-
-    // return this.ready
-    //   ? this.rootStore.i18n.data.loadingWidget.loaded
-    //   : this.rootStore.i18n.data.loadingWidget.loading;
   }
 
   @computed get styleInfo() {
@@ -102,8 +101,6 @@ export default class BordersModel {
       zoom: 1,
       bearing: 0,
       pitch: 0,
-      owner: 'miklergm',
-      visibility: 'private'
     };
   }
 }

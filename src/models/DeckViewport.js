@@ -112,6 +112,10 @@ export default class DeckViewportModel {
 
   @observable bearing = 0;
 
+  @observable interactiveMap = null;
+
+  @observable loadingStatus = false;
+
   @computed get maxZoom() {
     return this.rootStore.flags.flags.zoom.maxScale;
   }
@@ -149,6 +153,15 @@ export default class DeckViewportModel {
       this[field] = viewState[field];
       return 0;
     });
+  }
+
+  @action watchLoading() {
+    if (this.interactiveMap !== null) {
+      this.loadingStatus = this.interactiveMap.getMap().loaded();
+      if (typeof this.loadingStatus !== 'undefined') {
+        setTimeout(() => this.watchLoading(), 300);
+      }
+    }
   }
 
   @action updateViewState(viewState) {

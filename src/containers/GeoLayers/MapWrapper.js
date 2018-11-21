@@ -29,6 +29,7 @@ class MapWrapper extends React.Component {
   }
 
   componentWillUnmount() {
+    this.deck.InteractiveMap = null;
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
   }
@@ -155,6 +156,13 @@ class MapWrapper extends React.Component {
           mapStyle={this.props.store.borders.style}
           mapboxApiAccessToken={this.deck.mapBox.token}
           pickable
+          ref={(ref) => {
+            this.deck.interactiveMap = ref;
+          }}
+          onLoad={() => {
+            // starting a timer for status checking
+            this.deck.watchLoading();
+          }}
           onClick={(a) => {
             console.log('Interactive click', a);
           }}
