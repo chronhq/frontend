@@ -54,8 +54,7 @@ export default class CourseSideEffects {
 
 
   @computed get loadingIsComplete() {
-    return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded)
-      && this.rootStore.borders.ready;
+    return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded);
   }
 
   @computed get courseFilter() {
