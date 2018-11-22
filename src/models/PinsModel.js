@@ -63,7 +63,7 @@ export default class FeedPinsModel {
   }
 
   @computed get visibility() {
-    return this.rootStore.flags.flags.pins;
+    return this.rootStore.flags.pins.list;
   }
 
   @computed get selected() {

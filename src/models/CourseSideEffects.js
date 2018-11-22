@@ -13,7 +13,7 @@ export default class CourseSideEffects {
 
 
   @computed get courseId() {
-    return this.rootStore.flags.flags.runtime.SelectedCourse;
+    return this.rootStore.flags.runtime.get('SelectedCourse');
   }
 
   @computed get listOfDeps() {
@@ -116,7 +116,7 @@ export default class CourseSideEffects {
 
   /* eslint-disable consistent-return */
   @action select(id, name) {
-    if (id === this.rootStore.flags.flags.runtime.SelectedCourse) {
+    if (id === this.courseId) {
       console.log('Course already selected', id, name);
       return null;
     }

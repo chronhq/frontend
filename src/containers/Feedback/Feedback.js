@@ -35,8 +35,8 @@ class FeedbackForm extends React.Component {
       : this.i18n.error;
   }
 
-  @action closeFeedback() {
-    this.props.store.flags.flags.runtime.intro = false;
+  closeFeedback() {
+    this.props.store.flags.runtime.set('intro', false);
   }
 
 
@@ -148,15 +148,15 @@ class FeedbackForm extends React.Component {
 @observer
 class Feedback extends React.Component {
   @computed get isOpen() {
-    return this.props.store.flags.flags.runtime.feedback;
-  }
-
-  @action closeFeedback() {
-    this.props.store.flags.flags.runtime.feedback = false;
+    return this.props.store.flags.runtime.get('feedback');
   }
 
   @computed get i18n() {
     return this.props.store.i18n.data.feedback;
+  }
+
+  closeFeedback() {
+    this.props.store.flags.runtime.set('feedback', false);
   }
 
   render() {

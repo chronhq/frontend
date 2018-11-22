@@ -17,11 +17,11 @@ const info = {
 @observer
 class Bio extends React.Component {
   @action closeBio() {
-    this.props.store.flags.flags.runtime.BioIsOpen = false;
+    this.props.store.flags.runtime.set('BioIsOpen', false);
   }
 
   render() {
-    if (this.props.store.flags.flags.runtime.BioIsOpen === false) return '';
+    if (this.props.store.flags.runtime.get('BioIsOpen') === false) return '';
     return (
       <div className='bio__container layer-3'>
         <div className='bio__data'>

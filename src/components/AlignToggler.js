@@ -13,7 +13,7 @@ class AlignToggler extends React.Component {
 
   @action handleSubmit(event) {
     event.preventDefault();
-    this.props.store.flags.flags.runtime.alignPanel = this.value;
+    this.props.store.flags.runtime.set('alignPanel', this.value);
   }
 
   render() {

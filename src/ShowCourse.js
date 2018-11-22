@@ -18,7 +18,7 @@ class ShowCourse extends React.Component {
           courseSelected={this.props.computedMatch.params.id}
           fallbackRender={() => ''}
         />
-        {this.props.store.flags.flags.runtime.Setup === false && <UI />}
+        {this.props.store.flags.runtime.get('Setup') === false && <UI />}
       </div>
     );
   }

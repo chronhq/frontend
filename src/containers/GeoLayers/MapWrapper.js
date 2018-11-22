@@ -39,7 +39,7 @@ class MapWrapper extends React.Component {
   }
 
   @computed get options() {
-    return this.props.store.flags.flags.layer;
+    return this.props.store.flags.layer.list;
   }
 
   @computed get borders() {
@@ -92,7 +92,7 @@ class MapWrapper extends React.Component {
     return expeditionsLayer(
       this.props.store.prepared.expeditions,
       this.options.traces,
-      this.props.store.flags.flags.runtime.animation,
+      this.props.store.flags.runtime.get('animation'),
       this.props.store.animation.time
     );
   }

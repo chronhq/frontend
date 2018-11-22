@@ -64,7 +64,7 @@ class YearInput extends React.Component {
   }
 
   close = () => {
-    this.props.store.flags.set({ runtime: { yearInput: false } });
+    this.props.store.flags.runtime.set('yearInput', false);
     this.props.store.year.resetTuneValue();
   }
 

@@ -16,8 +16,8 @@ class Flag extends React.Component {
     const arr = this.props.name.split('.');
     const flag = arr.reduce((prev, cur) => (
       prev[cur]
-    ), this.props.store.flags.flags);
-    return flag;
+    ), this.props.store.flags);
+    return flag.value;
   }
 
   render() {

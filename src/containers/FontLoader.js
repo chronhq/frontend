@@ -6,7 +6,7 @@ import { observer, inject } from 'mobx-react';
 class FontLoader extends React.Component {
   render() {
     const fonts = Object.keys(this.props.store.prepared.decor.mapLabels.fonts);
-    const display = this.props.store.flags.flags.runtime.Ready === true
+    const display = this.props.store.flags.runtime.get('Ready') === true
       ? 'none' : 'inline';
     return (
       <div style={{ display, visibility: 'hidden' }}>

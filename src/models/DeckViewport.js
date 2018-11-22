@@ -56,13 +56,14 @@ export default class DeckViewportModel {
   }
 
   @computed get viewport() {
+    const zoom = this.rootStore.flags.zoom.list;
     const vState = {
       width: this.width,
       height: this.height,
       viewState: {
         ...INITIAL_VIEW_STATE,
-        maxZoom: this.rootStore.flags.flags.zoom.maxScale,
-        minZoom: this.rootStore.flags.flags.zoom.minScale,
+        maxZoom: zoom.maxScale,
+        minZoom: zoom.minScale,
       },
     };
 
@@ -112,19 +113,19 @@ export default class DeckViewportModel {
   @observable loadingStatus = false;
 
   @computed get maxZoom() {
-    return this.rootStore.flags.flags.zoom.maxScale;
+    return this.rootStore.flags.zoom.get('maxScale');
   }
 
   set maxZoom(z) {
-    this.rootStore.flags.flags.zoom.maxScale = z;
+    this.rootStore.flags.zoom.set('maxScale', z);
   }
 
   @computed get minZoom() {
-    return this.rootStore.flags.flags.zoom.minScale;
+    return this.rootStore.flags.zoom.get('minScale');
   }
 
   set minZoom(z) {
-    this.rootStore.flags.flags.zoom.minScale = z;
+    this.rootStore.flags.zoom.set('minScale', z);
   }
 
   @computed get rZoom() {

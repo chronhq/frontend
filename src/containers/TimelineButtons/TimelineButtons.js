@@ -15,11 +15,11 @@ class TimelineButtons extends React.Component {
   }
 
   @computed get isMin() {
-    return this.props.store.flags.flags.runtime.TimelineIsMinified;
+    return this.props.store.flags.runtime.get('TimelineIsMinified');
   }
 
   @computed get tip() {
-    return this.props.store.flags.flags.runtime.TimelineIsMinified
+    return this.isMin
       ? this.tooltips.expand
       : this.tooltips.collapse;
   }
@@ -29,13 +29,12 @@ class TimelineButtons extends React.Component {
     this.props.history.push('/');
   }
 
-  @action toggleTimepanel() {
-    this.props.store.flags.flags.runtime.TimelineIsMinified = !this.isMin;
+  toggleTimepanel() {
+    this.props.store.flags.runtime.toggle('TimelineIsMinified');
   }
 
-  @action bioToggle() {
-    const isBioOn = this.props.store.flags.flags.runtime.BioIsOpen;
-    this.props.store.flags.set({ runtime: { BioIsOpen: !isBioOn } });
+  bioToggle() {
+    this.props.store.flags.runtime.toggle('BioIsOpen');
   }
 
   // #TODO localization tooltip for BioButton

@@ -11,7 +11,7 @@ class Overlays extends React.Component {
     return (
       <div id='overlays'>
         <Feedback />
-        {this.props.store.flags.flags.runtime.yearInput ? <YearInput /> : null}
+        {this.props.store.flags.runtime.get('yearInput') ? <YearInput /> : null}
       </div>
     );
   }

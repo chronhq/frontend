@@ -1,14 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import { Button, ButtonGroup } from 'react-bootstrap';
+
 import { observer, inject } from 'mobx-react';
+import { action } from 'mobx';
 
 @inject('store')
 @observer
 class FeedbackButtons extends React.Component {
-  openFeedback() {
+  @action openFeedback() {
     this.props.store.feedback.year = this.props.store.year.now;
-    this.props.store.flags.flags.runtime.feedback = true;
+    this.props.store.flags.runtime.set('feedback', true);
   }
 
 
