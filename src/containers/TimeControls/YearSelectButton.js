@@ -15,7 +15,7 @@ class YearButton extends React.Component {
         onClick={() => this.toggle()}
         type='button'
       >
-        {this.props.store.control.now}
+        {this.props.store.year.tuneValue}
       </button>
     );
   }

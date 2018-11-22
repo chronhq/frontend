@@ -23,16 +23,11 @@ class SeekBar extends React.Component {
       const rectId = this.svgTime.childNodes[0];
       const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.width) {
-        this.props.store.control.nowState = Math.round(this.scale.invert(mouseX));
-        // this.setState({ now: Math.round(this.scale.invert(mouseX)) });
-        this.props.store.year.setYear(Number(this.props.store.control.nowState));
-        this.props.store.control.sync = true;
+        this.props.store.year.setYear(Math.round(this.scale.invert(mouseX)));
       }
     });
     svg.on('mousedown', () => {
-      this.props.store.control.sync = false;
       this.isDown = true;
-      // this.setState({ now: this.props.store.year.now });
       this.followMouse();
     });
   }
@@ -49,6 +44,10 @@ class SeekBar extends React.Component {
       .range([0, this.width]);
   }
 
+  @computed get translate() {
+    return this.scale(this.props.store.year.tuneValue);
+  }
+
 
   followMouse() {
     select(this.svgTime)
@@ -57,8 +56,7 @@ class SeekBar extends React.Component {
         const mouseX = mouse(rectId)[0];
         if (mouseX >= 0 && mouseX <= this.width) {
           const now = Math.round(this.scale.invert(mouseX));
-          // this.setState({ now });
-          this.props.store.control.nowState = now;
+          this.props.store.year.setTuneValue(now);
         }
       });
   }
@@ -80,7 +78,7 @@ class SeekBar extends React.Component {
           preserveAspectRatio="xMaxYMin meet"
         >
           <Axis width={this.width} scale={this.scale} />
-          <Cursor translate={this.scale(this.props.store.control.now)} active={this.isDown} />
+          <Cursor translate={this.translate} active={this.isDown} />
           {/*
             <rect
               x='0'

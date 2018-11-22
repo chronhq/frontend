@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed, action } from 'mobx';
+import { computed, observable } from 'mobx';
 import Picker from 'rmc-picker';
 
 import './Picker.less';
@@ -38,29 +38,7 @@ class TypeOne extends React.Component {
 @inject('store')
 @observer
 class YearInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      disabled: false
-    };
-  }
-
-  componentDidMount() {
-    this.props.store.control.nowState = this.props.store.year.now;
-  }
-
-  onChange(value) {
-    this.props.store.control.sync = false;
-    this.props.store.control.nowState = value;
-  }
-
-  @computed get isValid() {
-    if (this.props.store.control.nowState >= this.props.store.year.min
-        && this.props.store.control.nowState <= this.props.store.year.max) {
-      return true;
-    }
-    return false;
-  }
+  @observable disabled = false;
 
   @computed get items() {
     const { min: start, max: end } = this.props.store.year;
@@ -75,64 +53,60 @@ class YearInput extends React.Component {
     });
   }
 
-  handleWheel(event) {
-    // event.stopPropagation();
-
-    this.props.store.control.sync = false;
-    if (event.deltaY > 1) {
-      if (this.props.store.control.nowState < this.props.store.year.max) {
-        this.props.store.control.nowState += 1;
-      }
-    } else if (event.deltaY < 1) {
-      if (this.props.store.control.nowState > this.props.store.year.min) {
-        this.props.store.control.nowState -= 1;
-      }
-    }
+  @computed get className() {
+    return this.props.store.year.tuneIsValid
+      ? 'yearinput__title'
+      : 'yearinput__title yearinput__error';
   }
 
-  @action close() {
-    this.props.store.flags.flags.runtime.yearInput = false;
-    this.props.store.control.sync = true;
+  handleWheel = (event) => {
+    this.props.store.year.followWheel(event.deltaY);
   }
 
-  handleSet() {
-    this.props.store.year.setYear(Number(this.props.store.control.nowState));
-    this.props.store.control.sync = true;
+  close = () => {
+    this.props.store.flags.set({ runtime: { yearInput: false } });
+    this.props.store.year.resetTuneValue();
+  }
+
+  saveTuneValue = value => this.props.store.year.setTuneValue(value);
+
+  handleSet = () => {
+    this.props.store.year.flushTuneValue();
     this.close();
   }
 
   render() {
     return (
       <div className='yearinput__window layer-3'>
-        <div className={this.isValid ? 'yearinput__title' : 'yearinput__title yearinput__error'}>
+        <div className={this.className}>
           <TypeOne
-            now={this.props.store.control.now}
-            cb={value => this.onChange(value)}
+            now={this.props.store.year.tuneValue}
+            cb={this.saveTuneValue}
           />
         </div>
         <div
-          onWheel={e => this.handleWheel(e)}
+          onWheel={this.handleWheel}
         >
           <Picker
-            selectedValue={this.props.store.control.nowState}
-            disabled={this.state.disabled}
-            defaultSelectedValue={this.props.store.control.now}
-            onValueChange={v => this.onChange(v)}
+            selectedValue={this.props.store.year.tuneValue}
+            disabled={this.disabled}
+            defaultSelectedValue={this.props.store.year.tuneValue}
+            onValueChange={this.saveTuneValue}
           >
             {this.items}
           </Picker>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <button
-            onClick={() => this.handleSet()}
+            onClick={this.handleSet}
             type='button'
-            disabled={this.isValid ? false : 'disabled'}
-            className={this.isValid ? null : 'disabled'}
+            disabled={this.props.store.year.tuneIsValid ? false : 'disabled'}
+            className={this.props.store.year.tuneIsValid ? null : 'disabled'}
           >
             {this.props.store.i18n.data.buttons.set}
           </button>
           <button
-            onClick={() => this.close()}
+            onClick={this.close}
             type='button'
           >
             {this.props.store.i18n.data.buttons.dismiss}

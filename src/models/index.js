@@ -5,12 +5,11 @@ import Borders from './BordersModel';
 import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
-import YearControl from './YearControlModel';
 import CourseSideEffects from './CourseSideEffects';
 import Prepared from './PreparedData';
-// import View from './ViewModel';
+
 import FeedbackForm from './FeedbackForm';
-// import FeedModel from './FeedModel';
+
 import PinsModel from './PinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
@@ -29,7 +28,6 @@ export default class storeModel {
     this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
-    this.control = new YearControl(this);
     this.effects = {
       course: new CourseSideEffects(this),
     };
