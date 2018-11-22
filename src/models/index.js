@@ -34,8 +34,6 @@ export default class storeModel {
     this.borders = new Borders(this);
     this.properties = new Properties(this);
     this.prepared = new Prepared(this);
-    // this.view = new View(this);
-    // this.feed = new FeedModel(this);
     this.pins = new PinsModel(this);
     this.i18n = new Internationalization(this);
   }

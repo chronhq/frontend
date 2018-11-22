@@ -13,16 +13,6 @@ import Widgets from './Widgets';
 import Balloon from './Balloon';
 import FontLoader from './FontLoader';
 
-
-/* eslint-disable jsx-a11y/anchor-has-content */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-const MapPicsDownloadLink = () => (process.env.NODE_ENV === 'production'
-  ? ''
-  : (<a href='' visibility='hidden' id='mapPicsDownloadLink' />));
-/* eslint-enable jsx-a11y/anchor-has-content */
-/* eslint-enable jsx-a11y/anchor-is-valid */
-
-
 const UI = () => (
   <div className='content'>
     <Widgets />
@@ -52,7 +42,6 @@ const UI = () => (
       name="UI.MapViewport"
       render={() => <MapViewport />}
     />
-    <MapPicsDownloadLink />
   </div>
 );
 

@@ -9,8 +9,6 @@ import PointModel from './DataAdaptation/PointModel';
 export default class DataModel {
   @observable activeCourses = JSON.stringify({ where: { active: true } });
 
-  @observable devDeps = process.env.NODE_ENV === 'production' ? [] : ['MapPics'];
-
   @observable deps = {
     special: [
       'Courses'
@@ -27,7 +25,7 @@ export default class DataModel {
       'MapDecorations',
       'MapColors',
       'GeomBBoxes',
-      ...this.devDeps,
+      'MapPics',
     ],
     course: [
       'CourseTimelines',
@@ -54,6 +52,7 @@ export default class DataModel {
       return false;
     });
 
+    this.MapPics.filter = JSON.stringify({ where: { type: 'pin' } });
     this.Courses.filter = this.activeCourses;
     this.Borders.sortId = 'year';
     this.CourseTimelines.sortId = 'tick';

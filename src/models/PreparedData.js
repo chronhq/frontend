@@ -3,7 +3,6 @@ import Locations from './DataAdaptation/LocationsModel';
 import Persons from './DataAdaptation/PersonsList';
 import Inventions from './DataAdaptation/InventionsList';
 import GeoEvents from './DataAdaptation/GeoEventsList';
-import MapPics from './DataAdaptation/MapPicsModel';
 import Decor from './DataAdaptation/Decor';
 
 export default class FinalDataModel {
@@ -45,10 +44,6 @@ export default class FinalDataModel {
     this.data.decor = new Decor(rootStore);
     this.data.cities = new Locations(rootStore);
 
-    // for svg and json generation
-    if (process.env.NODE_ENV !== 'production') {
-      this.mapPics = new MapPics(rootStore);
-    }
     this.persons = new Persons(rootStore);
     this.inventions = new Inventions(rootStore);
     this.geoEventsList = new GeoEvents(rootStore);
