@@ -11,19 +11,25 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
+    chunkFilename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
   resolve: {
+    // modules: [
+    //   path.join(__dirname, 'src'),
+    //   'node_modules'
+    // ]
     modules: [
-      path.join(__dirname, 'src'),
-      'node_modules'
+      path.resolve('./'),
+      path.resolve('./node_modules'),
     ]
   },
   optimization: {
     nodeEnv: 'development',
+    runtimeChunk: 'single',
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all',
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 4,
@@ -33,11 +39,15 @@ module.exports = {
         node_vendors: {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'initial',
+          name: 'vendor',
           maxSize: 1000000,
           priority: 1
+          // enforce: true
+          // chunks: 'all',
+          // test: /node_modules/
         }
-      },
-    }
+      }
+    },
   },
   devServer: {
     historyApiFallback: true,
@@ -101,6 +111,11 @@ module.exports = {
       analyzerPort: '3001',
       openAnalyzer: false,
     }),
-    new HtmlWebpackPlugin({ title: 'Chronist Development', template: './index.html' }),
+    new HtmlWebpackPlugin({
+      title: 'Chronist Development',
+      filename: 'index.html',
+      template: './index.html',
+      inject: true
+    }),
   ]
 };

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
+import './Event.less';
+
 const Event = ({ event, currentTick, cb }) => {
   const entryClassname = (currentTick === event.tick)
     ? ['timeline__entry', 'timeline__entry--selected'].join(' ')
@@ -15,6 +17,7 @@ const Event = ({ event, currentTick, cb }) => {
         onClick={() => cb(event.tick)}
         className={entryClassname}
       >
+        <div className='timeline__circle' />
         <div className="timeline__heading">
           {' '}
           {event.year}
