@@ -11,7 +11,7 @@ export default class Decor {
   }
 
   @computed get courseId() {
-    return this.rootStore.flags.flags.runtime.SelectedCourse;
+    return this.rootStore.flags.runtime.get('SelectedCourse');
   }
 
   @computed get mapDecorationsRaw() {

@@ -1,6 +1,4 @@
-import { observable, action } from 'mobx';
-
-const isObject = item => (item && typeof item === 'object' && !Array.isArray(item));
+import { observable, action, computed } from 'mobx';
 
 const courseSelectionDefault = {
   Setup: true,
@@ -9,66 +7,104 @@ const courseSelectionDefault = {
   Ready: false,
 };
 
-function mergeFlags(source, target) {
-  const flags = { ...source, ...target };
-  const deep = Object.keys(flags).reduce((prev, flag) => (
-    (isObject(flags[flag] && source[flag] && target[flag]))
-      ? { ...prev, [flag]: mergeFlags(source[flag], target[flag]) }
-      : prev), {});
-  return { ...flags, ...deep };
+const flags = {
+  runtime: {
+    ...courseSelectionDefault,
+    alignPanel: 'right',
+    feedback: false,
+    yearInput: false,
+    SidePanelTab: 0,
+    SidePanelIsOpen: false,
+    TimelineIsMinified: false,
+    BioIsOpen: false,
+    animation: true,
+    cluster: true,
+  },
+  UI: {
+    MapViewport: true,
+    Balloon: true,
+  },
+  layer: {
+    borders: 1,
+    labels: 1,
+    mapDecorations: 1,
+    cities: 1,
+    traces: 1,
+  },
+  pins: {
+    inventions: 1,
+    persons: 1,
+    geoEvents: 1,
+  },
+  zoom: {
+    minScale: 1,
+    maxScale: 20,
+  }
+};
+
+class Flag {
+  @observable value;
+
+  constructor(flag) {
+    this.value = flag;
+  }
 }
 
-function findFlag(source, target) {
-  return target.split('.').reduce((prev, cur) => (
-    isObject(prev) ? prev[cur] : false
-  ), source);
+class FlagList {
+  @observable flags = [];
+
+  @action set(flag, value) {
+    if (typeof this[flag] !== 'undefined') {
+      this[flag].value = value;
+    } else {
+      this.flags = [...this.flags, flag];
+      this[flag] = new Flag(value);
+    }
+  }
+
+  @computed get list() {
+    return this.flags.reduce((prev, cur) => ({
+      ...prev,
+      [cur]: this[cur].value,
+    }), {});
+  }
+
+  update(list) {
+    Object.keys(list).map(c => this.set(c, list[c]));
+  }
+
+  get(flag) {
+    return (typeof this[flag] !== 'undefined')
+      ? this[flag].value
+      : undefined;
+  }
+
+  toggle(flag) {
+    if (typeof this[flag] !== 'undefined') {
+      this.set(flag, !this[flag].value);
+    }
+  }
+
+  constructor(list) {
+    this.update(list);
+  }
 }
 
 export default class FlagsModel {
-  @observable flags = {
-    runtime: {
-      ...courseSelectionDefault,
-      alignPanel: 'right',
-      feedback: false,
-      yearInput: false,
-      SidePanelTab: 0,
-      SidePanelIsOpen: false,
-      TimelineIsMinified: false,
-      BioIsOpen: false,
-      animation: true,
-      cluster: true,
-    },
-    UI: {
-      MapViewport: true,
-      Balloon: true,
-    },
-    layer: {
-      borders: 1,
-      labels: 1,
-      mapDecorations: 1,
-      cities: 1,
-      traces: 1,
-    },
-    pins: {
-      inventions: 1,
-      persons: 1,
-      geoEvents: 1,
-    },
-    zoom: {
-      minScale: 1,
-      maxScale: 20,
-    }
-  };
-
-  @action set(f) {
-    this.flags = mergeFlags(this.flags, f);
+  constructor() {
+    Object.keys(flags).map((l) => {
+      this[l] = new FlagList(flags[l]);
+      return null;
+    });
   }
 
-  get(f) {
-    return findFlag(this.flags, f);
+  @action set(f) {
+    Object.keys(f)
+      .map(branch => Object.keys(f[branch])
+        .map(flag => this[branch].set(flag, f[branch][flag])));
   }
 
   print() {
-    console.log(JSON.parse(JSON.stringify(this.flags)));
+    this.branches.map(b => console.log(b, this[b].list));
   }
 }

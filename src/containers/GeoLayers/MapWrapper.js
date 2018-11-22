@@ -1,7 +1,7 @@
 import React from 'react';
 import DeckGL from '@deck.gl/react';
 
-import { StaticMap } from 'react-map-gl';
+import { StaticMap, InteractiveMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
@@ -29,6 +29,7 @@ class MapWrapper extends React.Component {
   }
 
   componentWillUnmount() {
+    this.deck.InteractiveMap = null;
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
   }
@@ -38,7 +39,7 @@ class MapWrapper extends React.Component {
   }
 
   @computed get options() {
-    return this.props.store.flags.flags.layer;
+    return this.props.store.flags.layer.list;
   }
 
   @computed get borders() {
@@ -91,7 +92,7 @@ class MapWrapper extends React.Component {
     return expeditionsLayer(
       this.props.store.prepared.expeditions,
       this.options.traces,
-      this.props.store.flags.flags.runtime.animation,
+      this.props.store.flags.runtime.get('animation'),
       this.props.store.animation.time
     );
   }
@@ -99,7 +100,7 @@ class MapWrapper extends React.Component {
   @computed get feedPins() {
     const { pins } = this.props.store.pins;
     const { zoom } = this.deck;
-    const coursePins = this.props.store.prepared.data.courseGeoPoints.current;
+    const coursePins = this.props.store.prepared.geoPoints;
 
     return [
       pinsLayer(pins, 'map', zoom, true, this.onMapPinHover),
@@ -109,7 +110,6 @@ class MapWrapper extends React.Component {
 
   @computed get layers() {
     return [
-      this.borders,
       ...this.toponyms,
       this.cityPoints,
       this.oceanDecorations,
@@ -151,6 +151,21 @@ class MapWrapper extends React.Component {
         <StaticMap
           mapStyle={this.deck.mapBox.style}
           mapboxApiAccessToken={this.deck.mapBox.token}
+        />
+        <InteractiveMap
+          mapStyle={this.props.store.borders.style}
+          mapboxApiAccessToken={this.deck.mapBox.token}
+          pickable
+          ref={(ref) => {
+            this.deck.interactiveMap = ref;
+          }}
+          onLoad={() => {
+            // starting a timer for status checking
+            this.deck.watchLoading();
+          }}
+          onClick={(a) => {
+            console.log('Interactive click', a);
+          }}
         />
       </DeckGL>
     );

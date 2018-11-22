@@ -20,7 +20,7 @@ class TimeControls extends React.Component {
         <button type='button' onClick={() => this.props.store.year.prevYear()}>
           <Prev />
         </button>
-        <button type='button' onClick={() => { this.props.store.year.togglePlay(); this.props.store.control.sync = true; }}>
+        <button type='button' onClick={() => this.props.store.year.togglePlay()}>
           {this.props.store.year.playing
             ? <Pause />
             : <Play />

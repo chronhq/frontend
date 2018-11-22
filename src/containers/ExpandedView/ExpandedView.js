@@ -13,15 +13,15 @@ const Empty = () => ('');
 @observer
 class ExpandedView extends React.Component {
   @computed get alignPanel() {
-    return this.props.store.flags.flags.runtime.alignPanel;
+    return this.props.store.flags.runtime.get('alignPanel');
   }
 
-  @computed get flags() {
-    return this.props.store.flags.flags.runtime;
+  @computed get sidePanelTab() {
+    return this.props.store.flags.runtime.get('SidePanelTab');
   }
 
   @computed get isOpen() {
-    return this.props.store.flags.flags.runtime.SidePanelIsOpen;
+    return this.props.store.flags.runtime.get('SidePanelIsOpen');
   }
 
   @computed get sideNavAlign() {
@@ -31,7 +31,7 @@ class ExpandedView extends React.Component {
   }
 
   @computed get component() {
-    switch (this.flags.SidePanelTab) {
+    switch (this.sidePanelTab) {
       case 'settings':
         return Settings;
       case 'align':

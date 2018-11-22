@@ -13,7 +13,7 @@ class CollapsedView extends React.Component {
   }
 
   @computed get alignPanel() {
-    return this.props.store.flags.flags.runtime.alignPanel;
+    return this.props.store.flags.runtime.get('alignPanel');
   }
 
   @computed get iconBarAlign() {
@@ -23,19 +23,19 @@ class CollapsedView extends React.Component {
   }
 
   @computed get isOpen() {
-    return this.props.store.flags.flags.runtime.SidePanelIsOpen;
+    return this.props.store.flags.runtime.get('SidePanelIsOpen');
   }
 
   @computed get currentTab() {
-    return this.props.store.flags.flags.runtime.SidePanelTab;
+    return this.props.store.flags.runtime.get('SidePanelTab');
   }
 
   set isOpen(val) {
-    this.props.store.flags.flags.runtime.SidePanelIsOpen = val;
+    this.props.store.flags.runtime.set('SidePanelIsOpen', val);
   }
 
   set currentTab(val) {
-    this.props.store.flags.flags.runtime.SidePanelTab = val;
+    this.props.store.flags.runtime.set('SidePanelTab', val);
   }
 
   @action toggle(name) {
@@ -69,7 +69,7 @@ class CollapsedView extends React.Component {
           icon='lnr-cog'
           cb={() => this.toggle('settings')}
           name='settings'
-          active={this.props.store.flags.flags.runtime.SidePanelTab === 'settings'}
+          active={this.currentTab === 'settings'}
           disabled={false}
         />
         <FatButton
@@ -77,7 +77,7 @@ class CollapsedView extends React.Component {
           icon='lnr-layers'
           cb={() => this.toggle('layerscontrol')}
           name='layerscontrol'
-          active={this.props.store.flags.flags.runtime.SidePanelTab === 'layerscontrol'}
+          active={this.currentTab === 'layerscontrol'}
           disabled={false}
         />
         <FatButton
@@ -86,7 +86,7 @@ class CollapsedView extends React.Component {
           // cb={() => this.toggle('search')}
           cb={() => console.log('Option not available yet')}
           name='search'
-          active={this.props.store.flags.flags.runtime.SidePanelTab === 'search'}
+          active={this.currentTab === 'search'}
           disabled
         />
         <FatButton
@@ -95,7 +95,7 @@ class CollapsedView extends React.Component {
           cb={() => console.log('Option not available yet')}
           // cb={() => this.toggle('edit')}
           name='search'
-          active={this.props.store.flags.flags.runtime.SidePanelTab === 'search'}
+          active={this.currentTab === 'search'}
           disabled
         />
         <FatButton
@@ -104,7 +104,7 @@ class CollapsedView extends React.Component {
           cb={() => console.log('Option not available yet')}
           // cb={() => this.toggle('export')}
           name='export'
-          active={this.props.store.flags.flags.runtime.SidePanelTab === 'export'}
+          active={this.currentTab === 'export'}
           disabled
         />
         {(process.env.NODE_ENV !== 'production')
@@ -114,7 +114,7 @@ class CollapsedView extends React.Component {
               icon='lnr-bug'
               cb={() => this.toggle('align')}
               name='align'
-              active={this.props.store.flags.flags.runtime.SidePanelTab === 'align'}
+              active={this.currentTab === 'align'}
               disabled={false}
             />
           )

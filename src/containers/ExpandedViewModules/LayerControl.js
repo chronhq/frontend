@@ -7,15 +7,11 @@ import { InputCheckBox } from '../../components/Input';
 @observer
 class LayerControl extends React.Component {
   @computed get layer() {
-    return this.props.store.flags.flags.layer;
+    return this.props.store.flags.layer.list;
   }
 
   @computed get pins() {
-    return this.props.store.flags.flags.pins;
-  }
-
-  @computed get upcominglayer() {
-    return this.props.store.flags.flags.upcominglayer;
+    return this.props.store.flags.pins.list;
   }
 
   @computed get layerNames() {

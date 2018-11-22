@@ -5,8 +5,7 @@ import { observer, inject } from 'mobx-react';
 @observer
 class YearButton extends React.Component {
   toggle() {
-    const isYearInput = this.props.store.flags.flags.runtime.yearInput;
-    this.props.store.flags.set({ runtime: { yearInput: !isYearInput } });
+    this.props.store.flags.runtime.toggle('yearInput');
   }
 
   render() {
@@ -15,7 +14,7 @@ class YearButton extends React.Component {
         onClick={() => this.toggle()}
         type='button'
       >
-        {this.props.store.control.now}
+        {this.props.store.year.tuneValue}
       </button>
     );
   }

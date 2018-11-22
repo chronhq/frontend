@@ -1,49 +1,19 @@
 import {
-  observable, computed, action, when
+  computed, action, when
 } from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.rootStore.data.Courses.filter = this.activeCourses;
-    this.rootStore.data.Borders.sortId = 'year';
   }
 
-  @observable devDeps = process.env.NODE_ENV === 'production' ? [] : ['MapPics'];
+  @computed get deps() {
+    return this.rootStore.data.deps;
+  }
 
-  @observable deps = {
-    base: [
-      'Admins',
-      'CityLocs',
-      'CityPops',
-      'CityProperties',
-      'MapLabels',
-      'Persons',
-      'Properties',
-      'Types',
-      'MapDecorations',
-      'MapColors',
-      ...this.devDeps,
-    ],
-    course: [
-      'CourseTimelines',
-      'CourseTraces',
-      'CourseGeopoints',
-    ],
-    world: [
-      'Inventions',
-      'GeoEvents',
-    ],
-    heavy: [
-      'Borders',
-      'Geometries',
-    ]
-  };
-
-  @observable activeCourses = JSON.stringify({ where: { active: true } });
 
   @computed get courseId() {
-    return this.rootStore.flags.flags.runtime.SelectedCourse;
+    return this.rootStore.flags.runtime.get('SelectedCourse');
   }
 
   @computed get listOfDeps() {
@@ -54,8 +24,7 @@ export default class CourseSideEffects {
 
 
   @computed get loadingIsComplete() {
-    return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded)
-      && this.rootStore.borders.ready;
+    return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded);
   }
 
   @computed get courseFilter() {
@@ -86,10 +55,6 @@ export default class CourseSideEffects {
     this.deps.course.map(wipe);
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
-    // Wipe geometry
-    this.rootStore.borders.wipe();
-    this.rootStore.prepared.data.courseGeoPoints.wipe();
-    this.rootStore.prepared.data.courseTraces.wipe();
   }
 
   @action toggleCourseSelection(toggle) {
@@ -141,7 +106,6 @@ export default class CourseSideEffects {
     // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
 
-    this.rootStore.borders.loadGeometry();
     // reload all borders
     this.rootStore.data.Borders.get();
   }
@@ -152,7 +116,7 @@ export default class CourseSideEffects {
 
   /* eslint-disable consistent-return */
   @action select(id, name) {
-    if (id === this.rootStore.flags.flags.runtime.SelectedCourse) {
+    if (id === this.courseId) {
       console.log('Course already selected', id, name);
       return null;
     }

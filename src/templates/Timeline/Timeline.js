@@ -11,7 +11,7 @@ import './Timeline.less';
 @observer
 class Timeline extends React.Component {
   componentDidMount() {
-    if (this.props.store.flags.flags.runtime.animation) {
+    if (this.props.store.flags.runtime.get('animation')) {
       this.props.store.animation.startAnimation();
     }
   }
@@ -21,7 +21,7 @@ class Timeline extends React.Component {
   }
 
   @computed get className() {
-    return this.props.store.flags.flags.runtime.TimelineIsMinified
+    return this.props.store.flags.runtime.get('TimelineIsMinified')
       ? ['timeline', 'timeline__minified'].join(' ')
       : ['timeline'].join(' ');
   }

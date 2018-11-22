@@ -36,12 +36,7 @@ export default class DeckViewportModel {
     style: MAPBOX_STYLE,
   };
 
-  @computed get enabled() {
-    return this.rootStore.projection.enabled;
-  }
-
   @computed get view() {
-    // if (!this.enabled) return null;
     return new MapView({
       id: 'id-view',
       width: this.width,
@@ -61,13 +56,14 @@ export default class DeckViewportModel {
   }
 
   @computed get viewport() {
+    const zoom = this.rootStore.flags.zoom.list;
     const vState = {
       width: this.width,
       height: this.height,
       viewState: {
         ...INITIAL_VIEW_STATE,
-        maxZoom: this.rootStore.flags.flags.zoom.maxScale,
-        minZoom: this.rootStore.flags.flags.zoom.minScale,
+        maxZoom: zoom.maxScale,
+        minZoom: zoom.minScale,
       },
     };
 
@@ -112,20 +108,24 @@ export default class DeckViewportModel {
 
   @observable bearing = 0;
 
+  @observable interactiveMap = null;
+
+  @observable loadingStatus = false;
+
   @computed get maxZoom() {
-    return this.rootStore.flags.flags.zoom.maxScale;
+    return this.rootStore.flags.zoom.get('maxScale');
   }
 
   set maxZoom(z) {
-    this.rootStore.flags.flags.zoom.maxScale = z;
+    this.rootStore.flags.zoom.set('maxScale', z);
   }
 
   @computed get minZoom() {
-    return this.rootStore.flags.flags.zoom.minScale;
+    return this.rootStore.flags.zoom.get('minScale');
   }
 
   set minZoom(z) {
-    this.rootStore.flags.flags.zoom.minScale = z;
+    this.rootStore.flags.zoom.set('minScale', z);
   }
 
   @computed get rZoom() {
@@ -149,6 +149,15 @@ export default class DeckViewportModel {
       this[field] = viewState[field];
       return 0;
     });
+  }
+
+  @action watchLoading() {
+    if (this.interactiveMap !== null) {
+      this.loadingStatus = this.interactiveMap.getMap().loaded();
+      if (typeof this.loadingStatus !== 'undefined') {
+        setTimeout(() => this.watchLoading(), 300);
+      }
+    }
   }
 
   @action updateViewState(viewState) {

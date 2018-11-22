@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { action } from 'mobx';
 
 import TimeControls from '../TimeControls/TimeControls';
 import AlignToggler from '../../components/AlignToggler';
@@ -9,9 +8,8 @@ import { InputCheckBox } from '../../components/Input';
 @inject('store')
 @observer
 class Animation extends React.Component {
-  @action handleChange() {
-    const toggledAnimation = !this.props.store.flags.flags.runtime.animation;
-    this.props.store.flags.flags.runtime.animation = toggledAnimation;
+  handleChange() {
+    this.props.store.flags.runtime.toggle('animation');
   }
 
   render() {
@@ -36,7 +34,7 @@ class Animation extends React.Component {
         <InputCheckBox
           name='animation'
           label='Animation'
-          checked={this.props.store.flags.flags.runtime.animation}
+          checked={this.props.store.flags.runtime.get('animation')}
           cb={() => this.handleChange()}
         />
       </div>
