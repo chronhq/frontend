@@ -15,7 +15,7 @@ class ShowCourse extends React.Component {
         <Flag
           name="runtime.CourseSelection"
           render={props => <LoadingScreen {...props} />}
-          courseSelected={this.props.computedMatch.params.id}
+          courseSelected={this.props.match.params.id}
           fallbackRender={() => ''}
         />
         {this.props.store.flags.runtime.get('Setup') === false && <UI />}
