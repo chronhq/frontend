@@ -71,7 +71,7 @@ class YearInput extends React.Component {
   saveTuneValue = value => this.props.store.year.setTuneValue(value);
 
   handleSet = () => {
-    this.props.store.year.flushTuneValue();
+    this.props.store.year.saveTuneValue();
     this.close();
   }
 
