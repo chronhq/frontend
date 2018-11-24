@@ -1,7 +1,7 @@
 import React from 'react';
 import DeckGL from '@deck.gl/react';
 
-import { StaticMap, InteractiveMap } from 'react-map-gl';
+import { InteractiveMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
@@ -27,6 +27,7 @@ class MapWrapper extends React.Component {
     window.addEventListener('orientationchange', () => this.resize(), false);
     this.resize();
   }
+
 
   componentWillUnmount() {
     this.deck.InteractiveMap = null;
@@ -141,33 +142,31 @@ class MapWrapper extends React.Component {
 
   render() {
     return (
-      <DeckGL
-        views={this.deck.view}
+      <InteractiveMap
+        width={this.deck.width}
+        height={this.deck.height}
         viewState={this.deck.viewState}
+        mapStyle={this.props.store.borders.style}
+        // mapStyle={this.deck.mapBox.style}{/*terrain style*/}
+        mapboxApiAccessToken={this.deck.mapBox.token}
+        ref={(ref) => {
+          this.deck.interactiveMap = ref;
+        }}
+        onLoad={() => {
+          // starting a timer for status checking
+          this.deck.watchLoading();
+        }}
+        onClick={(a) => {
+          console.log('Interactive click', a);
+        }}
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
-        style={{ zIndex: 1 }}
-        layers={this.layers}
       >
-        <StaticMap
-          mapStyle={this.deck.mapBox.style}
-          mapboxApiAccessToken={this.deck.mapBox.token}
+        <DeckGL
+          viewState={this.deck.viewState}
+          style={{ zIndex: 1 }}
+          layers={this.layers}
         />
-        <InteractiveMap
-          mapStyle={this.props.store.borders.style}
-          mapboxApiAccessToken={this.deck.mapBox.token}
-          pickable
-          ref={(ref) => {
-            this.deck.interactiveMap = ref;
-          }}
-          onLoad={() => {
-            // starting a timer for status checking
-            this.deck.watchLoading();
-          }}
-          onClick={(a) => {
-            console.log('Interactive click', a);
-          }}
-        />
-      </DeckGL>
+      </InteractiveMap>
     );
   }
 }

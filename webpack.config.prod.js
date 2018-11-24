@@ -10,9 +10,15 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
     chunkFilename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
+  },
+  resolve: {
+    modules: [
+      path.join(__dirname, 'src'),
+      'node_modules'
+    ]
   },
   performance: {
     hints: 'warning',
@@ -21,8 +27,10 @@ module.exports = {
   optimization: {
     noEmitOnErrors: true,
     nodeEnv: 'production',
+    runtimeChunk: 'single',
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all',
+      minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 4,
       name: true,
@@ -31,11 +39,12 @@ module.exports = {
         node_vendors: {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'initial',
+          name: 'vendor',
           maxSize: 1000000,
           priority: 1
         }
-      },
-    }
+      }
+    },
   },
   stats: {
     assets: true,
@@ -43,12 +52,6 @@ module.exports = {
     errors: true,
     errorDetails: true,
     hash: false
-  },
-  resolve: {
-    modules: [
-      path.join(__dirname, 'src'),
-      'node_modules'
-    ]
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -91,11 +94,11 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
-        loader: 'url-loader?limit=20000&name=[name].[ext]'
+        loader: 'url-loader?limit=4096&name=[name].[ext]'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?limit=10000&name=[name].[ext]'
+        loader: 'url-loader?limit=4096&name=[name].[ext]'
       }
     ]
   },

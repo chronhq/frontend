@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 
 import Spinner from './components/Spinner/Spinner';
+
 const ShowCourse = lazy(() => import('./ShowCourse'));
 const CourseSelection = lazy(() => import('./pages/CourseSelection'));
 const NotFound = lazy(() => import('./pages/404'));
