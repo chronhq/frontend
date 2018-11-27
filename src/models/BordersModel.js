@@ -64,7 +64,7 @@ export default class BordersModel {
       const source = {
         type: 'vector',
         bounds: this.geomBBoxes[cur.id].bounds,
-        tiles: [`http://localhost:3000/mvt/${cur.id}/{z}/{x}/{y}`]
+        tiles: [`${window.location.origin}/mvt/${cur.id}/{z}/{x}/{y}`]
       };
 
       const layer = {
