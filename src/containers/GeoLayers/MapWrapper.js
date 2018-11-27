@@ -146,9 +146,8 @@ class MapWrapper extends React.Component {
         width={this.deck.width}
         height={this.deck.height}
         viewState={this.deck.viewState}
-        mapStyle={this.props.store.borders.style}
-        // mapStyle={this.deck.mapBox.style}{/*terrain style*/}
-        mapboxApiAccessToken={this.deck.mapBox.token}
+        mapStyle={this.props.store.mapStyle.style}
+        mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
         ref={(ref) => {
           this.deck.interactiveMap = ref;
         }}

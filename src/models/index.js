@@ -16,6 +16,8 @@ import DeckViewport from './DeckViewport';
 import AnimationFrame from './AnimationFrame';
 import Properties from './PropertiesModel';
 
+import MapStyle from './MapStyleModel';
+
 export default class storeModel {
   @observable fonts = {};
 
@@ -36,5 +38,6 @@ export default class storeModel {
     this.prepared = new Prepared(this);
     this.pins = new PinsModel(this);
     this.i18n = new Internationalization(this);
+    this.mapStyle = new MapStyle(this);
   }
 }

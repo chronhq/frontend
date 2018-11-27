@@ -17,9 +17,6 @@ const INITIAL_VIEW_STATE = {
   pitch: 0
 };
 
-const MAPBOX_STYLE = 'mapbox://styles/miklergm/cjnz3lyi26zu32sofcdrnxfnv';
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlrbGVyZ20iLCJhIjoiY2pueWVqcGhzMDRnczNrbzI2NzIxMDAzMyJ9.gtQYtN2oRxlEF_s_PRhTOQ';
-
 export default class DeckViewportModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -30,11 +27,6 @@ export default class DeckViewportModel {
   @observable height = window.innerHeight;
 
   @observable showCluster = true;
-
-  @observable mapBox = {
-    token: MAPBOX_TOKEN,
-    style: MAPBOX_STYLE,
-  };
 
   @computed get view() {
     return new MapView({
