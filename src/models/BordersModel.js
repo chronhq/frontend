@@ -45,12 +45,12 @@ export default class BordersModel {
 
   @computed get styleFeatures() {
     const properties = this.rootStore.properties.data;
-    return this.actualData.map(cur => ({
-      color: (cur.props in properties
-        ? properties[cur.props].color
+    return Object.keys(this.actualData).map(geo => ({
+      color: (this.actualData[geo] in properties
+        ? properties[this.actualData[geo]].color
         : [0, 0, 0, 0]),
-      id: cur.geo,
-      props: cur.props,
+      id: Number(geo),
+      props: this.actualData[geo],
     }));
   }
 
@@ -60,7 +60,8 @@ export default class BordersModel {
       if (typeof this.geomBBoxes[cur.id] === 'undefined') {
         return prev;
       }
-      const name = `geom-${cur.id}`;
+      const name = `${cur.id}`;
+
       const source = {
         type: 'vector',
         bounds: this.geomBBoxes[cur.id].bounds,

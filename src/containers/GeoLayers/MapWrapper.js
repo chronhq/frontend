@@ -123,9 +123,20 @@ class MapWrapper extends React.Component {
 
   onBorderHoverCb = (d) => {
     // if image contains transparent parts disable drawing tooltip
-    const key = d.color === null ? null : d.object.props;
+    let key = null;
+    const feature = d.features.length > 0
+      ? d.features[0]
+      : { layer: { id: '0' }, properties: { id: '1' } };
+    try {
+      if (Number(feature.layer.id) === feature.properties.id) {
+        // it's most possible one of our layers
+        key = this.props.store.borders.actualData[feature.properties.id];
+      }
+    } catch (e) {
+      console.error('Feature parsing failed', e, d);
+    }
     this.props.store.pins.setCountryActive(key);
-    this.props.store.pins.setPosition(d.x, d.y);
+    this.props.store.pins.setPosition(d.center.x, d.center.y);
   };
 
   onMapPinHover = (d) => {
@@ -155,9 +166,7 @@ class MapWrapper extends React.Component {
           // starting a timer for status checking
           this.deck.watchLoading();
         }}
-        onClick={(a) => {
-          console.log('Interactive click', a);
-        }}
+        onHover={this.onBorderHoverCb}
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
       >
         <DeckGL
