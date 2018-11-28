@@ -136,7 +136,9 @@ class MapWrapper extends React.Component {
       console.error('Feature parsing failed', e, features);
     }
     this.props.store.pins.setCountryActive(key);
-    this.props.store.pins.setPosition(...position);
+    if (key !== null) {
+      this.props.store.pins.setPosition(...position);
+    }
     return true;
   };
 
@@ -167,7 +169,10 @@ class MapWrapper extends React.Component {
         onLayerHover={(info, allInfos, event) => {
           const mapboxFeatures = this.deck.interactiveMap
             .queryRenderedFeatures([event.offsetX, event.offsetY]);
-          if (info === null) {
+          if (event.type === 'mouseleave') {
+            // disable all balloons
+            this.props.store.pins.setActive(null);
+          } else if (info === null) {
             this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY]);
           }
         }}
