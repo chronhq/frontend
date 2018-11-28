@@ -136,7 +136,9 @@ class MapWrapper extends React.Component {
       console.error('Feature parsing failed', e, features);
     }
     this.props.store.pins.setCountryActive(key);
-    this.props.store.pins.setPosition(...position);
+    if (key !== null) {
+      this.props.store.pins.setPosition(...position);
+    }
     return true;
   };
 
