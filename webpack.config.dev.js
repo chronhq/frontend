@@ -43,14 +43,17 @@ module.exports = {
     },
   },
   devServer: {
+    host: '0.0.0.0',
+    posrt: '3000',
+    public: '0.0.0.0:3000',
     historyApiFallback: true,
     inline: true,
-    host: '0.0.0.0',
     port: 3000,
     hot: true,
     hotOnly: true,
     compress: true,
     https: false,
+    disableHostCheck: true,
     proxy: {
       '/api': 'http://api:3333/',
       '/mvt': 'http://api:3333/',
@@ -73,7 +76,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', { loader: 'css-loader', options: { importLoaders: 1 } }, 'less-loader']
+        use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -89,7 +92,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
-        loader: 'url-loader?limit=10000&name=[name].[ext]'
+        loader: 'url-loader?limit=4096&name=[name].[ext]'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -107,8 +110,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Chronist Development',
       filename: 'index.html',
-      template: './index.html',
-      inject: true
+      template: './index.html'
     }),
   ]
 };

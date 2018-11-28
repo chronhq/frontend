@@ -53,16 +53,6 @@ module.exports = {
     errorDetails: true,
     hash: false
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'style.bundle.css',
-    }),
-    new HtmlWebpackPlugin({
-      template: './index.html',
-      inject: 'body',
-      filename: 'index.html'
-    }),
-  ],
   module: {
     rules: [
       {
@@ -98,8 +88,18 @@ module.exports = {
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?limit=4096&name=[name].[ext]'
+        loader: 'url-loader?limit=10000&name=[name].[ext]'
       }
     ]
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'style.bundle.css',
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      inject: 'body',
+      filename: 'index.html'
+    }),
+  ],
 };

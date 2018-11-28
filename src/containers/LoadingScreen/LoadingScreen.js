@@ -4,10 +4,8 @@ import { observer } from 'mobx-react';
 import { when, toJS } from 'mobx';
 
 import { ymHit } from '../../metrikaHelper';
-import './LoadingScreen.less';
-
-import checkCourses from '../../components/checkCourses';
 import LoadingLogo from './LoadingLogo';
+import checkCourses from '../../components/checkCourses';
 
 @observer
 class LoadingScreen extends React.Component {
@@ -24,6 +22,7 @@ class LoadingScreen extends React.Component {
   }
 
   selectCourse() {
+    // #TODO firing two times in ainu
     const course = this.props.store.effects.course.find(this.props.courseSelected);
     if (course !== undefined) {
       this.props.store.effects.course.select(course.id, course.url);
@@ -43,9 +42,7 @@ class LoadingScreen extends React.Component {
 
   render() {
     return (
-      <div className='loading-screen'>
-        <LoadingLogo i18n={this.props.store.i18n} />
-      </div>
+      <LoadingLogo />
     );
   }
 }

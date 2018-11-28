@@ -1,77 +1,46 @@
-.error-page {
+.error {
+  padding-top: 2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   & a {
     color: black;
     text-decoration: none;
     text-shadow: none;
     box-shadow: none;
   }
-
-  & h2, & h3 {
+  & h2, & h4 {
     text-align: center;
-    margin: 0 0 3px;
+    margin: 0 0 20px;
   }
-
-  & .background {
-
-    min-width: 320px;
+  &-back {
+    min-width: 300px;
     width: 50%;
     margin: 0 auto;
-    // padding-bottom: 220px;
-    &__single {
-      // width: 200px;
-      // height: 300px;
-      min-width: 300px;
-      width: 50%;
-      // height: auto;
-      display: inline-block;
-      text-align: center;
-      margin: 0 auto;
-      @media screen and (max-width: 540px) {
-        height: 300px;
-      }
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    &_single {
+      max-height: 300px;
+    }
+    &_over {
+      transform: translateX(70px);
+      max-height: 300px;
+    }
+    &_under {
+      transform: translateX(-20px);
+      max-height: 300px;
     }
   }
-
-  .over {
-    position: absolute;
-    height: 300px;
-    top: 200px;
-    color: rgba(0, 0, 0, 0.8);
-    left: calc(~'50vw - 160px');
-    @media screen and (max-width: 540px) {
-      height: 250px;
-      left: calc(~'50vw - 140px');
-    }
-  }
-
-  .under {
-    position: absolute;
-    height: 300px;
-    top: 200px;
-    left: calc(~'50vw - 40px');
-    @media screen and (max-width: 540px) {
-      height: 250px;
-      left: calc(~'50vw - 40px');
-    }
-  }
-}
-
-.overlap {
-  position: absolute;
 }
 
 .error-page__logo {
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  padding-top: 30px;
-  height: 150px;
-  min-width: 320px;
+  height: 120px;
+  min-width: 300px;
   & img {
     margin-top: 20px;
     margin-bottom: 20px;

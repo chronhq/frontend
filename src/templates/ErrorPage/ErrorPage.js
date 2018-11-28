@@ -16,27 +16,27 @@ class ErrorPage extends React.Component {
   render() {
     const Image = (this.props.code === 404)
       ? () => (
-        <div className='background'>
-          <img className='background__single' src={astronaut} alt='astronaut' />
+        <div className='error-back'>
+          <img className='error-back_single' src={astronaut} alt='astronaut' />
         </div>)
       : () => (
-        <div className='background'>
-          <img className='over' src={japanImg} alt='japanese-warrior' />
-          <img className='under' src={egyptImg} alt='egyptian-warrior' />
+        <div className='error-back'>
+          <img className='error-back_over' src={japanImg} alt='japanese-warrior' />
+          <img className='error-back_under' src={egyptImg} alt='egyptian-warrior' />
         </div>);
     return (
-      <div className='error-page'>
+      <div className='error'>
         <Suspense fallback={<Spinner />}>
           <TitleLogo logo={this.props.store.i18n.logo} />
         </Suspense>
         <h1>
           {this.props.store.i18n.data.error.message}
         </h1>
-        <h3>
+        <h4>
           {this.props.code}
           {'... '}
           {this.props.store.i18n.data.error[this.props.code]}
-        </h3>
+        </h4>
         <Image />
       </div>
     );

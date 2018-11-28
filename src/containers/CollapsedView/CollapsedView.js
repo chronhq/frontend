@@ -1,6 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
+import { withRouter } from 'react-router-dom';
 
 import VerticalLogo from '../../components/Logos/VerticalLogo';
 import FatButton from '../../components/FatButton/FatButton';
@@ -125,4 +126,4 @@ class CollapsedView extends React.Component {
   }
 }
 
-export default CollapsedView;
+export default withRouter(CollapsedView);
