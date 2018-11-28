@@ -121,22 +121,23 @@ class MapWrapper extends React.Component {
     ];
   }
 
-  onBorderHoverCb = (d) => {
+  onBorderHoverCb = (features, position) => {
     // if image contains transparent parts disable drawing tooltip
     let key = null;
-    const feature = d.features.length > 0
-      ? d.features[0]
+    const feature = features.length > 0
+      ? features[0]
       : { layer: { id: '0' }, properties: { id: '1' } };
     try {
       if (Number(feature.layer.id) === feature.properties.id) {
-        // it's most possible one of our layers
+        // it's one of our border layers
         key = this.props.store.borders.actualData[feature.properties.id];
       }
     } catch (e) {
-      console.error('Feature parsing failed', e, d);
+      console.error('Feature parsing failed', e, features);
     }
     this.props.store.pins.setCountryActive(key);
-    this.props.store.pins.setPosition(d.center.x, d.center.y);
+    this.props.store.pins.setPosition(...position);
+    return true;
   };
 
   onMapPinHover = (d) => {
@@ -144,6 +145,10 @@ class MapWrapper extends React.Component {
     const key = d.color === null ? null : d.object.key;
     this.props.store.pins.setActive(key, false);
     this.props.store.pins.setPosition(d.x, d.y);
+    // according to https://github.com/uber/deck.gl/blob/master/docs/get-started/interactivity.md
+    // event should be marked as complete if returns true
+    // but DeckGL onLayerHover will catch the event even if it should not
+    return false;
   };
 
   @action resize() {
@@ -153,28 +158,34 @@ class MapWrapper extends React.Component {
 
   render() {
     return (
-      <InteractiveMap
-        width={this.deck.width}
-        height={this.deck.height}
+      <DeckGL
         viewState={this.deck.viewState}
-        mapStyle={this.props.store.mapStyle.style}
-        mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
-        ref={(ref) => {
-          this.deck.interactiveMap = ref;
-        }}
-        onLoad={() => {
-          // starting a timer for status checking
-          this.deck.watchLoading();
-        }}
-        onHover={this.onBorderHoverCb}
+        style={{ zIndex: 1 }}
+        layers={this.layers}
+        views={this.deck.view}
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
+        onLayerHover={(info, allInfos, event) => {
+          const mapboxFeatures = this.deck.interactiveMap
+            .queryRenderedFeatures([event.offsetX, event.offsetY]);
+          if (info === null) {
+            this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY]);
+          }
+        }}
       >
-        <DeckGL
-          viewState={this.deck.viewState}
-          style={{ zIndex: 1 }}
-          layers={this.layers}
+        <InteractiveMap
+          mapStyle={this.props.store.mapStyle.style}
+          mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
+          ref={(ref) => {
+            this.deck.interactiveMap = ref;
+          }}
+          onLoad={() => {
+            // starting a timer for status checking
+            this.deck.watchLoading();
+          }}
+          // this event handled in DeckGL layer hover
+          // onHover={this.onBorderHoverCb}
         />
-      </InteractiveMap>
+      </DeckGL>
     );
   }
 }

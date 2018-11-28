@@ -52,12 +52,12 @@ export default class FeedPinsModel {
   }
 
   @action setActive(a, free = false) {
+    this.countryHover = null;
     this.selectedFreePin = free;
     this.active = a;
   }
 
   @action setCountryActive(c) {
-    // console.log('Selecting country', c);
     this.countryHover = c;
     this.active = Boolean(c);
   }
