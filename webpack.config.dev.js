@@ -44,7 +44,6 @@ module.exports = {
   },
   devServer: {
     host: '0.0.0.0',
-    posrt: '3000',
     public: '0.0.0.0:3000',
     historyApiFallback: true,
     inline: true,
