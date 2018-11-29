@@ -14,7 +14,8 @@ function cityTextLayer(cities, visible, deck) {
     getSize: d => (40 - (1.5 * d.scaleRank)),
     sizeScale: 0.5,
     getTextAnchor: 'middle',
-    fontFamily: 'OpenSans-Light',
+    fontFamily: 'Open Sans Light, sans-serif',
+    fontWeight: 300,
     characterSet: chars,
     getAlignmentBaseline: 'top',
     updateTriggers: {
