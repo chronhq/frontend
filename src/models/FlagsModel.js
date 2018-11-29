@@ -13,11 +13,6 @@ const flags = {
     animation: true,
     cluster: true,
   },
-  // UI flags are deprecated
-  UI: {
-    MapViewport: true,
-    Balloon: true,
-  },
   layer: {
     borders: 1,
     labels: 1,
