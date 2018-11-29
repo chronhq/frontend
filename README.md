@@ -1,204 +1,59 @@
-# [Техническое Задание](chronist/roadmap#2) #
+# Chron Frontend
 
-## Установка
-### Первоначальное клонирование
-
-`git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git  map-prototype --recursive`
-
-### Если необходимо загрузить сабмодули
-`git clone ssh://git@gitlab.morlov.tk:10022/chronist/map-prototype.git
-git submodule update --init --recursive`
-
-### Установка зависимостей
+## Getting Started
+### Requirments
+* Node.js version 8 and later
+* Mapbox access token
+### Hot to run
 ```bash
-npm install
-```
-### Компиляция данных
-Желательно использовать GitBash или WSL в зависимости от рабочего окружения
-```bash
-bash bin/prepareData.sh
-```
+# Clone the repo
+git clone https://github.com/chronhq/frontend.git
 
-### Запуск Dev сервера
+cd frontend
 
-```bash
+# Install dependencies
+npm i
+
+# Create a settings.json file from settings.json.example
+
+# Setup your mapbox access token in settings.json 
+# New token can be accuired from https://www.mapbox.com/account/access-tokens
+
+sed 's/MAPBOX_TOKEN/past_your_token_here/' settings.json.example > settings.json
+
+# Run the app in development environment
+# webpack-dev-server - 0.0.0.0:3000
+# webpack-bundle-analyzer - 0.0.0.0:3001 
 npm start
 ```
+The app can be accessed via http://localhost:3000/
 
-### Запуск Dev сервера c экспериментальным UI
+Webpack-bundle-analyzer can be accessed via http://localhost:3001/
 
+### How to build a release version
 ```bash
-npm run dev
+npm run release
+# Compiled files can be served from ./dist directory
 ```
+### Docker images
+App container can be build with docker but it was never designed to be used as standalone docker image.
 
-### Использование Redux DevTools
+However docker-compose is applicable for development purposes
 
-[Redux Devtools](https://github.com/gaearon/redux-devtools)
-[redux-devtools-dock-monitor](https://github.com/gaearon/redux-devtools-dock-monitor)
+------
+### Endpoints
+There are three endpoints for fetching data from backend
 
-- <kbd>CTRL</kbd>+<kbd>H</kbd> Toggle DevTools Dock
-- <kbd>CTRL</kbd>+<kbd>Q</kbd> Move DevTools Dock Position
+Development config:
+```json
+proxy: {
+  '/api': 'http://api:3333/',
+  '/mvt': 'http://api:3333/',
+  '/shared': 'http://api:3333/'
+}
+```
+`/api` - REST requests for data
 
-### TODO
-- [] Управление
-  - [X] Старт/Стоп/Рестарт
-  - [X] Ручная установка года
-  - [X] Таймлайн
-  - [] Выбор периода
-  - [] Отображение всех событий за период
-- [] Сайдбар-легенда
-  - [] Список фактов
-    - [X] За проигранный период
-    - [X] За текущий год
-    - [] Группировать по годам
-    - [] Дополнительная информация о факте
-- [] Карта
-  - [] Переключение видимости слоёв
-  - [] Города
-    - [X] По годам
-    - [X] Отображение на карте
-    - [] Анимация появления/исчезновения
-  - [] Факты
-    - [X] По годам
-    - [] Отображение на карте
-    - [] Взаимосвязи между фактами
-  - [] Политические границы
-    - [X] По годам
-    - [X] Отображение на карте
-    - [] Анимация перехода
-  - [] Скрытое
-    - [] Люди
-      - [] Выборка связанных фактов с человеком
-- [] Группировка по регионам
-- [] CRUD Админка
+`/mvt` - GET requests for MVT (mapbox vector tiles) with political borders `/mvt/{geom_id}/{z}/{x}/{y}` 
 
-
-бифокальная линца
-ловушка для лобстеро
-циркулярная пила
-
-
-#Project todo
-----------------
-
-## All
- - [x] пофиксить в разные стили,
-    - [x] убрать маргин у чекбокса слева
-    - [x] унифицировать кнопки для мапа
-    - [x] пофиксить z-index у карт/слоев/тултипов/всплываешк
-    - [ч] кастомный селект инпут
-    - [x] кастомный input[type=Number] инпут
-    - [x] заюзать нормальные иконки
-    - [x] запилить кастомный range селект
-  -[] Favicon plugin search and destroy
-    - [x] map
-    - [] landing
- - [x] кросплатформенность
-
-
-
-##Styles in the need of fix
- - [] Bio.less
- - [x] ErrorPages.less
- - [x] FontAwesome legacy:
-    - [x] FeedBackForm
- - [x] SidePanel slightly new look
-
-
- - [x] добавить цднки шрифтов
- - [] переделать иконки в TimePanel Control на те, что даня заэкспортил
-
-##BUGS
- - [x] In timeline seekbar some time show wrong year
- - [x] Course crashed in the end ticks
- - [] WorldMap sometimes loss all continent's contour
- - [] ainu - назад - в карту - ожидается
- - [] second click on button in collapsedview hide sidebar but don't clear runtime.SidePanelTab
-  - [] попрыгушки гексагонов в мишином хруме (what?)
-
-#Current
- - [x] пофиксить балуны людей
- - [x] Вытащить в коллапсед бокс задисейбленные кнопки
- - [x] Тени у включенных кнопок в Collapsed view
- - [] Вьюпорт маджик
-      - [x] позицию и масштаб и ограничение для курса
-      - [x] настроить минимальный и максимальный зум для карты.
-      - [x] Ограничения городов для курса, и изменение вьюпорта
-      - [x] смещение в левый верхний угол для курса
-      - [] поведение карты на краях. не прыгала. или замощение.
-      - [x] забанить питч
-
- - [] кластеризация эвентов
- - [] Кластаризация топонимов
- - [] стили для топонимов
- - [] noscript добавить. browser recomendation
-
- - [](?) Feed Pins, подсветка по эвентам ленты
- - [x] пины для городов изменить.
- - [x] Пины слепые
- - [o](?) фиксированный тултип для геолайера с указанием страны, населения, чонить ещё (dynamic baloons)
- - [o] галку в интро, кукисы к ним, перенос настроечек из кукисов в мобх (intro is gone)
-
- - [x] SplitCodeChunks
- - [x] вытищть animation flag checkbox
- - [x] year input
- - [x] pop-upы к пинам
- - [x] Пины (inventions and stuff).
- - [x] pop-upы к пинам(стили)
- - [x] импортнуть лору в демку и запилить лого на ней
- - [x] localization (window.store.i18n.lng='en')
- - [x] однородность
- - [x] убрать gap. (Edge compatibility broken)
- - [x] Box-shadows for stuf
- - [x] AlignToggle пришить к мобх/пришить направление тултипов к мобх
- - [x] Повернутые декорации
- - [x] selectы и радиожажа по лабелу должны тугглиться
- - [x] Выпилить бутстрап
-      - переделать курсы с бутстрапа на норм
- - [x] поменять пины для городов на кругляши
-
-## Problems
-  - [] getFilledColor паттерны всякие для разукрашивания в три цвета не работают
-  - [] traces data хранятся в жопке
-  - [] при питчинге карты  съедаются строчки от TextLayer
-  - [x] объединить эвент лисенер на ресайз из таймпанели и мапвраппера
-
-
-## Metriks
-SetLocalization.js - ym('reachGoal', 'locale', e.target.value);
-
-
-
-##Release notes (до релиза 17 дней)
-Mini
-  1. привести весь интерфейс в соответствие с UI kit, (in progress)
-  8. убрать дергания карты при максимальном зуме (in progress)
-  3. кластеризировать пины и топонимы
-  5. Новый движок, рабочий таймлайн с выбором года для мобил и для десктопа
-  6. Перепозиционировать топонимы
-  7. Viewport для курса изменить
-  9. Починить базу городов
-  10. починить ошибку из-за которой всё падает <-?
-  11. Ускорить загрузку UI ?
-    - [] рисовать контур до. контур загружать в
-    - []
-  12. Изменить уровень упрощения карты
-  13. Все карты с 1783 по 2000
-  14. База для цветов карты
-
-  16. Яндекс.директ и google adwords настройки.
-  15. релиз на русском и на английском
-Opti
-  17. Расставить Map decorations
-  18. дописать топонимы
-  19. Экспедиции в курсе (а что с ними вообще?) (check)
-  20. Отловить ошибки по картам
-  21. Проверить координаты городов
-  22. Перевести недопереведённое
-  23. купить домен chron.ist
-  24. сделать тестовый контур
-  25. Начать работу над админкой (конец августа)
-
-##Done
-  2. перерисовать баллоны (тултипы) (in progress)
-  4. Переехать на vps
+`/shared` - shared code with chronist landing page (Feedback page)
