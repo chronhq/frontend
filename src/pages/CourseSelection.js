@@ -8,7 +8,7 @@ import Wrapper from './Wrapper';
 @observer
 class CourseSelection extends React.Component {
   componentWillMount() {
-    this.props.store.effects.course.enableCourseSelection();
+    this.props.store.courseSelection.cleanup();
   }
 
   render() {

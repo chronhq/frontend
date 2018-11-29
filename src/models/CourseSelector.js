@@ -1,16 +1,19 @@
-import {
-  computed, action, when
-} from 'mobx';
+import { computed, action } from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
 
+  find(name) {
+    return Object
+      .values(this.rootStore.data.Courses.data)
+      .find(cur => cur.url === name);
+  }
+
   @computed get deps() {
     return this.rootStore.data.deps;
   }
-
 
   @computed get courseId() {
     return this.rootStore.flags.runtime.get('SelectedCourse');
@@ -39,13 +42,10 @@ export default class CourseSideEffects {
     return this.rootStore.data.Courses.data[this.courseId];
   }
 
-  @action enableCourseSelection() {
+  @action cleanup() {
     this.rootStore.flags.set({
       runtime: {
-        CourseSelection: true,
         SelectedCourse: null,
-        Setup: true,
-        Ready: false
       }
     });
 
@@ -55,32 +55,6 @@ export default class CourseSideEffects {
     this.deps.course.map(wipe);
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
-  }
-
-  @action toggleCourseSelection(toggle) {
-    // toggle === true - courseSelection enabled
-    this.rootStore.flags.set({
-      runtime: {
-        Ready: !toggle,
-        CourseSelection: toggle,
-      }
-    });
-  }
-
-  @action configureCourseUI() {
-    const uiSettings = this.courseInfo.config.settings;
-    const zoom = 'zoom' in this.courseInfo.config.settings
-      ? this.courseInfo.config.settings.zoom
-      : this.courseInfo.config.settings.flags.zoom;
-    this.rootStore.flags.set({
-      ...uiSettings.flags,
-      zoom
-    });
-  }
-
-  @action configureCourseEnv() {
-    this.rootStore.year.setup(this.courseInfo.config.year);
-    // this.rootStore.projection.setup(this.courseInfo.config.projection);
   }
 
   @action configureDataFilters() {
@@ -110,11 +84,6 @@ export default class CourseSideEffects {
     this.rootStore.data.Borders.get();
   }
 
-  find(name) {
-    return Object.values(this.rootStore.data.Courses.data).find(cur => cur.url === name);
-  }
-
-  /* eslint-disable consistent-return */
   @action select(id, name) {
     if (id === this.courseId) {
       console.log('Course already selected', id, name);
@@ -127,24 +96,14 @@ export default class CourseSideEffects {
       }
     });
 
-    this.configureCourseEnv();
+    this.rootStore.year.setup(this.courseInfo.config.year);
+    this.rootStore.flags.set(this.courseInfo.config.settings.flags);
+
     this.configureDataFilters();
-    this.configureCourseUI();
     this.loadCourseData();
 
     // update viewport position
     this.rootStore.deck.initLatLon();
-
-    this.rootStore.flags.set({
-      runtime: {
-        Setup: false,
-      }
-    });
-
-    // Close course selection screen after loading is complete
-    when(
-      () => this.loadingIsComplete,
-      () => this.toggleCourseSelection(false)
-    );
+    return true;
   }
 }

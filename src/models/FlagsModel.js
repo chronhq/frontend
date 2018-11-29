@@ -1,15 +1,8 @@
 import { observable, action, computed } from 'mobx';
 
-const courseSelectionDefault = {
-  Setup: true,
-  CourseSelection: true,
-  SelectedCourse: null,
-  Ready: false,
-};
-
 const flags = {
   runtime: {
-    ...courseSelectionDefault,
+    SelectedCourse: null,
     alignPanel: 'right',
     feedback: false,
     yearInput: false,
@@ -20,6 +13,7 @@ const flags = {
     animation: true,
     cluster: true,
   },
+  // UI flags are deprecated
   UI: {
     MapViewport: true,
     Balloon: true,
@@ -38,7 +32,7 @@ const flags = {
   },
   zoom: {
     minScale: 1,
-    maxScale: 20,
+    maxScale: 8,
   }
 };
 

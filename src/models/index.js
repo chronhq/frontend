@@ -5,7 +5,7 @@ import Borders from './BordersModel';
 import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
-import CourseSideEffects from './CourseSideEffects';
+import CourseSelector from './CourseSelector';
 import Prepared from './PreparedData';
 
 import FeedbackForm from './FeedbackForm';
@@ -30,9 +30,7 @@ export default class storeModel {
     this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
-    this.effects = {
-      course: new CourseSideEffects(this),
-    };
+    this.courseSelection = new CourseSelector(this);
     this.borders = new Borders(this);
     this.properties = new Properties(this);
     this.prepared = new Prepared(this);

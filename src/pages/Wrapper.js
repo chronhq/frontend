@@ -9,7 +9,7 @@ import { ymHit } from '../metrikaHelper';
 class Wrapper extends React.Component {
   componentDidMount() {
     ymHit(this.props.story);
-    this.props.store.effects.course.enableCourseSelection();
+    this.props.store.courseSelection.cleanup();
     when( // validate course name and download data
       () => this.props.store.data.Courses.status.loaded,
       () => this.validateCourses()
@@ -17,9 +17,9 @@ class Wrapper extends React.Component {
   }
 
   selectCourse() {
-    const course = this.props.store.effects.course.find(this.props.story);
+    const course = this.props.store.courseSelection.find(this.props.story);
     if (course !== undefined) {
-      this.props.store.effects.course.select(course.id, course.url);
+      this.props.store.courseSelection.select(course.id, course.url);
     } else {
       this.props.history.push('/404');
     }

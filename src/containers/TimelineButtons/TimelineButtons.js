@@ -25,7 +25,7 @@ class TimelineButtons extends React.Component {
   }
 
   @action handleReturn() {
-    this.props.store.effects.course.enableCourseSelection();
+    this.props.store.courseSelection.cleanup();
     this.props.history.push('/');
   }
 

@@ -10,7 +10,7 @@ import App from './App';
 
 window.store = new StoreModel();
 window.store.data.Courses.get();
-window.store.effects.course.loadBaseData();
+window.store.courseSelection.loadBaseData();
 
 // https://stackoverflow.com/questions/7944460/detect-safari-browser
 const isSafari = navigator.vendor
