@@ -1,3 +1,13 @@
-import MapWrapper from './MapWrapper';
+import React, { Suspense, lazy } from 'react';
 
-export default MapWrapper;
+import Spinner from '../../components/Spinner/Spinner';
+
+const MapWrapper = lazy(() => import('./MapWrapper'));
+
+const GeoLayers = () => (
+  <Suspense fallback={<Spinner />}>
+    <MapWrapper />
+  </Suspense>
+);
+
+export default GeoLayers;
