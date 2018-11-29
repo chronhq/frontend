@@ -31,11 +31,14 @@ class InputSelect extends Component {
 }
 
 InputSelect.propTypes = {
-  value: PropTypes.string, //TODO
+  value: PropTypes.any, // It should be a string
   placeholder: PropTypes.string.isRequired,
   options: PropTypes.object.isRequired,
   cb: PropTypes.func.isRequired
 };
 
+InputSelect.defaultProps = {
+  value: undefined
+};
 
 export default InputSelect;
