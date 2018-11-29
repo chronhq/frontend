@@ -45,7 +45,7 @@ class SeekBar extends React.Component {
   }
 
   @computed get translate() {
-    return this.scale(this.props.store.year.tuneValue);
+    return this.scale(this.props.store.year.tuneValue) || 0;
   }
 
 
