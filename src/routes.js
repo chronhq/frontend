@@ -4,7 +4,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import LoadingLogo from './containers/LoadingScreen/LoadingLogo';
+import LoadingLogo from './containers/LoadingLogo';
 
 const NotFound = lazy(() => import('./pages/404'));
 const BadGateway = lazy(() => import('./pages/502'));

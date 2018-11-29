@@ -9,7 +9,6 @@ import {
 } from 'mobx';
 
 import {
-  bordersLayer,
   toponymsLayer,
   cityPointsLayer,
   cityTextLayer,
@@ -41,12 +40,6 @@ class MapWrapper extends React.Component {
 
   @computed get options() {
     return this.props.store.flags.layer.list;
-  }
-
-  @computed get borders() {
-    const data = this.props.store.borders.features;
-    const visible = this.options.borders;
-    return bordersLayer(data, visible, this.onBorderHoverCb);
   }
 
   @computed get toponyms() {
@@ -122,7 +115,6 @@ class MapWrapper extends React.Component {
   }
 
   onBorderHoverCb = (features, position) => {
-    // if image contains transparent parts disable drawing tooltip
     let key = null;
     const feature = features.length > 0
       ? features[0]
