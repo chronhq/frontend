@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, observable, reaction } from 'mobx';
 
 import TimelineEvents from '../../containers/TimelineEvents/TimelineEvents';
 import ChangeTickButton from '../../components/TimelineChangeTickButton/ChangeTickButton';
@@ -14,10 +14,22 @@ class Timeline extends React.Component {
     if (this.props.store.flags.runtime.get('animation')) {
       this.props.store.animation.startAnimation();
     }
+    this.tickReaction = reaction(
+      () => this.props.store.year.tick,
+      () => {
+        // Timeline hack: active event on center
+        const selectedNode = document.getElementsByClassName('timeline__entry--selected');
+        const containerNode = document.getElementsByClassName('event__container');
+        if (selectedNode[0] !== undefined) {
+          containerNode[0].scrollTop = selectedNode[0].offsetTop - 222; // HARDCODE
+        }
+      }
+    );
   }
 
   componentWillUnmount() {
     this.props.store.animation.stopAnimation();
+    this.tickReaction.dispose();
   }
 
   @computed get className() {
@@ -26,10 +38,11 @@ class Timeline extends React.Component {
       : ['timeline'].join(' ');
   }
 
-
   @computed get tooltips() {
     return this.props.store.i18n.data.tooltips;
   }
+
+  @observable tickReaction;
 
   handlePress(event) {
     // console.log(e.keyCode);

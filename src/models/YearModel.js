@@ -84,12 +84,6 @@ export default class YearModel {
     if (tick in this.rootStore.data.CourseTimelines.data) {
       this.setYear(this.rootStore.data.CourseTimelines.data[tick].year);
       this.tick = tick;
-      // Timeline hack: active event on center
-      if (this.rootStore.flags.UI.get('MiniSidebar') === true) {
-        const selectedNode = document.getElementsByClassName('timeline__entry--selected');
-        const containerNode = document.getElementsByClassName('event__container');
-        containerNode[0].scrollTop = selectedNode[0].offsetTop - 222; // HARDCODE
-      }
     }
   }
 
