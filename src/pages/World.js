@@ -9,8 +9,8 @@ import FontLoader from '../containers/FontLoader';
 import GeoLayers from '../containers/GeoLayers';
 import Wrapper from './Wrapper';
 
-const World = ({ match }) => (
-  <Wrapper match={match} className='content'>
+const World = () => (
+  <Wrapper story='world'>
     <Widgets />
     <FontLoader />
     <Overlays />

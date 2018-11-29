@@ -9,8 +9,8 @@ import Balloon from '../containers/Balloon';
 import FontLoader from '../containers/FontLoader';
 import Wrapper from './Wrapper';
 
-const Narrative = ({ match }) => (
-  <Wrapper match={match} className='content'>
+const Narrative = ({ story }) => (
+  <Wrapper story={story}>
     <Widgets />
     <FontLoader />
     <Overlays />
