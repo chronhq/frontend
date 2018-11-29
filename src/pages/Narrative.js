@@ -36,9 +36,9 @@ class Narrative extends React.Component {
       const error = toJS(this.props.store.data.Courses.status.error);
       if (error !== null
         && typeof errorPages[toJS(error.status)] !== 'undefined') {
-        this.props.history.push(`${toJS(error.status)}`);
+        this.props.history.push(`/${toJS(error.status)}`);
       } else {
-        this.props.history.push('404');
+        this.props.history.push('/404');
       }
     }
   }
