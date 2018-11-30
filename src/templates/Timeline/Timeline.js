@@ -1,10 +1,3 @@
-import React from 'react';
-import { inject, observer } from 'mobx-react';
-import { computed, observable, reaction } from 'mobx';
-
-import TimelineEvents from '../../containers/TimelineEvents/TimelineEvents';
-import ChangeTickButton from '../../components/TimelineChangeTickButton/ChangeTickButton';
-import TimelineButtons from '../../containers/TimelineButtons/TimelineButtons';
 /*
  * Chron.
  * Copyright (c) 2018 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
@@ -23,6 +16,13 @@ import TimelineButtons from '../../containers/TimelineButtons/TimelineButtons';
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed, observable, reaction } from 'mobx';
+
+import TimelineEvents from '../../containers/TimelineEvents/TimelineEvents';
+import ChangeTickButton from '../../components/TimelineChangeTickButton/ChangeTickButton';
+import TimelineButtons from '../../containers/TimelineButtons/TimelineButtons';
 import './Timeline.less';
 
 @inject('store')
