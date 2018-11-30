@@ -1,0 +1,6 @@
+{
+  "mapbox": {
+    "token": "MAPBOX_TOKEN",
+    "style": "mapbox://styles/miklergm/cjouh4rm91yy32smc22tiaqpe"
+  }
+}

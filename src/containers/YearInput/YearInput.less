@@ -1,0 +1,134 @@
+@black: #000000;
+@main-blue: #013243;
+@base02: #2c393f;
+@base03: #576872;
+@link: #8aaddb;
+@border: #707880;
+@red: #ea4544;
+
+@dark-grey: #979797;
+@grey: #7f7f7f;
+@disable: #d5d5d5;
+@sidebar: #e9dac5;
+@light-grey: #fafafa;
+@button-text-inverse: #aaaaaa;
+@white: #ffffff;
+
+
+// .control-buttons {
+//   text-align: center;
+// }
+
+// .control--panel {
+//   position: fixed;
+//   z-index: 30;
+//   width: 100vw;
+//   background-color: rgba(219, 226, 230, 0.7);
+// }
+
+// .control--panel__max {
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+// }
+
+// .control--panel__min {
+//   height: 90px;
+//   bottom: 0;
+//   top: auto;
+//   left: 0;
+// }
+
+
+// button.decorless {
+//   min-width: auto;
+//   width: auto;
+//   decoration: none;
+//   background: none;
+//   border: none;
+//   box-sizing: border-box;
+//   height: auto;
+//   line-height: auto;
+//   margin: auto;
+//   padding: 0 5px;
+//   font-size: auto;
+//   color: inherit;
+// }
+
+
+// Year Input
+
+.yearinput__window {
+  position: fixed;
+  z-index: 50;
+  // box-shadow: 5px 5px 5px 5px rgba(0,0,0, 0.9);
+  bottom: 60px;
+  box-sizing: border-box;
+  left: 100px;
+  width: 300px;
+  // left: 5%;
+  background: white;
+  border: 1px solid @border;
+  border-radius: 2px;
+  text-align: center;
+  display: block;
+  padding: 5px 10px;
+  // flex-direction: column;
+  // justify-content: center;
+  height: auto;
+  // display: grid;
+  // grid-gap: 0px;
+  // grid-template-columns: 1fr 1fr;
+  @media screen and (max-width: 540px) {
+    width: 90%;
+    bottom: 130px;
+    left: 5%;
+  }
+}
+
+.yearinput__title {
+  // grid-column: 1 / span 2;
+  // grid-row: 1/2;
+  border-bottom: 1px solid rgba(0, 0, 255, 0.5);
+  padding: 5px 0 5px;
+  margin-bottom: 5px;
+}
+.yearinput__form {
+  // grid-column: 1 / span 2;
+  // grid-row: 2/3;
+  height: 200px;
+  overflow-y: hidden;
+}
+.yearinput__button {
+  // grid-row: 3/4;
+}
+
+.yearinput__button {
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0, 0.5);
+  background: none;
+  background-color: none;
+  margin-top: 5px;
+}
+
+.rmc-picker {
+  margin: auto;
+  display: flex;
+}
+
+.yearinput__window .yearInput {
+  border: none;
+  font-size: 36px;
+  line-height: 36px;
+  color: #666;
+  height: 36px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.yearinput__error {
+  border-bottom: 1px solid rgba(255, 0, 0, 0.5);
+}
