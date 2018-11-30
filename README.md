@@ -56,9 +56,9 @@ There are three endpoints for fetching data from backend
 Development config:
 ```json
 proxy: {
-  '/api': 'http://api:3333/',
-  '/mvt': 'http://api:3333/',
-  '/shared': 'http://api:3333/'
+  "/api": "http://api:3333/",
+  "/mvt": "http://api:3333/",
+  "/shared": "http://api:3333/"
 }
 ```
 `/api` - REST requests for data
