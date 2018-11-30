@@ -12,7 +12,11 @@ export default class GeoEventsList {
   @computed get data() {
     const data = {};
     Object.values(this.rootStore.data.GeoEvents.data).map((d) => {
-      data[d.id] = { ...d, description: [d.description[this.lng]], title: this.rootStore.i18n.data.messages.geoEventTitle };
+      data[d.id] = {
+        ...d,
+        description: [d.description[this.lng]],
+        title: this.rootStore.i18n.data.messages.geoEventTitle
+      };
       return null;
     });
     return data;
