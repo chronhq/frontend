@@ -14,6 +14,7 @@ export default class MessagesI18n extends BaseI18n {
       key: `in_${fact.id}`,
       name: fact[this.nameSelector],
       inventDate: fact.inventDate,
+      title: this.data.messages.inventionsTitle,
       description,
       inventors: this.getInventors(fact.inventor).join(', '),
     };

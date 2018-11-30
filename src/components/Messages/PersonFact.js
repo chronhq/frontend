@@ -1,30 +1,22 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
 
-@inject('store')
-@observer
-class PersonFact extends React.Component {
-  render() {
-    const { person } = { ...this.props };
-    return (
-      <div key={person.key}>
-        <p className='balloon-title'>
-          {person.title}
-        </p>
-        <p className='factHeader'>
-          {person.occasion}
-        </p>
-        <p className='factDate'>
-          {person.birthDate}
-          <br />
-          {person.deathDate}
-        </p>
-        <p className='factDescription'>
-          {person.location}
-        </p>
-      </div>
-    );
-  }
-}
+const PersonFact = ({ person }) => (
+  <div key={person.key}>
+    <p className='factTitle'>
+      {person.title}
+    </p>
+    <p className='factHeader'>
+      {person.occasion}
+    </p>
+    <p className='factDate'>
+      {person.birthDate}
+      <br />
+      {person.deathDate}
+    </p>
+    <p className='factDescription'>
+      {person.location}
+    </p>
+  </div>
+);
 
 export default PersonFact;

@@ -1,30 +1,17 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
 
-@inject('store')
-@observer
-class GeoEvent extends React.Component {
-  @computed get title() {
-    return this.props.store.i18n.data.messages.GeoEventTitle;
-  }
-
-  render() {
-    const { fact } = { ...this.props };
-    return (
-      <div className='factInner'>
-        <p className='balloon-title'>
-          {this.title}
-        </p>
-        <p className='factDescription'>
-          {fact.description}
-        </p>
-        <p className='factDate'>
-          {fact.date}
-        </p>
-      </div>
-    );
-  }
-}
+const GeoEvent = ({ fact }) => (
+  <div className='factInner'>
+    <p className='factTitle'>
+      {fact.title}
+    </p>
+    <p className='factDescription'>
+      {fact.description}
+    </p>
+    <p className='factDate'>
+      {fact.date}
+    </p>
+  </div>
+);
 
 export default GeoEvent;
