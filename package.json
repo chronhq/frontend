@@ -66,10 +66,10 @@
     "@babel/preset-env": "^7.1.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.1.5",
-    "@deck.gl/mapbox": "^6.2.3",
     "@deck.gl/core": "^6.2.3",
-    "@deck.gl/react": "^6.2.3",
     "@deck.gl/layers": "^6.2.3",
+    "@deck.gl/mapbox": "^6.2.3",
+    "@deck.gl/react": "^6.2.3",
     "autoprefixer": "^9.3.1",
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.1",
@@ -101,6 +101,7 @@
     "react-yandex-metrika": "^2.4.2",
     "rmc-picker": "^5.0.5",
     "style-loader": "^0.23.1",
-    "url-loader": "^1.1.2"
+    "url-loader": "^1.1.2",
+    "wikidata-sdk": "^5.15.9"
   }
 }
