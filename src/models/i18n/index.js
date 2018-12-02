@@ -37,7 +37,7 @@ export default class Internationalization {
         [cur]: AvailableLanguages[cur].language
       }), {});
 
-  @observable lng = 'ru';
+  @observable lng = 'en';
 
   @action select(languages) {
     if (languages in this.languages) {
