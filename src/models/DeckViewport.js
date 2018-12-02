@@ -85,7 +85,8 @@ export default class DeckViewportModel {
   }
 
   @computed get offsetDegree() {
-    const [offsetXpixels, offsetYpixels] = this.viewport.project([110, 65]);
+    const topLeft = this.rootStore.projection.data.clip[0];
+    const [offsetXpixels, offsetYpixels] = this.viewport.project(topLeft);
     let offsetXdegree = 0;
     let offsetYdegree = 0;
     if (this.clipEnabled) {

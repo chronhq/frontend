@@ -29,6 +29,7 @@ const BadGateway = lazy(() => import('./pages/502'));
 const GatewayTimeout = lazy(() => import('./pages/504'));
 const CourseSelection = lazy(() => import('./pages/CourseSelection'));
 const World = lazy(() => import('./pages/World'));
+const Demo = lazy(() => import('./pages/Demo'));
 const Narrative = lazy(() => import('./pages/Narrative'));
 
 const AppRouter = () => (
@@ -39,6 +40,7 @@ const AppRouter = () => (
       <Route path='/502' render={() => <BadGateway />} />
       <Route path='/504' render={() => <GatewayTimeout />} />
       <Route path='/world' render={() => <World />} />
+      <Route path='/demo' render={() => <Demo />} />
       <Route path='/:id' render={({ match }) => <Narrative story={match.params.id} />} />
     </Switch>
   </Suspense>
