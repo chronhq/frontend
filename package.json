@@ -4,7 +4,8 @@
   "description": "Frontend for chron project",
   "license": "GPLv3",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.dev.js",
+    "start": "webpack-dev-server --config ./webpack.config.dev.ext.js",
+    "dev": "webpack-dev-server --config ./webpack.config.dev.js",
     "release": "rimraf dist && webpack --config webpack.config.prod.js",
     "test": "jest --config ./jest.config.js",
     "stylelint": "stylelint \"src/**/*.less\"",
