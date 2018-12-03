@@ -36,9 +36,9 @@ class Demo extends React.Component {
       tick: 1, // does not really matter
     };
     demo.config.settings.flags.zoom.minScale = 4;
+    // Centring map on Europe. Coorinates are in [long, lat] format
+    demo.config.projection.center = [5, 50];
 
-    // Clip is the only possibility to set up the camera position right now
-    demo.config.projection.clip = [[-10, 60], [30, 40]];
     runInAction(() => {
       this.props.store.data.Courses.data[0] = demo;
       this.props.store.courseSelection.select(0, 'world');

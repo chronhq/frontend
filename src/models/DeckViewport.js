@@ -67,11 +67,19 @@ export default class DeckViewportModel {
 
   @computed get viewport() {
     const zoom = this.rootStore.flags.zoom.list;
+    const center = this.rootStore.projection.data.center !== undefined
+      ? {
+        longitude: this.rootStore.projection.data.center[0],
+        latitude: this.rootStore.projection.data.center[1],
+      }
+      : {};
     const vState = {
       width: this.width,
       height: this.height,
       viewState: {
         ...INITIAL_VIEW_STATE,
+        ...center,
+        zoom: zoom.minScale,
         maxZoom: zoom.maxScale,
         minZoom: zoom.minScale,
       },
@@ -82,18 +90,6 @@ export default class DeckViewportModel {
         .fitBounds(this.rootStore.projection.clip);
     }
     return this.view.makeViewport(vState);
-  }
-
-  @computed get offsetDegree() {
-    const topLeft = this.rootStore.projection.data.clip[0];
-    const [offsetXpixels, offsetYpixels] = this.viewport.project(topLeft);
-    let offsetXdegree = 0;
-    let offsetYdegree = 0;
-    if (this.clipEnabled) {
-      offsetXdegree = offsetXpixels * this.viewport.distanceScales.degreesPerPixel[0];
-      offsetYdegree = offsetYpixels * this.viewport.distanceScales.degreesPerPixel[1];
-    }
-    return [offsetXdegree, offsetYdegree];
   }
 
   @computed get metersPerPixel() {
@@ -109,9 +105,9 @@ export default class DeckViewportModel {
     return viewport.distanceScales.metersPerPixel[0];
   }
 
-  @observable longitude = this.viewport.longitude + this.offsetDegree[0];
+  @observable longitude = this.viewport.longitude;
 
-  @observable latitude = this.viewport.latitude + this.offsetDegree[1];
+  @observable latitude = this.viewport.latitude;
 
   @observable zoom = this.viewport.zoom;
 
@@ -176,8 +172,8 @@ export default class DeckViewportModel {
   }
 
   @action initLatLon() {
-    this.longitude = this.viewport.longitude + this.offsetDegree[0];
-    this.latitude = this.viewport.latitude + this.offsetDegree[1];
+    this.longitude = this.viewport.longitude;
+    this.latitude = this.viewport.latitude;
     this.zoom = this.viewport.zoom;
   }
 }
