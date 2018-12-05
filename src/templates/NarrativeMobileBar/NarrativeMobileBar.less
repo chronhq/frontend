@@ -1,0 +1,25 @@
+@import '../../styles/colors.less';
+
+.narrative-mobile-bar {
+  position: fixed;
+  z-index: 7;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 0;
+  width: 80%;
+  height: 30%;
+  margin: 0 auto;
+  &__layers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    text-align: center;
+  }
+  background-color: #E9DAC5;
+  color: @main-blue;
+  & * {
+    height: 90px;
+  }
+  @media screen and (min-width: 600px) {
+    display: none;
+  }
+}

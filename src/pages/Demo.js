@@ -20,7 +20,16 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { runInAction } from 'mobx';
 
-import World from './World';
+import SideBar from '../templates/SideBar/SideBar';
+import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileBar';
+import TimePanel from '../templates/TimePanel/TimePanel';
+import Overlays from '../templates/Overlays/Overlays';
+import Widgets from '../containers/Widgets';
+import Balloon from '../containers/Balloon';
+import FontLoader from '../containers/FontLoader';
+import GeoLayers from '../containers/GeoLayers';
+import Wrapper from './Wrapper';
+
 
 @inject('store')
 @observer
@@ -47,7 +56,16 @@ class Demo extends React.Component {
 
   render() {
     return (
-      <World />
+      <Wrapper story='world'>
+        <Widgets />
+        <NarrativeMobileBar />
+        <SideBar />
+        <FontLoader />
+        <Overlays />
+        <TimePanel />
+        <Balloon />
+        <GeoLayers />
+      </Wrapper>
     );
   }
 }
