@@ -31,6 +31,11 @@ import GeoLayers from '../containers/GeoLayers';
 import Wrapper from './Wrapper';
 
 
+const battles = ['Q1025134', 'Q898338', 'Q2234632', 'Q10671369', 'Q4871992', 'Q4872085', 'Q2564536', 'Q6539', 'Q1527921'];
+const birth = ['Q61987', 'Q1069841', 'Q1585', 'Q161145', 'Q8814'];
+const death = ['Q729541', 'Q496775', 'Q473506', 'Q315819', 'Q860155'];
+const treaty = ['Q169759'];
+
 @inject('store')
 @observer
 class Demo extends React.Component {
@@ -47,6 +52,8 @@ class Demo extends React.Component {
     demo.config.settings.flags.zoom.minScale = 4;
     // Centring map on Europe. Coorinates are in [long, lat] format
     demo.config.projection.center = [5, 50];
+
+    props.store.wikidata.getItems([...battles, ...birth, ...death, ...treaty]);
 
     runInAction(() => {
       this.props.store.data.Courses.data[0] = demo;

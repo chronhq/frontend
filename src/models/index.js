@@ -35,7 +35,7 @@ import AnimationFrame from './AnimationFrame';
 import Properties from './PropertiesModel';
 
 import MapStyle from './MapStyleModel';
-import WikidataFetcher from './WikidataFetcher';
+import WikidataFetcher from './Wikidata/WikidataFetcher';
 
 export default class storeModel {
   @observable fonts = {};
