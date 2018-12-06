@@ -18,44 +18,41 @@
  */
 import React from 'react';
 
-const Battle = ({ fact }) => {
-  const options = { year: 'numeric', month: 'short', day: 'numeric' };
-  return (
-    <div key={fact.key}>
-      <p className='factDate'>
-        {fact.date.toLocaleString('en-US', options)}
-      </p>
-      <p className='factTitle'>
-        {fact.label}
-      </p>
-      <p className='factDescription'>
-        {fact.description}
-      </p>
-      {fact.participant !== undefined
-        ? (
-          <p className='factDescription'>
-            {'Participants: '}
-            <i>
-              {Object.values(fact.participant).map(value => value.label).join(', ')}
-            </i>
-          </p>
-        )
-        : null
-      }
-      {fact.image !== undefined
-        ? (
-          <div className='factImageDemo'>
-            <img
-              className='factImageDemo'
-              src={fact.image.thumburl}
-              alt={fact.image.title}
-            />
-          </div>
-        )
-        : null
-      }
-    </div>
-  );
-};
+const Battle = ({ fact }) => (
+  <div key={fact.key}>
+    <p className='factDate'>
+      {fact.dateText}
+    </p>
+    <p className='factTitle'>
+      {fact.label}
+    </p>
+    <p className='factDescription'>
+      {fact.description}
+    </p>
+    {fact.participant !== undefined
+      ? (
+        <p className='factDescription'>
+          {'Participants: '}
+          <i>
+            {Object.values(fact.participant).map(value => value.label).join(', ')}
+          </i>
+        </p>
+      )
+      : null
+    }
+    {fact.image !== undefined
+      ? (
+        <div className='factImageDemo'>
+          <img
+            className='factImageDemo'
+            src={fact.image.thumburl}
+            alt={fact.image.title}
+          />
+        </div>
+      )
+      : null
+    }
+  </div>
+);
 
 export default Battle;

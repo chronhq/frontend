@@ -104,16 +104,11 @@ class WikidataStore {
   }
 
   @computed get actorPins() {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return this.actorsInCache.reduce((prev, cur) => {
-      const misc = {};
-      console.log('Actor', cur);
-      misc.deathDate = cur.dateOfDeath !== undefined
-        ? cur.dateOfDeath.toLocaleString('en-US', options)
-        : this.rootStore.i18n.data.unknown.year;
-      misc.birthDate = cur.dateOfBirth !== undefined
-        ? cur.dateOfBirth.toLocaleString('en-US', options)
-        : this.rootStore.i18n.data.unknown.year;
+      const misc = {
+        deathDate: cur.dateOfDeathText,
+        birthDate: cur.dateOfBirthText,
+      };
 
       if (cur.placeOfBirth instanceof Array) {
         const [y, x, qId, cityLabel] = cur.placeOfBirth;

@@ -1,5 +1,9 @@
 {
   "language": "English",
+  "date": {
+    "options": { "year": "numeric", "month": "short", "day": "numeric" },
+    "locale": "en-US"
+  },
   "title": "Chronist, interactive atlas",
   "loading": "loading...",
   "selectors": {

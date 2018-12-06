@@ -18,33 +18,30 @@
  */
 import React from 'react';
 
-const Document = ({ fact }) => {
-  const options = { year: 'numeric', month: 'short', day: 'numeric' };
-  return (
-    <div key={fact.key}>
-      <p className='factDate'>
-        {fact.date.toLocaleString('en-US', options)}
-      </p>
-      <p className='factTitle'>
-        {fact.label}
-      </p>
-      <p className='factDescription'>
-        {fact.description}
-      </p>
-      {fact.image !== undefined
-        ? (
-          <div className='factImageDemo'>
-            <img
-              className='factImageDemo'
-              src={fact.image.thumburl}
-              alt={fact.image.title}
-            />
-          </div>
-        )
-        : null
-      }
-    </div>
-  );
-};
+const Document = ({ fact }) => (
+  <div key={fact.key}>
+    <p className='factDate'>
+      {fact.dateText}
+    </p>
+    <p className='factTitle'>
+      {fact.label}
+    </p>
+    <p className='factDescription'>
+      {fact.description}
+    </p>
+    {fact.image !== undefined
+      ? (
+        <div className='factImageDemo'>
+          <img
+            className='factImageDemo'
+            src={fact.image.thumburl}
+            alt={fact.image.title}
+          />
+        </div>
+      )
+      : null
+    }
+  </div>
+);
 
 export default Document;

@@ -170,6 +170,13 @@ class WikidataEntity {
       ...image,
     };
 
+    [...Object.keys(this.dates), 'date'].map((cur) => {
+      flat[`${cur}Text`] = flat[cur] !== undefined
+        ? this.rootStore.i18n.dateToString(flat[cur])
+        : this.rootStore.i18n.data.unknown.year;
+      return false;
+    });
+
     return {
       id: this.entity.id,
       type: this.type,

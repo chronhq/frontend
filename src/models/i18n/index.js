@@ -48,6 +48,11 @@ export default class Internationalization {
     }
   }
 
+  @computed get dateToString() {
+    const { date } = this.data;
+    return d => d.toLocaleString(date.locale, date.options);
+  }
+
   @computed get data() {
     return AvailableLanguages[this.lng];
   }

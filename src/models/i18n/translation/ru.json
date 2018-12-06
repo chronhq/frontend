@@ -1,5 +1,9 @@
 {
   "language": "Русский",
+  "date": {
+    "options": { "year": "numeric", "month": "short", "day": "numeric" },
+    "locale": "ru-RU"
+  },
   "title": "Хронист, интерактивный атлас",
   "loading": "загружается...",
   "selectors": {
