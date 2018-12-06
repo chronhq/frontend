@@ -33,11 +33,13 @@ const Document = ({ fact }) => {
       </p>
       {fact.image !== undefined
         ? (
-          <img
-            className='factImageDemo'
-            src={fact.image.thumburl}
-            alt=''
-          />
+          <div className='factImageDemo'>
+            <img
+              className='factImageDemo'
+              src={fact.image.thumburl}
+              alt={fact.label}
+            />
+          </div>
         )
         : null
       }
