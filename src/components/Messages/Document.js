@@ -37,7 +37,7 @@ const Document = ({ fact }) => {
             <img
               className='factImageDemo'
               src={fact.image.thumburl}
-              alt={fact.label}
+              alt={fact.image.title}
             />
           </div>
         )
