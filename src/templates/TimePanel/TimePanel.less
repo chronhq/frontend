@@ -56,7 +56,7 @@
 .error.yearInput { border-bottom: 2px solid red; }
 
 .timepanel {
-  display: flex;
+  // display: flex;
   flex-direction: column;
   // font-size: 12px;
   justify-content: space-around;
@@ -68,12 +68,14 @@
   padding: 0;
   z-index: 8;
   // height: 200px;
-  // color: white;
+  color: white;
+  fill: white;
   // height: 55px;
   background: #02364C;
   opacity: 0.95;
-
+  display: none;
   @media screen and (min-width: 600px) {
+    display: flex;
     flex-direction: row-reverse;
   }
 }
