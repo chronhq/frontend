@@ -26,6 +26,8 @@ function getIcon(info) {
     case 'death': return 28; // Death
     case 'geo': return 30; // SimpleInfoPin
     case 'inv': return 27; // SimpleBulb
+    case 'battle': return 32; // SimpleSwords
+    case 'document': return 24; // treaty bird
     default: return 31; // SimpleStar
   }
 }
@@ -36,6 +38,8 @@ function getKey(info) {
     case 'death': return `P_${info.person.id}_${info.type}`;
     case 'geo': return `P_${info.geoEvent.id}`;
     case 'inv': return `P_${info.invention.id}`;
+    case 'battle': return `P_${info.battle.id}`;
+    case 'document': return `P_${info.document.id}`;
     default: return 'P_default';
   }
 }
