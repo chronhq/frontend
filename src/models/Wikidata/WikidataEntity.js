@@ -26,27 +26,31 @@ import {
 } from './WikidataHelper';
 
 class WikidataEntity {
+  // simplified entity
   @observable entity = {};
 
   @observable full = {};
 
+  // Response from wikimedia
   @observable media = [];
 
   @computed get values() {
-    // Extract values from wikidata
+    // Extract values from wikidata into human readable naming
     // values: { pointInTime, image, instanceOf ...}
     return Object.keys(wdProps)
       .reduce((values, key) => ({
         ...values,
-        ...Object.keys(wdProps[key]).reduce((p, c) => (this.entity.claims[c] !== undefined ? {
-          ...p,
-          [wdProps[key][c]]: this.entity.claims[c]
-        } : p), {})
+        ...Object.keys(wdProps[key])
+          .reduce((p, c) => (
+            this.entity.claims[c] !== undefined ? {
+              ...p,
+              [wdProps[key][c]]: this.entity.claims[c]
+            } : p), {})
       }), []);
   }
 
   @computed get dependencies() {
-    // return 'Q1';
+    // returns an array of 'core' dependencies, all places and instances
     return ['items', 'places'].reduce((prev, key) => ([
       ...prev,
       ...Object.values(wdProps[key]).reduce((p, c) => (
@@ -68,59 +72,99 @@ class WikidataEntity {
   }
 
   @computed get label() {
-    return this.entity.labels[this.lng]
-      ? this.entity.labels[this.lng] : '';
+    return this.getLngString(this.entity.labels);
   }
 
   @computed get description() {
-    return this.entity.descriptions[this.lng]
-      ? this.entity.descriptions[this.lng] : '';
+    return this.getLngString(this.entity.descriptions);
   }
 
   @computed get cache() {
     return this.rootStore.wikidata.cache;
   }
 
+  // if possible select primary language othewise fallback to default lng
+  getLngString = obj => ((obj[this.lng] || '') || (obj[this.fallback] || ''));
+
+  // grab point location from dependency
   getCoordinates = loc => loc.map(i => (this.rootStore.wikidata.cache[i]
     ? this.rootStore.wikidata.cache[i].values.coordinateLocation
     : null));
 
+  // resolve dependency into whole structures
   getParticipants = p => p.map(i => (this.rootStore.wikidata.cache[i]
     ? this.rootStore.wikidata.cache[i].structure
     : null));
 
+  getDeepData = (props, deepCb) => {
+    return props.reduce((prev, prop) => (
+      this.values[prop] !== undefined
+        ? {
+          ...prev,
+          [prop]: deepCb(this.values[prop])
+        }
+        : prev), {});
+  }
+
+  flattenData = values => (
+    Object.keys(values).reduce((prev, d) => {
+      // handle coordinate location which are structured as
+      // locations: [[coordinateLocation], [coordinateLocation]]
+      const [flat] = values[d][0] instanceof Array
+        ? values[d][0] : values[d];
+      return { ...prev, [d]: flat };
+    }, {})
+  )
+
+  @computed get places() {
+    return this.getDeepData(
+      Object.values(wdProps.places),
+      this.getCoordinates
+    );
+  }
+
+  @computed get dates() {
+    return this.getDeepData(
+      Object.values(wdProps.dates),
+      dates => dates.map(d => new Date(d))
+    );
+  }
+
+  @computed get participants() {
+    return this.getDeepData(['participant'], this.getParticipants);
+  }
+
   @computed get structure() {
-    const result = {};
+    const image = this.images.length > 0
+      ? { image: this.images[0] } : {};
 
-    Object.values(wdProps.places).map((place) => {
-      if (this.values[place] !== undefined) {
-        result[place] = this.getCoordinates(this.values[place]);
-      }
-      return false;
-    });
-
-    Object.values(wdProps.dates).map((date) => {
-      if (this.values[date] !== undefined) {
-        result[date] = this.values[date].map(d => new Date(d));
-      }
-      return false;
-    });
-
-    if (this.values.participant !== undefined) {
-      result.participant = this.getParticipants(this.values.participant);
-    }
+    const flat = {
+      ...this.flattenData(this.dates),
+      ...this.flattenData(this.places),
+      ...image,
+    };
 
     return {
+      id: this.entity.id,
       type: this.type,
       label: this.label,
       description: this.description,
-      images: this.images,
-      ...result
+      ...this.participants,
+      ...flat,
+      deep: {
+        images: this.images,
+        ...this.places,
+        ...this.dates,
+      },
     };
   }
 
   @computed get lng() {
     return this.rootStore.i18n.lng;
+  }
+
+  @computed get fallback() {
+    return this.rootStore.i18n.fallback;
   }
 
   @action async obtainImage() {

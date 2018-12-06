@@ -39,6 +39,9 @@ export default class Internationalization {
 
   @observable lng = 'en';
 
+  // language for wikidata entities if selected is not present
+  @observable fallback = 'en';
+
   @action select(languages) {
     if (languages in this.languages) {
       this.lng = languages;
