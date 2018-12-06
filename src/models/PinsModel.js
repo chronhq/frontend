@@ -190,8 +190,9 @@ export default class FeedPinsModel {
       this.inventionsRawPins.pins.map(combine);
     } if (this.visibility.persons) {
       this.personsRawPins.pins.map(combine);
+    } if (this.visibility.battle) {
+      this.battleRawPins.map(combine);
     }
-    this.battleRawPins.map(combine);
     return pins;
   }
 

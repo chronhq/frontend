@@ -42,6 +42,8 @@ const flags = {
     inventions: true,
     persons: true,
     geoEvents: true,
+    battle: true,
+    document: true,
   },
   zoom: {
     minScale: 1,

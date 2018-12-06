@@ -15,7 +15,10 @@ const LayerToggle = ({ ...props }) => (
       checked={props.checked}
       onChange={e => props.cb({ payload: { [props.name]: e.target.checked }, place: props.place })}
     />
-    {props.label}
+    <div className={`${props.name}_icon chron_icon${props.checked ? '__checked' : ''}`} />
+    <div className='layer-toggle-label'>
+      {props.label}
+    </div>
   </label>
 );
 

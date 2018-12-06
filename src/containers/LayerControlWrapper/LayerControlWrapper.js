@@ -7,10 +7,8 @@ import LayerToggle from '../../components/LayerToggle/LayerToggle';
 // dumbData object contains desciption of used layers and pins for eohd2018-mvp-chron project.
 // #HARDCODE
 const dumpData = {
-  layer: [
-    'borders', 'cities'],
-  pins: [
-    'inventions', 'persons', 'geoEvents'],
+  layer: ['borders', 'cities'],
+  pins: ['persons', 'battle', 'document'],
 };
 
 @inject('store')
