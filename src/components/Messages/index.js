@@ -19,9 +19,13 @@
 import GeoEvent from './GeoEvent';
 import PersonFact from './PersonFact';
 import Invention from './Invention';
+import Battle from './Battle';
+import Document from './Document';
 
 export {
   GeoEvent,
   PersonFact,
-  Invention
+  Invention,
+  Battle,
+  Document
 };
