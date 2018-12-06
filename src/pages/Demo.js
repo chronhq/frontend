@@ -46,6 +46,7 @@ class Demo extends React.Component {
     demo.config.settings.flags.zoom.minScale = 4;
     // Centring map on Europe. Coorinates are in [long, lat] format
     demo.config.projection.center = [5, 50];
+    this.props.store.wikistore.fetchAll();
 
     runInAction(() => {
       this.props.store.data.Courses.data[0] = demo;

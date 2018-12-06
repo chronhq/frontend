@@ -63,7 +63,11 @@ class WikidataEntity {
 
   @computed get images() {
     return this.media
-      .map(i => i.query.pages[Object.keys(i.query.pages)].imageinfo[0]);
+      .map(i => ({
+        ...i.query.pages[Object.keys(i.query.pages)].imageinfo[0],
+        // alt for image
+        title: i.query.pages[Object.keys(i.query.pages)].title
+      }));
   }
 
   @computed get type() {
@@ -87,8 +91,10 @@ class WikidataEntity {
   getLngString = obj => ((obj[this.lng] || '') || (obj[this.fallback] || ''));
 
   // grab point location from dependency
+  // add orig id and label of place to array
   getCoordinates = loc => loc.map(i => (this.cache[i]
     ? this.cache[i].values.coordinateLocation
+      .map(l => ([...l, this.cache[i].entity.id, this.cache[i].label]))
     : null));
 
   // resolve dependency into whole structures

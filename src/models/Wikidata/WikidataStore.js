@@ -68,8 +68,8 @@ class WikidataStore {
   @computed get battlePins() {
     // free battle pins (withour location) are not supported, yet
     return this.battlesInCache.reduce((prev, cur) => {
-      if (cur.pointInTime !== undefined
-        && cur.pointInTime.getUTCFullYear() === this.now
+      if (cur.date !== undefined
+        && cur.date.getUTCFullYear() === this.now
         && cur.place instanceof Array) {
         const [y, x] = cur.place;
         return [
@@ -87,7 +87,8 @@ class WikidataStore {
 
   @computed get documentPins() {
     return this.documentsInCache.reduce((prev, cur) => {
-      if (cur.place instanceof Array) {
+      if (cur.place instanceof Array
+        && cur.date.getUTCFullYear() === this.now) {
         const [y, x] = cur.place;
         return [
           ...prev,
@@ -100,6 +101,76 @@ class WikidataStore {
       }
       return prev;
     }, []);
+  }
+
+  @computed get actorPins() {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return this.actorsInCache.reduce((prev, cur) => {
+      const misc = {};
+      console.log('Actor', cur);
+      misc.deathDate = cur.dateOfDeath !== undefined
+        ? cur.dateOfDeath.toLocaleString('en-US', options)
+        : this.rootStore.i18n.data.unknown.year;
+      misc.birthDate = cur.dateOfBirth !== undefined
+        ? cur.dateOfBirth.toLocaleString('en-US', options)
+        : this.rootStore.i18n.data.unknown.year;
+
+      if (cur.placeOfBirth instanceof Array) {
+        const [y, x, qId, cityLabel] = cur.placeOfBirth;
+        misc.birthLoc = { y, x };
+        misc.birthLabel = cityLabel;
+      }
+
+      if (cur.placeOfDeath instanceof Array) {
+        const [y, x, qId, cityLabel] = cur.placeOfDeath;
+        misc.deathLoc = { y, x };
+        misc.deathLabel = cityLabel;
+      }
+
+      if (cur.placeOfBirth instanceof Array
+        && cur.dateOfBirth.getUTCFullYear() === this.now) {
+        const person = {
+          wd: true,
+          key: cur.id,
+          id: cur.id,
+          title: this.rootStore.i18n.data.messages.personBirth,
+          occasion: cur.label,
+          location: misc.birthLabel,
+          ...misc,
+        };
+        const event = {
+          type: 'birth',
+          loc: misc.birthLoc,
+          person,
+        };
+        return {
+          ...prev,
+          birth: [...prev.birth, event]
+        };
+      }
+      if (cur.placeOfDeath instanceof Array
+        && cur.dateOfDeath.getUTCFullYear() === this.now) {
+        const person = {
+          wd: true,
+          key: cur.id,
+          id: cur.id,
+          title: this.rootStore.i18n.data.messages.personDeath,
+          occasion: cur.label,
+          location: misc.deathLabel,
+          ...misc,
+        };
+        const event = {
+          type: 'death',
+          loc: misc.deathLoc,
+          person,
+        };
+        return {
+          ...prev,
+          death: [...prev.death, event]
+        };
+      }
+      return prev;
+    }, { birth: [], death: [] });
   }
 
   addBattles = (data, fetch) => this.addData('battles', data, fetch)
@@ -119,8 +190,6 @@ class WikidataStore {
     this.addActors([...death, ...birth], false);
 
     this.addDocuments(['Q169759'], false);
-
-    this.fetchAll();
   }
 }
 

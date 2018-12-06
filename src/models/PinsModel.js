@@ -179,6 +179,10 @@ export default class FeedPinsModel {
     return this.rootStore.wikistore.documentPins;
   }
 
+  @computed get actorRawPins() {
+    return this.rootStore.wikistore.actorPins;
+  }
+
   // Group pins by location
   // Allow only one pin per location as a separate icon
   @computed get combineRawPins() {
@@ -196,13 +200,16 @@ export default class FeedPinsModel {
       this.geoEventsRawPins.pins.map(combine);
     } if (this.visibility.inventions) {
       this.inventionsRawPins.pins.map(combine);
-    } if (this.visibility.persons) {
-      this.personsRawPins.pins.map(combine);
     } if (this.visibility.document) {
       this.documentRawPins.map(combine);
     } if (this.visibility.battle) {
       this.battleRawPins.map(combine);
+    } if (this.visibility.persons) {
+      this.personsRawPins.pins.map(combine);
+      this.actorRawPins.birth.map(combine);
+      this.actorRawPins.death.map(combine);
     }
+
     return pins;
   }
 

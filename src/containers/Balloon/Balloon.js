@@ -106,9 +106,12 @@ class Balloon extends React.Component {
             />);
         case 'death':
         case 'birth':
+        // actor from wikidata
           return (
             <PersonFact
-              person={this.i18n.person(pin.person, pin.type)}
+              person={pin.person.wd === true
+                ? pin.person
+                : this.i18n.person(pin.person, pin.type)}
               key={`balloon_person_${pin.type}_${pin.person.id}`}
             />);
         case 'battle':
