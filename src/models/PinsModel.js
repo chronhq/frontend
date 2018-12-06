@@ -171,6 +171,10 @@ export default class FeedPinsModel {
     return { pins, free };
   }
 
+  @computed get battleRawPins() {
+    return this.rootStore.wikistore.battlePins;
+  }
+
   @computed get combineRawPins() {
     const pins = {};
     const getLocKey = loc => `X${loc.x}Y${loc.y}`;
@@ -187,6 +191,7 @@ export default class FeedPinsModel {
     } if (this.visibility.persons) {
       this.personsRawPins.pins.map(combine);
     }
+    this.battleRawPins.map(combine);
     return pins;
   }
 

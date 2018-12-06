@@ -104,12 +104,17 @@ class Balloon extends React.Component {
               fact={this.i18n.invention(pin.invention)}
               key={`balloon_inv_${pin.invention.id}`}
             />);
-        default:
+        case 'death':
+        case 'birth':
           return (
             <PersonFact
               person={this.i18n.person(pin.person, pin.type)}
               key={`balloon_person_${pin.type}_${pin.person.id}`}
             />);
+        case 'battle':
+        case 'document':
+        default:
+          return () => '';
       }
     });
   }

@@ -87,24 +87,24 @@ class WikidataEntity {
   getLngString = obj => ((obj[this.lng] || '') || (obj[this.fallback] || ''));
 
   // grab point location from dependency
-  getCoordinates = loc => loc.map(i => (this.rootStore.wikidata.cache[i]
-    ? this.rootStore.wikidata.cache[i].values.coordinateLocation
+  getCoordinates = loc => loc.map(i => (this.cache[i]
+    ? this.cache[i].values.coordinateLocation
     : null));
 
   // resolve dependency into whole structures
-  getParticipants = p => p.map(i => (this.rootStore.wikidata.cache[i]
-    ? this.rootStore.wikidata.cache[i].structure
+  getParticipants = p => p.map(i => (this.cache[i]
+    ? this.cache[i].structure
     : null));
 
-  getDeepData = (props, deepCb) => {
-    return props.reduce((prev, prop) => (
+  getDeepData = (props, deepCb) => (
+    props.reduce((prev, prop) => (
       this.values[prop] !== undefined
         ? {
           ...prev,
           [prop]: deepCb(this.values[prop])
         }
-        : prev), {});
-  }
+        : prev), {})
+  )
 
   flattenData = values => (
     Object.keys(values).reduce((prev, d) => {
