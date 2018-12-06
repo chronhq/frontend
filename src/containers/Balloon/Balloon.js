@@ -118,6 +118,11 @@ class Balloon extends React.Component {
               key={`balloon_battle_${pin.type}_${pin.battle.id}`}
             />);
         case 'document':
+          return (
+            <Document
+              fact={pin.document}
+              key={`balloon_battle_${pin.type}_${pin.document.id}`}
+            />);
         default:
           return () => '';
       }
