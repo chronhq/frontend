@@ -25,7 +25,7 @@ const InputCheckBox = ({
     htmlFor={name}
     className={disabled ? 'checkbox--disabled' : ''}
     onChange={(e) => {
-      cb({ [name]: Number(e.target.checked) });
+      cb({ [name]: e.target.checked });
     }}
   >
     <span>
@@ -35,7 +35,7 @@ const InputCheckBox = ({
         checked={checked}
         disabled={disabled}
         onChange={(e) => {
-          cb({ [name]: Number(e.target.checked) });
+          cb({ [name]: e.target.checked });
         }}
       />
       <span />
