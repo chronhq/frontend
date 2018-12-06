@@ -19,12 +19,28 @@
 import React from 'react';
 
 const Document = ({ fact }) => {
-  // console.log('doc fact', fact);
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
   return (
     <div key={fact.key}>
+      <p className='factDate'>
+        {fact.date.toLocaleString('en-US', options)}
+      </p>
       <p className='factTitle'>
         {fact.label}
       </p>
+      <p className='factDescription'>
+        {fact.description}
+      </p>
+      {fact.image !== undefined
+        ? (
+          <img
+            className='factImageDemo'
+            src={fact.image.thumburl}
+            alt=''
+          />
+        )
+        : null
+      }
     </div>
   );
 };

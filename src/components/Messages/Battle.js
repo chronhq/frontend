@@ -23,7 +23,7 @@ const Battle = ({ fact }) => {
   return (
     <div key={fact.key}>
       <p className='factDate'>
-        {fact.pointInTime.toLocaleString('en-US', options)}
+        {fact.date.toLocaleString('en-US', options)}
       </p>
       <p className='factTitle'>
         {fact.label}
