@@ -66,17 +66,35 @@ class WikidataStore {
   }
 
   @computed get battlePins() {
+    // free battle pins (withour location) are not supported, yet
     return this.battlesInCache.reduce((prev, cur) => {
       if (cur.pointInTime !== undefined
         && cur.pointInTime.getUTCFullYear() === this.now
-        && cur.location instanceof Array) {
-        const [y, x] = cur.location;
+        && cur.place instanceof Array) {
+        const [y, x] = cur.place;
         return [
           ...prev,
           {
             loc: { x, y },
             type: 'battle',
             battle: cur,
+          }
+        ];
+      }
+      return prev;
+    }, []);
+  }
+
+  @computed get documentPins() {
+    return this.documentsInCache.reduce((prev, cur) => {
+      if (cur.place instanceof Array) {
+        const [y, x] = cur.place;
+        return [
+          ...prev,
+          {
+            loc: { x, y },
+            type: 'document',
+            document: cur,
           }
         ];
       }

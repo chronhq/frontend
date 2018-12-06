@@ -123,11 +123,29 @@ class WikidataEntity {
     );
   }
 
+  @computed get genericPlace() {
+    const result = {};
+    const { publicationPlace, location } = this.places;
+    const { coordinateLocation } = this.values;
+    if (coordinateLocation !== undefined) result.place = coordinateLocation;
+    if (publicationPlace !== undefined) result.place = publicationPlace;
+    if (location !== undefined) result.place = location;
+    return result;
+  }
+
   @computed get dates() {
     return this.getDeepData(
       Object.values(wdProps.dates),
       dates => dates.map(d => new Date(d))
     );
+  }
+
+  @computed get genericDate() {
+    const result = {};
+    const { publicationDate, pointInTime } = this.dates;
+    if (publicationDate !== undefined) result.date = publicationDate;
+    if (pointInTime !== undefined) result.date = pointInTime;
+    return result;
   }
 
   @computed get participants() {
@@ -141,6 +159,8 @@ class WikidataEntity {
     const flat = {
       ...this.flattenData(this.dates),
       ...this.flattenData(this.places),
+      ...this.flattenData(this.genericDate),
+      ...this.flattenData(this.genericPlace),
       ...image,
     };
 

@@ -175,21 +175,31 @@ export default class FeedPinsModel {
     return this.rootStore.wikistore.battlePins;
   }
 
+  @computed get documentRawPins() {
+    return this.rootStore.wikistore.documentPins;
+  }
+
+  // Group pins by location
+  // Allow only one pin per location as a separate icon
   @computed get combineRawPins() {
     const pins = {};
     const getLocKey = loc => `X${loc.x}Y${loc.y}`;
+    // allow only one icon per location
     const combine = (pin) => {
       const locKey = getLocKey(pin.loc);
       if (!(locKey in pins)) pins[locKey] = [];
       pins[locKey].push(pin);
       return false;
     };
+    // This is the pins order. Top level pin icons would be selected first
     if (this.visibility.geoEvents) {
       this.geoEventsRawPins.pins.map(combine);
     } if (this.visibility.inventions) {
       this.inventionsRawPins.pins.map(combine);
     } if (this.visibility.persons) {
       this.personsRawPins.pins.map(combine);
+    } if (this.visibility.document) {
+      this.documentRawPins.map(combine);
     } if (this.visibility.battle) {
       this.battleRawPins.map(combine);
     }

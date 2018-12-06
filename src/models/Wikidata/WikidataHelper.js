@@ -28,6 +28,7 @@ const wdProps = {
     P19: 'placeOfBirth',
     P20: 'placeOfDeath',
     P276: 'location', // (city, place)
+    P291: 'publicationPlace', // For documents
   },
   images: {
     P18: 'image',
