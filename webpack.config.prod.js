@@ -97,9 +97,14 @@ module.exports = {
       filename: 'style.bundle.css',
     }),
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './index.en.html',
       inject: 'body',
       filename: 'index.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.ru.html',
+      inject: 'body',
+      filename: 'index.ru.html'
     }),
   ],
 };

@@ -125,9 +125,9 @@ module.exports = {
       openAnalyzer: false,
     }),
     new HtmlWebpackPlugin({
-      title: 'Chronist Development',
+      title: 'Chron Development',
       filename: 'index.html',
-      template: './index.html'
+      template: './index.en.html'
     }),
   ]
 };
