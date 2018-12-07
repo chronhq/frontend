@@ -49,20 +49,26 @@ export default class MapStyleModel {
 
   @observable backgroundStyle = { ...BODY, sources: {}, layers: [] };
 
+  @computed get bordersStyle() {
+    return this.rootStore.flags.layer.get('borders')
+      ? this.rootStore.borders.styleInfo
+      : { sources: {}, layers: [] };
+  }
+
   @computed get style() {
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,
-        ...this.rootStore.borders.styleInfo.sources
+        ...this.bordersStyle.sources
       }
-      : this.rootStore.borders.styleInfo.sources;
+      : this.bordersStyle.sources;
 
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
         ...this.backgroundStyle.layers,
-        ...this.rootStore.borders.styleInfo.layers
+        ...this.bordersStyle.layers
       ]
-      : this.rootStore.borders.styleInfo.layers;
+      : this.bordersStyle.layers;
 
     return {
       ...this.backgroundStyle,
