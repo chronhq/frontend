@@ -46,6 +46,16 @@ class Demo extends React.Component {
     demo.config.settings.flags.zoom.minScale = 4;
     // Centring map on Europe. Coorinates are in [long, lat] format
     demo.config.projection.center = [5, 50];
+    this.props.store.wikistore.addBattles([
+      'Q1025134', 'Q898338', 'Q2234632', 'Q10671369',
+      'Q4871992', 'Q4872085', 'Q2564536', 'Q6539', 'Q1527921'], false);
+
+    const birth = ['Q61987', 'Q1069841', 'Q1585', 'Q161145', 'Q8814'];
+    const death = ['Q729541', 'Q496775', 'Q473506', 'Q315819', 'Q860155'];
+    this.props.store.wikistore.addActors([...death, ...birth], false);
+
+    this.props.store.wikistore.addDocuments(['Q169759'], false);
+
     this.props.store.wikistore.fetchAll();
 
     runInAction(() => {

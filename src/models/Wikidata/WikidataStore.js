@@ -103,69 +103,57 @@ class WikidataStore {
     }, []);
   }
 
-  @computed get actorPins() {
+  @computed get actorsTimeline() {
     return this.actorsInCache.reduce((prev, cur) => {
+      const locationAndLabel = (place, type) => (
+        place instanceof Array
+          ? {
+            [`${type}Label`]: place[3],
+            [`${type}Loc`]: {
+              y: place[0],
+              x: place[1],
+            }
+          }
+          : {});
+
       const misc = {
         deathDate: cur.dateOfDeathText,
         birthDate: cur.dateOfBirthText,
+        ...locationAndLabel(cur.placeOfBirth, 'birth'),
+        ...locationAndLabel(cur.placeOfDeath, 'death'),
       };
 
-      if (cur.placeOfBirth instanceof Array) {
-        const [y, x, qId, cityLabel] = cur.placeOfBirth;
-        misc.birthLoc = { y, x };
-        misc.birthLabel = cityLabel;
-      }
+      return ['birth', 'death'].reduce((p, type) => {
+        if (misc[`${type}Loc`] === undefined) return p;
+        const typeU = `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
+        const year = cur[`dateOf${typeU}`].getUTCFullYear();
 
-      if (cur.placeOfDeath instanceof Array) {
-        const [y, x, qId, cityLabel] = cur.placeOfDeath;
-        misc.deathLoc = { y, x };
-        misc.deathLabel = cityLabel;
-      }
-
-      if (cur.placeOfBirth instanceof Array
-        && cur.dateOfBirth.getUTCFullYear() === this.now) {
         const person = {
           wd: true,
           key: cur.id,
           id: cur.id,
-          title: this.rootStore.i18n.data.messages.personBirth,
+          title: this.rootStore.i18n.data.messages[`person${typeU}`],
           occasion: cur.label,
-          location: misc.birthLabel,
+          location: misc[`${type}Label`],
           ...misc,
         };
         const event = {
-          type: 'birth',
-          loc: misc.birthLoc,
+          type,
+          loc: misc[`${type}Loc`],
           person,
         };
+        const curYear = p[year] || { death: [], birth: [] };
         return {
-          ...prev,
-          birth: [...prev.birth, event]
+          ...p, [year]: { ...curYear, [type]: [...curYear[type], event] }
         };
-      }
-      if (cur.placeOfDeath instanceof Array
-        && cur.dateOfDeath.getUTCFullYear() === this.now) {
-        const person = {
-          wd: true,
-          key: cur.id,
-          id: cur.id,
-          title: this.rootStore.i18n.data.messages.personDeath,
-          occasion: cur.label,
-          location: misc.deathLabel,
-          ...misc,
-        };
-        const event = {
-          type: 'death',
-          loc: misc.deathLoc,
-          person,
-        };
-        return {
-          ...prev,
-          death: [...prev.death, event]
-        };
-      }
-      return prev;
-    }, { birth: [], death: [] });
+      }, prev);
+    }, { /* [year]: { death: [], birth: [] } */ });
+  }
+
+  @computed get actorPins() {
+    return this.now in this.actorsTimeline
+      ? this.actorsTimeline[this.now]
+      : { death: [], birth: [] };
   }
 
   addBattles = (data, fetch) => this.addData('battles', data, fetch)
@@ -176,15 +164,6 @@ class WikidataStore {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-
-    this.addBattles(['Q1025134', 'Q898338', 'Q2234632', 'Q10671369',
-      'Q4871992', 'Q4872085', 'Q2564536', 'Q6539', 'Q1527921'], false);
-
-    const birth = ['Q61987', 'Q1069841', 'Q1585', 'Q161145', 'Q8814'];
-    const death = ['Q729541', 'Q496775', 'Q473506', 'Q315819', 'Q860155'];
-    this.addActors([...death, ...birth], false);
-
-    this.addDocuments(['Q169759'], false);
   }
 }
 

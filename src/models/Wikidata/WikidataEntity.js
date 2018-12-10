@@ -87,7 +87,7 @@ class WikidataEntity {
     return this.rootStore.wikidata.cache;
   }
 
-  // if possible select primary language othewise fallback to default lng
+  // if possible select primary language otherwise fallback to default lng
   getLngString = obj => ((obj[this.lng] || '') || (obj[this.fallback] || ''));
 
   // grab point location from dependency
