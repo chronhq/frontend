@@ -133,7 +133,7 @@ class WikidataStore {
           key: cur.id,
           id: cur.id,
           title: this.rootStore.i18n.data.messages[`person${typeU}`],
-          occasion: cur.label,
+          label: cur.label,
           location: misc[`${type}Label`],
           ...misc,
         };

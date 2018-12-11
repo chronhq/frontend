@@ -24,7 +24,7 @@ const PersonFact = ({ person }) => (
       {person.title}
     </p>
     <p className='factHeader'>
-      {person.occasion}
+      {person.label}
     </p>
     <p className='factDate'>
       {person.birthDate}
