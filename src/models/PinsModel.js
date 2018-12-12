@@ -172,15 +172,15 @@ export default class FeedPinsModel {
   }
 
   @computed get battleRawPins() {
-    return this.rootStore.wikistore.battlePins;
+    return this.rootStore.wikistore.battles.pins;
   }
 
   @computed get documentRawPins() {
-    return this.rootStore.wikistore.documentPins;
+    return this.rootStore.wikistore.documents.pins;
   }
 
   @computed get actorRawPins() {
-    return this.rootStore.wikistore.actorPins;
+    return this.rootStore.wikistore.actors.pins;
   }
 
   // Group pins by location
@@ -201,13 +201,13 @@ export default class FeedPinsModel {
     } if (this.visibility.inventions) {
       this.inventionsRawPins.pins.map(combine);
     } if (this.visibility.document) {
-      this.documentRawPins.map(combine);
+      this.documentRawPins.pins.map(combine);
     } if (this.visibility.battle) {
-      this.battleRawPins.map(combine);
+      this.battleRawPins.pins.map(combine);
     } if (this.visibility.persons) {
       this.personsRawPins.pins.map(combine);
-      this.actorRawPins.birth.map(combine);
-      this.actorRawPins.death.map(combine);
+      this.actorRawPins.birth.pins.map(combine);
+      this.actorRawPins.death.pins.map(combine);
     }
 
     return pins;
@@ -238,6 +238,12 @@ export default class FeedPinsModel {
       pins.push(...this.inventionsRawPins.free);
     } if (this.visibility.persons) {
       pins.push(...this.personsRawPins.free);
+      pins.push(...this.actorRawPins.birth.free);
+      pins.push(...this.actorRawPins.death.free);
+    } if (this.visibility.document) {
+      pins.push(...this.documentRawPins.free);
+    } if (this.visibility.battle) {
+      pins.push(...this.battleRawPins.free);
     }
     return pins.map(p => new InteractivePin([p], getKey(p)));
   }

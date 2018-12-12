@@ -94,8 +94,13 @@ class WikidataEntity {
   // add orig id and label of place to array
   getCoordinates = loc => loc.map(i => (this.cache[i]
     ? this.cache[i].values.coordinateLocation
-      .map(l => ([...l, this.cache[i].entity.id, this.cache[i].label]))
-    : null));
+      .map(l => ({
+        y: l[0],
+        x: l[1],
+        id: this.cache[i].entity.id,
+        label: this.cache[i].label,
+      }))
+    : {}));
 
   // resolve dependency into whole structures
   getParticipants = p => p.map(i => (this.cache[i]
