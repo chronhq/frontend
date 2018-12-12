@@ -68,4 +68,23 @@ export default class GeoEventsList {
   @computed get currentData() {
     return this.current.map(id => this.data[id]);
   }
+
+  @computed get pins() {
+    const pins = [];
+    const free = [];
+    const type = 'geo';
+    this.currentData.map((geoEvent) => {
+      if (geoEvent.geopoint[0] === null || geoEvent.geopoint[1] === null) {
+        free.push({ type, geoEvent });
+      } else {
+        const loc = {
+          x: geoEvent.geopoint[0],
+          y: geoEvent.geopoint[1],
+        };
+        pins.push({ type, geoEvent, loc });
+      }
+      return false;
+    });
+    return { pins, free };
+  }
 }

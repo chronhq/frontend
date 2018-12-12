@@ -58,6 +58,9 @@ export default class FeedPinsModel {
     this.rootStore = rootStore;
   }
 
+  @observable pinsOrder = [
+    'geoEvents', 'inventions', 'document', 'battle', 'persons'];
+
   @observable active = null;
 
   @observable selectedFreePin = false;
@@ -94,81 +97,21 @@ export default class FeedPinsModel {
       : this.pins.find(pin => pin.key === this.active);
   }
 
-  @computed get persons() {
-    return this.rootStore.data.Persons.data;
-  }
-
-  @computed get personsFeed() {
-    return this.rootStore.prepared.persons.current;
-  }
-
   @computed get personsRawPins() {
-    const pins = [];
-    const free = [];
-    ['birth', 'death'].map(type => (
-      this.personsFeed[type].map((perFact) => {
-        const typePlace = `${type}Place`;
-        const person = this.persons[perFact.person];
-        const locId = person[typePlace];
-        if (locId !== 0) {
-          const loc = this.rootStore.prepared.data.cities.points[locId].location;
-          pins.push({ type, loc, person });
-        } else {
-          free.push({ type, person });
-        }
-        return false;
-      })
-    ));
-    return { pins, free };
-  }
-
-  @computed get inventions() {
-    return this.rootStore.data.Inventions.data;
-  }
-
-  @computed get inventionsFeed() {
-    return this.rootStore.prepared.inventions.current;
+    const persons = this.rootStore.prepared.persons.pins;
+    const actors = this.rootStore.wikistore.actors.pins;
+    return {
+      free: [...persons.free, ...actors.free],
+      pins: [...persons.pins, ...actors.pins],
+    };
   }
 
   @computed get inventionsRawPins() {
-    const pins = [];
-    const free = [];
-    const type = 'inv';
-    this.inventionsFeed.map((invId) => {
-      const invention = this.inventions[invId];
-      const locId = invention.inventPlace;
-      if (locId !== 0) {
-        const loc = this.rootStore.prepared.data.cities.points[locId].location;
-        pins.push({ type, loc, invention });
-      } else {
-        free.push({ type, invention });
-      }
-      return false;
-    });
-    return { pins, free };
-  }
-
-  @computed get geoEvents() {
-    return this.rootStore.prepared.geoEventsList.currentData;
+    return this.rootStore.prepared.inventions.pins;
   }
 
   @computed get geoEventsRawPins() {
-    const pins = [];
-    const free = [];
-    const type = 'geo';
-    this.geoEvents.map((geoEvent) => {
-      if (geoEvent.geopoint[0] === null || geoEvent.geopoint[1] === null) {
-        free.push({ type, geoEvent });
-      } else {
-        const loc = {
-          x: geoEvent.geopoint[0],
-          y: geoEvent.geopoint[1],
-        };
-        pins.push({ type, geoEvent, loc });
-      }
-      return false;
-    });
-    return { pins, free };
+    return this.rootStore.prepared.geoEventsList.pins;
   }
 
   @computed get battleRawPins() {
@@ -179,9 +122,15 @@ export default class FeedPinsModel {
     return this.rootStore.wikistore.documents.pins;
   }
 
-  @computed get actorRawPins() {
-    return this.rootStore.wikistore.actors.pins;
-  }
+  getActivePins = type => (
+    this.pinsOrder.reduce((prev, flag) => {
+      const rawPins = `${flag}RawPins`;
+      if (this[rawPins] === undefined) return prev;
+      return this.visibility[flag]
+        ? [...prev, ...this[`${flag}RawPins`][type]]
+        : prev;
+    }, [])
+  )
 
   // Group pins by location
   // Allow only one pin per location as a separate icon
@@ -196,19 +145,7 @@ export default class FeedPinsModel {
       return false;
     };
     // This is the pins order. Top level pin icons would be selected first
-    if (this.visibility.geoEvents) {
-      this.geoEventsRawPins.pins.map(combine);
-    } if (this.visibility.inventions) {
-      this.inventionsRawPins.pins.map(combine);
-    } if (this.visibility.document) {
-      this.documentRawPins.pins.map(combine);
-    } if (this.visibility.battle) {
-      this.battleRawPins.pins.map(combine);
-    } if (this.visibility.persons) {
-      this.personsRawPins.pins.map(combine);
-      this.actorRawPins.birth.pins.map(combine);
-      this.actorRawPins.death.pins.map(combine);
-    }
+    this.getActivePins('pins').map(combine);
 
     return pins;
   }
@@ -231,20 +168,7 @@ export default class FeedPinsModel {
   }
 
   @computed get freePins() {
-    const pins = [];
-    if (this.visibility.geoEvents) {
-      pins.push(...this.geoEventsRawPins.free);
-    } if (this.visibility.inventions) {
-      pins.push(...this.inventionsRawPins.free);
-    } if (this.visibility.persons) {
-      pins.push(...this.personsRawPins.free);
-      pins.push(...this.actorRawPins.birth.free);
-      pins.push(...this.actorRawPins.death.free);
-    } if (this.visibility.document) {
-      pins.push(...this.documentRawPins.free);
-    } if (this.visibility.battle) {
-      pins.push(...this.battleRawPins.free);
-    }
-    return pins.map(p => new InteractivePin([p], getKey(p)));
+    return this.getActivePins('free')
+      .map(p => new InteractivePin([p], getKey(p)));
   }
 }

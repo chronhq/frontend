@@ -105,7 +105,7 @@ class WikidataEntity {
   // resolve dependency into whole structures
   getParticipants = p => p.map(i => (this.cache[i]
     ? this.cache[i].structure
-    : null));
+    : {}));
 
   getDeepData = (props, deepCb) => (
     props.reduce((prev, prop) => (

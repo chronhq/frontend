@@ -19,19 +19,28 @@
 import { action, observable, computed } from 'mobx';
 
 class GenericStoreType {
-  @observable list = [];
+  // For storing unique wikidata_ids
+  @observable keys = {};
 
   @observable dummy = { free: [], pins: [] };
 
   @observable type = 'undefined'; // battle || document...
 
   @action add(data, fetch = true) {
-    this.list = [...this.list, ...data];
+    this.keys = {
+      ...this.keys,
+      ...data.reduce((p, c) => ({ ...p, [c]: null }), {})
+    };
+
     if (fetch) this.fetch();
   }
 
   @action fetch() {
     this.rootStore.wikidata.getItems(this.list);
+  }
+
+  @computed get list() {
+    return Object.keys(this.keys);
   }
 
   @computed get cache() {

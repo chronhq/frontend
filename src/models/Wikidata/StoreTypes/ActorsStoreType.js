@@ -46,32 +46,18 @@ class ActorsStoreType extends GenericStoreType {
           loc: cur[`placeOf${typeU}`],
           person,
         };
-        const curYear = p[type][year] || { free: [], pins: [] };
+        const curYear = p[year] || { free: [], pins: [] };
         const pos = event.loc.x !== undefined ? 'pins' : 'free';
 
         return {
           ...p,
-          [type]: { // birth | death
-            ...p[type], // [year] : { free, pins }
-            [year]: { ...curYear, [pos]: [...curYear[pos], event] }
+          [year]: { // birth | death
+            ...curYear, // [year] : { free, pins }
+            [pos]: [...curYear[pos], event]
           }
         };
       }, prev);
-    }, { /* [type]: [year]: { free: [], pins: [] } */
-      birth: {},
-      death: {}
-    });
-  }
-
-  getPins = type => (this.now in this.timeline[type]
-    ? this.timeline[type][this.now]
-    : { free: [], pins: [] })
-
-  @computed get pins() {
-    return {
-      death: this.getPins('death'),
-      birth: this.getPins('birth'),
-    };
+    }, { /* [year]: { free: [], pins: [] } */ });
   }
 }
 
