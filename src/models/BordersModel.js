@@ -91,7 +91,7 @@ export default class BordersModel {
         source: name,
         type: 'fill',
         paint: {
-          'fill-color': `rgba(${cur.color})`,
+          'fill-color': `hsla(${cur.color})`,
         },
         'source-layer': name
       };
