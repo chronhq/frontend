@@ -37,12 +37,20 @@ export default class Internationalization {
         [cur]: AvailableLanguages[cur].language
       }), {});
 
-  @observable lng = 'ru';
+  @observable lng = 'en';
+
+  // language for wikidata entities if selected is not present
+  @observable fallback = 'en';
 
   @action select(languages) {
     if (languages in this.languages) {
       this.lng = languages;
     }
+  }
+
+  @computed get dateToString() {
+    const { date } = this.data;
+    return d => d.toLocaleString(date.locale, date.options);
   }
 
   @computed get data() {

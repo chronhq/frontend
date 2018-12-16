@@ -30,6 +30,14 @@ window.store = new StoreModel();
 window.store.data.Courses.get();
 window.store.courseSelection.loadBaseData();
 
+const domain = window.location.hostname;
+
+// use russian language only for visits on maps.chronist.ru
+// it is safer than rely on browser language
+if (domain === 'maps.chronist.ru') {
+  window.store.i18n.select('ru');
+}
+
 // https://stackoverflow.com/questions/7944460/detect-safari-browser
 const isSafari = navigator.vendor
   && navigator.vendor.indexOf('Apple') > -1

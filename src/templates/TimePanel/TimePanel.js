@@ -24,8 +24,8 @@ import ControlButtons from '../../containers/TimeControls/TimeControls';
 import SeekBar from '../../containers/SeekBar/SeekBar';
 import './TimePanel.less';
 
-@inject('store')
-@observer
+// @inject('store')
+// @observer
 class TimePanel extends React.Component {
   render() {
     return (

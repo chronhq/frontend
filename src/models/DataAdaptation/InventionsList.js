@@ -45,4 +45,22 @@ export default class InventionsList {
       ? this.timeline[this.year]
       : [];
   }
+
+  @computed get pins() {
+    const pins = [];
+    const free = [];
+    const type = 'inv';
+    this.current.map((invId) => {
+      const invention = this.data[invId];
+      const locId = invention.inventPlace;
+      if (locId !== 0) {
+        const loc = this.rootStore.prepared.data.cities.points[locId].location;
+        pins.push({ type, loc, invention });
+      } else {
+        free.push({ type, invention });
+      }
+      return false;
+    });
+    return { pins, free };
+  }
 }

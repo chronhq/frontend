@@ -77,6 +77,10 @@ class YearInput extends React.Component {
       : 'yearinput__title yearinput__error';
   }
 
+  @computed get hidden() {
+    return !this.props.store.flags.runtime.get('yearInput');
+  }
+
   handleWheel = (event) => {
     this.props.store.year.followWheel(event.deltaY);
   }
@@ -94,6 +98,7 @@ class YearInput extends React.Component {
   }
 
   render() {
+    if (this.hidden) return null;
     return (
       <div className='yearinput__window layer-3'>
         <div className={this.className}>

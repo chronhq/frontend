@@ -39,7 +39,7 @@ export default class MessagesI18n extends BaseI18n {
   }
 
   person(person, type) {
-    const occasion = person[this.nameSelector];
+    const label = person[this.nameSelector];
     let location;
     let title;
     if (type === 'birth') {
@@ -56,7 +56,7 @@ export default class MessagesI18n extends BaseI18n {
       id: person.id,
       key: `person_${type}_${person.id}`,
       title,
-      occasion,
+      label,
       birthDate: person.birthDate ? person.birthDate : this.data.unknown.year,
       deathDate: person.deathDate ? person.deathDate : this.data.unknown.year,
       location

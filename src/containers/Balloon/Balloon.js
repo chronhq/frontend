@@ -20,7 +20,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import { PersonFact, Invention, GeoEvent } from '../../components/Messages';
+import { PersonFact, Invention, GeoEvent, Battle, Document } from '../../components/Messages';
 import CountryHover from '../../components/Messages/CountryHover';
 
 import './Balloon.less';
@@ -104,12 +104,30 @@ class Balloon extends React.Component {
               fact={this.i18n.invention(pin.invention)}
               key={`balloon_inv_${pin.invention.id}`}
             />);
-        default:
+        case 'death':
+        case 'birth':
+        // actor from wikidata
           return (
             <PersonFact
-              person={this.i18n.person(pin.person, pin.type)}
+              person={pin.person.wd === true
+                ? pin.person
+                : this.i18n.person(pin.person, pin.type)}
               key={`balloon_person_${pin.type}_${pin.person.id}`}
             />);
+        case 'battle':
+          return (
+            <Battle
+              fact={pin.battle}
+              key={`balloon_battle_${pin.type}_${pin.battle.id}`}
+            />);
+        case 'document':
+          return (
+            <Document
+              fact={pin.document}
+              key={`balloon_battle_${pin.type}_${pin.document.id}`}
+            />);
+        default:
+          return () => '';
       }
     });
   }

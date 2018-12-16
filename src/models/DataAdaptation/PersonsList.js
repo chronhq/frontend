@@ -117,4 +117,24 @@ export default class PersonsList {
       ? deathFacts[this.year]
       : { birth: [], death: [] };
   }
+
+  @computed get pins() {
+    const pins = [];
+    const free = [];
+    ['birth', 'death'].map(type => (
+      this.current[type].map((perFact) => {
+        const typePlace = `${type}Place`;
+        const person = this.data[perFact.person];
+        const locId = person[typePlace];
+        if (locId !== 0) {
+          const loc = this.rootStore.prepared.data.cities.points[locId].location;
+          pins.push({ type, loc, person });
+        } else {
+          free.push({ type, person });
+        }
+        return false;
+      })
+    ));
+    return { pins, free };
+  }
 }

@@ -1,0 +1,26 @@
+@import '../../styles/colors.less';
+
+.layer-toggle {
+  color: @dark-grey;
+  transition: color ease-in-out 60ms;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  & input[type="checkbox"] {
+    display: none;
+  }
+  &:hover {
+    background-color: #ccc;
+  }
+  &__checked {
+    color: black;
+    font-weight: 700;
+  }
+  &-label {
+    color: @main-blue;
+    @media screen and (min-width: 600px) {
+      display: none;
+    }
+  }
+}
