@@ -20,7 +20,9 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import { PersonFact, Invention, GeoEvent, Battle, Document } from '../../components/Messages';
+import {
+  PersonFact, Invention, GeoEvent, Battle, Document
+} from '../../components/Messages';
 import CountryHover from '../../components/Messages/CountryHover';
 
 import './Balloon.less';
@@ -85,7 +87,7 @@ class Balloon extends React.Component {
   }
 
   @computed get news() {
-    if (this.countryHover !== null) {
+    if (this.countryHover !== null && this.countryHover !== undefined) {
       return <CountryHover id={this.countryHover} />;
     }
     if (this.pin === null || typeof this.pin === 'undefined') return null;
