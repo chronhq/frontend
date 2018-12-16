@@ -73,33 +73,33 @@ export default class BordersModel {
   }
 
   @computed get styleInfo() {
-    return this.styleFeatures.reduce((prev, cur) => {
-      // skip source if it does not have bbox or bbox is still loading
-      if (typeof this.geomBBoxes[cur.id] === 'undefined') {
-        return prev;
-      }
-      const name = `${cur.id}`;
+    const name = 'collection';
+    const source = {
+      type: 'vector',
+      tiles: [`${window.location.origin}/mvt/${name}/{z}/{x}/{y}`]
+    };
 
-      const source = {
-        type: 'vector',
-        bounds: this.geomBBoxes[cur.id].bounds,
-        tiles: [`${window.location.origin}/mvt/${cur.id}/{z}/{x}/{y}`]
-      };
-
-      const layer = {
-        id: name,
-        source: name,
-        type: 'fill',
-        paint: {
-          'fill-color': `hsla(${cur.color})`,
-        },
-        'source-layer': name
-      };
-      return {
-        sources: { ...prev.sources, [name]: source },
-        layers: [...prev.layers, layer]
-      };
-    }, { sources: {}, layers: [] });
+    const ids = this.styleFeatures.map(cur => cur.id);
+    const fill = this.styleFeatures.reduce((prev, cur) => ([
+      ...prev,
+      [cur.id],
+      `hsla(${cur.color})`
+    ]), []);
+    const fallback = 'hsla(0, 14%, 87%, 0)';
+    const layer = {
+      layout: {},
+      filter: ['in', 'id', ...ids],
+      type: 'fill',
+      source: name,
+      id: name,
+      paint: {
+        'fill-color': ['match', ['get', 'id'], ...fill, fallback]
+      },
+      'source-layer': name
+    };
+    return {
+      sources: { [name]: source }, layers: [layer]
+    };
   }
 
   @computed get style() {
