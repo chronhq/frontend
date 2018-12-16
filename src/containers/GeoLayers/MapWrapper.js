@@ -138,7 +138,7 @@ class MapWrapper extends React.Component {
       ? features[0]
       : { layer: { id: '0' }, properties: { id: '1' } };
     try {
-      if (Number(feature.layer.id) === feature.properties.id) {
+      if (feature.layer.id === this.props.store.borders.layerName) {
         // it's one of our border layers
         key = this.props.store.borders.actualData[feature.properties.id];
       }

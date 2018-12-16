@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {
-  computed
+  computed, observable
 } from 'mobx';
 
 function getActualData(years, data, target) {
@@ -36,6 +36,8 @@ export default class BordersModel {
     this.rootStore = rootStore;
     this.data = this.rootStore.data;
   }
+
+  @observable layerName = 'collection';
 
   @computed get actualData() {
     const data = getActualData(
@@ -73,7 +75,7 @@ export default class BordersModel {
   }
 
   @computed get styleInfo() {
-    const name = 'collection';
+    const name = this.layerName;
 
     const mapsOpacity = 0.25;
 
