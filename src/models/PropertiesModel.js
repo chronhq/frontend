@@ -20,33 +20,6 @@ import {
   observable, computed
 } from 'mobx';
 
-const rgbaToHsla = (rgba) => {
-  const [r, g, b, a] = rgba.map(c => c / 255);
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const hsl = {};
-  const diff = max - min;
-  const sum = max + min;
-  hsl.l = (max + min) / 2;
-
-  if (diff === 0) {
-    hsl.h = 0;
-    hsl.s = 0;
-  } else {
-    hsl.s = hsl.l > 0.5
-      ? diff / (2 - diff)
-      : diff / (sum);
-    switch (max) {
-      case r: hsl.h = (g - b) / diff + (g < b ? 6 : 0); break;
-      case g: hsl.h = (b - r) / diff + 2; break;
-      case b: hsl.h = (r - g) / diff + 4; break;
-      default: break;
-    }
-    hsl.h /= 6;
-  }
-  return [`${hsl.h * 360}`, `${hsl.s * 100}%`, `${hsl.l * 100}%`, a];
-};
-
 class Property {
   @observable id;
 
@@ -64,16 +37,13 @@ class Property {
 
   @computed get color() {
     const colors = this.rootStore.data.MapColors.data;
-    // MapOpacity range from 0 to 255;
-    // 64 from 255 is 25% for opacity
-    const mapsOpacity = 64;
     try {
       const color = colors[this.data.color].color1;
-      return rgbaToHsla([color[0], color[1], color[2], mapsOpacity]);
+      return [color[0], color[1], color[2]];
     } catch (e) {
       // console.error('ColorID', this.data.color, 'Props', this.data);
       // Probably colorID === -99 -- Disputed territory
-      return rgbaToHsla([127, 127, 127, mapsOpacity]);
+      return [127, 127, 127];
     }
   }
 

@@ -66,7 +66,7 @@ export default class BordersModel {
     return Object.keys(this.actualData).map(geo => ({
       color: (this.actualData[geo] in properties
         ? properties[this.actualData[geo]].color
-        : [0, 0, 0, 0]),
+        : [0, 0, 0]),
       id: Number(geo),
       props: this.actualData[geo],
     }));
@@ -74,6 +74,9 @@ export default class BordersModel {
 
   @computed get styleInfo() {
     const name = 'collection';
+
+    const mapsOpacity = 0.25;
+
     const source = {
       type: 'vector',
       tiles: [`${window.location.origin}/mvt/${name}/{z}/{x}/{y}`]
@@ -83,8 +86,9 @@ export default class BordersModel {
     const fill = this.styleFeatures.reduce((prev, cur) => ([
       ...prev,
       [cur.id],
-      `hsla(${cur.color})`
+      `rgb(${cur.color})`
     ]), []);
+    // transparent fallback color
     const fallback = 'hsla(0, 14%, 87%, 0)';
     const layer = {
       layout: {},
@@ -93,6 +97,7 @@ export default class BordersModel {
       source: name,
       id: name,
       paint: {
+        'fill-opacity': mapsOpacity,
         'fill-color': ['match', ['get', 'id'], ...fill, fallback]
       },
       'source-layer': name
