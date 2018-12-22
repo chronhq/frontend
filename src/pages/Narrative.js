@@ -25,17 +25,22 @@ import Bio from '../components/TimelineBio/Bio';
 import Widgets from '../containers/Widgets';
 import Balloon from '../containers/Balloon';
 import FontLoader from '../containers/FontLoader';
+import Dashboard from '../templates/Dashboard/Dashboard';
+import SideBar from '../templates/SideBar/SideBar';
+import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileBar';
 import Wrapper from './Wrapper';
+import TimePanel from '../templates/TimePanel/TimePanel';
 
 const Narrative = ({ story }) => (
   <Wrapper story={story}>
-    <Widgets />
-    <FontLoader />
-    <Overlays />
-    <Bio />
-    <GeoLayers />
-    <Timeline />
+    {/*
+      <GeoLayers />
+    */}
+    <TimePanel />
     <Balloon />
+    <Dashboard />
+    <NarrativeMobileBar />
+    <SideBar />
   </Wrapper>
 );
 

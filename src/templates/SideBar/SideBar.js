@@ -5,7 +5,7 @@ import LayerControlWrapper from '../../containers/LayerControlWrapper/LayerContr
 import './SideBar.less';
 
 const SideBar = () => (
-  <div className='narrative-sidebar'>
+  <div className='narrative-sidebar layer-4'>
     <LayerControlWrapper />
   </div>
 );

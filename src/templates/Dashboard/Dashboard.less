@@ -1,0 +1,36 @@
+@import '../../styles/colors.less';
+
+.dashboard {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  top: 0;
+  height: calc(~'100vh - 55px');
+  max-width: 400px;
+  background-color: rgba(@panel, 0.7);
+  padding: 0rem;
+  transform: translateX(0);
+  transition: transform 300ms ease-in-out;
+  z-index: 40;
+  &__hidden {
+    transform: translateX(-400px);
+  }
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+  &-hide {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: 10px;
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    transform: translateX(40px);
+    background-color: rgba(@panel, 0.7);
+  }
+}
