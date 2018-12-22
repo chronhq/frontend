@@ -18,37 +18,13 @@ class StoryList extends React.Component {
   }
 
   handleStorySelection(url) {
-    console.log('action', url);
     this.props.store.courseSelection.cleanup();
     const course = this.props.store.courseSelection.find(url);
     this.props.store.courseSelection.select(course.id, course.url);
     this.props.history.push(`/${url}`);
   }
 
-  // selectCourse() {
-  //   const course = this.props.store.courseSelection.find(this.props.story);
-  //   if (course !== undefined) {
-  //     this.props.store.courseSelection.select(course.id, course.url);
-  //   } else {
-  //     this.props.history.push('/404');
-  //   }
-  // }
-
-  // validateCourses() {
-  //   const errorPages = {
-  //     404: 'Not Found', 502: 'Gateway timeout', 504: 'Bad Gateway'
-  //   };
-  //   const error = toJS(this.props.store.data.Courses.status.error);
-  //   if (error !== null && errorPages[toJS(error.status)] !== undefined) {
-  //     this.props.history.push(`/${toJS(error.status)}`);
-  //   }
-  //   if (this.props.story !== 'CourseSelection') {
-  //     this.selectCourse();
-  //   }
-  // }
-
   render() {
-    console.log('courses', this.courses);
     return (
       <div className='storylist'>
         {Object.values(this.courses).map(story => (

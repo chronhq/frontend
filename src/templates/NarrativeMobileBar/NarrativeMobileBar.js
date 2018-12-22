@@ -53,7 +53,6 @@ class NarrativeMobileBar extends React.Component {
         </div>
       </div>
     );
-
   }
 }
 

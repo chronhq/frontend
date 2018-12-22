@@ -4,11 +4,10 @@ import './DashboardFooter.less';
 
 const DashboardFooter = () => (
   <div className='dashboard-footer'>
-    <a>News</a>
-    <a>About us</a>
-    <a>License</a>
-    <a>Report error</a>
-
+    <span>News</span>
+    <span>About us</span>
+    <span>License</span>
+    <span>Report error</span>
   </div>
 );
 

@@ -21,7 +21,8 @@ class CurrentStory extends Component {
     return (
       <div className='currentstory'>
         <h6>
-          {this.props.store.courseSelection.courseId
+          {(this.props.store.courseSelection.courseId
+            || this.props.store.courseSelection.courseId === 0)
             ? this.courses[this.props.store.courseSelection.courseId].name[this.lng]
             : ''
           }

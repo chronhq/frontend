@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 import './StoryCard.less';
@@ -6,13 +7,14 @@ const StoryCard = ({
   title,
   author,
   dates,
-  cb,
-  url
+  cb
 }) => (
   <div
     role='button'
+    tabIndex={0}
     className='storycard'
     onClick={() => cb()}
+    onKeyPress={() => cb()}
   >
     <div className='storycard--title'>
       <h5>

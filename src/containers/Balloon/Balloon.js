@@ -20,7 +20,13 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import { PersonFact, Invention, GeoEvent, Battle, Document } from '../../components/Messages';
+import {
+  PersonFact,
+  Invention,
+  GeoEvent,
+  Battle,
+  Document
+} from '../../components/Messages';
 import CountryHover from '../../components/Messages/CountryHover';
 
 import './Balloon.less';

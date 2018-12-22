@@ -22,7 +22,6 @@ import { withRouter } from 'react-router-dom';
 import { computed, action } from 'mobx';
 
 import FatButton from '../../components/FatButton/FatButton';
-
 import './TimelineButtons.less';
 
 @inject('store')
