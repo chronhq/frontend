@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {
-  computed
+  computed, observable
 } from 'mobx';
 
 function getActualData(years, data, target) {
@@ -36,6 +36,8 @@ export default class BordersModel {
     this.rootStore = rootStore;
     this.data = this.rootStore.data;
   }
+
+  @observable layerName = 'collection';
 
   @computed get actualData() {
     const data = getActualData(
@@ -66,40 +68,45 @@ export default class BordersModel {
     return Object.keys(this.actualData).map(geo => ({
       color: (this.actualData[geo] in properties
         ? properties[this.actualData[geo]].color
-        : [0, 0, 0, 0]),
+        : [0, 0, 0]),
       id: Number(geo),
       props: this.actualData[geo],
     }));
   }
 
   @computed get styleInfo() {
-    return this.styleFeatures.reduce((prev, cur) => {
-      // skip source if it does not have bbox or bbox is still loading
-      if (typeof this.geomBBoxes[cur.id] === 'undefined') {
-        return prev;
-      }
-      const name = `${cur.id}`;
+    const name = this.layerName;
 
-      const source = {
-        type: 'vector',
-        bounds: this.geomBBoxes[cur.id].bounds,
-        tiles: [`${window.location.origin}/mvt/${cur.id}/{z}/{x}/{y}`]
-      };
+    const mapsOpacity = 0.25;
 
-      const layer = {
-        id: name,
-        source: name,
-        type: 'fill',
-        paint: {
-          'fill-color': `rgba(${cur.color})`,
-        },
-        'source-layer': name
-      };
-      return {
-        sources: { ...prev.sources, [name]: source },
-        layers: [...prev.layers, layer]
-      };
-    }, { sources: {}, layers: [] });
+    const source = {
+      type: 'vector',
+      tiles: [`${window.location.origin}/mvt/${name}/{z}/{x}/{y}`]
+    };
+
+    const ids = this.styleFeatures.map(cur => cur.id);
+    const fill = this.styleFeatures.reduce((prev, cur) => ([
+      ...prev,
+      [cur.id],
+      `rgb(${cur.color})`
+    ]), []);
+    // transparent fallback color
+    const fallback = 'hsla(0, 14%, 87%, 0)';
+    const layer = {
+      layout: {},
+      filter: ['in', 'id', ...ids],
+      type: 'fill',
+      source: name,
+      id: name,
+      paint: {
+        'fill-opacity': mapsOpacity,
+        'fill-color': ['match', ['get', 'id'], ...fill, fallback]
+      },
+      'source-layer': name
+    };
+    return {
+      sources: { [name]: source }, layers: [layer]
+    };
   }
 
   @computed get style() {

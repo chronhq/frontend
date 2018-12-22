@@ -91,7 +91,7 @@ class Balloon extends React.Component {
   }
 
   @computed get news() {
-    if (this.countryHover !== null) {
+    if (this.countryHover !== null && this.countryHover !== undefined) {
       return <CountryHover id={this.countryHover} />;
     }
     if (this.pin === null || typeof this.pin === 'undefined') return null;
