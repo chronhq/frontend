@@ -1,0 +1,13 @@
+cache: npm
+before_install:
+  - sed 's/MAPBOX_TOKEN/dummy_token/' settings.json.example > settings.json
+install:
+  - npm install
+language: node_js
+node_js:
+  - '10'
+  - '8'
+script:
+  - npm run lint
+  - npm run test
+  - npm run release
