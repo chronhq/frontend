@@ -1,4 +1,4 @@
-# Chron Frontend
+# Chron Frontend [![Build Status](https://travis-ci.org/chronhq/frontend.svg?branch=master)](https://travis-ci.org/chronhq/frontend)
 
 ## Getting Started
 
