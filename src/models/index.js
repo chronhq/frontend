@@ -37,6 +37,7 @@ import Properties from './PropertiesModel';
 import MapStyle from './MapStyleModel';
 import WikidataFetcher from './Wikidata/WikidataFetcher';
 import WikidataStore from './Wikidata/WikidataStore';
+import FilterNarratives from './Search/FilterNarratives';
 
 export default class storeModel {
   @observable fonts = {};
@@ -59,5 +60,8 @@ export default class storeModel {
     this.mapStyle = new MapStyle(this);
     this.wikidata = new WikidataFetcher(this);
     this.wikistore = new WikidataStore(this);
+    this.search = {
+      narratives: new FilterNarratives(this)
+    };
   }
 }

@@ -10,7 +10,7 @@ import './StoryList.less';
 @observer
 class StoryList extends React.Component {
   @computed get courses() {
-    return this.props.store.data.Courses.data;
+    return this.props.store.search.narratives.entities;
   }
 
   @computed get lng() {
