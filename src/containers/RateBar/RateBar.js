@@ -18,11 +18,15 @@ class RateBar extends Component {
   render() {
     return (
       <div className='rate-widget'>
-        <button type='button' onClick={() => this.increment()}> + </button>
+        <button type='button' onClick={() => this.decriment()}>
+          <i className='lnr lnr-arrow-down' aria-hidden='true' />
+        </button>
         <span>
           {this.state.rate}
         </span>
-        <button type='button' onClick={() => this.decriment()}> - </button>
+        <button type='button' onClick={() => this.increment()}>
+          <i className='lnr lnr-arrow-up' aria-hidden='true' />
+        </button>
       </div>
     );
   }
