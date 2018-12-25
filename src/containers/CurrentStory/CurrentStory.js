@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
+import PropTypes from 'prop-types';
 
 import RateBar from '../RateBar/RateBar';
 import './CurrentStory.less';
@@ -17,9 +18,18 @@ class CurrentStory extends Component {
   }
 
   render() {
-    console.log('id on render', this.props.store.courseSelection.courseId);
     return (
       <div className='currentstory'>
+        {this.props.isStorySelected
+          && (
+            <button
+              type='button'
+              onClick={() => this.props.changeUi()}
+            >
+              <i className='lnr lnr-chevron-left' aria-hidden='true' />
+              Back
+            </button>
+          )}
         <h6>
           {(this.props.store.courseSelection.courseId
             || this.props.store.courseSelection.courseId === 0)
@@ -32,5 +42,10 @@ class CurrentStory extends Component {
     );
   }
 }
+
+CurrentStory.propTypes = {
+  changeUi: PropTypes.func.isRequired,
+  isStorySelected: PropTypes.bool.isRequired
+};
 
 export default CurrentStory;
