@@ -1,14 +1,44 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
+import { action } from 'mobx';
 
 import './DashboardFooter.less';
 
-const DashboardFooter = () => (
-  <div className='dashboard-footer'>
-    <span>News</span>
-    <span>About us</span>
-    <span>License</span>
-    <span>Report error</span>
-  </div>
-);
+@inject('store')
+@observer
+class DashboardFooter extends React.Component {
+  @action openFeedback() {
+    this.props.store.feedback.year = this.props.store.year.now;
+    this.props.store.flags.runtime.set('feedback', true);
+  }
+
+  render() {
+    return (
+      <div className='dashboard-footer'>
+        <button
+          type='button'
+          onClick={() => console.log('news not available')}
+        >
+          News
+        </button>
+        <a href='https://github.com/chronhq/frontend'>
+          About us
+        </a>
+        <button
+          type='button'
+          onClick={() => console.log('show license')}
+        >
+          License
+        </button>
+        <button
+          type='button'
+          onClick={() => this.openFeedback()}
+        >
+          Report error
+        </button>
+      </div>
+    );
+  }
+}
 
 export default DashboardFooter;
