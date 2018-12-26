@@ -19,7 +19,7 @@
 import React from 'react';
 import DeckGL from '@deck.gl/react';
 
-import { InteractiveMap } from 'react-map-gl';
+import { InteractiveMap, FlyToInterpolator } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
@@ -188,6 +188,8 @@ class MapWrapper extends React.Component {
         }}
       >
         <InteractiveMap
+          transitionDuration={this.props.store.deck.transition}
+          transitionInterpolator={new FlyToInterpolator()}
           mapStyle={this.props.store.mapStyle.style}
           mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
           ref={(ref) => {
