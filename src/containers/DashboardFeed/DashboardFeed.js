@@ -7,7 +7,7 @@ class DashboardFeed extends React.Component {
     return (
       <div className='dashboard-feed'>
         <h2>
-          Event List
+          {'Event List'}
         </h2>
       </div>
     );

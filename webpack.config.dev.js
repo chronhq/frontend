@@ -22,25 +22,7 @@ module.exports = {
     ]
   },
   optimization: {
-    nodeEnv: 'development',
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 4,
-      name: true,
-      automaticNameDelimiter: '.',
-      cacheGroups: {
-        node_vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'initial',
-          name: 'vendor',
-          maxSize: 1000000,
-          priority: 1
-        }
-      }
-    },
+    nodeEnv: 'development'
   },
   devServer: {
     host: '0.0.0.0',

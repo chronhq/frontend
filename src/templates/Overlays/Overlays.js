@@ -21,9 +21,11 @@ import React from 'react';
 import Feedback from '../../containers/Feedback/Feedback';
 import YearInput from '../../containers/YearInput/YearInput';
 import Bio from '../../components/TimelineBio/Bio';
+import Article from '../../containers/Article/Article';
 
 const Overlays = () => (
   <div id='overlays'>
+    <Article />
     <Feedback />
     <YearInput />
     <Bio />

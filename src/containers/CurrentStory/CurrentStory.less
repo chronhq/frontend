@@ -1,11 +1,14 @@
 @import '../../styles/colors.less';
 
 .currentstory {
+  box-sizing: border-box;
   border: 1px solid #979797;
   background-color: #D8D8D8;
   padding: 0.5rem;
   display: flex;
   flex-direction: row;
+  width: calc(~'100% + 3px');
+  transform: translateX(0px);
   justify-content: center;
   color: #4A4A4A;
   font-family: 'Lora-Regular', serif;
@@ -16,7 +19,6 @@
     outline: none;
     border: none;
     box-shadow: none;
-    // margin-right: 1rem;
     padding: 0;
     color: #4A4A4A;
     &:focus, &:hover, &:active {
@@ -30,5 +32,8 @@
   }
   & h6 {
     margin: auto;
+  }
+  &__return {
+    margin-right: 0.5rem;
   }
 }

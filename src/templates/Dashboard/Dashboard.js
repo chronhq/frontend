@@ -22,8 +22,14 @@ class Dashboard extends React.Component {
     return (
       <div className={`dashboard layer-4 ${this.state.hidden && 'dashboard__hidden'}`}>
         <DashboardSearch />
-        <CurrentStory isStorySelected={this.state.isStorySelected} changeUi={() => this.changeUi()} />
-        {this.state.isStorySelected ? <DashboardFeed /> : <StoryList changeUi={() => this.changeUi()} />}
+        <CurrentStory
+          isStorySelected={this.state.isStorySelected}
+          changeUi={() => this.changeUi()}
+        />
+        {this.state.isStorySelected
+          ? <DashboardFeed />
+          : <StoryList changeUi={() => this.changeUi()} />
+        }
         <DashboardFooter />
         <button type='button' className='dashboard-hide layer-2' onClick={() => this.setState(state => ({ hidden: !state.hidden }))}>
           <i className={`lnr lnr-chevron-${this.state.hidden ? 'right' : 'left'}`} aria-hidden='true' title='show panel' />

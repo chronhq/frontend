@@ -19,22 +19,22 @@ class DashboardFooter extends React.Component {
           type='button'
           onClick={() => console.log('news not available')}
         >
-          News
+          {'News'}
         </button>
         <a href='https://github.com/chronhq/frontend'>
-          About us
+          {'About us'}
         </a>
         <button
           type='button'
           onClick={() => console.log('show license')}
         >
-          License
+          {'License'}
         </button>
         <button
           type='button'
           onClick={() => this.openFeedback()}
         >
-          Report error
+          {'Report error'}
         </button>
       </div>
     );

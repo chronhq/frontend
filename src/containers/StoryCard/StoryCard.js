@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import './StoryCard.less';
@@ -26,14 +25,14 @@ const StoryCard = ({
     </span>
     <div className='storycard--author'>
       <b>
-        Author:
+        {'Author:'}
       </b>
       <p>
         {author}
       </p>
     </div>
     <div className='storycard--rating'>
-      rate
+      {'0'}
     </div>
   </div>
 );

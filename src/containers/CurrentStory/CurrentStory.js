@@ -24,10 +24,11 @@ class CurrentStory extends Component {
           && (
             <button
               type='button'
+              className='currentstory__return'
               onClick={() => this.props.changeUi()}
             >
               <i className='lnr lnr-chevron-left' aria-hidden='true' />
-              Back
+              {'Back'}
             </button>
           )}
         <h6>
