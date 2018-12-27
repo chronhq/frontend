@@ -21,7 +21,7 @@ class DashboardFooter extends React.Component {
         >
           {'News'}
         </button>
-        <a href='https://github.com/chronhq/frontend'>
+        <a href='https://github.com/chronhq/frontend' target='_blank' rel='noopener noreferer'>
           {'About us'}
         </a>
         <button

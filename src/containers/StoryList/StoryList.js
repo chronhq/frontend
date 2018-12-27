@@ -27,7 +27,7 @@ class StoryList extends React.Component {
 
   render() {
     return (
-      <div className='storylist'>
+      <div className='dashboard-content'>
         {Object.values(this.courses).map(story => (
           <StoryCard
             key={`card_${story.url}`}
