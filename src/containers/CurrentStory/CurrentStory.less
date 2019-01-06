@@ -1,15 +1,16 @@
 @import '../../styles/colors.less';
 
 .currentstory {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   box-sizing: border-box;
+  position: static;
   border: 1px solid #979797;
   background-color: #D8D8D8;
   padding: 0.5rem;
-  display: flex;
-  flex-direction: row;
   width: calc(~'100% + 3px');
   transform: translateX(0px);
-  justify-content: center;
   color: #4A4A4A;
   font-family: 'Lora-Regular', serif;
   & button {

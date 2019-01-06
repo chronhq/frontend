@@ -40,7 +40,7 @@ class TrucatePart extends React.Component {
           onFocus={() => this.setState({ blockHover: true })}
           onMouseOut={() => this.setState({ blockHover: false })}
           onBlur={() => this.setState({ blockHover: false })}
-          className={this.state.showButton ? 'truncate--dots' : 'truncate--dots truncate--dots__hidden'}
+          className={this.state.showButton ? 'truncate--expand' : 'truncate--expand truncate--expand__hidden'}
         >
           {'Expand'}
         </button>

@@ -124,13 +124,14 @@ class YearInput extends React.Component {
             onClick={this.handleSet}
             type='button'
             disabled={this.props.store.year.tuneIsValid ? false : 'disabled'}
-            className={this.props.store.year.tuneIsValid ? null : 'disabled'}
+            className='yearinput__button'
           >
             {this.props.store.i18n.data.buttons.set}
           </button>
           <button
             onClick={this.close}
             type='button'
+            className='yearinput__button'
           >
             {this.props.store.i18n.data.buttons.dismiss}
           </button>
