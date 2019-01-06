@@ -67,5 +67,11 @@
 .article--body {
   column-count: 2;
   column-fill: auto;
+  -moz-column-fill: auto;
+  // -webkit-column-fill: auto;
   font-size: 0.875rem;
+  height: 300px; //hack
+  @media screen and (max-width: 600px) {
+    column-count: 1;
+  }
 }
