@@ -20,12 +20,15 @@
     &:hover {
       transform: scale(1.1);
     }
-  }
-  .lnr-arrow-up {
-    color: green;
-
-  }
-  .lnr-arrow-down {
-    color: red;
+    & .lnr-arrow-up {
+      color: green;
+    }
+    & .lnr-arrow-down {
+      color: red;
+    }
+    &:disabled .lnr-arrow-up,
+    &:disabled .lnr-arrow-down {
+      color: gray;
+    }
   }
 }
