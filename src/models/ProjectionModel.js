@@ -27,7 +27,7 @@ export default class ProjectionModel {
   @observable defaultClip = '[[-180,90],[180,-90]]';
 
   @computed get courseId() {
-    return this.rootStore.flags.runtime.get('SelectedCourse');
+    return this.rootStore.courseSelection.courseId;
   }
 
   @computed get data() {

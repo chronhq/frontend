@@ -25,7 +25,7 @@ class Dashboard {
 
   @computed get selected() {
     // returns false for global narrative
-    return Boolean(this.rootStore.flags.runtime.get('SelectedCourse'));
+    return Boolean(this.rootStore.courseSelection.courseId);
   }
 
   @computed get isStorySelected() {

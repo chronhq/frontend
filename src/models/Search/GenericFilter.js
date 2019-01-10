@@ -26,7 +26,7 @@ class GenericFilter {
   @observable entitiesSelector = 'data';
 
   @computed get selected() {
-    return Number(this.rootStore.flags.runtime.get('SelectedCourse'));
+    return this.rootStore.courseSelection.courseId;
   }
 
   @computed get lng() {
