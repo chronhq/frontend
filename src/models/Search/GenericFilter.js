@@ -18,8 +18,12 @@
  */
 import { observable, computed, action } from 'mobx';
 
-class FilterNarratives {
+class GenericFilter {
   @observable text = '';
+
+  @observable dataSelector = '';
+
+  @observable entitiesSelector = 'data';
 
   @computed get selected() {
     return Number(this.rootStore.flags.runtime.get('SelectedCourse'));
@@ -30,7 +34,7 @@ class FilterNarratives {
   }
 
   @computed get data() {
-    return this.rootStore.data.Courses.data;
+    return this.rootStore.data[this.dataSelector].data;
   }
 
   @computed get notSelected() {
@@ -42,10 +46,17 @@ class FilterNarratives {
       ), {});
   }
 
+
+  selectText = d => ([d.description]);
+
+  textCb = t => t[this.lng];
+
+  filterCb = cur => (
+    this.textCb(cur).toLowerCase().indexOf(this.text.toLowerCase()) > -1);
+
   filter = (id) => {
-    const { author, description, name } = this.data[id];
-    return [author, description, name].some(cur => (
-      cur[this.lng].toLowerCase().indexOf(this.text.toLowerCase()) > -1));
+    const fields = this.selectText(this.data[id]);
+    return fields.some(this.filterCb);
   }
 
   @computed get filtered() {
@@ -58,7 +69,7 @@ class FilterNarratives {
   }
 
   @computed get entities() {
-    if (this.text.length === 0) return this.notSelected;
+    if (this.text.length === 0) return this[this.entitiesSelector];
     return this.filtered;
   }
 
@@ -66,9 +77,11 @@ class FilterNarratives {
     this.text = text;
   }
 
-  constructor(rootStore) {
+  constructor(rootStore, dataSelector, selectAll = false) {
     this.rootStore = rootStore;
+    this.dataSelector = dataSelector;
+    this.entitiesSelector = selectAll === true ? 'data' : 'notSelected';
   }
 }
 
-export default FilterNarratives;
+export default GenericFilter;

@@ -25,7 +25,7 @@ import './DashboardSearch.less';
 @observer
 class DashboardSearch extends React.Component {
   setText = (e) => {
-    this.props.store.search.narratives.setText(e.target.value);
+    this.props.store.search.filter.setText(e.target.value);
   }
 
   render() {
@@ -33,6 +33,7 @@ class DashboardSearch extends React.Component {
       <input
         className='dashboard-search'
         type='text'
+        value={this.props.store.search.filter.text}
         onChange={this.setText}
       />
     );

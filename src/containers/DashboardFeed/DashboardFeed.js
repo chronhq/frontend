@@ -9,7 +9,7 @@ import './DashboardFeed.less';
 @observer
 class DashboardFeed extends React.Component {
   @computed get timeline() {
-    return this.props.store.data.CourseTimelines.data;
+    return this.props.store.search.Narrations.entities;
   }
 
   @computed get tick() {

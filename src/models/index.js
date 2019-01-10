@@ -37,7 +37,8 @@ import Properties from './PropertiesModel';
 import MapStyle from './MapStyleModel';
 import WikidataFetcher from './Wikidata/WikidataFetcher';
 import WikidataStore from './Wikidata/WikidataStore';
-import FilterNarratives from './Search/FilterNarratives';
+import Dashboard from './DashboardModel';
+import DashboardSearch from './Search/DashboardSearch';
 
 export default class storeModel {
   @observable fonts = {};
@@ -48,6 +49,7 @@ export default class storeModel {
     this.data = new Data();
     this.flags = new Flags();
     this.animation = new AnimationFrame();
+    this.dashboard = new Dashboard(this);
     this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
@@ -60,8 +62,6 @@ export default class storeModel {
     this.mapStyle = new MapStyle(this);
     this.wikidata = new WikidataFetcher(this);
     this.wikistore = new WikidataStore(this);
-    this.search = {
-      narratives: new FilterNarratives(this)
-    };
+    this.search = new DashboardSearch(this);
   }
 }
