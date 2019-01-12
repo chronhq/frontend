@@ -50,15 +50,16 @@ class Balloon extends React.Component {
   @computed get opacity() {
     if (this.countryHover === null) {
       return (this.pin === null || typeof this.pin === 'undefined')
-        ? 0
-        : 1;
+        ? 0 : 1;
     }
     return 1;
   }
 
+
   @computed get style() {
     return {
       opacity: this.opacity,
+      visibility: this.opacity ? 'visible' : 'hidden',
       top: `${this.props.store.pins.pageY}px`,
       left: `${this.props.store.pins.pageX}px`,
     };
