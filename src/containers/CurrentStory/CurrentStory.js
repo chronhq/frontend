@@ -41,7 +41,7 @@ class CurrentStory extends Component {
 
   handleTitleEnter(e) {
     if (e.keyCode === 13) {
-      this.props.changeUi(e);
+      this.props.changeUi();
     }
   }
 

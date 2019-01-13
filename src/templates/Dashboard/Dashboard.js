@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
     return this.hidden ? 'right' : 'left';
   }
 
-  changeUI = (e) => {
+  changeUI = () => {
     this.view.changeUI();
   }
 
