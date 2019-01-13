@@ -35,6 +35,16 @@ class CurrentStory extends Component {
     return this.props.store.i18n.lng;
   }
 
+  @computed get dashboard() {
+    return this.props.store.i18n.data.dashboard;
+  }
+
+  handleTitleEnter(e) {
+    if (e.keyCode === 13) {
+      this.props.changeUi(e);
+    }
+  }
+
   render() {
     return (
       <div className='currentstory'>
@@ -43,19 +53,24 @@ class CurrentStory extends Component {
             <button
               type='button'
               className='currentstory__return'
-              onClick={() => this.props.changeUi()}
+              onClick={e => this.props.changeUi(e)}
             >
               <i className='lnr lnr-chevron-left' aria-hidden='true' />
-              {'Back'}
+              {this.dashboard.back}
             </button>
           )}
-        <h6>
-          {(this.props.store.courseSelection.courseId
-            || this.props.store.courseSelection.courseId === 0)
+        <div
+          className='currentstory--title'
+          role='button'
+          tabIndex={0}
+          onClick={e => this.props.changeUi(e)}
+          onKeyDown={e => this.handleTitleEnter(e)}
+        >
+          {(this.props.store.courseSelection.courseId !== null)
             ? this.courses[this.props.store.courseSelection.courseId].name[this.lng]
             : ''
           }
-        </h6>
+        </div>
         <RateBar />
       </div>
     );
