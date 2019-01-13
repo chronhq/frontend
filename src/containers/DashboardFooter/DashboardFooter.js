@@ -25,13 +25,13 @@ import './DashboardFooter.less';
 @inject('store')
 @observer
 class DashboardFooter extends React.Component {
+  @computed get dashboard() {
+    return this.props.store.i18n.data.dashboard;
+  }
+
   @action openFeedback() {
     this.props.store.feedback.year = this.props.store.year.now;
     this.props.store.flags.runtime.set('feedback', true);
-  }
-
-  @computed get dashboard() {
-    return this.props.store.i18n.data.dashboard;
   }
 
   render() {
