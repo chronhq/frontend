@@ -49,7 +49,6 @@ class Dashboard extends React.Component {
   }
 
   changeUI = (e) => {
-    e.stopPropagation();
     this.view.changeUI();
   }
 

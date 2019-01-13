@@ -121,10 +121,7 @@ class FeedbackForm extends React.Component {
             invalid={this.i18n.textareaInvalid}
             cb={e => this.handleData(e)}
           />
-          <div style={{
-            display: 'flex', justifyContent: 'space-between', alignContent: 'center', verticalAlign: 'middle'
-          }}
-          >
+          <div className='feedback--actions'>
             <div style={{ verticalAlign: 'middle' }}>
               <InputCheckBox
                 name='agreement'
@@ -143,8 +140,7 @@ class FeedbackForm extends React.Component {
             </div>
             <button
               type='submit'
-              disable={this.feedback.validation ? undefined : 'disabled'}
-              className={this.feedback.validation ? '' : 'disabeld'}
+              disabled={this.feedback.validation ? undefined : true}
             >
               {this.i18n.button}
             </button>
