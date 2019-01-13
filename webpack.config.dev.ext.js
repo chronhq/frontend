@@ -41,24 +41,6 @@ module.exports = {
   },
   optimization: {
     nodeEnv: 'development',
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 4,
-      name: true,
-      automaticNameDelimiter: '.',
-      cacheGroups: {
-        node_vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'initial',
-          name: 'vendor',
-          maxSize: 1000000,
-          priority: 1
-        }
-      }
-    },
   },
   devServer: {
     host: '0.0.0.0',
@@ -94,18 +76,6 @@ module.exports = {
       {
         test: /\.less$/,
         use: ['style-loader', 'css-loader', 'less-loader']
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: ['url-loader?limit=4096&name=[name].[ext]']
-      },
-      {
-        test: /\.ico$/,
-        use: ['file-loader?name=[name].[ext]']
-      },
-      {
-        test: /\.html$/,
-        use: 'html-loader'
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,

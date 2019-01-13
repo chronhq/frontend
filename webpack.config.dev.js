@@ -5,7 +5,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   entry: {
     main: path.resolve(__dirname, 'src'),
   },
@@ -58,18 +58,6 @@ module.exports = {
       {
         test: /\.less$/,
         use: ['style-loader', 'css-loader', 'less-loader']
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: ['url-loader?limit=4096&name=[name].[ext]']
-      },
-      {
-        test: /\.ico$/,
-        use: ['file-loader?name=[name].[ext]']
-      },
-      {
-        test: /\.html$/,
-        use: 'html-loader'
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
