@@ -56,7 +56,7 @@ class TrucatePart extends React.Component {
           onMouseOut={() => this.hideButton()}
           onBlur={() => this.hideButton()}
         >
-          {this.props.string.substring(0, 512)}
+          {this.props.string.substring(0, stringLimit)}
         </div>
         <button
           onClick={e => this.toggleArticle(e)}
