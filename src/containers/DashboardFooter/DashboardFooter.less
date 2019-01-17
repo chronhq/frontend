@@ -1,0 +1,47 @@
+@import '../../styles/colors.less';
+
+.dashboard-footer {
+  box-sizing: border-box;
+  align-self: flex-end;
+  width: calc(~'100% + 3px');
+  transform: translateX(3px);
+  border: 1px solid @footer-border;
+  background-color: @footer-background;
+  margin: 0.75rem 0;
+  height: 2rem;
+  padding: 0.1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  vertical-align: middle;
+  & button, & a {
+    // display: inline-block;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    color: rgb(0, 0, 0);
+    font-size: 0.875rem;
+    font-weight: 400;
+    font-family: 'Lora', serif;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    display: inline-flex;
+    &:focus, &:hover, &:active {
+      outline: none !important;
+      border: none !important;
+    }
+    &:hover {
+      opacity: 0.7;
+      color: @main-blue;
+      text-decoration: underline;
+      text-decoration-color: @main-blue;
+    }
+  }
+}

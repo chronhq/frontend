@@ -1,0 +1,56 @@
+.nevent {
+  position: relative;
+  border-radius: 6px;
+  background-color: rgba(250,250,250,0.8);
+  margin: 10px 0;
+  // padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 10fr 2fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+  'title dates'
+  'paragraph paragraph';
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(250,250,250,0.6);
+  }
+  &__selected {
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.30);
+    border: 1px solid #80CECE;
+  }
+  &--title {
+    grid-area: title;
+    color: #2E4474;
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    letter-spacing: -1px;
+    text-align: left;
+    padding: 0.5rem 0 0 0.5rem;
+  }
+  &--dates {
+    grid-area: dates;
+    color: #80CECE;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-align: center;
+    padding: 0.5rem;
+  }
+  &--paragraph {
+    display: block;
+    position: relative;
+    grid-area: paragraph;
+    font-size: 0.875rem;
+    text-align: justify;
+    max-height: 0;
+    overflow-y: hidden;
+    transition: max-height 300ms ease-in-out;
+    padding: 0;
+  }
+}
+
+.nevent__selected > .nevent--paragraph {
+  transition: max-height 300ms ease-in-out;
+  max-height: 300px;
+  padding: 0.5rem;
+}

@@ -41,6 +41,7 @@ class App extends React.Component {
           <YMInitializer
             accounts={[50501221]}
             options={YM_CONFIG}
+            version='2'
           >
             <AppRouter />
           </YMInitializer>

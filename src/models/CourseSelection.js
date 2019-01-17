@@ -117,6 +117,8 @@ export default class CourseSideEffects {
     this.rootStore.year.setup(this.courseInfo.config.year);
     this.rootStore.flags.set(this.courseInfo.config.settings.flags);
 
+    this.rootStore.dashboard.setup();
+
     this.configureDataFilters();
     this.loadCourseData();
 

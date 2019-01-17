@@ -1,6 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -75,14 +76,6 @@ module.exports = {
         use: ['url-loader?limit=4096&name=[name].[ext]']
       },
       {
-        test: /\.ico$/,
-        use: ['file-loader?name=[name].[ext]']
-      },
-      {
-        test: /\.html$/,
-        use: 'html-loader'
-      },
-      {
         test: /\.(woff|woff2|ttf|eot)$/,
         loader: 'url-loader?limit=4096&name=[name].[ext]'
       },
@@ -106,5 +99,9 @@ module.exports = {
       inject: 'body',
       filename: 'index.ru.html'
     }),
+    new CopyWebpackPlugin([
+      './src/img/richpreview.jpg',
+      './src/img/favicon.ico'
+    ])
   ],
 };

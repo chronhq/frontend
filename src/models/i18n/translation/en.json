@@ -91,5 +91,13 @@
     "404": "Page not found",
     "502": "Bad Gateway",
     "504": "Gateway timeout"
+  },
+  "dashboard" : {
+    "news": "News",
+    "about": "About Us",
+    "license": "License",
+    "report": "Report error",
+    "back": "Back",
+    "expand": "Expand"
   }
 }

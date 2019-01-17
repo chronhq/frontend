@@ -23,6 +23,7 @@ const flags = {
     SelectedCourse: null,
     alignPanel: 'right',
     feedback: false,
+    article: false,
     yearInput: false,
     SidePanelTab: 0,
     SidePanelIsOpen: false,

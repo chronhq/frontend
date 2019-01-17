@@ -40,6 +40,8 @@ export default class DeckViewportModel {
     this.rootStore = rootStore;
   }
 
+  @observable transition = 1000;
+
   @observable width = window.innerWidth;
 
   @observable height = window.innerHeight;
@@ -172,8 +174,20 @@ export default class DeckViewportModel {
   }
 
   @action initLatLon() {
-    this.longitude = this.viewport.longitude;
-    this.latitude = this.viewport.latitude;
-    this.zoom = this.viewport.zoom;
+    if (this.interactiveMap !== null) {
+      const map = this.interactiveMap.getMap();
+      map.flyTo({
+        center: [
+          this.viewport.longitude,
+          this.viewport.latitude
+        ],
+        zoom: this.viewport.zoom,
+      });
+    }
+    setTimeout(() => {
+      this.longitude = this.viewport.longitude;
+      this.latitude = this.viewport.latitude;
+      this.zoom = this.viewport.zoom;
+    }, this.interactiveMap !== null ? this.transition : 0);
   }
 }

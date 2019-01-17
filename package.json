@@ -73,6 +73,7 @@
     "@deck.gl/react": "^6.2.3",
     "autoprefixer": "^9.3.1",
     "babel-loader": "^8.0.4",
+    "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.0.2",
     "d3-axis": "^1.0.12",
     "d3-scale": "^2.1.2",

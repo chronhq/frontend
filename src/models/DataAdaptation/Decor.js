@@ -29,7 +29,7 @@ export default class Decor {
   }
 
   @computed get courseId() {
-    return this.rootStore.flags.runtime.get('SelectedCourse');
+    return this.rootStore.courseSelection.courseId;
   }
 
   @computed get mapDecorationsRaw() {

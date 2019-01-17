@@ -1,0 +1,96 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed } from 'mobx';
+
+import './Article.less';
+
+@inject('store')
+@observer
+class Article extends React.Component {
+  @computed get isOpen() {
+    return this.props.store.flags.runtime.get('article');
+  }
+
+
+  @computed get timeline() {
+    return this.props.store.data.CourseTimelines.data;
+  }
+
+  @computed get tick() {
+    return this.props.store.year.tick;
+  }
+
+  closeFeedback(e) {
+    e.stopPropagation();
+    this.props.store.flags.runtime.set('article', false);
+  }
+
+  handleOverlay(e) {
+    if (e.keyCode === 13) {
+      this.closeFeedback(e);
+    }
+  }
+
+  clickOutside(e) {
+    if (!this.modal || this.modal.contains(e.target)) {
+      return;
+    }
+    this.closeFeedback(e);
+  }
+
+  render() {
+    if (this.isOpen === false) {
+      return null;
+    }
+    return (
+      <div
+        className='black-overlay'
+        role='button'
+        tabIndex='0'
+        onClick={e => this.clickOutside(e)}
+        onKeyUp={e => this.handleOverlay(e)}
+      >
+        <div
+          className='article'
+          ref={(ref) => { this.modal = ref; }}
+        >
+          <button
+            onClick={e => this.closeFeedback(e)}
+            className='close-window'
+            type='button'
+          >
+            <span className="lnr lnr-cross" />
+          </button>
+          <div className='article--title'>
+            <b>
+              {this.timeline[this.tick] ? this.timeline[this.tick].title : ''}
+            </b>
+          </div>
+          <div className='article--body'>
+            {this.timeline[this.tick] ? this.timeline[this.tick].description : ''}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Article;
