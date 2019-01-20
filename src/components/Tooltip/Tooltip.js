@@ -17,42 +17,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import Tooltip from 'rc-tooltip';
 import PropTypes from 'prop-types';
 
-import { Tooltip } from '../Input';
+import './Tooltip.less';
 
-class FatButton extends React.Component {
-  get classes() {
-    const classes = [];
-    if (this.props.active === true) {
-      classes.push('active');
-    }
-    if (this.props.disabled === true) {
-      classes.push('disabled');
-    }
-    return classes.join(' ');
-  }
+const Component = ({
+  children, placement, dark, content
+}) => (
+  <Tooltip
+    placement={placement}
+    trigger={['hover']}
+    overlay={() => (
+      <span>
+        {content}
+      </span>
+    )}
+    overlayClassName={dark ? 'rc-tooltip-dark' : ''}
+  >
+    {children}
+  </Tooltip>
+);
 
-  render() {
-    return (
-      <Tooltip placement='left' content={this.props.text}>
-        <button
-          onClick={() => this.props.cb()}
-          className={this.classes}
-          type='button'
-          // disabled={this.props.disabled}
-        >
-          <i className={`lnr ${this.props.icon}`} />
-        </button>
-      </Tooltip>
-    );
-  }
-}
-
-FatButton.propTypes = {
-  text: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  cb: PropTypes.func.isRequired
+Component.defaultProps = {
+  placement: 'left',
+  dark: false
 };
 
-export default FatButton;
+Component.propTypes = {
+  children: PropTypes.element.isRequired,
+  placement: PropTypes.string,
+  dark: PropTypes.bool,
+  content: PropTypes.string.isRequired
+};
+
+export default Component;

@@ -29,14 +29,16 @@ const Narrative = lazy(() => import('./pages/Narrative'));
 const NotFound = lazy(() => import('./pages/404'));
 const BadGateway = lazy(() => import('./pages/502'));
 const GatewayTimeout = lazy(() => import('./pages/504'));
+const Demo = lazy(() => import('./pages/Demo'));
 
 const AppRouter = () => (
   <Suspense fallback={<LoadingLogo />}>
     <Switch>
       <Route exact path='/' render={() => <Redirect to='/world' />} />
+      <Route path='/404' render={() => <NotFound />} />
       <Route path='/504' render={() => <GatewayTimeout />} />
       <Route path='/502' render={() => <BadGateway />} />
-      <Route path='/404' render={() => <NotFound />} />
+      <Route path='/demo' render={() => <Demo />} />
       <Route path='/:id' render={({ match }) => <Narrative story={match.params.id} />} />
     </Switch>
   </Suspense>

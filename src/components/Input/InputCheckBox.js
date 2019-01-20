@@ -17,6 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import './InputCheckBox.less';
 
 const InputCheckBox = ({
   name, checked, label, cb, disabled = false
@@ -43,5 +46,13 @@ const InputCheckBox = ({
     {label}
   </label>
 );
+
+InputCheckBox.propTypes = {
+  name: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  cb: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired
+};
 
 export default InputCheckBox;

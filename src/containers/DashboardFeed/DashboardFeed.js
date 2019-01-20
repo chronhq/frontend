@@ -21,6 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import NarrativeEvent from '../../components/NarrativeEvent/NarrativeEvent';
+import truncateText from '../Article/truncate';
 import './DashboardFeed.less';
 
 @inject('store')
@@ -53,6 +54,7 @@ class DashboardFeed extends React.Component {
                 event={this.timeline[event]}
                 cb={v => this.props.store.year.setTick(v)} // event.tick in value
                 currentTick={this.tick}
+                truncateText={truncateText}
               />
             )
           ))}
