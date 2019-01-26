@@ -29,6 +29,7 @@ const Narrative = lazy(() => import('./pages/Narrative'));
 const NotFound = lazy(() => import('./pages/404'));
 const BadGateway = lazy(() => import('./pages/502'));
 const GatewayTimeout = lazy(() => import('./pages/504'));
+const About = lazy(() => import('./pages/About'));
 
 const AppRouter = () => (
   <Suspense fallback={<LoadingLogo />}>
@@ -37,6 +38,7 @@ const AppRouter = () => (
       <Route path='/504' render={() => <GatewayTimeout />} />
       <Route path='/502' render={() => <BadGateway />} />
       <Route path='/404' render={() => <NotFound />} />
+      <Route path='/about' render={() => <About />} />
       <Route path='/:id' render={({ match }) => <Narrative story={match.params.id} />} />
     </Switch>
   </Suspense>
