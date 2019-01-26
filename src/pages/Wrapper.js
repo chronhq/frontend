@@ -37,7 +37,8 @@ class Wrapper extends React.Component {
   selectCourse() {
     const course = this.props.store.courseSelection.find(this.props.story);
     if (course !== undefined) {
-      this.props.store.courseSelection.select(course.id, course.url);
+      const fake = this.props.fake || null;
+      this.props.store.courseSelection.select(course.id, course.url, fake);
     } else {
       this.props.history.push('/404');
     }

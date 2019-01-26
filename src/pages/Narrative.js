@@ -28,8 +28,8 @@ import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileB
 import Wrapper from './Wrapper';
 import TimePanel from '../templates/TimePanel/TimePanel';
 
-const Narrative = ({ story }) => (
-  <Wrapper story={story}>
+const Narrative = ({ story, fake }) => (
+  <Wrapper story={story} fake={fake}>
     <GeoLayers />
     <TimePanel />
     <Overlays />
