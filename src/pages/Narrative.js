@@ -27,9 +27,11 @@ import SideBar from '../templates/SideBar/SideBar';
 import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileBar';
 import Wrapper from './Wrapper';
 import TimePanel from '../templates/TimePanel/TimePanel';
+import Widgets from '../containers/Widgets';
 
 const Narrative = ({ story }) => (
   <Wrapper story={story}>
+    <Widgets />
     <GeoLayers />
     <TimePanel />
     <Overlays />
