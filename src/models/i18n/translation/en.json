@@ -93,7 +93,7 @@
     "504": "Gateway timeout"
   },
   "dashboard" : {
-    "news": "News",
+    "project": "Project",
     "about": "About Us",
     "license": "License",
     "report": "Report error",
