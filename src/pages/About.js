@@ -60,7 +60,7 @@ const about = {
 const text = ['We are a community of enthusiasts behind Chron.',
   'We live in a different parts of the world',
   'but are united by passion for historical geography.',
-  'Find us on https://github.com/chronqh'].join(' ');
+  'Find us on https://github.com/chronhq'].join(' ');
 
 const tick = {
   year,
@@ -72,6 +72,23 @@ const tick = {
   cities: [],
   id: -1
 };
+
+const newPoint = p => ({ pic: 26, point: p });
+
+const points = [
+  { x: 33.044167, y: 34.674722 },
+  { x: -122.416667, y: 37.783333 },
+  { x: 2.3508, y: 48.8567 },
+  { x: 37.616667, y: 55.75 },
+  { x: 30.308611, y: 59.9375 },
+  { x: -71.063611, y: 42.358056 },
+  { x: 32.866667, y: 39.933333 },
+  { x: -93.093611, y: 44.944167 },
+  { x: 4.9, y: 52.366667 },
+  { x: 5.783333, y: 53.2 },
+  { x: 13.388889, y: 52.516667 },
+  { x: -122.272778, y: 37.871667 },
+].map(newPoint);
 
 
 @inject('store')
@@ -87,9 +104,8 @@ class About extends React.Component {
     when( // wait for course selection and add text
       () => this.props.store.courseSelection.courseId === -1,
       () => runInAction(() => {
-        console.log('when action is running');
-        // console.log('Status', this.props.store.data.CourseTimelines.status.loaded);
         this.props.store.data.CourseTimelines.data[-1] = tick;
+        this.props.store.data.CourseGeopoints.data[1] = points;
         return true;
       })
     );
