@@ -54,7 +54,7 @@ module.exports = {
     https: false,
     disableHostCheck: true,
     proxy: [{
-      context: ['/api', '/mvt', '/shared'],
+      context: ['/api', '/mvt'],
       target: 'https://maps.chron.ist/',
       changeOrigin: true,
     }],

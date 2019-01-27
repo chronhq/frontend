@@ -26,8 +26,6 @@ import Year from './YearModel';
 import CourseSelection from './CourseSelection';
 import Prepared from './PreparedData';
 
-import FeedbackForm from './FeedbackForm';
-
 import PinsModel from './PinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
@@ -45,7 +43,6 @@ export default class storeModel {
 
   // Add here new models
   constructor() {
-    this.feedback = new FeedbackForm();
     this.data = new Data();
     this.flags = new Flags();
     this.animation = new AnimationFrame();
