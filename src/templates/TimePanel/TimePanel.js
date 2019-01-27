@@ -28,7 +28,8 @@ class TimePanel extends React.Component {
       <div className='timepanel'>
         <SeekBar />
         <ControlButtons />
-      </div>);
+      </div>
+    );
   }
 }
 

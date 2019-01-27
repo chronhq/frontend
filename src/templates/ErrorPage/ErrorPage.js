@@ -36,12 +36,14 @@ class ErrorPage extends React.Component {
       ? () => (
         <div className='error-back'>
           <img className='error-back_single' src={astronaut} alt='astronaut' />
-        </div>)
+        </div>
+      )
       : () => (
         <div className='error-back'>
           <img className='error-back_over' src={japanImg} alt='japanese-warrior' />
           <img className='error-back_under' src={egyptImg} alt='egyptian-warrior' />
-        </div>);
+        </div>
+      );
     return (
       <div className='error'>
         <Suspense fallback={<Spinner />}>

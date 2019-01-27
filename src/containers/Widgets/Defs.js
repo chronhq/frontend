@@ -35,7 +35,8 @@ const MapPicsDefs = ({ symbols }) => ( // SymbolsDefs
             key={`mapPic_g_key_${mapPic.id}_${idx}`}
             d={g.d}
             style={{ ...g.style }}
-          />))}
+          />
+        ))}
       </symbol>
     ))}
   </g>
