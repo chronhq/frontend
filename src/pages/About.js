@@ -90,19 +90,6 @@ const points = [
   { x: -122.272778, y: 37.871667 }, // Berkeley
 ].map(newPoint);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @inject('store')
 @observer
 class About extends React.Component {
