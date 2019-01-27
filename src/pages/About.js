@@ -18,9 +18,12 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { runInAction } from 'mobx';
+import { runInAction, when } from 'mobx';
 
 import Narrative from './Narrative';
+
+const date = new Date();
+const year = date.getUTCFullYear();
 
 // Create a fake course
 const about = {
@@ -33,9 +36,9 @@ const about = {
   author: { ru: '', en: '' },
   config: {
     year: {
-      min: 2019,
-      max: 2019,
-      now: 2019,
+      min: year,
+      max: year,
+      now: year,
       tick: 1,
     },
     projection: {
@@ -54,6 +57,23 @@ const about = {
   }
 };
 
+const text = ['We are a community of enthusiasts behind Chron.',
+  'We live in a different parts of the world',
+  'but are united by passion for historical geography.',
+  'Find us on https://github.com/chronqh'].join(' ');
+
+const tick = {
+  year,
+  tick: 1,
+  courseId: -1,
+  title: '',
+  description: text,
+  persons: [],
+  cities: [],
+  id: -1
+};
+
+
 @inject('store')
 @observer
 class About extends React.Component {
@@ -63,6 +83,16 @@ class About extends React.Component {
     runInAction(() => {
       this.props.store.data.Courses.data[-1] = about;
     });
+
+    when( // wait for course selection and add text
+      () => this.props.store.courseSelection.courseId === -1,
+      () => runInAction(() => {
+        console.log('when action is running');
+        // console.log('Status', this.props.store.data.CourseTimelines.status.loaded);
+        this.props.store.data.CourseTimelines.data[-1] = tick;
+        return true;
+      })
+    );
   }
 
   render() {

@@ -44,9 +44,11 @@ export default class CourseSideEffects {
   }
 
   @computed get listOfDeps() {
-    return this.courseId === 0
-      ? [...this.deps.base, ...this.deps.world]
-      : [...this.deps.base, ...this.deps.course];
+    switch (this.courseId) {
+      case -1: return this.deps.base;
+      case 0: return [...this.deps.base, ...this.deps.world];
+      default: return [...this.deps.base, ...this.deps.course];
+    }
   }
 
 
@@ -110,9 +112,8 @@ export default class CourseSideEffects {
       console.log('Course already selected', id, name);
       return null;
     }
-
     // case for 'about us' page
-    if (id > 0 && this.rootStore.data.Courses.data[-1] !== undefined) {
+    if (id >= 0 && this.rootStore.data.Courses.data[-1] !== undefined) {
       delete this.rootStore.data.Courses.data[-1];
     }
 
