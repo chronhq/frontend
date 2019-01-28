@@ -18,7 +18,6 @@
  */
 import React from 'react';
 
-
 import Overlays from '../templates/Overlays/Overlays';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';

@@ -20,6 +20,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { action, computed } from 'mobx';
 
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 import './DashboardFooter.less';
 
 @inject('store')
@@ -37,27 +38,30 @@ class DashboardFooter extends React.Component {
   render() {
     return (
       <div className='dashboard-footer'>
-        <button
-          type='button'
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
           onClick={() => console.log('news not available')}
         >
           {this.dashboard.news}
-        </button>
-        <a href='https://github.com/chronhq/frontend' target='_blank' rel='noopener noreferrer'>
+        </Button>
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
+          onClick={() => console.log('https://github.com/chronhq/frontend')}
+        >
           {this.dashboard.about}
-        </a>
-        <button
-          type='button'
+        </Button>
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
           onClick={() => console.log('show license')}
         >
           {this.dashboard.license}
-        </button>
-        <button
-          type='button'
+        </Button>
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
           onClick={() => this.openFeedback()}
         >
           {this.dashboard.report}
-        </button>
+        </Button>
       </div>
     );
   }

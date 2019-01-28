@@ -42,33 +42,4 @@
   justify-content: space-between;
   align-content: center;
   vertical-align: middle;
-  & button {
-    cursor: pointer;
-    border-radius: 0.01rem;
-    background-color: @main-blue;
-    color: @white;
-    border: 1px solid @border;
-    display: inline-block;
-    height: 2rem;
-    padding: 3px 15px;
-    text-align: center;
-    outline:none;
-    transition: scale 200ms ease-in-out;
-    &:disabled, &[disabled] {
-      background-color: @disable;
-      color: @light-grey;
-    }
-    &:hover {
-      outline: none !important;
-      border-color: @dark-grey;
-      box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
-      opacity: 0.9;
-    }
-    &:focus {
-      outline: none !important;
-    }
-    &:active {
-      outline: 0 !important;
-    }
-  }
 }

@@ -8,15 +8,16 @@ const style = {
   alignContent: 'center',
   justfyContent: 'space-between',
   backgroundColor: '#E9DAC5',
-  height: '500px'
+  height: '800px'
 };
 
 storiesOf('Button', module)
   .add('sizes', () => (
-    <div style={style}>
+    <div>
       <Button btnSize={BUTTON_SIZE.NORMAL}>
         {'Normal'}
       </Button>
+      <hr />
       <Button btnSize={BUTTON_SIZE.SMALL}>
         {'Small'}
       </Button>
@@ -82,6 +83,24 @@ storiesOf('Button', module)
       <Button btnType={BUTTON_TYPE.CLOSE}>
         {'X'}
       </Button>
+      <div
+        style={{
+          width: '200px', height: '200px', backgroundColor: '#fafafa', position: 'relative', margin: 'auto'
+        }}
+      >
+        <Button btnType={BUTTON_TYPE.TRUNCATE}>
+          {'truncate'}
+        </Button>
+      </div>
+      <div
+        style={{
+          width: '50px', height: '50px', backgroundColor: '#fafafa', position: 'relative', margin: 'auto'
+        }}
+      >
+        <Button btnType={BUTTON_TYPE.ICON} btnSize={BUTTON_SIZE.AUTO}>
+          {'>'}
+        </Button>
+      </div>
     </div>
   ))
   .add('normal', () => (

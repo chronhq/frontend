@@ -6,12 +6,16 @@ export const BUTTON_TYPE = {
   BASIC: 'basic',
   GHOST: 'ghost',
   READMORE: 'readmore',
-  CLOSE: 'close'
+  CLOSE: 'close',
+  TRUNCATE: 'truncate',
+  ICON: 'icon'
 };
 
 export const BUTTON_SIZE = {
   NORMAL: 'normal',
-  SMALL: 'small'
+  SMALL: 'small',
+  WIDE: 'wide',
+  AUTO: 'auto'
 };
 
 export const BUTTON_COLOR = {
@@ -28,6 +32,7 @@ const Button = ({
   btnType,
   btnColor,
   children,
+  // type,
   ...props
 }) => (
   <button
@@ -42,11 +47,14 @@ const Button = ({
 Button.defaultProps = {
   btnSize: BUTTON_SIZE.NORMAL,
   btnType: BUTTON_TYPE.BASIC,
-  btnColor: BUTTON_COLOR.DEFAULT
+  btnColor: BUTTON_COLOR.DEFAULT,
+  children: '',
+  type: 'button'
 };
 
 Button.propTypes = {
-  children: PropTypes.any.isRequired,
+  children: PropTypes.any,
+  type: PropTypes.string,
   btnType: PropTypes.string,
   btnColor: PropTypes.string,
   btnSize: PropTypes.string

@@ -4,12 +4,18 @@ button {
   cursor: pointer;
   border-radius: 2px;
   display: inline-block;
+  // flex-direction: row;
+  // flex: 1 0 0;
+  // justify-content: center;
+  align-content: center;
   white-space: nowrap;
   outline: none !important;
   border: none;
-  max-width: 120px;
   transition: scale 200ms ease-in-out;
   margin: auto;
+  font-weight: inherit;
+  font-family: 'Open Sans', sans-serif;
+  vertical-align: baseline;
   &::-moz-focus-inner {
     border: 0;
   }
@@ -27,104 +33,95 @@ button {
   &.small {
     height: 25px;
   }
-  &.basic {
-    padding: 3px 15px;
-    text-align: center;
-    &:hover {
-      border-color: @dark-grey;
-      box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
-      opacity: 0.9;
-      text-shadow: 1px 1px 1px @grey;
-    }
+  &.wide {
+    height: 36px;
+    width: 100%;
   }
-  &.ghost {
-    padding: 2px;
-    background: none;
-    border: none;
-    max-width: 120px;
-    color: inherit;
+  &.auto {
     height: auto;
-    margin: auto;
-    line-height: inherit;
-    &:hover {
-      opacity: 0.7;
-      border: none !important;
-      box-shadow: inset 0 -1px @main-blue;
-      color: @main-blue;
-    }
-    &:focus {
-      // opacity: 0.7;
-      border: none !important;
-      box-shadow: inset 0 -1px @main-blue;
-      color: @main-blue;
-    }
+    width: auto;
   }
-  &.readmore {
-    color: @dark-grey;
-    overflow: visible;
-    border: none;
-    background: none;
-    text-align: left;
-    word-spacing: normal;
-    padding: 0;
-    text-decoration: none;
+}
+
+button.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  min-width: auto;
+  font-size: 1.5rem;
+  width: 4rem;
+  height: 4rem;
+  background: none;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
+  line-height: auto;
+  color: inherit;
+  transition: none; // chrome hack
+  &:hover {
+    opacity: 0.7;
+    border: none !important;
     box-shadow: none;
-    &:focus,
-    &:active {
-      color: @main-blue;
-      text-decoration: none;
-      box-shadow: inset 0 -1px @main-blue;
-    }
-    &:hover {
-      color: @main-blue;
-      text-decoration: none;
-      box-shadow: inset 0 -1px @main-blue;
-    }
-    &:after {
-      color: inherit;
-      content: '\f105';
-      display: inline-block;
-      font-family: 'fontello';
-      font-style: normal;
-      font-weight: inherit;
-      padding-left: 6px;
-      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out;
-      transition-property: transform, -webkit-transform;
-      transition-duration: 300ms, 300ms;
-      transition-timing-function: ease-in-out, ease-in-out;
-    }
-    &:hover:after {
-      transform: translateX(10px);
-    }
+    text-shadow: 2px 2px 5px black;
+    color: @main-blue;
   }
-  &.close {
-    position: absolute;
-    right: 0;
-    top: 0;
-    min-width: auto;
-    font-size: 1.5rem;
-    width: 4rem;
-    height: 4rem;
-    background: none;
-    margin: 0;
-    border: none;
-    box-sizing: border-box;
-    line-height: auto;
+  &:hover span {
+    text-shadow: 2px 2px 5px black;
+  }
+  &:active {
+    color: @dark-grey;
+  }
+}
+
+button.readmore {
+  color: @dark-grey;
+  overflow: visible;
+  border: none;
+  background: none;
+  text-align: left;
+  word-spacing: normal;
+  padding: 0;
+  text-decoration: none;
+  box-shadow: none;
+  &:focus,
+  &:active {
+    color: @main-blue;
+    text-decoration: none;
+    box-shadow: inset 0 -1px @main-blue;
+  }
+  &:hover {
+    color: @main-blue;
+    text-decoration: none;
+    box-shadow: inset 0 -1px @main-blue;
+  }
+  &:after {
     color: inherit;
-    transition: none; // chrome hack
-    &:hover {
-      opacity: 0.7;
-      border: none !important;
-      box-shadow: none;
-      text-shadow: 2px 2px 5px black;
-      color: @main-blue;
-    }
-    &:hover span {
-      text-shadow: 2px 2px 5px black;
-    }
-    &:active {
-      color: @dark-grey;
-    }
+    content: '\f105';
+    display: inline-block;
+    font-family: 'fontello';
+    font-style: normal;
+    font-weight: inherit;
+    padding-left: 6px;
+    transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out;
+    transition-property: transform, -webkit-transform;
+    transition-duration: 300ms, 300ms;
+    transition-timing-function: ease-in-out, ease-in-out;
+  }
+  &:hover:after {
+    transform: translateX(10px);
+  }
+}
+
+button.basic {
+  padding: 3px 15px;
+  text-align: center;
+  max-width: 120px;
+  margin: 0.5rem;
+  &:hover {
+    border-color: @dark-grey;
+    box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
+    opacity: 0.9;
+    text-shadow: 1px 1px 1px @grey;
   }
   &.red {
     background-color: @red;
@@ -165,73 +162,93 @@ button {
       color: @light-grey;
     }
   }
-
-
-
-  // &:hover {
-  //   border-color: @dark-grey;
-  //   box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
-  //   opacity: 0.9;
-  // }
 }
 
-// button.ghost {
-//   // min-width: auto;
-//   // padding: 0;
-//   // width: auto;
-//   // margin: 0;
-//   // background: none;
-//   // border: none;
-//   // box-sizing: border-box;
-//   // height: auto;
-//   // line-height: auto;
-//   // color: inherit;
-//   transition: opacity 200ms ease-in-out;
+button.ghost {
+  padding: 2px;
+  background: none;
+  border: none;
+  max-width: 120px;
+  color: inherit;
+  height: auto;
+  margin: auto;
+  line-height: inherit;
+  &:hover {
+    opacity: 0.7;
+    border: none !important;
+    box-shadow: inset 0 -1px @main-blue;
+    color: @main-blue;
+  }
+  &:focus {
+    // opacity: 0.7;
+    border: none !important;
+    box-shadow: inset 0 -1px @main-blue;
+    color: @main-blue;
+  }
+}
 
-// }
+button.truncate {
+  position: absolute;
+  background-color: rgba(216, 206, 192, 0.8);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  margin: 0 auto;
+  padding: 0;
+  bottom: 0;
+  z-index: 90;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  max-height: 100px;
+  transition: max-height 300ms ease-in-out;
+  border-radius: 6px;
+  &:hover {
+    text-shadow: 2px 2px 5px black;
+  }
+}
 
-// button.close-window {
-//   cursor: pointer;
-
-// }
-
-
-// button.readmore {
-//   // color: @dark-grey;
-//   // overflow: visible;
-//   // border: none;
-//   // background: none;
-//   // text-align: left;
-//   // word-spacing: normal;
-//   // padding: 0;
-//   // text-decoration: none;
-//   // box-shadow: none;
-//   // cursor: pointer;
-
-
-// }
-
-// button.color {
-//     cursor: pointer;
-//     background-color: @main-blue;
-//     color: @white;
-//     border: 1px solid @border;
-//     display: inline-block;
-//     height: 2rem;
-//     padding: 3px 15px;
-//     text-align: center;
-//     transition: scale 200ms ease-in-out;
-//     &:disabled, &[disabled] {
-//       background-color: @disable;
-//       color: @light-grey;
-//     }
-//     &:hover {
-//       border-color: @dark-grey;
-//       box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
-//       opacity: 0.9;
-//     }
-//     &:focus {
-//     }
-//     &:active {
-//     }
-//   }
+button.icon {
+  display: flex;
+  flex: 0 1 0;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  vertical-align: middle;
+  // color: red;
+  // height: 100%;
+  // height: 100%;
+  fill: inherit;
+  color: inherit;
+  background: none;
+  // right: 0;
+  padding: 5px;
+  // top: 0;
+  // width: 100%;
+  // height: 100%;
+  min-width: auto;
+  line-height: inherit;
+  font-size: inherit;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
+  transition: none; // chrome hack
+  &:hover {
+    opacity: 0.7;
+    border: none !important;
+    box-shadow: none;
+    text-shadow: 2px 2px 5px black;
+    // color: @main-blue;
+  }
+  &:hover span {
+    text-shadow: 2px 2px 5px black;
+  }
+  &:active, &:focus {
+    color: @dark-grey;
+    background: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    text-shadow: 2px 2px 5px black;
+  }
+}
