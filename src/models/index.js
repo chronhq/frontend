@@ -40,6 +40,9 @@ import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
 
+import SpaceTimeVolume from './SpaceTimeVolumeModel';
+import AtomicBorders from './AtomicBordersModel';
+
 export default class storeModel {
   @observable fonts = {};
 
@@ -55,7 +58,9 @@ export default class storeModel {
     this.year = new Year(this);
     this.courseSelection = new CourseSelection(this);
     this.borders = new Borders(this);
+    this.atomicBorders = new AtomicBorders(this);
     this.properties = new Properties(this);
+    this.spaceTimeVolume = new SpaceTimeVolume(this);
     this.prepared = new Prepared(this);
     this.pins = new PinsModel(this);
     this.i18n = new Internationalization(this);

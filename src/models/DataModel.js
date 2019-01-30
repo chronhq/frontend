@@ -41,9 +41,11 @@ export default class DataModel {
       'Properties',
       'Types',
       'MapDecorations',
-      'MapColors',
+      'MapColors', // TODO Remove after removing properties
       'GeomBBoxes',
       'MapPics',
+      'STVs',
+      'TEs',
     ],
     course: [
       'CourseTimelines',
