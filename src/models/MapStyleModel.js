@@ -51,21 +51,21 @@ export default class MapStyleModel {
 
   @computed get bordersStyle() {
     return this.rootStore.flags.layer.get('borders')
-      ? this.rootStore.borders.styleInfo
+      ? this.rootStore.atomicBorders.styleInfo
       : { sources: {}, layers: [] };
   }
 
   @computed get style() {
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
-        ...this.backgroundStyle.sources,
+        // ...this.backgroundStyle.sources,
         ...this.bordersStyle.sources
       }
       : this.bordersStyle.sources;
 
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
-        ...this.backgroundStyle.layers,
+        // ...this.backgroundStyle.layers,
         ...this.bordersStyle.layers
       ]
       : this.bordersStyle.layers;

@@ -176,16 +176,37 @@ class MapWrapper extends React.Component {
         layers={this.layers}
         views={this.deck.view}
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
-        onLayerHover={(info, allInfos, event) => {
+        onLayerClick={(info, allInfos, event) => {
           const mapboxFeatures = this.deck.interactiveMap
             .queryRenderedFeatures([event.offsetX, event.offsetY]);
-          if (event.type === 'mouseleave') {
-            // disable all balloons
-            this.props.store.pins.setActive(null);
-          } else if (info === null) {
-            this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY]);
-          }
+          // console.log(mapboxFeatures);
+          mapboxFeatures.map((f) => {
+            console.log('mbF', f);
+            if (f.properties !== undefined && f.properties.id) {
+              const STVs = this.props.store.spaceTimeVolume;
+              const stvIds = STVs.hovering(f.properties.id);
+              const names = stvIds.map(s => ([
+                STVs.current[s].values.title,
+                STVs.current[s].values.subTitle
+              ].join()));
+              console.log(
+                'AP:', f.properties.id,
+                'Clicked on STVs:', stvIds, names
+              );
+            }
+            return null;
+          });
         }}
+        // onLayerHover={(info, allInfos, event) => {
+        //   const mapboxFeatures = this.deck.interactiveMap
+        //     .queryRenderedFeatures([event.offsetX, event.offsetY]);
+        //   if (event.type === 'mouseleave') {
+        //     // disable all balloons
+        //     this.props.store.pins.setActive(null);
+        //   } else if (info === null) {
+        //     this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY]);
+        //   }
+        // }}
       >
         <InteractiveMap
           transitionDuration={this.props.store.deck.transition}
