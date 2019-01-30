@@ -37,8 +37,10 @@ module.exports = {
     disableHostCheck: true,
     proxy: {
       '/api': 'http://api:3333/',
-      '/mvt': 'http://api:3333/',
-      '/shared': 'http://api:3333/',
+      '/mvt': {
+        target: 'http://localhost:5000',
+        pathRewrite: { '^/mvt': '' }
+      }
     },
     headers: {
       'Access-Control-Allow-Origin': '*'
