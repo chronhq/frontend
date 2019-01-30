@@ -76,7 +76,6 @@ export default class CourseSideEffects {
   }
 
   @action configureDataFilters() {
-    this.rootStore.data.Borders.filter = this.courseFilter;
     this.rootStore.data.CourseTimelines.filter = this.courseFilter;
   }
 
@@ -85,21 +84,8 @@ export default class CourseSideEffects {
   }
 
   @action loadCourseData() {
-    // Load heavy data
-    const bordersFilter = {
-      where: {
-        and: [
-          { year: this.rootStore.year.now },
-          { courseId: this.courseId }
-        ]
-      }
-    };
-    this.rootStore.data.Borders.get(bordersFilter);
     // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
-
-    // reload all borders
-    this.rootStore.data.Borders.get();
   }
 
   @action select(id, name) {

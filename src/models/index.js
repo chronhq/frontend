@@ -19,7 +19,6 @@
 import { observable } from 'mobx';
 
 import Data from './DataModel';
-import Borders from './BordersModel';
 import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
@@ -32,7 +31,6 @@ import PinsModel from './PinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
 import AnimationFrame from './AnimationFrame';
-import Properties from './PropertiesModel';
 
 import MapStyle from './MapStyleModel';
 import WikidataFetcher from './Wikidata/WikidataFetcher';
@@ -57,9 +55,7 @@ export default class storeModel {
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
     this.courseSelection = new CourseSelection(this);
-    this.borders = new Borders(this);
     this.atomicBorders = new AtomicBorders(this);
-    this.properties = new Properties(this);
     this.spaceTimeVolume = new SpaceTimeVolume(this);
     this.prepared = new Prepared(this);
     this.pins = new PinsModel(this);

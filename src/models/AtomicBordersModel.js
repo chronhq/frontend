@@ -20,7 +20,7 @@ import {
   computed, observable
 } from 'mobx';
 
-export default class BordersModel {
+export default class AtomicBordersModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.data = this.rootStore.data;

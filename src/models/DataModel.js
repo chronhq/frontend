@@ -38,10 +38,8 @@ export default class DataModel {
       'CityProperties',
       'MapLabels',
       'Persons',
-      'Properties',
       'Types',
       'MapDecorations',
-      'MapColors', // TODO Remove after removing properties
       'GeomBBoxes',
       'MapPics',
       'STVs',
@@ -57,7 +55,6 @@ export default class DataModel {
       'GeoEvents',
     ],
     heavy: [
-      'Borders',
     ]
   };
 
@@ -72,9 +69,7 @@ export default class DataModel {
       return false;
     });
 
-    this.MapPics.filter = JSON.stringify({ where: { type: 'pin' } });
     this.Courses.filter = this.activeCourses;
-    this.Borders.sortId = 'year';
     this.CourseTimelines.sortId = 'tick';
 
     this.CourseGeopoints.configure({
