@@ -34,11 +34,10 @@ export default class BordersModel {
 
   @computed get styleFeatures() {
     console.time('StyleFeatures');
-    // `rgb(${stv.color})`
     const res = Object.values(this.STVs.current).reduce((prev, stv) => ({
       ids: [...prev.ids, ...stv.data.territory].map(m => Number(m)),
       // ids: Object.keys(this.STVs.active).map(m => Number(m)),
-      fill: [...prev.fill, stv.data.territory, `rgb(${[133, 20, 17]})`]
+      fill: [...prev.fill, stv.data.territory, `rgb(${stv.color})`]
     }), { ids: [], fill: [] });
     console.timeEnd('StyleFeatures');
     return res;
@@ -58,13 +57,12 @@ export default class BordersModel {
 
   @computed get fill() {
     return Object.values(this.STVs.current).reduce((prev, stv) => {
-      const territory = stv.data.territory.filter(f => (this.overlap[f] !== undefined));
+      const territory = stv.data.territory.filter(f => (this.polyCount[f] === 1));
       if (territory.length !== 0) {
         return [
           ...prev,
           territory.map(m => Number(m)),
-          `rgb(${[133, 20, 17]})`
-          // `rgb(${stv.color})`
+          `rgb(${stv.color})`
         ];
       }
       return prev;
@@ -95,22 +93,6 @@ export default class BordersModel {
     }, []);
   }
 
-  @computed get styleFeaturesDebug() {
-    // console.time('StyleFeaturesDebug');
-    // console.timeEnd('StyleFeaturesDebug');
-    return {
-      ids: Object.keys(this.overlap).map(m => Number(m)), fill: this.failed
-    };
-    // return {
-    //   ids: Object.keys(this.STVs.active).map(m => Number(m)),
-    //   fill
-    //   // fill: [
-    //   //   // ...this.fill,
-    //   //   // ...this.failed
-    //   // ]
-    // };
-  }
-
   @computed get styleInfo() {
     const name = this.layerName;
 
@@ -123,19 +105,19 @@ export default class BordersModel {
 
     // transparent fallback color
     // const fallback = 'hsla(0, 14%, 87%, 0)';
+    // bright green for debug purposes
     const fallback = 'rgb(0, 255, 0)';
 
     const layer = {
       layout: {},
-      filter: ['in', 'id', ...this.styleFeaturesDebug.ids],
+      filter: ['in', 'id', ...Object.keys(this.STVs.ap2stv).map(m => Number(m))],
       // filter: ['in', 'id', ...arr],
       type: 'fill',
       source: name,
       id: name,
       paint: {
         'fill-opacity': mapsOpacity,
-        'fill-color': ['match', ['get', 'id'], ...this.styleFeaturesDebug.fill, fallback],
-        // 'fill-color': ['match', ['get', 'id'], arr, 'rgb(100, 100, 255)', fallback],
+        'fill-color': ['match', ['get', 'id'], ...this.fill, ...this.failed, fallback],
         // 'fill-outline-color': 'hsl(0, 40%, 67%)',
         'fill-outline-color': 'rgb(30, 30, 200)',
       },
