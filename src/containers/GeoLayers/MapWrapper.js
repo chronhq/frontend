@@ -138,15 +138,15 @@ class MapWrapper extends React.Component {
       ? features[0]
       : { layer: { id: '0' }, properties: { id: '1' } };
     try {
-      if (feature.layer.id === this.props.store.borders.layerName) {
+      if (feature.layer.id === this.props.store.atomicBorders.layerName) {
         // it's one of our border layers
-        key = this.props.store.borders.actualData[feature.properties.id];
+        key = this.props.store.spaceTimeVolume.hovering(feature.properties.id).shift();
       }
     } catch (e) {
       console.error('Feature parsing failed', e, features);
     }
     this.props.store.pins.setCountryActive(key);
-    if (key !== null) {
+    if (key !== null && key !== undefined) {
       this.props.store.pins.setPosition(...position);
     }
     return true;
@@ -197,16 +197,16 @@ class MapWrapper extends React.Component {
             return null;
           });
         }}
-        // onLayerHover={(info, allInfos, event) => {
-        //   const mapboxFeatures = this.deck.interactiveMap
-        //     .queryRenderedFeatures([event.offsetX, event.offsetY]);
-        //   if (event.type === 'mouseleave') {
-        //     // disable all balloons
-        //     this.props.store.pins.setActive(null);
-        //   } else if (info === null) {
-        //     this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY]);
-        //   }
-        // }}
+        onLayerHover={(info, allInfos, event) => {
+          const mapboxFeatures = this.deck.interactiveMap
+            .queryRenderedFeatures([event.offsetX, event.offsetY]);
+          if (event.type === 'mouseleave') {
+            // disable all balloons
+            this.props.store.pins.setActive(null);
+          } else if (info === null) {
+            this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY]);
+          }
+        }}
       >
         <InteractiveMap
           transitionDuration={this.props.store.deck.transition}

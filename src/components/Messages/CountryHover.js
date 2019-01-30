@@ -25,6 +25,8 @@ import { observer, inject } from 'mobx-react';
 @inject('store')
 @observer
 class CountryHover extends React.Component {
+  type = 'No Type';
+
   @computed get lng() {
     return this.props.store.i18n.lng;
   }
@@ -34,19 +36,15 @@ class CountryHover extends React.Component {
   }
 
   @computed get properties() {
-    return this.props.store.data.Properties.data[this.props.id];
+    return this.props.store.spaceTimeVolume.data[this.props.id].values;
   }
 
   @computed get name() {
-    return this.properties[this.selectors.properties];
+    return this.properties.title;
   }
 
   @computed get admin() {
-    return this.props.store.data.Admins.data[this.properties.admin][this.lng];
-  }
-
-  @computed get type() {
-    return this.props.store.data.Types.data[this.properties.type][this.lng];
+    return this.properties.subTitle;
   }
 
   @computed get short() {
