@@ -122,10 +122,11 @@ export default class SpaceTimeVolumeModel {
 
   // // TODO Compute this on backend
   // @computed get ap2stv() {
-  //   return Object.values(this.data).reduce((prev, cur) => {
-  //     const next = cur.data.territory.reduce((p, c) => ({
+  //   return Object.keys(this.data).reduce((prev, curId) => {
+  //     const { id } = this.data[curId];
+  //     const next = this.data[curId].data.territory.reduce((p, c) => ({
   //       ...p,
-  //       [c]: prev[c] !== undefined ? [...prev[c], cur.id] : [cur.id]
+  //       [c]: prev[c] !== undefined ? [...prev[c], id] : [id]
   //     }), {});
   //     return { ...prev, ...next };
   //   }, {});
