@@ -21,8 +21,10 @@ import PersonFact from './PersonFact';
 import Invention from './Invention';
 import Battle from './Battle';
 import Document from './Document';
+import Sources from './Sources';
 
 export {
+  Sources,
   GeoEvent,
   PersonFact,
   Invention,

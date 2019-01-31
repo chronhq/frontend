@@ -21,6 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import {
+  Sources,
   PersonFact,
   Invention,
   GeoEvent,
@@ -42,9 +43,12 @@ class Balloon extends React.Component {
     return this.props.store.pins.selected;
   }
 
+  @computed get pinned() {
+    return this.props.store.pins.pinned;
+  }
+
   @computed get countryHover() {
     return this.props.store.pins.countryHover;
-    // return null;
   }
 
   @computed get opacity() {
@@ -65,26 +69,24 @@ class Balloon extends React.Component {
     };
   }
 
-  @computed get classNames() {
-    const classes = ['balloonNews'];
+  @computed get positionClassName() {
+    // const classes = ['balloonNews'];
     if (this.props.store.pins.pageX > 0.5 * window.innerWidth) {
       if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
-        classes.push('balloonTopRight');
-      } else {
-        classes.push('balloonBottomRight');
+        return 'balloonTopRight';
       }
-    } else if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
-      classes.push('balloonTopLeft');
-    } else {
-      classes.push('balloonBottomLeft');
+      return 'balloonBottomRight';
+    } if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
+      return 'balloonTopLeft';
     }
+    return 'balloonBottomLeft';
 
     // if (this.props.store.pins.pageY > 0.7*window.innerHeight) {
     //   classes.push('balloonBottom');
     // } else {
     //   classes.push('balloonTop');
     // }
-    return classes;
+    // return classes;
   }
 
   @computed get i18n() {
@@ -93,56 +95,86 @@ class Balloon extends React.Component {
 
   @computed get news() {
     if (this.countryHover !== null && this.countryHover !== undefined) {
-      return <CountryHover id={this.countryHover} />;
+      return [
+        {
+          message: <CountryHover id={this.countryHover} />,
+          sources: <Sources id={this.countryHover} type="countryHover" />
+        }
+      ];
     }
-    if (this.pin === null || typeof this.pin === 'undefined') return null;
+    if (this.pin === null || typeof this.pin === 'undefined') return [];
 
     return this.pin.info.map((pin) => {
       switch (pin.type) {
-        case 'geo': return (
-          <GeoEvent
-            fact={pin.geoEvent}
-            key={`balloon_geo_${pin.geoEvent.id}`}
-          />);
+        case 'geo': return {
+          message: (
+            <GeoEvent
+              fact={pin.geoEvent}
+              key={`balloon_geo_${pin.geoEvent.id}`}
+            />),
+          sources: () => ''
+        };
 
         case 'inv':
-          return (
-            <Invention
-              fact={this.i18n.invention(pin.invention)}
-              key={`balloon_inv_${pin.invention.id}`}
-            />);
+          return {
+            message: (
+              <Invention
+                fact={this.i18n.invention(pin.invention)}
+                key={`balloon_inv_${pin.invention.id}`}
+              />),
+            sources: () => ''
+          };
         case 'death':
         case 'birth':
         // actor from wikidata
-          return (
-            <PersonFact
-              person={pin.person.wd === true
-                ? pin.person
-                : this.i18n.person(pin.person, pin.type)}
-              key={`balloon_person_${pin.type}_${pin.person.id}`}
-            />);
+          return {
+            message: (
+              <PersonFact
+                person={pin.person.wd === true
+                  ? pin.person
+                  : this.i18n.person(pin.person, pin.type)}
+                key={`balloon_person_${pin.type}_${pin.person.id}`}
+              />),
+            sources: () => ''
+          };
         case 'battle':
-          return (
-            <Battle
-              fact={pin.battle}
-              key={`balloon_battle_${pin.type}_${pin.battle.id}`}
-            />);
+          return {
+            message: (
+              <Battle
+                fact={pin.battle}
+                key={`balloon_battle_${pin.type}_${pin.battle.id}`}
+              />),
+            sources: () => ''
+          };
         case 'document':
-          return (
-            <Document
-              fact={pin.document}
-              key={`balloon_battle_${pin.type}_${pin.document.id}`}
-            />);
+          return {
+            message: (
+              <Document
+                fact={pin.document}
+                key={`balloon_battle_${pin.type}_${pin.document.id}`}
+              />),
+            sources: () => ''
+          };
         default:
-          return () => '';
+          return { message: () => '', sources: () => '' };
       }
     });
   }
 
   render() {
+    const container = `balloonNewsContainer ${this.positionClassName}`;
+    const news = 'balloonNews balloonMain';
+    const sources = 'balloonNews balloonSources';
     return (
-      <div style={{ ...this.style }} className={this.classNames.join(' ')}>
-        {this.news}
+      <div style={{ ...this.style }} className={container}>
+        <div className={news}>
+          {this.news.map(n => n.message)}
+        </div>
+        {this.pinned && (
+          <div className={sources}>
+            {this.news.map(n => n.sources)}
+          </div>
+        )}
       </div>
     );
   }
