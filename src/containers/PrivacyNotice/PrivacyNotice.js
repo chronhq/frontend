@@ -1,29 +1,28 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
+import { YMInitializer } from 'react-yandex-metrika';
 
 import Button from '../../components/Button/Button';
-import { getCookie, setCookie } from '../../utils/localStorage';
 import './PrivacyNotice.less';
 
+const YM_CONFIG = {
+  defer: false,
+  clickmap: true,
+  trackLinks: true,
+  // accurateTrackBounce: true,
+  // webvisor: true,
+  trackHash: false
+};
+
+@inject('store')
+@observer
 class PrivacyNotice extends React.Component {
-  state = {
-    gdpr: false,
-  }
-
-  componentDidMount() {
-    if (getCookie().indexOf('gdpr') >= 0) {
-      this.setState({ gdpr: true });
-    }
-  }
-
   handleClick = () => {
-    setCookie('gdpr', true, Date.now());
-    this.setState({ gdpr: true });
+    this.props.store.analytics.agreeWithPolicy();
+    this.forceUpdate();
   }
 
-  render() {
-    if (this.state.gdpr) {
-      return null;
-    }
+  renderNotification() {
     return (
       <div className='notification'>
         <div className='page--content'>
@@ -37,6 +36,32 @@ class PrivacyNotice extends React.Component {
           </Button>
         </div>
       </div>
+    );
+  }
+
+  renderAnalytics() {
+    return (
+      <div>
+        <h2>renderAnalytics</h2>
+        <YMInitializer
+          accounts={[50501221]}
+          options={YM_CONFIG}
+          version='2'
+        />
+      </div>
+    );
+  }
+
+  render() {
+    console.log('analytic prop', this.props.store.analytics.agreement);
+    return (
+      <React.Fragment>
+        {
+          (this.props.store.analytics.agreement)
+            ? this.renderAnalytics()
+            : this.renderNotification()
+        }
+      </React.Fragment>
     );
   }
 }

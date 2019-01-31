@@ -16,18 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
 
-import Feedback from '../../containers/Feedback/Feedback';
-import YearInput from '../../containers/YearInput/YearInput';
-import Article from '../../containers/Article/Article';
+import {
+  observable,
+  computed,
+  action
+} from 'mobx';
 
-const Overlays = () => (
-  <div id='overlays'>
-    <Article />
-    <Feedback />
-    <YearInput />
-  </div>
-);
+import { getCookie, setCookie } from '../utils/localStorage';
 
-export default Overlays;
+export default class AnalyticModel {
+  @computed get agreement() {
+    return getCookie().indexOf('gdpr') >= 0;
+  }
+
+  @action agreeWithPolicy() {
+    setCookie('gdpr', true, Date.now());
+  }
+}

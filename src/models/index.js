@@ -33,6 +33,7 @@ import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
 import AnimationFrame from './AnimationFrame';
 import Properties from './PropertiesModel';
+import AnalyticModel from './AnalyticModel';
 
 import MapStyle from './MapStyleModel';
 import WikidataFetcher from './Wikidata/WikidataFetcher';
@@ -63,5 +64,6 @@ export default class storeModel {
     this.wikidata = new WikidataFetcher(this);
     this.wikistore = new WikidataStore(this);
     this.search = new DashboardSearch(this);
+    this.analytics = new AnalyticModel();
   }
 }

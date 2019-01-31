@@ -29,12 +29,14 @@ import TimePanel from '../templates/TimePanel/TimePanel';
 
 const Narrative = ({ story }) => (
   <Wrapper story={story}>
+    {/*
     <GeoLayers />
     <TimePanel />
-    <Overlays />
     <Balloon />
     <Dashboard />
     <NarrativeMobileBar />
+    */}
+    <Overlays />
     <SideBar />
   </Wrapper>
 );

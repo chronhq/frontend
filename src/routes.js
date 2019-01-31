@@ -24,6 +24,7 @@ import {
 } from 'react-router-dom';
 
 import LoadingLogo from './containers/LoadingLogo';
+import PrivacyNotice from './containers/PrivacyNotice/PrivacyNotice';
 
 const Narrative = lazy(() => import('./pages/Narrative'));
 const NotFound = lazy(() => import('./pages/404'));
@@ -33,6 +34,7 @@ const Demo = lazy(() => import('./pages/Demo'));
 
 const AppRouter = () => (
   <Suspense fallback={<LoadingLogo />}>
+    <PrivacyNotice />
     <Switch>
       <Route exact path='/' render={() => <Redirect to='/world' />} />
       <Route path='/404' render={() => <NotFound />} />
