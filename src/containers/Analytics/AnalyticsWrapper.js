@@ -1,22 +1,13 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { YMInitializer } from 'react-yandex-metrika';
 
+import Analytics from './Analytics';
 import Button from '../../components/Button/Button';
-import './PrivacyNotice.less';
-
-const YM_CONFIG = {
-  defer: false,
-  clickmap: true,
-  trackLinks: true,
-  // accurateTrackBounce: true,
-  // webvisor: true,
-  trackHash: false
-};
+import './AnalyticsWrapper.less';
 
 @inject('store')
 @observer
-class PrivacyNotice extends React.Component {
+class AnalyticsWrapper extends React.Component {
   handleClick = () => {
     this.props.store.analytics.agreeWithPolicy();
     this.forceUpdate();
@@ -39,26 +30,12 @@ class PrivacyNotice extends React.Component {
     );
   }
 
-  renderAnalytics() {
-    return (
-      <div>
-        <h2>renderAnalytics</h2>
-        <YMInitializer
-          accounts={[50501221]}
-          options={YM_CONFIG}
-          version='2'
-        />
-      </div>
-    );
-  }
-
   render() {
-    console.log('analytic prop', this.props.store.analytics.agreement);
     return (
       <React.Fragment>
         {
           (this.props.store.analytics.agreement)
-            ? this.renderAnalytics()
+            ? <Analytics />
             : this.renderNotification()
         }
       </React.Fragment>
@@ -66,4 +43,4 @@ class PrivacyNotice extends React.Component {
   }
 }
 
-export default PrivacyNotice;
+export default AnalyticsWrapper;

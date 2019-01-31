@@ -19,18 +19,31 @@
 
 import {
   observable,
-  computed,
   action
 } from 'mobx';
+import ym from 'react-yandex-metrika';
 
 import { getCookie, setCookie } from '../utils/localStorage';
 
 export default class AnalyticModel {
-  @computed get agreement() {
-    return getCookie().indexOf('gdpr') >= 0;
-  }
+  @observable agreement = getCookie().indexOf('gdpr') >= 0;
 
   @action agreeWithPolicy() {
     setCookie('gdpr', true, Date.now());
+    this.agreement = true;
+  }
+
+  @action metricHit(link) {
+    if (!this.agreement) {
+      return;
+    }
+    setTimeout(() => {
+      try {
+        ym('hit', link);
+      } catch (e) {
+        console.error('YM Metrika error', e);
+        this.metricHit(link);
+      }
+    }, 1000);
   }
 }
