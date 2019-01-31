@@ -20,78 +20,72 @@ import React from 'react';
 import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
-// language, properties, type
-
 @inject('store')
 @observer
 class CountryHover extends React.Component {
-  type = 'No Type';
-
-  @computed get lng() {
-    return this.props.store.i18n.lng;
+  @computed get values() {
+    try {
+      return this.props.store.spaceTimeVolume.data[this.props.id].values;
+    } catch (e) {
+      console.error('Unable to get values for Country Hover', this.props.id, e);
+      return {};
+    }
   }
 
-  @computed get selectors() {
-    return this.props.store.i18n.data.selectors;
+  @computed get title() {
+    return this.values.title;
   }
 
-  @computed get properties() {
-    return this.props.store.spaceTimeVolume.data[this.props.id].values;
-  }
-
-  @computed get name() {
-    return this.properties.title;
-  }
-
-  @computed get admin() {
-    return this.properties.subTitle;
-  }
-
-  @computed get short() {
+  @computed get factHeader() {
     return (
-      <p>
-        {' ['}
-        {this.type}
-        {']'}
+      <p className='factHeader'>
+        {this.title}
       </p>
     );
   }
 
-  @computed get long() {
-    if (this.type === null) {
-      // for ainu course
-      return (
-        <p>
-          {this.admin}
-        </p>
-      );
-    }
+  @computed get subTitle() {
+    return this.values.subTitle;
+  }
 
-    return (
+  @computed get subTitleMessage() {
+    return this.title === this.subTitle ? '' : (
       <p>
-        {this.admin}
-        {' ['}
-        {this.type}
-        {']'}
+        {this.subTitle}
       </p>
     );
   }
 
-  @computed get message() {
-    if (this.name === this.admin && this.admin !== '') {
-      return this.short;
-    }
-    return this.long;
+  @computed get flag() {
+    return this.values.flag;
   }
 
+  @computed get emblem() {
+    return this.values.emblem;
+  }
+
+  @computed get images() {
+    const img = i => (
+      <img
+        className='countryHoverImage'
+        src={i}
+        alt=''
+      />
+    );
+    return (
+      <div className='countryHoverImage'>
+        {this.flag !== undefined && img(this.flag)}
+        {this.emblem !== undefined && img(this.emblem)}
+      </div>
+    );
+  }
 
   render() {
     return (
       <div className='factInner'>
-        <p className='factHeader'>
-          {this.name}
-        </p>
-        {this.message}
+        {this.factHeader}
+        {this.subTitleMessage}
+        {this.images}
       </div>
     );
   }
