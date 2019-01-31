@@ -23,6 +23,10 @@ import { observer, inject } from 'mobx-react';
 @inject('store')
 @observer
 class CountryHover extends React.Component {
+  @computed get pinned() {
+    return this.props.store.pins.pinned;
+  }
+
   @computed get values() {
     try {
       return this.props.store.spaceTimeVolume.data[this.props.id].values;
@@ -65,6 +69,7 @@ class CountryHover extends React.Component {
   }
 
   @computed get images() {
+    if (this.pinned === false) return null;
     const img = i => (
       <img
         className='countryHoverImage'

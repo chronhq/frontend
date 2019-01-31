@@ -132,7 +132,7 @@ class MapWrapper extends React.Component {
     ];
   }
 
-  onBorderHoverCb = (features, position) => {
+  onBorderHoverCb = (features, position, force = false) => {
     let key = null;
     const feature = features.length > 0
       ? features[0]
@@ -145,23 +145,59 @@ class MapWrapper extends React.Component {
     } catch (e) {
       console.error('Feature parsing failed', e, features);
     }
-    this.props.store.pins.setCountryActive(key);
+    this.props.store.pins.setCountryActive(key, force);
     if (key !== null && key !== undefined) {
       this.props.store.pins.setPosition(...position);
     }
     return true;
   };
 
-  onMapPinHover = (d) => {
+  onMapPinHover = (d, force = false) => {
     // if image contains transparent parts disable drawing tooltip
     const key = d.color === null ? null : d.object.key;
-    this.props.store.pins.setActive(key, false);
+    this.props.store.pins.setActive(key, false, force);
     this.props.store.pins.setPosition(d.x, d.y);
     // according to https://github.com/uber/deck.gl/blob/master/docs/get-started/interactivity.md
     // event should be marked as complete if returns true
     // but DeckGL onLayerHover will catch the event even if it should not
     return false;
   };
+
+  setHoverBalloon = force => (
+    (info, allInfos, event) => {
+      if (force === false && this.props.store.pins.pinned === true) return;
+      const mapboxFeatures = this.deck.interactiveMap
+        .queryRenderedFeatures([event.offsetX, event.offsetY]);
+      if (event.type === 'mouseleave') {
+        // disable all balloons
+        this.props.store.pins.setActive(null);
+      } else if (info === null) {
+        this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY], force);
+      }
+    }
+  )
+
+  printDebugSTVInfo = (event) => {
+    const mapboxFeatures = this.deck.interactiveMap
+      .queryRenderedFeatures([event.offsetX, event.offsetY]);
+    // console.log(mapboxFeatures);
+    mapboxFeatures.map((f) => {
+      console.log('mbF', f);
+      if (f.properties !== undefined && f.properties.id) {
+        const STVs = this.props.store.spaceTimeVolume;
+        const stvIds = STVs.hovering(f.properties.id);
+        const names = stvIds.map(s => ([
+          STVs.current[s].values.title,
+          STVs.current[s].values.subTitle
+        ].join()));
+        console.log(
+          'AP:', f.properties.id,
+          'Clicked on STVs:', stvIds, names
+        );
+      }
+      return null;
+    });
+  }
 
   @action resize() {
     this.props.store.deck.width = window.innerWidth;
@@ -177,36 +213,12 @@ class MapWrapper extends React.Component {
         views={this.deck.view}
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
         onLayerClick={(info, allInfos, event) => {
-          const mapboxFeatures = this.deck.interactiveMap
-            .queryRenderedFeatures([event.offsetX, event.offsetY]);
-          // console.log(mapboxFeatures);
-          mapboxFeatures.map((f) => {
-            console.log('mbF', f);
-            if (f.properties !== undefined && f.properties.id) {
-              const STVs = this.props.store.spaceTimeVolume;
-              const stvIds = STVs.hovering(f.properties.id);
-              const names = stvIds.map(s => ([
-                STVs.current[s].values.title,
-                STVs.current[s].values.subTitle
-              ].join()));
-              console.log(
-                'AP:', f.properties.id,
-                'Clicked on STVs:', stvIds, names
-              );
-            }
-            return null;
-          });
-        }}
-        onLayerHover={(info, allInfos, event) => {
-          const mapboxFeatures = this.deck.interactiveMap
-            .queryRenderedFeatures([event.offsetX, event.offsetY]);
-          if (event.type === 'mouseleave') {
-            // disable all balloons
-            this.props.store.pins.setActive(null);
-          } else if (info === null) {
-            this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY]);
+          this.printDebugSTVInfo(event);
+          if (this.props.store.pins.unpin() !== true) {
+            this.setHoverBalloon(true)(info, allInfos, event);
           }
         }}
+        onLayerHover={this.setHoverBalloon(false)}
       >
         <InteractiveMap
           transitionDuration={this.props.store.deck.transition}

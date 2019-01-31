@@ -61,6 +61,8 @@ export default class FeedPinsModel {
   @observable pinsOrder = [
     'geoEvents', 'inventions', 'document', 'battle', 'persons'];
 
+  @observable pinned = false;
+
   @observable active = null;
 
   @observable selectedFreePin = false;
@@ -76,15 +78,34 @@ export default class FeedPinsModel {
     this.pageY = y;
   }
 
-  @action setActive(a, free = false) {
-    this.countryHover = null;
-    this.selectedFreePin = free;
-    this.active = a;
+  @action forcePin(a, force) {
+    if (force === true) this.pinned = true;
+    if (a === null) this.pinned = false;
   }
 
-  @action setCountryActive(c) {
-    this.countryHover = c;
-    this.active = Boolean(c);
+  @action unpin() {
+    if (this.pinned === true) {
+      this.pinned = false;
+      return true;
+    }
+    return false;
+  }
+
+  @action setActive(a, free = false, force = false) {
+    this.forcePin(a, force);
+    if (this.pinned === false || force === true) {
+      this.countryHover = null;
+      this.selectedFreePin = free;
+      this.active = a;
+    }
+  }
+
+  @action setCountryActive(c, force = false) {
+    this.forcePin(c, force);
+    if (this.pinned === false || force === true) {
+      this.countryHover = c;
+      this.active = Boolean(c);
+    }
   }
 
   @computed get visibility() {
