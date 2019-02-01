@@ -19,6 +19,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { action, computed } from 'mobx';
+import { withRouter } from 'react-router-dom';
+
 
 import './DashboardFooter.less';
 
@@ -43,15 +45,15 @@ class DashboardFooter extends React.Component {
         >
           {this.dashboard.news}
         </button>
-        <a href='https://github.com/chronhq/frontend' target='_blank' rel='noopener noreferrer'>
-          {this.dashboard.about}
-        </a>
         <button
           type='button'
-          onClick={() => console.log('show license')}
+          onClick={() => this.props.history.push('/about')}
         >
-          {this.dashboard.license}
+          {this.dashboard.about}
         </button>
+        <a href='https://github.com/chronhq/frontend' target='_blank' rel='noopener noreferrer'>
+          {this.dashboard.license}
+        </a>
         <button
           type='button'
           onClick={() => this.openFeedback()}
@@ -63,4 +65,4 @@ class DashboardFooter extends React.Component {
   }
 }
 
-export default DashboardFooter;
+export default withRouter(DashboardFooter);
