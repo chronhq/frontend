@@ -1,0 +1,16 @@
+@import '../../styles/colors.less';
+
+textarea {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  border-color: @border;
+  padding: 0 5px;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+  box-sizing: border-box;
+  &:required {
+    box-shadow: none;
+  }
+}

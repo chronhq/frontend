@@ -19,6 +19,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './MailInput.less';
+
 class MailInput extends React.Component {
   state = {
     valid: true
@@ -39,7 +41,7 @@ class MailInput extends React.Component {
           className={(this.state.valid) ? '' : 'invalid'}
           value={this.props.value}
           size='25'
-          pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$'
+          // pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$'
           onInvalid={e => this.handleInvalid(e)}
           placeholder={this.props.placeholder}
           required

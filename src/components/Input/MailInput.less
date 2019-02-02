@@ -1,0 +1,23 @@
+@import '../../styles/colors.less';
+
+input[type='email'] {
+  box-sizing: border-box;
+  height: 25px;
+  // min-width: 200px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  border-color: @border;
+  padding: 0 5px;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+  &:required {
+    box-shadow: none;
+  }
+  &:focus {
+    border-color: @main-blue;
+    box-shadow: 0 0 0 2px rgba(250,250,250,.2);
+  }
+}
+

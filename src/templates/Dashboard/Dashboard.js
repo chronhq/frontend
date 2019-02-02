@@ -26,6 +26,7 @@ import DashboardFooter from '../../containers/DashboardFooter/DashboardFooter';
 import DashboardSearch from '../../containers/DashboardSearch/DashboardSearch';
 import CurrentStory from '../../containers/CurrentStory/CurrentStory';
 import DashboardFeed from '../../containers/DashboardFeed/DashboardFeed';
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 
 import './Dashboard.less';
 
@@ -69,9 +70,11 @@ class Dashboard extends React.Component {
           : <StoryList changeUi={this.changeUI} />
         }
         <DashboardFooter />
-        <button type='button' className='dashboard-hide layer-2' onClick={this.toggle}>
-          <i className={`lnr lnr-chevron-${this.chevron}`} aria-hidden='true' title='show panel' />
-        </button>
+        <div className='dashboard-hide layer-2'>
+          <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggle}>
+            <span className={`lnr lnr-chevron-${this.chevron}`} aria-hidden='true' title='show panel' />
+          </Button>
+        </div>
       </div>
     );
   }

@@ -19,6 +19,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './TextareaInput.less';
+
 class TextareaInput extends React.Component {
   state = {
     valid: true

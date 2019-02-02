@@ -19,6 +19,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './TextInput.less';
+
 class TextInput extends React.Component {
   state = {
     valid: true
@@ -38,8 +40,8 @@ class TextInput extends React.Component {
           value={this.props.value}
           placeholder={this.props.placeholder}
           className={(this.state.valid) ? '' : 'invalid'}
-          maxLength='80'
-          // pattern='^[a-zA-Zа-яА-я0-9._%+-]'
+          maxLength={50}
+          pattern='^[a-zA-Zа-яА-я0-9._%+-]'
           onInvalid={e => this.handleInvalid(e)}
           onChange={(e) => {
             this.setState({ valid: true });

@@ -20,9 +20,11 @@ import React, { Component } from 'react';
 import Select, { Option } from 'rc-select';
 import PropTypes from 'prop-types';
 
+import './InputSelect.less';
+
 class InputSelect extends Component {
-  defaultProps = {
-    value: this.props.placeholder
+  static defaultProps = {
+    value: ''
   }
 
   render() {
@@ -51,12 +53,8 @@ class InputSelect extends Component {
 InputSelect.propTypes = {
   value: PropTypes.any, // It should be a string
   placeholder: PropTypes.string.isRequired,
-  options: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
   cb: PropTypes.func.isRequired
-};
-
-InputSelect.defaultProps = {
-  value: undefined
 };
 
 export default InputSelect;

@@ -19,9 +19,13 @@
 import React from 'react';
 
 import './NarrativeEvent.less';
-import truncateText from '../../containers/Article/truncate';
 
-const NarrativeEvent = ({ event, currentTick, cb }) => (
+const NarrativeEvent = ({
+  event,
+  currentTick,
+  cb,
+  truncateText
+}) => (
   <div
     role='button'
     tabIndex={0}

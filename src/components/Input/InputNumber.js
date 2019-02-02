@@ -18,6 +18,8 @@
  */
 import React from 'react';
 import InputNumber from 'rc-input-number';
+
+// import '../../styles/LineIcon.less';
 import './InputNumber.less';
 
 class Component extends React.Component {
