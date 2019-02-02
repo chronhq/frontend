@@ -75,7 +75,11 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          { loader: 'style-loader', options: { sourceMap: true } },
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'less-loader', options: { sourceMap: true } }
+        ]
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,

@@ -21,7 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 import { withRouter } from 'react-router-dom';
 
-import StoryCard from '../StoryCard/StoryCard';
+import StoryCard from '../../components/StoryCard/StoryCard';
 import './StoryList.less';
 
 @inject('store')

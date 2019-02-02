@@ -22,6 +22,8 @@ import Invention from './Invention';
 import Battle from './Battle';
 import Document from './Document';
 
+import './Messages.less';
+
 export {
   GeoEvent,
   PersonFact,

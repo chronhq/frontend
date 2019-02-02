@@ -20,6 +20,8 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed, action } from 'mobx';
 
+import Button, { BUTTON_TYPE, BUTTON_COLOR } from '../../components/Button/Button';
+
 import {
   InputCheckBox,
   InputNumber,
@@ -138,12 +140,14 @@ class FeedbackForm extends React.Component {
                 </a>
               </p>
             </div>
-            <button
+            <Button
               type='submit'
+              btnType={BUTTON_TYPE.BASIC}
+              btnColor={BUTTON_COLOR.BLACK}
               disabled={this.feedback.validation ? undefined : true}
             >
               {this.i18n.button}
-            </button>
+            </Button>
           </div>
           <div
             key='result'
@@ -186,9 +190,9 @@ class Feedback extends React.Component {
         <p>
           {this.i18n.subtitle}
         </p>
-        <button onClick={() => this.closeFeedback()} className='close-window' type='button'>
+        <Button onClick={() => this.closeFeedback()} btnType={BUTTON_TYPE.CLOSE}>
           <span className="lnr lnr-cross" />
-        </button>
+        </Button>
       </div>
     );
   }

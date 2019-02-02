@@ -19,6 +19,8 @@
 import React from 'react';
 import Slider from 'rc-slider';
 
+import './Slider.less';
+
 export default class InputRange extends React.Component {
   render() {
     return (

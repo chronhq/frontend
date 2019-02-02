@@ -16,12 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { computed, action } from 'mobx';
+import { computed, action, observable } from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
+
+  @observable fakeId = null;
 
   find(name) {
     return Object
@@ -37,10 +39,16 @@ export default class CourseSideEffects {
     return this.rootStore.flags.runtime.get('SelectedCourse');
   }
 
+  @computed get bordersCourseId() {
+    return this.fakeId === null ? this.courseId : this.fakeId;
+  }
+
   @computed get listOfDeps() {
-    return this.courseId === 0
-      ? [...this.deps.base, ...this.deps.world]
-      : [...this.deps.base, ...this.deps.course];
+    switch (this.courseId) {
+      case -1: return this.deps.base;
+      case 0: return [...this.deps.base, ...this.deps.world];
+      default: return [...this.deps.base, ...this.deps.course];
+    }
   }
 
 
@@ -52,6 +60,14 @@ export default class CourseSideEffects {
     return JSON.stringify({
       where: {
         courseId: this.courseId
+      }
+    });
+  }
+
+  @computed get bordersCourseFilter() {
+    return JSON.stringify({
+      where: {
+        courseId: this.bordersCourseId
       }
     });
   }
@@ -76,7 +92,7 @@ export default class CourseSideEffects {
   }
 
   @action configureDataFilters() {
-    this.rootStore.data.Borders.filter = this.courseFilter;
+    this.rootStore.data.Borders.filter = this.bordersCourseFilter;
     this.rootStore.data.CourseTimelines.filter = this.courseFilter;
   }
 
@@ -86,27 +102,22 @@ export default class CourseSideEffects {
 
   @action loadCourseData() {
     // Load heavy data
-    const bordersFilter = {
-      where: {
-        and: [
-          { year: this.rootStore.year.now },
-          { courseId: this.courseId }
-        ]
-      }
-    };
-    this.rootStore.data.Borders.get(bordersFilter);
+    this.rootStore.data.Borders.get();
     // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
-
-    // reload all borders
-    this.rootStore.data.Borders.get();
   }
 
-  @action select(id, name) {
+  @action select(id, name, fake = null) {
     if (id === this.courseId) {
       console.log('Course already selected', id, name);
       return null;
     }
+    // case for 'about us' page
+    if (id >= 0 && this.rootStore.data.Courses.data[-1] !== undefined) {
+      delete this.rootStore.data.Courses.data[-1];
+    }
+
+    this.fakeId = fake;
     this.rootStore.flags.set({
       runtime: {
         SelectedCourse: id,

@@ -42,7 +42,6 @@ export default class DataModel {
       'Types',
       'MapDecorations',
       'MapColors',
-      'GeomBBoxes',
     ],
     course: [
       'CourseTimelines',

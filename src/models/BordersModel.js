@@ -55,10 +55,6 @@ export default class BordersModel {
     return this.rootStore.data.Borders.data;
   }
 
-  @computed get geomBBoxes() {
-    return this.rootStore.data.GeomBBoxes.data;
-  }
-
   @computed get allYears() {
     return Object.keys(this.byYear);
   }
