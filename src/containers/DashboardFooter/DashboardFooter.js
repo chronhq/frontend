@@ -46,9 +46,12 @@ class DashboardFooter extends React.Component {
         >
           {this.dashboard.news}
         </Button>
-        <a href='https://github.com/chronhq/frontend' target='_blank' rel='noopener noreferrer'>
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
+          onClick={() => this.props.history.push('/about')}
+        >
           {this.dashboard.about}
-        </a>
+        </Button>
         <Button
           btnType={BUTTON_TYPE.GHOST}
           onClick={() => console.log('show license')}
