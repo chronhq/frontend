@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import Button, { BUTTON_TYPE } from './Button/Button';
 
 class SetLocalizationToggle extends React.Component {
   get next() {
@@ -37,9 +38,9 @@ class SetLocalizationToggle extends React.Component {
 
   render() {
     return (
-      <button type='button' className='decorless' onClick={this.toggleLanguage}>
+      <Button btnType={BUTTON_TYPE.GHOST} onClick={this.toggleLanguage}>
         {this.next.text}
-      </button>
+      </Button>
     );
   }
 }

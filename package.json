@@ -11,7 +11,8 @@
     "stylelint": "stylelint \"src/**/*.less\"",
     "stylelint-fix": "stylelint \"src/**/*.less\" --fix",
     "lint": "eslint src",
-    "lint-fix": "eslint src --fix"
+    "lint-fix": "eslint src --fix",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   },
   "homepage": "https://github.com/chronhq/frontend/",
   "devDependencies": {
+    "@storybook/react": "^4.1.7",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "enzyme": "^3.7.0",
@@ -51,8 +53,6 @@
     "rimraf": "^2.6.2",
     "stylelint": "^9.7.1",
     "stylelint-config-standard": "^18.2.0",
-    "webpack": "^4.25.1",
-    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
   },
@@ -86,6 +86,8 @@
     "mini-css-extract-plugin": "^0.5.0",
     "mobx": "^5.6.0",
     "mobx-react": "^5.3.6",
+    "postcss-fail-on-warn": "^0.1.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.6.2",
     "rbush": "^2.0.2",
@@ -103,6 +105,8 @@
     "rmc-picker": "^5.0.5",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
+    "webpack": "^4.25.1",
+    "webpack-bundle-analyzer": "^3.0.3",
     "wikidata-sdk": "^5.15.9"
   }
 }

@@ -21,6 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 import PropTypes from 'prop-types';
 
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 import RateBar from '../RateBar/RateBar';
 import './CurrentStory.less';
 
@@ -50,14 +51,14 @@ class CurrentStory extends Component {
       <div className='currentstory'>
         {this.props.isStorySelected
           && (
-            <button
-              type='button'
+            <Button
+              btnType={BUTTON_TYPE.GHOST}
               className='currentstory__return'
               onClick={this.props.changeUi}
             >
               <i className='lnr lnr-chevron-left' aria-hidden='true' />
               {this.dashboard.back}
-            </button>
+            </Button>
           )}
         <div
           className='currentstory--title'

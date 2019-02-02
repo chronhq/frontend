@@ -20,6 +20,8 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
 
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+
 const stringLimit = 512;
 
 @inject('store')
@@ -58,9 +60,9 @@ class TrucatePart extends React.Component {
         >
           {this.props.string.substring(0, stringLimit)}
         </div>
-        <button
+        <Button
           onClick={e => this.toggleArticle(e)}
-          type='button'
+          btnType={BUTTON_TYPE.TRUNCATE}
           onMouseOver={() => this.setState({ blockHover: true })}
           onFocus={() => this.setState({ blockHover: true })}
           onMouseOut={() => this.setState({ blockHover: false })}
@@ -68,7 +70,7 @@ class TrucatePart extends React.Component {
           className={this.state.showButton ? 'truncate--expand' : 'truncate--expand truncate--expand__hidden'}
         >
           {this.dashboard.expand}
-        </button>
+        </Button>
       </React.Fragment>
     );
   }

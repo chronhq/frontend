@@ -11,6 +11,15 @@
     "new-cap": [2, { "capIsNewExceptions": ["List", "Map", "Set"] }],
     "react/no-multi-comp": 0,
     "import/no-named-as-default": 2,
+    "import/no-extraneous-dependencies": [
+      error,
+      {
+        devDependencies: [
+          ".storybook/**",
+          "**/*.stories.js"
+        ]
+      }
+    ],
     "comma-dangle": 0,
     "indent": [2, 2, {"SwitchCase": 1}],
     "no-console": 0,

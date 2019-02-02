@@ -21,6 +21,7 @@ import { observer, inject } from 'mobx-react';
 import { computed, observable } from 'mobx';
 import Picker from 'rmc-picker';
 
+import Button, { BUTTON_COLOR, BUTTON_SIZE } from '../../components/Button/Button';
 import './Picker.less';
 import './YearInput.less';
 
@@ -120,21 +121,21 @@ class YearInput extends React.Component {
           </Picker>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <button
+          <Button
             onClick={this.handleSet}
-            type='button'
-            disabled={this.props.store.year.tuneIsValid ? false : 'disabled'}
-            className='yearinput__button'
+            btnColor={BUTTON_COLOR.LIGHT}
+            btnSize={BUTTON_SIZE.WIDE}
+            disabled={!this.props.store.year.tuneIsValid}
           >
             {this.props.store.i18n.data.buttons.set}
-          </button>
-          <button
+          </Button>
+          <Button
+            btnSize={BUTTON_SIZE.WIDE}
+            btnColor={BUTTON_COLOR.LIGHT}
             onClick={this.close}
-            type='button'
-            className='yearinput__button'
           >
             {this.props.store.i18n.data.buttons.dismiss}
-          </button>
+          </Button>
         </div>
       </div>
     );

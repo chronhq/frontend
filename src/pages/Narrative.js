@@ -18,7 +18,6 @@
  */
 import React from 'react';
 
-
 import Overlays from '../templates/Overlays/Overlays';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';
@@ -32,10 +31,10 @@ const Narrative = ({ story, fake }) => (
   <Wrapper story={story} fake={fake}>
     <GeoLayers />
     <TimePanel />
-    <Overlays />
     <Balloon />
     <Dashboard />
     <NarrativeMobileBar />
+    <Overlays />
     <SideBar />
   </Wrapper>
 );

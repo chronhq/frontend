@@ -20,6 +20,8 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import YearSelectButton from './YearSelectButton';
 
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+
 import {
   Prev, Next
 } from './TimeControlsButtons';
@@ -32,13 +34,13 @@ class TimeControls extends React.Component {
   render() {
     return (
       <div className='timepanel__controls'>
-        <button type='button' onClick={() => this.props.store.year.prevYear()}>
+        <Button btnType={BUTTON_TYPE.ICON} onClick={() => this.props.store.year.prevYear()}>
           <Prev />
-        </button>
+        </Button>
         <YearSelectButton />
-        <button type='button' onClick={() => this.props.store.year.nextYear()}>
+        <Button btnType={BUTTON_TYPE.ICON} onClick={() => this.props.store.year.nextYear()}>
           <Next />
-        </button>
+        </Button>
       </div>
     );
   }

@@ -22,6 +22,7 @@ import { action, computed } from 'mobx';
 import { withRouter } from 'react-router-dom';
 
 
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 import './DashboardFooter.less';
 
 @inject('store')
@@ -39,27 +40,30 @@ class DashboardFooter extends React.Component {
   render() {
     return (
       <div className='dashboard-footer'>
-        <button
-          type='button'
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
           onClick={() => console.log('news not available')}
         >
           {this.dashboard.news}
-        </button>
-        <button
-          type='button'
+        </Button>
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
           onClick={() => this.props.history.push('/about')}
         >
           {this.dashboard.about}
-        </button>
-        <a href='https://github.com/chronhq/frontend' target='_blank' rel='noopener noreferrer'>
+        </Button>
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
+          onClick={() => console.log('show license')}
+        >
           {this.dashboard.license}
-        </a>
-        <button
-          type='button'
+        </Button>
+        <Button
+          btnType={BUTTON_TYPE.GHOST}
           onClick={() => this.openFeedback()}
         >
           {this.dashboard.report}
-        </button>
+        </Button>
       </div>
     );
   }

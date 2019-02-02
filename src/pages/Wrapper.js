@@ -20,13 +20,12 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { when, toJS } from 'mobx';
-import { ymHit } from '../metrikaHelper';
 
 @inject('store')
 @observer
 class Wrapper extends React.Component {
   componentDidMount() {
-    ymHit(this.props.story);
+    this.props.store.analytics.metricHit(this.props.story);
     this.props.store.courseSelection.cleanup();
     when( // validate course name and download data
       () => this.props.store.data.Courses.status.loaded,

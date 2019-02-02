@@ -18,6 +18,7 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 
 @inject('store')
 @observer
@@ -28,12 +29,12 @@ class YearButton extends React.Component {
 
   render() {
     return (
-      <button
+      <Button
+        btnType={BUTTON_TYPE.ICON}
         onClick={() => this.toggle()}
-        type='button'
       >
         {this.props.store.year.tuneValue}
-      </button>
+      </Button>
     );
   }
 }
