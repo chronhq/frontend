@@ -20,10 +20,9 @@ import {
   observable, action, computed
 } from 'mobx';
 
-import wdk from 'wikidata-sdk';
 import {
-  wdProps, wdTypesMap, getWikimediaURI
-} from './WikidataHelper';
+  wdProps, getWikimediaURI
+} from '../WikidataHelper';
 
 class WikidataEntity {
   // simplified entity
@@ -33,6 +32,8 @@ class WikidataEntity {
 
   // Response from wikimedia
   @observable media = [];
+
+  @observable type = 'misc';
 
   @computed get values() {
     // Extract values from wikidata into human readable naming
@@ -68,11 +69,6 @@ class WikidataEntity {
         // alt for image
         title: i.query.pages[Object.keys(i.query.pages)].title
       }));
-  }
-
-  @computed get type() {
-    return this.values.instanceOf
-      .reduce((prev, cur) => (wdTypesMap[cur] || prev), 'misc');
   }
 
   @computed get label() {
@@ -207,16 +203,15 @@ class WikidataEntity {
 
   @action async obtainImage() {
     if (this.values.image === undefined) return;
-    const results = await Promise.all(
-      this.values.image.map(i => fetch(getWikimediaURI(i)))
-    );
-    this.media = await Promise.all(results.map(r => r.json()));
+    const results = await fetch(getWikimediaURI(this.values.image));
+    this.media = await results.json();
   }
 
-  constructor(entity, rootStore) {
+  constructor(rootStore, type, full, simple) {
     this.rootStore = rootStore;
-    this.full = entity;
-    this.entity = wdk.simplify.entity(entity);
+    this.full = full;
+    this.entity = simple;
+    this.type = type;
     this.obtainImage();
   }
 }

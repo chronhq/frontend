@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+const instanceOf = 'P31';
 // List of wikidata properties
 const wdProps = {
   items: {
@@ -86,24 +87,25 @@ const wdTypesMap = Object.keys(wdTypes)
       .reduce((p, c) => ({ ...p, [c]: cur }), {})
   }), {});
 
-const getWikimediaURI = (name) => {
+const getWikimediaURI = (names) => {
   // thumbwidth in pixels
   const width = 250;
   const api = 'commons.wikimedia.org/w/api.php';
-  const file = encodeURI(name);
+  const files = names.map(name => `File:${encodeURI(name)}`).join('|');
   const params = [
     'action=query',
     'prop=imageinfo',
     'iiprop=url',
     'format=json',
     'origin=*', // for Browser request (CORB)
-    `titles=File:${file}`,
+    `titles=${files}`, // TODO: check for GET request string length
     `iiurlwidth=${width}`,
   ].join('&');
   return `https://${api}?${params}`;
 };
 
 export {
+  instanceOf,
   wdProps,
   wdTypes,
   wdTypesMap,

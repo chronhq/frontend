@@ -26,17 +26,34 @@ class GenericStoreType {
 
   @observable type = 'undefined'; // battle || document...
 
-  @action add(data, fetch = true) {
+  @observable fetched = false;
+
+  @action add(data = [], fetch = true) {
+    const res = data.reduce((p, c) => (
+      this.keys[c] === undefined
+        ? { ...p, [c]: null }
+        : p), {});
+    const resList = Object.keys(res);
+
     this.keys = {
       ...this.keys,
-      ...data.reduce((p, c) => ({ ...p, [c]: null }), {})
+      ...res
     };
-
-    if (fetch) this.fetch();
+    if (fetch) {
+      if (this.fetched === false) {
+        this.fetch();
+      } else if (resList.length > 0 && this.fetched === true) {
+        this.fetch(resList);
+      }
+    } else if (resList.length > 0) {
+      this.fetched = false;
+    }
   }
 
-  @action fetch() {
-    this.rootStore.wikidata.getItems(this.list);
+  @action fetch(upd = null) {
+    this.fetched = true;
+    const list = upd === null ? this.list : upd;
+    this.rootStore.wikidata.getItems(list);
   }
 
   @computed get list() {

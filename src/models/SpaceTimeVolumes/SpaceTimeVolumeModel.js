@@ -43,13 +43,25 @@ export default class SpaceTimeVolume {
     return this.rootStore.data.TEs.data[this.data.entity];
   }
 
+  @computed get title() {
+    // admin_level = 2
+    return this.wikidata.label;
+  }
+
+  @computed get subTitle() {
+    // TODO: This one depends on the relations
+    // Better switch to an array
+    // labels for wikidata_items from deeper admin levels to top (admin_level = 3)
+    return this.te.name;
+  }
+
   @computed get values() {
     return {
-      title: this.wikidata.label,
-      subTitle: this.te.name,
+      title: this.title,
+      subTitle: this.subTitle,
       flag: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg',
       emblem: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Royal_Coat_of_Arms_of_the_United_Kingdom.svg',
-      dataOrigin: ['https://www.wikidata.org/wiki/Q145'],
+      dataOrigin: [`https://www.wikidata.org/wiki/${this.wId}`],
       sources: [
         'https://en.wikipedia.org/wiki/United_Kingdom',
         'https://www.wikidata.org/wiki/Q145'
