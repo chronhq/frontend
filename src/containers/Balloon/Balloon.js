@@ -97,6 +97,7 @@ class Balloon extends React.Component {
     if (this.countryHover !== null && this.countryHover !== undefined) {
       return [
         {
+          id: 'countryHoverBaloon',
           message: <CountryHover id={this.countryHover} />,
           sources: <Sources id={this.countryHover} type="countryHover" />
         }
@@ -107,6 +108,7 @@ class Balloon extends React.Component {
     return this.pin.info.map((pin) => {
       switch (pin.type) {
         case 'geo': return {
+          id: `geoHoverBalloon_${pin.geoEvent.id}`,
           message: (
             <GeoEvent
               fact={pin.geoEvent}
@@ -117,6 +119,7 @@ class Balloon extends React.Component {
 
         case 'inv':
           return {
+            id: `invHoverBalloon_${pin.invention.id}`,
             message: (
               <Invention
                 fact={this.i18n.invention(pin.invention)}
@@ -128,6 +131,7 @@ class Balloon extends React.Component {
         case 'birth':
         // actor from wikidata
           return {
+            id: `personHoverBalloon_${pin.person.id}`,
             message: (
               <PersonFact
                 person={pin.person.wd === true
@@ -139,6 +143,7 @@ class Balloon extends React.Component {
           };
         case 'battle':
           return {
+            id: `battleHoverBalloon_${pin.battle.id}`,
             message: (
               <Battle
                 fact={pin.battle}
@@ -148,6 +153,7 @@ class Balloon extends React.Component {
           };
         case 'document':
           return {
+            id: `documentHoverBalloon_${pin.document.id}`,
             message: (
               <Document
                 fact={pin.document}
@@ -156,7 +162,7 @@ class Balloon extends React.Component {
             sources: () => ''
           };
         default:
-          return { message: () => '', sources: () => '' };
+          return { message: () => '', sources: () => '', id: 'defaultBalloonId' };
       }
     });
   }
@@ -168,11 +174,11 @@ class Balloon extends React.Component {
     return (
       <div style={{ ...this.style }} className={container}>
         <div className={news}>
-          {this.news.map(n => n.message)}
+          {this.news.map(n => (<div key={`news_${n.id}`}>{n.message}</div>))}
         </div>
         {this.pinned && (
           <div className={sources}>
-            {this.news.map(n => n.sources)}
+            {this.news.map(n => (<div key={`sources_${n.id}`}>{n.sources}</div>))}
           </div>
         )}
       </div>
