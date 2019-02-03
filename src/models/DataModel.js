@@ -23,6 +23,7 @@ import {
 import DataLoaderModel from './DataLoaderModel';
 import TraceModel from './DataAdaptation/TraceModel';
 import PointModel from './DataAdaptation/PointModel';
+import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
 
 export default class DataModel {
   @observable activeCourses = JSON.stringify({ where: { active: true } });
@@ -63,7 +64,7 @@ export default class DataModel {
       .reduce((prev, cur) => ([...prev, ...this.deps[cur]]), []);
   }
 
-  constructor() {
+  constructor(rootStore) {
     this.roster.map((model) => {
       this[model] = new DataLoaderModel(model);
       return false;
@@ -84,6 +85,13 @@ export default class DataModel {
       append: true,
       arrayCb: true,
       wrapData: d => new TraceModel(d),
+    });
+
+    this.STVs.configure({
+      sortId: 'id',
+      append: false,
+      arrayCb: false,
+      wrapData: d => new SpaceTimeVolume(rootStore, d.id, d),
     });
   }
 

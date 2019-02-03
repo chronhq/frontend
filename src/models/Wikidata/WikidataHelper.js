@@ -32,6 +32,8 @@ const wdProps = {
   },
   images: {
     P18: 'image',
+    P41: 'flagImage',
+    P94: 'coatOfArmsImage'
   },
   points: {
     P625: 'coordinateLocation', // coordinate location
@@ -46,6 +48,13 @@ const wdProps = {
 };
 
 const wdTypes = {
+  territorialEntities: {
+    Q6256: 'country',
+    Q3024240: 'historicalCountry',
+    Q1048835: 'politicalTerritorialEntity',
+    Q1496967: 'territorialEntity',
+    Q56061: 'administrativeTerritorialEntity',
+  },
   battles: {
     Q178561: 'battle',
     Q180684: 'conflict',
@@ -64,6 +73,8 @@ const wdTypes = {
     Q215627: 'person', // should not be used as `instalce of`
     Q20643955: 'humanBiblicalFigure',
     Q21070568: 'humanWhoMayBeFictional',
+    // P6: 'headOfGovernment',
+    // P35: 'headOfState',
   }
 };
 

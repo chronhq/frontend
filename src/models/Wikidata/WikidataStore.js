@@ -28,6 +28,8 @@ class WikidataStore {
 
   @observable documents;
 
+  @observable countries;
+
   @action fetchAll() {
     this.rootStore.wikidata.getItems(this.list);
   }
@@ -44,6 +46,7 @@ class WikidataStore {
     this.battles = new GenericType(rootStore, 'battle');
     this.actors = new Actors(rootStore, 'person');
     this.documents = new GenericType(rootStore, 'document');
+    this.countries = new GenericType(rootStore, 'country');
   }
 }
 

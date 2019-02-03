@@ -20,84 +20,15 @@ import {
   observable, computed
 } from 'mobx';
 
-import MapColors from './MapColors';
+// import MapColors from './MapColors';
 import Ap2STV from './Ap2STV';
 
-class STV {
-  @observable id;
-
-  @computed get now() {
-    return this.rootStore.year.now;
-  }
-
-  @computed get visible() {
-    return (this.data.start_date <= this.now && this.now <= this.data.end_date);
-  }
-
-  @computed get data() {
-    return this.rootStore.data.STVs.data[this.id];
-  }
-
-  @computed get inUse() {
-    return this.data.territory.reduce((p, c) => ({ ...p, [c]: true }));
-  }
-
-  @computed get te() {
-    // TODO: add conditions for admin_level and relations
-    return this.rootStore.data.TEs.data[this.data.entity];
-  }
-
-  @computed get values() {
-    return {
-      title: this.te.admin,
-      subTitle: this.te.name,
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg',
-      emblem: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Royal_Coat_of_Arms_of_the_United_Kingdom.svg',
-      dataOrigin: ['https://www.wikidata.org/wiki/Q145'],
-      sources: [
-        'https://en.wikipedia.org/wiki/United_Kingdom',
-        'https://www.wikidata.org/wiki/Q145'
-      ]
-    };
-  }
-
-  @computed get color() {
-    try {
-      const color = this.mapColors[this.te.color].color1;
-      return [color[0], color[1], color[2]];
-    } catch (e) {
-      // console.error('ColorID', this.data.color, 'Props', this.data);
-      // Probably colorID === -99 -- Disputed territory
-      return [127, 127, 127];
-    }
-  }
-
-  constructor(rootStore, id, mapColors) {
-    this.rootStore = rootStore;
-    this.mapColors = mapColors;
-    this.id = id;
-  }
-}
 
 export default class SpaceTimeVolumeModel {
   @observable ap2stv = Ap2STV;
 
-  @observable mapColors = MapColors;
-
-  // @observable data = {};
-
-  @computed get STVs() {
-    return this.rootStore.data.STVs.data;
-  }
-
-  // @action setup() {
-  // console.log('Setup');
   @computed get data() {
-    return Object.values(this.STVs).reduce((prev, cur) => ({
-      ...prev,
-      [cur.id]: new STV(this.rootStore, cur.id, this.mapColors)
-    }), {});
-    // extendObservable(this.data, data);
+    return this.rootStore.data.STVs.data;
   }
 
   @computed get current() {
@@ -118,6 +49,10 @@ export default class SpaceTimeVolumeModel {
   @computed get blank() {
     return Object.keys(this.ap2stv).reduce((p, c) => (
       this.active[c] !== undefined ? p : [...p, c]), []).map(m => Number(m));
+  }
+
+  @computed get wIds() {
+    return Object.keys(this.current).map(stv => this.current[stv].wId);
   }
 
   // // TODO Compute this on backend
@@ -145,6 +80,11 @@ export default class SpaceTimeVolumeModel {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
+    // this.wIdGetter = autorun(() => {
+    //   console.log('Autorun for wId', this.wIds.length);
+    //   this.rootStore.wikistore.countries.add(this.wIds, true);
+    // });
+
     // when(
     //   () => this.rootStore.data.STVs.status.loaded,
     //   () => this.setup()

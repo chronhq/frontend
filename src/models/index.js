@@ -38,7 +38,7 @@ import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
 
-import SpaceTimeVolume from './SpaceTimeVolumeModel';
+import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumesContainer';
 import AtomicBorders from './AtomicBordersModel';
 
 export default class storeModel {
@@ -47,13 +47,15 @@ export default class storeModel {
   // Add here new models
   constructor() {
     this.feedback = new FeedbackForm();
-    this.data = new Data();
     this.flags = new Flags();
     this.animation = new AnimationFrame();
+    this.data = new Data(this);
     this.dashboard = new Dashboard(this);
     this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
+    this.wikidata = new WikidataFetcher(this);
+    this.wikistore = new WikidataStore(this);
     this.courseSelection = new CourseSelection(this);
     this.atomicBorders = new AtomicBorders(this);
     this.spaceTimeVolume = new SpaceTimeVolume(this);
@@ -61,8 +63,6 @@ export default class storeModel {
     this.pins = new PinsModel(this);
     this.i18n = new Internationalization(this);
     this.mapStyle = new MapStyle(this);
-    this.wikidata = new WikidataFetcher(this);
-    this.wikistore = new WikidataStore(this);
     this.search = new DashboardSearch(this);
   }
 }
