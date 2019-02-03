@@ -34,9 +34,6 @@ export default class YearModel {
 
   @observable playing = false;
 
-  // timeout before change year
-  @observable yearInterval = 1000;
-
   @computed get tuneIsValid() {
     return (this.tuneValue >= this.min && this.tuneValue <= this.max);
   }
@@ -111,16 +108,5 @@ export default class YearModel {
 
   prevTick() {
     this.setTick(this.tick - 1);
-  }
-
-  play() {
-    if (this.playing === false) return;
-    this.nextYear();
-    setTimeout(() => this.play(), this.yearInterval);
-  }
-
-  @action togglePlay(playing = !this.playing) {
-    this.playing = playing;
-    this.play();
   }
 }
