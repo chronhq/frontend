@@ -19,6 +19,7 @@
 import wdk from 'wikidata-sdk';
 
 import WikidataEntity from './Entities/WikidataEntity';
+import WikidataTerritorialEntity from './Entities/WikidataTerritorialEntity';
 import {
   wdTypesMap, instanceOf
 } from './WikidataHelper';
@@ -31,6 +32,7 @@ function wikidataEntityFactory(entity, rootStore) {
     ? fallbackClass
     : simple.claims[instanceOf]
       .reduce((prev, cur) => (wdTypesMap[cur] || prev), fallbackClass);
+  if (type === 'territorialEntities') return new WikidataTerritorialEntity(rootStore, type, entity, simple);
   return new WikidataEntity(rootStore, type, entity, simple);
 }
 

@@ -55,11 +55,19 @@ export default class SpaceTimeVolume {
     return this.te.name;
   }
 
+  @computed get flag() {
+    if (this.wikidata.activeFlag !== undefined
+      && this.wikidata.activeFlag.image !== undefined) {
+      return this.wikidata.activeFlag.image.thumburl;
+    }
+    return undefined;
+  }
+
   @computed get values() {
     return {
       title: this.title,
       subTitle: this.subTitle,
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg',
+      flag: this.flag,
       emblem: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Royal_Coat_of_Arms_of_the_United_Kingdom.svg',
       dataOrigin: [`https://www.wikidata.org/wiki/${this.wId}`],
       sources: [
