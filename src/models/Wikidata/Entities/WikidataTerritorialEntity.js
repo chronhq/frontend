@@ -62,24 +62,34 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
   }
 
   @computed get activeFlag() {
-    const fileName = this.flags.find(f => ((
+    const flag = this.flags.find(f => ((
       f.start === null
       || f.start.getFullYear() <= this.now
     ) && (
       f.end === null
       || f.end.getFullYear() >= this.now
     )));
-    return {
-      file: fileName,
-      image: this.media.flagImages !== undefined
-        ? this.media.flagImages[fileName.file]
-        : undefined
-    };
+    if (flag !== undefined
+      && flag.file !== undefined && this.media.flagImages !== undefined) {
+      const image = this.media.flagImages[flag.file];
+      if (image !== undefined) return image.thumburl;
+    }
+    return undefined;
+  }
+
+  @computed get emblem() {
+    if (Array.isArray(this.entity.claims.P94) && this.media.coatOfArms !== undefined) {
+      const file = this.entity.claims.P94[0];
+      const image = this.media.coatOfArms[file];
+      if (image !== undefined) return image.thumburl;
+    }
+    return undefined;
   }
 
   constructor(rootStore, type, full, simple) {
     super(rootStore, type, full, simple);
     this.obtainImages(this.flags.map(f => f.file), 'flagImages');
+    this.obtainImages(this.entity.claims.P94, 'coatOfArms');
   }
 }
 
