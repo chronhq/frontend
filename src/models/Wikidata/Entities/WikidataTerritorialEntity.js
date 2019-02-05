@@ -24,11 +24,23 @@ import {
 import { wikidataTimeToDateObject } from 'wikidata-sdk/lib/helpers/helpers';
 
 import WikidataGenericEntity from './WikidataGenericEntity';
+import { natureOfStatement } from '../WikidataHelper';
 
 class WikidataTerritorialEntity extends WikidataGenericEntity {
   // media.flagImages - observable for storing wikimeda
 
-  getFileName = s => s.mainsnak.datavalue.value;
+  getValueItem = s => s.mainsnak.datavalue.value;
+
+  getNatureOfStatement = (d) => {
+    const { deJure, id } = natureOfStatement;
+    try {
+      if (d === undefined || d[id] === undefined) return true;
+      const v = d[id][0];
+      return v.datavalue.value.id === deJure;
+    } catch (e) {
+      return true; // deJure
+    }
+  };
 
   getDate = (d, p) => {
     try {
@@ -49,6 +61,78 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
     }
   }
 
+  getRangeValue(P, cb = f => ({ value: this.getValueItem(f) })) {
+    return this.full.claims[P] === undefined
+      ? []
+      : this.full.claims[P].map(f => ({
+        start: this.getDate(f.qualifiers, 'P580'),
+        end: this.getDate(f.qualifiers, 'P582'),
+        ...cb(f),
+      }));
+  }
+
+  inRange = f => ((
+    f.start === null
+    || f.start.getFullYear() <= this.now
+  ) && (
+    f.end === null
+    || f.end.getFullYear() >= this.now
+  ))
+
+  getActiveEntity = (items) => {
+    // picks first match
+    if (items === undefined) return undefined;
+    const cur = items.find(this.inRange);
+    if (cur !== undefined && cur.value !== undefined) {
+      return {
+        item: cur,
+        label: this.cache[cur.value.id] !== undefined
+          ? this.cache[cur.value.id].label : undefined,
+      };
+    }
+    return undefined;
+  }
+
+  @computed get capitals() {
+    return this.getRangeValue('P36', f => ({
+      value: this.getValueItem(f),
+      deJure: this.getNatureOfStatement(f.qualifiers),
+    }));
+  }
+
+  @computed get capital() {
+    return this.capitals.reduce((prev, cur) => {
+      if (this.inRange(cur)) {
+        const k = cur.deJure ? 'deJure' : 'deFacto';
+        return {
+          ...prev,
+          [k]: {
+            id: cur.value.id,
+            label: this.cache[cur.value.id] !== undefined
+              ? this.cache[cur.value.id].label : undefined,
+          },
+        };
+      }
+      return prev;
+    }, { deJure: undefined, deFacto: undefined });
+  }
+
+  @computed get headOfGovernment() {
+    return this.getRangeValue('P6');
+  }
+
+  @computed get currentHead() {
+    return this.getActiveEntity(this.headOfGovernment);
+  }
+
+  @computed get basicFormOfGovernment() {
+    return this.getRangeValue('P122');
+  }
+
+  @computed get currentGovernment() {
+    return this.getActiveEntity(this.basicFormOfGovernment);
+  }
+
   @computed get population() {
     return this.full.claims.P1082 === undefined
       ? []
@@ -65,28 +149,14 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
   }
 
   @computed get flags() {
-    // This is an array of wikidata 'flag images' items
-    // this.full.claims.P41
-    return this.full.claims.P41 === undefined
-      ? []
-      : this.full.claims.P41.map(f => ({
-        file: this.getFileName(f),
-        start: this.getDate(f.qualifiers, 'P580'),
-        end: this.getDate(f.qualifiers, 'P582'),
-      }));
+    return this.getRangeValue('P41');
   }
 
   @computed get activeFlag() {
-    const flag = this.flags.find(f => ((
-      f.start === null
-      || f.start.getFullYear() <= this.now
-    ) && (
-      f.end === null
-      || f.end.getFullYear() >= this.now
-    )));
+    const flag = this.flags.find(this.inRange);
     if (flag !== undefined
-      && flag.file !== undefined && this.media.flagImages !== undefined) {
-      const image = this.media.flagImages[flag.file];
+      && flag.value !== undefined && this.media.flagImages !== undefined) {
+      const image = this.media.flagImages[flag.value];
       if (image !== undefined) return image.thumburl;
     }
     return undefined;
@@ -101,9 +171,17 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
     return undefined;
   }
 
+  deepDeps = () => ([
+    ...this.capitals.map(c => c.value.id),
+    ...this.basicFormOfgovernment.map(c => c.value.id),
+    ...this.headOfGovernment.map(c => c.value.id)
+  ].filter((v, i, s) => s.indexOf(v) === i));
+
+
   constructor(rootStore, type, full, simple) {
     super(rootStore, type, full, simple);
-    this.obtainImages(this.flags.map(f => f.file), 'flagImages');
+    this.flatDeps = [];
+    this.obtainImages(this.flags.map(f => f.value), 'flagImages');
     this.obtainImages(this.entity.claims.P94, 'coatOfArms');
   }
 }

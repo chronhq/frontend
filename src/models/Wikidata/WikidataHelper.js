@@ -18,6 +18,12 @@
  */
 
 const instanceOf = 'P31';
+const natureOfStatement = {
+  id: 'P5102',
+  deFacto: 'Q712144',
+  deJure: 'Q132555',
+};
+
 // List of wikidata properties
 const wdProps = {
   items: {
@@ -45,6 +51,11 @@ const wdProps = {
     P577: 'publicationDate',
     P585: 'pointInTime',
     P571: 'inception',
+  },
+  territorialEntities: {
+    capital: 'P36',
+    headOfGovernment: 'P6',
+    basicFormOfGovernment: 'P122',
   },
 };
 
@@ -105,6 +116,7 @@ const getWikimediaURI = (names) => {
 };
 
 export {
+  natureOfStatement,
   instanceOf,
   wdProps,
   wdTypes,

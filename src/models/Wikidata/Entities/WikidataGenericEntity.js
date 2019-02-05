@@ -35,6 +35,8 @@ class WikidataGenericEntity {
 
   @observable type = 'misc';
 
+  @observable flatDeps = ['items', 'places'];
+
   @computed get cache() {
     return this.rootStore.wikidata.cache;
   }
@@ -69,16 +71,19 @@ class WikidataGenericEntity {
       }), []);
   }
 
+  // this method should be overwritten
+  deepDeps = () => ([])
+
   @computed get dependencies() {
     // returns an array of 'core' dependencies, all places and instances
-    return ['items', 'places'].reduce((prev, key) => ([
+    return this.flatDeps.reduce((prev, key) => ([
       ...prev,
       ...Object.values(wdProps[key]).reduce((p, c) => (
         this.values[c] !== undefined ? [
           ...p,
           ...this.values[c],
         ] : p), [])
-    ]), []);
+    ]), [...this.deepDeps()]);
   }
 
   @computed get label() {
