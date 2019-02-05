@@ -61,6 +61,10 @@ export default class SpaceTimeVolume {
       subTitle: this.subTitle,
       flag: this.wikidata.activeFlag,
       emblem: this.wikidata.emblem,
+      capital: this.wikidata.capital,
+      head: this.wikidata.currentHead,
+      government: this.wikidata.currentGovernment,
+      population: this.wikidata.currentPopulation,
       dataOrigin: [`https://www.wikidata.org/wiki/${this.wId}`],
       sources: [
         'https://en.wikipedia.org/wiki/United_Kingdom',

@@ -20,6 +20,17 @@ import React from 'react';
 import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
+const InfoLink = ({ wId, label = null }) => (
+  <a
+    // className='sourcesList'
+    href={`https://www.wikidata.org/wiki/${wId}`}
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    {label !== null ? label : wId}
+  </a>
+);
+
 @inject('store')
 @observer
 class CountryHover extends React.Component {
@@ -85,11 +96,57 @@ class CountryHover extends React.Component {
     );
   }
 
+  @computed get government() {
+    return this.values.government === undefined ? '' : (
+      <p>
+        {this.values.government.label}
+      </p>
+    );
+  }
+
+  @computed get population() {
+    if (this.pinned === false || this.values.population === undefined) return null;
+    const pop = new Intl.NumberFormat().format(this.values.population.amount);
+    return (
+      <p>
+        {'Population: '}
+        {pop}
+      </p>
+    );
+  }
+
+  @computed get head() {
+    if (this.pinned === false || this.values.head === undefined) return null;
+    return (
+      <p>
+        {'Head: '}
+        {<InfoLink wId={this.values.head.id} label={this.values.head.label} />}
+      </p>
+    );
+  }
+
+  @computed get capital() {
+    if (this.pinned === false) return null;
+    const { deJure, deFacto } = this.values.capital;
+    if (deJure === undefined && deFacto === undefined) return null;
+    return (
+      <p>
+        {'Capital: '}
+        {(deJure !== undefined) && <InfoLink wId={deJure.id} label={deJure.label} />}
+        {(deFacto !== undefined) && <InfoLink wId={deFacto.id} label={deFacto.label} />}
+      </p>
+    );
+  }
+
   render() {
     return (
       <div className='factInner'>
         {this.factHeader}
         {this.subTitleMessage}
+        {this.government}
+        {this.capital}
+        {this.head}
+        {this.population}
         {this.images}
       </div>
     );
