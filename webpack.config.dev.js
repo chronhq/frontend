@@ -38,7 +38,6 @@ module.exports = {
     proxy: {
       '/api': 'http://api:3333/',
       '/mvt': 'http://api:3333/',
-      '/shared': 'http://api:3333/',
     },
     headers: {
       'Access-Control-Allow-Origin': '*'

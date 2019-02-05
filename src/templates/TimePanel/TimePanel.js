@@ -31,7 +31,8 @@ class TimePanel extends React.Component {
       <div className={`timepanel ${(this.props.store.courseSelection.courseId !== 0) ? 'timepanel--disable' : ''}`}>
         <SeekBar />
         <ControlButtons />
-      </div>);
+      </div>
+    );
   }
 }
 

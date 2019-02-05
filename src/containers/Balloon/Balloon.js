@@ -103,14 +103,16 @@ class Balloon extends React.Component {
           <GeoEvent
             fact={pin.geoEvent}
             key={`balloon_geo_${pin.geoEvent.id}`}
-          />);
+          />
+        );
 
         case 'inv':
           return (
             <Invention
               fact={this.i18n.invention(pin.invention)}
               key={`balloon_inv_${pin.invention.id}`}
-            />);
+            />
+          );
         case 'death':
         case 'birth':
         // actor from wikidata
@@ -120,19 +122,22 @@ class Balloon extends React.Component {
                 ? pin.person
                 : this.i18n.person(pin.person, pin.type)}
               key={`balloon_person_${pin.type}_${pin.person.id}`}
-            />);
+            />
+          );
         case 'battle':
           return (
             <Battle
               fact={pin.battle}
               key={`balloon_battle_${pin.type}_${pin.battle.id}`}
-            />);
+            />
+          );
         case 'document':
           return (
             <Document
               fact={pin.document}
               key={`balloon_battle_${pin.type}_${pin.document.id}`}
-            />);
+            />
+          );
         default:
           return () => '';
       }

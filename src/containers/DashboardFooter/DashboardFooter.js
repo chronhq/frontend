@@ -18,11 +18,10 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { action, computed } from 'mobx';
+import { computed } from 'mobx';
 import { withRouter } from 'react-router-dom';
 
 
-import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 import './DashboardFooter.less';
 
 @inject('store')
@@ -32,38 +31,34 @@ class DashboardFooter extends React.Component {
     return this.props.store.i18n.data.dashboard;
   }
 
-  @action openFeedback() {
-    this.props.store.feedback.year = this.props.store.year.now;
-    this.props.store.flags.runtime.set('feedback', true);
+  link(url, name) {
+    return (
+      <a
+        href={url}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        {this.dashboard[name]}
+      </a>
+    );
   }
 
   render() {
     return (
       <div className='dashboard-footer'>
-        <Button
-          btnType={BUTTON_TYPE.GHOST}
-          onClick={() => console.log('news not available')}
-        >
-          {this.dashboard.news}
-        </Button>
-        <Button
-          btnType={BUTTON_TYPE.GHOST}
-          onClick={() => this.props.history.push('/about')}
+        {this.link('https://chronhq.github.io/wiki/', 'wiki')}
+        <a
+          href='/about'
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.history.push('/about');
+            return false;
+          }}
         >
           {this.dashboard.about}
-        </Button>
-        <Button
-          btnType={BUTTON_TYPE.GHOST}
-          onClick={() => console.log('show license')}
-        >
-          {this.dashboard.license}
-        </Button>
-        <Button
-          btnType={BUTTON_TYPE.GHOST}
-          onClick={() => this.openFeedback()}
-        >
-          {this.dashboard.report}
-        </Button>
+        </a>
+        {this.link('https://chronhq.github.io/wiki/project/licenses.html', 'license')}
+        {this.link('https://github.com/chronhq/data/issues', 'report')}
       </div>
     );
   }
