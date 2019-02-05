@@ -46,7 +46,7 @@ class DashboardFooter extends React.Component {
   render() {
     return (
       <div className='dashboard-footer'>
-        {this.link('https://chronhq.github.io/wiki/', 'project')}
+        {this.link('https://chronhq.github.io/wiki/', 'wiki')}
         <a
           href='/about'
           onClick={(e) => {
