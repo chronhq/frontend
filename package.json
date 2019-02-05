@@ -8,6 +8,7 @@
     "dev": "webpack-dev-server --config ./webpack.config.dev.js",
     "release": "rimraf dist && webpack --config webpack.config.prod.js",
     "test": "jest --config ./jest.config.js",
+    "svg": "node ./src/build/buildPins.js",
     "stylelint": "stylelint \"src/**/*.less\"",
     "stylelint-fix": "stylelint \"src/**/*.less\" --fix",
     "lint": "eslint src",

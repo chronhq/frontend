@@ -39,7 +39,7 @@ class Widgets extends React.Component {
         height={this.props.store.deck.height}
         style={{ zIndex: 2, pointerEvents: 'none', position: 'absolute' }}
       >
-        <Defs MapPics={this.props.store.data.MapPics} />
+        <Defs />
         <g id='svgWidgets' transform={translate}>
           {showWidgets && <ScaleWidget />}
           {showWidgets && <LoadingWidget />}

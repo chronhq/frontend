@@ -42,7 +42,6 @@ export default class DataModel {
       'Types',
       'MapDecorations',
       'MapColors',
-      'MapPics',
     ],
     course: [
       'CourseTimelines',
@@ -69,7 +68,6 @@ export default class DataModel {
       return false;
     });
 
-    this.MapPics.filter = JSON.stringify({ where: { type: 'pin' } });
     this.Courses.filter = this.activeCourses;
     this.Borders.sortId = 'year';
     this.CourseTimelines.sortId = 'tick';
