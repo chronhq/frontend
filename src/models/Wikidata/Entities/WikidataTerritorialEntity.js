@@ -49,6 +49,21 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
     }
   }
 
+  @computed get population() {
+    return this.full.claims.P1082 === undefined
+      ? []
+      : this.full.claims.P1082.map(f => ({
+        amount: Number(f.mainsnak.datavalue.value.amount),
+        date: this.getDate(f.qualifiers, 'P585'),
+      })).sort((p1, p2) => p2.date - p1.date);
+  }
+
+  @computed get currentPopulation() {
+    return this.population.find(p => (
+      p.date !== null
+      && p.date.getFullYear() <= this.now));
+  }
+
   @computed get flags() {
     // This is an array of wikidata 'flag images' items
     // this.full.claims.P41
