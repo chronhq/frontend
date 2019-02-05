@@ -173,7 +173,7 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
 
   deepDeps = () => ([
     ...this.capitals.map(c => c.value.id),
-    ...this.basicFormOfgovernment.map(c => c.value.id),
+    ...this.basicFormOfGovernment.map(c => c.value.id),
     ...this.headOfGovernment.map(c => c.value.id)
   ].filter((v, i, s) => s.indexOf(v) === i));
 
