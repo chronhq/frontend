@@ -29,7 +29,6 @@ const flags = {
     SidePanelIsOpen: false,
     TimelineIsMinified: false,
     BioIsOpen: false,
-    animation: true,
     cluster: true,
   },
   layer: {
@@ -37,7 +36,6 @@ const flags = {
     labels: true,
     mapDecorations: true,
     cities: true,
-    traces: true,
   },
   pins: {
     persons: true,

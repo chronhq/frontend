@@ -30,7 +30,6 @@ import {
   toponymsLayer,
   oceanDecorationLayer,
   mapDecorationsLayer,
-  expeditionsLayer,
   pinsLayer
 } from '../../components/Layers';
 
@@ -82,15 +81,6 @@ class MapWrapper extends React.Component {
     );
   }
 
-  @computed get expeditions() {
-    return expeditionsLayer(
-      this.props.store.prepared.expeditions,
-      this.options.traces,
-      this.props.store.flags.runtime.get('animation'),
-      this.props.store.animation.time
-    );
-  }
-
   @computed get feedPins() {
     const { pins } = this.props.store.pins;
     const { zoom } = this.deck;
@@ -105,12 +95,9 @@ class MapWrapper extends React.Component {
   @computed get layers() {
     return [
       ...this.toponyms,
-      this.cityPoints,
       this.oceanDecorations,
       this.mapDecorations,
-      this.expeditions,
       ...this.feedPins,
-      this.cityText,
     ];
   }
 

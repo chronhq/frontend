@@ -29,12 +29,6 @@ export default class FinalDataModel {
       : [];
   }
 
-  @computed get expeditions() {
-    return this.rootStore.year.tick in this.rootStore.data.CourseTraces.data
-      ? this.rootStore.data.CourseTraces.data[this.rootStore.year.tick]
-      : [];
-  }
-
   @computed get decor() {
     return this.data.decor;
   }

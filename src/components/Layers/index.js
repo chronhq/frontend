@@ -19,13 +19,11 @@
 import toponymsLayer from './ToponymsLayer';
 import oceanDecorationLayer from './OceanDecorationLayer';
 import mapDecorationsLayer from './MapDecorationsLayer';
-import expeditionsLayer from './ExpeditionsLayer';
 import pinsLayer from './PinsLayer';
 
 export {
   toponymsLayer,
   oceanDecorationLayer,
   mapDecorationsLayer,
-  expeditionsLayer,
   pinsLayer
 };

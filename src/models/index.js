@@ -28,7 +28,6 @@ import Prepared from './PreparedData';
 import PinsModel from './PinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
-import AnimationFrame from './AnimationFrame';
 import AnalyticModel from './AnalyticModel';
 
 import MapStyle from './MapStyleModel';
@@ -46,7 +45,6 @@ export default class storeModel {
   // Add here new models
   constructor() {
     this.flags = new Flags();
-    this.animation = new AnimationFrame();
     this.data = new Data(this);
     this.dashboard = new Dashboard(this);
     this.projection = new Projection(this);

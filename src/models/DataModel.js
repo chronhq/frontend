@@ -21,7 +21,6 @@ import {
 } from 'mobx';
 
 import DataLoaderModel from './DataLoaderModel';
-import TraceModel from './DataAdaptation/TraceModel';
 import PointModel from './DataAdaptation/PointModel';
 import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
 
@@ -40,7 +39,6 @@ export default class DataModel {
     ],
     course: [
       'CourseTimelines',
-      'CourseTraces',
       'CourseGeopoints',
     ],
     world: [
@@ -68,13 +66,6 @@ export default class DataModel {
       append: true,
       arrayCb: true,
       wrapData: d => new PointModel(d),
-    });
-
-    this.CourseTraces.configure({
-      sortId: 'courseTimelineId',
-      append: true,
-      arrayCb: true,
-      wrapData: d => new TraceModel(d),
     });
 
     this.STVs.configure({
