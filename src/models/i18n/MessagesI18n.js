@@ -19,25 +19,6 @@
 import BaseI18n from './BaseI18n';
 
 export default class MessagesI18n extends BaseI18n {
-  getInventors = inventors => inventors.reduce((prev, p) => (typeof this.persons[p] === 'undefined'
-    ? prev
-    : [...prev, this.persons[p][this.nameSelector]]), []);
-
-  invention(fact) {
-    const description = typeof fact.description[this.lng] === 'string'
-      ? fact.description[this.lng].replace(/\u00a0/g, ' ')
-      : this.data.unknown.fact;
-    return {
-      id: fact.id,
-      key: `in_${fact.id}`,
-      name: fact[this.nameSelector],
-      inventDate: fact.inventDate,
-      title: this.data.messages.inventionsTitle,
-      description,
-      inventors: this.getInventors(fact.inventor).join(', '),
-    };
-  }
-
   person(person, type) {
     const label = person[this.nameSelector];
     let location;

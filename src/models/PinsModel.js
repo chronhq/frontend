@@ -24,8 +24,9 @@ function getIcon(info) {
   switch (info.type) {
     case 'birth': return 26; // Birth
     case 'death': return 28; // Death
-    case 'geo': return 30; // SimpleInfoPin
-    case 'inv': return 27; // SimpleBulb
+    // Deprecated pin types
+    // case 'geo': return 30; // SimpleInfoPin
+    // case 'inv': return 27; // SimpleBulb
     case 'battle': return 32; // SimpleSwords
     case 'document': return 24; // treaty bird
     default: return 31; // SimpleStar
@@ -36,8 +37,6 @@ function getKey(info) {
   switch (info.type) {
     case 'birth': return `P_${info.person.id}_${info.type}`;
     case 'death': return `P_${info.person.id}_${info.type}`;
-    case 'geo': return `P_${info.geoEvent.id}`;
-    case 'inv': return `P_${info.invention.id}`;
     case 'battle': return `P_${info.battle.id}`;
     case 'document': return `P_${info.document.id}`;
     default: return 'P_default';
@@ -58,8 +57,7 @@ export default class FeedPinsModel {
     this.rootStore = rootStore;
   }
 
-  @observable pinsOrder = [
-    'geoEvents', 'inventions', 'document', 'battle', 'persons'];
+  @observable pinsOrder = ['document', 'battle', 'persons'];
 
   @observable pinned = false;
 
@@ -129,13 +127,6 @@ export default class FeedPinsModel {
     };
   }
 
-  @computed get inventionsRawPins() {
-    return this.rootStore.prepared.inventions.pins;
-  }
-
-  @computed get geoEventsRawPins() {
-    return this.rootStore.prepared.geoEventsList.pins;
-  }
 
   @computed get battleRawPins() {
     return this.rootStore.wikistore.battles.pins;

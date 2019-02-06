@@ -23,8 +23,6 @@ import { computed } from 'mobx';
 import {
   Sources,
   PersonFact,
-  Invention,
-  GeoEvent,
   Battle,
   Document
 } from '../../components/Messages';
@@ -107,28 +105,6 @@ class Balloon extends React.Component {
 
     return this.pin.info.map((pin) => {
       switch (pin.type) {
-        case 'geo': return {
-          id: `geoHoverBalloon_${pin.geoEvent.id}`,
-          message: (
-            <GeoEvent
-              fact={pin.geoEvent}
-              key={`balloon_geo_${pin.geoEvent.id}`}
-            />
-          ),
-          sources: () => ''
-        };
-
-        case 'inv':
-          return {
-            id: `invHoverBalloon_${pin.invention.id}`,
-            message: (
-              <Invention
-                fact={this.i18n.invention(pin.invention)}
-                key={`balloon_inv_${pin.invention.id}`}
-              />
-            ),
-            sources: () => ''
-          };
         case 'death':
         case 'birth':
         // actor from wikidata

@@ -66,14 +66,10 @@
     "traces": "Expeditions",
     "cities": "Cities",
     "wars": "Wars",
-    "inventions": "Inventions",
     "persons": "Persons",
-    "geoEvents": "Events",
     "other": "Other"
   },
   "messages": {
-    "inventionsTitle": "Invention",
-    "geoEventTitle": "Event",
     "personDeath": "Passed",
     "personBirth": "Born"
   },

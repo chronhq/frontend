@@ -66,14 +66,10 @@
     "traces": "Экспедиции",
     "cities": "Города",
     "wars": "Войны",
-    "inventions": "Изобретения",
     "persons": "Персоны",
-    "geoEvents": "События",
     "other": "Другоe"
   },
   "messages": {
-    "inventionsTitle": "Изобретения",
-    "geoEventTitle": "Справка",
     "personDeath": "Смерть",
     "personBirth": "Рождение"
   },

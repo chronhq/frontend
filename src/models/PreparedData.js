@@ -19,18 +19,12 @@
 import { observable, computed } from 'mobx';
 import Locations from './DataAdaptation/LocationsModel';
 import Persons from './DataAdaptation/PersonsList';
-import Inventions from './DataAdaptation/InventionsList';
-import GeoEvents from './DataAdaptation/GeoEventsList';
 import Decor from './DataAdaptation/Decor';
 
 export default class FinalDataModel {
   @observable data = {};
 
   @observable persons;
-
-  @observable inventions;
-
-  @observable geoEventsList;
 
   @computed get locations() {
     return this.data.cities.locations;
@@ -63,7 +57,5 @@ export default class FinalDataModel {
     this.data.cities = new Locations(rootStore);
 
     this.persons = new Persons(rootStore);
-    this.inventions = new Inventions(rootStore);
-    this.geoEventsList = new GeoEvents(rootStore);
   }
 }

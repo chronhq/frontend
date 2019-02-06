@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import GeoEvent from './GeoEvent';
 import PersonFact from './PersonFact';
-import Invention from './Invention';
 import Battle from './Battle';
 import Document from './Document';
 import Sources from './Sources';
@@ -27,9 +25,7 @@ import './Messages.less';
 
 export {
   Sources,
-  GeoEvent,
   PersonFact,
-  Invention,
   Battle,
   Document
 };

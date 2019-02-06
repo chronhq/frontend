@@ -40,9 +40,7 @@ const flags = {
     traces: true,
   },
   pins: {
-    inventions: true,
     persons: true,
-    geoEvents: true,
     battle: true,
     document: true,
   },

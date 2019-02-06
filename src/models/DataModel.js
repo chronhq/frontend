@@ -33,13 +33,11 @@ export default class DataModel {
       'Courses'
     ],
     base: [
-      'Admins',
       'CityLocs',
       'CityPops',
       'CityProperties',
       'MapLabels',
       'Persons',
-      'Types',
       'MapDecorations',
       'STVs',
       'TEs',
@@ -50,8 +48,6 @@ export default class DataModel {
       'CourseGeopoints',
     ],
     world: [
-      'Inventions',
-      'GeoEvents',
     ],
     heavy: [
     ]
