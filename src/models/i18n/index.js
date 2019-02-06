@@ -17,7 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, computed, action } from 'mobx';
-import MessagesI18n from './MessagesI18n';
 import AvailableLanguages from './translation/AvailableLanguages';
 
 import logoRu from '../../img/logo-grey-ru.svg';
@@ -27,8 +26,6 @@ export default class Internationalization {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
-
-  @observable messages = new MessagesI18n(this.rootStore);
 
   @observable languages =
     Object.keys(AvailableLanguages)

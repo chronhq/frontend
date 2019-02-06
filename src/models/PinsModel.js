@@ -119,14 +119,8 @@ export default class FeedPinsModel {
   }
 
   @computed get personsRawPins() {
-    const persons = this.rootStore.prepared.persons.pins;
-    const actors = this.rootStore.wikistore.actors.pins;
-    return {
-      free: [...persons.free, ...actors.free],
-      pins: [...persons.pins, ...actors.pins],
-    };
+    return this.rootStore.wikistore.actors.pins;
   }
-
 
   @computed get battleRawPins() {
     return this.rootStore.wikistore.battles.pins;

@@ -37,7 +37,6 @@ export default class DataModel {
       'CityPops',
       'CityProperties',
       'MapLabels',
-      'Persons',
       'MapDecorations',
       'STVs',
       'TEs',

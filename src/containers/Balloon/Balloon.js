@@ -33,10 +33,6 @@ import './Balloon.less';
 @inject('store')
 @observer
 class Balloon extends React.Component {
-  @computed get persons() {
-    return this.props.store.data.Persons.data;
-  }
-
   @computed get pin() {
     return this.props.store.pins.selected;
   }
@@ -112,9 +108,7 @@ class Balloon extends React.Component {
             id: `personHoverBalloon_${pin.person.id}`,
             message: (
               <PersonFact
-                person={pin.person.wd === true
-                  ? pin.person
-                  : this.i18n.person(pin.person, pin.type)}
+                person={pin.person}
                 key={`balloon_person_${pin.type}_${pin.person.id}`}
               />
             ),

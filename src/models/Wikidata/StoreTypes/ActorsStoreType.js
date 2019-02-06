@@ -32,7 +32,6 @@ class ActorsStoreType extends GenericStoreType {
         const year = cur[`dateOf${typeU}`].getUTCFullYear();
 
         const person = {
-          wd: true, // this entity is from wikidata
           key: cur.id,
           id: cur.id,
           title: this.rootStore.i18n.data.messages[`person${typeU}`],

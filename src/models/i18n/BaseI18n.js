@@ -35,10 +35,6 @@ export default class BaseI18N {
     return this.rootStore.i18n.nameSelector;
   }
 
-  @computed get persons() {
-    return this.rootStore.data.Persons.data;
-  }
-
   @computed get cities() {
     return this.rootStore.prepared.data.cities.points;
   }
