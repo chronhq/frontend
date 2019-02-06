@@ -23,7 +23,7 @@ import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSelection from './CourseSelection';
-import Prepared from './PreparedData';
+import Decor from './Decor';
 
 import PinsModel from './PinsModel';
 import Internationalization from './i18n';
@@ -55,7 +55,7 @@ export default class storeModel {
     this.courseSelection = new CourseSelection(this);
     this.atomicBorders = new AtomicBorders(this);
     this.spaceTimeVolume = new SpaceTimeVolume(this);
-    this.prepared = new Prepared(this);
+    this.decor = new Decor(this);
     this.pins = new PinsModel(this);
     this.i18n = new Internationalization(this);
     this.mapStyle = new MapStyle(this);

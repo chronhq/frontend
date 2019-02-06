@@ -32,8 +32,6 @@ export default class DataModel {
       'Courses'
     ],
     base: [
-      'MapLabels',
-      'MapDecorations',
       'STVs',
       'TEs',
     ],

@@ -20,11 +20,8 @@
 // import citiesAtlas from './geoAssets/cities.svg';
 // import citiesMapping from './geoAssets/cities.json';
 
-import decorationAtlas from './geoAssets/decoration.svg';
-import decorationMapping from './geoAssets/decoration.json';
-
-import eventAtlas from './geoAssets/event.svg';
-import eventMapping from './geoAssets/event.json';
+// import decorationAtlas from './geoAssets/decoration.svg';
+// import decorationMapping from './geoAssets/decoration.json';
 
 import oceanAtlas from './geoAssets/ocean.svg';
 import oceanMapping from './geoAssets/ocean.json';
@@ -37,14 +34,10 @@ export default {
   //   map: citiesMapping,
   //   img: citiesAtlas
   // },
-  decoration: {
-    map: decorationMapping,
-    img: decorationAtlas
-  },
-  event: {
-    map: eventMapping,
-    img: eventAtlas
-  },
+  // decoration: {
+  //   map: decorationMapping,
+  //   img: decorationAtlas
+  // },
   ocean: {
     map: oceanMapping,
     img: oceanAtlas

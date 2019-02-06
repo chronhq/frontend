@@ -27,9 +27,7 @@ import {
 } from 'mobx';
 
 import {
-  toponymsLayer,
   oceanDecorationLayer,
-  mapDecorationsLayer,
   pinsLayer
 } from '../../components/Layers';
 
@@ -57,34 +55,25 @@ class MapWrapper extends React.Component {
     return this.props.store.flags.layer.list;
   }
 
-  @computed get toponyms() {
-    return toponymsLayer(
-      this.props.store.prepared.decor.toponyms,
-      this.options.labels,
-      this.deck.rZoom
-    );
-  }
-
   @computed get oceanDecorations() {
     return oceanDecorationLayer(
-      this.props.store.prepared.decor.oceans,
+      this.props.store.decor.oceans,
       this.options.mapDecorations,
       this.deck
     );
   }
 
-  @computed get mapDecorations() {
-    return mapDecorationsLayer(
-      this.props.store.prepared.decor.decorations,
-      this.options.mapDecorations,
-      this.deck
-    );
+  @computed get geoPoints() {
+    const geoPoints = this.props.store.data.CourseGeopoints.data;
+    return this.props.store.year.tick in geoPoints
+      ? geoPoints[this.props.store.year.tick]
+      : [];
   }
 
   @computed get feedPins() {
     const { pins } = this.props.store.pins;
     const { zoom } = this.deck;
-    const coursePins = this.props.store.prepared.geoPoints;
+    const coursePins = this.geoPoints;
 
     return [
       pinsLayer(pins, 'map', zoom, true, this.onMapPinHover),
@@ -94,9 +83,7 @@ class MapWrapper extends React.Component {
 
   @computed get layers() {
     return [
-      ...this.toponyms,
       this.oceanDecorations,
-      this.mapDecorations,
       ...this.feedPins,
     ];
   }
