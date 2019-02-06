@@ -99,5 +99,14 @@
     "report": "Сообщить об ошибке",
     "back": "Назад",
     "expand": "Показать больше"
+  },
+  "countryHover": {
+    "capital": "Столица",
+    "head": "Руководитель",
+    "population": "Население"
+  },
+  "sourcesBalloon": {
+    "origin": "Источник данных",
+    "sources": "Ресурсы"
   }
 }

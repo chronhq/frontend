@@ -22,7 +22,7 @@ import { observer, inject } from 'mobx-react';
 
 const InfoLink = ({ wId, label = null }) => (
   <a
-    // className='sourcesList'
+    className='factSource'
     href={`https://www.wikidata.org/wiki/${wId}`}
     target='_blank'
     rel='noopener noreferrer'
@@ -34,6 +34,10 @@ const InfoLink = ({ wId, label = null }) => (
 @inject('store')
 @observer
 class CountryHover extends React.Component {
+  @computed get messages() {
+    return this.props.store.i18n.data.countryHover;
+  }
+
   @computed get pinned() {
     return this.props.store.pins.pinned;
   }
@@ -109,7 +113,10 @@ class CountryHover extends React.Component {
     const pop = new Intl.NumberFormat().format(this.values.population.amount);
     return (
       <p>
-        {'Population: '}
+        <span className='factSubTitle'>
+          {this.messages.population}
+          {': '}
+        </span>
         {pop}
       </p>
     );
@@ -119,19 +126,25 @@ class CountryHover extends React.Component {
     if (this.pinned === false || this.values.head === undefined) return null;
     return (
       <p>
-        {'Head: '}
+        <span className='factSubTitle'>
+          {this.messages.head}
+          {': '}
+        </span>
         {<InfoLink wId={this.values.head.id} label={this.values.head.label} />}
       </p>
     );
   }
 
   @computed get capital() {
-    if (this.pinned === false) return null;
+    if (this.pinned === false || this.values.capital === undefined) return null;
     const { deJure, deFacto } = this.values.capital;
     if (deJure === undefined && deFacto === undefined) return null;
     return (
       <p>
-        {'Capital: '}
+        <span className='factSubTitle'>
+          {this.messages.capital}
+          {': '}
+        </span>
         {(deJure !== undefined) && <InfoLink wId={deJure.id} label={deJure.label} />}
         {(deFacto !== undefined) && <InfoLink wId={deFacto.id} label={deFacto.label} />}
       </p>

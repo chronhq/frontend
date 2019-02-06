@@ -40,14 +40,14 @@ const linkKey = (name, l, id) => (`src_${name}_${l.length}_${id}`);
 const SourceInfo = ({ name, data }) => (
   data.length > 0 ? (
     <div className='sourcesInfo'>
-      <p className='factHeader'>
+      <p className='factSubTitle'>
         {name}
         {':'}
       </p>
       {data.map((d, id) => (
         <a
           key={linkKey(name, d, id)}
-          className='sourcesList'
+          className='factSource factSourcesList'
           href={d}
           target='_blank'
           rel='noopener noreferrer'
@@ -62,6 +62,10 @@ const SourceInfo = ({ name, data }) => (
 @inject('store')
 @observer
 class Sources extends React.Component {
+  @computed get messages() {
+    return this.props.store.i18n.data.sourcesBalloon;
+  }
+
   @computed get item() {
     if (this.props.type === 'countryHover') {
       try {
@@ -85,8 +89,8 @@ class Sources extends React.Component {
   render() {
     return (
       <div>
-        <SourceInfo name="Data Origin" data={this.dataOrigin} />
-        <SourceInfo name="Sources" data={this.sources} />
+        <SourceInfo name={this.messages.origin} data={this.dataOrigin} />
+        <SourceInfo name={this.messages.sources} data={this.sources} />
       </div>
     );
   }

@@ -99,5 +99,14 @@
     "report": "Report error",
     "back": "Back",
     "expand": "Expand"
+  },
+  "countryHover": {
+    "capital": "Capital",
+    "head": "Head",
+    "population": "Population"
+  },
+  "sourcesBalloon": {
+    "origin": "Data Origin",
+    "sources": "Sources"
   }
 }
