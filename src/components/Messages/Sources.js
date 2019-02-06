@@ -66,6 +66,14 @@ class Sources extends React.Component {
     return this.props.store.i18n.data.sourcesBalloon;
   }
 
+  @computed get clickPosition() {
+    const pos = this.props.store.pins.clickPosition;
+    return {
+      lat: Math.round(pos.lat * 1000000) / 1000000,
+      lng: Math.round(pos.lng * 1000000) / 1000000,
+    };
+  }
+
   @computed get item() {
     if (this.props.type === 'countryHover') {
       try {
@@ -91,6 +99,16 @@ class Sources extends React.Component {
       <div>
         <SourceInfo name={this.messages.origin} data={this.dataOrigin} />
         <SourceInfo name={this.messages.sources} data={this.sources} />
+        <div>
+          <p>
+            {'Lat: '}
+            {this.clickPosition.lat}
+          </p>
+          <p>
+            {'Lng: '}
+            {this.clickPosition.lng}
+          </p>
+        </div>
       </div>
     );
   }

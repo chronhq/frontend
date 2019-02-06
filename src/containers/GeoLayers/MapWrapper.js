@@ -215,6 +215,8 @@ class MapWrapper extends React.Component {
         onLayerClick={(info, allInfos, event) => {
           this.printDebugSTVInfo(event);
           if (this.props.store.pins.unpin() !== true) {
+            this.props.store.pins.clickPosition = this.deck
+              .interactiveMap.getMap().unproject([event.offsetX, event.offsetY]);
             this.setHoverBalloon(true)(info, allInfos, event);
           }
         }}

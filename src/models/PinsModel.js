@@ -73,6 +73,8 @@ export default class FeedPinsModel {
 
   @observable countryHover = null;
 
+  @observable clickPosition = { lat: 0, lon: 0 };
+
   @action setPosition(x, y) {
     this.pageX = x;
     this.pageY = y;
