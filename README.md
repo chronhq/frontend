@@ -58,11 +58,8 @@ Development config:
 proxy: {
   "/api": "http://api:3333/",
   "/mvt": "http://api:3333/",
-  "/shared": "http://api:3333/"
 }
 ```
 `/api` - REST requests for data
 
-`/mvt` - GET requests for MVT (mapbox vector tiles) with political borders `/mvt/{geom_id}/{z}/{x}/{y}` 
-
-`/shared` - shared code with chronist landing page (Feedback page)
+`/mvt` - GET requests for MVT (mapbox vector tiles) with political borders `/mvt/{z}/{x}/{y}` 

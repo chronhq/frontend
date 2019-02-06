@@ -65,7 +65,8 @@ class FreePinsWidget extends React.Component {
             onMouseMove={e => this.setTooltip(icon, e)}
           />
         ))}
-      </g>);
+      </g>
+    );
   }
 }
 

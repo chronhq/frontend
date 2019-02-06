@@ -18,7 +18,6 @@
  */
 import React from 'react';
 
-
 import Overlays from '../templates/Overlays/Overlays';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';
@@ -27,15 +26,17 @@ import SideBar from '../templates/SideBar/SideBar';
 import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileBar';
 import Wrapper from './Wrapper';
 import TimePanel from '../templates/TimePanel/TimePanel';
+import Widgets from '../containers/Widgets';
 
-const Narrative = ({ story }) => (
-  <Wrapper story={story}>
+const Narrative = ({ story, fake }) => (
+  <Wrapper story={story} fake={fake}>
+    <Widgets />
     <GeoLayers />
     <TimePanel />
-    <Overlays />
     <Balloon />
     <Dashboard />
     <NarrativeMobileBar />
+    <Overlays />
     <SideBar />
   </Wrapper>
 );

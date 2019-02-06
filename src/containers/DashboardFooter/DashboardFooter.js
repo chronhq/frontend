@@ -18,7 +18,9 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { action, computed } from 'mobx';
+import { computed } from 'mobx';
+import { withRouter } from 'react-router-dom';
+
 
 import './DashboardFooter.less';
 
@@ -29,38 +31,37 @@ class DashboardFooter extends React.Component {
     return this.props.store.i18n.data.dashboard;
   }
 
-  @action openFeedback() {
-    this.props.store.feedback.year = this.props.store.year.now;
-    this.props.store.flags.runtime.set('feedback', true);
+  link(url, name) {
+    return (
+      <a
+        href={url}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        {this.dashboard[name]}
+      </a>
+    );
   }
 
   render() {
     return (
       <div className='dashboard-footer'>
-        <button
-          type='button'
-          onClick={() => console.log('news not available')}
+        {this.link('https://chronhq.github.io/wiki/', 'wiki')}
+        <a
+          href='/about'
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.history.push('/about');
+            return false;
+          }}
         >
-          {this.dashboard.news}
-        </button>
-        <a href='https://github.com/chronhq/frontend' target='_blank' rel='noopener noreferrer'>
           {this.dashboard.about}
         </a>
-        <button
-          type='button'
-          onClick={() => console.log('show license')}
-        >
-          {this.dashboard.license}
-        </button>
-        <button
-          type='button'
-          onClick={() => this.openFeedback()}
-        >
-          {this.dashboard.report}
-        </button>
+        {this.link('https://chronhq.github.io/wiki/project/licenses.html', 'license')}
+        {this.link('https://github.com/chronhq/data/issues', 'report')}
       </div>
     );
   }
 }
 
-export default DashboardFooter;
+export default withRouter(DashboardFooter);

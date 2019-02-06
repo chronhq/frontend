@@ -18,6 +18,8 @@
  */
 import React from 'react';
 
+import './InputRadio.less';
+
 export default class InputRadio extends React.Component {
   render() {
     return (

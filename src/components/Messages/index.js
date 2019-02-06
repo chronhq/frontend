@@ -23,6 +23,8 @@ import Battle from './Battle';
 import Document from './Document';
 import Sources from './Sources';
 
+import './Messages.less';
+
 export {
   Sources,
   GeoEvent,

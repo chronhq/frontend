@@ -18,9 +18,12 @@
  */
 import React from 'react';
 import Tooltip from 'rc-tooltip';
+import PropTypes from 'prop-types';
+
+import './Tooltip.less';
 
 const Component = ({
-  children, placement = 'left', dark = false, content
+  children, placement, dark, content
 }) => (
   <Tooltip
     placement={placement}
@@ -35,5 +38,17 @@ const Component = ({
     {children}
   </Tooltip>
 );
+
+Component.defaultProps = {
+  placement: 'left',
+  dark: false
+};
+
+Component.propTypes = {
+  children: PropTypes.element.isRequired,
+  placement: PropTypes.string,
+  dark: PropTypes.bool,
+  content: PropTypes.string.isRequired
+};
 
 export default Component;

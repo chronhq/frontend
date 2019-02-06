@@ -20,13 +20,12 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { when, toJS } from 'mobx';
-import { ymHit } from '../metrikaHelper';
 
 @inject('store')
 @observer
 class Wrapper extends React.Component {
   componentDidMount() {
-    ymHit(this.props.story);
+    this.props.store.analytics.metricHit(this.props.story);
     this.props.store.courseSelection.cleanup();
     when( // validate course name and download data
       () => this.props.store.data.Courses.status.loaded,
@@ -37,7 +36,8 @@ class Wrapper extends React.Component {
   selectCourse() {
     const course = this.props.store.courseSelection.find(this.props.story);
     if (course !== undefined) {
-      this.props.store.courseSelection.select(course.id, course.url);
+      const fake = this.props.fake || null;
+      this.props.store.courseSelection.select(course.id, course.url, fake);
     } else {
       this.props.history.push('/404');
     }

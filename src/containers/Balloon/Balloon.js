@@ -113,7 +113,8 @@ class Balloon extends React.Component {
             <GeoEvent
               fact={pin.geoEvent}
               key={`balloon_geo_${pin.geoEvent.id}`}
-            />),
+            />
+          ),
           sources: () => ''
         };
 
@@ -124,7 +125,8 @@ class Balloon extends React.Component {
               <Invention
                 fact={this.i18n.invention(pin.invention)}
                 key={`balloon_inv_${pin.invention.id}`}
-              />),
+              />
+            ),
             sources: () => ''
           };
         case 'death':
@@ -138,7 +140,8 @@ class Balloon extends React.Component {
                   ? pin.person
                   : this.i18n.person(pin.person, pin.type)}
                 key={`balloon_person_${pin.type}_${pin.person.id}`}
-              />),
+              />
+            ),
             sources: () => ''
           };
         case 'battle':
@@ -148,7 +151,8 @@ class Balloon extends React.Component {
               <Battle
                 fact={pin.battle}
                 key={`balloon_battle_${pin.type}_${pin.battle.id}`}
-              />),
+              />
+            ),
             sources: () => ''
           };
         case 'document':
@@ -158,7 +162,8 @@ class Balloon extends React.Component {
               <Document
                 fact={pin.document}
                 key={`balloon_battle_${pin.type}_${pin.document.id}`}
-              />),
+              />
+            ),
             sources: () => ''
           };
         default:

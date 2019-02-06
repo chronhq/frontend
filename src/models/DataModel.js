@@ -41,8 +41,6 @@ export default class DataModel {
       'Persons',
       'Types',
       'MapDecorations',
-      'GeomBBoxes',
-      'MapPics',
       'STVs',
       'TEs',
     ],

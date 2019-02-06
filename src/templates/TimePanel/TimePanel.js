@@ -17,18 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 
 import ControlButtons from '../../containers/TimeControls/TimeControls';
 import SeekBar from '../../containers/SeekBar/SeekBar';
 import './TimePanel.less';
 
+@inject('store')
+@observer
 class TimePanel extends React.Component {
   render() {
     return (
-      <div className='timepanel'>
+      <div className={`timepanel ${(this.props.store.courseSelection.courseId !== 0) ? 'timepanel--disable' : ''}`}>
         <SeekBar />
         <ControlButtons />
-      </div>);
+      </div>
+    );
   }
 }
 

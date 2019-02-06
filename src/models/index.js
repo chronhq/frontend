@@ -25,12 +25,11 @@ import Year from './YearModel';
 import CourseSelection from './CourseSelection';
 import Prepared from './PreparedData';
 
-import FeedbackForm from './FeedbackForm';
-
 import PinsModel from './PinsModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
 import AnimationFrame from './AnimationFrame';
+import AnalyticModel from './AnalyticModel';
 
 import MapStyle from './MapStyleModel';
 import WikidataFetcher from './Wikidata/WikidataFetcher';
@@ -46,7 +45,6 @@ export default class storeModel {
 
   // Add here new models
   constructor() {
-    this.feedback = new FeedbackForm();
     this.flags = new Flags();
     this.animation = new AnimationFrame();
     this.data = new Data(this);
@@ -64,5 +62,6 @@ export default class storeModel {
     this.i18n = new Internationalization(this);
     this.mapStyle = new MapStyle(this);
     this.search = new DashboardSearch(this);
+    this.analytics = new AnalyticModel();
   }
 }
