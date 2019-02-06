@@ -33,9 +33,6 @@ export default class DataModel {
       'Courses'
     ],
     base: [
-      'CityLocs',
-      'CityPops',
-      'CityProperties',
       'MapLabels',
       'MapDecorations',
       'STVs',

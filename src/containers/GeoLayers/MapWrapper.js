@@ -28,8 +28,6 @@ import {
 
 import {
   toponymsLayer,
-  cityPointsLayer,
-  cityTextLayer,
   oceanDecorationLayer,
   mapDecorationsLayer,
   expeditionsLayer,
@@ -65,22 +63,6 @@ class MapWrapper extends React.Component {
       this.props.store.prepared.decor.toponyms,
       this.options.labels,
       this.deck.rZoom
-    );
-  }
-
-  @computed get cityPoints() {
-    return cityPointsLayer(
-      this.props.store.prepared.clusteredLocations,
-      this.options.cities,
-      this.deck
-    );
-  }
-
-  @computed get cityText() {
-    return cityTextLayer(
-      this.props.store.prepared.clusteredLocations,
-      this.options.cities,
-      this.deck
     );
   }
 

@@ -17,19 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, computed } from 'mobx';
-import Locations from './DataAdaptation/LocationsModel';
 import Decor from './DataAdaptation/Decor';
 
 export default class FinalDataModel {
   @observable data = {};
-
-  @computed get locations() {
-    return this.data.cities.locations;
-  }
-
-  @computed get clusteredLocations() {
-    return this.data.cities.clusteredLocations;
-  }
 
   @computed get geoPoints() {
     const geoPoints = this.rootStore.data.CourseGeopoints.data;
@@ -51,6 +42,5 @@ export default class FinalDataModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.data.decor = new Decor(rootStore);
-    this.data.cities = new Locations(rootStore);
   }
 }

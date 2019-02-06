@@ -57,8 +57,4 @@ export default class Internationalization {
   @computed get logo() {
     return this.lng === 'ru' ? logoRu : logoEn;
   }
-
-  @computed get nameSelector() {
-    return this.data.selectors.name;
-  }
 }

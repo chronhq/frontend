@@ -6,10 +6,6 @@
   },
   "title": "Хронист, интерактивный атлас",
   "loading": "загружается...",
-  "selectors": {
-    "name": "nameRus",
-    "properties": "nameru"
-  },
   "courseSelection": {
     "title": "Выберите режим"
   },
