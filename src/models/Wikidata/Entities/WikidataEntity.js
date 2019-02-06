@@ -1,6 +1,6 @@
 /*
  * Chron.
- * Copyright (c) 2018 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
  * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
  * -----
  * This program is free software: you can redistribute it and/or modify
@@ -17,77 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {
-  observable, action, computed
+  computed
 } from 'mobx';
 
-import {
-  wdProps, getWikimediaURI
-} from '../WikidataHelper';
+import { wdProps } from '../WikidataHelper';
+import WikidataGenericEntity from './WikidataGenericEntity';
 
-class WikidataEntity {
-  // simplified entity
-  @observable entity = {};
-
-  @observable full = {};
-
-  // Response from wikimedia
-  @observable media = [];
-
-  @observable type = 'misc';
-
-  @computed get values() {
-    // Extract values from wikidata into human readable naming
-    // values: { pointInTime, image, instanceOf ...}
-    return Object.keys(wdProps)
-      .reduce((values, key) => ({
-        ...values,
-        ...Object.keys(wdProps[key])
-          .reduce((p, c) => (
-            this.entity.claims[c] !== undefined ? {
-              ...p,
-              [wdProps[key][c]]: this.entity.claims[c]
-            } : p), {})
-      }), []);
-  }
-
-  @computed get dependencies() {
-    // returns an array of 'core' dependencies, all places and instances
-    return ['items', 'places'].reduce((prev, key) => ([
-      ...prev,
-      ...Object.values(wdProps[key]).reduce((p, c) => (
-        this.values[c] !== undefined ? [
-          ...p,
-          ...this.values[c],
-        ] : p), [])
-    ]), []);
-  }
-
-  @computed get images() {
-    return this.media
-      .map(i => ({
-        ...i.query.pages[Object.keys(i.query.pages)].imageinfo[0],
-        // alt for image
-        title: i.query.pages[Object.keys(i.query.pages)].title
-      }));
-  }
-
-  @computed get label() {
-    return this.getLngString(this.entity.labels);
-  }
-
-  @computed get description() {
-    return this.getLngString(this.entity.descriptions);
-  }
-
-  @computed get cache() {
-    return this.rootStore.wikidata.cache;
-  }
-
-  // if possible select primary language otherwise fallback to default lng
-  getLngString = obj => ((obj[this.lng] || '') || (obj[this.fallback] || ''));
-
-  // grab point location from dependency
-  // add orig id and label of place to array
+class WikidataEntity extends WikidataGenericEntity {
   getCoordinates = loc => loc.map(i => (this.cache[i]
     ? this.cache[i].values.coordinateLocation
       .map(l => ({
@@ -100,28 +36,8 @@ class WikidataEntity {
 
   // resolve dependency into whole structures
   getParticipants = p => p.map(i => (this.cache[i]
-    ? this.cache[i].structure
+    ? this.cache[i].label
     : {}));
-
-  getDeepData = (props, deepCb) => (
-    props.reduce((prev, prop) => (
-      this.values[prop] !== undefined
-        ? {
-          ...prev,
-          [prop]: deepCb(this.values[prop])
-        }
-        : prev), {})
-  )
-
-  flattenData = values => (
-    Object.keys(values).reduce((prev, d) => {
-      // handle coordinate location which are structured as
-      // locations: [[coordinateLocation], [coordinateLocation]]
-      const [flat] = values[d][0] instanceof Array
-        ? values[d][0] : values[d];
-      return { ...prev, [d]: flat };
-    }, {})
-  )
 
   @computed get places() {
     return this.getDeepData(
@@ -159,16 +75,25 @@ class WikidataEntity {
     return this.getDeepData(['participant'], this.getParticipants);
   }
 
-  @computed get structure() {
-    const image = this.images.length > 0
-      ? { image: this.images[0] } : {};
+  @computed get image() {
+    if (this.media.media !== undefined && Object.keys(this.media.media).length > 0) {
+      const key = Object.keys(this.media.media)[0];
+      return {
+        image: {
+          ...this.media.media[key],
+          title: key
+        }
+      };
+    }
+    return {};
+  }
 
+  @computed get structure() {
     const flat = {
       ...this.flattenData(this.dates),
       ...this.flattenData(this.places),
       ...this.flattenData(this.genericDate),
       ...this.flattenData(this.genericPlace),
-      ...image,
     };
 
     [...Object.keys(this.dates), 'date'].map((cur) => {
@@ -183,36 +108,17 @@ class WikidataEntity {
       type: this.type,
       label: this.label,
       description: this.description,
+      ...this.image,
       ...this.participants,
       ...flat,
-      deep: {
-        images: this.images,
-        ...this.places,
-        ...this.dates,
-      },
     };
   }
 
-  @computed get lng() {
-    return this.rootStore.i18n.lng;
-  }
-
-  @computed get fallback() {
-    return this.rootStore.i18n.fallback;
-  }
-
-  @action async obtainImage() {
-    if (this.values.image === undefined) return;
-    const results = await fetch(getWikimediaURI(this.values.image));
-    this.media = await results.json();
-  }
-
   constructor(rootStore, type, full, simple) {
-    this.rootStore = rootStore;
-    this.full = full;
-    this.entity = simple;
-    this.type = type;
-    this.obtainImage();
+    super(rootStore, type, full, simple);
+    if (this.type === 'battles' || this.type === 'documents') {
+      this.obtainImages(this.values.image, 'media');
+    }
   }
 }
 

@@ -34,7 +34,7 @@ const Battle = ({ fact }) => (
         <p className='factDescription'>
           {'Participants: '}
           <i>
-            {Object.values(fact.participant).map(value => value.label).join(', ')}
+            {Object.values(fact.participant).join(', ')}
           </i>
         </p>
       )

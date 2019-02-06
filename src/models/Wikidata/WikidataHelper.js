@@ -62,6 +62,7 @@ const wdProps = {
 const wdTypes = {
   territorialEntities: {
     Q6256: 'country',
+    Q48349: 'empire',
     Q3024240: 'historicalCountry',
     Q1048835: 'politicalTerritorialEntity',
     Q1496967: 'territorialEntity',

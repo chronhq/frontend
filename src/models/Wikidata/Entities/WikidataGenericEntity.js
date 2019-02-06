@@ -121,18 +121,29 @@ class WikidataGenericEntity {
       const results = await fetch(getWikimediaURI(images));
       const res = await results.json();
       const imgData = Object.values(res.query.pages).reduce((prev, cur) => {
-        const fileName = cur.title.replace('File:', '');
-        const info = cur.imageinfo[0];
-        return {
-          ...prev, [fileName]: info
-        };
+        try {
+          if (cur === undefined || cur.imageinfo === undefined || cur.imageinfo[0] === undefined) {
+            console.warn('Empty image from wikidata', this.entity.id, this.label, cur);
+            return prev;
+          }
+          const fileName = cur.title.replace('File:', '');
+
+          const info = cur.imageinfo[0];
+          return {
+            ...prev, [fileName]: info
+          };
+        } catch (e) {
+          console.error('Obtain images response failed', this.entity.id, this.label, cur, prev);
+          console.error(e);
+          return prev;
+        }
       }, {});
       this.media = observable({
         ...this.media,
         [key]: imgData
       });
     } catch (e) {
-      console.error('Obtain images failed', this);
+      console.error('Obtain images failed', this.entity.id, this.label, this);
       console.error('Input', images, key);
       console.error(e);
     }
