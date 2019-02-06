@@ -26,7 +26,6 @@ import TimePanel from '../templates/TimePanel/TimePanel';
 import Overlays from '../templates/Overlays/Overlays';
 import Widgets from '../containers/Widgets';
 import Balloon from '../containers/Balloon';
-import FontLoader from '../containers/FontLoader';
 import GeoLayers from '../containers/GeoLayers';
 import Wrapper from './Wrapper';
 
@@ -70,7 +69,6 @@ class Demo extends React.Component {
         <Widgets />
         <NarrativeMobileBar />
         <SideBar />
-        <FontLoader />
         <Overlays />
         <TimePanel />
         <Balloon />
