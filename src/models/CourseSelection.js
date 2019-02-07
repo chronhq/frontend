@@ -89,6 +89,7 @@ export default class CourseSideEffects {
     this.deps.course.map(wipe);
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
+    this.rootStore.pins.wipeDummyPins();
   }
 
   @action configureDataFilters() {

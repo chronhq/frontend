@@ -63,21 +63,13 @@ class MapWrapper extends React.Component {
     );
   }
 
-  @computed get geoPoints() {
-    const geoPoints = this.props.store.data.CourseGeopoints.data;
-    return this.props.store.year.tick in geoPoints
-      ? geoPoints[this.props.store.year.tick]
-      : [];
-  }
-
   @computed get feedPins() {
-    const { pins } = this.props.store.pins;
+    const { pins, dummyPins } = this.props.store.pins;
     const { zoom } = this.deck;
-    const coursePins = this.geoPoints;
 
     return [
       pinsLayer(pins, 'map', zoom, true, this.onMapPinHover),
-      pinsLayer(coursePins, 'course', zoom, false),
+      pinsLayer(dummyPins, 'dummy', zoom, false),
     ];
   }
 

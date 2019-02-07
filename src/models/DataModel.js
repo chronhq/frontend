@@ -21,7 +21,6 @@ import {
 } from 'mobx';
 
 import DataLoaderModel from './DataLoaderModel';
-import PointModel from './DataAdaptation/PointModel';
 import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
 
 export default class DataModel {
@@ -37,7 +36,6 @@ export default class DataModel {
     ],
     course: [
       'CourseTimelines',
-      'CourseGeopoints',
     ],
     world: [
     ],
@@ -58,13 +56,6 @@ export default class DataModel {
 
     this.Courses.filter = this.activeCourses;
     this.CourseTimelines.sortId = 'tick';
-
-    this.CourseGeopoints.configure({
-      sortId: 'courseTimelineId',
-      append: true,
-      arrayCb: true,
-      wrapData: d => new PointModel(d),
-    });
 
     this.STVs.configure({
       sortId: 'id',

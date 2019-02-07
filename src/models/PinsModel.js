@@ -73,6 +73,20 @@ export default class FeedPinsModel {
 
   @observable clickPosition = { lat: 0, lon: 0 };
 
+  // dummy pins are sorced directly from deck.gl layer and do not have tooltip
+  // [{ pic: 26, point: { x: 33.044167, y: 34.674722 } }]
+  @observable dummyPins = [];
+
+  @action addDummyPins(points, keep = true) {
+    this.dummyPins = keep
+      ? observable([...this.dummyPins, points])
+      : observable(points);
+  }
+
+  @action wipeDummyPins() {
+    this.addDummyPins([], false);
+  }
+
   @action setPosition(x, y) {
     this.pageX = x;
     this.pageY = y;

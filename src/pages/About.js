@@ -104,7 +104,7 @@ class About extends React.Component {
       () => this.props.store.courseSelection.courseId === -1,
       () => runInAction(() => {
         this.props.store.data.CourseTimelines.data[-1] = tick;
-        this.props.store.data.CourseGeopoints.data[1] = points;
+        this.props.store.pins.addDummyPins(points, false);
         return true;
       })
     );
