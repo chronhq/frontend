@@ -25,7 +25,10 @@ const pinsOutPath = path
 const mapPicsOutPath = path
   .normalize(path.join(__dirname, '../containers/Widgets/mapPics.json'));
 
-// console.log(__dirname, pinsSrcPath, pinsOutPath);
+
+const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
+const camelCase = string => string.trim()
+  .split('-').map((s, idx) => ((idx === 0) ? s : capitalizeFirstLetter(s))).join('');
 
 const files = fs.readdirSync(pinsSrcPath);
 const res = files.reduce((prev, cur) => {
@@ -77,12 +80,22 @@ const pinsSvg = res.map(m => ([
   '</svg>'
 ].join('\n'))).join('\n');
 
+const fixReactStyles = g => (
+  g.map((p) => {
+    if (p.style === undefined) return p;
+    const style = Object.keys(p.style).reduce((pp, cc) => ({
+      ...pp,
+      [camelCase(cc)]: p.style[cc]
+    }), {});
+    return { ...p, style };
+  }));
+
 const mapPicsJson = res.reduce((prev, m) => ({
   ...prev,
   [m.id]: {
     id: m.id,
     viewbox: `0 0 ${m.box} ${m.box}`,
-    g: m.paths
+    g: fixReactStyles(m.paths)
   }
 }), {});
 
