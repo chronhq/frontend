@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
+/* eslint-disable camelcase */
 const buildNarrative = ({
   url = 'fake', id = -1,
   title = '', author = '', description = '',
-  min = 1783, max = 2000, tags = [],
-  center = [0, 0], minScale = 1, maxScale = 7.5
+  start_year = 1783, end_year = 2000, tags = [],
 }) => ({
   url,
   id,
@@ -29,27 +28,26 @@ const buildNarrative = ({
   author,
   description,
   tags,
-  config: {
-    year: {
-      min,
-      max,
-      now: min,
-      tick: 0,
-    },
-    projection: {
-      clip: [[-180, 90], [180, -90]],
-      rotate: [0, 0, 0],
-      center
-    },
-    settings: {
-      flags: {
-        zoom: {
-          minScale,
-          maxScale
-        }
-      }
-    }
-  }
+  start_year,
+  end_year
 });
 
-export default buildNarrative;
+const buildMapSettings = ({
+  id = -1,
+  zoom_min = 1, zoom_max = 7.5,
+  // [[left, bottom], [right, top]]
+  coordinates = [[0, 0], [0, 0]]
+}) => ({
+  id,
+  bbox: {
+    type: 'MultiPoint',
+    coordinates
+  },
+  zoom_min,
+  zoom_max
+});
+
+export {
+  buildNarrative,
+  buildMapSettings
+};

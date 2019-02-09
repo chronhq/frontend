@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { computed, action, observable } from 'mobx';
+import {
+  computed, action, observable, when
+} from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
@@ -32,7 +34,7 @@ export default class CourseSideEffects {
   }
 
   @computed get deps() {
-    return this.rootStore.data.deps;
+    return this.rootStore.data.camelDeps;
   }
 
   @computed get courseId() {
@@ -92,9 +94,11 @@ export default class CourseSideEffects {
     this.rootStore.pins.wipeDummyPins();
   }
 
-  // @action configureDataFilters() {
-  //   this.rootStore.data.CourseTimelines.filter = this.courseFilter;
-  // }
+  @action configureDataFilters() {
+    const filter = `narrative=${this.courseId}`;
+    this.rootStore.data.narrations.filter = filter;
+    this.rootStore.data.mapSettings.filter = filter;
+  }
 
   @action loadBaseData() {
     this.rootStore.data.resolveDependencies(this.deps.base);
@@ -106,7 +110,7 @@ export default class CourseSideEffects {
   }
 
   @action select(id, name, fake = null) {
-    if (id === this.courseId) {
+    if (id === this.courseId && fake !== null) {
       console.log('Course already selected', id, name);
       return null;
     }
@@ -123,16 +127,32 @@ export default class CourseSideEffects {
       }
     });
 
-    this.rootStore.year.setup(this.courseInfo.config.year);
-    this.rootStore.flags.set(this.courseInfo.config.settings.flags);
+    this.rootStore.year.setup({
+      min: this.courseInfo.start_year,
+      end: this.courseInfo.end_year,
+      now: this.courseInfo.start_year,
+      tick: 0,
+    });
+
 
     this.rootStore.dashboard.setup();
 
-    // this.configureDataFilters();
+    this.configureDataFilters();
     this.loadCourseData();
 
-    // update viewport position
-    this.rootStore.deck.initLatLon();
+    this.rootStore.flags.set({
+      projection: this.rootStore.flags.defaultFlags.projection
+    });
+
+    when(
+      () => (
+        this.rootStore.data.mapSettings.status.loaded
+        && this.rootStore.data.narrations.status.loaded),
+      () => {
+        this.rootStore.year.setTick(0);
+      }
+    );
+
     return true;
   }
 }

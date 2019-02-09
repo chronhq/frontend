@@ -22,7 +22,7 @@ import {
 
 import DataLoaderModel from './DataLoaderModel';
 import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
-import fakeNarrativeBuilder from '../FakeNarrativeBuilder';
+import { buildNarrative } from '../FakeNarrativeBuilder';
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
 const camelCase = string => string.trim()
@@ -38,13 +38,21 @@ export default class DataModel {
       'territorial-entities', // territorialEntities
     ],
     course: [
-      'narrations'
+      'narrations',
+      'map-settings', // mapSettings
     ],
     world: [
     ],
     heavy: [
     ]
   };
+
+  @computed get camelDeps() {
+    return Object.keys(this.deps).reduce((prev, cur) => ({
+      ...prev,
+      [cur]: this.deps[cur].map(camelCase)
+    }), {});
+  }
 
   @computed get roster() {
     // { dash-key: dashKey }
@@ -69,10 +77,10 @@ export default class DataModel {
 
     this.narratives.configure({
       append: true,
-      wrapData: d => fakeNarrativeBuilder({ ...d, url: d.id }),
+      wrapData: d => buildNarrative({ ...d, url: d.id }),
     });
 
-    this.narratives.data[0] = fakeNarrativeBuilder({
+    this.narratives.data[0] = buildNarrative({
       url: 'world',
       id: 0,
       title: 'Global Narrative',

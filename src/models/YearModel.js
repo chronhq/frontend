@@ -95,10 +95,34 @@ export default class YearModel {
     this.setYear(this.min);
   }
 
+  // TODO move it somewhere.
+  @action updateSettings(mapSetting) {
+    const center = [
+      mapSetting.bbox.coordinates[1][1] - mapSetting.bbox.coordinates[0][1],
+      mapSetting.bbox.coordinates[1][0] - mapSetting.bbox.coordinates[0][0],
+    ];
+    this.rootStore.flags.set({
+      zoom: {
+        minScale: mapSetting.zoom_min,
+        maxScale: mapSetting.zoom_max,
+      },
+      projection: {
+        clip: [[-180, 90], [180, -90]],
+        rotate: [0, 0, 0],
+        center
+      },
+    });
+    // update viewport position
+    this.rootStore.deck.initLatLon();
+  }
+
   @action setTick(tick) {
-    // TODO UPDATE Map settings
     if (tick in this.rootStore.data.narrations.data) {
-      this.setYear(this.rootStore.data.narrations.data[tick].map_datetime.split('-')[0]);
+      const narration = this.rootStore.data.narrations.data[tick];
+      const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
+      console.log(mapSetting, narration);
+      this.updateSettings(mapSetting);
+      this.setYear(narration.map_datetime.split('-')[0]);
       this.tick = tick;
     }
   }

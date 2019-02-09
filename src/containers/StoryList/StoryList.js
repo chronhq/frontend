@@ -47,7 +47,7 @@ class StoryList extends React.Component {
             title={story.title}
             author={story.author}
             url={story.url}
-            dates={[story.config.year.min, story.config.year.max]}
+            dates={[story.start_year, story.end_year]}
             cb={() => this.handleStorySelection(story.url)}
           />
         ))}

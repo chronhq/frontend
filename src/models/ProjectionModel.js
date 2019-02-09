@@ -31,14 +31,7 @@ export default class ProjectionModel {
   }
 
   @computed get data() {
-    return (this.courseId !== null
-      && this.courseId in this.rootStore.data.narratives.data)
-      ? this.rootStore.data.narratives.data[this.courseId].config.projection
-      : {
-        center: [0, 0],
-        clip: [[-180, 90], [180, -90]],
-        rotate: [0, 0, 0],
-      };
+    return this.rootStore.flags.projection.list;
   }
 
   @computed get clipEnabled() {

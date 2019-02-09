@@ -45,6 +45,11 @@ const flags = {
   zoom: {
     minScale: 1,
     maxScale: 8,
+  },
+  projection: {
+    center: [0, 0],
+    clip: [[-180, 90], [180, -90]],
+    rotate: [0, 0, 0],
   }
 };
 
@@ -97,9 +102,11 @@ class FlagList {
 }
 
 export default class FlagsModel {
+  @observable defaultFlags = flags;
+
   constructor() {
-    Object.keys(flags).map((l) => {
-      this[l] = new FlagList(flags[l]);
+    Object.keys(this.defaultFlags).map((l) => {
+      this[l] = new FlagList(this.defaultFlags[l]);
       return null;
     });
   }
