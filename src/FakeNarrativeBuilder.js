@@ -20,7 +20,7 @@
 const buildNarrative = ({
   url = 'fake', id = -1,
   title = '', author = '', description = '',
-  min = 1783, max = 2000,
+  min = 1783, max = 2000, tags = [],
   center = [0, 0], minScale = 1, maxScale = 7.5
 }) => ({
   url,
@@ -28,6 +28,7 @@ const buildNarrative = ({
   title,
   author,
   description,
+  tags,
   config: {
     year: {
       min,

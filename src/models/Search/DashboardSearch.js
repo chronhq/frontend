@@ -38,7 +38,7 @@ class DashboardSearch {
 
     // TODO search in tags
     this.Narratives = new GenericFilter(this.rootStore, 'narratives', false);
-    this.Narratives.selectText = d => [d.author, d.description, d.title];
+    this.Narratives.selectText = d => [d.author, d.description, d.title, d.tags.join(' ')];
   }
 }
 
