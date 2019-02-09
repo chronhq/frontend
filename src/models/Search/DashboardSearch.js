@@ -30,11 +30,31 @@ class DashboardSearch {
       ? this.Narrations : this.Narratives;
   }
 
+  @computed get wikidata() {
+    return this.rootStore.wikidata.cache;
+  }
+
+  wikidataLabel = id => (
+    (this.wikidata[id] !== undefined)
+      ? `${this.wikidata[id].label} ${this.wikidata[id].description}`
+      : ''
+  );
+
   constructor(rootStore) {
     this.rootStore = rootStore;
 
     this.Narrations = new GenericFilter(this.rootStore, 'narrations', true);
-    this.Narrations.selectText = d => [d.description, d.title];
+    this.Narrations.selectText = d => [
+      d.description,
+      d.title,
+      d.date_label,
+      d.attached_events.map(a => (
+        // in case of ids instead of objects;
+        a.wikidata_id !== undefined
+          ? this.wikidataLabel(`Q${a.wikidata_id}`)
+          : ''
+      )).join(' ')
+    ];
 
     // TODO search in tags
     this.Narratives = new GenericFilter(this.rootStore, 'narratives', false);
