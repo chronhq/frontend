@@ -26,7 +26,7 @@ import StoreModel from './models';
 import App from './App';
 
 window.store = new StoreModel();
-window.store.data.Courses.get();
+window.store.data.narratives.get();
 window.store.courseSelection.loadBaseData();
 
 const domain = window.location.hostname;

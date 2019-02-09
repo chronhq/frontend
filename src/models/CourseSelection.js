@@ -27,7 +27,7 @@ export default class CourseSideEffects {
 
   find(name) {
     return Object
-      .values(this.rootStore.data.Courses.data)
+      .values(this.rootStore.data.narratives.data)
       .find(cur => cur.url === name);
   }
 
@@ -73,7 +73,7 @@ export default class CourseSideEffects {
   }
 
   @computed get courseInfo() {
-    return this.rootStore.data.Courses.data[this.courseId];
+    return this.rootStore.data.narratives.data[this.courseId];
   }
 
   @action cleanup() {
@@ -92,9 +92,9 @@ export default class CourseSideEffects {
     this.rootStore.pins.wipeDummyPins();
   }
 
-  @action configureDataFilters() {
-    this.rootStore.data.CourseTimelines.filter = this.courseFilter;
-  }
+  // @action configureDataFilters() {
+  //   this.rootStore.data.CourseTimelines.filter = this.courseFilter;
+  // }
 
   @action loadBaseData() {
     this.rootStore.data.resolveDependencies(this.deps.base);
@@ -111,8 +111,8 @@ export default class CourseSideEffects {
       return null;
     }
     // case for 'about us' page
-    if (id >= 0 && this.rootStore.data.Courses.data[-1] !== undefined) {
-      delete this.rootStore.data.Courses.data[-1];
+    if (id >= 0 && this.rootStore.data.narratives.data[-1] !== undefined) {
+      delete this.rootStore.data.narratives.data[-1];
     }
 
     this.fakeId = fake;
@@ -128,7 +128,7 @@ export default class CourseSideEffects {
 
     this.rootStore.dashboard.setup();
 
-    this.configureDataFilters();
+    // this.configureDataFilters();
     this.loadCourseData();
 
     // update viewport position

@@ -28,8 +28,8 @@ import './CurrentStory.less';
 @inject('store')
 @observer
 class CurrentStory extends Component {
-  @computed get courses() {
-    return this.props.store.data.Courses.data;
+  @computed get narratives() {
+    return this.props.store.data.narratives.data;
   }
 
   @computed get lng() {
@@ -68,7 +68,7 @@ class CurrentStory extends Component {
           onKeyDown={e => this.handleTitleEnter(e)}
         >
           {(this.props.store.courseSelection.courseId !== null)
-            ? this.courses[this.props.store.courseSelection.courseId].name[this.lng]
+            ? this.narratives[this.props.store.courseSelection.courseId].title
             : ''
           }
         </div>

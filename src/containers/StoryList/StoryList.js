@@ -31,10 +31,6 @@ class StoryList extends React.Component {
     return this.props.store.search.Narratives.entities;
   }
 
-  @computed get lng() {
-    return this.props.store.i18n.lng;
-  }
-
   handleStorySelection(url) {
     this.props.store.courseSelection.cleanup();
     const course = this.props.store.courseSelection.find(url);
@@ -48,8 +44,8 @@ class StoryList extends React.Component {
         {Object.values(this.courses).map(story => (
           <StoryCard
             key={`card_${story.url}`}
-            title={story.name[this.lng]}
-            author={story.author[this.lng]}
+            title={story.title}
+            author={story.author}
             url={story.url}
             dates={[story.config.year.min, story.config.year.max]}
             cb={() => this.handleStorySelection(story.url)}

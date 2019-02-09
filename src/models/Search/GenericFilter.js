@@ -29,10 +29,6 @@ class GenericFilter {
     return this.rootStore.courseSelection.courseId;
   }
 
-  @computed get lng() {
-    return this.rootStore.i18n.lng;
-  }
-
   @computed get data() {
     return this.rootStore.data[this.dataSelector].data;
   }
@@ -49,7 +45,7 @@ class GenericFilter {
 
   selectText = d => ([d.description]);
 
-  textCb = t => t[this.lng];
+  textCb = t => t;
 
   filterCb = cur => (
     this.textCb(cur).toLowerCase().indexOf(this.text.toLowerCase()) > -1);

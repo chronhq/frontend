@@ -29,9 +29,9 @@ const NarrativeEvent = ({
   <div
     role='button'
     tabIndex={0}
-    onClick={() => cb(event.tick)}
-    onKeyPress={() => cb(event.tick)}
-    className={`nevent ${(currentTick === event.tick) ? 'nevent__selected' : ''}`}
+    onClick={() => cb(event.order)}
+    onKeyPress={() => cb(event.order)}
+    className={`nevent ${(currentTick === event.order) ? 'nevent__selected' : ''}`}
   >
     <div className='nevent--title'>
       <b>
@@ -39,7 +39,7 @@ const NarrativeEvent = ({
       </b>
     </div>
     <div className='nevent--dates'>
-      {event.year}
+      {event.date_label}
     </div>
     <div className='nevent--paragraph'>
       {truncateText(event.description)}

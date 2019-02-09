@@ -40,7 +40,7 @@ export default class SpaceTimeVolume {
 
   @computed get te() {
     // TODO: add conditions for admin_level and relations
-    return this.rootStore.data.TEs.data[this.data.entity];
+    return this.rootStore.data.territorialEntities.data[this.data.entity];
   }
 
   @computed get title() {

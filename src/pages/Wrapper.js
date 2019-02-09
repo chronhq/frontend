@@ -28,8 +28,8 @@ class Wrapper extends React.Component {
     this.props.store.analytics.metricHit(this.props.story);
     this.props.store.courseSelection.cleanup();
     when( // validate course name and download data
-      () => this.props.store.data.Courses.status.loaded,
-      () => this.validateCourses()
+      () => this.props.store.data.narratives.status.loaded,
+      () => this.validateNarratives()
     );
   }
 
@@ -43,11 +43,11 @@ class Wrapper extends React.Component {
     }
   }
 
-  validateCourses() {
+  validateNarratives() {
     const errorPages = {
       404: 'Not Found', 502: 'Gateway timeout', 504: 'Bad Gateway'
     };
-    const error = toJS(this.props.store.data.Courses.status.error);
+    const error = toJS(this.props.store.data.narratives.status.error);
     if (error !== null && errorPages[toJS(error.status)] !== undefined) {
       this.props.history.push(`/${toJS(error.status)}`);
     }

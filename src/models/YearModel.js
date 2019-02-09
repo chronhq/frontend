@@ -96,8 +96,9 @@ export default class YearModel {
   }
 
   @action setTick(tick) {
-    if (tick in this.rootStore.data.CourseTimelines.data) {
-      this.setYear(this.rootStore.data.CourseTimelines.data[tick].year);
+    // TODO UPDATE Map settings
+    if (tick in this.rootStore.data.narrations.data) {
+      this.setYear(this.rootStore.data.narrations.data[tick].map_datetime.split('-')[0]);
       this.tick = tick;
     }
   }

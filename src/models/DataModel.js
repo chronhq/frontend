@@ -22,20 +22,23 @@ import {
 
 import DataLoaderModel from './DataLoaderModel';
 import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
+import fakeNarrativeBuilder from '../FakeNarrativeBuilder';
+
+const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
+const camelCase = string => string.trim()
+  .split('-').map((s, idx) => ((idx === 0) ? s : capitalizeFirstLetter(s))).join('');
 
 export default class DataModel {
-  @observable activeCourses = JSON.stringify({ where: { active: true } });
-
   @observable deps = {
     special: [
-      'Courses'
+      'narratives'
     ],
     base: [
-      'STVs',
-      'TEs',
+      'spacetime-volumes', // would be translated into 'spacetimeVolumes' model
+      'territorial-entities', // territorialEntities
     ],
     course: [
-      'CourseTimelines',
+      'narrations'
     ],
     world: [
     ],
@@ -44,20 +47,39 @@ export default class DataModel {
   };
 
   @computed get roster() {
+    // { dash-key: dashKey }
     return Object.keys(this.deps)
-      .reduce((prev, cur) => ([...prev, ...this.deps[cur]]), []);
+      .reduce((prev, cur) => ({
+        ...prev,
+        ...this.deps[cur].reduce((p, c) => ({
+          ...p,
+          [c]: camelCase(c)
+        }), {})
+      }), {});
   }
 
   constructor(rootStore) {
-    this.roster.map((model) => {
-      this[model] = new DataLoaderModel(model);
+    Object.keys(this.roster).map((url) => {
+      const model = this.roster[url];
+      this[model] = new DataLoaderModel(url);
       return false;
     });
 
-    this.Courses.filter = this.activeCourses;
-    this.CourseTimelines.sortId = 'tick';
+    this.narrations.sortId = 'order';
 
-    this.STVs.configure({
+    this.narratives.configure({
+      append: true,
+      wrapData: d => fakeNarrativeBuilder({ ...d, url: d.id }),
+    });
+
+    this.narratives.data[0] = fakeNarrativeBuilder({
+      url: 'world',
+      id: 0,
+      title: 'Global Narrative',
+      author: ''
+    });
+
+    this.spacetimeVolumes.configure({
       sortId: 'id',
       append: false,
       arrayCb: false,
@@ -67,7 +89,7 @@ export default class DataModel {
 
   @action resolveDependencies(depend) {
     return depend.map((model) => {
-      this[model].downloadModel();
+      this[camelCase(model)].downloadModel();
       return false;
     });
   }

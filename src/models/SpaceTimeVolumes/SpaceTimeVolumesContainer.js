@@ -28,7 +28,7 @@ export default class SpaceTimeVolumeModel {
   @observable ap2stv = Ap2STV;
 
   @computed get data() {
-    return this.rootStore.data.STVs.data;
+    return this.rootStore.data.spacetimeVolumes.data;
   }
 
   @computed get current() {

@@ -19,40 +19,15 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { runInAction } from 'mobx';
+
+import fakeNarrativeBuilder from '../FakeNarrativeBuilder';
 import Narrative from './Narrative';
 
 const year = 1789;
 // Create a fake course
-const demo = {
-  url: 'demo',
-  id: -1,
-  name: {
-    ru: 'EADH 2018 Demo',
-    en: 'EADH 2018 Demo'
-  },
-  author: { ru: '', en: '' },
-  config: {
-    year: {
-      min: year,
-      max: year,
-      now: year,
-      tick: 1,
-    },
-    projection: {
-      clip: [[-180, 90], [180, -90]],
-      rotate: [0, 0, 0],
-      center: [5, 50]
-    },
-    settings: {
-      flags: {
-        zoom: {
-          minScale: 4,
-          maxScale: 7.5
-        }
-      }
-    }
-  }
-};
+const demo = fakeNarrativeBuilder({
+  min: year, max: year, url: 'demo', name: 'EADH 2018 Demo', minScale: 4, center: [5, 50],
+});
 
 @inject('store')
 @observer
@@ -72,7 +47,7 @@ class Demo extends React.Component {
     this.props.store.wikistore.fetchAll();
 
     runInAction(() => {
-      this.props.store.data.Courses.data[-1] = demo;
+      this.props.store.data.narratives.data[-1] = demo;
     });
   }
 

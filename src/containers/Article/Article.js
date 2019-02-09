@@ -32,7 +32,7 @@ class Article extends React.Component {
 
 
   @computed get timeline() {
-    return this.props.store.data.CourseTimelines.data;
+    return this.props.store.data.narrations.data;
   }
 
   @computed get tick() {

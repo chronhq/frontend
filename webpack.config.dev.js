@@ -36,7 +36,7 @@ module.exports = {
     https: false,
     disableHostCheck: true,
     proxy: {
-      '/api': 'http://api:3333/',
+      '/api': 'http://api/',
       '/mvt': {
         target: 'http://localhost:5000',
         pathRewrite: { '^/mvt': '' }

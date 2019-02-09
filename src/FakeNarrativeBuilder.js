@@ -16,30 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { observable, computed } from 'mobx';
 
-import GenericFilter from './GenericFilter';
-
-class DashboardSearch {
-  @observable Narratives;
-
-  @observable Narrations;
-
-  @computed get filter() {
-    return this.rootStore.dashboard.isStorySelected
-      ? this.Narrations : this.Narratives;
+const buildNarrative = ({
+  url = 'fake', id = -1,
+  title = '', author = '', description = '',
+  min = 1783, max = 2000,
+  center = [0, 0], minScale = 1, maxScale = 7.5
+}) => ({
+  url,
+  id,
+  title,
+  author,
+  description,
+  config: {
+    year: {
+      min,
+      max,
+      now: min,
+      tick: 0,
+    },
+    projection: {
+      clip: [[-180, 90], [180, -90]],
+      rotate: [0, 0, 0],
+      center
+    },
+    settings: {
+      flags: {
+        zoom: {
+          minScale,
+          maxScale
+        }
+      }
+    }
   }
+});
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
-
-    this.Narrations = new GenericFilter(this.rootStore, 'narrations', true);
-    this.Narrations.selectText = d => [d.description, d.title];
-
-    // TODO search in tags
-    this.Narratives = new GenericFilter(this.rootStore, 'narratives', false);
-    this.Narratives.selectText = d => [d.author, d.description, d.title];
-  }
-}
-
-export default DashboardSearch;
+export default buildNarrative;
