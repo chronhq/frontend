@@ -84,8 +84,10 @@ class Article extends React.Component {
               {this.timeline[this.tick] ? this.timeline[this.tick].title : ''}
             </b>
           </div>
-          <div className='article--body'>
-            {this.timeline[this.tick] ? this.timeline[this.tick].description : ''}
+          <div className='article--body--container'>
+            <div className='article--body'>
+              {this.timeline[this.tick] ? this.timeline[this.tick].description : ''}
+            </div>
           </div>
         </div>
       </div>
