@@ -77,14 +77,12 @@ export default class DataModel {
 
     this.narratives.configure({
       append: true,
-      wrapData: d => buildNarrative({ ...d, url: d.id }),
     });
 
     this.narratives.data[0] = buildNarrative({
       url: 'world',
       id: 0,
       title: 'Global Narrative',
-      author: ''
     });
 
     this.spacetimeVolumes.configure({
