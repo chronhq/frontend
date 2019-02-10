@@ -113,6 +113,7 @@ export default class DeckViewportModel {
 
   @observable loadingStatus = false;
 
+  @observable flyToEnabled = true;
 
   @computed get validZoomValue() {
     // Do not reset zoom if current value is in range
@@ -156,22 +157,37 @@ export default class DeckViewportModel {
     this.viewState = viewState;
   }
 
+  @action toggleFlyTo() {
+    this.flyToEnabled = !this.flyToEnabled;
+  }
+
   @action initLatLon() {
+    const center = this.flyToEnabled
+      ? [
+        this.viewport.longitude,
+        this.viewport.latitude
+      ]
+      : [
+        this.viewState.longitude,
+        this.viewState.latitude
+      ];
+
     if (this.interactiveMap !== null) {
       const map = this.interactiveMap.getMap();
       map.flyTo({
-        center: [
-          this.viewport.longitude,
-          this.viewport.latitude
-        ],
+        center,
         zoom: this.validZoomValue,
       });
     }
     setTimeout(() => {
-      this.longitude = this.viewport.longitude;
-      this.latitude = this.viewport.latitude;
+      if (this.flyToEnabled === true) {
+        this.longitude = this.viewport.longitude;
+        this.latitude = this.viewport.latitude;
+      }
       this.zoom = this.validZoomValue;
-    }, this.interactiveMap !== null ? this.transition : 0);
+    }, (this.interactiveMap !== null
+      || (this.flyToEnabled !== true && this.zoom !== this.validZoomValue))
+      ? this.transition : 0);
   }
 
   @action updateSettings(mapSettings) {

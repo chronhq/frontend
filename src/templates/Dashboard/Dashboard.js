@@ -49,12 +49,26 @@ class Dashboard extends React.Component {
     return this.hidden ? 'right' : 'left';
   }
 
+  @computed get flyToStyle() {
+    const color = this.props.store.deck.flyToEnabled
+      ? { color: 'green' }
+      : {};
+    return {
+      transform: 'translate(40px, 40px)',
+      ...color,
+    };
+  }
+
   changeUI = () => {
     this.view.changeUI();
   }
 
   toggle = () => {
     this.view.toggle();
+  }
+
+  toggleFlyTo = () => {
+    this.props.store.deck.toggleFlyTo();
   }
 
   render() {
@@ -73,6 +87,11 @@ class Dashboard extends React.Component {
         <div className='dashboard-hide layer-2'>
           <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggle}>
             <span className={`lnr lnr-chevron-${this.chevron}`} aria-hidden='true' title='show panel' />
+          </Button>
+        </div>
+        <div className='dashboard-hide layer-2' style={this.flyToStyle}>
+          <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggleFlyTo}>
+            <span className='lnr lnr-location' aria-hidden='true' title='show panel' />
           </Button>
         </div>
       </div>
