@@ -43,13 +43,12 @@ const flags = {
     document: true,
   },
   zoom: {
-    minScale: 1,
-    maxScale: 8,
+    minZoom: 1,
+    maxZoom: 8,
   },
   projection: {
     center: [0, 0],
     clip: [[-180, 90], [180, -90]],
-    rotate: [0, 0, 0],
   }
 };
 

@@ -32,8 +32,6 @@ export default class YearModel {
   // for UI interface and 'year' sliders
   @observable tuneValue;
 
-  @observable playing = false;
-
   @computed get tuneIsValid() {
     return (this.tuneValue >= this.min && this.tuneValue <= this.max);
   }
@@ -103,12 +101,11 @@ export default class YearModel {
     ];
     this.rootStore.flags.set({
       zoom: {
-        minScale: mapSetting.zoom_min,
-        maxScale: mapSetting.zoom_max,
+        minZoom: mapSetting.zoom_min,
+        maxZoom: mapSetting.zoom_max,
       },
       projection: {
         clip: [[-180, 90], [180, -90]],
-        rotate: [0, 0, 0],
         center
       },
     });
@@ -120,7 +117,6 @@ export default class YearModel {
     if (tick in this.rootStore.data.narrations.data) {
       const narration = this.rootStore.data.narrations.data[tick];
       const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
-      console.log(mapSetting, narration);
       this.updateSettings(mapSetting);
       this.setYear(narration.map_datetime.split('-')[0]);
       this.tick = tick;

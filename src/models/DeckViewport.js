@@ -57,12 +57,6 @@ export default class DeckViewportModel {
     });
   }
 
-  @computed get sizeScale() {
-    return this.showCluster
-      ? 1 * window.devicePixelRatio
-      : Math.min(1.5 ** (this.zoom - 10), 1) * window.devicePixelRatio;
-  }
-
   @computed get clipEnabled() {
     return this.rootStore.projection.clipEnabled === true;
   }
@@ -75,15 +69,16 @@ export default class DeckViewportModel {
         latitude: this.rootStore.projection.data.center[1],
       }
       : {};
+    const { minZoom, maxZoom } = zoom;
     const vState = {
       width: this.width,
       height: this.height,
       viewState: {
         ...INITIAL_VIEW_STATE,
         ...center,
-        zoom: zoom.minScale,
-        maxZoom: zoom.maxScale,
-        minZoom: zoom.minScale,
+        zoom: minZoom,
+        minZoom,
+        maxZoom,
       },
     };
 
@@ -94,6 +89,7 @@ export default class DeckViewportModel {
     return this.view.makeViewport(vState);
   }
 
+  // TODO change lng lat of check
   @computed get metersPerPixel() {
     const vState = {
       width: this.width,
@@ -113,32 +109,18 @@ export default class DeckViewportModel {
 
   @observable zoom = this.viewport.zoom;
 
-  @observable pitch = 0;
-
-  @observable bearing = 0;
-
   @observable interactiveMap = null;
 
   @observable loadingStatus = false;
 
-  @computed get maxZoom() {
-    return this.rootStore.flags.zoom.get('maxScale');
-  }
 
-  set maxZoom(z) {
-    this.rootStore.flags.zoom.set('maxScale', z);
-  }
-
-  @computed get minZoom() {
-    return this.rootStore.flags.zoom.get('minScale');
-  }
-
-  set minZoom(z) {
-    this.rootStore.flags.zoom.set('minScale', z);
-  }
-
-  @computed get rZoom() {
-    return Math.floor(this.zoom);
+  @computed get validZoomValue() {
+    // Do not reset zoom if current value is in range
+    const { minZoom, maxZoom } = this.rootStore.flags.zoom.list;
+    const { zoom } = this.viewState;
+    return (maxZoom >= zoom && minZoom <= zoom)
+      ? zoom // Keep current zoom if in range
+      : this.viewport.zoom;
   }
 
   @computed get viewState() {
@@ -146,8 +128,8 @@ export default class DeckViewportModel {
       longitude: this.longitude,
       latitude: this.latitude,
       zoom: this.zoom,
-      pitch: this.pitch,
-      bearing: this.bearing,
+      pitch: 0,
+      bearing: 0,
       minZoom: this.minZoom,
       maxZoom: this.maxZoom
     };
@@ -181,13 +163,13 @@ export default class DeckViewportModel {
           this.viewport.longitude,
           this.viewport.latitude
         ],
-        zoom: this.viewport.zoom,
+        zoom: this.validZoomValue,
       });
     }
     setTimeout(() => {
       this.longitude = this.viewport.longitude;
       this.latitude = this.viewport.latitude;
-      this.zoom = this.viewport.zoom;
+      this.zoom = this.validZoomValue;
     }, this.interactiveMap !== null ? this.transition : 0);
   }
 }
