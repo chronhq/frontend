@@ -22,7 +22,7 @@ import {
 
 import DataLoaderModel from './DataLoaderModel';
 import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
-import { buildNarrative } from '../FakeNarrativeBuilder';
+import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
 const camelCase = string => string.trim()
@@ -79,10 +79,15 @@ export default class DataModel {
       append: true,
     });
 
+    const mapSettings = buildMapSettings({
+      zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
+    });
+
     this.narratives.data[0] = buildNarrative({
       url: 'world',
       id: 0,
       title: 'Global Narrative',
+      mapSettings,
     });
 
     this.spacetimeVolumes.configure({

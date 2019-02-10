@@ -146,9 +146,14 @@ export default class CourseSideEffects {
 
     when(
       () => (
-        this.rootStore.data.mapSettings.status.loaded
-        && this.rootStore.data.narrations.status.loaded),
+        fake !== null || id === 0 // for global narrative and fake pages
+        || (this.rootStore.data.mapSettings.status.loaded
+        && this.rootStore.data.narrations.status.loaded)),
       () => {
+        if (this.courseInfo.mapSettings !== undefined) {
+          // Fake courses or Global Narrative
+          this.rootStore.deck.updateSettings(this.courseInfo.mapSettings);
+        }
         this.rootStore.year.setTick(0);
       }
     );

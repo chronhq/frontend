@@ -124,14 +124,15 @@ export default class DeckViewportModel {
   }
 
   @computed get viewState() {
+    const { minZoom, maxZoom } = this.rootStore.flags.zoom.list;
     return {
       longitude: this.longitude,
       latitude: this.latitude,
       zoom: this.zoom,
       pitch: 0,
       bearing: 0,
-      minZoom: this.minZoom,
-      maxZoom: this.maxZoom
+      minZoom,
+      maxZoom,
     };
   }
 
@@ -171,5 +172,28 @@ export default class DeckViewportModel {
       this.latitude = this.viewport.latitude;
       this.zoom = this.validZoomValue;
     }, this.interactiveMap !== null ? this.transition : 0);
+  }
+
+  @action updateSettings(mapSettings) {
+    if (mapSettings === undefined) {
+      console.error('Undefined Map Settings');
+      return;
+    }
+    const center = [
+      (mapSettings.bbox.coordinates[1][0] + mapSettings.bbox.coordinates[0][0]) / 2,
+      (mapSettings.bbox.coordinates[1][1] + mapSettings.bbox.coordinates[0][1]) / 2,
+    ];
+    this.rootStore.flags.set({
+      zoom: {
+        minZoom: mapSettings.zoom_min,
+        maxZoom: mapSettings.zoom_max,
+      },
+      projection: {
+        clip: [[-180, 90], [180, -90]],
+        center
+      },
+    });
+    // update viewport position
+    this.initLatLon();
   }
 }

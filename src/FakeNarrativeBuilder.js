@@ -19,7 +19,7 @@
 /* eslint-disable camelcase */
 const buildNarrative = ({
   url = 'fake', id = -1,
-  title = '', author = '', description = '',
+  title = '', author = '', description = '', mapSettings = undefined,
   start_year = 1783, end_year = 2000, tags = [],
 }) => ({
   url,
@@ -27,6 +27,7 @@ const buildNarrative = ({
   title,
   author,
   description,
+  mapSettings,
   tags,
   start_year,
   end_year

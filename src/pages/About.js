@@ -20,15 +20,19 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { runInAction, when } from 'mobx';
 
-import fakeNarrativeBuilder from '../FakeNarrativeBuilder';
+import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 import Narrative from './Narrative';
 
 const date = new Date();
 const year = date.getUTCFullYear();
 
+const mapSettings = buildMapSettings({
+  zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
+});
+
 // Create a fake course
-const about = fakeNarrativeBuilder({
-  min: year, max: year, url: 'about', name: 'About Us'
+const about = buildNarrative({
+  start_year: year, end_year: year, url: 'about', name: 'About Us', mapSettings
 });
 
 const text = ['We are a community of enthusiasts behind Chron.',

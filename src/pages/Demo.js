@@ -20,13 +20,18 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { runInAction } from 'mobx';
 
-import fakeNarrativeBuilder from '../FakeNarrativeBuilder';
+import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 import Narrative from './Narrative';
 
 const year = 1789;
+
+const mapSettings = buildMapSettings({
+  zoom_min: 4, zoom_max: 7.5, coordinates: [[50, 5], [50, 5]]
+});
+
 // Create a fake course
-const demo = fakeNarrativeBuilder({
-  min: year, max: year, url: 'demo', name: 'EADH 2018 Demo', minScale: 4, center: [5, 50],
+const demo = buildNarrative({
+  start_year: year, end_year: year, url: 'demo', name: 'EADH 2018 Demo', mapSettings
 });
 
 @inject('store')
