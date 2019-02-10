@@ -38,7 +38,7 @@ class Axis extends React.Component {
       .scale(this.props.scale)
       .tickPadding([6])
       .tickSize(10)
-      .ticks(parseInt(this.props.width / 45, 10), 'f');
+      .ticks(this.props.ticks, 'f');
     select(this.svgAxis).call(axis);
   }
 
@@ -55,6 +55,7 @@ class Axis extends React.Component {
 
 Axis.propTypes = {
   width: PropTypes.number.isRequired,
+  ticks: PropTypes.number.isRequired,
   scale: PropTypes.func.isRequired
 };
 

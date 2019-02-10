@@ -66,6 +66,13 @@ class SeekBar extends React.Component {
     return this.scale(this.props.store.year.tuneValue) || 0;
   }
 
+  @computed get ticks() {
+    const ticks = parseInt(this.width / 45, 10);
+    const maxTicks = this.props.store.year.max - this.props.store.year.min;
+    console.log('Ticks', ticks, maxTicks);
+    return (Number.isNaN(maxTicks) || ticks <= maxTicks) ? ticks : maxTicks;
+  }
+
 
   followMouse() {
     select(this.svgTime)
@@ -95,7 +102,7 @@ class SeekBar extends React.Component {
           viewBox={viewBox}
           preserveAspectRatio="xMaxYMin meet"
         >
-          <Axis width={this.width} scale={this.scale} />
+          <Axis width={this.width} scale={this.scale} ticks={this.ticks} />
           <Cursor translate={this.translate} active={this.isDown} />
           {/*
             <rect

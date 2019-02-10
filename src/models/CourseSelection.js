@@ -129,7 +129,7 @@ export default class CourseSideEffects {
 
     this.rootStore.year.setup({
       min: this.courseInfo.start_year,
-      end: this.courseInfo.end_year,
+      max: this.courseInfo.end_year,
       now: this.courseInfo.start_year,
       tick: 0,
     });
