@@ -69,7 +69,6 @@ class SeekBar extends React.Component {
   @computed get ticks() {
     const ticks = parseInt(this.width / 45, 10);
     const maxTicks = this.props.store.year.max - this.props.store.year.min;
-    console.log('Ticks', ticks, maxTicks);
     return (Number.isNaN(maxTicks) || ticks <= maxTicks) ? ticks : maxTicks;
   }
 

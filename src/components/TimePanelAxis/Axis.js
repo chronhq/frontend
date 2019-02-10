@@ -54,7 +54,6 @@ class Axis extends React.Component {
 }
 
 Axis.propTypes = {
-  width: PropTypes.number.isRequired,
   ticks: PropTypes.number.isRequired,
   scale: PropTypes.func.isRequired
 };

@@ -90,7 +90,6 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.6.2",
-    "rbush": "^2.0.2",
     "rc-input-number": "^4.3.9",
     "rc-select": "^8.7.2",
     "rc-slider": "^8.6.4",
