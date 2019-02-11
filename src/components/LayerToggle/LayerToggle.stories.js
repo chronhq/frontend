@@ -31,6 +31,7 @@ storiesOf('LayerToggle', module)
     <LayerToggle
       id={data.enabled.id}
       key={`layer_${data.enabled.id}`}
+      tooltip='Tooltip'
       label={data.enabled.id}
       place={data.enabled.place}
       checked={data.enabled.checked}
@@ -42,6 +43,7 @@ storiesOf('LayerToggle', module)
     <LayerToggle
       id={data.disabled.id}
       key={`layer_${data.disabled.id}`}
+      tooltip='Tooltip'
       label={data.disabled.id}
       place={data.disabled.place}
       checked={data.disabled.checked}

@@ -27,12 +27,17 @@ import DashboardSearch from '../../containers/DashboardSearch/DashboardSearch';
 import CurrentStory from '../../containers/CurrentStory/CurrentStory';
 import DashboardFeed from '../../containers/DashboardFeed/DashboardFeed';
 import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+import Tooltip from '../../components/Tooltip/Tooltip';
 
 import './Dashboard.less';
 
 @inject('store')
 @observer
 class Dashboard extends React.Component {
+  @computed get msg() {
+    return this.props.store.i18n.data.tooltips;
+  }
+
   @computed get view() {
     return this.props.store.dashboard;
   }
@@ -57,6 +62,18 @@ class Dashboard extends React.Component {
       transform: 'translate(40px, 40px)',
       ...color,
     };
+  }
+
+  @computed get chevronMsg() {
+    return this.hidden
+      ? this.msg.panelShow
+      : this.msg.panelHide;
+  }
+
+  @computed get locMsg() {
+    return this.props.store.deck.flyToEnabled
+      ? this.msg.locationUnfollow
+      : this.msg.locationFollow;
   }
 
   changeUI = () => {
@@ -85,14 +102,18 @@ class Dashboard extends React.Component {
         }
         <DashboardFooter />
         <div className='dashboard-hide layer-2'>
-          <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggle}>
-            <span className={`lnr lnr-chevron-${this.chevron}`} aria-hidden='true' title='show panel' />
-          </Button>
+          <Tooltip placement='right' content={this.chevronMsg}>
+            <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggle}>
+              <span className={`lnr lnr-chevron-${this.chevron}`} aria-hidden='true' title={this.chevronMsg} />
+            </Button>
+          </Tooltip>
         </div>
         <div className='dashboard-hide layer-2' style={this.flyToStyle}>
-          <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggleFlyTo}>
-            <span className='lnr lnr-location' aria-hidden='true' title='show panel' />
-          </Button>
+          <Tooltip placement='right' content={this.locMsg}>
+            <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggleFlyTo}>
+              <span className='lnr lnr-location' aria-hidden='true' title={this.locMsg} />
+            </Button>
+          </Tooltip>
         </div>
       </div>
     );

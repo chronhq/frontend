@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { action } from 'mobx';
+import { action, computed } from 'mobx';
 
 import LayerToggle from '../../components/LayerToggle/LayerToggle';
 
@@ -14,6 +14,12 @@ const dumpData = {
 @inject('store')
 @observer
 class LayerControlWrapper extends React.Component {
+  @computed get msg() {
+    return this.props.store.i18n.data;
+  }
+
+  nameToTooltip = id => this.msg.layerNames[id];
+
   @action handleLayer(data) {
     Object.keys(data.payload).map((cur) => {
       this.props.store.flags[data.place].set(cur, data.payload[cur]);
@@ -29,6 +35,7 @@ class LayerControlWrapper extends React.Component {
             <LayerToggle
               id={id}
               key={`layer_${id}`}
+              tooltip={this.nameToTooltip(id)}
               label={id}
               place={place}
               checked={this.props.store.flags[place].list[id]}

@@ -25,6 +25,10 @@
     "dismiss": "Dismiss"
   },
   "tooltips": {
+    "locationFollow": "Follow Narration Location",
+    "locationUnfollow": "Ignore Narration Location",
+    "panelHide": "Hide Panel",
+    "panelShow": "Show Panel",
     "back": "Go to main screen",
     "search": "Search",
     "feed": "Feed",
@@ -60,7 +64,8 @@
   "layerNames": {
     "borders": "State Borders",
     "cities": "Cities",
-    "wars": "Wars",
+    "battle": "Battles",
+    "document": "Treaties",
     "persons": "Persons",
     "other": "Other"
   },
