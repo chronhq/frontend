@@ -30,14 +30,13 @@ import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
 import AnalyticModel from './AnalyticModel';
 
-import MapStyle from './MapStyleModel';
+import MapStyle from './MVTStyles/MapStyleModel';
 import WikidataFetcher from './Wikidata/WikidataFetcher';
 import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
 
 import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumesContainer';
-import AtomicBorders from './AtomicBordersModel';
 
 export default class storeModel {
   @observable fonts = {};
@@ -53,7 +52,6 @@ export default class storeModel {
     this.wikidata = new WikidataFetcher(this);
     this.wikistore = new WikidataStore(this);
     this.courseSelection = new CourseSelection(this);
-    this.atomicBorders = new AtomicBorders(this);
     this.spaceTimeVolume = new SpaceTimeVolume(this);
     this.decor = new Decor(this);
     this.pins = new PinsModel(this);

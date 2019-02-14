@@ -86,7 +86,7 @@ class MapWrapper extends React.Component {
       ? features[0]
       : { layer: { id: '0' }, properties: { id: '1' } };
     try {
-      if (feature.layer.id === this.props.store.atomicBorders.layerName) {
+      if (feature.layer.id === this.props.store.mapStyle.atomicBorders.layerName) {
         // it's one of our border layers
         key = this.props.store.spaceTimeVolume.hovering(feature.properties.id).shift();
       }

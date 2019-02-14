@@ -28,7 +28,7 @@ class Wrapper extends React.Component {
     this.props.store.analytics.metricHit(this.props.story);
     this.props.store.courseSelection.cleanup();
     when( // validate course name and download data
-      () => this.props.store.data.narratives.status.loaded,
+      () => this.props.store.data.narratives.status.loaded || this.props.story === 'world',
       () => this.validateNarratives()
     );
   }
@@ -51,9 +51,7 @@ class Wrapper extends React.Component {
     if (error !== null && errorPages[toJS(error.status)] !== undefined) {
       this.props.history.push(`/${toJS(error.status)}`);
     }
-    if (this.props.story !== 'CourseSelection') {
-      this.selectCourse();
-    }
+    this.selectCourse();
   }
 
   render() {

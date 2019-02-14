@@ -20,7 +20,13 @@ import {
   computed, observable, action, runInAction
 } from 'mobx';
 
-import settings from '../../settings.json';
+import settings from '../../../settings.json';
+
+import citiesStyle from './CitiesMVTStyle';
+import pinsStyle from './PinsMVTStyle';
+
+
+import AtomicBorders from './AtomicBordersModel';
 
 const BODY = {
   version: 8,
@@ -41,6 +47,8 @@ const BODY = {
 };
 
 export default class MapStyleModel {
+  @observable atomicBorders;
+
   @observable desiredMapBoxStyle;
 
   @observable installedMapBoxStyle;
@@ -55,18 +63,30 @@ export default class MapStyleModel {
       : { sources: {}, layers: [] };
   }
 
+  @computed get cities() {
+    return citiesStyle(this.rootStore.year.now);
+  }
+
+  @computed get pins() {
+    return pinsStyle(this.rootStore.year.now);
+  }
+
   @computed get style() {
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
-        // ...this.backgroundStyle.sources,
-        ...this.bordersStyle.sources
+        ...this.backgroundStyle.sources,
+        ...this.cities.sources,
+        ...this.pins.sources,
+        // ...this.bordersStyle.sources
       }
       : this.bordersStyle.sources;
 
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
-        // ...this.backgroundStyle.layers,
-        ...this.bordersStyle.layers
+        ...this.backgroundStyle.layers,
+        ...this.cities.layers,
+        ...this.pins.layers,
+        // ...this.bordersStyle.layers
       ]
       : this.bordersStyle.layers;
 
@@ -112,6 +132,7 @@ export default class MapStyleModel {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
+    this.atomicBorders = new AtomicBorders(rootStore);
     this.setUpBackground(settings.mapbox.style);
   }
 }
