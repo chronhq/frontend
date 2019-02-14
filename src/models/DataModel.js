@@ -23,6 +23,7 @@ import {
 import DataLoaderModel from './DataLoaderModel';
 import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
 import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
+import stvs from './stvs';
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
 const camelCase = string => string.trim()
@@ -31,10 +32,10 @@ const camelCase = string => string.trim()
 export default class DataModel {
   @observable deps = {
     special: [
-      'narratives'
+      'narratives',
+      'spacetime-volumes', // would be translated into 'spacetimeVolumes' model
     ],
     base: [
-      'spacetime-volumes', // would be translated into 'spacetimeVolumes' model
       'territorial-entities', // territorialEntities
     ],
     course: [
@@ -96,6 +97,8 @@ export default class DataModel {
       arrayCb: false,
       wrapData: d => new SpaceTimeVolume(rootStore, d.id, d),
     });
+
+    this.spacetimeVolumes.flatGenCb(stvs);
   }
 
   @action resolveDependencies(depend) {

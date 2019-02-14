@@ -16,17 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import {
-  observable, computed
-} from 'mobx';
-
-// import MapColors from './MapColors';
-import Ap2STV from './Ap2STV';
-
+import { computed } from 'mobx';
 
 export default class SpaceTimeVolumeModel {
-  @observable ap2stv = Ap2STV;
-
   @computed get data() {
     return this.rootStore.data.spacetimeVolumes.data;
   }
@@ -46,48 +38,24 @@ export default class SpaceTimeVolumeModel {
     }), {});
   }
 
-  @computed get blank() {
-    return Object.keys(this.ap2stv).reduce((p, c) => (
-      this.active[c] !== undefined ? p : [...p, c]), []).map(m => Number(m));
-  }
-
   @computed get wIds() {
     return Object.keys(this.current).map(stv => this.current[stv].wId);
   }
 
-  // // TODO Compute this on backend
-  // @computed get ap2stv() {
-  //   return Object.keys(this.data).reduce((prev, curId) => {
-  //     const { id } = this.data[curId];
-  //     const next = this.data[curId].data.territory.reduce((p, c) => ({
-  //       ...p,
-  //       [c]: prev[c] !== undefined ? [...prev[c], id] : [id]
-  //     }), {});
-  //     return { ...prev, ...next };
-  //   }, {});
-  // }
-
-  hovering(id) {
-    return this.ap2stv[id].filter(f => this.data[f].visible);
-  }
-
-  @computed get overlapping() {
-    return Object.keys(this.ap2stv).reduce((p, c) => {
-      const hov = this.hovering(c);
-      return hov.length > 1 ? [...p, c] : p;
-    }, []);
+  hovering(ap) {
+    if (ap.layer.id === this.rootStore.mapStyle.atomicBorders.layerName) {
+      try {
+        const stvs = JSON.parse(ap.properties.stv);
+        return stvs.find(s => this.data[s].visible);
+      } catch (e) {
+        console.error('Hover error', e);
+      }
+    }
+    return null;
+    // return this.ap2stv[id].filter(f => this.data[f].visible);
   }
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-    // this.wIdGetter = autorun(() => {
-    //   console.log('Autorun for wId', this.wIds.length);
-    //   this.rootStore.wikistore.countries.add(this.wIds, true);
-    // });
-
-    // when(
-    //   () => this.rootStore.data.STVs.status.loaded,
-    //   () => this.setup()
-    // );
   }
 }

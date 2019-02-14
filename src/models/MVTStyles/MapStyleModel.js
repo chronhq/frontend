@@ -59,7 +59,7 @@ export default class MapStyleModel {
 
   @computed get bordersStyle() {
     return this.rootStore.flags.layer.get('borders')
-      ? this.rootStore.atomicBorders.styleInfo
+      ? this.atomicBorders.styleInfo
       : { sources: {}, layers: [] };
   }
 
@@ -75,18 +75,18 @@ export default class MapStyleModel {
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,
+        ...this.bordersStyle.sources,
         ...this.cities.sources,
         ...this.pins.sources,
-        // ...this.bordersStyle.sources
       }
       : this.bordersStyle.sources;
 
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
         ...this.backgroundStyle.layers,
+        ...this.bordersStyle.layers,
         ...this.cities.layers,
         ...this.pins.layers,
-        // ...this.bordersStyle.layers
       ]
       : this.bordersStyle.layers;
 

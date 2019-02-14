@@ -15,8 +15,16 @@ export default class SpaceTimeVolume {
     return this.rootStore.year.now;
   }
 
+  @computed get startDate() {
+    return this.data.start_date.split('-')[0];
+  }
+
+  @computed get endDate() {
+    return this.data.end_date.split('-')[0];
+  }
+
   @computed get visible() {
-    return (this.data.start_date <= this.now && this.now <= this.data.end_date);
+    return (this.startDate <= this.now && this.now <= this.endDate);
   }
 
   @computed get inUse() {

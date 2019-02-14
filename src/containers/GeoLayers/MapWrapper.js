@@ -88,7 +88,7 @@ class MapWrapper extends React.Component {
     try {
       if (feature.layer.id === this.props.store.mapStyle.atomicBorders.layerName) {
         // it's one of our border layers
-        key = this.props.store.spaceTimeVolume.hovering(feature.properties.id).shift();
+        key = this.props.store.spaceTimeVolume.hovering(feature);
       }
     } catch (e) {
       console.error('Feature parsing failed', e, features);
