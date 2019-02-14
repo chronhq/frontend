@@ -133,14 +133,14 @@ class MapWrapper extends React.Component {
       console.log('mbF', f);
       if (f.properties !== undefined && f.properties.id) {
         const STVs = this.props.store.spaceTimeVolume;
-        const stvIds = STVs.hovering(f.properties.id);
-        const names = stvIds.map(s => ([
+        const s = STVs.hovering(f);
+        const sTitle = [
           STVs.current[s].values.title,
           STVs.current[s].values.subTitle
-        ].join()));
+        ];
         console.log(
           'AP:', f.properties.id,
-          'Clicked on STVs:', stvIds, names
+          'Clicked on STVs:', ...sTitle
         );
       }
       return null;

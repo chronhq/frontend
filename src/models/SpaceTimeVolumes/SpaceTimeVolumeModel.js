@@ -74,10 +74,7 @@ export default class SpaceTimeVolume {
       government: this.wikidata.currentGovernment,
       population: this.wikidata.currentPopulation,
       dataOrigin: [`https://www.wikidata.org/wiki/${this.wId}`],
-      sources: [
-        'https://en.wikipedia.org/wiki/United_Kingdom',
-        'https://www.wikidata.org/wiki/Q145'
-      ]
+      sources: this.data.references
     };
   }
 
