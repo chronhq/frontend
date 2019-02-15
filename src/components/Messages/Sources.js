@@ -67,11 +67,7 @@ class Sources extends React.Component {
   }
 
   @computed get clickPosition() {
-    const pos = this.props.store.pins.clickPosition;
-    return {
-      lat: Math.round(pos.lat * 1000000) / 1000000,
-      lng: Math.round(pos.lng * 1000000) / 1000000,
-    };
+    return this.props.store.balloon.clickPosition;
   }
 
   @computed get item() {

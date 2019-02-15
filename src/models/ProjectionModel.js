@@ -45,13 +45,4 @@ export default class ProjectionModel {
   @computed get center() {
     return this.data.center;
   }
-
-
-  inTheBox(x, y) {
-    return (!(x < this.clip[0][0] // Top
-        || x > this.clip[1][0] // Bottom
-        || y < this.clip[1][1] // Right
-        || y > this.clip[0][1]) // Left
-    );
-  }
 }

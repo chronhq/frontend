@@ -39,10 +39,10 @@ class FreePinsWidget extends React.Component {
 
   translate = idx => [this.translateX(idx), -this.translateY(idx)].join(',');
 
-  setTooltip = (icon, e) => {
+  setBalloon = (icon, e) => {
     const { pageX, pageY } = e;
-    this.props.store.pins.setActive(icon.key, true);
-    this.props.store.pins.setPosition(pageX, pageY);
+    this.props.store.balloon.setActive(icon.key, true);
+    this.props.store.balloon.setPosition(pageX, pageY);
     return true;
   }
 
@@ -57,9 +57,9 @@ class FreePinsWidget extends React.Component {
             height='20px'
             xlinkHref={`#mapPic_${icon.pic}`}
             transform={`translate(${this.translate(idx)}) rotate(-135)`}
-            onMouseEnter={e => this.setTooltip(icon, e)}
+            onMouseEnter={e => this.setBalloon(icon, e)}
             onMouseLeave={() => {
-              this.props.store.pins.setActive(null);
+              this.props.store.balloon.setActive(null);
               return true;
             }}
             onMouseMove={e => this.setTooltip(icon, e)}

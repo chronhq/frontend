@@ -39,7 +39,7 @@ class CountryHover extends React.Component {
   }
 
   @computed get pinned() {
-    return this.props.store.pins.pinned;
+    return this.props.store.balloon.pinned;
   }
 
   @computed get values() {

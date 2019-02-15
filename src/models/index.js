@@ -26,6 +26,7 @@ import CourseSelection from './CourseSelection';
 import Decor from './Decor';
 
 import PinsModel from './PinsModel';
+import BalloonModel from './BalloonModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
 import AnalyticModel from './AnalyticModel';
@@ -55,6 +56,7 @@ export default class storeModel {
     this.spaceTimeVolume = new SpaceTimeVolume(this);
     this.decor = new Decor(this);
     this.pins = new PinsModel(this);
+    this.balloon = new BalloonModel(this);
     this.i18n = new Internationalization(this);
     this.mapStyle = new MapStyle(this);
     this.search = new DashboardSearch(this);

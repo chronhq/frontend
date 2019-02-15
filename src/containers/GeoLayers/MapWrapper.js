@@ -93,9 +93,9 @@ class MapWrapper extends React.Component {
     } catch (e) {
       console.error('Feature parsing failed', e, features);
     }
-    this.props.store.pins.setCountryActive(key, force);
+    this.props.store.balloon.setCountryActive(key, force);
     if (key !== null && key !== undefined) {
-      this.props.store.pins.setPosition(...position);
+      this.props.store.balloon.setPosition(...position);
     }
     return true;
   };
@@ -103,8 +103,8 @@ class MapWrapper extends React.Component {
   onMapPinHover = (d, force = false) => {
     // if image contains transparent parts disable drawing tooltip
     const key = d.color === null ? null : d.object.key;
-    this.props.store.pins.setActive(key, false, force);
-    this.props.store.pins.setPosition(d.x, d.y);
+    this.props.store.balloon.setActive(key, false, force);
+    this.props.store.balloon.setPosition(d.x, d.y);
     // according to https://github.com/uber/deck.gl/blob/master/docs/get-started/interactivity.md
     // event should be marked as complete if returns true
     // but DeckGL onLayerHover will catch the event even if it should not
@@ -113,12 +113,12 @@ class MapWrapper extends React.Component {
 
   setHoverBalloon = force => (
     (info, allInfos, event) => {
-      if (force === false && this.props.store.pins.pinned === true) return;
+      if (force === false && this.props.store.balloon.pinned === true) return;
       const mapboxFeatures = this.deck.interactiveMap
         .queryRenderedFeatures([event.offsetX, event.offsetY]);
       if (event.type === 'mouseleave') {
         // disable all balloons
-        this.props.store.pins.setActive(null);
+        this.props.store.balloon.setActive(null);
       } else if (info === null) {
         this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY], force);
       }
@@ -162,8 +162,8 @@ class MapWrapper extends React.Component {
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
         onLayerClick={(info, allInfos, event) => {
           this.printDebugSTVInfo(event);
-          if (this.props.store.pins.unpin() !== true) {
-            this.props.store.pins.clickPosition = this.deck
+          if (this.props.store.balloon.unpin() !== true) {
+            this.props.store.balloon.clickPosition = this.deck
               .interactiveMap.getMap().unproject([event.offsetX, event.offsetY]);
             this.setHoverBalloon(true)(info, allInfos, event);
           }

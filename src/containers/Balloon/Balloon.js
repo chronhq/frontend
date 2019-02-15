@@ -34,15 +34,15 @@ import './Balloon.less';
 @observer
 class Balloon extends React.Component {
   @computed get pin() {
-    return this.props.store.pins.selected;
+    return this.props.store.balloon.selected;
   }
 
   @computed get pinned() {
-    return this.props.store.pins.pinned;
+    return this.props.store.balloon.pinned;
   }
 
   @computed get countryHover() {
-    return this.props.store.pins.countryHover;
+    return this.props.store.balloon.countryHover;
   }
 
   @computed get opacity() {
@@ -58,19 +58,19 @@ class Balloon extends React.Component {
     return {
       opacity: this.opacity,
       visibility: this.opacity ? 'visible' : 'hidden',
-      top: `${this.props.store.pins.pageY}px`,
-      left: `${this.props.store.pins.pageX}px`,
+      top: `${this.props.store.balloon.pageY}px`,
+      left: `${this.props.store.balloon.pageX}px`,
     };
   }
 
   @computed get positionClassName() {
     // const classes = ['balloonNews'];
-    if (this.props.store.pins.pageX > 0.5 * window.innerWidth) {
-      if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
+    if (this.props.store.balloon.pageX > 0.5 * window.innerWidth) {
+      if (this.props.store.balloon.pageY < 0.7 * window.innerHeight) {
         return 'balloonTopRight';
       }
       return 'balloonBottomRight';
-    } if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
+    } if (this.props.store.balloon.pageY < 0.7 * window.innerHeight) {
       return 'balloonTopLeft';
     }
     return 'balloonBottomLeft';

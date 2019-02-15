@@ -52,26 +52,12 @@ class InteractivePin {
   }
 }
 
-export default class FeedPinsModel {
+export default class PinsModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
 
   @observable pinsOrder = ['document', 'battle', 'persons'];
-
-  @observable pinned = false;
-
-  @observable active = null;
-
-  @observable selectedFreePin = false;
-
-  @observable pageX = 0;
-
-  @observable pageY = 1;
-
-  @observable countryHover = null;
-
-  @observable clickPosition = { lat: 0, lon: 0 };
 
   // dummy pins are sorced directly from deck.gl layer and do not have tooltip
   // [{ pic: 26, point: { x: 33.044167, y: 34.674722 } }]
@@ -87,49 +73,8 @@ export default class FeedPinsModel {
     this.addDummyPins([], false);
   }
 
-  @action setPosition(x, y) {
-    this.pageX = x;
-    this.pageY = y;
-  }
-
-  @action forcePin(a, force) {
-    if (force === true) this.pinned = true;
-    if (a === null) this.pinned = false;
-  }
-
-  @action unpin() {
-    if (this.pinned === true) {
-      this.pinned = false;
-      return true;
-    }
-    return false;
-  }
-
-  @action setActive(a, free = false, force = false) {
-    this.forcePin(a, force);
-    if (this.pinned === false || force === true) {
-      this.countryHover = null;
-      this.selectedFreePin = free;
-      this.active = a;
-    }
-  }
-
-  @action setCountryActive(c, force = false) {
-    this.forcePin(c, force);
-    if (this.pinned === false || force === true) {
-      this.countryHover = c;
-      this.active = Boolean(c);
-    }
-  }
-
   @computed get visibility() {
     return this.rootStore.flags.pins.list;
-  }
-
-  @computed get selected() {
-    return this.selectedFreePin
-      ? this.freePins.find(pin => pin.key === this.active)
-      : this.pins.find(pin => pin.key === this.active);
   }
 
   @computed get personsRawPins() {
@@ -177,13 +122,7 @@ export default class FeedPinsModel {
     Object.keys(this.combineRawPins)
       .map((d) => {
         const pin = toJS(this.combineRawPins[d]);
-        const inTheBox = this.rootStore
-          .projection.inTheBox(pin[0].loc.x, pin[0].loc.y);
-        if (inTheBox) {
-          p.push(new InteractivePin(pin, d));
-        } else {
-          console.log('Not In the Box', JSON.stringify(pin), pin[0].loc.x, pin[0].loc.y);
-        }
+        p.push(new InteractivePin(pin, d));
         return false;
       });
     return p;
