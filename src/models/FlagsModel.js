@@ -22,7 +22,6 @@ const flags = {
   runtime: {
     SelectedCourse: null,
     alignPanel: 'right',
-    feedback: false,
     article: false,
     yearInput: false,
     SidePanelTab: 0,
