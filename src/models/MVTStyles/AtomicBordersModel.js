@@ -65,7 +65,8 @@ export default class AtomicBordersModel {
       paint: {
         'fill-opacity': mapsOpacity,
         'fill-color': ['match', ['get', 'id'], ...this.fill, fallback],
-        'fill-outline-color': 'rgb(30, 30, 200)',
+        'fill-outline-color': fallback,
+        // 'fill-outline-color': 'rgb(30, 30, 200)',
       },
       'source-layer': name
     };
