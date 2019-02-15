@@ -79,17 +79,28 @@ class GenericStoreType {
     );
   }
 
+  getEventFromWid = (type, w) => {
+    const cur = this.cache[w];
+    return cur === undefined ? null : this.getEvent(type, cur.structure).event;
+  }
+
+  getEvent = (type, cur) => {
+    const event = {
+      type: this.type,
+      loc: cur.place || {}, // in case if place if undefined
+      [this.type]: cur,
+    };
+
+    const year = cur.date instanceof Date
+      ? cur.date.getUTCFullYear()
+      : cur.date;
+
+    return { year, event };
+  }
+
   @computed get timeline() {
     return this.inCache.reduce((prev, cur) => {
-      const event = {
-        type: this.type,
-        loc: cur.place || {}, // in case if place if undefined
-        [this.type]: cur,
-      };
-
-      const year = cur.date instanceof Date
-        ? cur.date.getUTCFullYear()
-        : cur.date;
+      const { year, event } = this.getEvent(this.type, cur);
 
       const curYear = prev[year] || { free: [], pins: [] };
       const pos = event.loc.x !== undefined ? 'pins' : 'free';

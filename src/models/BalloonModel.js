@@ -23,33 +23,31 @@ export default class BalloonModel {
     this.rootStore = rootStore;
   }
 
+  // reaction on onClick event for countryHover
   @observable pinned = false;
 
-  @observable active = null;
+  @observable payload = null;
 
-  @observable selectedFreePin = false;
+  @observable deckPin = false;
+
+  @observable pinHasNoLocation = false;
+
+  @observable countryHover = false;
+
+  @observable eventPin = false;
 
   @observable pageX = 0;
 
   @observable pageY = 1;
 
-  @observable countryHover = null;
-
   @observable clickPositionRaw = { lat: 0, lon: 0 };
-
-  // pins from mvt cached-data events
-  @observable mvtpins = [];
 
   @action setPosition(x, y) {
     this.pageX = x;
     this.pageY = y;
   }
 
-  @action setClickPosition(clickPosition) {
-    this.clickPosition = clickPosition;
-  }
-
-  @action forcePin(a, force) {
+  @action changePinnedStatus(a, force) {
     if (force === true) this.pinned = true;
     if (a === null) this.pinned = false;
   }
@@ -62,21 +60,36 @@ export default class BalloonModel {
     return false;
   }
 
-  @action setActive(a, free = false, force = false) {
-    this.forcePin(a, force);
+  @action changeBalloonStatus({
+    a = null, force = false,
+    countryHover = false, deckPinId = false,
+    pinHasNoLocation = false, eventPin = false
+  }) {
+    this.changePinnedStatus(a, force);
     if (this.pinned === false || force === true) {
-      this.countryHover = null;
-      this.selectedFreePin = free;
-      this.active = a;
+      this.payload = a;
+      this.countryHover = countryHover;
+      this.deckPinId = deckPinId;
+      this.pinHasNoLocation = pinHasNoLocation;
+      this.eventPin = eventPin;
     }
   }
 
-  @action setCountryActive(c, force = false) {
-    this.forcePin(c, force);
-    if (this.pinned === false || force === true) {
-      this.countryHover = c;
-      this.active = Boolean(c);
-    }
+  @action setMVTEventBalloon(features, force = false) {
+    const a = features;
+    this.changeBalloonStatus({ a, force, eventPin: Boolean(a) });
+  }
+
+  // Set active pin by it's key for Deck GL layer and SVG Free pins
+  @action setPinBalloon(a, free = false, force = false) {
+    this.changeBalloonStatus({
+      a, force, pinHasNoLocation: free, deckPinId: Boolean(a)
+    });
+  }
+
+  // set Territorial Entity Wikidata ID to countryHover
+  @action setCountryBalloon(a, force = false) {
+    this.changeBalloonStatus({ a, force, countryHover: Boolean(a) });
   }
 
   @computed get clickPosition() {
@@ -87,6 +100,10 @@ export default class BalloonModel {
     };
   }
 
+  set clickPosition(clickPosition) {
+    this.clickPositionRaw = clickPosition;
+  }
+
   @computed get pins() {
     return this.rootStore.pins.pins;
   }
@@ -95,13 +112,42 @@ export default class BalloonModel {
     return this.rootStore.pins.freePins;
   }
 
-  set clickPosition(clickPosition) {
-    this.clickPositionRaw = clickPosition;
+  @computed get getSelectedEvents() {
+    if (this.eventPin) {
+      try {
+        const wIds = [];
+        const data = this.payload.map((f) => {
+          const wId = `Q${f.properties.wikidata_id}`;
+          if (this.rootStore.wikidata.cache[wId] === undefined) {
+            wIds.push(wId);
+            return undefined;
+          }
+          let layer = 'actors'; // 'birth' or 'death' events
+          if (f.layer.id === 'battle') layer = 'battles';
+          if (f.layer.id === 'document') layer = 'documents';
+          return this.rootStore.wikistore[layer].getEventFromWid(f.layer.id, wId);
+        }).filter(f => (f !== undefined && f !== null));
+        this.rootStore.wikidata.getItems(wIds);
+        return { info: data };
+      } catch (e) {
+        console.error('Failed to parse Balloon payload', e, this.payload);
+      }
+    }
+    return { info: [] };
   }
 
   @computed get selected() {
-    return this.selectedFreePin
-      ? this.freePins.find(pin => pin.key === this.active)
-      : this.pins.find(pin => pin.key === this.active);
+    if (this.pinHasNoLocation) {
+      return this.freePins.find(pin => pin.key === this.payload);
+    } if (this.deckPin) {
+      return this.pins.find(pin => pin.key === this.deckPin);
+    } if (this.countryHover) {
+      // InteractivePin
+      return { info: [{ type: 'countryHover', data: this.payload }] };
+    }
+    if (this.eventPin) {
+      return this.getSelectedEvents;
+    }
+    return { info: [] };
   }
 }

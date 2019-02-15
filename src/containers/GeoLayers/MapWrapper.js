@@ -86,24 +86,32 @@ class MapWrapper extends React.Component {
       ? features[0]
       : { layer: { id: '0' }, properties: { id: '1' } };
     try {
-      if (feature.layer.id === this.props.store.mapStyle.atomicBorders.layerName) {
+      if (feature.layer.source === 'ap') {
         // it's one of our border layers
         key = this.props.store.spaceTimeVolume.hovering(feature);
+        this.props.store.balloon.setCountryBalloon(key, force);
+        if (key !== null && key !== undefined) {
+          this.props.store.balloon.setPosition(...position);
+        }
+        return true;
+      } if (feature.layer.source === 'events') {
+        const events = features.filter(f => f.layer.source === 'events');
+        this.props.store.balloon.setMVTEventBalloon(events, force);
+        this.props.store.balloon.setPosition(...position);
+        return true;
       }
     } catch (e) {
       console.error('Feature parsing failed', e, features);
     }
-    this.props.store.balloon.setCountryActive(key, force);
-    if (key !== null && key !== undefined) {
-      this.props.store.balloon.setPosition(...position);
-    }
+    // Hide balloon if not active layer
+    this.props.store.balloon.setCountryBalloon(null, false);
     return true;
   };
 
   onMapPinHover = (d, force = false) => {
     // if image contains transparent parts disable drawing tooltip
     const key = d.color === null ? null : d.object.key;
-    this.props.store.balloon.setActive(key, false, force);
+    this.props.store.balloon.setPinBalloon(key, false, force);
     this.props.store.balloon.setPosition(d.x, d.y);
     // according to https://github.com/uber/deck.gl/blob/master/docs/get-started/interactivity.md
     // event should be marked as complete if returns true
@@ -118,7 +126,7 @@ class MapWrapper extends React.Component {
         .queryRenderedFeatures([event.offsetX, event.offsetY]);
       if (event.type === 'mouseleave') {
         // disable all balloons
-        this.props.store.balloon.setActive(null);
+        this.props.store.balloon.setPinBalloon(null);
       } else if (info === null) {
         this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY], force);
       }

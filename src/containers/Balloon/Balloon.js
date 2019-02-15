@@ -46,8 +46,8 @@ class Balloon extends React.Component {
   }
 
   @computed get opacity() {
-    if (this.countryHover === null) {
-      return (this.pin === null || typeof this.pin === 'undefined')
+    if (this.countryHover === false) {
+      return (this.pin === null || this.pin === undefined || this.pin.info.length === 0)
         ? 0 : 1;
     }
     return 1;
@@ -64,7 +64,6 @@ class Balloon extends React.Component {
   }
 
   @computed get positionClassName() {
-    // const classes = ['balloonNews'];
     if (this.props.store.balloon.pageX > 0.5 * window.innerWidth) {
       if (this.props.store.balloon.pageY < 0.7 * window.innerHeight) {
         return 'balloonTopRight';
@@ -74,13 +73,6 @@ class Balloon extends React.Component {
       return 'balloonTopLeft';
     }
     return 'balloonBottomLeft';
-
-    // if (this.props.store.pins.pageY > 0.7*window.innerHeight) {
-    //   classes.push('balloonBottom');
-    // } else {
-    //   classes.push('balloonTop');
-    // }
-    // return classes;
   }
 
   @computed get i18n() {
@@ -88,19 +80,15 @@ class Balloon extends React.Component {
   }
 
   @computed get news() {
-    if (this.countryHover !== null && this.countryHover !== undefined) {
-      return [
-        {
-          id: 'countryHoverBaloon',
-          message: <CountryHover id={this.countryHover} />,
-          sources: <Sources id={this.countryHover} type="countryHover" />
-        }
-      ];
-    }
-    if (this.pin === null || typeof this.pin === 'undefined') return [];
-
+    if (this.pin === null || this.pin === undefined) return [];
     return this.pin.info.map((pin) => {
       switch (pin.type) {
+        case 'countryHover':
+          return {
+            id: 'countryHoverBaloon',
+            message: <CountryHover id={this.pin.info[0].data} />,
+            sources: <Sources id={this.pin.info[0].data} type={this.pin.info[0].type} />
+          };
         case 'death':
         case 'birth':
         // actor from wikidata
