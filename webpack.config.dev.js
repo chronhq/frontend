@@ -35,6 +35,8 @@ module.exports = {
     compress: true,
     https: false,
     disableHostCheck: true,
+    contentBase: path.resolve('static'),
+    publicPath: '/',
     proxy: {
       '/api': 'http://api/',
       '/mvt': {

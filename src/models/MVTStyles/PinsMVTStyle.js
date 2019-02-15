@@ -26,20 +26,19 @@ const types = {
 
 const getLayer = (now, id) => ({
   id,
-  layout: {},
+  layout: {
+    'icon-image': `pin-${types[id].pic}`,
+    'icon-rotate': -135,
+    'icon-size': 0.5,
+    'icon-anchor': 'top-left',
+  },
   minzoom: 1,
   filter: [
     'all',
     ['==', 'year', now],
     ['==', 'event_type', types[id].id]
   ],
-  type: 'circle',
-  paint: {
-    'circle-radius': 6,
-    'circle-color': types[id].color,
-    'circle-stroke-color': 'rgba(238,78,139, 1)',
-    'circle-stroke-width': 1
-  },
+  type: 'symbol',
   source: 'events',
   'source-layer': 'events'
 });

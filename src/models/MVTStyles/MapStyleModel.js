@@ -25,7 +25,6 @@ import settings from '../../../settings.json';
 import citiesStyle from './CitiesMVTStyle';
 import pinsStyle from './PinsMVTStyle';
 
-
 import AtomicBorders from './AtomicBordersModel';
 
 const BODY = {
@@ -94,6 +93,7 @@ export default class MapStyleModel {
       ...this.backgroundStyle,
       sources,
       layers,
+      sprite: `${window.location.origin}/pin`
     };
   }
 
