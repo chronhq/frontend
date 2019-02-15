@@ -64,11 +64,11 @@ export default class MapStyleModel {
   }
 
   @computed get cities() {
-    return citiesStyle(this.rootStore.year.now);
+    return citiesStyle(this.rootStore.year.now, this.rootStore.flags.layer.list);
   }
 
   @computed get pins() {
-    return pinsStyle(this.rootStore.year.now);
+    return pinsStyle(this.rootStore.year.now, this.rootStore.flags.pins.list);
   }
 
   @computed get style() {

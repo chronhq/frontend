@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const citiesStyle = (now) => {
+const citiesStyle = (now, flags) => {
   const url = 'cities';
   const source = {
     type: 'vector',
@@ -74,8 +74,9 @@ const citiesStyle = (now) => {
       'text-halo-color': 'rgba(255,255,255,0.7)'
     }
   };
+  const layers = flags.cities === true ? [layer, labels] : [];
   return {
-    sources: { cities: source }, layers: [layer, labels]
+    sources: { cities: source }, layers
   };
 };
 

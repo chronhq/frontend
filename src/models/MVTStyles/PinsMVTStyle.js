@@ -18,13 +18,14 @@
  */
 
 const types = {
-  BATTLE: { id: 178561, pic: 32, color: 'rgba(255,0,100, 1)' },
-  DOCUMENT: { id: 131569, pic: 24, color: 'rgba(100,255,0, 1)' },
-  BIRTH: { id: 569, pic: 26, color: 'rgba(0,100,255, 1)' },
-  DEATH: { id: 570, pic: 28, color: 'rgba(100,0,255, 1)' },
+  battle: { id: 178561, pic: 32, color: 'rgba(255,0,100, 1)' },
+  document: { id: 131569, pic: 24, color: 'rgba(100,255,0, 1)' },
+  birth: { id: 569, pic: 26, color: 'rgba(0,100,255, 1)' },
+  death: { id: 570, pic: 28, color: 'rgba(100,0,255, 1)' },
 };
 
 const getLayer = (now, id) => ({
+  id,
   layout: {},
   minzoom: 1,
   filter: [
@@ -40,18 +41,23 @@ const getLayer = (now, id) => ({
     'circle-stroke-width': 1
   },
   source: 'events',
-  id: `pins-${id}`,
   'source-layer': 'events'
 });
 
-const pins = (now) => {
+const pins = (now, flags) => {
   const url = 'cached-data';
   const source = {
     type: 'vector',
     tiles: [`${window.location.origin}/api/mvt/${url}/{z}/{x}/{y}`]
   };
+  const layers = [];
 
-  const layers = Object.keys(types).map(l => getLayer(now, l));
+  if (flags.persons === true) {
+    layers.push(getLayer(now, 'birth'));
+    layers.push(getLayer(now, 'death'));
+  }
+  if (flags.battle === true) layers.push(getLayer(now, 'battle'));
+  if (flags.document === true) layers.push(getLayer(now, 'document'));
 
 
   return {
