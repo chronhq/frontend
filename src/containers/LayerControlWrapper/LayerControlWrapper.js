@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { action, computed } from 'mobx';
+import { computed } from 'mobx';
 
 import LayerToggle from '../../components/LayerToggle/LayerToggle';
 
@@ -20,9 +20,10 @@ class LayerControlWrapper extends React.Component {
 
   nameToTooltip = id => this.msg.layerNames[id];
 
-  @action handleLayer(data) {
+  handleLayer = (data) => {
     Object.keys(data.payload).map((cur) => {
       this.props.store.flags[data.place].set(cur, data.payload[cur]);
+      this.props.store.analytics.metricHit(`main_${cur}`);
       return false;
     });
   }
@@ -40,7 +41,7 @@ class LayerControlWrapper extends React.Component {
               place={place}
               checked={this.props.store.flags[place].list[id]}
               name={id}
-              cb={o => this.handleLayer(o)}
+              cb={this.handleLayer}
             />
           ))
         ))}

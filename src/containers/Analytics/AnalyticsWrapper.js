@@ -8,12 +8,7 @@ import './AnalyticsWrapper.less';
 @inject('store')
 @observer
 class AnalyticsWrapper extends React.Component {
-  handleClick = () => {
-    this.props.store.analytics.agreeWithPolicy();
-    this.forceUpdate();
-  }
-
-  renderNotification() {
+  get renderNotification() {
     return (
       <div className='notification'>
         <div className='page--content'>
@@ -30,13 +25,21 @@ class AnalyticsWrapper extends React.Component {
     );
   }
 
+  handleClick = () => {
+    this.props.store.analytics.agreeWithPolicy();
+    this.forceUpdate();
+  }
+
   render() {
+    const { config } = this.props.store.analytics;
+    // Skip notification if no analytics
+    const disabled = (!config.ym.enabled && !config.ga.enabled);
     return (
       <React.Fragment>
         {
-          (this.props.store.analytics.agreement)
-            ? <Analytics />
-            : this.renderNotification()
+          (this.props.store.analytics.agreement || disabled)
+            ? <Analytics config={config} />
+            : this.renderNotification
         }
       </React.Fragment>
     );

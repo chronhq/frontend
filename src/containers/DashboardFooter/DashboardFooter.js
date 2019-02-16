@@ -27,16 +27,34 @@ import './DashboardFooter.less';
 @inject('store')
 @observer
 class DashboardFooter extends React.Component {
+  license ='https://chronhq.github.io/wiki/project/licenses.html'
+
+  wiki = 'https://chronhq.github.io/wiki/'
+
+  report = 'https://github.com/chronhq/data/issues'
+
   @computed get dashboard() {
     return this.props.store.i18n.data.dashboard;
   }
 
-  link(url, name) {
+  goToAbout = (e) => {
+    e.preventDefault();
+    this.props.history.push('/about');
+    return false;
+  }
+
+  metricHit = (link) => {
+    this.props.store.analytics.metricHit(link);
+    return true;
+  }
+
+  link(url, name, click = () => true) {
     return (
       <a
         href={url}
         target='_blank'
         rel='noopener noreferrer'
+        onClick={click}
       >
         {this.dashboard[name]}
       </a>
@@ -46,19 +64,10 @@ class DashboardFooter extends React.Component {
   render() {
     return (
       <div className='dashboard-footer'>
-        {this.link('https://chronhq.github.io/wiki/', 'wiki')}
-        <a
-          href='/about'
-          onClick={(e) => {
-            e.preventDefault();
-            this.props.history.push('/about');
-            return false;
-          }}
-        >
-          {this.dashboard.about}
-        </a>
-        {this.link('https://chronhq.github.io/wiki/project/licenses.html', 'license')}
-        {this.link('https://github.com/chronhq/data/issues', 'report')}
+        {this.link(this.wiki, 'wiki')}
+        {this.link('/about', 'about', this.goToAbout)}
+        {this.link(this.license, 'license', () => this.metricHit('goto_github'))}
+        {this.link(this.report, 'report')}
       </div>
     );
   }

@@ -25,12 +25,23 @@ import { when, toJS } from 'mobx';
 @observer
 class Wrapper extends React.Component {
   componentDidMount() {
-    this.props.store.analytics.metricHit(this.props.story);
-    this.props.store.courseSelection.cleanup();
+    this.metricHit();
     when( // validate course name and download data
       () => this.props.store.data.narratives.status.loaded || this.props.story === 'world',
       () => this.validateNarratives()
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.story !== prevProps.story) {
+      this.metricHit();
+    }
+  }
+
+  metricHit() {
+    let metric = this.props.metric || 'narrative_open';
+    if (this.props.story === 'world') metric = 'main_open';
+    this.props.store.analytics.metricHit(metric);
   }
 
   selectCourse() {

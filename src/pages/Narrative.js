@@ -28,8 +28,8 @@ import Wrapper from './Wrapper';
 import TimePanel from '../templates/TimePanel/TimePanel';
 import Widgets from '../containers/Widgets';
 
-const Narrative = ({ story, fake }) => (
-  <Wrapper story={story} fake={fake}>
+const Narrative = ({ story, fake, metric }) => (
+  <Wrapper story={story} fake={fake} metric={metric}>
     <Widgets />
     <GeoLayers />
     <TimePanel />

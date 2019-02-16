@@ -90,7 +90,7 @@ class About extends React.Component {
 
   render() {
     return (
-      <Narrative story='about' fake='0' />
+      <Narrative story='about' fake='0' metric='check_about' />
     );
   }
 }

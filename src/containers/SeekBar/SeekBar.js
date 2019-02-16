@@ -42,6 +42,7 @@ class SeekBar extends React.Component {
       const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.width) {
         this.props.store.year.setYear(Math.round(this.scale.invert(mouseX)));
+        this.props.store.analytics.metricHit('check_timepanel');
       }
     });
     svg.on('mousedown', () => {

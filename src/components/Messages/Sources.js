@@ -49,6 +49,10 @@ const SourceInfo = ({ name, data }) => (
           key={linkKey(name, d, id)}
           className='factSource factSourcesList'
           href={d}
+          onClick={() => {
+            this.props.store.analytics.metricHit('goto_wikidata');
+            return true;
+          }}
           target='_blank'
           rel='noopener noreferrer'
         >

@@ -75,8 +75,10 @@ export default class BalloonModel {
     }
   }
 
-  @action setMVTEventBalloon(features, force = false) {
-    const a = features;
+  @action setMVTEventBalloon(a, force = false) {
+    if (!this.eventPin && Boolean(a) && a.some(f => f.layer.id === 'battle')) {
+      this.rootStore.analytics.metricHit('check_battle');
+    }
     this.changeBalloonStatus({ a, force, eventPin: Boolean(a) });
   }
 

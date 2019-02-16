@@ -90,10 +90,12 @@ export default class MapStyleModel {
       : this.bordersStyle.layers;
 
     return {
+      glyphs: '',
       ...this.backgroundStyle,
       sources,
       layers,
-      sprite: `${window.location.origin}/pin`
+      sprite: `${window.location.origin}/pin`,
+      name: 'chronmaps',
     };
   }
 

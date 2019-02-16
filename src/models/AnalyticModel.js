@@ -24,26 +24,47 @@ import {
 import ym from 'react-yandex-metrika';
 
 import { getCookie, setCookie } from '../utils/localStorage';
+import settings from '../../settings.json';
+
+const config = ((settings.analytics !== undefined)
+  ? {
+    ym: { enabled: Boolean(settings.analytics.ym), id: Number(settings.analytics.ym) },
+    ga: { enabled: Boolean(settings.analytics.ga), id: settings.analytics.ga },
+  }
+  : {
+    ym: { enabled: false, id: '' },
+    ga: { enabled: false, id: '' },
+  }
+);
 
 export default class AnalyticModel {
   @observable agreement = getCookie().indexOf('gdpr') >= 0;
 
+  @observable config = config;
+
+  @observable goal;
+
   @action agreeWithPolicy() {
     setCookie('gdpr', true, Date.now());
     this.agreement = true;
+    this.metricHit(this.goal);
   }
 
-  @action metricHit(link) {
+  @action metricHit(link, c = 0) {
+    console.log('Hit', link, c);
     if (!this.agreement) {
+      this.goal = link;
       return;
     }
-    setTimeout(() => {
-      try {
-        ym('hit', link);
-      } catch (e) {
-        console.error('YM Metrika error', e);
-        this.metricHit(link);
-      }
-    }, 1000);
+    if (this.config.ym.enabled) {
+      setTimeout(() => {
+        try {
+          ym('hit', link);
+        } catch (e) {
+          console.error('YM Metrika error', e);
+          if (c < 3) this.metricHit(link, c + 1);
+        }
+      }, 1000);
+    }
   }
 }

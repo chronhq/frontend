@@ -14,11 +14,13 @@ class Analytics extends React.Component {
   render() {
     return (
       <div>
-        <YMInitializer
-          accounts={[50501221]}
-          options={YM_CONFIG}
-          version='2'
-        />
+        {this.props.config.ym.enabled && (
+          <YMInitializer
+            accounts={[this.props.config.ym.id]}
+            options={YM_CONFIG}
+            version='2'
+          />
+        )}
       </div>
     );
   }

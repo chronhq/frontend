@@ -36,6 +36,14 @@ export default class YearModel {
     return (this.tuneValue >= this.min && this.tuneValue <= this.max);
   }
 
+  @computed get narrations() {
+    return this.rootStore.data.narrations.data;
+  }
+
+  @computed get maxTick() {
+    return Math.max(...Object.keys(this.narrations));
+  }
+
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
@@ -94,14 +102,17 @@ export default class YearModel {
   }
 
   @action setTick(tick) {
-    if (tick in this.rootStore.data.narrations.data) {
-      const narration = this.rootStore.data.narrations.data[tick];
+    if (tick in this.narrations) {
+      const narration = this.narrations[tick];
       if (narration.settings) {
         const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
         this.rootStore.deck.updateSettings(mapSetting);
       }
       this.setYear(narration.map_datetime.split('-')[0]);
       this.tick = tick;
+      if (this.maxTick === tick && this.rootStore.courseSelection.courseId > 0) {
+        this.rootStore.analytics.metricHit('narrative_completed');
+      }
     }
   }
 

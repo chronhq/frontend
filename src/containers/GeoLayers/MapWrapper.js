@@ -91,6 +91,7 @@ class MapWrapper extends React.Component {
         key = this.props.store.spaceTimeVolume.hovering(feature);
         this.props.store.balloon.setCountryBalloon(key, force);
         if (key !== null && key !== undefined) {
+          if (force === true) this.props.store.analytics.metricHit('check_country');
           this.props.store.balloon.setPosition(...position);
         }
         return true;
@@ -167,10 +168,12 @@ class MapWrapper extends React.Component {
         style={{ zIndex: 1 }}
         layers={this.layers}
         views={this.deck.view}
+        on
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
         onLayerClick={(info, allInfos, event) => {
           this.printDebugSTVInfo(event);
           if (this.props.store.balloon.unpin() !== true) {
+            this.props.store.analytics.metricHit('check_map');
             this.props.store.balloon.clickPosition = this.deck
               .interactiveMap.getMap().unproject([event.offsetX, event.offsetY]);
             this.setHoverBalloon(true)(info, allInfos, event);
