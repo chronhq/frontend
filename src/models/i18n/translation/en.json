@@ -83,6 +83,11 @@
     "head": "Head",
     "population": "Population"
   },
+  "gdpr": {
+    "title": "This website uses cookies",
+    "agree": "Agree",
+    "message": "We use cookies to  keep track of visitors and enhance user experience. By continuing to browse this website you consent to the use of these cookies."
+  },
   "sourcesBalloon": {
     "origin": "Data Origin",
     "sources": "Sources"
