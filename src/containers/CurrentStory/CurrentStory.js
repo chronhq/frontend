@@ -54,7 +54,10 @@ class CurrentStory extends Component {
             <Button
               btnType={BUTTON_TYPE.GHOST}
               className='currentstory__return'
-              onClick={this.props.changeUi}
+              onClick={() => {
+                this.props.handleStorySelection('world');
+                this.props.changeUi();
+              }}
             >
               <i className='lnr lnr-chevron-left' aria-hidden='true' />
               {this.dashboard.back}
@@ -64,7 +67,6 @@ class CurrentStory extends Component {
           className='currentstory--title'
           role='button'
           tabIndex={0}
-          onClick={this.props.changeUi}
           onKeyDown={e => this.handleTitleEnter(e)}
         >
           {(this.props.store.courseSelection.courseId !== null)

@@ -20,6 +20,7 @@ import React from 'react';
 
 import { computed } from 'mobx';
 import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
 
 import StoryList from '../../containers/StoryList/StoryList';
 import DashboardFooter from '../../containers/DashboardFooter/DashboardFooter';
@@ -76,6 +77,13 @@ class Dashboard extends React.Component {
       : this.msg.locationFollow;
   }
 
+  handleStorySelection = (url) => {
+    this.props.store.courseSelection.cleanup();
+    const course = this.props.store.courseSelection.find(url);
+    this.props.store.courseSelection.select(course.id, course.url);
+    this.props.history.push(`/${url}`);
+  }
+
   changeUI = () => {
     this.view.changeUI();
   }
@@ -95,10 +103,11 @@ class Dashboard extends React.Component {
         <CurrentStory
           isStorySelected={this.isStorySelected}
           changeUi={this.changeUI}
+          handleStorySelection={this.handleStorySelection}
         />
         {this.isStorySelected
           ? <DashboardFeed />
-          : <StoryList changeUi={this.changeUI} />
+          : <StoryList changeUi={this.changeUI} handleStorySelection={this.handleStorySelection} />
         }
         <DashboardFooter />
         <div className='dashboard-hide layer-2'>
@@ -120,4 +129,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);

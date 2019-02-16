@@ -2,33 +2,32 @@ import React from 'react';
 
 import './StoryCard.less';
 
+// TODO i18n for author
 const StoryCard = ({
-  title,
-  author,
-  dates,
-  cb
+  story,
+  handleStorySelection
 }) => (
   <div
     role='button'
     tabIndex={0}
     className='storycard'
-    onClick={() => cb()}
-    onKeyPress={() => cb()}
+    onClick={() => handleStorySelection(story.url)}
+    onKeyPress={() => handleStorySelection(story.url)}
   >
     <div className='storycard--title'>
       <h5>
-        {title}
+        {story.title}
       </h5>
     </div>
     <span className='storycard--dates'>
-      {dates.join(' - ')}
+      {[story.start_year, story.end_year].join(' - ')}
     </span>
     <div className='storycard--author'>
       <b>
         {'Author:'}
       </b>
       <p>
-        {author}
+        {story.author}
       </p>
     </div>
     <div className='storycard--rating'>
