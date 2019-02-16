@@ -67,7 +67,11 @@ export default class MapStyleModel {
   }
 
   @computed get pins() {
-    return pinsStyle(this.rootStore.year.now, this.rootStore.flags.pins.list);
+    return pinsStyle(
+      this.rootStore.year.now,
+      this.rootStore.flags.pins.list,
+      this.rootStore.courseSelection.courseId,
+    );
   }
 
   @computed get style() {

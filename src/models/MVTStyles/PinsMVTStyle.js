@@ -43,8 +43,11 @@ const getLayer = (now, id) => ({
   'source-layer': 'events'
 });
 
-const pins = (now, flags) => {
-  const url = 'cached-data';
+const pins = (now, flags, courseId) => {
+  if (courseId < 0) return { sources: {}, layers: [] };
+  const url = courseId > 0
+    ? `narrations/${courseId}`
+    : 'cached-data';
   const source = {
     type: 'vector',
     tiles: [`${window.location.origin}/api/mvt/${url}/{z}/{x}/{y}`]
