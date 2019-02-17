@@ -26,14 +26,31 @@ import ym from 'react-yandex-metrika';
 import { getCookie, setCookie } from '../utils/localStorage';
 import settings from '../../settings.json';
 
+const YM_CONFIG = {
+  defer: false,
+  clickmap: true,
+  trackLinks: true,
+  // accurateTrackBounce: true,
+  webvisor: true,
+  trackHash: false
+};
+
 const config = ((settings.analytics !== undefined)
   ? {
-    ym: { enabled: Boolean(settings.analytics.ym), id: Number(settings.analytics.ym) },
-    ga: { enabled: Boolean(settings.analytics.ga), id: settings.analytics.ga },
+    ym: {
+      enabled: Boolean(settings.analytics.ym),
+      id: Number(settings.analytics.ym),
+      config: YM_CONFIG
+    },
+    ga: {
+      enabled: Boolean(settings.analytics.ga),
+      id: settings.analytics.ga,
+      config: {}
+    },
   }
   : {
-    ym: { enabled: false, id: '' },
-    ga: { enabled: false, id: '' },
+    ym: { enabled: false, id: '', config: {} },
+    ga: { enabled: false, id: '', config: {} },
   }
 );
 
@@ -59,7 +76,7 @@ export default class AnalyticModel {
     if (this.config.ym.enabled) {
       setTimeout(() => {
         try {
-          ym('hit', link);
+          ym('reachGoal', link);
         } catch (e) {
           console.error('YM Metrika error', e);
           if (c < 3) this.metricHit(link, c + 1);
