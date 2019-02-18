@@ -61,6 +61,7 @@ class Article extends React.Component {
     if (this.isOpen === false) {
       return null;
     }
+    const data = this.timeline[this.tick];
     return (
       <div
         className='black-overlay'
@@ -81,12 +82,22 @@ class Article extends React.Component {
           </Button>
           <div className='article--title'>
             <b>
-              {this.timeline[this.tick] ? this.timeline[this.tick].title : ''}
+              {data ? data.title : ''}
             </b>
           </div>
           <div className='article--body--container'>
             <div className='article--body'>
-              {this.timeline[this.tick] ? this.timeline[this.tick].description : ''}
+              {data ? data.description : ''}
+              {(data && data.img)
+                ? (
+                  <img
+                    className='article--body'
+                    src={data.img}
+                    alt=''
+                  />
+                )
+                : ''
+              }
             </div>
           </div>
         </div>
