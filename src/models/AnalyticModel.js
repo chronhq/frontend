@@ -87,7 +87,7 @@ export default class AnalyticModel {
       setTimeout(() => {
         try {
           ReactGA.event({
-            category: 'User',
+            category: 'UserBehaviour',
             action: link
           });
         } catch (e) {
@@ -108,12 +108,16 @@ export default class AnalyticModel {
   }
 
   initGA = () => {
+    // Init GA component and start tracking
     if (this.config.ga.enabled) {
+      window[`ga-disable-${this.config.ga.id}`] = false;
       ReactGA.initialize(this.config.ga.id, this.config.ga.config);
     }
   }
 
   constructor() {
+    // Disable GA tracking
+    window[`ga-disable-${this.config.ga.id}`] = true;
     if (getCookie().indexOf('gdpr') >= 0) {
       this.agreement = true;
       this.initGA();

@@ -50,6 +50,7 @@ class Wrapper extends React.Component {
       const fake = this.props.fake || null;
       this.props.store.courseSelection.select(course.id, course.url, fake);
     } else {
+      this.props.store.analytics.metricHit('404');
       this.props.history.push('/404');
     }
   }
@@ -60,7 +61,9 @@ class Wrapper extends React.Component {
     };
     const error = toJS(this.props.store.data.narratives.status.error);
     if (error !== null && errorPages[toJS(error.status)] !== undefined) {
+      this.props.store.analytics.metricHit(toJS(error.status));
       this.props.history.push(`/${toJS(error.status)}`);
+      return;
     }
     this.selectCourse();
   }
