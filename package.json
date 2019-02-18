@@ -96,6 +96,7 @@
     "rc-tooltip": "^3.7.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-ga": "^2.5.7",
     "react-hotkeys": "^1.1.4",
     "react-map-gl": "^4.0.9",
     "react-router": "^4.3.1",

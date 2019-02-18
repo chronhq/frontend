@@ -22,6 +22,7 @@ import {
   action
 } from 'mobx';
 import ym from 'react-yandex-metrika';
+import ReactGA from 'react-ga';
 
 import { getCookie, setCookie } from '../utils/localStorage';
 import settings from '../../settings.json';
@@ -55,7 +56,7 @@ const config = ((settings.analytics !== undefined)
 );
 
 export default class AnalyticModel {
-  @observable agreement = getCookie().indexOf('gdpr') >= 0;
+  @observable agreement = false;
 
   @observable config = config;
 
@@ -64,24 +65,58 @@ export default class AnalyticModel {
   @action agreeWithPolicy() {
     setCookie('gdpr', true, Date.now());
     this.agreement = true;
+    this.initGA();
     this.metricHit(this.goal);
   }
 
-  @action metricHit(link, c = 0) {
-    console.log('Hit', link, c);
-    if (!this.agreement) {
-      this.goal = link;
-      return;
-    }
+  ymHit = (link, c = 0) => {
     if (this.config.ym.enabled) {
       setTimeout(() => {
         try {
           ym('reachGoal', link);
         } catch (e) {
           console.error('YM Metrika error', e);
-          if (c < 3) this.metricHit(link, c + 1);
+          if (c < 3) this.ymHit(link, c + 1);
         }
       }, 1000);
+    }
+  }
+
+  gaHit = (link, c = 0) => {
+    if (this.config.ga.enabled) {
+      setTimeout(() => {
+        try {
+          ReactGA.event({
+            category: 'User',
+            action: link
+          });
+        } catch (e) {
+          console.error('GA Error', e);
+          if (c < 3) this.gaHit(link, c + 1);
+        }
+      }, 1000);
+    }
+  }
+
+  metricHit = (link) => {
+    if (!this.agreement) {
+      this.goal = link;
+      return;
+    }
+    this.ymHit(link);
+    this.gaHit(link);
+  }
+
+  initGA = () => {
+    if (this.config.ga.enabled) {
+      ReactGA.initialize(this.config.ga.id, this.config.ga.config);
+    }
+  }
+
+  constructor() {
+    if (getCookie().indexOf('gdpr') >= 0) {
+      this.agreement = true;
+      this.initGA();
     }
   }
 }
