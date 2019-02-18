@@ -28,7 +28,6 @@ const natureOfStatement = {
 const wdProps = {
   items: {
     P17: 'country',
-    P31: 'instanceOf',
     P710: 'participant',
   },
   places: {

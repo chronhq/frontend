@@ -76,8 +76,12 @@ export default class BalloonModel {
   }
 
   @action setMVTEventBalloon(a, force = false) {
-    if (!this.eventPin && Boolean(a) && a.some(f => f.layer.id === 'battle')) {
-      this.rootStore.analytics.metricHit('check_battle');
+    if (!this.eventPin && Boolean(a)) {
+      const wIds = a.map(f => `Q${f.properties.wikidata_id}`);
+      this.rootStore.wikidata.getItems(wIds);
+      if (a.some(f => f.layer.id === 'battle')) {
+        this.rootStore.analytics.metricHit('check_battle');
+      }
     }
     this.changeBalloonStatus({ a, force, eventPin: Boolean(a) });
   }
@@ -117,11 +121,9 @@ export default class BalloonModel {
   @computed get getSelectedEvents() {
     if (this.eventPin) {
       try {
-        const wIds = [];
         const data = this.payload.map((f) => {
           const wId = `Q${f.properties.wikidata_id}`;
           if (this.rootStore.wikidata.cache[wId] === undefined) {
-            wIds.push(wId);
             return undefined;
           }
           let layer = 'actors'; // 'birth' or 'death' events
@@ -129,7 +131,6 @@ export default class BalloonModel {
           if (f.layer.id === 'document') layer = 'documents';
           return this.rootStore.wikistore[layer].getEventFromWid(f.layer.id, wId);
         }).filter(f => (f !== undefined && f !== null));
-        this.rootStore.wikidata.getItems(wIds);
         return { info: data };
       } catch (e) {
         console.error('Failed to parse Balloon payload', e, this.payload);

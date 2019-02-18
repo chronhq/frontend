@@ -134,28 +134,6 @@ class MapWrapper extends React.Component {
     }
   )
 
-  printDebugSTVInfo = (event) => {
-    const mapboxFeatures = this.deck.interactiveMap
-      .queryRenderedFeatures([event.offsetX, event.offsetY]);
-    // console.log(mapboxFeatures);
-    mapboxFeatures.map((f) => {
-      console.log('mbF', f);
-      if (f.properties !== undefined && f.properties.id) {
-        const STVs = this.props.store.spaceTimeVolume;
-        const s = STVs.hovering(f);
-        const sTitle = [
-          STVs.current[s].values.title,
-          STVs.current[s].values.subTitle
-        ];
-        console.log(
-          'AP:', f.properties.id,
-          'Clicked on STVs:', ...sTitle
-        );
-      }
-      return null;
-    });
-  }
-
   @action resize() {
     this.props.store.deck.width = window.innerWidth;
     this.props.store.deck.height = window.innerHeight;
@@ -171,7 +149,6 @@ class MapWrapper extends React.Component {
         on
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
         onLayerClick={(info, allInfos, event) => {
-          this.printDebugSTVInfo(event);
           if (this.props.store.balloon.unpin() !== true) {
             this.props.store.analytics.metricHit('check_map');
             this.props.store.balloon.clickPosition = this.deck

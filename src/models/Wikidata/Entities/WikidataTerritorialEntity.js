@@ -163,9 +163,9 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
   }
 
   @computed get emblem() {
-    if (Array.isArray(this.entity.claims.P94) && this.media.coatOfArms !== undefined) {
+    if (Array.isArray(this.entity.claims.P94) && this.media.flagImages !== undefined) {
       const file = this.entity.claims.P94[0];
-      const image = this.media.coatOfArms[file];
+      const image = this.media.flagImages[file];
       if (image !== undefined) return image.thumburl;
     }
     return undefined;
@@ -181,8 +181,13 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
   constructor(rootStore, type, full, simple) {
     super(rootStore, type, full, simple);
     this.flatDeps = [];
-    this.obtainImages(this.flags.map(f => f.value), 'flagImages');
-    this.obtainImages(this.entity.claims.P94, 'coatOfArms');
+
+    // fetch all images in one request
+    const images = this.flags.map(f => f.value);
+    if (this.entity.claims.P94 !== undefined) {
+      images.push(...this.entity.claims.P94);
+    }
+    this.obtainImages(images, 'flagImages');
   }
 }
 
