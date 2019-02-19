@@ -19,13 +19,14 @@
 import { observable, computed, action } from 'mobx';
 import AvailableLanguages from './translation/AvailableLanguages';
 
-import logoRu from '../../img/logo-grey-ru.svg';
-import logoEn from '../../img/logo-grey-en.svg';
+import logo from '../../img/logo-long.svg';
 
 export default class Internationalization {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
+
+  @observable logo = logo;
 
   @observable languages =
     Object.keys(AvailableLanguages)
@@ -52,9 +53,5 @@ export default class Internationalization {
 
   @computed get data() {
     return AvailableLanguages[this.lng];
-  }
-
-  @computed get logo() {
-    return this.lng === 'ru' ? logoRu : logoEn;
   }
 }
