@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, computed, action } from 'mobx';
+import { typesMapping } from './Wikidata/WikidataHelper';
 
 export default class BalloonModel {
   constructor(rootStore) {
@@ -126,9 +127,7 @@ export default class BalloonModel {
           if (this.rootStore.wikidata.cache[wId] === undefined) {
             return undefined;
           }
-          let layer = 'actors'; // 'birth' or 'death' events
-          if (f.layer.id === 'battle') layer = 'battles';
-          if (f.layer.id === 'document') layer = 'documents';
+          const layer = typesMapping[f.layer.id].store;
           return this.rootStore.wikistore[layer].getEventFromWid(f.layer.id, wId);
         }).filter(f => (f !== undefined && f !== null));
         return { info: data };

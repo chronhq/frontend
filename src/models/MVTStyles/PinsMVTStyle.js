@@ -16,18 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-const types = {
-  battle: { id: 178561, pic: 32, color: 'rgba(255,0,100, 1)' },
-  document: { id: 131569, pic: 24, color: 'rgba(100,255,0, 1)' },
-  birth: { id: 569, pic: 26, color: 'rgba(0,100,255, 1)' },
-  death: { id: 570, pic: 28, color: 'rgba(100,0,255, 1)' },
-};
+import { typesMapping } from '../Wikidata/WikidataHelper';
 
 const getLayer = (now, id) => ({
   id,
   layout: {
-    'icon-image': `pin-${types[id].pic}`,
+    'icon-image': `pin-${typesMapping[id].pic}`,
     'icon-rotate': -135,
     'icon-size': 0.5,
     'icon-anchor': 'top-left',
@@ -36,7 +30,7 @@ const getLayer = (now, id) => ({
   filter: [
     'all',
     ['==', 'year', now],
-    ['==', 'event_type', types[id].id]
+    ['==', 'event_type', typesMapping[id].id]
   ],
   type: 'symbol',
   source: 'events',

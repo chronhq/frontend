@@ -20,17 +20,11 @@ import {
   observable, computed, action, toJS
 } from 'mobx';
 
+import { typesMapping } from './Wikidata/WikidataHelper';
+
 function getIcon(info) {
-  switch (info.type) {
-    case 'birth': return 26; // Birth
-    case 'death': return 28; // Death
-    // Deprecated pin types
-    // case 'geo': return 30; // SimpleInfoPin
-    // case 'inv': return 27; // SimpleBulb
-    case 'battle': return 32; // SimpleSwords
-    case 'document': return 24; // treaty bird
-    default: return 31; // SimpleStar
-  }
+  const v = Object.keys(typesMapping).find(f => info.type === f);
+  return v === undefined ? 31 : v.pic;
 }
 
 function getKey(info) {

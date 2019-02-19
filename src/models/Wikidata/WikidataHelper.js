@@ -115,9 +115,20 @@ const getWikimediaURI = (names) => {
   return `https://${api}?${params}`;
 };
 
+const typesMapping = {
+  // { id: 'geo', pic: 30 }, // SimpleInfoPin
+  // { id: 'inv', pic: 27 }, // SimpleBulb
+  // { id: 'star', pic: 31 }, // SimpleStar
+  battle: { id: 178561, pic: 32, store: 'battles', },
+  document: { id: 131569, pic: 24, store: 'documents', },
+  birth: { id: 569, pic: 26, store: 'actors', },
+  death: { id: 570, pic: 28, store: 'actors', },
+};
+
 export {
   natureOfStatement,
   instanceOf,
+  typesMapping,
   wdProps,
   wdTypes,
   wdTypesMap,
