@@ -110,6 +110,8 @@ export default class YearModel {
       }
       this.setYear(narration.map_datetime.split('-')[0]);
       this.tick = tick;
+      // Fetch free data for free pins
+      this.rootStore.wikidata.getItems(this.rootStore.pins.narrationFreeDeps);
       if (this.maxTick === tick && this.rootStore.courseSelection.courseId > 0) {
         this.rootStore.analytics.metricHit('narrative_completed');
       }

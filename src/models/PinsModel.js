@@ -22,9 +22,14 @@ import {
 
 import { typesMapping } from './Wikidata/WikidataHelper';
 
+const typesStub = Object.keys(typesMapping).reduce((p, c) => ({
+  ...p,
+  [typesMapping[c].id]: []
+}), {});
+
 function getIcon(info) {
-  const v = Object.keys(typesMapping).find(f => info.type === f);
-  return v === undefined ? 31 : v.pic;
+  const v = typesMapping[info.type].pic;
+  return v === undefined ? 31 : v;
 }
 
 function getKey(info) {
@@ -122,8 +127,40 @@ export default class PinsModel {
     return p;
   }
 
+  @computed get narrationFree() {
+    const { tick } = this.rootStore.year;
+    const narrations = this.rootStore.data.narrations.data;
+    if (narrations[tick] !== undefined && Array.isArray(narrations[tick].attached_events)) {
+      const events = narrations[tick].attached_events.filter(a => a.location === null);
+      return events.reduce((p, c) => ({
+        ...p,
+        [c.event_type]: [...p[c.event_type], `Q${c.wikidata_id}`]
+      }), { ...typesStub });
+    }
+    return typesStub;
+  }
+
+  @computed get narrationFreeDeps() {
+    return Object.keys(typesStub).reduce((p, c) => ([...p, ...this.narrationFree[c]]), []);
+  }
+
+  @computed get narrationFreePins() {
+    return Object.keys(typesMapping).reduce((prev, k) => {
+      const layer = typesMapping[k].store;
+      const pins = this.narrationFree[typesMapping[k].id].map(w => (
+        this.rootStore.wikistore[layer].getEventFromWid(k, w)
+      )).filter(f => (f !== undefined && f !== null));
+      return [...prev, ...pins];
+    }, []);
+  }
+
   @computed get freePins() {
-    return this.getActivePins('free')
-      .map(p => new InteractivePin([p], getKey(p)));
+    const buildPin = p => new InteractivePin([p], getKey(p));
+    const active = this.getActivePins('free').map(buildPin);
+    const narrative = this.narrationFreePins.map(buildPin);
+    return [
+      ...active,
+      ...narrative,
+    ];
   }
 }

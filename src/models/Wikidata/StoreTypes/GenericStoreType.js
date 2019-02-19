@@ -86,6 +86,7 @@ class GenericStoreType {
 
   getEvent = (type, cur) => {
     const event = {
+      key: cur.id,
       type: this.type,
       loc: cur.place || {}, // in case if place if undefined
       [this.type]: cur,

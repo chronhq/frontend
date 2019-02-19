@@ -62,7 +62,7 @@ class FreePinsWidget extends React.Component {
               this.props.store.balloon.setPinBalloon(null);
               return true;
             }}
-            onMouseMove={e => this.setTooltip(icon, e)}
+            onMouseMove={e => this.setBalloon(icon, e)}
           />
         ))}
       </g>
