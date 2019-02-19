@@ -24,7 +24,7 @@ import { wdProps } from '../WikidataHelper';
 import WikidataGenericEntity from './WikidataGenericEntity';
 
 class WikidataEntity extends WikidataGenericEntity {
-  getCoordinates = loc => loc.map(i => (this.cache[i]
+  getCoordinates = loc => loc.map(i => ((this.cache[i] && this.cache[i].values.coordinateLocation)
     ? this.cache[i].values.coordinateLocation
       .map(l => ({
         y: l[0],

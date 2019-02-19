@@ -44,6 +44,7 @@ export default class DataModel {
     world: [
     ],
     heavy: [
+      'cached-data',
     ]
   };
 

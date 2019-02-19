@@ -100,6 +100,23 @@ export default class CourseSideEffects {
     this.rootStore.data.mapSettings.filter = filter;
   }
 
+  @action updateCD() {
+    const filter = `year=${this.rootStore.year.now}&has_location=false`;
+    this.rootStore.data.cachedData.filter = filter;
+    this.rootStore.data.cachedData.wipe();
+    if (this.courseId === 0) {
+      this.rootStore.data.cachedData.get();
+      when(
+        () => this.rootStore.data.cachedData.status.loaded,
+        () => {
+          const wIds = Object.values(this.rootStore.data.cachedData.data)
+            .map(c => `Q${c.wikidata_id}`);
+          this.rootStore.wikidata.getItems(wIds);
+        }
+      );
+    }
+  }
+
   @action loadBaseData() {
     this.rootStore.data.resolveDependencies(this.deps.base);
   }
@@ -155,6 +172,7 @@ export default class CourseSideEffects {
           this.rootStore.deck.updateSettings(this.courseInfo.mapSettings);
         }
         this.rootStore.year.setTick(0);
+        this.updateCD();
       }
     );
 

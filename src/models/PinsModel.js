@@ -27,6 +27,11 @@ const typesStub = Object.keys(typesMapping).reduce((p, c) => ({
   [typesMapping[c].id]: []
 }), {});
 
+const getFreeEvents = (p, c) => ({
+  ...p,
+  [c.event_type]: [...p[c.event_type], `Q${c.wikidata_id}`]
+});
+
 function getIcon(info) {
   const v = typesMapping[info.type].pic;
   return v === undefined ? 31 : v;
@@ -128,14 +133,17 @@ export default class PinsModel {
   }
 
   @computed get narrationFree() {
-    const { tick } = this.rootStore.year;
-    const narrations = this.rootStore.data.narrations.data;
-    if (narrations[tick] !== undefined && Array.isArray(narrations[tick].attached_events)) {
-      const events = narrations[tick].attached_events.filter(a => a.location === null);
-      return events.reduce((p, c) => ({
-        ...p,
-        [c.event_type]: [...p[c.event_type], `Q${c.wikidata_id}`]
-      }), { ...typesStub });
+    const { courseId } = this.rootStore.courseSelection;
+    if (courseId > 0) {
+      const { tick } = this.rootStore.year;
+      const narrations = this.rootStore.data.narrations.data;
+      if (narrations[tick] !== undefined && Array.isArray(narrations[tick].attached_events)) {
+        const events = narrations[tick].attached_events.filter(a => a.location === null);
+        return events.reduce(getFreeEvents, { ...typesStub });
+      }
+    } if (courseId === 0 && this.rootStore.data.cachedData.status.loaded) {
+      return Object.values(this.rootStore.data.cachedData.data)
+        .reduce(getFreeEvents, { ...typesStub });
     }
     return typesStub;
   }
