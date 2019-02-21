@@ -22,15 +22,15 @@
     flex-direction: row;
     justify-content: center;
     &_single {
-      max-height: 300px;
+      height: 30vh;
     }
     &_over {
-      transform: translateX(70px);
-      max-height: 300px;
+      transform: translateX(15%);
+      height: 30vh;
     }
     &_under {
-      transform: translateX(-20px);
-      max-height: 300px;
+      transform: translateX(-15%);
+      height: 30vh;
     }
   }
 }
@@ -39,12 +39,13 @@
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  height: 120px;
   min-width: 300px;
   & img {
     margin-top: 20px;
     margin-bottom: 20px;
-    width: 100%;
-    height: auto;
+    height: 10vh;
+    @media screen and (max-width: 40em) {
+      height: 5vh;
+    }
   }
 }
