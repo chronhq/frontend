@@ -87,7 +87,7 @@ export default class YearModel {
   }
 
   resetTuneValue() {
-    this.setYear(this.now);
+    if (this.tuneValue !== this.now) this.setYear(this.now);
   }
 
   nextYear() {
