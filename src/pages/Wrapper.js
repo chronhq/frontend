@@ -28,8 +28,13 @@ class Wrapper extends React.Component {
     this.metricHit();
     when( // validate course name and download data
       () => this.props.store.data.narratives.status.loaded || this.props.story === 'world',
-      () => this.validateNarratives()
+      () => this.checkForErrors('narratives', () => this.selectCourse())
     );
+    // TODO test against various conditions
+    this.props.store.data.camelDeps.base.map(d => when(
+      () => this.props.store.data[d].status.loaded,
+      () => this.checkForErrors(d)
+    ));
   }
 
   componentDidUpdate(prevProps) {
@@ -55,17 +60,17 @@ class Wrapper extends React.Component {
     }
   }
 
-  validateNarratives() {
+  checkForErrors(d, cb = () => '') {
     const errorPages = {
       404: 'Not Found', 502: 'Gateway timeout', 504: 'Bad Gateway'
     };
-    const error = toJS(this.props.store.data.narratives.status.error);
+    const error = toJS(this.props.store.data[d].status.error);
     if (error !== null && errorPages[toJS(error.status)] !== undefined) {
       this.props.store.analytics.metricHit(toJS(error.status));
       this.props.history.push(`/${toJS(error.status)}`);
       return;
     }
-    this.selectCourse();
+    cb();
   }
 
   render() {
