@@ -95,13 +95,13 @@ export default class CourseSideEffects {
   }
 
   @action configureDataFilters() {
-    const filter = `narrative=${this.courseId}`;
+    const filter = `?narrative=${this.courseId}`;
     this.rootStore.data.narrations.filter = filter;
     this.rootStore.data.mapSettings.filter = filter;
   }
 
   @action updateCD() {
-    const filter = `year=${this.rootStore.year.now}&has_location=false`;
+    const filter = `?year=${this.rootStore.year.now}&has_location=false`;
     this.rootStore.data.cachedData.filter = filter;
     this.rootStore.data.cachedData.wipe();
     if (this.courseId === 0) {

@@ -88,7 +88,7 @@ export default class DataLoaderModel {
       console.log('get', this.model, params, id);
       return `/api/${this.model}/${id}/`;
     } if (filter !== null) {
-      return `/api/${this.model}/?${filter}`;
+      return `/api/${this.model}/${filter}`;
     }
     return `/api/${this.model}/`;
   }

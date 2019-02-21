@@ -97,6 +97,7 @@ export default class DataModel {
       arrayCb: false,
       wrapData: d => new SpaceTimeVolume(rootStore, d.id, d),
     });
+    this.spacetimeVolumes.filter = 'all/';
   }
 
   @action resolveDependencies(depend) {

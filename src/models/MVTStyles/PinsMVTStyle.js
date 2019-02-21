@@ -42,7 +42,7 @@ const getLayer = (now, id, wIds = null) => ({
 const pins = (now, flags, courseId, wIds = null) => {
   if (courseId < 0) return { sources: {}, layers: [] };
   const url = courseId > 0
-    ? `narrations/${courseId}`
+    ? `narratives/${courseId}`
     : 'cached-data';
   const source = {
     type: 'vector',
