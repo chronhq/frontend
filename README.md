@@ -24,6 +24,7 @@ npm i
 # New token can be accuired from https://www.mapbox.com/account/access-tokens
 
 sed 's/MAPBOX_TOKEN/past_your_token_here/' settings.json.example > settings.json
+# Optional: configure analytics in the same config
 
 # Run the app in development environment
 # webpack-dev-server - 0.0.0.0:3000
@@ -51,13 +52,13 @@ However docker-compose is applicable for development purposes
 ------
 ### Endpoints
 
-There are three endpoints for fetching data from backend
+There are two endpoints for fetching data from backend
 
 Development config:
 ```json
 proxy: {
-  "/api": "http://api:3333/",
-  "/mvt": "http://api:3333/",
+  "/api": "http://api/",
+  "/mvt": "http://api:5000/",
 }
 ```
 `/api` - REST requests for data

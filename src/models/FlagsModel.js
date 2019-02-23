@@ -22,14 +22,12 @@ const flags = {
   runtime: {
     SelectedCourse: null,
     alignPanel: 'right',
-    feedback: false,
     article: false,
     yearInput: false,
     SidePanelTab: 0,
     SidePanelIsOpen: false,
     TimelineIsMinified: false,
     BioIsOpen: false,
-    animation: true,
     cluster: true,
   },
   layer: {
@@ -37,18 +35,19 @@ const flags = {
     labels: true,
     mapDecorations: true,
     cities: true,
-    traces: true,
   },
   pins: {
-    inventions: true,
     persons: true,
-    geoEvents: true,
     battle: true,
     document: true,
   },
   zoom: {
-    minScale: 1,
-    maxScale: 8,
+    minZoom: 1,
+    maxZoom: 8,
+  },
+  projection: {
+    center: [0, 0],
+    clip: [[-180, 90], [180, -90]],
   }
 };
 
@@ -101,9 +100,11 @@ class FlagList {
 }
 
 export default class FlagsModel {
+  @observable defaultFlags = flags;
+
   constructor() {
-    Object.keys(flags).map((l) => {
-      this[l] = new FlagList(flags[l]);
+    Object.keys(this.defaultFlags).map((l) => {
+      this[l] = new FlagList(this.defaultFlags[l]);
       return null;
     });
   }

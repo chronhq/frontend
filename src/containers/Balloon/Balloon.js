@@ -21,9 +21,8 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import {
+  Sources,
   PersonFact,
-  Invention,
-  GeoEvent,
   Battle,
   Document
 } from '../../components/Messages';
@@ -34,22 +33,21 @@ import './Balloon.less';
 @inject('store')
 @observer
 class Balloon extends React.Component {
-  @computed get persons() {
-    return this.props.store.data.Persons.data;
+  @computed get pin() {
+    return this.props.store.balloon.selected;
   }
 
-  @computed get pin() {
-    return this.props.store.pins.selected;
+  @computed get pinned() {
+    return this.props.store.balloon.pinned;
   }
 
   @computed get countryHover() {
-    return this.props.store.pins.countryHover;
-    // return null;
+    return this.props.store.balloon.countryHover;
   }
 
   @computed get opacity() {
-    if (this.countryHover === null) {
-      return (this.pin === null || typeof this.pin === 'undefined')
+    if (this.countryHover === false) {
+      return (this.pin === null || this.pin === undefined || this.pin.info.length === 0)
         ? 0 : 1;
     }
     return 1;
@@ -60,31 +58,21 @@ class Balloon extends React.Component {
     return {
       opacity: this.opacity,
       visibility: this.opacity ? 'visible' : 'hidden',
-      top: `${this.props.store.pins.pageY}px`,
-      left: `${this.props.store.pins.pageX}px`,
+      top: `${this.props.store.balloon.pageY}px`,
+      left: `${this.props.store.balloon.pageX}px`,
     };
   }
 
-  @computed get classNames() {
-    const classes = ['balloonNews'];
-    if (this.props.store.pins.pageX > 0.5 * window.innerWidth) {
-      if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
-        classes.push('balloonTopRight');
-      } else {
-        classes.push('balloonBottomRight');
+  @computed get positionClassName() {
+    if (this.props.store.balloon.pageX > 0.5 * window.innerWidth) {
+      if (this.props.store.balloon.pageY < 0.7 * window.innerHeight) {
+        return 'balloonTopRight';
       }
-    } else if (this.props.store.pins.pageY < 0.7 * window.innerHeight) {
-      classes.push('balloonTopLeft');
-    } else {
-      classes.push('balloonBottomLeft');
+      return 'balloonBottomRight';
+    } if (this.props.store.balloon.pageY < 0.7 * window.innerHeight) {
+      return 'balloonTopLeft';
     }
-
-    // if (this.props.store.pins.pageY > 0.7*window.innerHeight) {
-    //   classes.push('balloonBottom');
-    // } else {
-    //   classes.push('balloonTop');
-    // }
-    return classes;
+    return 'balloonBottomLeft';
   }
 
   @computed get i18n() {
@@ -92,62 +80,70 @@ class Balloon extends React.Component {
   }
 
   @computed get news() {
-    if (this.countryHover !== null && this.countryHover !== undefined) {
-      return <CountryHover id={this.countryHover} />;
-    }
-    if (this.pin === null || typeof this.pin === 'undefined') return null;
-
+    if (this.pin === null || this.pin === undefined) return [];
     return this.pin.info.map((pin) => {
       switch (pin.type) {
-        case 'geo': return (
-          <GeoEvent
-            fact={pin.geoEvent}
-            key={`balloon_geo_${pin.geoEvent.id}`}
-          />
-        );
-
-        case 'inv':
-          return (
-            <Invention
-              fact={this.i18n.invention(pin.invention)}
-              key={`balloon_inv_${pin.invention.id}`}
-            />
-          );
+        case 'countryHover':
+          return {
+            id: 'countryHoverBaloon',
+            message: <CountryHover id={this.pin.info[0].data} />,
+            sources: <Sources id={this.pin.info[0].data} type={this.pin.info[0].type} />
+          };
         case 'death':
         case 'birth':
         // actor from wikidata
-          return (
-            <PersonFact
-              person={pin.person.wd === true
-                ? pin.person
-                : this.i18n.person(pin.person, pin.type)}
-              key={`balloon_person_${pin.type}_${pin.person.id}`}
-            />
-          );
+          return {
+            id: `personHoverBalloon_${pin.person.id}`,
+            message: (
+              <PersonFact
+                person={pin.person}
+                key={`balloon_person_${pin.type}_${pin.person.id}`}
+              />
+            ),
+            sources: () => ''
+          };
         case 'battle':
-          return (
-            <Battle
-              fact={pin.battle}
-              key={`balloon_battle_${pin.type}_${pin.battle.id}`}
-            />
-          );
+          return {
+            id: `battleHoverBalloon_${pin.battle.id}`,
+            message: (
+              <Battle
+                fact={pin.battle}
+                key={`balloon_battle_${pin.type}_${pin.battle.id}`}
+              />
+            ),
+            sources: () => ''
+          };
         case 'document':
-          return (
-            <Document
-              fact={pin.document}
-              key={`balloon_battle_${pin.type}_${pin.document.id}`}
-            />
-          );
+          return {
+            id: `documentHoverBalloon_${pin.document.id}`,
+            message: (
+              <Document
+                fact={pin.document}
+                key={`balloon_battle_${pin.type}_${pin.document.id}`}
+              />
+            ),
+            sources: () => ''
+          };
         default:
-          return () => '';
+          return { message: () => '', sources: () => '', id: 'defaultBalloonId' };
       }
     });
   }
 
   render() {
+    const container = `balloonNewsContainer ${this.positionClassName}`;
+    const news = 'balloonNews balloonMain';
+    const sources = 'balloonNews balloonSources';
     return (
-      <div style={{ ...this.style }} className={this.classNames.join(' ')}>
-        {this.news}
+      <div style={{ ...this.style }} className={container}>
+        <div className={news}>
+          {this.news.map(n => (<div key={`news_${n.id}`}>{n.message}</div>))}
+        </div>
+        {this.pinned && (
+          <div className={sources}>
+            {this.news.map(n => (<div key={`sources_${n.id}`}>{n.sources}</div>))}
+          </div>
+        )}
       </div>
     );
   }

@@ -23,15 +23,16 @@ import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 @inject('store')
 @observer
 class YearButton extends React.Component {
-  toggle() {
+  toggle = () => {
     this.props.store.flags.runtime.toggle('yearInput');
+    this.props.store.analytics.metricHit('year_change');
   }
 
   render() {
     return (
       <Button
         btnType={BUTTON_TYPE.ICON}
-        onClick={() => this.toggle()}
+        onClick={this.toggle}
       >
         {this.props.store.year.tuneValue}
       </Button>

@@ -20,32 +20,25 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { runInAction } from 'mobx';
 
-import SideBar from '../templates/SideBar/SideBar';
-import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileBar';
-import TimePanel from '../templates/TimePanel/TimePanel';
-import Overlays from '../templates/Overlays/Overlays';
-import Widgets from '../containers/Widgets';
-import Balloon from '../containers/Balloon';
-import FontLoader from '../containers/FontLoader';
-import GeoLayers from '../containers/GeoLayers';
-import Wrapper from './Wrapper';
+import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
+import Narrative from './Narrative';
+
+const year = 1789;
+
+const mapSettings = buildMapSettings({
+  zoom_min: 4, zoom_max: 7.5, coordinates: [[50, 5], [50, 5]]
+});
+
+// Create a fake course
+const demo = buildNarrative({
+  start_year: year, end_year: year, url: 'demo', name: 'EADH 2018 Demo', mapSettings
+});
 
 @inject('store')
 @observer
 class Demo extends React.Component {
   constructor(props) {
     super(props);
-    // Create a fake course
-    const demo = this.props.store.data.Courses.data[0];
-    demo.config.year = {
-      min: 1789,
-      max: 1789,
-      now: 1789,
-      tick: 1, // does not really matter
-    };
-    demo.config.settings.flags.zoom.minScale = 4;
-    // Centring map on Europe. Coordinates are in [long, lat] format
-    demo.config.projection.center = [5, 50];
     this.props.store.wikistore.battles.add([
       'Q1025134', 'Q898338', 'Q2234632', 'Q10671369',
       'Q4871992', 'Q4872085', 'Q2564536', 'Q6539', 'Q1527921'], false);
@@ -59,23 +52,13 @@ class Demo extends React.Component {
     this.props.store.wikistore.fetchAll();
 
     runInAction(() => {
-      this.props.store.data.Courses.data[0] = demo;
-      this.props.store.courseSelection.select(0, 'world');
+      this.props.store.data.narratives.data[-1] = demo;
     });
   }
 
   render() {
     return (
-      <Wrapper story='world'>
-        <Widgets />
-        <NarrativeMobileBar />
-        <SideBar />
-        <FontLoader />
-        <Overlays />
-        <TimePanel />
-        <Balloon />
-        <GeoLayers />
-      </Wrapper>
+      <Narrative story='demo' fake='0' />
     );
   }
 }

@@ -36,9 +36,10 @@ class TrucatePart extends React.Component {
     return this.props.store.i18n.data.dashboard;
   }
 
-  toggleArticle(e) {
+  toggleArticle = (e) => {
     e.stopPropagation();
-    // set data for showing within model or somehow else
+    this.props.store.analytics.metricHit('narrative_expand');
+    // TODO set data for showing within model or somehow else
     this.props.store.flags.runtime.set('article', true);
   }
 

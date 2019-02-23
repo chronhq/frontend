@@ -20,35 +20,39 @@ import { computed } from 'mobx';
 import GenericStoreType from './GenericStoreType';
 
 class ActorsStoreType extends GenericStoreType {
+  getEvent = (type, cur) => {
+    const misc = {
+      deathDate: cur.dateOfDeathText,
+      birthDate: cur.dateOfBirthText,
+    };
+
+    const typeU = `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
+    const year = cur[`dateOf${typeU}`] instanceof Date
+      ? cur[`dateOf${typeU}`].getUTCFullYear() : '';
+
+    const person = {
+      key: cur.id,
+      id: cur.id,
+      title: this.rootStore.i18n.data.messages[`person${typeU}`],
+      label: cur.label,
+      location: cur[`placeOf${typeU}`].label
+        || this.rootStore.i18n.data.unknown.place,
+      ...misc,
+    };
+    const event = {
+      type,
+      loc: cur[`placeOf${typeU}`],
+      person,
+    };
+    return { year, event };
+  }
+
   @computed get timeline() {
-    return this.inCache.reduce((prev, cur) => {
-      const misc = {
-        deathDate: cur.dateOfDeathText,
-        birthDate: cur.dateOfBirthText,
-      };
-
-      return ['birth', 'death'].reduce((p, type) => {
-        const typeU = `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
-        const year = cur[`dateOf${typeU}`].getUTCFullYear();
-
-        const person = {
-          wd: true, // this entity is from wikidata
-          key: cur.id,
-          id: cur.id,
-          title: this.rootStore.i18n.data.messages[`person${typeU}`],
-          label: cur.label,
-          location: cur[`placeOf${typeU}`].label
-            || this.rootStore.i18n.data.unknown.place,
-          ...misc,
-        };
-        const event = {
-          type,
-          loc: cur[`placeOf${typeU}`],
-          person,
-        };
+    return this.inCache.reduce((prev, cur) => (
+      ['birth', 'death'].reduce((p, type) => {
+        const { year, event } = this.getEvent(type, cur);
         const curYear = p[year] || { free: [], pins: [] };
         const pos = event.loc.x !== undefined ? 'pins' : 'free';
-
         return {
           ...p,
           [year]: { // birth | death
@@ -56,8 +60,8 @@ class ActorsStoreType extends GenericStoreType {
             [pos]: [...curYear[pos], event]
           }
         };
-      }, prev);
-    }, { /* [year]: { free: [], pins: [] } */ });
+      }, prev)
+    ), { /* [year]: { free: [], pins: [] } */ });
   }
 }
 

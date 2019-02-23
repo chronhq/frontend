@@ -32,13 +32,16 @@ export default class YearModel {
   // for UI interface and 'year' sliders
   @observable tuneValue;
 
-  @observable playing = false;
-
-  // timeout before change year
-  @observable yearInterval = 1000;
-
   @computed get tuneIsValid() {
     return (this.tuneValue >= this.min && this.tuneValue <= this.max);
+  }
+
+  @computed get narrations() {
+    return this.rootStore.data.narrations.data;
+  }
+
+  @computed get maxTick() {
+    return Math.max(...Object.keys(this.narrations));
   }
 
   constructor(rootStore) {
@@ -63,6 +66,7 @@ export default class YearModel {
     this.now = (year > this.max || year < this.min)
       ? this.min
       : year;
+    this.rootStore.courseSelection.updateCD();
     this.setTuneValue(this.now);
   }
 
@@ -83,7 +87,7 @@ export default class YearModel {
   }
 
   resetTuneValue() {
-    this.setYear(this.now);
+    if (this.tuneValue !== this.now) this.setYear(this.now);
   }
 
   nextYear() {
@@ -99,9 +103,19 @@ export default class YearModel {
   }
 
   @action setTick(tick) {
-    if (tick in this.rootStore.data.CourseTimelines.data) {
-      this.setYear(this.rootStore.data.CourseTimelines.data[tick].year);
+    if (tick in this.narrations) {
+      const narration = this.narrations[tick];
+      if (narration.settings) {
+        const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
+        this.rootStore.deck.updateSettings(mapSetting);
+      }
+      this.setYear(narration.map_datetime.split('-')[0]);
       this.tick = tick;
+      // Fetch free data for free pins
+      this.rootStore.wikidata.getItems(this.rootStore.pins.narrationFreeDeps);
+      if (this.maxTick === tick && this.rootStore.courseSelection.courseId > 0) {
+        this.rootStore.analytics.metricHit('narrative_completed');
+      }
     }
   }
 
@@ -111,16 +125,5 @@ export default class YearModel {
 
   prevTick() {
     this.setTick(this.tick - 1);
-  }
-
-  play() {
-    if (this.playing === false) return;
-    this.nextYear();
-    setTimeout(() => this.play(), this.yearInterval);
-  }
-
-  @action togglePlay(playing = !this.playing) {
-    this.playing = playing;
-    this.play();
   }
 }

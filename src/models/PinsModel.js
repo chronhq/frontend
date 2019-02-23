@@ -20,24 +20,27 @@ import {
   observable, computed, action, toJS
 } from 'mobx';
 
+import { typesMapping } from './Wikidata/WikidataHelper';
+
+const typesStub = Object.keys(typesMapping).reduce((p, c) => ({
+  ...p,
+  [typesMapping[c].id]: []
+}), {});
+
+const getFreeEvents = (p, c) => ({
+  ...p,
+  [c.event_type]: [...p[c.event_type], `Q${c.wikidata_id}`]
+});
+
 function getIcon(info) {
-  switch (info.type) {
-    case 'birth': return 26; // Birth
-    case 'death': return 28; // Death
-    case 'geo': return 30; // SimpleInfoPin
-    case 'inv': return 27; // SimpleBulb
-    case 'battle': return 32; // SimpleSwords
-    case 'document': return 24; // treaty bird
-    default: return 31; // SimpleStar
-  }
+  const v = typesMapping[info.type].pic;
+  return v === undefined ? 31 : v;
 }
 
 function getKey(info) {
   switch (info.type) {
     case 'birth': return `P_${info.person.id}_${info.type}`;
     case 'death': return `P_${info.person.id}_${info.type}`;
-    case 'geo': return `P_${info.geoEvent.id}`;
-    case 'inv': return `P_${info.invention.id}`;
     case 'battle': return `P_${info.battle.id}`;
     case 'document': return `P_${info.document.id}`;
     default: return 'P_default';
@@ -53,65 +56,33 @@ class InteractivePin {
   }
 }
 
-export default class FeedPinsModel {
+export default class PinsModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
 
-  @observable pinsOrder = [
-    'geoEvents', 'inventions', 'document', 'battle', 'persons'];
+  @observable pinsOrder = ['document', 'battle', 'persons'];
 
-  @observable active = null;
+  // dummy pins are sorced directly from deck.gl layer and do not have tooltip
+  // [{ pic: 26, point: { x: 33.044167, y: 34.674722 } }]
+  @observable dummyPins = [];
 
-  @observable selectedFreePin = false;
-
-  @observable pageX = 0;
-
-  @observable pageY = 1;
-
-  @observable countryHover = null;
-
-  @action setPosition(x, y) {
-    this.pageX = x;
-    this.pageY = y;
+  @action addDummyPins(points, keep = true) {
+    this.dummyPins = keep
+      ? observable([...this.dummyPins, points])
+      : observable(points);
   }
 
-  @action setActive(a, free = false) {
-    this.countryHover = null;
-    this.selectedFreePin = free;
-    this.active = a;
-  }
-
-  @action setCountryActive(c) {
-    this.countryHover = c;
-    this.active = Boolean(c);
+  @action wipeDummyPins() {
+    this.addDummyPins([], false);
   }
 
   @computed get visibility() {
     return this.rootStore.flags.pins.list;
   }
 
-  @computed get selected() {
-    return this.selectedFreePin
-      ? this.freePins.find(pin => pin.key === this.active)
-      : this.pins.find(pin => pin.key === this.active);
-  }
-
   @computed get personsRawPins() {
-    const persons = this.rootStore.prepared.persons.pins;
-    const actors = this.rootStore.wikistore.actors.pins;
-    return {
-      free: [...persons.free, ...actors.free],
-      pins: [...persons.pins, ...actors.pins],
-    };
-  }
-
-  @computed get inventionsRawPins() {
-    return this.rootStore.prepared.inventions.pins;
-  }
-
-  @computed get geoEventsRawPins() {
-    return this.rootStore.prepared.geoEventsList.pins;
+    return this.rootStore.wikistore.actors.pins;
   }
 
   @computed get battleRawPins() {
@@ -155,20 +126,49 @@ export default class FeedPinsModel {
     Object.keys(this.combineRawPins)
       .map((d) => {
         const pin = toJS(this.combineRawPins[d]);
-        const inTheBox = this.rootStore
-          .projection.inTheBox(pin[0].loc.x, pin[0].loc.y);
-        if (inTheBox) {
-          p.push(new InteractivePin(pin, d));
-        } else {
-          console.log('Not In the Box', JSON.stringify(pin), pin[0].loc.x, pin[0].loc.y);
-        }
+        p.push(new InteractivePin(pin, d));
         return false;
       });
     return p;
   }
 
+  @computed get narrationFree() {
+    const { courseId } = this.rootStore.courseSelection;
+    if (courseId > 0) {
+      const { tick } = this.rootStore.year;
+      const narrations = this.rootStore.data.narrations.data;
+      if (narrations[tick] !== undefined && Array.isArray(narrations[tick].attached_events)) {
+        const events = narrations[tick].attached_events.filter(a => a.location === null);
+        return events.reduce(getFreeEvents, { ...typesStub });
+      }
+    } if (courseId === 0 && this.rootStore.data.cachedData.status.loaded) {
+      return Object.values(this.rootStore.data.cachedData.data)
+        .reduce(getFreeEvents, { ...typesStub });
+    }
+    return typesStub;
+  }
+
+  @computed get narrationFreeDeps() {
+    return Object.keys(typesStub).reduce((p, c) => ([...p, ...this.narrationFree[c]]), []);
+  }
+
+  @computed get narrationFreePins() {
+    return Object.keys(typesMapping).reduce((prev, k) => {
+      const layer = typesMapping[k].store;
+      const pins = this.narrationFree[typesMapping[k].id].map(w => (
+        this.rootStore.wikistore[layer].getEventFromWid(k, w)
+      )).filter(f => (f !== undefined && f !== null));
+      return [...prev, ...pins];
+    }, []);
+  }
+
   @computed get freePins() {
-    return this.getActivePins('free')
-      .map(p => new InteractivePin([p], getKey(p)));
+    const buildPin = p => new InteractivePin([p], getKey(p));
+    const active = this.getActivePins('free').map(buildPin);
+    const narrative = this.narrationFreePins.map(buildPin);
+    return [
+      ...active,
+      ...narrative,
+    ];
   }
 }

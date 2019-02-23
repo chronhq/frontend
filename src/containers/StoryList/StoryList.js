@@ -19,7 +19,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
-import { withRouter } from 'react-router-dom';
 
 import StoryCard from '../../components/StoryCard/StoryCard';
 import './StoryList.less';
@@ -31,28 +30,14 @@ class StoryList extends React.Component {
     return this.props.store.search.Narratives.entities;
   }
 
-  @computed get lng() {
-    return this.props.store.i18n.lng;
-  }
-
-  handleStorySelection(url) {
-    this.props.store.courseSelection.cleanup();
-    const course = this.props.store.courseSelection.find(url);
-    this.props.store.courseSelection.select(course.id, course.url);
-    this.props.history.push(`/${url}`);
-  }
-
   render() {
     return (
       <div className='dashboard-content'>
         {Object.values(this.courses).map(story => (
           <StoryCard
             key={`card_${story.url}`}
-            title={story.name[this.lng]}
-            author={story.author[this.lng]}
-            url={story.url}
-            dates={[story.config.year.min, story.config.year.max]}
-            cb={() => this.handleStorySelection(story.url)}
+            story={story}
+            handleStorySelection={this.props.handleStorySelection}
           />
         ))}
       </div>
@@ -60,4 +45,4 @@ class StoryList extends React.Component {
   }
 }
 
-export default withRouter(StoryList);
+export default StoryList;

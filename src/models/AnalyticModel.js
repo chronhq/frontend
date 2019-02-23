@@ -22,28 +22,105 @@ import {
   action
 } from 'mobx';
 import ym from 'react-yandex-metrika';
+import ReactGA from 'react-ga';
 
 import { getCookie, setCookie } from '../utils/localStorage';
+import settings from '../../settings.json';
+
+const YM_CONFIG = {
+  defer: false,
+  clickmap: true,
+  trackLinks: true,
+  // accurateTrackBounce: true,
+  webvisor: true,
+  trackHash: false
+};
+
+const config = ((settings.analytics !== undefined)
+  ? {
+    ym: {
+      enabled: Boolean(settings.analytics.ym),
+      id: Number(settings.analytics.ym),
+      config: YM_CONFIG
+    },
+    ga: {
+      enabled: Boolean(settings.analytics.ga),
+      id: settings.analytics.ga,
+      config: {}
+    },
+  }
+  : {
+    ym: { enabled: false, id: '', config: {} },
+    ga: { enabled: false, id: '', config: {} },
+  }
+);
 
 export default class AnalyticModel {
-  @observable agreement = getCookie().indexOf('gdpr') >= 0;
+  @observable agreement = false;
+
+  @observable config = config;
+
+  @observable goal;
 
   @action agreeWithPolicy() {
     setCookie('gdpr', true, Date.now());
     this.agreement = true;
+    this.initGA();
+    this.metricHit(this.goal);
   }
 
-  @action metricHit(link) {
+  ymHit = (link, c = 0) => {
+    if (this.config.ym.enabled) {
+      setTimeout(() => {
+        try {
+          ym('reachGoal', link);
+        } catch (e) {
+          console.error('YM Metrika error', e);
+          if (c < 3) this.ymHit(link, c + 1);
+        }
+      }, 1000);
+    }
+  }
+
+  gaHit = (link, c = 0) => {
+    if (this.config.ga.enabled) {
+      setTimeout(() => {
+        try {
+          ReactGA.event({
+            category: 'UserBehaviour',
+            action: link
+          });
+        } catch (e) {
+          console.error('GA Error', e);
+          if (c < 3) this.gaHit(link, c + 1);
+        }
+      }, 1000);
+    }
+  }
+
+  metricHit = (link) => {
     if (!this.agreement) {
+      this.goal = link;
       return;
     }
-    setTimeout(() => {
-      try {
-        ym('hit', link);
-      } catch (e) {
-        console.error('YM Metrika error', e);
-        this.metricHit(link);
-      }
-    }, 1000);
+    this.ymHit(link);
+    this.gaHit(link);
+  }
+
+  initGA = () => {
+    // Init GA component and start tracking
+    if (this.config.ga.enabled) {
+      window[`ga-disable-${this.config.ga.id}`] = false;
+      ReactGA.initialize(this.config.ga.id, this.config.ga.config);
+    }
+  }
+
+  constructor() {
+    // Disable GA tracking
+    window[`ga-disable-${this.config.ga.id}`] = true;
+    if (getCookie().indexOf('gdpr') >= 0) {
+      this.agreement = true;
+      this.initGA();
+    }
   }
 }

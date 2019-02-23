@@ -42,6 +42,7 @@ class SeekBar extends React.Component {
       const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.width) {
         this.props.store.year.setYear(Math.round(this.scale.invert(mouseX)));
+        this.props.store.analytics.metricHit('check_timepanel');
       }
     });
     svg.on('mousedown', () => {
@@ -64,6 +65,12 @@ class SeekBar extends React.Component {
 
   @computed get translate() {
     return this.scale(this.props.store.year.tuneValue) || 0;
+  }
+
+  @computed get ticks() {
+    const ticks = parseInt(this.width / 45, 10);
+    const maxTicks = this.props.store.year.max - this.props.store.year.min;
+    return (Number.isNaN(maxTicks) || ticks <= maxTicks) ? ticks : maxTicks;
   }
 
 
@@ -95,7 +102,7 @@ class SeekBar extends React.Component {
           viewBox={viewBox}
           preserveAspectRatio="xMaxYMin meet"
         >
-          <Axis width={this.width} scale={this.scale} />
+          <Axis width={this.width} scale={this.scale} ticks={this.ticks} />
           <Cursor translate={this.translate} active={this.isDown} />
           {/*
             <rect

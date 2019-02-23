@@ -20,42 +20,20 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { runInAction, when } from 'mobx';
 
+import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 import Narrative from './Narrative';
 
 const date = new Date();
 const year = date.getUTCFullYear();
 
+const mapSettings = buildMapSettings({
+  zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
+});
+
 // Create a fake course
-const about = {
-  url: 'about',
-  id: -1,
-  name: {
-    ru: 'О нас',
-    en: 'About us'
-  },
-  author: { ru: '', en: '' },
-  config: {
-    year: {
-      min: year,
-      max: year,
-      now: year,
-      tick: 1,
-    },
-    projection: {
-      clip: [[-180, 90], [180, -90]],
-      rotate: [0, 0, 0],
-      center: [0, 0]
-    },
-    settings: {
-      flags: {
-        zoom: {
-          minScale: 1,
-          maxScale: 7.5
-        }
-      }
-    }
-  }
-};
+const about = buildNarrative({
+  start_year: year, end_year: year, url: 'about', name: 'About Us', mapSettings
+});
 
 const text = ['We are a community of enthusiasts behind Chron.',
   'We live in a different parts of the world',
@@ -64,7 +42,7 @@ const text = ['We are a community of enthusiasts behind Chron.',
 
 const tick = {
   year,
-  tick: 1,
+  order: 0,
   courseId: -1,
   title: '',
   description: text,
@@ -97,14 +75,14 @@ class About extends React.Component {
     super(props);
 
     runInAction(() => {
-      this.props.store.data.Courses.data[-1] = about;
+      this.props.store.data.narratives.data[-1] = about;
     });
 
     when( // wait for course selection and add text
       () => this.props.store.courseSelection.courseId === -1,
       () => runInAction(() => {
-        this.props.store.data.CourseTimelines.data[-1] = tick;
-        this.props.store.data.CourseGeopoints.data[1] = points;
+        this.props.store.data.narrations.data[-1] = tick;
+        this.props.store.pins.addDummyPins(points, false);
         return true;
       })
     );
@@ -112,7 +90,7 @@ class About extends React.Component {
 
   render() {
     return (
-      <Narrative story='about' fake='0' />
+      <Narrative story='about' fake='0' metric='check_about' />
     );
   }
 }

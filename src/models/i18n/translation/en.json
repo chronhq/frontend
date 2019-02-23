@@ -6,10 +6,6 @@
   },
   "title": "Chron, interactive atlas",
   "loading": "loading...",
-  "selectors": {
-    "name": "nameEng",
-    "properties": "name"
-  },
   "courseSelection": {
     "title": "Choose type"
   },
@@ -29,6 +25,10 @@
     "dismiss": "Dismiss"
   },
   "tooltips": {
+    "locationFollow": "Follow Narration Location",
+    "locationUnfollow": "Ignore Narration Location",
+    "panelHide": "Hide Panel",
+    "panelShow": "Show Panel",
     "back": "Go to main screen",
     "search": "Search",
     "feed": "Feed",
@@ -43,37 +43,15 @@
     "expand": "Expand",
     "soon": "Not available yet"
   },
-  "feedback": {
-    "title": "There's a mistake!",
-    "subtitle": "Data accuracy is our priority. We greatly appreciate any submitted reports.",
-    "name": "Title",
-    "email": "Email",
-    "year": "Year",
-    "layer": "Type of Data",
-    "desc": "Describe a problem. If our data is incorrect please provide links to verify it",
-    "ref": "Reference",
-    "ToS": "I agree to the Privacy Policy",
-    "ToSlink": "Privacy Policy",
-    "button": "Bug report",
-    "success": "Your message has been succesfully sent",
-    "error": "Error occurred",
-    "emailInvalid": "Email Address not valid",
-    "textInvalid": "Text required.",
-    "textareaInvalid": "Message required"
-  },
   "layerNames": {
     "borders": "State Borders",
-    "traces": "Expeditions",
     "cities": "Cities",
-    "wars": "Wars",
-    "inventions": "Inventions",
+    "battle": "Battles",
+    "document": "Treaties",
     "persons": "Persons",
-    "geoEvents": "Events",
     "other": "Other"
   },
   "messages": {
-    "inventionsTitle": "Invention",
-    "geoEventTitle": "Event",
     "personDeath": "Passed",
     "personBirth": "Born"
   },
@@ -99,5 +77,19 @@
     "report": "Report error",
     "back": "Back",
     "expand": "Expand"
+  },
+  "countryHover": {
+    "capital": "Capital",
+    "head": "Head",
+    "population": "Population"
+  },
+  "gdpr": {
+    "title": "This website uses cookies",
+    "agree": "Agree",
+    "message": "We use cookies to  keep track of visitors and enhance user experience. By continuing to browse this website you consent to the use of these cookies."
+  },
+  "sourcesBalloon": {
+    "origin": "Data Origin",
+    "sources": "Sources"
   }
 }

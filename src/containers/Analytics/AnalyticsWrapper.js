@@ -8,35 +8,39 @@ import './AnalyticsWrapper.less';
 @inject('store')
 @observer
 class AnalyticsWrapper extends React.Component {
-  handleClick = () => {
-    this.props.store.analytics.agreeWithPolicy();
-    this.forceUpdate();
-  }
-
-  renderNotification() {
+  get renderNotification() {
+    const msg = this.props.store.i18n.data.gdpr;
     return (
       <div className='notification'>
         <div className='page--content'>
           <p>
-            {'This website uses cookies'}
+            {msg.title}
             <br />
-            {'We use cookies to personalize content and ads, to provide social media features and to analyze our traffic. You consent to our cookies if you continue to use our website.'}
+            {msg.message}
           </p>
           <Button onClick={this.handleClick}>
-            {'Agree'}
+            {msg.agree}
           </Button>
         </div>
       </div>
     );
   }
 
+  handleClick = () => {
+    this.props.store.analytics.agreeWithPolicy();
+    this.forceUpdate();
+  }
+
   render() {
+    const { config } = this.props.store.analytics;
+    // Skip notification if no analytics
+    const disabled = (!config.ym.enabled && !config.ga.enabled);
     return (
       <React.Fragment>
         {
-          (this.props.store.analytics.agreement)
-            ? <Analytics />
-            : this.renderNotification()
+          (this.props.store.analytics.agreement || disabled)
+            ? <Analytics config={config} />
+            : this.renderNotification
         }
       </React.Fragment>
     );

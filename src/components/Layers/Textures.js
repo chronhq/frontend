@@ -16,14 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import citiesAtlas from './geoAssets/cities.svg';
-import citiesMapping from './geoAssets/cities.json';
+// TODO: use this pics for MVT sprites
+// import citiesAtlas from './geoAssets/cities.svg';
+// import citiesMapping from './geoAssets/cities.json';
 
-import decorationAtlas from './geoAssets/decoration.svg';
-import decorationMapping from './geoAssets/decoration.json';
-
-import eventAtlas from './geoAssets/event.svg';
-import eventMapping from './geoAssets/event.json';
+// import decorationAtlas from './geoAssets/decoration.svg';
+// import decorationMapping from './geoAssets/decoration.json';
 
 import oceanAtlas from './geoAssets/ocean.svg';
 import oceanMapping from './geoAssets/ocean.json';
@@ -32,18 +30,14 @@ import pinAtlas from './geoAssets/pin.svg';
 import pinMapping from './geoAssets/pin.json';
 
 export default {
-  cities: {
-    map: citiesMapping,
-    img: citiesAtlas
-  },
-  decoration: {
-    map: decorationMapping,
-    img: decorationAtlas
-  },
-  event: {
-    map: eventMapping,
-    img: eventAtlas
-  },
+  // cities: {
+  //   map: citiesMapping,
+  //   img: citiesAtlas
+  // },
+  // decoration: {
+  //   map: decorationMapping,
+  //   img: decorationAtlas
+  // },
   ocean: {
     map: oceanMapping,
     img: oceanAtlas

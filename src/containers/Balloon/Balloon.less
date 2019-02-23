@@ -22,14 +22,15 @@
 
 .balloonBottomRight {transform: translate(-90%, calc(-100% - 20px));}
 
-.balloonNews {
+.balloonNewsContainer {
+  display: flex;
+  flex-direction: row;
+  max-width: 450px;
   position: absolute;
   z-index: 100;
   padding: 6px;
 
   border-radius: 2px;
-  min-width: 200px;
-  max-width: 370px;
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 12px 0 rgba(0,0,0,0.50);
   -webkit-touch-callout: none;
@@ -37,23 +38,31 @@
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
-  & h6 {
-    text-align: center;
+  .balloonMain {
+    min-width: 200px;
+    max-width: 370px;
+    user-select: none;
   }
-  & p {
-    font-size: 14px;
+  .balloonSources {
+    min-width: 80px;
   }
-  & span.decal {
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    border: 1px solid black;
-    border-radius: 2px;
-    height: 10px;
-    width: 10px !important;
-    min-width: 10px;
-    margin: 0 2px;
+  .balloonNews {
+    & h6 {
+      text-align: center;
+    }
+    & p {
+      font-size: 14px;
+    }
+    & span.decal {
+      position: relative;
+      display: inline-block;
+      box-sizing: border-box;
+      border: 1px solid black;
+      border-radius: 2px;
+      height: 10px;
+      width: 10px !important;
+      min-width: 10px;
+      margin: 0 2px;
+    }
   }
 }
-

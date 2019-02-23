@@ -31,14 +31,7 @@ export default class ProjectionModel {
   }
 
   @computed get data() {
-    return (this.courseId !== null
-      && this.courseId in this.rootStore.data.Courses.data)
-      ? this.rootStore.data.Courses.data[this.courseId].config.projection
-      : {
-        center: [0, 0],
-        clip: [[-180, 90], [180, -90]],
-        rotate: [0, 0, 0],
-      };
+    return this.rootStore.flags.projection.list;
   }
 
   @computed get clipEnabled() {
@@ -51,14 +44,5 @@ export default class ProjectionModel {
 
   @computed get center() {
     return this.data.center;
-  }
-
-
-  inTheBox(x, y) {
-    return (!(x < this.clip[0][0] // Top
-        || x > this.clip[1][0] // Bottom
-        || y < this.clip[1][1] // Right
-        || y > this.clip[0][1]) // Left
-    );
   }
 }

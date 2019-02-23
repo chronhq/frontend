@@ -26,17 +26,34 @@ class GenericStoreType {
 
   @observable type = 'undefined'; // battle || document...
 
-  @action add(data, fetch = true) {
+  @observable fetched = false;
+
+  @action add(data = [], fetch = true) {
+    const res = data.reduce((p, c) => (
+      this.keys[c] === undefined
+        ? { ...p, [c]: null }
+        : p), {});
+    const resList = Object.keys(res);
+
     this.keys = {
       ...this.keys,
-      ...data.reduce((p, c) => ({ ...p, [c]: null }), {})
+      ...res
     };
-
-    if (fetch) this.fetch();
+    if (fetch) {
+      if (this.fetched === false) {
+        this.fetch();
+      } else if (resList.length > 0 && this.fetched === true) {
+        this.fetch(resList);
+      }
+    } else if (resList.length > 0) {
+      this.fetched = false;
+    }
   }
 
-  @action fetch() {
-    this.rootStore.wikidata.getItems(this.list);
+  @action fetch(upd = null) {
+    this.fetched = true;
+    const list = upd === null ? this.list : upd;
+    this.rootStore.wikidata.getItems(list);
   }
 
   @computed get list() {
@@ -62,17 +79,29 @@ class GenericStoreType {
     );
   }
 
+  getEventFromWid = (type, w) => {
+    const cur = this.cache[w];
+    return cur === undefined ? null : this.getEvent(type, cur.structure).event;
+  }
+
+  getEvent = (type, cur) => {
+    const event = {
+      key: cur.id,
+      type: this.type,
+      loc: cur.place || {}, // in case if place if undefined
+      [this.type]: cur,
+    };
+
+    const year = cur.date instanceof Date
+      ? cur.date.getUTCFullYear()
+      : cur.date;
+
+    return { year, event };
+  }
+
   @computed get timeline() {
     return this.inCache.reduce((prev, cur) => {
-      const event = {
-        type: this.type,
-        loc: cur.place || {}, // in case if place if undefined
-        [this.type]: cur,
-      };
-
-      const year = cur.date instanceof Date
-        ? cur.date.getUTCFullYear()
-        : cur.date;
+      const { year, event } = this.getEvent(this.type, cur);
 
       const curYear = prev[year] || { free: [], pins: [] };
       const pos = event.loc.x !== undefined ? 'pins' : 'free';

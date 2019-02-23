@@ -35,6 +35,12 @@ class DashboardSearch extends React.Component {
         type='text'
         value={this.props.store.search.filter.text}
         onChange={this.setText}
+        onBlur={() => {
+          if (this.props.store.search.filter.text.length > 0) {
+            this.props.store.analytics.metricHit('main_search');
+          }
+          return true;
+        }}
       />
     );
   }

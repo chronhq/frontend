@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { computed, action, observable } from 'mobx';
+import {
+  computed, action, observable, when
+} from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
@@ -27,12 +29,12 @@ export default class CourseSideEffects {
 
   find(name) {
     return Object
-      .values(this.rootStore.data.Courses.data)
+      .values(this.rootStore.data.narratives.data)
       .find(cur => cur.url === name);
   }
 
   @computed get deps() {
-    return this.rootStore.data.deps;
+    return this.rootStore.data.camelDeps;
   }
 
   @computed get courseId() {
@@ -73,7 +75,7 @@ export default class CourseSideEffects {
   }
 
   @computed get courseInfo() {
-    return this.rootStore.data.Courses.data[this.courseId];
+    return this.rootStore.data.narratives.data[this.courseId];
   }
 
   @action cleanup() {
@@ -89,11 +91,30 @@ export default class CourseSideEffects {
     this.deps.course.map(wipe);
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
+    this.rootStore.pins.wipeDummyPins();
   }
 
   @action configureDataFilters() {
-    this.rootStore.data.Borders.filter = this.bordersCourseFilter;
-    this.rootStore.data.CourseTimelines.filter = this.courseFilter;
+    const filter = `?narrative=${this.courseId}`;
+    this.rootStore.data.narrations.filter = filter;
+    this.rootStore.data.mapSettings.filter = filter;
+  }
+
+  @action updateCD() {
+    const filter = `?year=${this.rootStore.year.now}&has_location=false`;
+    this.rootStore.data.cachedData.filter = filter;
+    this.rootStore.data.cachedData.wipe();
+    if (this.courseId === 0) {
+      this.rootStore.data.cachedData.get();
+      when(
+        () => this.rootStore.data.cachedData.status.loaded,
+        () => {
+          const wIds = Object.values(this.rootStore.data.cachedData.data)
+            .map(c => `Q${c.wikidata_id}`);
+          this.rootStore.wikidata.getItems(wIds);
+        }
+      );
+    }
   }
 
   @action loadBaseData() {
@@ -101,20 +122,18 @@ export default class CourseSideEffects {
   }
 
   @action loadCourseData() {
-    // Load heavy data
-    this.rootStore.data.Borders.get();
     // Load Course Specific data
     this.rootStore.data.resolveDependencies(this.listOfDeps);
   }
 
   @action select(id, name, fake = null) {
-    if (id === this.courseId) {
+    if (id === this.courseId && fake !== null) {
       console.log('Course already selected', id, name);
       return null;
     }
     // case for 'about us' page
-    if (id >= 0 && this.rootStore.data.Courses.data[-1] !== undefined) {
-      delete this.rootStore.data.Courses.data[-1];
+    if (id >= 0 && this.rootStore.data.narratives.data[-1] !== undefined) {
+      delete this.rootStore.data.narratives.data[-1];
     }
 
     this.fakeId = fake;
@@ -125,16 +144,38 @@ export default class CourseSideEffects {
       }
     });
 
-    this.rootStore.year.setup(this.courseInfo.config.year);
-    this.rootStore.flags.set(this.courseInfo.config.settings.flags);
+    this.rootStore.year.setup({
+      min: this.courseInfo.start_year,
+      max: this.courseInfo.end_year,
+      now: this.courseInfo.start_year,
+      tick: 0,
+    });
+
 
     this.rootStore.dashboard.setup();
 
     this.configureDataFilters();
     this.loadCourseData();
 
-    // update viewport position
-    this.rootStore.deck.initLatLon();
+    this.rootStore.flags.set({
+      projection: this.rootStore.flags.defaultFlags.projection
+    });
+
+    when(
+      () => (
+        fake !== null || id === 0 // for global narrative and fake pages
+        || (this.rootStore.data.mapSettings.status.loaded
+        && this.rootStore.data.narrations.status.loaded)),
+      () => {
+        if (this.courseInfo.mapSettings !== undefined) {
+          // Fake courses or Global Narrative
+          this.rootStore.deck.updateSettings(this.courseInfo.mapSettings);
+        }
+        this.rootStore.year.setTick(0);
+        this.updateCD();
+      }
+    );
+
     return true;
   }
 }

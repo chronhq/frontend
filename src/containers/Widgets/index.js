@@ -28,10 +28,11 @@ import Defs from './Defs';
 @observer
 class Widgets extends React.Component {
   render() {
-    const freePinsEnabled = !this.props.store.projection.clipEnabled;
+    // TODO store calculations and flags somewhere in models
     const showWidgets = this.props.store.deck.width > 600;
     const shiftHeight = this.props.store.deck.height - 100;
-    const shiftX = 50;
+    // TODO link Dashboard witdh (400px) from css to js somehow.
+    const shiftX = 50 + (this.props.store.dashboard.hidden ? 0 : 400);
     const translate = `translate(${shiftX}, ${shiftHeight})`;
     return (
       <svg
@@ -40,11 +41,13 @@ class Widgets extends React.Component {
         style={{ zIndex: 2, pointerEvents: 'none', position: 'absolute' }}
       >
         <Defs />
-        <g id='svgWidgets' transform={translate}>
-          {showWidgets && <ScaleWidget />}
-          {showWidgets && <LoadingWidget />}
-          {freePinsEnabled && <FreePinsWidget /> }
-        </g>
+        {showWidgets && (
+          <g id='svgWidgets' transform={translate}>
+            <ScaleWidget />
+            <LoadingWidget />
+            <FreePinsWidget />
+          </g>
+        )}
       </svg>
     );
   }

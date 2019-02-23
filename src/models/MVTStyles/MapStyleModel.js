@@ -20,7 +20,12 @@ import {
   computed, observable, action, runInAction
 } from 'mobx';
 
-import settings from '../../settings.json';
+import settings from '../../../settings.json';
+
+import citiesStyle from './CitiesMVTStyle';
+import pinsStyle from './PinsMVTStyle';
+
+import AtomicBorders from './AtomicBordersModel';
 
 const BODY = {
   version: 8,
@@ -41,6 +46,8 @@ const BODY = {
 };
 
 export default class MapStyleModel {
+  @observable atomicBorders;
+
   @observable desiredMapBoxStyle;
 
   @observable installedMapBoxStyle;
@@ -51,29 +58,56 @@ export default class MapStyleModel {
 
   @computed get bordersStyle() {
     return this.rootStore.flags.layer.get('borders')
-      ? this.rootStore.borders.styleInfo
+      ? this.atomicBorders.styleInfo
       : { sources: {}, layers: [] };
+  }
+
+  @computed get cities() {
+    return citiesStyle(this.rootStore.year.now, this.rootStore.flags.layer.list);
+  }
+
+  @computed get pins() {
+    const { now, tick } = this.rootStore.year;
+    const { courseId } = this.rootStore.courseSelection;
+    const narrations = this.rootStore.data.narrations.data;
+    const wIds = (courseId > 0 && narrations[tick] !== undefined)
+      ? narrations[tick].attached_events.map(e => e.wikidata_id)
+      : [];
+
+    return pinsStyle(
+      now,
+      this.rootStore.flags.pins.list,
+      courseId,
+      wIds.length > 0 ? wIds : null,
+    );
   }
 
   @computed get style() {
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,
-        ...this.bordersStyle.sources
+        ...this.bordersStyle.sources,
+        ...this.cities.sources,
+        ...this.pins.sources,
       }
       : this.bordersStyle.sources;
 
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
         ...this.backgroundStyle.layers,
-        ...this.bordersStyle.layers
+        ...this.bordersStyle.layers,
+        ...this.cities.layers,
+        ...this.pins.layers,
       ]
       : this.bordersStyle.layers;
 
     return {
+      glyphs: '',
       ...this.backgroundStyle,
       sources,
       layers,
+      sprite: `${window.location.origin}/pin`,
+      name: 'chronmaps',
     };
   }
 
@@ -112,6 +146,7 @@ export default class MapStyleModel {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
+    this.atomicBorders = new AtomicBorders(rootStore);
     this.setUpBackground(settings.mapbox.style);
   }
 }

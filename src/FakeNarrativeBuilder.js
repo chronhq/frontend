@@ -1,6 +1,6 @@
 /*
  * Chron.
- * Copyright (c) 2018 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
  * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
  * -----
  * This program is free software: you can redistribute it and/or modify
@@ -16,18 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { observable } from 'mobx';
+/* eslint-disable camelcase */
+const buildNarrative = ({
+  url = 'fake', id = -1,
+  title = '', author = '', description = '', mapSettings = undefined,
+  start_year = 1783, end_year = 2000, tags = [],
+}) => ({
+  url,
+  id,
+  title,
+  author,
+  description,
+  mapSettings,
+  tags,
+  start_year,
+  end_year
+});
 
-export default class Point {
-  @observable pic;
+const buildMapSettings = ({
+  id = -1,
+  zoom_min = 1, zoom_max = 7.5,
+  // [[left, bottom], [right, top]]
+  coordinates = [[0, 0], [0, 0]]
+}) => ({
+  id,
+  bbox: {
+    type: 'MultiPoint',
+    coordinates
+  },
+  zoom_min,
+  zoom_max
+});
 
-  @observable point;
-
-  constructor(point) {
-    this.point = {
-      x: point.geopoint[0],
-      y: point.geopoint[1],
-    };
-    this.pic = point.pic;
-  }
-}
+export {
+  buildNarrative,
+  buildMapSettings
+};

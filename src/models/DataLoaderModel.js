@@ -86,11 +86,11 @@ export default class DataLoaderModel {
       : JSON.stringify(params);
     if (id !== null) {
       console.log('get', this.model, params, id);
-      return `/api/${this.model}/${id}`;
+      return `/api/${this.model}/${id}/`;
     } if (filter !== null) {
-      return `/api/${this.model}?filter=${filter}`;
+      return `/api/${this.model}/${filter}`;
     }
-    return `/api/${this.model}`;
+    return `/api/${this.model}/`;
   }
 
   @action wipe() {

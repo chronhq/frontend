@@ -19,47 +19,46 @@
 import { observable } from 'mobx';
 
 import Data from './DataModel';
-import Borders from './BordersModel';
 import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSelection from './CourseSelection';
-import Prepared from './PreparedData';
+import Decor from './Decor';
 
 import PinsModel from './PinsModel';
+import BalloonModel from './BalloonModel';
 import Internationalization from './i18n';
 import DeckViewport from './DeckViewport';
-import AnimationFrame from './AnimationFrame';
-import Properties from './PropertiesModel';
 import AnalyticModel from './AnalyticModel';
 
-import MapStyle from './MapStyleModel';
+import MapStyle from './MVTStyles/MapStyleModel';
 import WikidataFetcher from './Wikidata/WikidataFetcher';
 import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
+
+import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumesContainer';
 
 export default class storeModel {
   @observable fonts = {};
 
   // Add here new models
   constructor() {
-    this.data = new Data();
     this.flags = new Flags();
-    this.animation = new AnimationFrame();
+    this.data = new Data(this);
     this.dashboard = new Dashboard(this);
     this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
-    this.courseSelection = new CourseSelection(this);
-    this.borders = new Borders(this);
-    this.properties = new Properties(this);
-    this.prepared = new Prepared(this);
-    this.pins = new PinsModel(this);
-    this.i18n = new Internationalization(this);
-    this.mapStyle = new MapStyle(this);
     this.wikidata = new WikidataFetcher(this);
     this.wikistore = new WikidataStore(this);
+    this.courseSelection = new CourseSelection(this);
+    this.spaceTimeVolume = new SpaceTimeVolume(this);
+    this.decor = new Decor(this);
+    this.pins = new PinsModel(this);
+    this.balloon = new BalloonModel(this);
+    this.i18n = new Internationalization(this);
+    this.mapStyle = new MapStyle(this);
     this.search = new DashboardSearch(this);
     this.analytics = new AnalyticModel();
   }

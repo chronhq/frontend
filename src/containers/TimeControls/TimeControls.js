@@ -34,11 +34,23 @@ class TimeControls extends React.Component {
   render() {
     return (
       <div className='timepanel__controls'>
-        <Button btnType={BUTTON_TYPE.ICON} onClick={() => this.props.store.year.prevYear()}>
+        <Button
+          btnType={BUTTON_TYPE.ICON}
+          onClick={() => {
+            this.props.store.year.prevYear();
+            this.props.store.analytics.metricHit('year_change');
+          }}
+        >
           <Prev />
         </Button>
         <YearSelectButton />
-        <Button btnType={BUTTON_TYPE.ICON} onClick={() => this.props.store.year.nextYear()}>
+        <Button
+          btnType={BUTTON_TYPE.ICON}
+          onClick={() => {
+            this.props.store.year.nextYear();
+            this.props.store.analytics.metricHit('year_change');
+          }}
+        >
           <Next />
         </Button>
       </div>

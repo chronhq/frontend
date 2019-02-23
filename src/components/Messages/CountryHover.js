@@ -20,80 +20,147 @@ import React from 'react';
 import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
-// language, properties, type
+const InfoLink = ({ wId, label = null }) => (
+  <a
+    className='factSource'
+    href={`https://www.wikidata.org/wiki/${wId}`}
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    {label !== null ? label : wId}
+  </a>
+);
 
 @inject('store')
 @observer
 class CountryHover extends React.Component {
-  @computed get lng() {
-    return this.props.store.i18n.lng;
+  @computed get messages() {
+    return this.props.store.i18n.data.countryHover;
   }
 
-  @computed get selectors() {
-    return this.props.store.i18n.data.selectors;
+  @computed get pinned() {
+    return this.props.store.balloon.pinned;
   }
 
-  @computed get properties() {
-    return this.props.store.data.Properties.data[this.props.id];
+  @computed get values() {
+    try {
+      return this.props.store.spaceTimeVolume.data[this.props.id].values;
+    } catch (e) {
+      console.error('Unable to get values for Country Hover', this.props.id, e);
+      return {};
+    }
   }
 
-  @computed get name() {
-    return this.properties[this.selectors.properties];
+  @computed get title() {
+    return this.values.title;
   }
 
-  @computed get admin() {
-    return this.props.store.data.Admins.data[this.properties.admin][this.lng];
-  }
-
-  @computed get type() {
-    return this.props.store.data.Types.data[this.properties.type][this.lng];
-  }
-
-  @computed get short() {
+  @computed get factHeader() {
     return (
-      <p>
-        {' ['}
-        {this.type}
-        {']'}
+      <p className='factHeader'>
+        {this.title}
       </p>
     );
   }
 
-  @computed get long() {
-    if (this.type === null) {
-      // for ainu course
-      return (
-        <p>
-          {this.admin}
-        </p>
-      );
-    }
+  @computed get subTitle() {
+    return this.values.subTitle;
+  }
 
-    return (
+  @computed get subTitleMessage() {
+    return this.title === this.subTitle ? '' : (
       <p>
-        {this.admin}
-        {' ['}
-        {this.type}
-        {']'}
+        {this.subTitle}
       </p>
     );
   }
 
-  @computed get message() {
-    if (this.name === this.admin && this.admin !== '') {
-      return this.short;
-    }
-    return this.long;
+  @computed get flag() {
+    return this.values.flag;
   }
 
+  @computed get emblem() {
+    return this.values.emblem;
+  }
+
+  @computed get images() {
+    if (this.pinned === false) return null;
+    const img = i => (
+      <img
+        className='countryHoverImage'
+        src={i}
+        alt=''
+      />
+    );
+    return (
+      <div className='countryHoverImage'>
+        {this.flag !== undefined && img(this.flag)}
+        {this.emblem !== undefined && img(this.emblem)}
+      </div>
+    );
+  }
+
+  @computed get government() {
+    return this.values.government === undefined ? '' : (
+      <p>
+        {this.values.government.label}
+      </p>
+    );
+  }
+
+  @computed get population() {
+    if (this.pinned === false || this.values.population === undefined) return null;
+    const pop = new Intl.NumberFormat().format(this.values.population.amount);
+    return (
+      <p>
+        <span className='factSubTitle'>
+          {this.messages.population}
+          {': '}
+        </span>
+        {pop}
+      </p>
+    );
+  }
+
+  @computed get head() {
+    if (this.pinned === false || this.values.head === undefined) return null;
+    return (
+      <p>
+        <span className='factSubTitle'>
+          {this.messages.head}
+          {': '}
+        </span>
+        {<InfoLink wId={this.values.head.id} label={this.values.head.label} />}
+      </p>
+    );
+  }
+
+  @computed get capital() {
+    if (this.pinned === false || this.values.capital === undefined) return null;
+    const { deJure, deFacto } = this.values.capital;
+    if (deJure === undefined && deFacto === undefined) return null;
+    return (
+      <p>
+        <span className='factSubTitle'>
+          {this.messages.capital}
+          {': '}
+        </span>
+        {(deJure !== undefined) && <InfoLink wId={deJure.id} label={deJure.label} />}
+        {(deFacto !== undefined) && <InfoLink wId={deFacto.id} label={deFacto.label} />}
+      </p>
+    );
+  }
 
   render() {
     return (
       <div className='factInner'>
-        <p className='factHeader'>
-          {this.name}
-        </p>
-        {this.message}
+        {this.factHeader}
+        {this.subTitleMessage}
+        {this.government}
+        {this.capital}
+        {this.head}
+        {this.population}
+        {this.images}
       </div>
     );
   }

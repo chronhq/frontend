@@ -1,0 +1,80 @@
+[{
+  "geopoint": [
+    153,
+    21
+  ],
+  "string": {
+    "ru": 42,
+    "en": 39
+  },
+  "style": {
+    "string": "Pacific Ocean",
+    "pic": true,
+    "size": 40
+  },
+  "id": 14
+},
+{
+  "geopoint": [
+    -40,
+    28
+  ],
+  "string": {
+    "ru": 34,
+    "en": 33
+  },
+  "style": {
+    "string": "Atlantic Ocean",
+    "pic": true,
+    "size": 45
+  },
+  "id": 15
+},
+{
+  "geopoint": [
+    78,
+    -14
+  ],
+  "string": {
+    "ru": 36,
+    "en": 35
+  },
+  "style": {
+    "string": "Indian Ocean",
+    "pic": true,
+    "size": 45
+  },
+  "id": 16
+},
+{
+  "geopoint": [
+    -10,
+    -65
+  ],
+  "string": {
+    "ru": 40,
+    "en": 41
+  },
+  "style": {
+    "string": "Southern Ocean",
+    "pic": true,
+    "size": 45
+  },
+  "id": 17
+},
+{
+  "geopoint": [
+    120,
+    81
+  ],
+  "string": {
+    "ru": 38,
+    "en": 37
+  },
+  "style": {
+    "string": "Arctic Ocean",
+    "pic": true,
+    "size": 55
+  },
+  "id": 18
+}]

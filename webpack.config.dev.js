@@ -35,9 +35,14 @@ module.exports = {
     compress: true,
     https: false,
     disableHostCheck: true,
+    contentBase: path.resolve('static'),
+    publicPath: '/',
     proxy: {
-      '/api': 'http://api:3333/',
-      '/mvt': 'http://api:3333/',
+      '/api': 'http://api/',
+      '/mvt': {
+        target: 'http://localhost:5000',
+        pathRewrite: { '^/mvt': '' }
+      }
     },
     headers: {
       'Access-Control-Allow-Origin': '*'
@@ -56,7 +61,11 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          { loader: 'style-loader', options: { sourceMap: true } },
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'less-loader', options: { sourceMap: true } }
+        ]
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,

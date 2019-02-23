@@ -53,9 +53,11 @@ module.exports = {
     compress: true,
     https: false,
     disableHostCheck: true,
+    contentBase: path.resolve('static'),
+    publicPath: '/',
     proxy: [{
       context: ['/api', '/mvt'],
-      target: 'https://maps.chron.ist/',
+      target: 'https://chronmaps.com/',
       changeOrigin: true,
     }],
     headers: {

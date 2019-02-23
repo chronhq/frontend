@@ -17,11 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+const instanceOf = 'P31';
+const natureOfStatement = {
+  id: 'P5102',
+  deFacto: 'Q712144',
+  deJure: 'Q132555',
+};
+
 // List of wikidata properties
 const wdProps = {
   items: {
     P17: 'country',
-    P31: 'instanceOf',
     P710: 'participant',
   },
   places: {
@@ -32,6 +38,8 @@ const wdProps = {
   },
   images: {
     P18: 'image',
+    P41: 'flagImage',
+    P94: 'coatOfArmsImage'
   },
   points: {
     P625: 'coordinateLocation', // coordinate location
@@ -43,9 +51,22 @@ const wdProps = {
     P585: 'pointInTime',
     P571: 'inception',
   },
+  territorialEntities: {
+    capital: 'P36',
+    headOfGovernment: 'P6',
+    basicFormOfGovernment: 'P122',
+  },
 };
 
 const wdTypes = {
+  territorialEntities: {
+    Q6256: 'country',
+    Q48349: 'empire',
+    Q3024240: 'historicalCountry',
+    Q1048835: 'politicalTerritorialEntity',
+    Q1496967: 'territorialEntity',
+    Q56061: 'administrativeTerritorialEntity',
+  },
   battles: {
     Q178561: 'battle',
     Q180684: 'conflict',
@@ -64,6 +85,8 @@ const wdTypes = {
     Q215627: 'person', // should not be used as `instalce of`
     Q20643955: 'humanBiblicalFigure',
     Q21070568: 'humanWhoMayBeFictional',
+    // P6: 'headOfGovernment',
+    // P35: 'headOfState',
   }
 };
 
@@ -75,24 +98,37 @@ const wdTypesMap = Object.keys(wdTypes)
       .reduce((p, c) => ({ ...p, [c]: cur }), {})
   }), {});
 
-const getWikimediaURI = (name) => {
+const getWikimediaURI = (names) => {
   // thumbwidth in pixels
   const width = 250;
   const api = 'commons.wikimedia.org/w/api.php';
-  const file = encodeURI(name);
+  const files = names.map(name => `File:${encodeURI(name)}`).join('|');
   const params = [
     'action=query',
     'prop=imageinfo',
     'iiprop=url',
     'format=json',
     'origin=*', // for Browser request (CORB)
-    `titles=File:${file}`,
+    `titles=${files}`, // TODO: check for GET request string length
     `iiurlwidth=${width}`,
   ].join('&');
   return `https://${api}?${params}`;
 };
 
+const typesMapping = {
+  // { id: 'geo', pic: 30 }, // SimpleInfoPin
+  // { id: 'inv', pic: 27 }, // SimpleBulb
+  // { id: 'star', pic: 31 }, // SimpleStar
+  battle: { id: 178561, pic: 32, store: 'battles', },
+  document: { id: 131569, pic: 24, store: 'documents', },
+  birth: { id: 569, pic: 26, store: 'actors', },
+  death: { id: 570, pic: 28, store: 'actors', },
+};
+
 export {
+  natureOfStatement,
+  instanceOf,
+  typesMapping,
   wdProps,
   wdTypes,
   wdTypesMap,

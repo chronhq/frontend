@@ -28,8 +28,8 @@ import './CurrentStory.less';
 @inject('store')
 @observer
 class CurrentStory extends Component {
-  @computed get courses() {
-    return this.props.store.data.Courses.data;
+  @computed get narratives() {
+    return this.props.store.data.narratives.data;
   }
 
   @computed get lng() {
@@ -54,7 +54,10 @@ class CurrentStory extends Component {
             <Button
               btnType={BUTTON_TYPE.GHOST}
               className='currentstory__return'
-              onClick={this.props.changeUi}
+              onClick={() => {
+                this.props.handleStorySelection('world');
+                this.props.changeUi();
+              }}
             >
               <i className='lnr lnr-chevron-left' aria-hidden='true' />
               {this.dashboard.back}
@@ -64,11 +67,10 @@ class CurrentStory extends Component {
           className='currentstory--title'
           role='button'
           tabIndex={0}
-          onClick={this.props.changeUi}
           onKeyDown={e => this.handleTitleEnter(e)}
         >
           {(this.props.store.courseSelection.courseId !== null)
-            ? this.courses[this.props.store.courseSelection.courseId].name[this.lng]
+            ? this.narratives[this.props.store.courseSelection.courseId].title
             : ''
           }
         </div>

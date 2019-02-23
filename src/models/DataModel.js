@@ -21,75 +21,88 @@ import {
 } from 'mobx';
 
 import DataLoaderModel from './DataLoaderModel';
-import TraceModel from './DataAdaptation/TraceModel';
-import PointModel from './DataAdaptation/PointModel';
+import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
+import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
+
+const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
+const camelCase = string => string.trim()
+  .split('-').map((s, idx) => ((idx === 0) ? s : capitalizeFirstLetter(s))).join('');
 
 export default class DataModel {
-  @observable activeCourses = JSON.stringify({ where: { active: true } });
-
   @observable deps = {
     special: [
-      'Courses'
+      'narratives',
     ],
     base: [
-      'Admins',
-      'CityLocs',
-      'CityPops',
-      'CityProperties',
-      'MapLabels',
-      'Persons',
-      'Properties',
-      'Types',
-      'MapDecorations',
-      'MapColors',
+      'territorial-entities', // territorialEntities
+      'spacetime-volumes', // would be translated into 'spacetimeVolumes' model
     ],
     course: [
-      'CourseTimelines',
-      'CourseTraces',
-      'CourseGeopoints',
+      'narrations',
+      'map-settings', // mapSettings
     ],
     world: [
-      'Inventions',
-      'GeoEvents',
     ],
     heavy: [
-      'Borders',
+      'cached-data',
     ]
   };
 
-  @computed get roster() {
-    return Object.keys(this.deps)
-      .reduce((prev, cur) => ([...prev, ...this.deps[cur]]), []);
+  @computed get camelDeps() {
+    return Object.keys(this.deps).reduce((prev, cur) => ({
+      ...prev,
+      [cur]: this.deps[cur].map(camelCase)
+    }), {});
   }
 
-  constructor() {
-    this.roster.map((model) => {
-      this[model] = new DataLoaderModel(model);
+  @computed get roster() {
+    // { dash-key: dashKey }
+    return Object.keys(this.deps)
+      .reduce((prev, cur) => ({
+        ...prev,
+        ...this.deps[cur].reduce((p, c) => ({
+          ...p,
+          [c]: camelCase(c)
+        }), {})
+      }), {});
+  }
+
+  constructor(rootStore) {
+    Object.keys(this.roster).map((url) => {
+      const model = this.roster[url];
+      this[model] = new DataLoaderModel(url);
       return false;
     });
 
-    this.Courses.filter = this.activeCourses;
-    this.Borders.sortId = 'year';
-    this.CourseTimelines.sortId = 'tick';
+    this.narrations.sortId = 'order';
 
-    this.CourseGeopoints.configure({
-      sortId: 'courseTimelineId',
+    this.narratives.configure({
       append: true,
-      arrayCb: true,
-      wrapData: d => new PointModel(d),
     });
 
-    this.CourseTraces.configure({
-      sortId: 'courseTimelineId',
-      append: true,
-      arrayCb: true,
-      wrapData: d => new TraceModel(d),
+    const mapSettings = buildMapSettings({
+      zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
     });
+
+    this.narratives.data[0] = buildNarrative({
+      url: 'world',
+      id: 0,
+      title: 'Global Narrative',
+      mapSettings,
+    });
+
+    this.spacetimeVolumes.configure({
+      sortId: 'id',
+      append: false,
+      arrayCb: false,
+      wrapData: d => new SpaceTimeVolume(rootStore, d.id, d),
+    });
+    this.spacetimeVolumes.filter = 'all/';
   }
 
   @action resolveDependencies(depend) {
     return depend.map((model) => {
-      this[model].downloadModel();
+      this[camelCase(model)].downloadModel();
       return false;
     });
   }

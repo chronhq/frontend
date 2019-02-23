@@ -25,12 +25,28 @@ import { when, toJS } from 'mobx';
 @observer
 class Wrapper extends React.Component {
   componentDidMount() {
-    this.props.store.analytics.metricHit(this.props.story);
-    this.props.store.courseSelection.cleanup();
+    this.metricHit();
     when( // validate course name and download data
-      () => this.props.store.data.Courses.status.loaded,
-      () => this.validateCourses()
+      () => this.props.store.data.narratives.status.loaded || this.props.story === 'world',
+      () => this.checkForErrors('narratives', () => this.selectCourse())
     );
+    // TODO test against various conditions
+    this.props.store.data.camelDeps.base.map(d => when(
+      () => this.props.store.data[d].status.loaded,
+      () => this.checkForErrors(d)
+    ));
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.story !== prevProps.story) {
+      this.metricHit();
+    }
+  }
+
+  metricHit() {
+    let metric = this.props.metric || 'narrative_open';
+    if (this.props.story === 'world') metric = 'main_open';
+    this.props.store.analytics.metricHit(metric);
   }
 
   selectCourse() {
@@ -39,21 +55,22 @@ class Wrapper extends React.Component {
       const fake = this.props.fake || null;
       this.props.store.courseSelection.select(course.id, course.url, fake);
     } else {
+      this.props.store.analytics.metricHit('404');
       this.props.history.push('/404');
     }
   }
 
-  validateCourses() {
+  checkForErrors(d, cb = () => '') {
     const errorPages = {
       404: 'Not Found', 502: 'Gateway timeout', 504: 'Bad Gateway'
     };
-    const error = toJS(this.props.store.data.Courses.status.error);
+    const error = toJS(this.props.store.data[d].status.error);
     if (error !== null && errorPages[toJS(error.status)] !== undefined) {
+      this.props.store.analytics.metricHit(toJS(error.status));
       this.props.history.push(`/${toJS(error.status)}`);
+      return;
     }
-    if (this.props.story !== 'CourseSelection') {
-      this.selectCourse();
-    }
+    cb();
   }
 
   render() {

@@ -17,18 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, computed, action } from 'mobx';
-import MessagesI18n from './MessagesI18n';
 import AvailableLanguages from './translation/AvailableLanguages';
 
-import logoRu from '../../img/logo-grey-ru.svg';
-import logoEn from '../../img/logo-grey-en.svg';
+import logo from '../../img/logo-long.svg';
 
 export default class Internationalization {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
 
-  @observable messages = new MessagesI18n(this.rootStore);
+  @observable logo = logo;
 
   @observable languages =
     Object.keys(AvailableLanguages)
@@ -55,13 +53,5 @@ export default class Internationalization {
 
   @computed get data() {
     return AvailableLanguages[this.lng];
-  }
-
-  @computed get logo() {
-    return this.lng === 'ru' ? logoRu : logoEn;
-  }
-
-  @computed get nameSelector() {
-    return this.data.selectors.name;
   }
 }

@@ -22,7 +22,7 @@ import {
 
 import wdk from 'wikidata-sdk';
 
-import WikidataEntity from './WikidataEntity';
+import wikidataEntityFactory from './WikidataEntityFactory';
 
 export default class WikidataFetcher {
   constructor(rootStore) {
@@ -34,7 +34,7 @@ export default class WikidataFetcher {
   @action saveToCache(data) {
     const entities = Object.keys(data).reduce((p, c) => ({
       ...p,
-      [c]: new WikidataEntity(data[c], this.rootStore)
+      [c]: wikidataEntityFactory(data[c], this.rootStore)
     }), {});
 
     this.cache = {
