@@ -9,23 +9,21 @@
         "coordinates": [153, 21]
       },
       "properties": {
-        "name": "Pacific Ocean",
-        "ru": 42,
-        "en": 39,
-        "size": 45
+        "name-en": "Pacific Ocean",
+        "name-ru": "Тихий океан",
+        "img": 4
       }
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-40, 28]
+        "coordinates": [-42, 28]
       },
       "properties": {
-        "name": "Atlantic Ocean",
-        "ru": 34,
-        "en": 33,
-        "size": 45
+        "name-en": "Atlantic Ocean",
+        "name-ru": "Атлантический океан",
+        "img": 4
       }
     },
     {
@@ -35,10 +33,9 @@
         "coordinates": [78, -14]
       },
       "properties": {
-        "name": "Indian Ocean",
-        "ru": 36,
-        "en": 35,
-        "size": 45
+        "name-en": "Indian Ocean",
+        "name-ru": "Индийский океан",
+        "img": 2
       }
     },
     {
@@ -48,10 +45,9 @@
         "coordinates": [-10, -65]
       },
       "properties": {
-        "name": "Southern Ocean",
-        "ru": 40,
-        "en": 41,
-        "size": 45
+        "name-en": "Southern Ocean",
+        "name-ru": "Южный океан",
+        "img": 11
       }
     },
     {
@@ -61,10 +57,9 @@
         "coordinates": [120, 81]
       },
       "properties": {
-        "name": "Arctic Ocean",
-        "ru": 38,
-        "en": 37,
-        "size": 55
+        "name-en": "Arctic Ocean",
+        "name-ru": "Северный Ледовитый океан",
+        "img": 8
       }
     }
   ]

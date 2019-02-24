@@ -63,6 +63,10 @@ export default class MapStyleModel {
       : { sources: {}, layers: [] };
   }
 
+  @computed get decor() {
+    return decorStyle(this.rootStore.i18n.lng);
+  }
+
   @computed get cities() {
     return citiesStyle(this.rootStore.year.now, this.rootStore.flags.layer.list);
   }
@@ -87,6 +91,7 @@ export default class MapStyleModel {
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,
+        ...this.decor.sources,
         ...this.bordersStyle.sources,
         ...this.cities.sources,
         ...this.pins.sources,
@@ -96,6 +101,7 @@ export default class MapStyleModel {
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
         ...this.backgroundStyle.layers,
+        ...this.decor.layers,
         ...this.bordersStyle.layers,
         ...this.cities.layers,
         ...this.pins.layers,
