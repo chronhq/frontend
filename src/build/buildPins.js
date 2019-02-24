@@ -21,7 +21,7 @@ const fs = require('fs');
 
 const pinsSrcPath = path.join(__dirname, 'pins');
 const pinsOutPath = path
-  .normalize(path.join(__dirname, '../components/Layers/geoAssets'));
+  .normalize(path.join(__dirname, '/'));
 const mapPicsOutPath = path
   .normalize(path.join(__dirname, '../containers/Widgets/mapPics.json'));
 
