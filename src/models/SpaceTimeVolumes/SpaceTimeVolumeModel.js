@@ -27,10 +27,6 @@ export default class SpaceTimeVolume {
     return (this.startDate <= this.now && this.now <= this.endDate);
   }
 
-  @computed get inUse() {
-    return this.data.territory.reduce((p, c) => ({ ...p, [c]: true }), {});
-  }
-
   @computed get wId() {
     return `Q${this.te.wikidata_id}`;
   }

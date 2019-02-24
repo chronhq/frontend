@@ -58,7 +58,6 @@ export default class AtomicBordersModel {
 
     const layer = {
       layout: {},
-      filter: ['in', 'id', ...Object.keys(this.STVs.active).map(m => Number(m))],
       type: 'fill',
       source: name,
       id: name,
