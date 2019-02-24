@@ -26,10 +26,7 @@ import {
   computed, action
 } from 'mobx';
 
-import {
-  oceanDecorationLayer,
-  pinsLayer
-} from '../../components/Layers';
+import pinsLayer from '../../components/Layers/PinsLayer';
 
 @inject('store')
 @observer
@@ -55,14 +52,6 @@ class MapWrapper extends React.Component {
     return this.props.store.flags.layer.list;
   }
 
-  @computed get oceanDecorations() {
-    return oceanDecorationLayer(
-      this.props.store.decor.oceans,
-      this.options.mapDecorations,
-      this.deck
-    );
-  }
-
   @computed get feedPins() {
     const { pins, dummyPins } = this.props.store.pins;
     const { zoom } = this.deck;
@@ -74,10 +63,7 @@ class MapWrapper extends React.Component {
   }
 
   @computed get layers() {
-    return [
-      this.oceanDecorations,
-      ...this.feedPins,
-    ];
+    return this.feedPins;
   }
 
   onBorderHoverCb = (features, position, force = false) => {
