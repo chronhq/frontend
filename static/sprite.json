@@ -1,0 +1,173 @@
+{
+    "pin-24": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "pin-26": {
+        "x": 32,
+        "y": 0,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "pin-27": {
+        "x": 64,
+        "y": 0,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "pin-28": {
+        "x": 96,
+        "y": 0,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "pin-29": {
+        "x": 0,
+        "y": 32,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "pin-30": {
+        "x": 32,
+        "y": 32,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "pin-31": {
+        "x": 64,
+        "y": 32,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "pin-32": {
+        "x": 96,
+        "y": 32,
+        "width": 32,
+        "height": 32,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-1": {
+        "x": 0,
+        "y": 64,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-2": {
+        "x": 64,
+        "y": 64,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-3": {
+        "x": 128,
+        "y": 64,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-4": {
+        "x": 192,
+        "y": 64,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-5": {
+        "x": 0,
+        "y": 192,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-6": {
+        "x": 64,
+        "y": 192,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-7": {
+        "x": 128,
+        "y": 192,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-8": {
+        "x": 64,
+        "y": 192,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-9": {
+        "x": 0,
+        "y": 320,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-10": {
+        "x": 64,
+        "y": 320,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
+    "decoration-11": {
+        "x": 128,
+        "y": 320,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    }
+}
