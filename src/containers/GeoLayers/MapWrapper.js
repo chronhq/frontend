@@ -70,6 +70,10 @@ class MapWrapper extends React.Component {
         this.props.store.balloon.setMVTEventBalloon(events, force);
         this.props.store.balloon.setPosition(...position);
         return true;
+      } if (feature.layer.source === 'pinsGJ') {
+        this.props.store.balloon.setGJEventBalloon(feature.properties.info, force);
+        this.props.store.balloon.setPosition(...position);
+        return true;
       }
     } catch (e) {
       console.error('Feature parsing failed', e, features);
