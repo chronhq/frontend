@@ -77,11 +77,11 @@ export default class SpaceTimeVolume {
   @computed get color() {
     try {
       const color = this.mapColors[this.te.color].color1;
-      return [color[0], color[1], color[2]];
+      return `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
     } catch (e) {
       // console.error('ColorID', this.data.color, 'Props', this.data);
       // Probably colorID === -99 -- Disputed territory
-      return [127, 127, 127];
+      return 'rgb(127, 127, 127)';
     }
   }
 
