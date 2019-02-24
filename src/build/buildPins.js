@@ -21,7 +21,7 @@ const fs = require('fs');
 
 const pinsSrcPath = path.join(__dirname, 'pins');
 const pinsOutPath = path
-  .normalize(path.join(__dirname, '../components/Layers/geoAssets'));
+  .normalize(path.join(__dirname, '/'));
 const mapPicsOutPath = path
   .normalize(path.join(__dirname, '../containers/Widgets/mapPics.json'));
 
@@ -103,7 +103,7 @@ fs.writeFileSync(path.join(pinsOutPath, 'pin.json'), JSON.stringify(pinsJson));
 
 fs.writeFileSync(path.join(pinsOutPath, 'pin.svg'), [
   '<?xml version="1.0" encoding="UTF-8"?>',
-  '<svg width="4096" height="4096" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
+  '<svg width="4096" height="2048" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
   pinsSvg,
   '</svg>'
 ].join('\n'));

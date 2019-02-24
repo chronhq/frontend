@@ -24,6 +24,8 @@ import settings from '../../../settings.json';
 
 import citiesStyle from './CitiesMVTStyle';
 import pinsStyle from './PinsMVTStyle';
+import decorStyle from './DecorGJStyle';
+import legacyPinsStyle from './PinsGJStyle';
 
 import AtomicBorders from './AtomicBordersModel';
 
@@ -62,6 +64,18 @@ export default class MapStyleModel {
       : { sources: {}, layers: [] };
   }
 
+  @computed get pinsGJ() {
+    return legacyPinsStyle(this.rootStore.pins.pins, 'pinsGJ');
+  }
+
+  @computed get dummyPinsGJ() {
+    return legacyPinsStyle(this.rootStore.pins.dummyPinsGJ, 'dummyPinsGJ');
+  }
+
+  @computed get decor() {
+    return decorStyle(this.rootStore.i18n.lng);
+  }
+
   @computed get cities() {
     return citiesStyle(this.rootStore.year.now, this.rootStore.flags.layer.list);
   }
@@ -86,8 +100,11 @@ export default class MapStyleModel {
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,
+        ...this.decor.sources,
         ...this.bordersStyle.sources,
         ...this.cities.sources,
+        ...this.pinsGJ.sources,
+        ...this.dummyPinsGJ.sources,
         ...this.pins.sources,
       }
       : this.bordersStyle.sources;
@@ -95,8 +112,11 @@ export default class MapStyleModel {
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
         ...this.backgroundStyle.layers,
+        ...this.decor.layers,
         ...this.bordersStyle.layers,
         ...this.cities.layers,
+        ...this.pinsGJ.layers,
+        ...this.dummyPinsGJ.layers,
         ...this.pins.layers,
       ]
       : this.bordersStyle.layers;
@@ -106,7 +126,7 @@ export default class MapStyleModel {
       ...this.backgroundStyle,
       sources,
       layers,
-      sprite: `${window.location.origin}/pin`,
+      sprite: `${window.location.origin}/sprite`,
       name: 'chronmaps',
     };
   }

@@ -1,6 +1,6 @@
 /*
  * Chron.
- * Copyright (c) 2018 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
  * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
  * -----
  * This program is free software: you can redistribute it and/or modify
@@ -16,27 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { IconLayer } from '@deck.gl/layers';
-import Textures from './Textures';
+const getLayer = layerName => ({
+  id: layerName,
+  layout: {
+    'icon-image': 'pin-{img}',
+    'icon-rotate': -135,
+    'icon-size': 1,
+    'icon-anchor': 'top-left',
+  },
+  type: 'symbol',
+  source: layerName,
+});
 
-function oceanDecorationLayer(oceans, visible, deck) {
-  return new IconLayer({
-    id: 'map-oceans-layer',
-    data: oceans,
-    visible,
-    pickable: true,
-    iconAtlas: Textures.ocean.img,
-    iconMapping: Textures.ocean.map,
-    getAngle: 0,
-    sizeScale: 3,
-    getSize: d => (deck.zoom * d.size),
-    getPosition: d => [d.geopoint[0], d.geopoint[1]],
-    getIcon: d => `ocean-${d.picId}`,
-    updateTriggers: {
-      getSize: deck.zoom,
-    },
-    onClick: d => console.log('ocean:', d)
-  });
-}
+const pins = (data, layerName) => {
+  const source = {
+    type: 'geojson',
+    data
+  };
+  return {
+    sources: { [layerName]: source }, layers: [getLayer(layerName)]
+  };
+};
 
-export default oceanDecorationLayer;
+export default pins;

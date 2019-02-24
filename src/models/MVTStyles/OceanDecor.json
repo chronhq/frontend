@@ -1,0 +1,66 @@
+
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [153, 21]
+      },
+      "properties": {
+        "name-en": "Pacific Ocean",
+        "name-ru": "Тихий океан",
+        "img": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-42, 28]
+      },
+      "properties": {
+        "name-en": "Atlantic Ocean",
+        "name-ru": "Атлантический океан",
+        "img": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [78, -14]
+      },
+      "properties": {
+        "name-en": "Indian Ocean",
+        "name-ru": "Индийский океан",
+        "img": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-10, -65]
+      },
+      "properties": {
+        "name-en": "Southern Ocean",
+        "name-ru": "Южный океан",
+        "img": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [120, 81]
+      },
+      "properties": {
+        "name-en": "Arctic Ocean",
+        "name-ru": "Северный Ледовитый океан",
+        "img": 8
+      }
+    }
+  ]
+}

@@ -23,7 +23,6 @@ import Flags from './FlagsModel';
 import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSelection from './CourseSelection';
-import Decor from './Decor';
 
 import PinsModel from './PinsModel';
 import BalloonModel from './BalloonModel';
@@ -54,7 +53,6 @@ export default class storeModel {
     this.wikistore = new WikidataStore(this);
     this.courseSelection = new CourseSelection(this);
     this.spaceTimeVolume = new SpaceTimeVolume(this);
-    this.decor = new Decor(this);
     this.pins = new PinsModel(this);
     this.balloon = new BalloonModel(this);
     this.i18n = new Internationalization(this);

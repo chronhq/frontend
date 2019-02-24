@@ -37,6 +37,8 @@ export default class BalloonModel {
 
   @observable eventPin = false;
 
+  @observable GJPin = false;
+
   @observable pageX = 0;
 
   @observable pageY = 1;
@@ -63,7 +65,7 @@ export default class BalloonModel {
 
   @action changeBalloonStatus({
     a = null, force = false,
-    countryHover = false, deckPinId = false,
+    countryHover = false, deckPinId = false, GJPin = false,
     pinHasNoLocation = false, eventPin = false
   }) {
     this.changePinnedStatus(a, force);
@@ -73,6 +75,16 @@ export default class BalloonModel {
       this.deckPinId = deckPinId;
       this.pinHasNoLocation = pinHasNoLocation;
       this.eventPin = eventPin;
+      this.GJPin = GJPin;
+    }
+  }
+
+  @action setGJEventBalloon(p, force = false) {
+    try {
+      const a = JSON.parse(p);
+      this.changeBalloonStatus({ a, force, GJPin: Boolean(a) });
+    } catch (e) {
+      this.changeBalloonStatus({ a: null, force: false, GJPin: false });
     }
   }
 
@@ -146,8 +158,9 @@ export default class BalloonModel {
     } if (this.countryHover) {
       // InteractivePin
       return { info: [{ type: 'countryHover', data: this.payload }] };
-    }
-    if (this.eventPin) {
+    } if (this.GJPin && Array.isArray(this.payload)) {
+      return { info: this.payload };
+    } if (this.eventPin) {
       return this.getSelectedEvents;
     }
     return { info: [] };

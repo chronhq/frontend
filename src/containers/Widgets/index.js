@@ -19,7 +19,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-import ScaleWidget from './ScaleWidget';
+// import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
 import FreePinsWidget from './FreePinsWidget';
 import Defs from './Defs';
@@ -43,7 +43,7 @@ class Widgets extends React.Component {
         <Defs />
         {showWidgets && (
           <g id='svgWidgets' transform={translate}>
-            <ScaleWidget />
+            {/* <ScaleWidget /> */}
             <LoadingWidget />
             <FreePinsWidget />
           </g>

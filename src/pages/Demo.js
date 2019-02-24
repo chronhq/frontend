@@ -26,7 +26,7 @@ import Narrative from './Narrative';
 const year = 1789;
 
 const mapSettings = buildMapSettings({
-  zoom_min: 4, zoom_max: 7.5, coordinates: [[50, 5], [50, 5]]
+  zoom_min: 4, zoom_max: 7.5, coordinates: [[5, 50], [5, 50]]
 });
 
 // Create a fake course

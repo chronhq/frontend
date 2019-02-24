@@ -1,6 +1,6 @@
 /*
  * Chron.
- * Copyright (c) 2018 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
  * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
  * -----
  * This program is free software: you can redistribute it and/or modify
@@ -16,20 +16,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { computed } from 'mobx';
-
 import OceanDecor from './OceanDecor';
 
-export default class Decor {
-  constructor(rootStore) {
-    this.rootStore = rootStore;
-  }
+const decor = (lng) => {
+  const text = lng === 'ru' ? '{name-ru}' : '{name-en}';
+  const source = {
+    type: 'geojson',
+    data: OceanDecor
+  };
+  const layer = {
+    type: 'symbol',
+    layout: {
+      'icon-image': 'decoration-{img}',
+      'icon-size': 1.28,
+      'text-field': text,
+      'text-offset': [
+        0.5,
+        -1
+      ],
+      'text-max-width': 15,
+      'text-size': 16
+    },
+    paint: {
+      'text-color': '#80CDDD',
+      'text-halo-width': 1.5,
+      'text-halo-color': 'rgba(255,255,255,0.7)'
+    },
+    minzoom: 0,
+    maxzoom: 4,
+    source: 'decor',
+    id: 'decor',
+  };
+  return {
+    sources: { decor: source }, layers: [layer]
+  };
+};
 
-  @computed get oceans() {
-    return Object.values(OceanDecor).map(cur => ({
-      picId: cur.string[this.rootStore.i18n.lng],
-      geopoint: cur.geopoint,
-      size: cur.style.size,
-    }));
-  }
-}
+export default decor;

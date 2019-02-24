@@ -23,7 +23,7 @@ const getLayer = (now, id, wIds = null) => ({
   layout: {
     'icon-image': `pin-${typesMapping[id].pic}`,
     'icon-rotate': -135,
-    'icon-size': 0.5,
+    'icon-size': 1,
     'icon-anchor': 'top-left',
   },
   minzoom: 1,

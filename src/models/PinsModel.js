@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {
-  observable, computed, action, toJS
+  observable, computed, action
 } from 'mobx';
 
 import { typesMapping } from './Wikidata/WikidataHelper';
@@ -56,6 +56,18 @@ class InteractivePin {
   }
 }
 
+
+const pinToGeoPointRaw = (info = [], loc, img) => ({
+  type: 'Feature',
+  geometry: {
+    type: 'Point',
+    coordinates: [loc.x, loc.y]
+  },
+  properties: { info, img }
+});
+
+const pinToGeoPoint = info => pinToGeoPointRaw(info, info[0].loc, getIcon(info[0]));
+
 export default class PinsModel {
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -63,7 +75,7 @@ export default class PinsModel {
 
   @observable pinsOrder = ['document', 'battle', 'persons'];
 
-  // dummy pins are sorced directly from deck.gl layer and do not have tooltip
+  // dummy pins - layer without tooltip
   // [{ pic: 26, point: { x: 33.044167, y: 34.674722 } }]
   @observable dummyPins = [];
 
@@ -75,6 +87,15 @@ export default class PinsModel {
 
   @action wipeDummyPins() {
     this.addDummyPins([], false);
+  }
+
+  @computed get dummyPinsGJ() {
+    const features = this.dummyPins
+      .map(d => pinToGeoPointRaw([], d.loc, d.img));
+    return {
+      type: 'FeatureCollection',
+      features
+    };
   }
 
   @computed get visibility() {
@@ -122,14 +143,12 @@ export default class PinsModel {
   }
 
   @computed get pins() {
-    const p = [];
-    Object.keys(this.combineRawPins)
-      .map((d) => {
-        const pin = toJS(this.combineRawPins[d]);
-        p.push(new InteractivePin(pin, d));
-        return false;
-      });
-    return p;
+    const features = Object.keys(this.combineRawPins)
+      .map(d => pinToGeoPoint(this.combineRawPins[d]));
+    return {
+      type: 'FeatureCollection',
+      features
+    };
   }
 
   @computed get narrationFree() {
