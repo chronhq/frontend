@@ -61,7 +61,6 @@ class Wrapper extends React.Component {
       && this.props.store.data.narratives.status.loaded
       && this.props.store.data.camelDeps.base
         .every(d => this.props.store.data[d].status.loaded)
-      && Object.keys(this.props.store.spaceTimeVolume.current).length !== 0
     ));
   }
 
