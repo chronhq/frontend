@@ -27,10 +27,6 @@ export default class SpaceTimeVolume {
     return (this.startDate <= this.now && this.now <= this.endDate);
   }
 
-  @computed get inUse() {
-    return this.data.territory.reduce((p, c) => ({ ...p, [c]: true }));
-  }
-
   @computed get wId() {
     return `Q${this.te.wikidata_id}`;
   }
@@ -81,11 +77,11 @@ export default class SpaceTimeVolume {
   @computed get color() {
     try {
       const color = this.mapColors[this.te.color].color1;
-      return [color[0], color[1], color[2]];
+      return `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
     } catch (e) {
       // console.error('ColorID', this.data.color, 'Props', this.data);
       // Probably colorID === -99 -- Disputed territory
-      return [127, 127, 127];
+      return 'rgb(127, 127, 127)';
     }
   }
 

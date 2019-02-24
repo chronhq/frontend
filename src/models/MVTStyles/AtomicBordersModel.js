@@ -28,50 +28,55 @@ export default class AtomicBordersModel {
 
   @observable layerName = 'ap';
 
+  @observable mapsOpacity = 0.75;
+
+  @observable debug = false;
+
+  @computed get fallback() {
+    return this.debug
+      // bright green for debug purposes
+      ? 'rgb(0, 255, 0)'
+      // transparent fallback color
+      : 'hsla(0, 14%, 87%, 0)';
+  }
+
+  @computed get paint() {
+    return {
+      'fill-opacity': this.mapsOpacity,
+      'fill-outline-color': this.debug ? 'rgb(30, 30, 200)' : this.fallback,
+      'fill-color': ['match', ['get', 'id'], ...this.fill, this.fallback],
+    };
+  }
+
   @computed get STVs() {
     return this.rootStore.spaceTimeVolume;
   }
 
   @computed get fill() {
-    console.time('StyleFeatures');
     const res = Object.values(this.STVs.current).reduce((prev, stv) => (
-      [...prev, stv.data.territory, `rgb(${stv.color})`]
+      [...prev, stv.data.territory, stv.color]
     ), []);
-    console.timeEnd('StyleFeatures');
     return res;
   }
 
-  @computed get styleInfo() {
-    const name = this.layerName;
-
-    const mapsOpacity = 0.75;
-
-    const source = {
+  @computed get source() {
+    return {
       type: 'vector',
-      tiles: [`${window.location.origin}/mvt/${name}/{z}/{x}/{y}`]
+      tiles: [`${window.location.origin}/mvt/${this.layerName}/{z}/{x}/{y}`]
     };
+  }
 
-    // transparent fallback color
-    const fallback = 'hsla(0, 14%, 87%, 0)';
-    // bright green for debug purposes
-    // const fallback = 'rgb(0, 255, 0)';
-
+  @computed get styleInfo() {
     const layer = {
       layout: {},
-      filter: ['in', 'id', ...Object.keys(this.STVs.active).map(m => Number(m))],
       type: 'fill',
-      source: name,
-      id: name,
-      paint: {
-        'fill-opacity': mapsOpacity,
-        'fill-color': ['match', ['get', 'id'], ...this.fill, fallback],
-        'fill-outline-color': fallback,
-        // 'fill-outline-color': 'rgb(30, 30, 200)',
-      },
-      'source-layer': name
+      source: this.layerName,
+      id: this.layerName,
+      paint: this.paint,
+      'source-layer': this.layerName
     };
     return {
-      sources: { [name]: source }, layers: [layer]
+      sources: { [this.layerName]: this.source }, layers: [layer]
     };
   }
 }

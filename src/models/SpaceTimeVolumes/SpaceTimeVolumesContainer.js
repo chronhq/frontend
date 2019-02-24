@@ -31,13 +31,6 @@ export default class SpaceTimeVolumeModel {
         : prev), {});
   }
 
-  @computed get active() {
-    return Object.keys(this.current).reduce((prev, key) => ({
-      ...prev,
-      ...this.current[key].inUse
-    }), {});
-  }
-
   @computed get wIds() {
     return Object.keys(this.current).map(stv => this.current[stv].wId);
   }
@@ -52,7 +45,6 @@ export default class SpaceTimeVolumeModel {
       }
     }
     return null;
-    // return this.ap2stv[id].filter(f => this.data[f].visible);
   }
 
   constructor(rootStore) {
