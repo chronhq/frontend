@@ -83,27 +83,15 @@ class MapWrapper extends React.Component {
     return true;
   };
 
-  onMapPinHover = (d, force = false) => {
-    // if image contains transparent parts disable drawing tooltip
-    const key = d.color === null ? null : d.object.key;
-    this.props.store.balloon.setPinBalloon(key, false, force);
-    this.props.store.balloon.setPosition(d.x, d.y);
-    // according to https://github.com/uber/deck.gl/blob/master/docs/get-started/interactivity.md
-    // event should be marked as complete if returns true
-    // but DeckGL onLayerHover will catch the event even if it should not
-    return false;
-  };
-
   setHoverBalloon = force => (
-    (info, allInfos, event) => {
+    (pointerEvent) => {
       if (force === false && this.props.store.balloon.pinned === true) return;
-      const mapboxFeatures = this.deck.interactiveMap
-        .queryRenderedFeatures([event.offsetX, event.offsetY]);
-      if (event.type === 'mouseleave') {
+      const { features, type, point } = pointerEvent;
+      if (type === 'leave') {
         // disable all balloons
         this.props.store.balloon.setPinBalloon(null);
-      } else if (info === null) {
-        this.onBorderHoverCb(mapboxFeatures, [event.offsetX, event.offsetY], force);
+      } else {
+        this.onBorderHoverCb(features, point, force);
       }
     }
   )
@@ -115,39 +103,33 @@ class MapWrapper extends React.Component {
 
   render() {
     return (
-      <DeckGL
-        viewState={this.deck.viewState}
+      <InteractiveMap
         style={{ zIndex: 1 }}
-        layers={[]}
+        width={this.deck.width}
+        height={this.deck.height}
+        viewState={this.deck.viewState}
         views={this.deck.view}
-        on
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
-        onLayerClick={(info, allInfos, event) => {
+        // transitionDuration={this.props.store.deck.transition}
+        // transitionInterpolator={new FlyToInterpolator()}
+        mapStyle={this.props.store.mapStyle.style}
+        mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
+        ref={(ref) => {
+          this.deck.interactiveMap = ref;
+        }}
+        onLoad={() => {
+          // starting a timer for status checking
+          this.deck.watchLoading();
+        }}
+        onHover={this.setHoverBalloon(false)}
+        onLayerClick={(pointerEvent) => {
           if (this.props.store.balloon.unpin() !== true) {
             this.props.store.analytics.metricHit('check_map');
-            this.props.store.balloon.clickPosition = this.deck
-              .interactiveMap.getMap().unproject([event.offsetX, event.offsetY]);
-            this.setHoverBalloon(true)(info, allInfos, event);
+            this.props.store.balloon.clickPosition = pointerEvent.lngLat;
+            this.setHoverBalloon(true)(pointerEvent);
           }
         }}
-        onLayerHover={this.setHoverBalloon(false)}
-      >
-        <InteractiveMap
-          transitionDuration={this.props.store.deck.transition}
-          transitionInterpolator={new FlyToInterpolator()}
-          mapStyle={this.props.store.mapStyle.style}
-          mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
-          ref={(ref) => {
-            this.deck.interactiveMap = ref;
-          }}
-          onLoad={() => {
-            // starting a timer for status checking
-            this.deck.watchLoading();
-          }}
-          // this event handled in DeckGL layer hover
-          // onHover={this.onBorderHoverCb}
-        />
-      </DeckGL>
+      />
     );
   }
 }
