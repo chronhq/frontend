@@ -68,11 +68,6 @@ export default class DeckViewportModel {
     return vState;
   }
 
-  // TODO change lng lat of check
-  @computed get metersPerPixel() {
-    return 0;
-  }
-
   @observable longitude = this.viewport.longitude;
 
   @observable latitude = this.viewport.latitude;
