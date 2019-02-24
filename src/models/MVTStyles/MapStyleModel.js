@@ -24,6 +24,7 @@ import settings from '../../../settings.json';
 
 import citiesStyle from './CitiesMVTStyle';
 import pinsStyle from './PinsMVTStyle';
+import decorStyle from './DecorMVTStyle';
 
 import AtomicBorders from './AtomicBordersModel';
 
@@ -106,7 +107,7 @@ export default class MapStyleModel {
       ...this.backgroundStyle,
       sources,
       layers,
-      sprite: `${window.location.origin}/pin`,
+      sprite: `${window.location.origin}/sprite`,
       name: 'chronmaps',
     };
   }
