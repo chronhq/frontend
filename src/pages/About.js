@@ -51,7 +51,7 @@ const tick = {
   id: -1
 };
 
-const newPoint = p => ({ pic: 26, point: p });
+const newPoint = p => ({ img: 26, loc: p });
 
 const points = [
   { x: 33.044167, y: 34.674722 }, // Limassol

@@ -16,10 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const layerName = 'pinsGJ';
-
-const getLayer = id => ({
-  id,
+const getLayer = layerName => ({
+  id: layerName,
   layout: {
     'icon-image': 'pin-{img}',
     'icon-rotate': -135,
@@ -30,7 +28,7 @@ const getLayer = id => ({
   source: layerName,
 });
 
-const pins = (data) => {
+const pins = (data, layerName) => {
   const source = {
     type: 'geojson',
     data
