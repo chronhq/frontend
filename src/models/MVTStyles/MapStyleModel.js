@@ -24,7 +24,7 @@ import settings from '../../../settings.json';
 
 import citiesStyle from './CitiesMVTStyle';
 import pinsStyle from './PinsMVTStyle';
-import decorStyle from './DecorMVTStyle';
+import decorStyle from './DecorGJStyle';
 import legacyPinsStyle from './PinsGJStyle';
 
 import AtomicBorders from './AtomicBordersModel';
