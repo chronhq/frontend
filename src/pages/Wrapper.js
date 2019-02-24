@@ -19,11 +19,17 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { when, toJS } from 'mobx';
+import {
+  when, toJS, computed, observable
+} from 'mobx';
+
+import LoadingLogo from '../containers/LoadingLogo';
 
 @inject('store')
 @observer
 class Wrapper extends React.Component {
+  @observable mapLoaded = false;
+
   componentDidMount() {
     this.metricHit();
     when( // validate course name and download data
@@ -35,6 +41,13 @@ class Wrapper extends React.Component {
       () => this.props.store.data[d].status.loaded,
       () => this.checkForErrors(d)
     ));
+
+    when(
+      () => this.props.store.deck.loadingStatus,
+      () => {
+        this.mapLoaded = true;
+      }
+    );
   }
 
   componentDidUpdate(prevProps) {
@@ -43,7 +56,15 @@ class Wrapper extends React.Component {
     }
   }
 
-  metricHit() {
+  @computed get loadingBaseData() {
+    return (!(this.mapLoaded
+      && this.props.store.data.narratives.status.loaded
+      && this.props.store.data.camelDeps.base
+        .every(d => this.props.store.data[d].status.loaded)
+    ));
+  }
+
+  metricHit = () => {
     let metric = this.props.metric || 'narrative_open';
     if (this.props.story === 'world') metric = 'main_open';
     this.props.store.analytics.metricHit(metric);
@@ -76,6 +97,7 @@ class Wrapper extends React.Component {
   render() {
     return (
       <div className='content'>
+        {this.loadingBaseData && <LoadingLogo />}
         {this.props.children}
       </div>
     );
