@@ -17,9 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import DeckGL from '@deck.gl/react';
 
-import { InteractiveMap, FlyToInterpolator } from 'react-map-gl';
+import { InteractiveMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
 import {
@@ -105,13 +104,10 @@ class MapWrapper extends React.Component {
     return (
       <InteractiveMap
         style={{ zIndex: 1 }}
-        width={this.deck.width}
-        height={this.deck.height}
-        viewState={this.deck.viewState}
-        views={this.deck.view}
-        onViewStateChange={v => this.deck.updateViewState(v.viewState)}
-        // transitionDuration={this.props.store.deck.transition}
-        // transitionInterpolator={new FlyToInterpolator()}
+        {...this.deck.viewState}
+        onViewStateChange={(e) => {
+          this.deck.updateViewState(e.viewState);
+        }}
         mapStyle={this.props.store.mapStyle.style}
         mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
         ref={(ref) => {

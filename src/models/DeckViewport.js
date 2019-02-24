@@ -22,11 +22,6 @@ import {
   action
 } from 'mobx';
 
-import {
-  MapView,
-  MapController
-} from '@deck.gl/core';
-
 const INITIAL_VIEW_STATE = {
   latitude: 0,
   longitude: 0,
@@ -45,17 +40,6 @@ export default class DeckViewportModel {
   @observable width = window.innerWidth;
 
   @observable height = window.innerHeight;
-
-  @observable showCluster = true;
-
-  @computed get view() {
-    return new MapView({
-      id: 'id-view',
-      width: this.width,
-      height: this.height,
-      controller: { type: MapController, dragRotate: false }
-    });
-  }
 
   @computed get clipEnabled() {
     return this.rootStore.projection.clipEnabled === true;
@@ -81,26 +65,12 @@ export default class DeckViewportModel {
         maxZoom,
       },
     };
-
-    if (this.clipEnabled) {
-      return this.view.makeViewport(vState)
-        .fitBounds(this.rootStore.projection.clip);
-    }
-    return this.view.makeViewport(vState);
+    return vState;
   }
 
   // TODO change lng lat of check
   @computed get metersPerPixel() {
-    const vState = {
-      width: this.width,
-      height: this.height,
-      viewState: this.viewState,
-    };
-    const viewport = this.clipEnabled
-      ? this.view.makeViewport(vState)
-        .fitBounds(this.rootStore.projection.clip)
-      : this.view.makeViewport(vState);
-    return viewport.distanceScales.metersPerPixel[0];
+    return 0;
   }
 
   @observable longitude = this.viewport.longitude;
@@ -127,6 +97,8 @@ export default class DeckViewportModel {
   @computed get viewState() {
     const { minZoom, maxZoom } = this.rootStore.flags.zoom.list;
     return {
+      width: this.width,
+      height: this.height,
       longitude: this.longitude,
       latitude: this.latitude,
       zoom: this.zoom,
@@ -164,8 +136,8 @@ export default class DeckViewportModel {
   @action initLatLon() {
     const center = this.flyToEnabled
       ? [
-        this.viewport.longitude,
-        this.viewport.latitude
+        this.viewport.viewState.longitude,
+        this.viewport.viewState.latitude
       ]
       : [
         this.viewState.longitude,
@@ -181,8 +153,8 @@ export default class DeckViewportModel {
     }
     setTimeout(() => {
       if (this.flyToEnabled === true) {
-        this.longitude = this.viewport.longitude;
-        this.latitude = this.viewport.latitude;
+        this.longitude = this.viewport.viewState.longitude;
+        this.latitude = this.viewport.viewState.latitude;
       }
       this.zoom = this.validZoomValue;
     }, (this.interactiveMap !== null
