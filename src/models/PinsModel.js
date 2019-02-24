@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {
-  observable, computed, action, toJS
+  observable, computed, action
 } from 'mobx';
 
 import { typesMapping } from './Wikidata/WikidataHelper';
@@ -55,6 +55,19 @@ class InteractivePin {
     this.pic = getIcon(this.info[0]);
   }
 }
+
+const pinToGeoPoint = (info, key) => ({
+  type: 'Feature',
+  geometry: {
+    type: 'Point',
+    coordinates: [info[0].loc.x, info[0].loc.y]
+  },
+  properties: {
+    key,
+    info,
+    img: getIcon(info[0])
+  }
+});
 
 export default class PinsModel {
   constructor(rootStore) {
@@ -122,14 +135,12 @@ export default class PinsModel {
   }
 
   @computed get pins() {
-    const p = [];
-    Object.keys(this.combineRawPins)
-      .map((d) => {
-        const pin = toJS(this.combineRawPins[d]);
-        p.push(new InteractivePin(pin, d));
-        return false;
-      });
-    return p;
+    const features = Object.keys(this.combineRawPins)
+      .map(d => pinToGeoPoint(this.combineRawPins[d], d));
+    return {
+      type: 'FeatureCollection',
+      features
+    };
   }
 
   @computed get narrationFree() {

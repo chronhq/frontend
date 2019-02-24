@@ -25,6 +25,7 @@ import settings from '../../../settings.json';
 import citiesStyle from './CitiesMVTStyle';
 import pinsStyle from './PinsMVTStyle';
 import decorStyle from './DecorMVTStyle';
+import legacyPinsStyle from './PinsGJStyle';
 
 import AtomicBorders from './AtomicBordersModel';
 
@@ -63,6 +64,10 @@ export default class MapStyleModel {
       : { sources: {}, layers: [] };
   }
 
+  @computed get pinsGJ() {
+    return legacyPinsStyle(this.rootStore.pins.pins);
+  }
+
   @computed get decor() {
     return decorStyle(this.rootStore.i18n.lng);
   }
@@ -94,6 +99,7 @@ export default class MapStyleModel {
         ...this.decor.sources,
         ...this.bordersStyle.sources,
         ...this.cities.sources,
+        ...this.pinsGJ.sources,
         ...this.pins.sources,
       }
       : this.bordersStyle.sources;
@@ -104,6 +110,7 @@ export default class MapStyleModel {
         ...this.decor.layers,
         ...this.bordersStyle.layers,
         ...this.cities.layers,
+        ...this.pinsGJ.layers,
         ...this.pins.layers,
       ]
       : this.bordersStyle.layers;

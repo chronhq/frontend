@@ -26,8 +26,6 @@ import {
   computed, action
 } from 'mobx';
 
-import pinsLayer from '../../components/Layers/PinsLayer';
-
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
@@ -50,20 +48,6 @@ class MapWrapper extends React.Component {
 
   @computed get options() {
     return this.props.store.flags.layer.list;
-  }
-
-  @computed get feedPins() {
-    const { pins, dummyPins } = this.props.store.pins;
-    const { zoom } = this.deck;
-
-    return [
-      pinsLayer(pins, 'map', zoom, true, this.onMapPinHover),
-      pinsLayer(dummyPins, 'dummy', zoom, false),
-    ];
-  }
-
-  @computed get layers() {
-    return this.feedPins;
   }
 
   onBorderHoverCb = (features, position, force = false) => {
@@ -130,7 +114,7 @@ class MapWrapper extends React.Component {
       <DeckGL
         viewState={this.deck.viewState}
         style={{ zIndex: 1 }}
-        layers={this.layers}
+        layers={[]}
         views={this.deck.view}
         on
         onViewStateChange={v => this.deck.updateViewState(v.viewState)}
