@@ -28,7 +28,7 @@ export default class SpaceTimeVolume {
   }
 
   @computed get inUse() {
-    return this.data.territory.reduce((p, c) => ({ ...p, [c]: true }));
+    return this.data.territory.reduce((p, c) => ({ ...p, [c]: true }), {});
   }
 
   @computed get wId() {
