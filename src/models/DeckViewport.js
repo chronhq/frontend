@@ -111,13 +111,8 @@ export default class DeckViewportModel {
     });
   }
 
-  @action watchLoading() {
-    if (this.interactiveMap !== null) {
-      this.loadingStatus = this.interactiveMap.getMap().loaded();
-      if (typeof this.loadingStatus !== 'undefined') {
-        setTimeout(() => this.watchLoading(), 300);
-      }
-    }
+  @action isLoaded(e) {
+    this.loadingStatus = e.isSourceLoaded;
   }
 
   @action updateViewState(viewState) {

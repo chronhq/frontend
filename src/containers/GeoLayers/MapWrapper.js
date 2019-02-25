@@ -36,6 +36,7 @@ class MapWrapper extends React.Component {
 
 
   componentWillUnmount() {
+    this.toggleDataLoadingEventListeners('off');
     this.deck.InteractiveMap = null;
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
@@ -90,6 +91,14 @@ class MapWrapper extends React.Component {
     }
   )
 
+  dataLoadingListener = e => this.deck.isLoaded(e)
+
+  toggleDataLoadingEventListeners = (t = 'on') => {
+    const map = this.deck.interactiveMap.getMap();
+    map[t]('dataloading', this.dataLoadingListener);
+    map[t]('data', this.dataLoadingListener);
+  }
+
   @action resize() {
     this.props.store.deck.width = window.innerWidth;
     this.props.store.deck.height = window.innerHeight;
@@ -109,8 +118,8 @@ class MapWrapper extends React.Component {
           this.deck.interactiveMap = ref;
         }}
         onLoad={() => {
-          // starting a timer for status checking
-          this.deck.watchLoading();
+          this.deck.isLoaded({ isSourceLoaded: true });
+          this.toggleDataLoadingEventListeners('on');
         }}
         onHover={this.setHoverBalloon(false)}
         onClick={(pointerEvent) => {
