@@ -69,7 +69,7 @@ export default class SpaceTimeVolume {
       head: this.wikidata.currentHead,
       government: this.wikidata.currentGovernment,
       population: this.wikidata.currentPopulation,
-      dataOrigin: [`https://www.wikidata.org/wiki/${this.wId}`],
+      dataOrigin: this.wikidata.dataOrigin,
       sources: this.data.references
     };
   }

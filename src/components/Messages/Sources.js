@@ -37,7 +37,7 @@ const parseLink = (link) => {
 
 const linkKey = (name, l, id) => (`src_${name}_${l.length}_${id}`);
 
-const SourceInfo = ({ name, data }) => (
+const SourceInfo = ({ name, data = [] }) => (
   data.length > 0 ? (
     <div className='sourcesInfo'>
       <p className='factSubTitle'>
@@ -82,6 +82,11 @@ class Sources extends React.Component {
         console.error('Unable to get values for Country Hover', this.props.id, e);
         return {};
       }
+    }
+    if (this.props.store.wikidata.cache[this.props.id] !== undefined) {
+      return {
+        dataOrigin: this.props.store.wikidata.cache[this.props.id].dataOrigin
+      };
     }
     return {};
   }

@@ -108,7 +108,7 @@ class Balloon extends React.Component {
                 key={`balloon_person_${pin.type}_${pin.person.id}`}
               />
             ),
-            sources: () => ''
+            sources: <Sources id={pin.person.id} pin={pin.person} type={pin.type} />
           };
         case 'battle':
           return {
@@ -119,7 +119,7 @@ class Balloon extends React.Component {
                 key={`balloon_battle_${pin.type}_${pin.battle.id}`}
               />
             ),
-            sources: () => ''
+            sources: <Sources id={pin.battle.id} pin={pin.battle} type={pin.type} />
           };
         case 'document':
           return {
@@ -127,10 +127,10 @@ class Balloon extends React.Component {
             message: (
               <Document
                 fact={pin.document}
-                key={`balloon_battle_${pin.type}_${pin.document.id}`}
+                key={`balloon_document_${pin.type}_${pin.document.id}`}
               />
             ),
-            sources: () => ''
+            sources: <Sources id={pin.document.id} pin={pin.document} type={pin.type} />
           };
         default:
           return { message: () => '', sources: () => '', id: 'defaultBalloonId' };
