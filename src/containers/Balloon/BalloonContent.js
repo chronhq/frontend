@@ -33,7 +33,7 @@ import CountryHover from '../../components/Messages/CountryHover';
 @observer
 class BalloonContent extends React.Component {
   @computed get i18n() {
-    return this.props.store.i18n.messages;
+    return this.props.store.i18n.data.messages;
   }
 
   @computed get balloon() {
@@ -72,6 +72,7 @@ class BalloonContent extends React.Component {
             id: `battleHoverBalloon_${pin.battle.id}`,
             message: (
               <Battle
+                i18n={this.i18n}
                 fact={pin.battle}
                 key={`balloon_battle_${pin.type}_${pin.battle.id}`}
               />
