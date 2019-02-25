@@ -82,7 +82,7 @@ const timeline = [{
   text
 }];
 
-const ticks = timeline.map(createTick)
+const ticks = timeline.map(createTick);
 
 const points = [
   { x: 33.044167, y: 34.674722 }, // Limassol
