@@ -24,6 +24,8 @@ export default class BalloonModel {
     this.rootStore = rootStore;
   }
 
+  @observable dragOn = false;
+
   // reaction on onClick event for countryHover
   @observable pinned = false;
 
@@ -44,6 +46,10 @@ export default class BalloonModel {
   @observable pageY = 1;
 
   @observable clickPositionRaw = { lat: 0, lng: 0 };
+
+  @action dragClick(b) {
+    this.dragOn = b;
+  }
 
   @action setPosition(x, y) {
     this.pageX = x;

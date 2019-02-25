@@ -18,7 +18,8 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, observable, action } from 'mobx';
+import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 
 import {
   Sources,
@@ -33,6 +34,12 @@ import './Balloon.less';
 @inject('store')
 @observer
 class Balloon extends React.Component {
+  @observable positionClassNameCache = '';
+
+  @observable mouseX = 0;
+
+  @observable mouseY = 0;
+
   @computed get pin() {
     return this.props.store.balloon.selected;
   }
@@ -64,6 +71,7 @@ class Balloon extends React.Component {
   }
 
   @computed get positionClassName() {
+    if (this.props.store.balloon.pinned) return this.positionClassNameCache;
     if (this.props.store.balloon.pageX > 0.5 * window.innerWidth) {
       if (this.props.store.balloon.pageY < 0.7 * window.innerHeight) {
         return 'balloonTopRight';
@@ -130,20 +138,65 @@ class Balloon extends React.Component {
     });
   }
 
+  @action setMousePosition(e) {
+    this.mouseX = e.pageX;
+    this.mouseY = e.pageY;
+  }
+
+  mouseDragDown = (e) => {
+    this.positionClassNameCache = this.positionClassName;
+    this.setMousePosition(e);
+    this.props.store.balloon.dragClick(true);
+  }
+
+  mouseDrag = (e) => {
+    e.preventDefault();
+    if (this.props.store.balloon.dragOn) {
+      this.props.store.balloon.setPosition(
+        this.props.store.balloon.pageX - (this.mouseX - e.pageX),
+        this.props.store.balloon.pageY - (this.mouseY - e.pageY)
+      );
+      this.setMousePosition(e);
+    }
+  }
+
   render() {
-    const container = `balloonNewsContainer ${this.positionClassName}`;
+    const container = `balloonContainer ${this.positionClassName}`;
     const news = 'balloonNews balloonMain';
     const sources = 'balloonNews balloonSources';
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
       <div style={{ ...this.style }} className={container}>
-        <div className={news}>
-          {this.news.map(n => (<div key={`news_${n.id}`}>{n.message}</div>))}
-        </div>
-        {this.pinned && (
-          <div className={sources}>
-            {this.news.map(n => (<div key={`sources_${n.id}`}>{n.sources}</div>))}
+        {this.props.store.balloon.pinned
+          && (
+            <div className='balloonControls'>
+              <div
+                className='balloonDrag'
+                onMouseDown={this.mouseDragDown}
+                onMouseUp={() => this.props.store.balloon.dragClick(false)}
+                onMouseLeave={() => this.props.store.balloon.dragClick(false)}
+                onMouseMove={this.mouseDrag}
+              >
+                <hr />
+              </div>
+              <Button
+                btnType={BUTTON_TYPE.CLOSE}
+                onClick={() => this.props.store.balloon.unpin()}
+              >
+                <span className="lnr lnr-cross" />
+              </Button>
+            </div>
+          )}
+        <div className='balloonNewsContainer'>
+          <div className={news}>
+            {this.news.map(n => (<div key={`news_${n.id}`}>{n.message}</div>))}
           </div>
-        )}
+          {this.pinned && (
+            <div className={sources}>
+              {this.news.map(n => (<div key={`sources_${n.id}`}>{n.sources}</div>))}
+            </div>
+          )}
+        </div>
       </div>
     );
   }
