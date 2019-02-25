@@ -35,10 +35,14 @@
 
 .balloonBottomRight {transform: translate(-90%, calc(-100% - 20px));}
 
+.balloonNewsContainer {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
 .balloonContainer {
-  display: flex;
-  flex-direction: column;
-  max-width: 450px;
+  max-width: 30vw;
+  max-height: auto;
   position: absolute;
   z-index: 100;
   padding: 6px;
@@ -51,7 +55,7 @@
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  .balloonNewsContainer {
+  .balloonNewsRow {
     display: flex;
     flex-direction: row;
     .balloonMain {
