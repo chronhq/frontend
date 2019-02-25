@@ -17,15 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {
-  computed, action, observable, when
+  computed, action, when
 } from 'mobx';
 
 export default class CourseSideEffects {
   constructor(rootStore) {
     this.rootStore = rootStore;
   }
-
-  @observable fakeId = null;
 
   find(name) {
     return Object
@@ -41,10 +39,6 @@ export default class CourseSideEffects {
     return this.rootStore.flags.runtime.get('SelectedCourse');
   }
 
-  @computed get bordersCourseId() {
-    return this.fakeId === null ? this.courseId : this.fakeId;
-  }
-
   @computed get listOfDeps() {
     switch (this.courseId) {
       case -1: return this.deps.base;
@@ -53,25 +47,8 @@ export default class CourseSideEffects {
     }
   }
 
-
   @computed get loadingIsComplete() {
     return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded);
-  }
-
-  @computed get courseFilter() {
-    return JSON.stringify({
-      where: {
-        courseId: this.courseId
-      }
-    });
-  }
-
-  @computed get bordersCourseFilter() {
-    return JSON.stringify({
-      where: {
-        courseId: this.bordersCourseId
-      }
-    });
   }
 
   @computed get courseInfo() {
@@ -136,7 +113,6 @@ export default class CourseSideEffects {
       delete this.rootStore.data.narratives.data[-1];
     }
 
-    this.fakeId = fake;
     this.rootStore.flags.set({
       runtime: {
         SelectedCourse: id,
