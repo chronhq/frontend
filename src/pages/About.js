@@ -41,16 +41,48 @@ const text = ['We are a community of enthusiasts behind Chron.',
   'but are united by passion for historical geography.',
   'Find us on https://github.com/chronhq'].join(' ');
 
-const tick = {
-  year,
-  order: 0,
+const createTick = (e, idx) => ({
+  map_datetime: String(year),
+  order: idx,
   courseId: -1,
-  title: '',
-  description: text,
-  id: -1
-};
+  title: e.text,
+  description: '',
+  date_label: e.date,
+  id: idx
+});
 
 const newPoint = p => ({ img: 26, loc: p });
+
+const timeline = [{
+  date: '7 March 2017',
+  text: 'Chronist team launched first demo'
+}, {
+  date: '11 November 2017',
+  text: 'first narrative made by Chronist'
+}, {
+  date: '12 January 2018',
+  text: 'the launch of the first slack and the ChronoScio project announced by Ollie Bye'
+}, {
+  date: '6 July 2018',
+  text: 'ChronoScio team started to work on website'
+}, {
+  date: '1 August 2018',
+  text: 'Chronist team published 220 years of world history maps'
+}, {
+  date: '9 September 2018',
+  text: 'ChronoScio team began mapping past 1789'
+}, {
+  date: '19 October 2018',
+  text: 'ChronoScio and Chronist teams came together'
+}, {
+  date: '26 February 2019',
+  text: 'United Chron team launched first demo'
+}, {
+  date: 'Now',
+  text
+}];
+
+const ticks = timeline.map(createTick)
 
 const points = [
   { x: 33.044167, y: 34.674722 }, // Limassol
@@ -81,7 +113,7 @@ class About extends React.Component {
     when( // wait for course selection and add text
       () => this.props.store.courseSelection.courseId === -1,
       () => runInAction(() => {
-        this.props.store.data.narrations.data[-1] = tick;
+        this.props.store.data.narrations.flatGenCb(ticks);
         this.props.store.pins.addDummyPins(points, false);
         return true;
       })
