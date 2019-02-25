@@ -23,8 +23,9 @@ import { runInAction, when } from 'mobx';
 import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 import Narrative from './Narrative';
 
-const date = new Date();
-const year = date.getUTCFullYear();
+// store.data.narratives.data[0].end_year
+// last mapped year
+const year = 2000;
 
 const mapSettings = buildMapSettings({
   zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
@@ -32,7 +33,7 @@ const mapSettings = buildMapSettings({
 
 // Create a fake course
 const about = buildNarrative({
-  start_year: year, end_year: year, url: 'about', name: 'About Us', mapSettings
+  start_year: year, end_year: year, url: 'about', title: 'About Us', mapSettings
 });
 
 const text = ['We are a community of enthusiasts behind Chron.',
@@ -46,8 +47,6 @@ const tick = {
   courseId: -1,
   title: '',
   description: text,
-  persons: [],
-  cities: [],
   id: -1
 };
 
@@ -73,7 +72,8 @@ const points = [
 class About extends React.Component {
   constructor(props) {
     super(props);
-
+    // clean data from previous selected narrative
+    this.props.store.courseSelection.cleanup();
     runInAction(() => {
       this.props.store.data.narratives.data[-1] = about;
     });
