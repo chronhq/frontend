@@ -58,10 +58,10 @@ const timeline = [{
   text: 'Chronist team launched first demo'
 }, {
   date: '11 November 2017',
-  text: 'first narrative made by Chronist'
+  text: 'First narrative made by Chronist'
 }, {
   date: '12 January 2018',
-  text: 'the launch of the first slack and the ChronoScio project announced by Ollie Bye'
+  text: 'Launch of the first slack and the ChronoScio project announced by Ollie Bye'
 }, {
   date: '6 July 2018',
   text: 'ChronoScio team started to work on website'
