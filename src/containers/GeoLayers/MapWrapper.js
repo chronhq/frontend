@@ -120,7 +120,9 @@ class MapWrapper extends React.Component {
             this.setHoverBalloon(true)(pointerEvent);
           }
         }}
-        onMouseOut={() => this.props.store.balloon.setPinBalloon(null)}
+        // keep pinned balloon oppened onMouseLeave
+        onMouseOut={() => (this.props.store.balloon.pinned === false
+          && this.props.store.balloon.setPinBalloon(null))}
         // There is no such event for mapbox gl
         // eslint(jsx-a11y/mouse-events-have-key-events)
         onBlur={() => ''}
