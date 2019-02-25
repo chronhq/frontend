@@ -85,13 +85,8 @@ class MapWrapper extends React.Component {
   setHoverBalloon = force => (
     (pointerEvent) => {
       if (force === false && this.props.store.balloon.pinned === true) return;
-      const { features, type, point } = pointerEvent;
-      if (type === 'leave') {
-        // disable all balloons
-        this.props.store.balloon.setPinBalloon(null);
-      } else {
-        this.onBorderHoverCb(features, point, force);
-      }
+      const { features, point } = pointerEvent;
+      this.onBorderHoverCb(features, point, force);
     }
   )
 
@@ -118,13 +113,17 @@ class MapWrapper extends React.Component {
           this.deck.watchLoading();
         }}
         onHover={this.setHoverBalloon(false)}
-        onLayerClick={(pointerEvent) => {
+        onClick={(pointerEvent) => {
           if (this.props.store.balloon.unpin() !== true) {
             this.props.store.analytics.metricHit('check_map');
             this.props.store.balloon.clickPosition = pointerEvent.lngLat;
             this.setHoverBalloon(true)(pointerEvent);
           }
         }}
+        onMouseOut={() => this.props.store.balloon.setPinBalloon(null)}
+        // There is no such event for mapbox gl
+        // eslint(jsx-a11y/mouse-events-have-key-events)
+        onBlur={() => ''}
       />
     );
   }
