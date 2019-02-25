@@ -37,6 +37,7 @@ class MapWrapper extends React.Component {
 
   componentWillUnmount() {
     this.toggleDataLoadingEventListeners('off');
+    this.deck.initialLoad(false);
     this.deck.InteractiveMap = null;
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
@@ -118,7 +119,7 @@ class MapWrapper extends React.Component {
           this.deck.interactiveMap = ref;
         }}
         onLoad={() => {
-          this.deck.isLoaded({ isSourceLoaded: true });
+          this.deck.initialLoad(true);
           this.toggleDataLoadingEventListeners('on');
         }}
         onHover={this.setHoverBalloon(false)}

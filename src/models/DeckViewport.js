@@ -41,6 +41,8 @@ export default class DeckViewportModel {
 
   @observable height = window.innerHeight;
 
+  @observable mapInitialized = false;
+
   @computed get clipEnabled() {
     return this.rootStore.projection.clipEnabled === true;
   }
@@ -109,6 +111,11 @@ export default class DeckViewportModel {
       this[field] = viewState[field];
       return 0;
     });
+  }
+
+  @action initialLoad(b) {
+    this.mapInitialized = b;
+    this.loadingStatus = b;
   }
 
   @action isLoaded(e) {
