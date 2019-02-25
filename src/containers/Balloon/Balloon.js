@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { computed, observable, action } from 'mobx';
+import { computed } from 'mobx';
 
 import './Balloon.less';
 import BalloonControls from './BalloonControls';
@@ -27,8 +27,6 @@ import BalloonContent from './BalloonContent';
 @inject('store')
 @observer
 class Balloon extends React.Component {
-  @observable positionClassNameCache = '';
-
   @computed get balloon() {
     return this.props.store.balloon;
   }
@@ -55,20 +53,21 @@ class Balloon extends React.Component {
   }
 
   @computed get positionClassName() {
-    if (this.balloon.pinned) return this.positionClassNameCache;
-    if (this.balloon.pageX > 0.5 * window.innerWidth) {
-      if (this.balloon.pageY < 0.7 * window.innerHeight) {
-        return 'balloonTopRight';
-      }
-      return 'balloonBottomRight';
-    } if (this.balloon.pageY < 0.7 * window.innerHeight) {
-      return 'balloonTopLeft';
+    let { pageX, pageY } = this.balloon;
+    if (this.balloon.pinned) {
+      pageX = this.balloon.pageXP;
+      pageY = this.balloon.pageYP;
     }
-    return 'balloonBottomLeft';
-  }
 
-  @action cachePosition() {
-    this.positionClassNameCache = this.positionClassName;
+    const { width, height } = this.props.store.deck;
+    if (pageX > 0.5 * width) {
+      return (pageY < 0.7 * height)
+        ? 'balloonTopRight'
+        : 'balloonBottomRight';
+    }
+    return (pageY < 0.7 * height)
+      ? 'balloonTopLeft'
+      : 'balloonBottomLeft';
   }
 
   render() {

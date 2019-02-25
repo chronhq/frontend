@@ -35,7 +35,6 @@ class BalloonControls extends React.Component {
   }
 
   mouseDragDown = (e) => {
-    this.props.cachePosition();
     this.setMousePosition(e);
     this.props.store.balloon.dragClick(true);
   }

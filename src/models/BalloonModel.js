@@ -43,7 +43,12 @@ export default class BalloonModel {
 
   @observable pageX = 0;
 
-  @observable pageY = 1;
+  @observable pageY = 0;
+
+  // observables for holding pinned state
+  @observable pageXP = 0;
+
+  @observable pageYP = 0;
 
   @observable clickPositionRaw = { lat: 0, lng: 0 };
 
@@ -57,7 +62,11 @@ export default class BalloonModel {
   }
 
   @action changePinnedStatus(a, force) {
-    if (force === true) this.pinned = true;
+    if (force === true) {
+      this.pinned = true;
+      this.pageXP = this.pageX;
+      this.pageYP = this.pageY;
+    }
     if (a === null) this.pinned = false;
   }
 
