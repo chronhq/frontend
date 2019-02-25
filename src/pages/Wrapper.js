@@ -20,7 +20,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import {
-  when, toJS, computed, observable
+  when, toJS, computed
 } from 'mobx';
 
 import LoadingLogo from '../containers/LoadingLogo';
@@ -28,8 +28,6 @@ import LoadingLogo from '../containers/LoadingLogo';
 @inject('store')
 @observer
 class Wrapper extends React.Component {
-  @observable mapLoaded = false;
-
   componentDidMount() {
     this.metricHit();
     when( // validate course name and download data
@@ -41,13 +39,6 @@ class Wrapper extends React.Component {
       () => this.props.store.data[d].status.loaded,
       () => this.checkForErrors(d)
     ));
-
-    when(
-      () => this.props.store.deck.loadingStatus,
-      () => {
-        this.mapLoaded = true;
-      }
-    );
   }
 
   componentDidUpdate(prevProps) {
@@ -57,7 +48,7 @@ class Wrapper extends React.Component {
   }
 
   @computed get loadingBaseData() {
-    return (!(this.mapLoaded
+    return (!(this.props.store.deck.mapInitialized
       && this.props.store.data.narratives.status.loaded
       && this.props.store.data.camelDeps.base
         .every(d => this.props.store.data[d].status.loaded)

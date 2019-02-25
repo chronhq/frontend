@@ -41,6 +41,8 @@ export default class DeckViewportModel {
 
   @observable height = window.innerHeight;
 
+  @observable mapInitialized = false;
+
   @computed get clipEnabled() {
     return this.rootStore.projection.clipEnabled === true;
   }
@@ -111,13 +113,13 @@ export default class DeckViewportModel {
     });
   }
 
-  @action watchLoading() {
-    if (this.interactiveMap !== null) {
-      this.loadingStatus = this.interactiveMap.getMap().loaded();
-      if (typeof this.loadingStatus !== 'undefined') {
-        setTimeout(() => this.watchLoading(), 300);
-      }
-    }
+  @action initialLoad(b) {
+    this.mapInitialized = b;
+    this.loadingStatus = b;
+  }
+
+  @action isLoaded(e) {
+    this.loadingStatus = e.isSourceLoaded;
   }
 
   @action updateViewState(viewState) {

@@ -31,7 +31,7 @@ const mapSettings = buildMapSettings({
 
 // Create a fake course
 const demo = buildNarrative({
-  start_year: year, end_year: year, url: 'demo', name: 'EADH 2018 Demo', mapSettings
+  start_year: year, end_year: year, url: 'demo', title: 'EADH 2018 Demo', mapSettings
 });
 
 @inject('store')
@@ -39,6 +39,7 @@ const demo = buildNarrative({
 class Demo extends React.Component {
   constructor(props) {
     super(props);
+    this.props.store.courseSelection.cleanup();
     this.props.store.wikistore.battles.add([
       'Q1025134', 'Q898338', 'Q2234632', 'Q10671369',
       'Q4871992', 'Q4872085', 'Q2564536', 'Q6539', 'Q1527921'], false);

@@ -4,7 +4,7 @@
     "options": { "year": "numeric", "month": "short", "day": "numeric" },
     "locale": "ru-RU"
   },
-  "title": "Хронист, интерактивный атлас",
+  "title": "Хрон, интерактивный атлас",
   "loading": "загружается...",
   "courseSelection": {
     "title": "Выберите режим"

@@ -43,7 +43,7 @@ export default class BalloonModel {
 
   @observable pageY = 1;
 
-  @observable clickPositionRaw = { lat: 0, lon: 0 };
+  @observable clickPositionRaw = { lat: 0, lng: 0 };
 
   @action setPosition(x, y) {
     this.pageX = x;
@@ -120,7 +120,7 @@ export default class BalloonModel {
   }
 
   set clickPosition(clickPosition) {
-    this.clickPositionRaw = clickPosition;
+    this.clickPositionRaw = { lng: clickPosition[0], lat: clickPosition[1] };
   }
 
   @computed get pins() {

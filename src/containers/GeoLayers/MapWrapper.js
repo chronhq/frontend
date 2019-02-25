@@ -36,6 +36,8 @@ class MapWrapper extends React.Component {
 
 
   componentWillUnmount() {
+    this.toggleDataLoadingEventListeners('off');
+    this.deck.initialLoad(false);
     this.deck.InteractiveMap = null;
     window.removeEventListener('resize', () => this.resize(), false);
     window.removeEventListener('orientationchange', () => this.resize(), false);
@@ -85,15 +87,18 @@ class MapWrapper extends React.Component {
   setHoverBalloon = force => (
     (pointerEvent) => {
       if (force === false && this.props.store.balloon.pinned === true) return;
-      const { features, type, point } = pointerEvent;
-      if (type === 'leave') {
-        // disable all balloons
-        this.props.store.balloon.setPinBalloon(null);
-      } else {
-        this.onBorderHoverCb(features, point, force);
-      }
+      const { features, point } = pointerEvent;
+      this.onBorderHoverCb(features, point, force);
     }
   )
+
+  dataLoadingListener = e => this.deck.isLoaded(e)
+
+  toggleDataLoadingEventListeners = (t = 'on') => {
+    const map = this.deck.interactiveMap.getMap();
+    map[t]('dataloading', this.dataLoadingListener);
+    map[t]('data', this.dataLoadingListener);
+  }
 
   @action resize() {
     this.props.store.deck.width = window.innerWidth;
@@ -114,17 +119,23 @@ class MapWrapper extends React.Component {
           this.deck.interactiveMap = ref;
         }}
         onLoad={() => {
-          // starting a timer for status checking
-          this.deck.watchLoading();
+          this.deck.initialLoad(true);
+          this.toggleDataLoadingEventListeners('on');
         }}
         onHover={this.setHoverBalloon(false)}
-        onLayerClick={(pointerEvent) => {
+        onClick={(pointerEvent) => {
           if (this.props.store.balloon.unpin() !== true) {
             this.props.store.analytics.metricHit('check_map');
             this.props.store.balloon.clickPosition = pointerEvent.lngLat;
             this.setHoverBalloon(true)(pointerEvent);
           }
         }}
+        // keep pinned balloon oppened onMouseLeave
+        onMouseOut={() => (this.props.store.balloon.pinned === false
+          && this.props.store.balloon.setPinBalloon(null))}
+        // There is no such event for mapbox gl
+        // eslint(jsx-a11y/mouse-events-have-key-events)
+        onBlur={() => ''}
       />
     );
   }
