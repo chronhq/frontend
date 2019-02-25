@@ -52,6 +52,7 @@
     "other": "Другоe"
   },
   "messages": {
+    "balloonExpand": "Развернуть по клику",
     "participants": "Участники",
     "personDeath": "Смерть",
     "personBirth": "Рождение"

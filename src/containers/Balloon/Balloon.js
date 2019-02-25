@@ -76,6 +76,11 @@ class Balloon extends React.Component {
       <div style={{ ...this.style }} className={container}>
         <BalloonControls cachePosition={() => this.cachePosition()} />
         <BalloonContent />
+        {!this.balloon.pinned && (
+          <div className='balloonClickNotice'>
+            {this.props.store.i18n.data.messages.balloonExpand}
+          </div>
+        )}
       </div>
     );
   }

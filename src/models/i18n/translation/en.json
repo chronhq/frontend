@@ -52,6 +52,7 @@
     "other": "Other"
   },
   "messages": {
+    "balloonExpand": "Click to expand",
     "participants": "Participants",
     "personDeath": "Passed",
     "personBirth": "Born"
