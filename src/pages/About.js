@@ -36,11 +36,6 @@ const about = buildNarrative({
   start_year: year, end_year: year, url: 'about', title: 'About Us', mapSettings
 });
 
-const text = ['We are a community of enthusiasts behind Chron.',
-  'We live in a different parts of the world',
-  'but are united by passion for historical geography.',
-  'Find us on https://github.com/chronhq'].join(' ');
-
 const createTick = (e, idx) => ({
   map_datetime: String(year),
   order: idx,
@@ -61,7 +56,7 @@ const timeline = [{
   text: 'First narrative made by Chronist'
 }, {
   date: '12 January 2018',
-  text: 'Launch of the first slack and the ChronoScio project announced by Ollie Bye'
+  text: 'Launch of first demo by ChronoScio announced by Ollie Bye'
 }, {
   date: '6 July 2018',
   text: 'ChronoScio team started to work on website'
@@ -79,7 +74,9 @@ const timeline = [{
   text: 'United Chron team launched first demo'
 }, {
   date: 'Now',
-  text
+  text: ['We are a community of enthusiasts behind Chron.',
+    'We live in a different parts of the world',
+    'but are united by passion for historical geography'].join(' ')
 }];
 
 const ticks = timeline.map(createTick);
@@ -91,7 +88,7 @@ const points = [
   { x: 37.616667, y: 55.75 }, // Moscow
   { x: 30.308611, y: 59.9375 }, // Saint-Petersburg
   { x: -71.063611, y: 42.358056 }, // Boston
-  { x: 32.866667, y: 39.933333 }, // Turkey
+  { x: 32.866667, y: 39.933333 }, // Ankara
   { x: -93.093611, y: 44.944167 }, // Minnesota
   { x: 4.9, y: 52.366667 }, // Amsterdam
   { x: 5.783333, y: 53.2 }, // Leeuwarden
