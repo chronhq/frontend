@@ -50,7 +50,8 @@ const timeline = [{
   text: 'Launch of first demo by ChronoScio announced by Ollie Bye'
 }, {
   date: '6 July 2018',
-  text: 'ChronoScio team started to work on website'
+  text: ['With the addition of new members,',
+    'ChronoScio team started to work on the second iteration of their website'].join(' ')
 }, {
   date: '1 August 2018',
   text: 'Chronist team published 220 years of world history maps'
