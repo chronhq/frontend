@@ -20,6 +20,8 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
+import ClickPositionInfo from './ClickPositionInfo';
+
 const parseLink = (link) => {
   const tmp = link.replace(/https?:\/\//, '').replace(/\?.*/, '').replace(/\/$/, '');
   const file = tmp.replace(/.*\//, '');
@@ -37,7 +39,7 @@ const parseLink = (link) => {
 
 const linkKey = (name, l, id) => (`src_${name}_${l.length}_${id}`);
 
-const SourceInfo = ({ name, data }) => (
+const SourceInfo = ({ name, data = [] }) => (
   data.length > 0 ? (
     <div className='sourcesInfo'>
       <p className='factSubTitle'>
@@ -70,10 +72,6 @@ class Sources extends React.Component {
     return this.props.store.i18n.data.sourcesBalloon;
   }
 
-  @computed get clickPosition() {
-    return this.props.store.balloon.clickPosition;
-  }
-
   @computed get item() {
     if (this.props.type === 'countryHover') {
       try {
@@ -82,6 +80,11 @@ class Sources extends React.Component {
         console.error('Unable to get values for Country Hover', this.props.id, e);
         return {};
       }
+    }
+    if (this.props.store.wikidata.cache[this.props.id] !== undefined) {
+      return {
+        dataOrigin: this.props.store.wikidata.cache[this.props.id].dataOrigin
+      };
     }
     return {};
   }
@@ -99,16 +102,7 @@ class Sources extends React.Component {
       <div>
         <SourceInfo name={this.messages.origin} data={this.dataOrigin} />
         <SourceInfo name={this.messages.sources} data={this.sources} />
-        <div>
-          <p>
-            {'Lat: '}
-            {this.clickPosition.lat}
-          </p>
-          <p>
-            {'Lng: '}
-            {this.clickPosition.lng}
-          </p>
-        </div>
+        {this.props.type === 'countryHover' && <ClickPositionInfo />}
       </div>
     );
   }

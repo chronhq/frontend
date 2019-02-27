@@ -18,7 +18,7 @@
  */
 import React from 'react';
 
-const Battle = ({ fact }) => (
+const Battle = ({ fact, i18n }) => (
   <div key={fact.key}>
     <p className='factDate'>
       {fact.dateText}
@@ -32,7 +32,7 @@ const Battle = ({ fact }) => (
     {fact.participant !== undefined
       ? (
         <p className='factDescription'>
-          {'Participants: '}
+          {`${i18n.participants}: `}
           <i>
             {Object.values(fact.participant).join(', ')}
           </i>

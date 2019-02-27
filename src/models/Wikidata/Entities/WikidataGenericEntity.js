@@ -53,6 +53,10 @@ class WikidataGenericEntity {
     return this.rootStore.i18n.fallback;
   }
 
+  @computed get dataOrigin() {
+    return [`https://www.wikidata.org/wiki/${this.entity.id}`];
+  }
+
   // if possible select primary language otherwise fallback to default lng
   getLngString = obj => ((obj[this.lng] || '') || (obj[this.fallback] || ''));
 

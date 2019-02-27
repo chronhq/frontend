@@ -52,6 +52,10 @@
     "other": "Другоe"
   },
   "messages": {
+    "positionCopy": "Скопировать",
+    "positionCopied": "Скопировано",
+    "balloonExpand": "Развернуть по клику",
+    "participants": "Участники",
     "personDeath": "Смерть",
     "personBirth": "Рождение"
   },

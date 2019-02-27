@@ -52,6 +52,10 @@
     "other": "Other"
   },
   "messages": {
+    "positionCopy": "Click to copy",
+    "positionCopied": "Copied",
+    "balloonExpand": "Click to expand",
+    "participants": "Participants",
     "personDeath": "Passed",
     "personBirth": "Born"
   },
