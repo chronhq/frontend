@@ -20,6 +20,8 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
+import ClickPositionInfo from './ClickPositionInfo';
+
 const parseLink = (link) => {
   const tmp = link.replace(/https?:\/\//, '').replace(/\?.*/, '').replace(/\/$/, '');
   const file = tmp.replace(/.*\//, '');
@@ -70,10 +72,6 @@ class Sources extends React.Component {
     return this.props.store.i18n.data.sourcesBalloon;
   }
 
-  @computed get clickPosition() {
-    return this.props.store.balloon.clickPosition;
-  }
-
   @computed get item() {
     if (this.props.type === 'countryHover') {
       try {
@@ -104,16 +102,7 @@ class Sources extends React.Component {
       <div>
         <SourceInfo name={this.messages.origin} data={this.dataOrigin} />
         <SourceInfo name={this.messages.sources} data={this.sources} />
-        <div>
-          <p>
-            {'Lat: '}
-            {this.clickPosition.lat}
-          </p>
-          <p>
-            {'Lng: '}
-            {this.clickPosition.lng}
-          </p>
-        </div>
+        {this.props.type === 'countryHover' && <ClickPositionInfo />}
       </div>
     );
   }
