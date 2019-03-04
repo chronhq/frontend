@@ -109,7 +109,7 @@
     },
     "decoration-5": {
         "x": 0,
-        "y": 192,
+        "y": 128,
         "width": 64,
         "height": 64,
         "anchorY": 0,
@@ -118,7 +118,7 @@
     },
     "decoration-6": {
         "x": 64,
-        "y": 192,
+        "y": 128,
         "width": 64,
         "height": 64,
         "anchorY": 0,
@@ -127,7 +127,7 @@
     },
     "decoration-7": {
         "x": 128,
-        "y": 192,
+        "y": 128,
         "width": 64,
         "height": 64,
         "anchorY": 0,
@@ -136,7 +136,7 @@
     },
     "decoration-8": {
         "x": 64,
-        "y": 192,
+        "y": 128,
         "width": 64,
         "height": 64,
         "anchorY": 0,
@@ -145,7 +145,7 @@
     },
     "decoration-9": {
         "x": 0,
-        "y": 320,
+        "y": 192,
         "width": 64,
         "height": 64,
         "anchorY": 0,
@@ -154,7 +154,7 @@
     },
     "decoration-10": {
         "x": 64,
-        "y": 320,
+        "y": 192,
         "width": 64,
         "height": 64,
         "anchorY": 0,
@@ -163,7 +163,7 @@
     },
     "decoration-11": {
         "x": 128,
-        "y": 320,
+        "y": 192,
         "width": 64,
         "height": 64,
         "anchorY": 0,
