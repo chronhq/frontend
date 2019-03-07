@@ -60,8 +60,7 @@
     "personBirth": "Born"
   },
   "loadingWidget": {
-    "loading": "Loading...",
-    "loaded": "Loading complete"
+    "loading": "Loading..."
   },
   "unknown": {
     "year": "????",
