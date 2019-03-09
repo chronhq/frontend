@@ -48,7 +48,7 @@ class FreePinsWidget extends React.Component {
 
   render() {
     return (
-      <g className="freePinsBar" transform='translate(0, -60)'>
+      <g className="freePinsBar" transform='translate(0, -15)'>
         {this.pins.map((icon, idx) => (
           <use
             style={{ pointerEvents: 'all' }}

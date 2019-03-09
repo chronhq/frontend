@@ -26,7 +26,7 @@ class LoadingWidget extends React.Component {
     return this.props.store.deck.loadingStatus
       ? null
       : (
-        <g className='sizeMeter' transform='translate(0,-40)' strokeWidth="1" stroke='black'>
+        <g className='sizeMeter' transform='translate(-5, 0)' strokeWidth="1" stroke='black'>
           <text style={{ userSelect: 'none' }} stroke='transparent'>
             {this.props.store.i18n.data.loadingWidget.loading}
           </text>
