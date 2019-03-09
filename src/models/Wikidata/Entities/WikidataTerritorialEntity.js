@@ -101,20 +101,18 @@ class WikidataTerritorialEntity extends WikidataGenericEntity {
   }
 
   @computed get capital() {
-    return this.capitals.reduce((prev, cur) => {
-      if (this.inRange(cur)) {
-        const k = cur.deJure ? 'deJure' : 'deFacto';
-        return {
+    return this.capitals.reduce((prev, cur) => (
+      this.inRange(cur)
+        ? [
           ...prev,
-          [k]: {
+          {
             id: cur.value.id,
             label: this.cache[cur.value.id] !== undefined
               ? this.cache[cur.value.id].label : undefined,
           },
-        };
-      }
-      return prev;
-    }, { deJure: undefined, deFacto: undefined });
+        ]
+        : prev
+    ), []);
   }
 
   @computed get headOfGovernment() {

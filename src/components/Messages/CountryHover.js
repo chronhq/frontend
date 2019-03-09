@@ -136,17 +136,22 @@ class CountryHover extends React.Component {
   }
 
   @computed get capital() {
-    if (this.pinned === false || this.values.capital === undefined) return null;
-    const { deJure, deFacto } = this.values.capital;
-    if (deJure === undefined && deFacto === undefined) return null;
+    if (
+      this.pinned === false
+      || this.values.capital === undefined
+      || this.values.capital.length === 0) return null;
     return (
       <p>
         <span className='factSubTitle'>
           {this.messages.capital}
           {': '}
         </span>
-        {(deJure !== undefined) && <InfoLink wId={deJure.id} label={deJure.label} />}
-        {(deFacto !== undefined) && <InfoLink wId={deFacto.id} label={deFacto.label} />}
+        {this.values.capital.map((c, idx, arr) => (
+          <span>
+            <InfoLink key={c.id} wId={c.id} label={c.label} />
+            {idx + 1 < arr.length ? ', ' : ''}
+          </span>
+        ))}
       </p>
     );
   }

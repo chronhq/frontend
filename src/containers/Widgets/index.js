@@ -19,7 +19,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-// import ScaleWidget from './ScaleWidget';
 import LoadingWidget from './LoadingWidget';
 import FreePinsWidget from './FreePinsWidget';
 import Defs from './Defs';
@@ -30,7 +29,7 @@ class Widgets extends React.Component {
   render() {
     // TODO store calculations and flags somewhere in models
     const showWidgets = this.props.store.deck.width > 600;
-    const shiftHeight = this.props.store.deck.height - 100;
+    const shiftHeight = this.props.store.deck.height - 70;
     // TODO link Dashboard witdh (400px) from css to js somehow.
     const shiftX = 50 + (this.props.store.dashboard.hidden ? 0 : 400);
     const translate = `translate(${shiftX}, ${shiftHeight})`;
@@ -43,7 +42,6 @@ class Widgets extends React.Component {
         <Defs />
         {showWidgets && (
           <g id='svgWidgets' transform={translate}>
-            {/* <ScaleWidget /> */}
             <LoadingWidget />
             <FreePinsWidget />
           </g>

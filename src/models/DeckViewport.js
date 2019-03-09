@@ -70,11 +70,11 @@ export default class DeckViewportModel {
     return vState;
   }
 
-  @observable longitude = this.viewport.longitude;
+  @observable longitude = this.viewport.viewState.longitude;
 
-  @observable latitude = this.viewport.latitude;
+  @observable latitude = this.viewport.viewState.latitude;
 
-  @observable zoom = this.viewport.zoom;
+  @observable zoom = this.viewport.viewState.zoom;
 
   @observable interactiveMap = null;
 
@@ -88,7 +88,7 @@ export default class DeckViewportModel {
     const { zoom } = this.viewState;
     return (maxZoom >= zoom && minZoom <= zoom)
       ? zoom // Keep current zoom if in range
-      : this.viewport.zoom;
+      : this.viewport.viewState.zoom;
   }
 
   @computed get viewState() {
