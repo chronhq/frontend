@@ -27,7 +27,9 @@ import pinsStyle from './PinsMVTStyle';
 import decorStyle from './DecorGJStyle';
 import legacyPinsStyle from './PinsGJStyle';
 
-import AtomicBorders from './AtomicBordersModel';
+// import AtomicBorders from './AtomicBordersModel';
+
+import stvBorders from './STVBordersStyle';
 
 const BODY = {
   version: 8,
@@ -59,9 +61,7 @@ export default class MapStyleModel {
   @observable backgroundStyle = { ...BODY, sources: {}, layers: [] };
 
   @computed get bordersStyle() {
-    return this.rootStore.flags.layer.get('borders')
-      ? this.atomicBorders.styleInfo
-      : { sources: {}, layers: [] };
+    return stvBorders(this.rootStore.year.now);
   }
 
   @computed get pinsGJ() {
@@ -166,7 +166,7 @@ export default class MapStyleModel {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.atomicBorders = new AtomicBorders(rootStore);
+    // this.atomicBorders = new AtomicBorders(rootStore);
     this.setUpBackground(settings.mapbox.style);
   }
 }
