@@ -18,7 +18,10 @@
  */
 const STVBorders = (now) => {
   const url = 'stv';
-  const opacity = 0.75;
+  const opacity = {
+    min: 0.75,
+    max: 0.25
+  };
   const source = {
     type: 'vector',
     tiles: [`${window.location.origin}/mvt/${url}/{z}/{x}/{y}`]
@@ -56,7 +59,14 @@ const STVBorders = (now) => {
         '13', '#a55f94',
         'rgb(127, 127, 127)' // Disputed
       ],
-      'fill-opacity': opacity,
+      'fill-opacity': {
+        base: opacity.min,
+        stops: [
+          [0, opacity.min],
+          [8, opacity.max],
+          [20, opacity.max]
+        ]
+      },
     },
     source: 'stv',
     id: 'stvs',
