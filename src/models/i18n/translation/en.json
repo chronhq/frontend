@@ -5,7 +5,7 @@
     "locale": "en-US"
   },
   "title": "Chron, interactive atlas",
-  "loading": "loading...",
+  "loading": "Loading...",
   "courseSelection": {
     "title": "Choose type"
   },
@@ -58,9 +58,6 @@
     "participants": "Participants",
     "personDeath": "Passed",
     "personBirth": "Born"
-  },
-  "loadingWidget": {
-    "loading": "Loading..."
   },
   "unknown": {
     "year": "????",
