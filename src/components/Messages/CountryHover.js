@@ -42,45 +42,49 @@ class CountryHover extends React.Component {
     return this.props.store.balloon.pinned;
   }
 
-  @computed get values() {
-    try {
-      return this.props.store.spaceTimeVolume.data[this.props.id].values;
-    } catch (e) {
-      console.error('Unable to get values for Country Hover', this.props.id, e);
-      return {};
-    }
+  @computed get wikidata() {
+    return this.props.store.wikidata.cache[`Q${this.props.data.wikidata_id}`];
   }
 
-  @computed get title() {
-    return this.values.title;
+  @computed get base() {
+    return this.wikidata === undefined
+      ? {
+        title: `Q${this.props.data.wikidata_id}`,
+        subTitle: this.props.store.i18n.data.loading
+      }
+      : {
+        title: this.wikidata.label,
+        subTitle: '', // TODO add subtitle based on Political Relations
+        government: this.wikidata.currentGovernment,
+      };
+  }
+
+  @computed get extra() {
+    return this.wikidata === undefined
+      ? {}
+      : {
+        flag: this.wikidata.activeFlag,
+        emblem: this.wikidata.emblem,
+        capital: this.wikidata.capital,
+        head: this.wikidata.currentHead,
+        population: this.wikidata.currentPopulation,
+      };
   }
 
   @computed get factHeader() {
     return (
       <p className='factHeader'>
-        {this.title}
+        {this.base.title}
       </p>
     );
-  }
-
-  @computed get subTitle() {
-    return this.values.subTitle;
   }
 
   @computed get subTitleMessage() {
-    return this.title === this.subTitle ? '' : (
+    return this.base.title === this.base.subTitle ? '' : (
       <p>
-        {this.subTitle}
+        {this.base.subTitle}
       </p>
     );
-  }
-
-  @computed get flag() {
-    return this.values.flag;
-  }
-
-  @computed get emblem() {
-    return this.values.emblem;
   }
 
   @computed get images() {
@@ -94,23 +98,23 @@ class CountryHover extends React.Component {
     );
     return (
       <div className='countryHoverImage'>
-        {this.flag !== undefined && img(this.flag)}
-        {this.emblem !== undefined && img(this.emblem)}
+        {this.extra.flag !== undefined && img(this.extra.flag)}
+        {this.extra.emblem !== undefined && img(this.extra.emblem)}
       </div>
     );
   }
 
   @computed get government() {
-    return this.values.government === undefined ? '' : (
+    return this.base.government === undefined ? '' : (
       <p>
-        {this.values.government.label}
+        {this.base.government.label}
       </p>
     );
   }
 
   @computed get population() {
-    if (this.pinned === false || this.values.population === undefined) return null;
-    const pop = new Intl.NumberFormat().format(this.values.population.amount);
+    if (this.pinned === false || this.extra.population === undefined) return null;
+    const pop = new Intl.NumberFormat().format(this.extra.population.amount);
     return (
       <p>
         <span className='factSubTitle'>
@@ -123,14 +127,14 @@ class CountryHover extends React.Component {
   }
 
   @computed get head() {
-    if (this.pinned === false || this.values.head === undefined) return null;
+    if (this.pinned === false || this.extra.head === undefined) return null;
     return (
       <p>
         <span className='factSubTitle'>
           {this.messages.head}
           {': '}
         </span>
-        {<InfoLink wId={this.values.head.id} label={this.values.head.label} />}
+        {<InfoLink wId={this.extra.head.id} label={this.extra.head.label} />}
       </p>
     );
   }
@@ -138,15 +142,15 @@ class CountryHover extends React.Component {
   @computed get capital() {
     if (
       this.pinned === false
-      || this.values.capital === undefined
-      || this.values.capital.length === 0) return null;
+      || this.extra.capital === undefined
+      || this.extra.capital.length === 0) return null;
     return (
       <p>
         <span className='factSubTitle'>
           {this.messages.capital}
           {': '}
         </span>
-        {this.values.capital.map((c, idx, arr) => (
+        {this.extra.capital.map((c, idx, arr) => (
           <span>
             <InfoLink key={c.id} wId={c.id} label={c.label} />
             {idx + 1 < arr.length ? ', ' : ''}

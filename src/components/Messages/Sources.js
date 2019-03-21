@@ -73,35 +73,25 @@ class Sources extends React.Component {
   }
 
   @computed get item() {
-    if (this.props.type === 'countryHover') {
-      try {
-        return this.props.store.spaceTimeVolume.data[this.props.id].values;
-      } catch (e) {
-        console.error('Unable to get values for Country Hover', this.props.id, e);
-        return {};
-      }
-    }
-    if (this.props.store.wikidata.cache[this.props.id] !== undefined) {
+    const wId = `Q${this.props.id}`;
+    const sources = this.props.type === 'countryHover'
+      ? JSON.parse(this.props.data.references)
+      : undefined;
+
+    if (this.props.store.wikidata.cache[wId] !== undefined) {
       return {
-        dataOrigin: this.props.store.wikidata.cache[this.props.id].dataOrigin
+        dataOrigin: this.props.store.wikidata.cache[wId].dataOrigin,
+        sources,
       };
     }
     return {};
   }
 
-  @computed get dataOrigin() {
-    return this.item.dataOrigin;
-  }
-
-  @computed get sources() {
-    return this.item.sources;
-  }
-
   render() {
     return (
       <div>
-        <SourceInfo name={this.messages.origin} data={this.dataOrigin} />
-        <SourceInfo name={this.messages.sources} data={this.sources} />
+        <SourceInfo name={this.messages.origin} data={this.item.dataOrigin} />
+        <SourceInfo name={this.messages.sources} data={this.item.sources} />
         {this.props.type === 'countryHover' && <ClickPositionInfo />}
       </div>
     );
