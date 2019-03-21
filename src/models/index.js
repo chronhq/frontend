@@ -36,15 +36,13 @@ import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
 
-import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumesContainer';
-
 export default class storeModel {
   @observable fonts = {};
 
   // Add here new models
   constructor() {
     this.flags = new Flags();
-    this.data = new Data(this);
+    this.data = new Data();
     this.dashboard = new Dashboard(this);
     this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
@@ -52,7 +50,6 @@ export default class storeModel {
     this.wikidata = new WikidataFetcher(this);
     this.wikistore = new WikidataStore(this);
     this.courseSelection = new CourseSelection(this);
-    this.spaceTimeVolume = new SpaceTimeVolume(this);
     this.pins = new PinsModel(this);
     this.balloon = new BalloonModel(this);
     this.i18n = new Internationalization(this);

@@ -27,8 +27,6 @@ import pinsStyle from './PinsMVTStyle';
 import decorStyle from './DecorGJStyle';
 import legacyPinsStyle from './PinsGJStyle';
 
-// import AtomicBorders from './AtomicBordersModel';
-
 import stvBorders from './STVBordersStyle';
 
 const BODY = {
@@ -166,7 +164,6 @@ export default class MapStyleModel {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-    // this.atomicBorders = new AtomicBorders(rootStore);
     this.setUpBackground(settings.mapbox.style);
   }
 }
