@@ -26,6 +26,7 @@ class LoadingLogo extends Component {
     return (
       <div
         style={{
+          userSelect: 'none',
           position: 'fixed',
           display: 'flex',
           flexDirection: 'column',
