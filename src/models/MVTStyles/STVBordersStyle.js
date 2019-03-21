@@ -33,7 +33,7 @@ const STVBorders = (now) => {
     ['>=', 'end', now]
   ];
 
-  const layer = {
+  const fill = {
     layout: {},
     filter,
     type: 'fill',
@@ -56,7 +56,6 @@ const STVBorders = (now) => {
         '13', '#a55f94',
         'rgb(127, 127, 127)' // Disputed
       ],
-      'fill-outline-color': 'rgb(30, 30, 200)',
       'fill-opacity': opacity,
     },
     source: 'stv',
@@ -64,8 +63,29 @@ const STVBorders = (now) => {
     'source-layer': 'stv'
   };
 
+  const borders = {
+    layout: {
+      'line-cap': 'round',
+      'line-join': 'round',
+    },
+    filter,
+    type: 'line',
+    paint: {
+      'line-color': 'rgb(127, 127, 127)',
+      'line-width': {
+        base: 0.5,
+        stops: [
+          [3, 0.8],
+          [20, 2]
+        ]
+      },
+    },
+    source: 'stv',
+    id: 'stv-lines',
+    'source-layer': 'stv'
+  };
   return {
-    sources: { stv: source }, layers: [layer]
+    sources: { stv: source }, layers: [fill, borders]
   };
 };
 
