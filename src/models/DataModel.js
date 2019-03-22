@@ -21,7 +21,6 @@ import {
 } from 'mobx';
 
 import DataLoaderModel from './DataLoaderModel';
-import SpaceTimeVolume from './SpaceTimeVolumes/SpaceTimeVolumeModel';
 import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
@@ -34,8 +33,6 @@ export default class DataModel {
       'narratives',
     ],
     base: [
-      'territorial-entities', // territorialEntities
-      'spacetime-volumes', // would be translated into 'spacetimeVolumes' model
     ],
     course: [
       'narrations',
@@ -67,7 +64,7 @@ export default class DataModel {
       }), {});
   }
 
-  constructor(rootStore) {
+  constructor() {
     Object.keys(this.roster).map((url) => {
       const model = this.roster[url];
       this[model] = new DataLoaderModel(url);
@@ -90,14 +87,6 @@ export default class DataModel {
       title: 'Global Narrative',
       mapSettings,
     });
-
-    this.spacetimeVolumes.configure({
-      sortId: 'id',
-      append: false,
-      arrayCb: false,
-      wrapData: d => new SpaceTimeVolume(rootStore, d.id, d),
-    });
-    this.spacetimeVolumes.filter = 'all/';
   }
 
   @action resolveDependencies(depend) {

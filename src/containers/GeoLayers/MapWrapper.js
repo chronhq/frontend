@@ -52,19 +52,14 @@ class MapWrapper extends React.Component {
   }
 
   onBorderHoverCb = (features, position, force = false) => {
-    let key = null;
     const feature = features.length > 0
       ? features[0]
-      : { layer: { id: '0' }, properties: { id: '1' } };
+      : { layer: { id: '0', source: 'unknown' }, properties: { id: '1' } };
     try {
-      if (feature.layer.source === 'ap') {
+      if (feature.layer.source === 'stv') {
         // it's one of our border layers
-        key = this.props.store.spaceTimeVolume.hovering(feature);
-        this.props.store.balloon.setCountryBalloon(key, force);
-        if (key !== null && key !== undefined) {
-          if (force === true) this.props.store.analytics.metricHit('check_country');
-          this.props.store.balloon.setPosition(...position);
-        }
+        this.props.store.balloon.setMVTCountryBalloon(feature.properties, force);
+        this.props.store.balloon.setPosition(...position);
         return true;
       } if (feature.layer.source === 'events') {
         const events = features.filter(f => f.layer.source === 'events');
@@ -80,7 +75,7 @@ class MapWrapper extends React.Component {
       console.error('Feature parsing failed', e, features);
     }
     // Hide balloon if not active layer
-    this.props.store.balloon.setCountryBalloon(null, false);
+    this.props.store.balloon.setMVTCountryBalloon(null, false);
     return true;
   };
 

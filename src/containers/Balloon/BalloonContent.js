@@ -51,8 +51,12 @@ class BalloonContent extends React.Component {
         case 'countryHover':
           return {
             id: 'countryHoverBaloon',
-            message: <CountryHover id={this.data.info[0].data} />,
-            sources: <Sources id={this.data.info[0].data} type={this.data.info[0].type} />
+            message: <CountryHover id={this.data.info[0].data.id} data={this.data.info[0].data} />,
+            sources: <Sources
+              id={this.data.info[0].data.wikidata_id}
+              data={this.data.info[0].data}
+              type={this.data.info[0].type}
+            />
           };
         case 'death':
         case 'birth':

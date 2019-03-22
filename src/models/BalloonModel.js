@@ -104,7 +104,7 @@ export default class BalloonModel {
   }
 
   @action setMVTEventBalloon(a, force = false) {
-    if (!this.eventPin && Boolean(a)) {
+    if (Boolean(a) && (!this.eventPin || a !== this.payload)) {
       const wIds = a.map(f => `Q${f.properties.wikidata_id}`);
       this.rootStore.wikidata.getItems(wIds);
       if (a.some(f => f.layer.id === 'battle')) {
@@ -114,16 +114,20 @@ export default class BalloonModel {
     this.changeBalloonStatus({ a, force, eventPin: Boolean(a) });
   }
 
+  @action setMVTCountryBalloon(a, force = false) {
+    if (Boolean(a) && (!this.countryHover || a !== this.payload)) {
+      this.rootStore.wikidata.getItems([`Q${a.wikidata_id}`]);
+      if (force === true) this.rootStore.analytics.metricHit('check_country');
+    }
+    this.changeBalloonStatus({ a, force, countryHover: Boolean(a) });
+  }
+
+
   // Set active pin by it's key for Deck GL layer and SVG Free pins
   @action setPinBalloon(a, free = false, force = false) {
     this.changeBalloonStatus({
       a, force, pinHasNoLocation: free, deckPinId: Boolean(a)
     });
-  }
-
-  // set Territorial Entity Wikidata ID to countryHover
-  @action setCountryBalloon(a, force = false) {
-    this.changeBalloonStatus({ a, force, countryHover: Boolean(a) });
   }
 
   @computed get clickPosition() {

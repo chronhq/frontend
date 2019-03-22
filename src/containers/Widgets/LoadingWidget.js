@@ -28,7 +28,7 @@ class LoadingWidget extends React.Component {
       : (
         <g className='sizeMeter' transform='translate(-5, 0)' strokeWidth="1" stroke='black'>
           <text style={{ userSelect: 'none' }} stroke='transparent'>
-            {this.props.store.i18n.data.loadingWidget.loading}
+            {this.props.store.i18n.data.loading}
           </text>
         </g>
       );
