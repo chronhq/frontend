@@ -109,7 +109,7 @@ export default class YearModel {
         const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
         this.rootStore.deck.updateSettings(mapSetting);
       }
-      this.setYear(narration.map_datetime.split('-')[0]);
+      this.setYear(Number(narration.map_datetime.split('-')[0]));
       this.tick = tick;
       // Fetch free data for free pins
       this.rootStore.wikidata.getItems(this.rootStore.pins.narrationFreeDeps);
