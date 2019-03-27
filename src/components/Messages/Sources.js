@@ -73,7 +73,9 @@ class Sources extends React.Component {
   }
 
   @computed get item() {
-    const wId = `Q${this.props.id}`;
+    const wId = this.props.id.match(/^Q/)
+      ? this.props.id
+      : `Q${this.props.id}`;
     const sources = this.props.type === 'countryHover'
       ? JSON.parse(this.props.data.references)
       : undefined;
