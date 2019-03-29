@@ -34,7 +34,7 @@ class YearButton extends React.Component {
         btnType={BUTTON_TYPE.ICON}
         onClick={this.toggle}
       >
-        {this.props.store.year.tuneValue}
+        {this.props.store.year.tuneValueG}
       </Button>
     );
   }

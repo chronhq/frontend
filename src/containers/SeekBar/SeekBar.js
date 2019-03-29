@@ -59,17 +59,17 @@ class SeekBar extends React.Component {
 
   @computed get scale() {
     return scaleLinear()
-      .domain([this.props.store.year.min, this.props.store.year.max])
+      .domain([this.props.store.year.minG, this.props.store.year.maxG])
       .range([0, this.width]);
   }
 
   @computed get translate() {
-    return this.scale(this.props.store.year.tuneValue) || 0;
+    return this.scale(this.props.store.year.tuneValueG) || 0;
   }
 
   @computed get ticks() {
     const ticks = parseInt(this.width / 45, 10);
-    const maxTicks = this.props.store.year.max - this.props.store.year.min;
+    const maxTicks = this.props.store.year.maxG - this.props.store.year.minG;
     return (Number.isNaN(maxTicks) || ticks <= maxTicks) ? ticks : maxTicks;
   }
 
