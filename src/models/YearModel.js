@@ -17,8 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, action, computed } from 'mobx';
+import julian from 'julian';
+
+const yearToJulian = (year) => {
+  // Date in ISO would be treated as UTC date
+  const date = new Date(`${year}-01-01`);
+  return Number(julian(date));
+};
 
 export default class YearModel {
+  @observable step = {
+    year: 1,
+    month: 0,
+    week: 0,
+    day: 0,
+  };
+
   @observable min;
 
   @observable max;
@@ -31,6 +45,32 @@ export default class YearModel {
 
   // for UI interface and 'year' sliders
   @observable tuneValue;
+
+  getGDate = (d) => {
+    const g = julian.toDate(d);
+    const year = g.getUTCFullYear();
+    // it should include locale settings
+    // precision should be set somewhere
+    // const month = g.getUTCMonth();
+    // const date = g.getUTCDate();
+    return Number(year);
+  }
+
+  @computed get tuneValueG() {
+    return this.getGDate(this.now);
+  }
+
+  @computed get minG() {
+    return this.getGDate(this.min);
+  }
+
+  @computed get maxG() {
+    return this.getGDate(this.max);
+  }
+
+  @computed get nowG() {
+    return this.getGDate(this.now);
+  }
 
   @computed get tuneIsValid() {
     return (this.tuneValue >= this.min && this.tuneValue <= this.max);
@@ -49,19 +89,23 @@ export default class YearModel {
   }
 
   @action setup(year) {
-    this.min = year.min;
-    this.max = year.max;
-    this.now = year.now;
-    this.tuneValue = year.now;
-    this.prev = year.now;
+    this.min = yearToJulian(year.min);
+    this.max = yearToJulian(year.max);
+    this.now = yearToJulian(year.now);
+    this.tuneValue = this.now;
+    this.prev = this.now;
     this.tick = year.tick;
   }
 
   @action setTuneValue(year) {
-    this.tuneValue = year;
+    this.tuneValue = yearToJulian(year);
   }
 
   @action setYear(year) {
+    this.setDate(yearToJulian(year));
+  }
+
+  @action setDate(year) {
     this.prev = this.now;
     this.now = (year > this.max || year < this.min)
       ? this.min
@@ -83,23 +127,32 @@ export default class YearModel {
   }
 
   saveTuneValue() {
-    this.setYear(this.tuneValue);
+    this.setDate(this.tuneValue);
   }
 
   resetTuneValue() {
-    if (this.tuneValue !== this.now) this.setYear(this.now);
+    if (this.tuneValue !== this.now) this.setDate(this.now);
+  }
+
+  getDateByStep(next = true) {
+    const m = next ? 1 : -1;
+    const date = julian.toDate(this.now);
+    date.setUTCDate(date.getUTCDate() + (m * (this.step.day + this.step.week * 7)));
+    date.setUTCMonth(date.getUTCMonth() + m * this.step.month);
+    date.setUTCFullYear(date.getUTCFullYear() + m * this.step.year);
+    return Number(julian(date));
   }
 
   nextYear() {
-    this.setYear(this.now + 1);
+    this.setDate(this.getDateByStep(true));
   }
 
   prevYear() {
-    this.setYear(this.now - 1);
+    this.setDate(this.getDateByStep(false));
   }
 
-  resetYear() {
-    this.setYear(this.min);
+  resetDate() {
+    this.setDate(this.min);
   }
 
   @action setTick(tick) {
@@ -109,7 +162,8 @@ export default class YearModel {
         const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
         this.rootStore.deck.updateSettings(mapSetting);
       }
-      this.setYear(Number(narration.map_datetime.split('-')[0]));
+      const date = new Date(narration.map_datetime);
+      this.setDate(Number(julian(date)));
       this.tick = tick;
       // Fetch free data for free pins
       this.rootStore.wikidata.getItems(this.rootStore.pins.narrationFreeDeps);
