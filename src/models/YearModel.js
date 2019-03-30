@@ -21,7 +21,9 @@ import julian from 'julian';
 
 const yearToJulian = (year) => {
   // Date in ISO would be treated as UTC date
-  const date = new Date(`${year}-01-01`);
+  const date = new Date('2000-01-01');
+  // B.C. dates can not be set via ISO string
+  date.setUTCFullYear(year);
   return Number(julian(date));
 };
 
@@ -46,30 +48,19 @@ export default class YearModel {
   // for UI interface and 'year' sliders
   @observable tuneValue;
 
-  getGDate = (d) => {
-    const g = julian.toDate(d);
-    const year = g.getUTCFullYear();
-    // it should include locale settings
-    // precision should be set somewhere
-    // const month = g.getUTCMonth();
-    // const date = g.getUTCDate();
-    return Number(year);
-  }
-
   @computed get tuneValueG() {
-    return this.getGDate(this.now);
+    return julian.toDate(this.tuneValue).getUTCFullYear();
   }
 
-  @computed get minG() {
-    return this.getGDate(this.min);
+  @computed get limits() {
+    return {
+      min: julian.toDate(this.min).getUTCFullYear(),
+      max: julian.toDate(this.max).getUTCFullYear()
+    };
   }
 
-  @computed get maxG() {
-    return this.getGDate(this.max);
-  }
-
-  @computed get nowG() {
-    return this.getGDate(this.now);
+  @computed get year() {
+    return julian.toDate(this.now).getUTCFullYear();
   }
 
   @computed get tuneIsValid() {
@@ -111,17 +102,17 @@ export default class YearModel {
       ? this.min
       : year;
     this.rootStore.courseSelection.updateCD();
-    this.setTuneValue(this.now);
+    this.tuneValue = this.now;
   }
 
   @action followWheel(deltaY) {
     if (deltaY > 1) {
       if (this.tuneValue < this.max) {
-        this.setTuneValue(this.tuneValue + 1);
+        this.setTuneValue(this.tuneValueG + 1);
       }
     } else if (deltaY < 1) {
       if (this.tuneValue > this.min) {
-        this.setTuneValue(this.tuneValue - 1);
+        this.setTuneValue(this.tuneValueG - 1);
       }
     }
   }
@@ -134,12 +125,14 @@ export default class YearModel {
     if (this.tuneValue !== this.now) this.setDate(this.now);
   }
 
-  getDateByStep(next = true) {
-    const m = next ? 1 : -1;
+  getDateByStep(next = true, c = 1) {
+    const m = next ? 1 * c : -1 * c;
     const date = julian.toDate(this.now);
-    date.setUTCDate(date.getUTCDate() + (m * (this.step.day + this.step.week * 7)));
-    date.setUTCMonth(date.getUTCMonth() + m * this.step.month);
-    date.setUTCFullYear(date.getUTCFullYear() + m * this.step.year);
+    date.setUTCFullYear(
+      date.getUTCFullYear() + m * this.step.year,
+      date.getUTCMonth() + m * this.step.month,
+      date.getUTCDate() + (m * (this.step.day + this.step.week * 7))
+    );
     return Number(julian(date));
   }
 
