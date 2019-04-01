@@ -19,12 +19,13 @@
 import { observable, action, computed } from 'mobx';
 import julian from 'julian';
 
+const julianInt = date => Math.round(Number(julian(date)));
 const yearToJulian = (year) => {
   // Date in ISO would be treated as UTC date
   const date = new Date('2000-01-01');
   // B.C. dates can not be set via ISO string
   date.setUTCFullYear(year);
-  return Number(julian(date));
+  return julianInt(date);
 };
 
 export default class YearModel {
@@ -133,7 +134,7 @@ export default class YearModel {
       date.getUTCMonth() + m * this.step.month,
       date.getUTCDate() + (m * (this.step.day + this.step.week * 7))
     );
-    return Number(julian(date));
+    return julianInt(date);
   }
 
   nextYear() {
@@ -156,7 +157,7 @@ export default class YearModel {
         this.rootStore.deck.updateSettings(mapSetting);
       }
       const date = new Date(narration.map_datetime);
-      this.setDate(Number(julian(date)));
+      this.setDate(julianInt(date));
       this.tick = tick;
       // Fetch free data for free pins
       this.rootStore.wikidata.getItems(this.rootStore.pins.narrationFreeDeps);
