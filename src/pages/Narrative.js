@@ -27,6 +27,7 @@ import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileB
 import Wrapper from './Wrapper';
 import TimePanel from '../templates/TimePanel/TimePanel';
 import Widgets from '../containers/Widgets';
+import AdminOverlay from '../containers/AdminOverlay/AdminOverlay';
 
 const Narrative = ({ story, fake, metric }) => (
   <Wrapper story={story} fake={fake} metric={metric}>
@@ -38,6 +39,7 @@ const Narrative = ({ story, fake, metric }) => (
     <NarrativeMobileBar />
     <Overlays />
     <SideBar />
+    <AdminOverlay />
   </Wrapper>
 );
 
