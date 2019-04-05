@@ -1,6 +1,7 @@
 cache: npm
 before_install:
   - sed 's/MAPBOX_TOKEN/dummy_token/' settings.json.example > settings.json
+  - cp firebase-config.json.example firebase-config.json
 install:
   - npm install
 language: node_js

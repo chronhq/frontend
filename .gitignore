@@ -3,6 +3,7 @@ npm-debug.log*
 .DS_Store
 dist
 settings.json
+firebase-config.json
 *.sublime-workspace
 *.sublime-project
 package-lock.json
