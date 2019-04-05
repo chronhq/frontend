@@ -35,6 +35,7 @@ import WikidataFetcher from './Wikidata/WikidataFetcher';
 import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
+import AuthModel from './AuthModel';
 
 export default class storeModel {
   @observable fonts = {};
@@ -56,5 +57,6 @@ export default class storeModel {
     this.mapStyle = new MapStyle(this);
     this.search = new DashboardSearch(this);
     this.analytics = new AnalyticModel();
+    this.auth = new AuthModel();
   }
 }

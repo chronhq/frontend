@@ -29,6 +29,7 @@ const flags = {
     TimelineIsMinified: false,
     BioIsOpen: false,
     cluster: true,
+    admin: false,
   },
   layer: {
     borders: true,
