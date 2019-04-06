@@ -20,20 +20,34 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 import AdminWrapper from './AdminWrapper';
 import AdminFooterLinks from './AdminFooterLinks';
 
 import { Create, Change, Sandbox } from './AdminIcons';
 
-const ActionButton = ({ text, Icon }) => (
-  <div className='actionButton'>
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
+const ActionButton = ({ text, Icon, click }) => (
+  <a
+    href=''
+    onClick={(e) => {
+      e.preventDefault();
+      click();
+      return false;
+    }}
+    className='actionButton'
+  >
     <Icon />
     {' '}
     <span>
       {text}
     </span>
-  </div>
+  </a>
 );
+
 @inject('store')
 @observer
 class AdminPanel extends React.Component {
@@ -41,25 +55,27 @@ class AdminPanel extends React.Component {
     return this.props.store.auth;
   }
 
+  @computed get admin() {
+    return this.props.store.admin;
+  }
+
   render() {
     return (
       <AdminWrapper title='User Panel'>
-        <div className='adminContent'>
-          <p>
-            {'Profile'}
-          </p>
-          <p>
-            {'Territorial Entity'}
-          </p>
-          <ActionButton text='New/Edit' Icon={Change} />
-          <ActionButton text='Sandbox' Icon={Sandbox} />
-          <p>
-            {'Narrative'}
-          </p>
-          <ActionButton text='New' Icon={Create} />
-          <ActionButton text='Edit' Icon={Change} />
-          <AdminFooterLinks right='Sing Out' rightIsLonger />
-        </div>
+        <p>
+          {'Profile'}
+        </p>
+        <p>
+          {'Territorial Entity'}
+        </p>
+        <ActionButton text='New/Edit' Icon={Change} click={() => this.admin.nextScreen('te')} />
+        <ActionButton text='Sandbox' Icon={Sandbox} click={() => this.admin.nextScreen('sandbox')} />
+        <p>
+          {'Narrative'}
+        </p>
+        <ActionButton text='New' Icon={Create} click={() => true} />
+        <ActionButton text='Edit' Icon={Change} click={() => true} />
+        <AdminFooterLinks right='Sing Out' rightIsLonger rightClick={() => firebase.auth().signOut()} />
       </AdminWrapper>
     );
   }

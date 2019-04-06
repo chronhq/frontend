@@ -56,6 +56,8 @@
 
 .adminContent {
   margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
   color: black;
   p {
     font-weight: normal;
@@ -76,11 +78,13 @@
   }
 }
 
-.footerLinks {
-  color: #9b9b9b;
-  text-decoration: underline;
-  font-weight: normal;
-  font-size: 1rem;
+.adminFooterContainer {
+  a {
+    color: #9b9b9b;
+    text-decoration: underline;
+    font-weight: normal;
+    font-size: 1rem;
+  }
   margin-top: 0.5rem;
   width: 80%;
   transform: translate(10%);

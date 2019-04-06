@@ -21,19 +21,31 @@ import PropTypes from 'prop-types';
 
 const width = b => (b ? { width: '100%' } : {});
 
-const AdminFooterLinks = ({ left, right, rightIsLonger }) => (
-  <div className='footerLinks'>
+/* eslint-disable jsx-a11y/anchor-is-valid */
+const Button = ({
+  click, text, primary, position
+}) => (text && (
+  <a
+    href=''
+    onClick={(e) => {
+      e.preventDefault();
+      click();
+      return false;
+    }}
+    style={width(primary)}
+    className={position}
+  >
+    {text}
+  </a>
+));
+
+const AdminFooterLinks = ({
+  left, right, leftClick, rightClick, rightIsLonger
+}) => (
+  <div className='adminFooterContainer'>
     <div className='adminFooter'>
-      {left && (
-        <span style={width(!rightIsLonger)} className='leftFooter'>
-          {left}
-        </span>
-      )}
-      {right && (
-        <span style={width(rightIsLonger)} className='rightFooter'>
-          {right}
-        </span>
-      )}
+      <Button position='leftFooter' text={left} click={leftClick} primary={!rightIsLonger} />
+      <Button position='rightFooter' text={right} click={rightClick} primary={rightIsLonger} />
     </div>
   </div>
 );
@@ -42,12 +54,16 @@ AdminFooterLinks.defaultProps = {
   rightIsLonger: false,
   left: null,
   right: null,
+  leftClick: () => false,
+  rightClick: () => false,
 };
 
 AdminFooterLinks.propTypes = {
   rightIsLonger: PropTypes.bool,
   left: PropTypes.string,
   right: PropTypes.string,
+  leftClick: PropTypes.any,
+  rightClick: PropTypes.any,
 };
 
 export default AdminFooterLinks;
