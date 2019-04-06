@@ -36,6 +36,7 @@ import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
 import AuthModel from './AuthModel';
+import AdminModel from './AdminModel';
 
 export default class storeModel {
   @observable fonts = {};
@@ -58,5 +59,6 @@ export default class storeModel {
     this.search = new DashboardSearch(this);
     this.analytics = new AnalyticModel();
     this.auth = new AuthModel();
+    this.admin = new AdminModel();
   }
 }
