@@ -1,9 +1,27 @@
+/*
+ * Chron.
+ * Copyright (c) 2018 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-module.exports = {
+module.exports = (env = {}) => ({
   mode: 'development',
   devtool: 'source-map',
   entry: {
@@ -22,7 +40,7 @@ module.exports = {
     ]
   },
   optimization: {
-    nodeEnv: 'development'
+    nodeEnv: 'development',
   },
   devServer: {
     host: '0.0.0.0',
@@ -37,13 +55,19 @@ module.exports = {
     disableHostCheck: true,
     contentBase: path.resolve('static'),
     publicPath: '/',
-    proxy: {
-      '/api': 'http://api/',
-      '/mvt': {
-        target: 'http://localhost:5000',
-        pathRewrite: { '^/mvt': '' }
-      }
-    },
+    proxy: env.EXT
+      ? [{
+        context: ['/api', '/mvt'],
+        target: 'https://chronmaps.com/',
+        changeOrigin: true,
+      }]
+      : {
+        '/api': 'http://api/',
+        '/mvt': {
+          target: 'http://localhost:5000',
+          pathRewrite: { '^/mvt': '' }
+        }
+      },
     headers: {
       'Access-Control-Allow-Origin': '*'
     }
@@ -58,6 +82,10 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         },
+      },
+      {
+        test: /\.css/,
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.less$/,
@@ -90,4 +118,4 @@ module.exports = {
       template: './index.en.html'
     }),
   ]
-};
+});
