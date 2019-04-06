@@ -25,6 +25,7 @@ import 'firebase/auth';
 
 import LoginScreen from './LoginScreen';
 import AdminPanel from './AdminPanel';
+import DummyScreen from './DummyScreen';
 
 import './AdminScreen.less';
 
@@ -49,7 +50,7 @@ class AdminScreen extends React.Component {
 
   @computed get screen() {
     if (this.admin.screens.panel) return AdminPanel;
-    return null;
+    return DummyScreen;
   }
 
   @action authStatusChanged(user) {

@@ -25,7 +25,6 @@ import 'firebase/auth';
 
 import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
-import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../../components/Button/Button';
 import AdminWrapper from './AdminWrapper';
 
 
@@ -51,20 +50,7 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <AdminWrapper title='Log In'>
-        {this.auth.isSignedIn
-          ? (
-            <Button
-              btnType={BUTTON_TYPE.BASIC}
-              btnSize={BUTTON_SIZE.WIDE}
-              onClick={() => firebase.auth().signOut()}
-            >
-              <span className='lnr lnr-exit' aria-hidden='true'>
-                {'Log out'}
-              </span>
-            </Button>
-          )
-          : <FirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
-        }
+        <FirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
       </AdminWrapper>
     );
   }

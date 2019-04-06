@@ -17,22 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 
-import AdminHeader from './AdminHeader';
+import AdminWrapper from './AdminWrapper';
+import AdminFooterLinks from './AdminFooterLinks';
 
-class AdminWrapper extends React.Component {
+@inject('store')
+@observer
+class DummyScreen extends React.Component {
   render() {
     return (
-      <div className='adminContainer'>
-        <div className='adminBody'>
-          <div className='adminContent'>
-            <AdminHeader title={this.props.title} />
-            {this.props.children}
-          </div>
-        </div>
-      </div>
+      <AdminWrapper title='Under Construction'>
+        <AdminFooterLinks
+          right='Back'
+          rightClick={() => this.props.store.admin.nextScreen('panel')}
+          rightIsLonger
+        />
+      </AdminWrapper>
     );
   }
 }
 
-export default AdminWrapper;
+export default DummyScreen;

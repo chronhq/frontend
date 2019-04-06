@@ -26,7 +26,7 @@ export default class AdminModel {
   @observable screens = {};
 
   @computed get screen() {
-    return Object.keys(this.screens).find(s => s === true);
+    return Object.keys(this.screens).find(s => this.screens[s] === true);
   }
 
   @action toggle() {
