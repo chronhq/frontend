@@ -24,6 +24,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import LoginScreen from './LoginScreen';
+import AdminPanel from './AdminPanel';
 
 import './AdminScreen.less';
 
@@ -42,6 +43,15 @@ class AdminScreen extends React.Component {
     return this.props.store.auth;
   }
 
+  @computed get admin() {
+    return this.props.store.admin;
+  }
+
+  @computed get screen() {
+    if (this.admin.screens.panel) return AdminPanel;
+    return null;
+  }
+
   @action authStatusChanged(user) {
     this.auth.user = user;
   }
@@ -57,12 +67,10 @@ class AdminScreen extends React.Component {
   }
 
   render() {
-    if (this.auth.initialized === false) return null;
-    return (
-      <div className='adminContainer'>
-        <LoginScreen />
-      </div>
-    );
+    if (!this.auth.initialized) return null;
+    if (!this.auth.isSignedIn) return <LoginScreen />;
+    const Screen = this.screen;
+    return <Screen />;
   }
 }
 
