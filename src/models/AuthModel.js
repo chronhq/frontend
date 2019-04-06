@@ -16,14 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 
-import firebase from '../../firebase-config.json';
+import firebaseConfig from '../../firebase-config.json';
 
 export default class AuthModel {
   @observable initialized = false;
 
-  @observable firebase = firebase;
+  @observable firebase = firebaseConfig.config;
 
-  @observable isSignedIn = false;
+  @observable methods = firebaseConfig.methods;
+
+  @observable user;
+
+  @computed get isSignedIn() {
+    return !!this.user;
+  }
 }

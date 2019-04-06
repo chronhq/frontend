@@ -27,7 +27,7 @@ sed 's/MAPBOX_TOKEN/past_your_token_here/' settings.json.example > settings.json
 # Optional: configure analytics in the same config
 
 # Create project in Firebase https://console.firebase.google.com/
-# Configure firebase auth
+# Configure firebase and auth methods https://github.com/firebase/firebaseui-web#available-providers
 cp firebase-config.json.example firebase-config.json
 
 # Run the app in development environment
