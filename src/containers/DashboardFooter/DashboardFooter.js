@@ -27,8 +27,6 @@ import './DashboardFooter.less';
 @inject('store')
 @observer
 class DashboardFooter extends React.Component {
-  license ='https://chronhq.github.io/wiki/project/licenses.html'
-
   wiki = 'https://chronhq.github.io/wiki/'
 
   report = 'https://github.com/chronhq/data/issues'
@@ -40,6 +38,13 @@ class DashboardFooter extends React.Component {
   goToAbout = (e) => {
     e.preventDefault();
     this.props.history.push('/about');
+    return false;
+  }
+
+  openAdmin = (e) => {
+    e.preventDefault();
+    const admin = this.props.store.flags.runtime.get('admin');
+    this.props.store.flags.runtime.set('admin', !admin);
     return false;
   }
 
@@ -64,9 +69,9 @@ class DashboardFooter extends React.Component {
   render() {
     return (
       <div className='dashboard-footer'>
-        {this.link(this.wiki, 'wiki')}
+        {this.link(this.wiki, 'wiki', () => this.metricHit('goto_github'))}
         {this.link('/about', 'about', this.goToAbout)}
-        {this.link(this.license, 'license', () => this.metricHit('goto_github'))}
+        {this.link('/admin', 'admin', this.openAdmin)}
         {this.link(this.report, 'report')}
       </div>
     );

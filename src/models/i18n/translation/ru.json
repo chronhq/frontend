@@ -73,7 +73,7 @@
   "dashboard" : {
     "wiki": "Wiki",
     "about": "О нас",
-    "license": "Лицензия",
+    "admin": "Помочь",
     "report": "Сообщить об ошибке",
     "back": "Назад",
     "expand": "Показать больше"
