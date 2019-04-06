@@ -7,6 +7,7 @@ export const BUTTON_TYPE = {
   GHOST: 'ghost',
   READMORE: 'readmore',
   CLOSE: 'close',
+  COMPACT: 'close compact',
   TRUNCATE: 'truncate',
   ICON: 'icon'
 };

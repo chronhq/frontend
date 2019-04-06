@@ -44,6 +44,7 @@ button {
 }
 
 button.close {
+  vertical-align: baseline;
   position: absolute;
   right: 0;
   top: 0;
@@ -71,6 +72,13 @@ button.close {
   &:active {
     color: @dark-grey;
   }
+}
+
+button.compact {
+  margin-right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
 }
 
 button.readmore {

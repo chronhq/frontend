@@ -19,7 +19,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
-import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+import CloseButton from '../../components/Button/CloseButton';
 
 
 @inject('store')
@@ -64,12 +64,7 @@ class BalloonControls extends React.Component {
         >
           <hr />
         </div>
-        <Button
-          btnType={BUTTON_TYPE.CLOSE}
-          onClick={() => this.props.store.balloon.unpin()}
-        >
-          <span className="lnr lnr-cross" />
-        </Button>
+        <CloseButton onClick={() => this.props.store.balloon.unpin()} compact />
       </div>
     );
   }

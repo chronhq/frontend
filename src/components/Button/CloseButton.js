@@ -17,27 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { observer, inject } from 'mobx-react';
+import PropTypes from 'prop-types';
 
-import CloseButton from '../../components/Button/CloseButton';
+import Button, { BUTTON_TYPE } from './Button';
 
-@inject('store')
-@observer
-class AdminHeader extends React.Component {
-  close = () => {
-    this.props.store.flags.runtime.set('admin', false);
-  }
+const CloseButton = ({
+  onClick = () => { console.log('CloseBtn cb'); },
+  compact = false,
+}) => (
+  <Button
+    btnType={compact ? BUTTON_TYPE.COMPACT : BUTTON_TYPE.CLOSE}
+    onClick={onClick}
+  >
+    <span className="lnr lnr-cross" />
+  </Button>
+);
 
-  render() {
-    return (
-      <div className='adminHeader'>
-        <h2>
-          {this.props.title}
-        </h2>
-        <CloseButton onClick={this.close} />
-      </div>
-    );
-  }
-}
+CloseButton.propTypes = {
+  onClick: PropTypes.any.isRequired,
+  compact: PropTypes.bool.isRequired,
+};
 
-export default AdminHeader;
+export default CloseButton;

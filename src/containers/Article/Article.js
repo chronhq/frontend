@@ -20,7 +20,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+import CloseButton from '../../components/Button/CloseButton';
 import './Article.less';
 
 @inject('store')
@@ -74,12 +74,7 @@ class Article extends React.Component {
           className='article'
           ref={(ref) => { this.modal = ref; }}
         >
-          <Button
-            btnType={BUTTON_TYPE.CLOSE}
-            onClick={e => this.closeFeedback(e)}
-          >
-            <span className="lnr lnr-cross" />
-          </Button>
+          <CloseButton onClick={e => this.closeFeedback(e)} />
           <div className='article--title'>
             <b>
               {data ? data.title : ''}
