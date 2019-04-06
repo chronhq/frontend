@@ -26,7 +26,7 @@ import 'firebase/auth';
 import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../../components/Button/Button';
-import AdminHeader from './AdminHeader';
+import AdminWrapper from './AdminWrapper';
 
 
 @inject('store')
@@ -50,8 +50,7 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <div>
-        <AdminHeader title='Log In' />
+      <AdminWrapper title='Log In'>
         {this.auth.isSignedIn
           ? (
             <Button
@@ -66,7 +65,7 @@ class LoginScreen extends React.Component {
           )
           : <FirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
         }
-      </div>
+      </AdminWrapper>
     );
   }
 }
