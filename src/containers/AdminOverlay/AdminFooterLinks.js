@@ -19,27 +19,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button, { BUTTON_TYPE } from './Button';
+const width = b => (b ? { width: '100%' } : {});
 
-const CloseButton = ({
-  onClick = () => { console.log('CloseBtn cb'); },
-  compact = false,
-}) => (
-  <Button
-    btnType={compact ? BUTTON_TYPE.COMPACT : BUTTON_TYPE.CLOSE}
-    onClick={onClick}
-  >
-    <span className="lnr lnr-cross" />
-  </Button>
+const AdminFooterLinks = ({ left, right, rightIsLonger }) => (
+  <div className='footerLinks'>
+    <div className='adminFooter'>
+      {left && (
+        <span style={width(!rightIsLonger)} className='leftFooter'>
+          {left}
+        </span>
+      )}
+      {right && (
+        <span style={width(rightIsLonger)} className='rightFooter'>
+          {right}
+        </span>
+      )}
+    </div>
+  </div>
 );
 
-CloseButton.defaultProps = {
-  compact: false
+AdminFooterLinks.defaultProps = {
+  rightIsLonger: false,
+  left: null,
+  right: null,
 };
 
-CloseButton.propTypes = {
-  onClick: PropTypes.any.isRequired,
-  compact: PropTypes.bool,
+AdminFooterLinks.propTypes = {
+  rightIsLonger: PropTypes.bool,
+  left: PropTypes.string,
+  right: PropTypes.string,
 };
 
-export default CloseButton;
+export default AdminFooterLinks;

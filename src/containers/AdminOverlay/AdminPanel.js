@@ -20,12 +20,20 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
 
-import Button, { BUTTON_TYPE, BUTTON_SIZE, BUTTON_COLOR } from '../../components/Button/Button';
 import AdminWrapper from './AdminWrapper';
+import AdminFooterLinks from './AdminFooterLinks';
 
 import { Create, Change, Sandbox } from './AdminIcons';
 
-
+const ActionButton = ({ text, Icon }) => (
+  <div className='actionButton'>
+    <Icon />
+    {' '}
+    <span>
+      {text}
+    </span>
+  </div>
+);
 @inject('store')
 @observer
 class AdminPanel extends React.Component {
@@ -36,22 +44,22 @@ class AdminPanel extends React.Component {
   render() {
     return (
       <AdminWrapper title='User Panel'>
-        <h4>
-          {'Profile'}
-        </h4>
-        <Button
-          btnType={BUTTON_TYPE.GHOST}
-          // btnSize={BUTTON_SIZE.WIDE}
-          bntColor={BUTTON_COLOR.TRANSP}
-          onClick={() => true}
-        >
-
-          <span>
-            <Create />
-            {' '}
-            {'Test'}
-          </span>
-        </Button>
+        <div className='adminContent'>
+          <p>
+            {'Profile'}
+          </p>
+          <p>
+            {'Territorial Entity'}
+          </p>
+          <ActionButton text='New/Edit' Icon={Change} />
+          <ActionButton text='Sandbox' Icon={Sandbox} />
+          <p>
+            {'Narrative'}
+          </p>
+          <ActionButton text='New' Icon={Create} />
+          <ActionButton text='Edit' Icon={Change} />
+          <AdminFooterLinks right='Sing Out' rightIsLonger />
+        </div>
       </AdminWrapper>
     );
   }

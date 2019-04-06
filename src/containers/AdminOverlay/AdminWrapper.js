@@ -24,8 +24,10 @@ class AdminWrapper extends React.Component {
   render() {
     return (
       <div className='adminContainer'>
-        <AdminHeader title={this.props.title} />
-        {this.props.children}
+        <div className='adminBody'>
+          <AdminHeader title={this.props.title} />
+          {this.props.children}
+        </div>
       </div>
     );
   }

@@ -23,7 +23,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   min-width: 25%;
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
   user-select: none;
   position: fixed;
   display: flex;
@@ -47,5 +47,54 @@
     font-weight: normal;
     margin-left: 1rem;
     margin-right: 3rem;
+  }
+}
+
+.adminBody {
+  width: 100%;
+}
+
+.adminContent {
+  margin-left: 1rem;
+  color: black;
+  p {
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 0.5rem 0rem 0rem 0rem;
+  }
+}
+
+.actionButton {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  svg {
+    vertical-align: middle;
+  }
+  span {
+    font-weight: 300;
+    text-decoration: underline;
+  }
+}
+
+.footerLinks {
+  color: #9b9b9b;
+  text-decoration: underline;
+  font-weight: normal;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  width: 80%;
+  transform: translate(10%);
+}
+
+.adminFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  .leftFooter {
+    text-align: left;
+  }
+  .rightFooter {
+    text-align: right;
   }
 }
