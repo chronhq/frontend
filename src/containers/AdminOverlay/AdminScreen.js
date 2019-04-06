@@ -20,32 +20,12 @@ import React from 'react';
 import { action, computed } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
-// import firebase from '@firebase/app';
-// import '@firebase/auth';
-
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-
-import AdminHeader from './AdminHeader';
+import LoginScreen from './LoginScreen';
 
 import './AdminScreen.less';
-
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: 'popup',
-  signInSuccess: (a) => {
-    console.log('Wowowwow sign in');
-    console.log('a', a);
-  },
-
-  // We will display Google and Facebook as auth providers.
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ]
-};
 
 @inject('store')
 @observer
@@ -54,8 +34,16 @@ class AdminScreen extends React.Component {
     this.initFirebase();
   }
 
+  componentWillUnmount() {
+    this.unregisterAuthObserver();
+  }
+
   @computed get auth() {
     return this.props.store.auth;
+  }
+
+  @action authStatusChanged(user) {
+    this.auth.user = user;
   }
 
   @action initFirebase() {
@@ -64,18 +52,15 @@ class AdminScreen extends React.Component {
       firebase.initializeApp(this.auth.firebase);
       this.auth.initialized = true;
     }
-  }
-
-  @action close() {
-    this.props.store.flags.runtime.set('admin', false);
+    this.unregisterAuthObserver = firebase.auth()
+      .onAuthStateChanged(u => this.authStatusChanged(u));
   }
 
   render() {
     if (this.auth.initialized === false) return null;
     return (
       <div className='adminContainer'>
-        <AdminHeader title='Log In' close={() => this.close()} />
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        <LoginScreen />
       </div>
     );
   }

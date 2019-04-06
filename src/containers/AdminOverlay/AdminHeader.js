@@ -17,20 +17,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { observer, inject } from 'mobx-react';
+
 import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 
-const AdminHeader = ({ title, close }) => (
-  <div className='adminHeader'>
-    <h2>
-      {title}
-    </h2>
-    <Button
-      btnType={BUTTON_TYPE.CLOSE}
-      onClick={close}
-    >
-      <span className="lnr lnr-cross" />
-    </Button>
-  </div>
-);
+@inject('store')
+@observer
+class AdminHeader extends React.Component {
+  close = () => {
+    this.props.store.flags.runtime.set('admin', false);
+  }
+
+  render() {
+    return (
+      <div className='adminHeader'>
+        <h2>
+          {this.props.title}
+        </h2>
+        <Button
+          btnType={BUTTON_TYPE.CLOSE}
+          onClick={this.close}
+        >
+          <span className="lnr lnr-cross" />
+        </Button>
+      </div>
+    );
+  }
+}
 
 export default AdminHeader;
