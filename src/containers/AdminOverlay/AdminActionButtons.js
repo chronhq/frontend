@@ -18,7 +18,7 @@
  */
 import React from 'react';
 
-export const Create = ({ fill = '#4A4A4A' }) => (
+const Create = ({ fill = '#4A4A4A' }) => (
   <svg width="16px" height="18px" version="1.1" viewBox="0 0 16 18" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <g transform="translate(-577 -546)" fill={fill}>
@@ -30,7 +30,7 @@ export const Create = ({ fill = '#4A4A4A' }) => (
   </svg>
 );
 
-export const Change = ({ fill = '#4A4A4A' }) => (
+const Change = ({ fill = '#4A4A4A' }) => (
   <svg width="16px" height="18px" version="1.1" viewBox="0 0 16 18" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <g transform="translate(-577 -482)" fill={fill}>
@@ -42,7 +42,7 @@ export const Change = ({ fill = '#4A4A4A' }) => (
   </svg>
 );
 
-export const Sandbox = ({ fill = '#4A4A4A' }) => (
+const Sandbox = ({ fill = '#4A4A4A' }) => (
   <svg width="16px" height="19px" version="1.1" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <g transform="translate(-577 -578)" fill={fill}>
@@ -53,3 +53,38 @@ export const Sandbox = ({ fill = '#4A4A4A' }) => (
     </g>
   </svg>
 );
+
+/* eslint-disable jsx-a11y/anchor-is-valid */
+const ActionButton = ({ text, Icon, click }) => (
+  <a
+    href=''
+    onClick={(e) => {
+      e.preventDefault();
+      click();
+      return false;
+    }}
+    className='actionButton'
+  >
+    {Icon && <Icon />}
+    {Icon && ' '}
+    <span>
+      {text}
+    </span>
+  </a>
+);
+
+/* eslint-disable new-cap */
+const SandboxActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Sandbox });
+const CreateActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Create });
+const ChangeActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Change });
+
+export {
+  Create,
+  Change,
+  Sandbox,
+  CreateActionButton,
+  ChangeActionButton,
+  SandboxActionButton,
+};
+
+export default ActionButton;

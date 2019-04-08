@@ -26,27 +26,7 @@ import 'firebase/auth';
 import AdminWrapper from './AdminWrapper';
 import AdminFooterLinks from './AdminFooterLinks';
 
-import { Create, Change, Sandbox } from './AdminIcons';
-
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
-const ActionButton = ({ text, Icon, click }) => (
-  <a
-    href=''
-    onClick={(e) => {
-      e.preventDefault();
-      click();
-      return false;
-    }}
-    className='actionButton'
-  >
-    <Icon />
-    {' '}
-    <span>
-      {text}
-    </span>
-  </a>
-);
+import { CreateActionButton, ChangeActionButton, SandboxActionButton } from './AdminActionButtons';
 
 @inject('store')
 @observer
@@ -68,14 +48,14 @@ class AdminPanel extends React.Component {
         <p>
           {'Territorial Entity'}
         </p>
-        <ActionButton text='New/Edit' Icon={Change} click={() => this.admin.nextScreen('te')} />
-        <ActionButton text='Sandbox' Icon={Sandbox} click={() => this.admin.nextScreen('sandbox')} />
+        <ChangeActionButton text='New/Edit' click={() => this.admin.nextScreen('te')} />
+        <SandboxActionButton text='Sandbox' click={() => this.admin.nextScreen('sandbox')} />
         <p>
           {'Narrative'}
         </p>
-        <ActionButton text='New' Icon={Create} click={() => true} />
-        <ActionButton text='Edit' Icon={Change} click={() => true} />
-        <AdminFooterLinks right='Sing Out' rightIsLonger rightClick={() => firebase.auth().signOut()} />
+        <CreateActionButton text='New' click={() => true} />
+        <ChangeActionButton text='Edit' click={() => true} />
+        <AdminFooterLinks right='Sign Out' rightIsLonger rightClick={() => firebase.auth().signOut()} />
       </AdminWrapper>
     );
   }
