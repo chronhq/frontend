@@ -28,6 +28,8 @@ import AdminPanel from './AdminPanel';
 import DummyScreen from './DummyScreen';
 
 import './AdminScreen.less';
+import AdminTE from './AdminTE';
+import AdminSTV from './AdminSTV';
 
 @inject('store')
 @observer
@@ -50,6 +52,8 @@ class AdminScreen extends React.Component {
 
   @computed get screen() {
     if (this.admin.screens.panel) return AdminPanel;
+    if (this.admin.screens.te) return AdminTE;
+    if (this.admin.screens.stv) return AdminSTV;
     return DummyScreen;
   }
 
@@ -58,7 +62,6 @@ class AdminScreen extends React.Component {
   }
 
   @action initFirebase() {
-    console.log(firebase);
     if (this.auth.initialized === false) {
       firebase.initializeApp(this.auth.firebase);
       this.auth.initialized = true;
