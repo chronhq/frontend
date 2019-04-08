@@ -16,6 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import mapColors from './colors';
+
+const colors = Object.keys(mapColors).reduce((p, c) => ([...p, String(mapColors[c]), c]), []);
+
 const STVBorders = (now) => {
   const url = 'stv';
   const opacity = {
@@ -49,19 +53,7 @@ const STVBorders = (now) => {
       'fill-color': [
         'match',
         ['get', 'color'],
-        '1', '#ff6161',
-        '2', '#263f66',
-        '3', '#f9aa54',
-        '4', '#f9ff56',
-        '5', '#089195',
-        '6', '#669966',
-        '7', '#044e7b',
-        '8', '#935a41',
-        '9', '#80d0dd',
-        '10', '#944564',
-        '11', '#acb537',
-        '12', '#9561ba',
-        '13', '#a55f94',
+        ...colors,
         'rgb(127, 127, 127)' // Disputed
       ],
       'fill-opacity': {
