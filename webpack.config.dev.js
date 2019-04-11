@@ -84,15 +84,18 @@ module.exports = (env = {}) => ({
         },
       },
       {
-        test: /\.css/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
         test: /\.less$/,
         use: [
           { loader: 'style-loader', options: { sourceMap: true } },
           { loader: 'css-loader', options: { sourceMap: true } },
           { loader: 'less-loader', options: { sourceMap: true } }
+        ]
+      },
+      {
+        test: /\.css/,
+        use: [
+          { loader: 'style-loader', options: { sourceMap: true } },
+          { loader: 'css-loader', options: { sourceMap: true } }
         ]
       },
       {
