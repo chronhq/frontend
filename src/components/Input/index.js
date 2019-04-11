@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import 'rc-select/assets/index.css';
+
 import InputCheckBox from './InputCheckBox';
 import InputNumber from './InputNumber';
 import InputRange from './Slider';
