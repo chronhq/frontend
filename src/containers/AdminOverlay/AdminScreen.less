@@ -30,7 +30,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 199;
+  z-index: 50;
   border-radius: 2px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   background-color: @light-grey;
@@ -55,11 +55,12 @@
 }
 
 .adminContent {
-  margin-left: 1rem;
+  margin: 0 1rem;
   display: flex;
   flex-direction: column;
   color: black;
   p {
+    max-width: 80%;
     font-weight: normal;
     font-size: 1rem;
     margin: 0.5rem 0rem 0rem 0rem;
@@ -86,8 +87,6 @@
     font-size: 1rem;
   }
   margin-top: 0.5rem;
-  width: 80%;
-  transform: translate(10%);
 }
 
 .adminFooter {
@@ -119,4 +118,14 @@
 
 .pickedColor {
   box-shadow: 0 0px 5px 4px rgba(0, 0, 0, 0.2);
+}
+
+.stvEntity {
+  display: flex;
+  margin: 0.5rem;
+  flex-direction: row;
+  justify-content: space-around;
+  span {
+    margin-top: 0.5rem;
+  }
 }

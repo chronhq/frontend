@@ -22,12 +22,15 @@ import { inject, observer } from 'mobx-react';
 import AdminWrapper from './AdminWrapper';
 import AdminFooterLinks from './AdminFooterLinks';
 
+import DatePicker from '../../components/DatePicker/DatePicker';
+
 @inject('store')
 @observer
 class DummyScreen extends React.Component {
   render() {
     return (
       <AdminWrapper title='Under Construction'>
+        <DatePicker />
         <AdminFooterLinks
           right='Back'
           rightClick={() => this.props.store.admin.nextScreen('panel')}

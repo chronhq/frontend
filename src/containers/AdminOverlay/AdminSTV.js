@@ -20,9 +20,26 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 import AdminWrapper from './AdminWrapper';
-import { CreateActionButton } from './AdminActionButtons';
+import ActionButton, { CreateActionButton, ChangeActionButton } from './AdminActionButtons';
 import AdminFooterLinks from './AdminFooterLinks';
 
+const Entity = ({ id, start, end }) => (
+  <div className='stvEntity'>
+    <div className='actionButton'>
+      <span>
+        {id}
+        {'> '}
+        {start}
+        {'-'}
+        {end}
+      </span>
+    </div>
+    <span>
+      <ChangeActionButton click={() => true} text='Edit' />
+      <ActionButton click={() => true} text='Download' />
+    </span>
+  </div>
+);
 
 @inject('store')
 @observer
@@ -33,6 +50,8 @@ class AdminSTV extends React.Component {
         <p>
           {'Chosen Territorial entity contains the following Spacetime volumes:'}
         </p>
+        <Entity id='1' start='1998' end='1999' />
+        <Entity id='1' start='1999' end='2000' />
         <CreateActionButton text='New' click={() => true} />
         <AdminFooterLinks
           left='Back'
