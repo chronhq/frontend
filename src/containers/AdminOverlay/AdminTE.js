@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 import AdminWrapper from './AdminWrapper';
 import AdminFooterLinks from './AdminFooterLinks';
@@ -26,10 +26,26 @@ import { CreateActionButton } from './AdminActionButtons';
 import ColorPicker from './ColorPicker';
 import { InputSelect } from '../../components/Input';
 
+const keyVal = arr => arr.map(a => ({ key: a, value: a }));
 @inject('store')
 @observer
 class AdminTE extends React.Component {
   @observable color = 1;
+
+  @observable value = '';
+
+  @observable disabled = false;
+
+
+  componentDidMount() {
+    if (!this.loaded) {
+      this.props.store.data.territorialEntities.get();
+    }
+  }
+
+  @computed get loaded() {
+    return this.props.store.data.territorialEntities.status.loaded;
+  }
 
   @action changeColor(c) {
     this.color = c;
@@ -46,10 +62,10 @@ class AdminTE extends React.Component {
         </p>
         <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
         <InputSelect
-          value='Fair'
-          placeholder='Data quality'
-          options={['Fair', 'Good', 'Excellent']}
-          cb={value => console.log('cb', value)}
+          options={keyVal(['one', 'two', 'sadf', 'sdfdd', 'dfsd'])}
+          value={this.value}
+          placeholder='select'
+          cb={(e) => { this.value = e; return false; }}
         />
         <CreateActionButton text='New' click={() => true} />
         <AdminFooterLinks
