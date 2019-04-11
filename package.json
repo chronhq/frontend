@@ -38,7 +38,7 @@
     "@storybook/react": "^4.1.16",
     "babel-eslint": "^10.0.1",
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.11.2",
+    "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
@@ -48,13 +48,13 @@
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "jest-enzyme": "^7.0.2",
-    "react-hot-loader": "^4.8.2",
+    "react-hot-loader": "^4.8.3",
     "react-test-renderer": "^16.8.6",
     "rimraf": "^2.6.3",
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
@@ -70,10 +70,10 @@
     "@babel/runtime": "^7.4.3",
     "@firebase/app": "^0.3.14",
     "@firebase/auth": "^0.9.7",
-    "autoprefixer": "^9.5.0",
+    "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^4.6.0",
-    "core-js": "^2.6.5",
+    "core-js": "2.6.5",
     "css-loader": "^2.1.1",
     "d3-axis": "^1.0.12",
     "d3-scale": "^2.2.2",
@@ -93,7 +93,7 @@
     "promise-polyfill": "^8.1.0",
     "prop-types": "^15.7.2",
     "rc-input-number": "^4.4.1",
-    "rc-select": "^8.8.4",
+    "rc-select": "^9.0.2",
     "rc-slider": "^8.6.9",
     "rc-tooltip": "^3.7.3",
     "react": "^16.8.6",
@@ -109,7 +109,7 @@
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
-    "webpack-bundle-analyzer": "^3.1.0",
+    "webpack-bundle-analyzer": "^3.2.0",
     "wikidata-sdk": "^5.16.2"
   }
 }
