@@ -20,25 +20,28 @@ import React from 'react';
 
 import { CalendarActionButton } from './ActionButtons';
 import DatePicker from '../DatePicker/DatePicker';
+import ModalWrapper from '../ModalWrapper';
+
+
+const CalendarWrapper = ({ close }) => {
+  const date = { day: 12, month: 6, year: 1957 };
+  const style = { position: 'absolute', minWidth: '16rem', maxWidth: '20rem' };
+
+  return (
+    <ModalWrapper style={style} close={close}>
+      <DatePicker save={() => null} {...date} />
+    </ModalWrapper>
+  );
+};
 
 class CalendarWidget extends React.Component {
   state = {
-    active: false,
+    modal: false,
   }
 
   get widget() {
-    const date = { day: 12, month: 6, year: 1957 };
-    return this.state.active
-      ? () => (
-        <div style={{
-          position: 'absolute',
-          minWidth: '16rem',
-          maxWidth: '20rem',
-        }}
-        >
-          <DatePicker save={this.save} {...date} />
-        </div>
-      )
+    return this.state.modal
+      ? CalendarWrapper
       : () => '';
   }
 
@@ -48,7 +51,7 @@ class CalendarWidget extends React.Component {
 
   toggleCalendar = () => (
     this.setState(s => ({
-      active: !s.active
+      modal: !s.modal
     })))
 
   render() {
@@ -57,7 +60,7 @@ class CalendarWidget extends React.Component {
     return (
       <div>
         <CalendarActionButton text='Set Date' click={this.toggleCalendar} />
-        <Calendar />
+        <Calendar close={() => this.setState({ modal: false })} />
       </div>
     );
   }

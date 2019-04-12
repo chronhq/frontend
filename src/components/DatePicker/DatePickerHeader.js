@@ -17,9 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { InputSelect } from '../Input';
+// import { InputSelect } from '../Input';
+import Select from 'react-select';
 
-const eras = new Array(2050 / 50).fill(0).map((m, i) => ({ value: 50 * i, key: 50 * i }));
+const eras = new Array(2050 / 50).fill(0).map((m, i) => ({ label: 50 * i, value: 50 * i }));
+
+const styles = ({
+  container: c => ({ ...c, width: '7rem' }),
+  valueContainer: c => ({ ...c, padding: '0px 4px' }),
+  input: c => ({
+    ...c, paddingBottom: 0, paddingTop: 0, margin: 0
+  }),
+  dropdownIndicator: c => ({ ...c, padding: 0 }),
+});
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const ChangeEraArrow = ({ changeEra, forward }) => (
@@ -33,32 +43,29 @@ const ChangeEraArrow = ({ changeEra, forward }) => (
 
 const EraSelector = ({ era, changeEra }) => (
   <div className='datePicker-era'>
-    <div>
+    <div className='datePicker-era-center'>
       <ChangeEraArrow changeEra={changeEra} />
-      <span className='datePicker-era-century'>
-        <InputSelect
-          style={{ width: '6rem', margin: '0 0.5rem' }}
-          cb={y => changeEra(undefined, y)}
-          placeholder='Era'
-          value={era}
-          options={eras}
-        />
-      </span>
+      <Select
+        styles={styles}
+        onChange={y => changeEra(undefined, y.value)}
+        placeholder='Era'
+        value={{ label: era, value: era }}
+        options={eras}
+      />
       <ChangeEraArrow changeEra={changeEra} forward />
     </div>
   </div>
 );
 
 const monthEntity = (n, l = window.navigator.language || 'en-US') => ({
-  value: new Date(`2000-${n}-10`).toLocaleString(l, { month: 'long' }),
-  key: n
+  label: new Date(`2000-${n}-10`).toLocaleString(l, { month: 'long' }),
+  value: n
 });
 
 const months = new Array(12).fill(1).map((m, i) => monthEntity(m + i));
 
-const getDays = max => new Array(max).fill(1).map((m, i) => ({ value: m + i, key: m + i }));
+const getDays = max => new Array(max).fill(1).map((m, i) => ({ label: m + i, value: m + i }));
 
-const style = { width: '40%' };
 const DateSelector = ({
   year, month, day, setDate
 }) => {
@@ -66,20 +73,24 @@ const DateSelector = ({
   const maxDays = new Date(year, month, 0).getDate();
   const days = getDays(maxDays);
   if (day > maxDays) setDate(undefined, undefined, maxDays);
+  const dayValue = { label: day, value: day };
+  const monthValue = monthEntity(month);
+
   return (
     <div className='datePicker-date'>
-      <InputSelect
-        style={style}
-        cb={m => setDate(undefined, m)}
+      <Select
+        styles={styles}
+        onChange={m => setDate(undefined, m.value)}
         placeholder='Month'
-        value={month}
+        value={monthValue}
         options={months}
       />
-      <InputSelect
-        style={style}
-        cb={d => setDate(undefined, undefined, d)}
+      <Select
+        classNamePrefix='datePicker-select'
+        styles={styles}
+        onChange={d => setDate(undefined, undefined, d.value)}
         placeholder='Day'
-        value={day}
+        value={dayValue}
         options={days}
       />
     </div>

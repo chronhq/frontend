@@ -36,7 +36,12 @@ class DatePicker extends React.Component {
   }
 
   componentWillReceiveProps(next) {
-    this.setYear(next.year);
+    const state = this.nextState(next.year);
+    this.setState({
+      ...state,
+      month: next.month,
+      day: next.day
+    });
   }
 
   get date() {
@@ -54,11 +59,9 @@ class DatePicker extends React.Component {
   nextState = (newYear) => {
     // TODO fix negative dates
     const year = newYear % 100;
-    const prefix = newYear - year;
-    const era = year < 50 ? prefix : prefix + 50;
+    const era = newYear - (year % 50);
     return {
       year: newYear,
-      prefix: newYear - year,
       era,
     };
   }
@@ -74,10 +77,7 @@ class DatePicker extends React.Component {
       const i = forward ? 50 : -50;
       const era = exact || state.era + i;
       return (minEra <= era && maxEra >= era)
-        ? {
-          era,
-          prefix: era - (era % 100),
-        }
+        ? { era }
         : {};
     });
   }
@@ -85,6 +85,7 @@ class DatePicker extends React.Component {
   render() {
     return (
       <div className='datePicker-container'>
+        <p>Select Date</p>
         <DatePickerHeader
           {...this.state}
           changeEra={this.changeEra}
@@ -103,10 +104,16 @@ class DatePicker extends React.Component {
   }
 }
 
+DatePicker.defaultProps = {
+  year: 1800,
+  month: 1,
+  day: 1
+};
+
 DatePicker.propTypes = {
-  year: PropTypes.number.isRequired,
-  month: PropTypes.number.isRequired,
-  day: PropTypes.number.isRequired,
+  year: PropTypes.number,
+  month: PropTypes.number,
+  day: PropTypes.number,
   save: PropTypes.func.isRequired
 };
 
