@@ -17,19 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-// import { InputSelect } from '../Input';
-import Select from 'react-select';
+import Select from '../SlimSelect';
 
 const eras = new Array(2050 / 50).fill(0).map((m, i) => ({ label: 50 * i, value: 50 * i }));
-
-const styles = ({
-  container: c => ({ ...c, width: '7rem' }),
-  valueContainer: c => ({ ...c, padding: '0px 4px' }),
-  input: c => ({
-    ...c, paddingBottom: 0, paddingTop: 0, margin: 0
-  }),
-  dropdownIndicator: c => ({ ...c, padding: 0 }),
-});
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const ChangeEraArrow = ({ changeEra, forward }) => (
@@ -46,7 +36,6 @@ const EraSelector = ({ era, changeEra }) => (
     <div className='datePicker-era-center'>
       <ChangeEraArrow changeEra={changeEra} />
       <Select
-        styles={styles}
         onChange={y => changeEra(undefined, y.value)}
         placeholder='Era'
         value={{ label: era, value: era }}
@@ -79,15 +68,12 @@ const DateSelector = ({
   return (
     <div className='datePicker-date'>
       <Select
-        styles={styles}
         onChange={m => setDate(undefined, m.value)}
         placeholder='Month'
         value={monthValue}
         options={months}
       />
       <Select
-        classNamePrefix='datePicker-select'
-        styles={styles}
         onChange={d => setDate(undefined, undefined, d.value)}
         placeholder='Day'
         value={dayValue}

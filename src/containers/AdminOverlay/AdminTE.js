@@ -24,9 +24,9 @@ import AdminWrapper from './AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from './ColorPicker';
-import { InputSelect } from '../../components/Input';
+import Select from '../../components/SlimSelect';
 
-const keyVal = arr => arr.map(a => ({ key: a, value: a }));
+const keyVal = arr => arr.map(a => ({ value: a, label: a }));
 @inject('store')
 @observer
 class AdminTE extends React.Component {
@@ -61,9 +61,9 @@ class AdminTE extends React.Component {
           {'Set up political relations'}
         </p>
         <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
-        <InputSelect
+        <Select
           options={keyVal(['one', 'two', 'sadf', 'sdfdd', 'dfsd'])}
-          value={this.value}
+          value={keyVal([this.value]).shift()}
           placeholder='select'
           cb={(e) => { this.value = e; return false; }}
         />
