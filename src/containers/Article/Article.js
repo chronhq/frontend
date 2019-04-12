@@ -21,11 +21,15 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import CloseButton from '../../components/Button/CloseButton';
+import ClickOutside from '../../components/ClickOutside/ClickOutside';
+
 import './Article.less';
 
 @inject('store')
 @observer
 class Article extends React.Component {
+  modal = React.createRef();
+
   @computed get isOpen() {
     return this.props.store.flags.runtime.get('article');
   }
@@ -39,22 +43,9 @@ class Article extends React.Component {
     return this.props.store.year.tick;
   }
 
-  closeFeedback(e) {
+  closeFeedback = (e) => {
     e.stopPropagation();
     this.props.store.flags.runtime.set('article', false);
-  }
-
-  handleOverlay(e) {
-    if (e.keyCode === 13) {
-      this.closeFeedback(e);
-    }
-  }
-
-  clickOutside(e) {
-    if (!this.modal || this.modal.contains(e.target)) {
-      return;
-    }
-    this.closeFeedback(e);
   }
 
   render() {
@@ -63,18 +54,12 @@ class Article extends React.Component {
     }
     const data = this.timeline[this.tick];
     return (
-      <div
-        className='black-overlay'
-        role='button'
-        tabIndex='0'
-        onClick={e => this.clickOutside(e)}
-        onKeyUp={e => this.handleOverlay(e)}
-      >
+      <ClickOutside close={this.closeFeedback} modal={this.modal}>
         <div
           className='article'
-          ref={(ref) => { this.modal = ref; }}
+          ref={this.modal}
         >
-          <CloseButton onClick={e => this.closeFeedback(e)} />
+          <CloseButton onClick={this.closeFeedback} />
           <div className='article--title'>
             <b>
               {data ? data.title : ''}
@@ -96,7 +81,7 @@ class Article extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </ClickOutside>
     );
   }
 }

@@ -36,7 +36,7 @@ class MapWrapper extends React.Component {
     this.resize();
     if (disabled.map) {
       this.deck.initialLoad(true);
-      console.info('Geometry Layers are disabled by ENV');
+      console.info('Geometry Layers were disabled by ENV');
     }
   }
 
