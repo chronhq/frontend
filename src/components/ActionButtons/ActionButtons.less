@@ -16,28 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { inject, observer } from 'mobx-react';
-
-import AdminWrapper from './AdminWrapper';
-import AdminFooterLinks from './AdminFooterLinks';
-import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
-
-@inject('store')
-@observer
-class DummyScreen extends React.Component {
-  render() {
-    return (
-      <AdminWrapper title='Under Construction'>
-        <CalendarWidget />
-        <AdminFooterLinks
-          right='Back'
-          rightClick={() => this.props.store.admin.nextScreen('panel')}
-          rightIsLonger
-        />
-      </AdminWrapper>
-    );
+.actionButton {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  svg {
+    vertical-align: middle;
+  }
+  span {
+    font-weight: 300;
+    text-decoration: underline;
   }
 }
-
-export default DummyScreen;

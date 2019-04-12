@@ -26,7 +26,9 @@ import 'firebase/auth';
 import AdminWrapper from './AdminWrapper';
 import AdminFooterLinks from './AdminFooterLinks';
 
-import { CreateActionButton, ChangeActionButton, SandboxActionButton } from './AdminActionButtons';
+import {
+  CreateActionButton, ChangeActionButton, SandboxActionButton
+} from '../../components/ActionButtons/ActionButtons';
 
 @inject('store')
 @observer

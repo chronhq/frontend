@@ -20,7 +20,9 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 import AdminWrapper from './AdminWrapper';
-import ActionButton, { CreateActionButton, ChangeActionButton } from './AdminActionButtons';
+import ActionButton, {
+  CreateActionButton, ChangeActionButton
+} from '../../components/ActionButtons/ActionButtons';
 import AdminFooterLinks from './AdminFooterLinks';
 
 const Entity = ({ id, start, end }) => (

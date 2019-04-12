@@ -22,7 +22,7 @@ import { observable, action, computed } from 'mobx';
 
 import AdminWrapper from './AdminWrapper';
 import AdminFooterLinks from './AdminFooterLinks';
-import { CreateActionButton } from './AdminActionButtons';
+import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from './ColorPicker';
 import { InputSelect } from '../../components/Input';
 

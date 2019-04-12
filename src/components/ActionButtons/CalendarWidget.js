@@ -17,27 +17,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { inject, observer } from 'mobx-react';
 
-import AdminWrapper from './AdminWrapper';
-import AdminFooterLinks from './AdminFooterLinks';
-import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
+import { CalendarActionButton } from './ActionButtons';
+import DatePicker from '../DatePicker/DatePicker';
 
-@inject('store')
-@observer
-class DummyScreen extends React.Component {
+class CalendarWidget extends React.Component {
+  state = {
+    active: false,
+  }
+
+  get widget() {
+    const date = { day: 12, month: 6, year: 1957 };
+    return this.state.active
+      ? () => (
+        <div style={{
+          position: 'absolute',
+          minWidth: '16rem',
+          maxWidth: '20rem',
+        }}
+        >
+          <DatePicker save={this.save} {...date} />
+        </div>
+      )
+      : () => '';
+  }
+
+  saveDate = (d) => {
+    console.log('Save', d);
+  }
+
+  toggleCalendar = () => (
+    this.setState(s => ({
+      active: !s.active
+    })))
+
   render() {
+    const Calendar = this.widget;
+
     return (
-      <AdminWrapper title='Under Construction'>
-        <CalendarWidget />
-        <AdminFooterLinks
-          right='Back'
-          rightClick={() => this.props.store.admin.nextScreen('panel')}
-          rightIsLonger
-        />
-      </AdminWrapper>
+      <div>
+        <CalendarActionButton text='Set Date' click={this.toggleCalendar} />
+        <Calendar />
+      </div>
     );
   }
 }
 
-export default DummyScreen;
+export default CalendarWidget;
