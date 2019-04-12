@@ -21,7 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
 import CloseButton from '../../components/Button/CloseButton';
-import ClickOutside from '../../components/ClickOutside/ClickOutside';
+import ModalWrapper from '../../components/ModalWrapper';
 
 import './Article.less';
 
@@ -43,8 +43,7 @@ class Article extends React.Component {
     return this.props.store.year.tick;
   }
 
-  closeFeedback = (e) => {
-    e.stopPropagation();
+  closeFeedback = () => {
     this.props.store.flags.runtime.set('article', false);
   }
 
@@ -54,7 +53,7 @@ class Article extends React.Component {
     }
     const data = this.timeline[this.tick];
     return (
-      <ClickOutside close={this.closeFeedback} modal={this.modal}>
+      <ModalWrapper close={this.closeFeedback} modal={this.modal}>
         <div
           className='article'
           ref={this.modal}
@@ -81,7 +80,7 @@ class Article extends React.Component {
             </div>
           </div>
         </div>
-      </ClickOutside>
+      </ModalWrapper>
     );
   }
 }

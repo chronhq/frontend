@@ -17,42 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import useOnClickOutside from 'use-onclickoutside';
 import PropTypes from 'prop-types';
 
-import './ClickOutside.less';
+const ClickOutside = ({ close, children, style }) => {
+  const ref = React.useRef(null);
+  useOnClickOutside(ref, close);
+  return (
+    <div ref={ref} style={style}>
+      {children}
+    </div>
+  );
+};
 
-class ClickOutside extends React.Component {
-  handleOverlay(e) {
-    if (e.keyCode === 13) {
-      this.props.close(e);
-    }
-  }
-
-  clickOutside(e) {
-    if (this.props.modal.current.contains(e.target)) {
-      return;
-    }
-    this.props.close(e);
-  }
-
-  render() {
-    return (
-      <div
-        className='black-overlay'
-        role='button'
-        tabIndex='0'
-        onClick={e => this.clickOutside(e)}
-        onKeyUp={e => this.handleOverlay(e)}
-      >
-        {this.props.children}
-      </div>
-    );
-  }
-}
+ClickOutside.defaultProps = {
+  style: {}
+};
 
 ClickOutside.propTypes = {
-  close: PropTypes.any.isRequired,
-  modal: PropTypes.any.isRequired
+  close: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  style: PropTypes.object,
 };
 
 export default ClickOutside;
