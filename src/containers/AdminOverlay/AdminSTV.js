@@ -23,7 +23,7 @@ import AdminWrapper from './AdminWrapper';
 import ActionButton, {
   CreateActionButton, ChangeActionButton
 } from '../../components/ActionButtons/ActionButtons';
-import AdminFooterLinks from './AdminFooterLinks';
+import TwoActions from '../../components/TwoActions/TwoActions';
 
 const Entity = ({ id, start, end }) => (
   <div className='stvEntity'>
@@ -55,7 +55,7 @@ class AdminSTV extends React.Component {
         <Entity id='1' start='1998' end='1999' />
         <Entity id='1' start='1999' end='2000' />
         <CreateActionButton text='New' click={() => true} />
-        <AdminFooterLinks
+        <TwoActions
           left='Back'
           leftClick={() => this.props.store.admin.nextScreen('te')}
         />

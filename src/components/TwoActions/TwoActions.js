@@ -18,6 +18,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import './TwoActions.less';
 
 const width = b => (b ? { width: '100%' } : {});
 
@@ -39,18 +40,18 @@ const Button = ({
   </a>
 ));
 
-const AdminFooterLinks = ({
+const TwoActions = ({
   left, right, leftClick, rightClick, rightIsLonger
 }) => (
-  <div className='adminFooterContainer'>
-    <div className='adminFooter'>
+  <div className='twoActionsContainer'>
+    <div className='twoActions'>
       <Button position='leftFooter' text={left} click={leftClick} primary={!rightIsLonger} />
       <Button position='rightFooter' text={right} click={rightClick} primary={rightIsLonger} />
     </div>
   </div>
 );
 
-AdminFooterLinks.defaultProps = {
+TwoActions.defaultProps = {
   rightIsLonger: false,
   left: null,
   right: null,
@@ -58,7 +59,7 @@ AdminFooterLinks.defaultProps = {
   rightClick: () => false,
 };
 
-AdminFooterLinks.propTypes = {
+TwoActions.propTypes = {
   rightIsLonger: PropTypes.bool,
   left: PropTypes.string,
   right: PropTypes.string,
@@ -66,4 +67,4 @@ AdminFooterLinks.propTypes = {
   rightClick: PropTypes.any,
 };
 
-export default AdminFooterLinks;
+export default TwoActions;

@@ -16,28 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { inject, observer } from 'mobx-react';
-
-import AdminWrapper from './AdminWrapper';
-import TwoActions from '../../components/TwoActions/TwoActions';
-import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
-
-@inject('store')
-@observer
-class DummyScreen extends React.Component {
-  render() {
-    return (
-      <AdminWrapper title='Under Construction'>
-        <CalendarWidget />
-        <TwoActions
-          right='Back'
-          rightClick={() => this.props.store.admin.nextScreen('panel')}
-          rightIsLonger
-        />
-      </AdminWrapper>
-    );
+.twoActionsContainer {
+  a {
+    color: #9b9b9b;
+    text-decoration: underline;
+    font-weight: normal;
+    font-size: 1rem;
   }
+  margin-top: 0.5rem;
 }
 
-export default DummyScreen;
+.twoActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  .leftFooter {
+    text-align: left;
+  }
+  .rightFooter {
+    text-align: right;
+  }
+}

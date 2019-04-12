@@ -21,7 +21,7 @@ import { observer, inject } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
 
 import AdminWrapper from './AdminWrapper';
-import AdminFooterLinks from './AdminFooterLinks';
+import TwoActions from '../../components/TwoActions/TwoActions';
 import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from './ColorPicker';
 import { InputSelect } from '../../components/Input';
@@ -68,12 +68,12 @@ class AdminTE extends React.Component {
           cb={(e) => { this.value = e; return false; }}
         />
         <CreateActionButton text='New' click={() => true} />
-        <AdminFooterLinks
+        <TwoActions
           left='Back'
           leftClick={() => this.props.store.admin.nextScreen('panel')}
           right='Save'
         />
-        <AdminFooterLinks
+        <TwoActions
           left='Delete'
           right='Continue to STV'
           rightClick={() => this.props.store.admin.nextScreen('stv')}
