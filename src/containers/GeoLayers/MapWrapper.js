@@ -25,6 +25,8 @@ import {
   computed, action
 } from 'mobx';
 
+import disabled from '../../../disabled.json';
+
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
@@ -32,6 +34,10 @@ class MapWrapper extends React.Component {
     window.addEventListener('resize', () => this.resize(), false);
     window.addEventListener('orientationchange', () => this.resize(), false);
     this.resize();
+    if (disabled.map) {
+      this.deck.initialLoad(true);
+      console.info('Geometry Layers are disabled by ENV');
+    }
   }
 
 
@@ -101,6 +107,8 @@ class MapWrapper extends React.Component {
   }
 
   render() {
+    if (disabled.map) return null;
+
     return (
       <InteractiveMap
         style={{ zIndex: 1 }}

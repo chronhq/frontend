@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, action } from 'mobx';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -26,6 +26,9 @@ import 'firebase/auth';
 import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import AdminWrapper from './AdminWrapper';
+
+import TwoActions from '../../components/TwoActions/TwoActions';
+import disabled from '../../../disabled.json';
 
 
 @inject('store')
@@ -47,10 +50,22 @@ class LoginScreen extends React.Component {
     };
   }
 
+  @computed get skip() {
+    return disabled.login
+      ? () => <TwoActions left='Let Me Through' leftClick={() => this.dummyUser()} />
+      : () => null;
+  }
+
+  @action dummyUser() {
+    this.auth.user = {};
+  }
+
   render() {
+    const Skip = this.skip;
     return (
       <AdminWrapper title='Log In'>
         <FirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+        <Skip />
       </AdminWrapper>
     );
   }
