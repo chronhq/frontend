@@ -22,6 +22,7 @@ import { inject, observer } from 'mobx-react';
 import AdminWrapper from './AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
+import UploadWidget from '../../components/ActionButtons/UploadWidget';
 
 @inject('store')
 @observer
@@ -30,6 +31,7 @@ class DummyScreen extends React.Component {
     return (
       <AdminWrapper title='Under Construction'>
         <CalendarWidget save={d => console.log('Calendar Save Date', d)} />
+        <UploadWidget />
         <TwoActions
           right='Back'
           rightClick={() => this.props.store.admin.nextScreen('panel')}
