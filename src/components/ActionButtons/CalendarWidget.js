@@ -17,24 +17,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { CalendarActionButton } from './ActionButtons';
 import DatePickerModal, { dateToLocaleString } from '../DatePicker/DatePickerModal';
 
 class CalendarWidget extends React.Component {
-  state = {
-    modal: false,
-    text: undefined,
-    date: undefined,
+  constructor(props) {
+    super();
+    if (props.JDN) {
+      console.warn('JDN is not yet supported in Calendar Widget');
+    }
+    this.state = {
+      modal: false,
+      text: props.text,
+      date: undefined,
+    };
+    if (props.date !== undefined) {
+      this.state = {
+        ...this.state,
+        ...this.stateFromYear(props.date)
+      };
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.date !== undefined) this.setState(this.stateFromYear(props.date));
   }
 
   saveDate = (d) => {
-    this.setState({
-      date: d,
-      text: dateToLocaleString(d),
-      modal: false
-    });
+    this.setState(this.stateFromYear(d));
+    this.props.save(d);
   }
+
+  stateFromYear = d => ({
+    date: d,
+    // TODO check for undefined
+    text: dateToLocaleString(d),
+    modal: false
+  });
 
   toggleCalendar = () => (
     this.setState(s => ({
@@ -46,7 +67,7 @@ class CalendarWidget extends React.Component {
   render() {
     return (
       <div>
-        <CalendarActionButton text={this.state.text || 'Set Date'} click={this.toggleCalendar} />
+        <CalendarActionButton text={this.state.text} click={this.toggleCalendar} />
         <DatePickerModal
           save={this.saveDate}
           date={this.state.date}
@@ -57,5 +78,18 @@ class CalendarWidget extends React.Component {
     );
   }
 }
+
+CalendarWidget.defaultProps = {
+  JDN: false,
+  text: 'Set Date',
+  date: undefined,
+};
+
+CalendarWidget.propTypes = {
+  text: PropTypes.string,
+  JDN: PropTypes.bool,
+  save: PropTypes.func.isRequired,
+  date: PropTypes.any,
+};
 
 export default CalendarWidget;

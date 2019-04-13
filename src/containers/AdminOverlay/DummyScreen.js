@@ -29,7 +29,7 @@ class DummyScreen extends React.Component {
   render() {
     return (
       <AdminWrapper title='Under Construction'>
-        <CalendarWidget />
+        <CalendarWidget save={d => console.log('Calendar Save Date', d)} />
         <TwoActions
           right='Back'
           rightClick={() => this.props.store.admin.nextScreen('panel')}
