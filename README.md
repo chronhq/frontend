@@ -18,6 +18,9 @@ cd frontend
 # Install dependencies
 npm i
 
+# Create an empty disabled.json file
+echo '{}' > disabled.json
+
 # Create a settings.json file from settings.json.example
 
 # Setup your mapbox access token in settings.json 

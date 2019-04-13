@@ -1,5 +1,6 @@
 cache: npm
 before_install:
+  - echo '{}' > disabled.json
   - sed 's/MAPBOX_TOKEN/dummy_token/' settings.json.example > settings.json
   - cp firebase-config.json.example firebase-config.json
 install:
