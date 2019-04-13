@@ -19,15 +19,21 @@
 import React from 'react';
 
 import { CalendarActionButton } from './ActionButtons';
-import DatePickerModal from '../DatePicker/DatePickerModal';
+import DatePickerModal, { dateToLocaleString } from '../DatePicker/DatePickerModal';
 
 class CalendarWidget extends React.Component {
   state = {
     modal: false,
+    text: undefined,
+    date: undefined,
   }
 
   saveDate = (d) => {
-    console.log('Save', d);
+    this.setState({
+      date: d,
+      text: dateToLocaleString(d),
+      modal: false
+    });
   }
 
   toggleCalendar = () => (
@@ -35,13 +41,16 @@ class CalendarWidget extends React.Component {
       modal: !s.modal
     })))
 
+  close = () => this.setState({ modal: false })
+
   render() {
     return (
       <div>
-        <CalendarActionButton text='Set Date' click={this.toggleCalendar} />
+        <CalendarActionButton text={this.state.text || 'Set Date'} click={this.toggleCalendar} />
         <DatePickerModal
           save={this.saveDate}
-          close={() => this.setState({ modal: false })}
+          date={this.state.date}
+          close={this.close}
           isOpen={this.state.modal}
         />
       </div>

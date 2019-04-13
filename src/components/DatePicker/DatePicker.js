@@ -29,6 +29,13 @@ import './DatePicker.less';
 const minEra = 0;
 const maxEra = 2000;
 
+
+export const dateToLocaleString = date => (
+  date.toLocaleString(window.navigator.language || 'en-US', {
+    month: 'short', year: 'numeric', day: '2-digit', timeZone: 'UTC'
+  })
+);
+
 class DatePicker extends React.Component {
   constructor(props) {
     super();
@@ -46,18 +53,13 @@ class DatePicker extends React.Component {
     return d;
   }
 
-  get dateString() {
-    // TODO prevent from duplicating this config
-    return this.date.toLocaleString(window.navigator.language || 'en-US', {
-      month: 'short', year: 'numeric', day: '2-digit', timeZone: 'UTC'
-    });
-  }
-
   eraCalculator = nextYear => nextYear - (nextYear % 150)
 
   propsToState = next => ({
     era: this.eraCalculator(next.date.getUTCFullYear()),
+    year: next.date.getUTCFullYear(),
     month: next.date.getUTCMonth() + 1,
+    day: next.date.getDate(),
   })
 
   setDate = (year, month, day) => (
@@ -76,7 +78,7 @@ class DatePicker extends React.Component {
   resetEra = () => this.setDate(this.state.year);
 
   save = () => {
-    this.props.save({ date: this.date, text: this.dateString });
+    this.props.save(this.date);
   }
 
   render() {
@@ -95,7 +97,7 @@ class DatePicker extends React.Component {
         />
         <hr />
         <TwoActions
-          left={this.dateString}
+          left={dateToLocaleString(this.date)}
           leftClick={this.resetEra}
           right='Save'
           rightClick={this.save}

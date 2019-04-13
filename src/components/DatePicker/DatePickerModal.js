@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import DatePicker from './DatePicker';
+import DatePicker, { dateToLocaleString } from './DatePicker';
 import ModalWrapper from '../ModalWrapper';
 
 
@@ -25,8 +25,10 @@ const DatePickerModal = ({
   close, save, date, isOpen
 }) => (
   <ModalWrapper className='datePicker-modal' close={close} isOpen={isOpen}>
-    <DatePicker save={save} {...date} />
+    <DatePicker save={save} date={date} />
   </ModalWrapper>
 );
+
+export { dateToLocaleString };
 
 export default DatePickerModal;

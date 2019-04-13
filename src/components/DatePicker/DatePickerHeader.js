@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Select from '../SlimSelect';
 
 const eras = new Array(2050 / 50).fill(0).map((m, i) => ({ label: 50 * i, value: 50 * i }));
@@ -70,24 +72,28 @@ const DateSelector = ({
   );
 };
 
-class DatePickerHeader extends React.Component {
-  render() {
-    return (
-      <div className='datePicker-header'>
-        <EraSelector
-          first={this.props.first}
-          era={this.props.era}
-          changeEra={this.props.changeEra}
-        />
-        <DateSelector
-          year={this.props.year}
-          month={this.props.month}
-          day={this.props.day}
-          setDate={this.props.setDate}
-        />
-      </div>
-    );
-  }
-}
+const DatePickerHeader = props => (
+  <div className='datePicker-header'>
+    <EraSelector
+      era={props.era}
+      changeEra={props.changeEra}
+    />
+    <DateSelector
+      year={props.year}
+      month={props.month}
+      day={props.day}
+      setDate={props.setDate}
+    />
+  </div>
+);
+
+DatePickerHeader.propTypes = {
+  changeEra: PropTypes.func.isRequired,
+  setDate: PropTypes.func.isRequired,
+  era: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  day: PropTypes.number.isRequired,
+};
 
 export default DatePickerHeader;
