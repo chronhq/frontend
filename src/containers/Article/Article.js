@@ -31,6 +31,7 @@ class Article extends React.Component {
   modal = React.createRef();
 
   @computed get isOpen() {
+    // TODO set UI flags in a different place
     return this.props.store.flags.runtime.get('article');
   }
 
@@ -48,12 +49,9 @@ class Article extends React.Component {
   }
 
   render() {
-    if (this.isOpen === false) {
-      return null;
-    }
     const data = this.timeline[this.tick];
     return (
-      <ModalWrapper close={this.closeFeedback} modal={this.modal}>
+      <ModalWrapper close={this.closeFeedback} modal={this.modal} isOpen={this.isOpen}>
         <div
           className='article'
           ref={this.modal}

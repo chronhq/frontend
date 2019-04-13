@@ -17,36 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import DatePicker from './DatePicker';
+import ModalWrapper from '../ModalWrapper';
 
-import { CalendarActionButton } from './ActionButtons';
-import DatePickerModal from '../DatePicker/DatePickerModal';
 
-class CalendarWidget extends React.Component {
-  state = {
-    modal: false,
-  }
+const DatePickerModal = ({
+  close, save, date, isOpen
+}) => (
+  <ModalWrapper className='datePicker-modal' close={close} isOpen={isOpen}>
+    <DatePicker save={save} {...date} />
+  </ModalWrapper>
+);
 
-  saveDate = (d) => {
-    console.log('Save', d);
-  }
-
-  toggleCalendar = () => (
-    this.setState(s => ({
-      modal: !s.modal
-    })))
-
-  render() {
-    return (
-      <div>
-        <CalendarActionButton text='Set Date' click={this.toggleCalendar} />
-        <DatePickerModal
-          save={this.saveDate}
-          close={() => this.setState({ modal: false })}
-          isOpen={this.state.modal}
-        />
-      </div>
-    );
-  }
-}
-
-export default CalendarWidget;
+export default DatePickerModal;

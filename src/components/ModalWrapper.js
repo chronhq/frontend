@@ -20,24 +20,31 @@ import React from 'react';
 import useOnClickOutside from 'use-onclickoutside';
 import PropTypes from 'prop-types';
 
-const ClickOutside = ({ close, children, style }) => {
+const ClickOutside = ({
+  close, children, style, isOpen, className
+}) => {
   const ref = React.useRef(null);
   useOnClickOutside(ref, close);
-  return (
-    <div ref={ref} style={style}>
-      {children}
-    </div>
-  );
+  return isOpen
+    ? (
+      <div ref={ref} style={style} className={className}>
+        {children}
+      </div>
+    )
+    : null;
 };
 
 ClickOutside.defaultProps = {
-  style: {}
+  style: {},
+  className: '',
 };
 
 ClickOutside.propTypes = {
   close: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default ClickOutside;

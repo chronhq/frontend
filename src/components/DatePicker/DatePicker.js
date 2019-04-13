@@ -22,70 +22,66 @@ import PropTypes from 'prop-types';
 import DatePickerHeader from './DatePickerHeader';
 import DatePickerYears from './DatePickerYears';
 
+import TwoActions from '../TwoActions/TwoActions';
+
 import './DatePicker.less';
 
 const minEra = 0;
 const maxEra = 2000;
 
 class DatePicker extends React.Component {
-  state = {
-    era: 1950,
-    year: 1958,
-    month: 1,
-    day: 1,
+  constructor(props) {
+    super();
+    this.state = this.propsToState(props);
   }
 
-  componentWillReceiveProps(next) {
-    const state = this.nextState(next.year);
-    this.setState({
-      ...state,
-      month: next.month,
-      day: next.day
-    });
+  componentWillReceiveProps(props) {
+    this.setState(this.propsToState(props));
   }
 
   get date() {
     const d = new Date('2000-01-01');
+    // UTC Month start from 0
     d.setUTCFullYear(this.state.year, this.state.month - 1, this.state.day);
     return d;
   }
 
   get dateString() {
+    // TODO prevent from duplicating this config
     return this.date.toLocaleString(window.navigator.language || 'en-US', {
       month: 'short', year: 'numeric', day: '2-digit', timeZone: 'UTC'
     });
   }
 
-  nextState = (newYear) => {
-    // TODO fix negative dates
-    const year = newYear % 100;
-    const era = newYear - (year % 50);
-    return {
-      year: newYear,
-      era,
-    };
-  }
+  eraCalculator = nextYear => nextYear - (nextYear % 150)
 
-  setDate = (year, month, day) => {
-    if (year) this.setState(this.nextState(year));
-    if (month) this.setState({ month });
-    if (day) this.setState({ day });
-  }
+  propsToState = next => ({
+    era: this.eraCalculator(next.date.getUTCFullYear()),
+    month: next.date.getUTCMonth() + 1,
+  })
 
-  changeEra = (forward, exact) => {
-    this.setState((state) => {
-      const i = forward ? 50 : -50;
-      const era = exact || state.era + i;
-      return (minEra <= era && maxEra >= era)
-        ? { era }
-        : {};
-    });
+  setDate = (year, month, day) => (
+    this.setState(s => ({
+      era: this.eraCalculator(year !== undefined ? year : s.year),
+      year: year !== undefined ? year : s.year,
+      month: month || s.month,
+      day: day || s.day,
+    })))
+
+  changeEra = era => (
+    this.setState(
+      (minEra <= era && maxEra >= era) ? { era } : {}
+    ))
+
+  resetEra = () => this.setDate(this.state.year);
+
+  save = () => {
+    this.props.save({ date: this.date, text: this.dateString });
   }
 
   render() {
     return (
       <div className='datePicker-container'>
-        <p>Select Date</p>
         <DatePickerHeader
           {...this.state}
           changeEra={this.changeEra}
@@ -98,22 +94,23 @@ class DatePicker extends React.Component {
           setDate={this.setDate}
         />
         <hr />
-        <p>{this.dateString}</p>
+        <TwoActions
+          left={this.dateString}
+          leftClick={this.resetEra}
+          right='Save'
+          rightClick={this.save}
+        />
       </div>
     );
   }
 }
 
 DatePicker.defaultProps = {
-  year: 1800,
-  month: 1,
-  day: 1
+  date: new Date('1800-01-01')
 };
 
 DatePicker.propTypes = {
-  year: PropTypes.number,
-  month: PropTypes.number,
-  day: PropTypes.number,
+  date: PropTypes.instanceOf(Date),
   save: PropTypes.func.isRequired
 };
 

@@ -21,28 +21,15 @@ import Select from '../SlimSelect';
 
 const eras = new Array(2050 / 50).fill(0).map((m, i) => ({ label: 50 * i, value: 50 * i }));
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-const ChangeEraArrow = ({ changeEra, forward }) => (
-  <a
-    href=''
-    onClick={(e) => { e.preventDefault(); changeEra(forward); return false; }}
-  >
-    <span className={`lnr lnr-${forward ? 'chevron-right' : 'chevron-left'}`} />
-  </a>
-);
-
 const EraSelector = ({ era, changeEra }) => (
-  <div className='datePicker-era'>
-    <div className='datePicker-era-center'>
-      <ChangeEraArrow changeEra={changeEra} />
-      <Select
-        onChange={y => changeEra(undefined, y.value)}
-        placeholder='Era'
-        value={{ label: era, value: era }}
-        options={eras}
-      />
-      <ChangeEraArrow changeEra={changeEra} forward />
-    </div>
+  <div className='datePicker-date'>
+    <p style={{ width: '7rem' }}>Select Date</p>
+    <Select
+      onChange={y => changeEra(y.value)}
+      placeholder='Era'
+      value={{ label: era, value: era }}
+      options={eras}
+    />
   </div>
 );
 

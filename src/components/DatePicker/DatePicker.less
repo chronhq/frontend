@@ -18,11 +18,15 @@
  */
 @import '../../styles/colors.less';
 
+.datePicker-modal {
+  position: absolute;
+  min-width: 16rem;
+  max-width: 20rem;
+}
+
 .datePicker-container {
-  padding-bottom: 1rem;
+  padding: 1rem 0.25rem;
   user-select: none;
-  // position: fixed;
-  // display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -30,21 +34,6 @@
   border-radius: 2px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   background-color: @light-grey;
-}
-
-.datePicker-era  {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-}
-
-.datePicker-era-center {
-  display: flex;
-  flex-direction: row;
-  span {
-    font-size: 1.4rem;
-  }
 }
 
 .datePicker-date {
@@ -77,9 +66,4 @@
     background-color: @footer-border;
     transition: background-color 150ms ease-in-out;
   }
-}
-
-.datePicker-select {
-  padding: 0;
-  font-size: 1rem;
 }
