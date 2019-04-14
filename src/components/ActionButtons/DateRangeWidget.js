@@ -17,28 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { inject, observer } from 'mobx-react';
 
-import AdminWrapper from './AdminWrapper';
-import TwoActions from '../../components/TwoActions/TwoActions';
-import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
-import UploadWidget from '../../components/ActionButtons/UploadWidget';
+import PropTypes from 'prop-types';
 
-@inject('store')
-@observer
-class DummyScreen extends React.Component {
-  render() {
-    return (
-      <AdminWrapper title='Under Construction' position='middle'>
-        <CalendarWidget save={d => console.log('Calendar Save Date', d)} />
-        <UploadWidget />
-        <TwoActions
-          right='Back'
-          rightClick={() => this.props.store.admin.nextScreen('panel')}
-        />
-      </AdminWrapper>
-    );
-  }
-}
+import ActionButton from './ActionButtons';
+import { dateToLocaleString } from '../DatePicker/DatePickerModal';
 
-export default DummyScreen;
+const DateActionButton = ({ date, click }) => (
+  <ActionButton text={dateToLocaleString(date)} click={click} />
+);
+
+DateActionButton.propTypes = {
+  date: PropTypes.instanceOf(Date).isRequired,
+  click: PropTypes.func.isRequired
+};
+
+const DateRangeWidget = ({ start, end, click }) => (
+  <div>
+    <DateActionButton date={start} click={click} />
+    <span>
+      {' - '}
+    </span>
+    <DateActionButton date={end} click={click} />
+  </div>
+);
+
+DateRangeWidget.propTypes = {
+  start: PropTypes.instanceOf(Date).isRequired,
+  end: PropTypes.instanceOf(Date).isRequired,
+  click: PropTypes.func.isRequired
+};
+
+export { DateActionButton };
+
+export default DateRangeWidget;

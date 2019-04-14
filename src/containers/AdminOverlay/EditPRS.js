@@ -20,56 +20,61 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 
 import AdminWrapper from './AdminWrapper';
-import {
-  CreateActionButton, ChangeActionButton
-} from '../../components/ActionButtons/ActionButtons';
 import DateRangeWidget from '../../components/ActionButtons/DateRangeWidget';
+import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 
-import './AdminSTV.less';
-
-const Entity = ({ start, end, status }) => (
-  <div className='stv-entities-row-grid'>
-    <span className={`lnr lnr-${status ? 'checkmark' : 'question'}-circle`} />
-    <DateRangeWidget start={start} end={end} click={() => null} />
-    <ChangeActionButton click={() => true} text='Edit' />
-  </div>
-);
+import './EditPRS.less';
 
 const genDate = () => (new Date(+(new Date()) - Math.floor(Math.random() * 10000000000000)));
 
-const Entities = ({ count = 10 }) => {
+const Entity = ({ start, end }) => (
+  <div className='prs-row-grid'>
+    <p>
+      {'TE label for PR'}
+    </p>
+    <div className='prs-col-grid'>
+      <DateRangeWidget start={start} end={end} click={() => null} />
+      <span className='lnr lnr-cross-circle' />
+    </div>
+  </div>
+);
+
+
+const Entities = ({ title }) => {
+  const count = Math.round(Math.random() * 10);
   const dates = new Array(count * 2).fill(0).map(genDate)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
   const data = new Array(count).fill(0).map((v, i) => {
-    const status = Boolean(Math.round(Math.random()));
     const end = dates[i * 2];
     const start = dates[i * 2 + 1];
-    const stars = Math.round(Math.random() * 5);
-    return {
-      status, start, end, stars, key: i
-    };
+    return { start, end };
   });
+
   return (
-    <div className='stv-entities-container'>
-      {data.map(d => <Entity {...d} />)}
+    <div>
+      <p>{title}</p>
+      <div className='prs-container'>
+        {data.map(d => <Entity {...d} />)}
+      </div>
+      <CreateActionButton text='Add' click={() => null} />
     </div>
   );
 };
 
 @inject('store')
 @observer
-class AdminSTV extends React.Component {
+class EditPRS extends React.Component {
   render() {
     return (
-      <AdminWrapper title='Spacetime volume'>
-        <p>
-          {'Chosen Territorial entity contains the following Spacetime volumes:'}
-        </p>
-        <Entities />
-        <CreateActionButton text='New' click={() => true} />
+      <AdminWrapper title='Edit PRS' position='middle'>
+        <div className='prs'>
+          <Entities title='Direct' />
+          <Entities title='Indirect' />
+          <Entities title='Group' />
+        </div>
       </AdminWrapper>
     );
   }
 }
 
-export default AdminSTV;
+export default EditPRS;

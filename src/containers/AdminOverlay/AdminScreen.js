@@ -30,6 +30,8 @@ import DummyScreen from './DummyScreen';
 import './AdminScreen.less';
 import AdminTE from './AdminTE';
 import AdminSTV from './AdminSTV';
+import EditSTV from './EditSTV';
+import EditPRS from './EditPRS';
 
 const Grid = ({ children }) => (
   <div className='admin-grid-container'>
@@ -43,6 +45,8 @@ const GridTE = () => (
   <Grid>
     <AdminTE />
     <AdminSTV />
+    <EditSTV />
+    <EditPRS />
   </Grid>
 );
 

@@ -24,6 +24,7 @@ import {
   Sandbox,
   Calendar,
   Upload,
+  Label,
 } from './Icons';
 
 import './ActionButtons.less';
@@ -53,6 +54,7 @@ const CreateActionButton = ({ text, click }) => ActionButton({ text, click, Icon
 const ChangeActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Change });
 const CalendarActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Calendar });
 const UploadActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Upload });
+const LabelActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Label });
 
 
 export {
@@ -61,6 +63,7 @@ export {
   SandboxActionButton,
   CalendarActionButton,
   UploadActionButton,
+  LabelActionButton,
 };
 
 export default ActionButton;

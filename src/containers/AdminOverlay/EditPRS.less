@@ -16,14 +16,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-.actionButton {
-  // margin-left: 0.5rem;
-  // margin-top: 0.5rem;
-  svg {
-    vertical-align: middle;
-  }
-  span {
-    font-weight: 300;
-    text-decoration: underline;
-  }
+.prs {
+  overflow-y: auto;
+  max-height: 25rem;
+}
+
+.prs-row-grid {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr 1fr;
+}
+
+.prs-col-grid {
+  display: grid;
+  grid-template-columns: 2fr 2rem;
+}
+
+.prs-container {
+  overflow-y: auto;
+  max-height: 10rem;
+  margin: 1rem 0;
+}
+
+.prs-add {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem;
 }

@@ -32,7 +32,11 @@ const keyVal = arr => arr.map(a => ({ value: a, label: a }));
 class AdminTE extends React.Component {
   @observable color = 1;
 
-  @observable value = '';
+  @observable adminLevel = { value: 'Country', label: 'Country' };
+
+  @observable teId = undefined;
+
+  @observable predecessorId = undefined;
 
   @observable disabled = false;
 
@@ -55,29 +59,48 @@ class AdminTE extends React.Component {
     return (
       <AdminWrapper title='Territorial Entity'>
         <p>
+          {'Enter wikidata id'}
+        </p>
+        <Select
+          containerWidth='14rem'
+          options={keyVal(['Union', 'Country', 'Region'])}
+          value={this.teId}
+          placeholder='Territorial Entity id'
+          onClick={(e) => { this.teId = e; return false; }}
+        />
+        <span>Label placeholder</span>
+        <p>
           {'Select color'}
         </p>
-        <p>
-          {'Set up political relations'}
-        </p>
         <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
+        <p>
+          {'Select admin level'}
+        </p>
         <Select
-          options={keyVal(['one', 'two', 'sadf', 'sdfdd', 'dfsd'])}
-          value={keyVal([this.value]).shift()}
-          placeholder='select'
-          cb={(e) => { this.value = e; return false; }}
+          containerWidth='14rem'
+          options={keyVal(['Union', 'Country', 'Region'])}
+          value={this.adminLevel}
+          placeholder='Admin Level'
+          onClick={(e) => { this.adminLevel = e; return false; }}
+        />
+        <p>
+          {'Predecessor wikidata id'}
+        </p>
+        <Select
+          containerWidth='14rem'
+          options={keyVal(['Union', 'Country', 'Region'])}
+          value={this.predecessorId}
+          placeholder='Predecessor wikidata id'
+          onClick={(e) => { this.predecessorId = e; return false; }}
         />
         <CreateActionButton text='New' click={() => true} />
         <TwoActions
-          left='Back'
-          leftClick={() => this.props.store.admin.nextScreen('panel')}
+          left='Delete'
           right='Save'
         />
         <TwoActions
-          left='Delete'
-          right='Continue to STV'
-          rightClick={() => this.props.store.admin.nextScreen('stv')}
-          rightIsLonger
+          left='Back'
+          leftClick={() => this.props.store.admin.nextScreen('panel')}
         />
       </AdminWrapper>
     );

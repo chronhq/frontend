@@ -57,7 +57,7 @@ class AdminPanel extends React.Component {
         </p>
         <CreateActionButton text='New' click={() => true} />
         <ChangeActionButton text='Edit' click={() => true} />
-        <TwoActions right='Sign Out' rightIsLonger rightClick={() => firebase.auth().signOut()} />
+        <TwoActions right='Sign Out' rightClick={() => firebase.auth().signOut()} />
       </AdminWrapper>
     );
   }
