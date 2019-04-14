@@ -30,6 +30,7 @@ import AdminWrapper from './AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import disabled from '../../../disabled.json';
 
+import './LoginScreen.less';
 
 @inject('store')
 @observer
