@@ -21,6 +21,13 @@ import Upload from 'rc-upload';
 
 import { UploadActionButton } from './ActionButtons';
 
+import './UploadWidget.less';
+
+const ProgressBar = ({ progress }) => (
+  <div className='progressBar-container'>
+    <div className='progressBar-fill' style={{ width: `${progress}%` }} />
+  </div>
+);
 class UploadWidget extends React.Component {
   onStart = (file) => {
     console.log('onStart', file, file.name);
@@ -40,9 +47,11 @@ class UploadWidget extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='uploadWidget-container'>
+        <ProgressBar progress={30} />
         <Upload
           multiple
+          style={{ width: '10rem', textAlign: 'right' }}
           // data={{ a: 1, b: 2 }}
           // headers={{
           //   Authorization: '$prefix $token',
