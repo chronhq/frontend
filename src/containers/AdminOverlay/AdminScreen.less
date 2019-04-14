@@ -18,14 +18,29 @@
  */
 @import '../../styles/colors.less';
 
+.admin-grid-container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: minmax(14rem, auto) minmax(14rem, auto) minmax(14rem, auto) auto;
+  grid-template-rows: minmax(8rem, auto) minmax(8rem, auto) auto;
+  grid-gap: 1rem;
+  padding: 1rem;
+}
+
+.admin-grid-position-top {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.admin-grid-position-middle {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
 .adminContainer {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 25%;
+
   padding-bottom: 1rem;
   user-select: none;
-  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,24 +80,6 @@
     font-size: 1rem;
     margin: 0.5rem 0rem 0rem 0rem;
   }
-}
-
-.colorPicker {
-  display: flex;
-  margin: 0.5rem;
-  flex-direction: row;
-  justify-content: space-around;
-  span {
-    height: 1rem;
-    width: 1rem;
-    background-color: rgb(127,127,127);
-    border-radius: 50%;
-    display: inline-block;
-  }
-}
-
-.pickedColor {
-  box-shadow: 0 0px 5px 4px rgba(0, 0, 0, 0.2);
 }
 
 .stvEntity {

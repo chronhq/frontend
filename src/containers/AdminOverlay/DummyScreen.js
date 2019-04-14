@@ -29,7 +29,7 @@ import UploadWidget from '../../components/ActionButtons/UploadWidget';
 class DummyScreen extends React.Component {
   render() {
     return (
-      <AdminWrapper title='Under Construction'>
+      <AdminWrapper title='Under Construction' position='middle'>
         <CalendarWidget save={d => console.log('Calendar Save Date', d)} />
         <UploadWidget />
         <TwoActions

@@ -23,7 +23,7 @@ import { observable, action, computed } from 'mobx';
 import AdminWrapper from './AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
-import ColorPicker from './ColorPicker';
+import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import Select from '../../components/SlimSelect';
 
 const keyVal = arr => arr.map(a => ({ value: a, label: a }));

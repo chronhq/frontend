@@ -17,22 +17,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import AdminHeader from './AdminHeader';
 
-class AdminWrapper extends React.Component {
-  render() {
-    return (
-      <div className='adminContainer'>
-        <div className='adminBody'>
-          <div className='adminContent'>
-            <AdminHeader title={this.props.title} />
-            {this.props.children}
-          </div>
+const AdminWrapper = ({ position, title, children }) => (
+  <div className={`admin-grid-position-${position}`}>
+    <div className='adminContainer'>
+      <div className='adminBody'>
+        <div className='adminContent'>
+          <AdminHeader title={title} />
+          {children}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  </div>
+);
+
+AdminWrapper.defaultProps = {
+  position: 'top'
+};
+
+AdminWrapper.propTypes = {
+  position: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default AdminWrapper;

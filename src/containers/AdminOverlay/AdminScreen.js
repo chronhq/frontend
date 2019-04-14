@@ -31,6 +31,34 @@ import './AdminScreen.less';
 import AdminTE from './AdminTE';
 import AdminSTV from './AdminSTV';
 
+const Grid = ({ children }) => (
+  <div className='admin-grid-container'>
+    {children}
+  </div>
+);
+
+const GridLoginScreen = () => (<Grid><LoginScreen /></Grid>);
+
+const GridTE = () => (
+  <Grid>
+    <AdminTE />
+    <AdminSTV />
+  </Grid>
+);
+
+const GridWIP = () => (
+  <Grid>
+    <AdminPanel />
+    <DummyScreen />
+  </Grid>
+);
+
+const GridPanel = () => (
+  <Grid>
+    <AdminPanel />
+  </Grid>
+);
+
 @inject('store')
 @observer
 class AdminScreen extends React.Component {
@@ -51,10 +79,9 @@ class AdminScreen extends React.Component {
   }
 
   @computed get screen() {
-    if (this.admin.screens.panel) return AdminPanel;
-    if (this.admin.screens.te) return AdminTE;
-    if (this.admin.screens.stv) return AdminSTV;
-    return DummyScreen;
+    if (this.admin.screens.panel) return GridPanel;
+    if (this.admin.screens.te || this.admin.screens.stv) return GridTE;
+    return GridWIP;
   }
 
   @action authStatusChanged(user) {
@@ -72,8 +99,7 @@ class AdminScreen extends React.Component {
 
   render() {
     if (!this.auth.initialized) return null;
-    if (!this.auth.isSignedIn) return <LoginScreen />;
-    const Screen = this.screen;
+    const Screen = (!this.auth.isSignedIn) ? GridLoginScreen : this.screen;
     return <Screen />;
   }
 }
