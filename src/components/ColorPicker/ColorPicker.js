@@ -18,7 +18,9 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import mapColors from '../../models/MVTStyles/colors';
+import './ColorPicker.less';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const ColorBubble = ({
