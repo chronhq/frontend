@@ -27,14 +27,14 @@
 }
 
 .twoActions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(5rem, auto) minmax(5rem, auto);
   .leftFooter {
-    text-align: left;
+    grid-column-start: 1;
+    justify-self: start;
   }
   .rightFooter {
-    text-align: right;
+    grid-column-start: 2;
+    justify-self: end;
   }
 }

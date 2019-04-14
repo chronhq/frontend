@@ -20,11 +20,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TwoActions.less';
 
-const width = b => (b ? { width: '100%' } : {});
-
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const Button = ({
-  click, text, primary, position
+  click, text, position
 }) => (text && (
   <a
     href=''
@@ -33,7 +31,6 @@ const Button = ({
       click();
       return false;
     }}
-    style={width(primary)}
     className={position}
   >
     {text}
@@ -41,18 +38,17 @@ const Button = ({
 ));
 
 const TwoActions = ({
-  left, right, leftClick, rightClick, rightIsLonger
+  left, right, leftClick, rightClick
 }) => (
   <div className='twoActionsContainer'>
     <div className='twoActions'>
-      <Button position='leftFooter' text={left} click={leftClick} primary={!rightIsLonger} />
-      <Button position='rightFooter' text={right} click={rightClick} primary={rightIsLonger} />
+      <Button position='leftFooter' text={left} click={leftClick} />
+      <Button position='rightFooter' text={right} click={rightClick} />
     </div>
   </div>
 );
 
 TwoActions.defaultProps = {
-  rightIsLonger: false,
   left: null,
   right: null,
   leftClick: () => false,
@@ -60,7 +56,6 @@ TwoActions.defaultProps = {
 };
 
 TwoActions.propTypes = {
-  rightIsLonger: PropTypes.bool,
   left: PropTypes.string,
   right: PropTypes.string,
   leftClick: PropTypes.any,
