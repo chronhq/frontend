@@ -23,45 +23,13 @@ import { inject, observer } from 'mobx-react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import LoginScreen from './LoginScreen';
-import AdminPanel from './AdminPanel';
-import DummyScreen from './DummyScreen';
+import {
+  GridAdminPanel,
+  GridWIP,
+  GridTE,
+  GridLoginScreen,
+} from './AdminGrid';
 
-import './AdminScreen.less';
-import AdminTE from './AdminTE';
-import AdminSTV from './AdminSTV';
-import EditSTV from './EditSTV';
-import EditPRS from './EditPRS';
-
-const Grid = ({ children }) => (
-  <div className='admin-grid-container'>
-    {children}
-  </div>
-);
-
-const GridLoginScreen = () => (<Grid><LoginScreen /></Grid>);
-
-const GridTE = () => (
-  <Grid>
-    <AdminTE />
-    <AdminSTV />
-    <EditSTV />
-    <EditPRS />
-  </Grid>
-);
-
-const GridWIP = () => (
-  <Grid>
-    <AdminPanel />
-    <DummyScreen />
-  </Grid>
-);
-
-const GridPanel = () => (
-  <Grid>
-    <AdminPanel />
-  </Grid>
-);
 
 @inject('store')
 @observer
@@ -83,7 +51,7 @@ class AdminScreen extends React.Component {
   }
 
   @computed get screen() {
-    if (this.admin.screens.panel) return GridPanel;
+    if (this.admin.screens.panel) return GridAdminPanel;
     if (this.admin.screens.te || this.admin.screens.stv) return GridTE;
     return GridWIP;
   }

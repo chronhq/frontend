@@ -19,8 +19,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import CloseButton from '../../components/Button/CloseButton';
-
 @inject('store')
 @observer
 class AdminHeader extends React.Component {
@@ -34,7 +32,6 @@ class AdminHeader extends React.Component {
         <h2>
           {this.props.title}
         </h2>
-        <CloseButton onClick={this.close} />
       </div>
     );
   }

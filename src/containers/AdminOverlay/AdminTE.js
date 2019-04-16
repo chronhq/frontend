@@ -19,10 +19,11 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
+import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from './AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
-import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
+import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import Select from '../../components/SlimSelect';
 
@@ -35,6 +36,8 @@ class AdminTE extends React.Component {
   @observable adminLevel = { value: 'Country', label: 'Country' };
 
   @observable teId = undefined;
+
+  @observable edit = false;
 
   @observable predecessorId = undefined;
 
@@ -69,30 +72,35 @@ class AdminTE extends React.Component {
           onClick={(e) => { this.teId = e; return false; }}
         />
         <span>Label placeholder</span>
-        <p>
-          {'Select color'}
-        </p>
-        <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
-        <p>
-          {'Select admin level'}
-        </p>
-        <Select
-          containerWidth='14rem'
-          options={keyVal(['Union', 'Country', 'Region'])}
-          value={this.adminLevel}
-          placeholder='Admin Level'
-          onClick={(e) => { this.adminLevel = e; return false; }}
-        />
-        <p>
-          {'Predecessor wikidata id'}
-        </p>
-        <Select
-          containerWidth='14rem'
-          options={keyVal(['Union', 'Country', 'Region'])}
-          value={this.predecessorId}
-          placeholder='Predecessor wikidata id'
-          onClick={(e) => { this.predecessorId = e; return false; }}
-        />
+        <ChangeActionButton text={this.edit ? 'Cancel' : 'Edit'} click={() => { this.edit = !this.edit; return false; }} />
+        <SmoothCollapse expanded={this.edit}>
+          <div>
+            <p>
+              {'Select color'}
+            </p>
+            <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
+            <p>
+              {'Select admin level'}
+            </p>
+            <Select
+              containerWidth='14rem'
+              options={keyVal(['Union', 'Country', 'Region'])}
+              value={this.adminLevel}
+              placeholder='Admin Level'
+              onClick={(e) => { this.adminLevel = e; return false; }}
+            />
+            <p>
+              {'Predecessor wikidata id'}
+            </p>
+            <Select
+              containerWidth='14rem'
+              options={keyVal(['Union', 'Country', 'Region'])}
+              value={this.predecessorId}
+              placeholder='Predecessor wikidata id'
+              onClick={(e) => { this.predecessorId = e; return false; }}
+            />
+          </div>
+        </SmoothCollapse>
         <CreateActionButton text='New' click={() => true} />
         <TwoActions
           left='Delete'

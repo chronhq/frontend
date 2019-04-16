@@ -103,6 +103,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-select": "^2.4.2",
+    "react-smooth-collapse": "^2.0.1",
     "react-yandex-metrika": "^2.5.1",
     "rmc-picker": "^5.0.8",
     "style-loader": "^0.23.1",

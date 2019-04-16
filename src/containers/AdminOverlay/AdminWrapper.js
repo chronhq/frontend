@@ -21,25 +21,23 @@ import PropTypes from 'prop-types';
 
 import AdminHeader from './AdminHeader';
 
-const AdminWrapper = ({ position, title, children }) => (
-  <div className={`admin-grid-position-${position}`}>
-    <div className='adminContainer'>
-      <div className='adminBody'>
-        <div className='adminContent'>
-          <AdminHeader title={title} />
-          {children}
-        </div>
+const AdminWrapper = ({ title, children }) => (
+  <div className='adminContainer'>
+    <div className='adminBody'>
+      <div className='adminContent'>
+        <AdminHeader title={title} />
+        {children}
       </div>
     </div>
   </div>
 );
 
-AdminWrapper.defaultProps = {
-  position: 'top'
-};
+// AdminWrapper.defaultProps = {
+//   position: 'left'
+// };
 
 AdminWrapper.propTypes = {
-  position: PropTypes.string,
+  // position: PropTypes.string,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };

@@ -18,10 +18,11 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from './AdminWrapper';
 import DateRangeWidget from '../../components/ActionButtons/DateRangeWidget';
-import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
+import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 
 import './EditPRS.less';
 
@@ -40,7 +41,7 @@ const Entity = ({ start, end }) => (
 );
 
 
-const Entities = ({ title }) => {
+const Entities = ({ title, click, expanded }) => {
   const count = Math.round(Math.random() * 10);
   const dates = new Array(count * 2).fill(0).map(genDate)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -52,11 +53,13 @@ const Entities = ({ title }) => {
 
   return (
     <div>
-      <p>{title}</p>
-      <div className='prs-container'>
-        {data.map(d => <Entity {...d} />)}
-      </div>
-      <CreateActionButton text='Add' click={() => null} />
+      <ChangeActionButton text={title} click={click} />
+      <SmoothCollapse expanded={expanded}>
+        <div className='prs-container'>
+          {data.map(d => <Entity {...d} />)}
+        </div>
+        <CreateActionButton text='Add' click={() => null} />
+      </SmoothCollapse>
     </div>
   );
 };
@@ -64,14 +67,20 @@ const Entities = ({ title }) => {
 @inject('store')
 @observer
 class EditPRS extends React.Component {
+  state = {
+    direct: false,
+    indirect: false,
+    group: false,
+  }
+
+  click = d => this.setState(s => ({ [d]: !s[d] }))
+
   render() {
     return (
-      <AdminWrapper title='Edit PRS' position='middle'>
-        <div className='prs'>
-          <Entities title='Direct' />
-          <Entities title='Indirect' />
-          <Entities title='Group' />
-        </div>
+      <AdminWrapper title='Relations'>
+        <Entities title='Direct' expanded={this.state.direct} click={() => this.click('direct')} />
+        <Entities title='Indirect' expanded={this.state.indirect} click={() => this.click('indirect')} />
+        <Entities title='Group' expanded={this.state.group} click={() => this.click('group')} />
       </AdminWrapper>
     );
   }

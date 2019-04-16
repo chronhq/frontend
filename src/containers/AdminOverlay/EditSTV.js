@@ -36,7 +36,7 @@ import ActionButton, {
 class EditSTV extends React.Component {
   render() {
     return (
-      <AdminWrapper title='Edit STV' position='top'>
+      <AdminWrapper title='Edit STV'>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
           <CalendarWidget text='Start Date' save={d => console.log('Calendar Save Date', d)} />
           <CalendarWidget text='End Date' save={d => console.log('Calendar Save Date', d)} />
