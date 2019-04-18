@@ -23,39 +23,49 @@ import YearSelectButton from './YearSelectButton';
 import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 
 import {
-  Prev, Next
+  Prev, Next, Play
 } from './TimeControlsButtons';
 
 import './TimeControls.less';
 
 @inject('store')
 @observer
-class TimeControls extends React.Component {
+class TimeControlButton extends React.Component {
   render() {
+    const Icon = this.props.icon;
     return (
-      <div className='timepanel__controls'>
-        <Button
-          btnType={BUTTON_TYPE.ICON}
-          onClick={() => {
-            this.props.store.year.prevYear();
-            this.props.store.analytics.metricHit('year_change');
-          }}
-        >
-          <Prev />
-        </Button>
-        <YearSelectButton />
-        <Button
-          btnType={BUTTON_TYPE.ICON}
-          onClick={() => {
-            this.props.store.year.nextYear();
-            this.props.store.analytics.metricHit('year_change');
-          }}
-        >
-          <Next />
-        </Button>
-      </div>
+      <Button
+        btnType={BUTTON_TYPE.ICON}
+        onClick={() => {
+          this.props.store.year[this.props.control]();
+          this.props.store.analytics.metricHit('year_change');
+        }}
+      >
+        <Icon />
+      </Button>
     );
   }
 }
+
+const PrevYear = () => <TimeControlButton icon={Prev} control='prevYear' />;
+
+const NextYear = () => <TimeControlButton icon={Next} control='nextYear' />;
+
+const PlayYear = () => <TimeControlButton icon={Play} control='nextYear' />;
+
+
+const TimeControls = () => (
+  <div className='timepanel__controls'>
+    <PrevYear />
+    <YearSelectButton />
+    <NextYear />
+  </div>
+);
+
+export {
+  PrevYear,
+  NextYear,
+  PlayYear,
+};
 
 export default TimeControls;

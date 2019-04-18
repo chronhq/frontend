@@ -1,0 +1,22 @@
+@import '../../styles/colors.less';
+
+@containerBorders: .25rem;
+
+@pinSize: calc((6rem - 2 * @containerBorders) / 3);
+
+.free-pins-container {
+  padding: 0rem @containerBorders;
+}
+
+.free-pins-grid {
+  display: grid;
+  grid-template-columns: repeat(3, @pinSize);
+  grid-auto-rows: @pinSize;
+  padding: 0.5rem 0;
+}
+
+.free-pins-attention {
+  background-image: url('./attention.svg');
+  background-repeat: no-repeat;
+  background-position: right center;
+}

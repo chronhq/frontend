@@ -20,6 +20,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './style.less';
+import './styles/Sprites.less';
 import './styles/LineIcon.less';
 
 import StoreModel from './models';

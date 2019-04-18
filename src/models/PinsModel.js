@@ -52,6 +52,7 @@ class InteractivePin {
     this.key = key;
     this.info = info;
     this.point = this.info[0].loc;
+    this.type = this.info[0].type;
     this.pic = getIcon(this.info[0]);
   }
 }

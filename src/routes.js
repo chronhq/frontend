@@ -26,7 +26,7 @@ import {
 import LoadingLogo from './containers/LoadingLogo';
 import AnalyticsWrapper from './containers/Analytics/AnalyticsWrapper';
 
-const Narrative = lazy(() => import('./pages/Narrative'));
+const Narrative = lazy(() => import('./pages/SummerNarrative'));
 const NotFound = lazy(() => import('./pages/404'));
 const BadGateway = lazy(() => import('./pages/502'));
 const GatewayTimeout = lazy(() => import('./pages/504'));
