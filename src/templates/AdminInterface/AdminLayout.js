@@ -24,7 +24,6 @@ import DummyScreen from '../../containers/AdminOverlay/DummyScreen';
 import './AdminScreen.less';
 import AdminTE from '../../containers/AdminOverlay/AdminTE';
 import AdminSTV from '../../containers/AdminOverlay/AdminSTV';
-import EditSTV from '../../containers/AdminOverlay/EditSTV';
 import EditPRS from '../../containers/AdminOverlay/EditPRS';
 
 import AdminBlock from './AdminBlock';
@@ -39,7 +38,6 @@ const TE = () => (
     </AdminBlock>
     <AdminBlock position='right'>
       <AdminSTV />
-      <EditSTV />
     </AdminBlock>
   </>
 );

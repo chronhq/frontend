@@ -35,6 +35,7 @@ const ActionButton = ({ text, Icon, click }) => (
     href=''
     onClick={(e) => {
       e.preventDefault();
+      e.stopPropagation();
       click();
       return false;
     }}
