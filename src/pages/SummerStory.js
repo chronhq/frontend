@@ -23,17 +23,17 @@ import Overlays from '../templates/Overlays/Overlays';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';
 import Wrapper from './Wrapper';
-import AdminOverlay from '../containers/AdminOverlay/AdminOverlay';
+import AdminInterface from '../templates/AdminInterface/AdminInterface';
 import NarrativeDesktop from '../templates/NarrativeDesktop/NarrativeDesktop';
 
-const Narrative = ({ story, fake, metric }) => (
+const SummerStory = ({ story, fake, metric }) => (
   <Wrapper story={story} fake={fake} metric={metric}>
-    <NarrativeDesktop />
     <GeoLayers />
+    <NarrativeDesktop />
     <Balloon />
     <Overlays />
-    <AdminOverlay />
+    <AdminInterface />
   </Wrapper>
 );
 
-export default Narrative;
+export default SummerStory;

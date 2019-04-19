@@ -21,7 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { runInAction } from 'mobx';
 
 import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
-import Narrative from './SummerNarrative';
+import Narrative from './SummerStory';
 
 const year = 1789;
 
