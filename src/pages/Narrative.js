@@ -25,12 +25,10 @@ import Dashboard from '../templates/Dashboard/Dashboard';
 import SideBar from '../templates/SideBar/SideBar';
 import NarrativeMobileBar from '../templates/NarrativeMobileBar/NarrativeMobileBar';
 import Wrapper from './Wrapper';
-import Widgets from '../containers/Widgets';
 import AdminOverlay from '../containers/AdminOverlay/AdminOverlay';
 
 const Narrative = ({ story, fake, metric }) => (
   <Wrapper story={story} fake={fake} metric={metric}>
-    <Widgets />
     <GeoLayers />
     <Balloon />
     <Dashboard />
