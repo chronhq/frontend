@@ -21,7 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { runInAction, when } from 'mobx';
 
 import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
-import Narrative from './Narrative';
+import Narrative from './SummerNarrative';
 
 const mapSettings = buildMapSettings({
   zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
