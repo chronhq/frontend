@@ -19,7 +19,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-import AdminWrapper from './AdminWrapper';
+import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
 import UploadWidget from '../../components/ActionButtons/UploadWidget';

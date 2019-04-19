@@ -20,8 +20,8 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import SmoothCollapse from 'react-smooth-collapse';
 
-import AdminWrapper from './AdminWrapper';
-import EditSTV from './EditSTV';
+import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
+import EditSTV from './STVEntity';
 import {
   CreateActionButton, ChangeActionButton
 } from '../../components/ActionButtons/ActionButtons';

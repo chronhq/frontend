@@ -16,25 +16,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { observer, inject } from 'mobx-react';
+@import '../../styles/colors.less';
 
-@inject('store')
-@observer
-class AdminHeader extends React.Component {
-  close = () => {
-    this.props.store.flags.runtime.set('admin', false);
-  }
+.adminContainer {
+  padding-bottom: 1rem;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  render() {
-    return (
-      <div className='adminHeader'>
-        <h2>
-          {this.props.title}
-        </h2>
-      </div>
-    );
+.adminHeader {
+  color: @main-blue;
+  display: flex;
+  flex-direction: row;
+  vertical-align: baseline;
+  text-align: justify;
+  width: 100%;
+  h2 {
+    font-size: 1.8rem;
+    font-weight: normal;
+    margin-left: 1rem;
+    margin-right: 3rem;
   }
 }
 
-export default AdminHeader;
+.adminBody {
+  width: 100%;
+}
+
+.adminContent {
+  margin: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  p {
+    max-width: 80%;
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 0.5rem 0rem 0rem 0rem;
+  }
+}

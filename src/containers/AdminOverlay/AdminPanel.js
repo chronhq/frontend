@@ -23,7 +23,7 @@ import { computed } from 'mobx';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import AdminWrapper from './AdminWrapper';
+import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 
 import {

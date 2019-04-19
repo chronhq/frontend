@@ -19,7 +19,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AdminHeader from './AdminHeader';
+import './AdminWrapper.less';
+
+const AdminHeader = ({ title }) => (
+  <div className='adminHeader'>
+    <h2>
+      {title}
+    </h2>
+  </div>
+);
 
 const AdminWrapper = ({ title, children }) => (
   <div className='adminContainer'>
@@ -32,9 +40,6 @@ const AdminWrapper = ({ title, children }) => (
   </div>
 );
 
-// AdminWrapper.defaultProps = {
-//   position: 'left'
-// };
 
 AdminWrapper.propTypes = {
   // position: PropTypes.string,

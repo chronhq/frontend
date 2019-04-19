@@ -21,7 +21,7 @@ import { observer, inject } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
 import SmoothCollapse from 'react-smooth-collapse';
 
-import AdminWrapper from './AdminWrapper';
+import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';

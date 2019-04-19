@@ -25,7 +25,7 @@ import 'firebase/auth';
 
 import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
-import AdminWrapper from './AdminWrapper';
+import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 
 import TwoActions from '../../components/TwoActions/TwoActions';
 import disabled from '../../../disabled.json';

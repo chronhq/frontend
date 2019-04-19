@@ -21,9 +21,8 @@ import LoginScreen from '../../containers/AdminOverlay/LoginScreen';
 import AdminPanel from '../../containers/AdminOverlay/AdminPanel';
 import DummyScreen from '../../containers/AdminOverlay/DummyScreen';
 
-import './AdminScreen.less';
 import AdminTE from '../../containers/AdminOverlay/AdminTE';
-import AdminSTV from '../../containers/AdminOverlay/AdminSTV';
+import AdminSTV from '../../containers/AdminSTV/AdminSTV';
 import EditPRS from '../../containers/AdminOverlay/EditPRS';
 
 import AdminBlock from './AdminBlock';

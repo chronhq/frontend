@@ -20,7 +20,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import SmoothCollapse from 'react-smooth-collapse';
 
-import AdminWrapper from './AdminWrapper';
+import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import DateRangeWidget from '../../components/DateRangeWidget';
 import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 
