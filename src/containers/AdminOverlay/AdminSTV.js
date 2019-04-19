@@ -23,16 +23,16 @@ import AdminWrapper from './AdminWrapper';
 import {
   CreateActionButton, ChangeActionButton
 } from '../../components/ActionButtons/ActionButtons';
-import DateRangeWidget from '../../components/ActionButtons/DateRangeWidget';
+import DateRangeWidget from '../../components/DateRangeWidget';
 
 import './AdminSTV.less';
 
 const Entity = ({ start, end, status }) => (
-  <div className='stv-entities-row-grid'>
+  <>
     <span className={`lnr lnr-${status ? 'checkmark' : 'question'}-circle`} />
     <DateRangeWidget start={start} end={end} click={() => null} />
-    <ChangeActionButton click={() => true} text='Edit' />
-  </div>
+    <ChangeActionButton click={() => true} text='' />
+  </>
 );
 
 const genDate = () => (new Date(+(new Date()) - Math.floor(Math.random() * 10000000000000)));

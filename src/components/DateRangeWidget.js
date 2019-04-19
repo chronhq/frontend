@@ -20,34 +20,19 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import ActionButton from './ActionButtons';
-import { dateToLocaleString } from '../DatePicker/DatePickerModal';
+import { dateToLocaleString } from './DatePicker/DatePickerModal';
 
-const DateActionButton = ({ date, click }) => (
-  <ActionButton text={dateToLocaleString(date)} click={click} />
-);
-
-DateActionButton.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  click: PropTypes.func.isRequired
-};
-
-const DateRangeWidget = ({ start, end, click }) => (
-  <div>
-    <DateActionButton date={start} click={click} />
-    <span>
-      {' - '}
-    </span>
-    <DateActionButton date={end} click={click} />
-  </div>
+const DateRangeWidget = ({ start, end }) => (
+  <>
+    <span>{dateToLocaleString(start)}</span>
+    <span className='lnr lnr-chevron-right' />
+    <span>{dateToLocaleString(end)}</span>
+  </>
 );
 
 DateRangeWidget.propTypes = {
   start: PropTypes.instanceOf(Date).isRequired,
   end: PropTypes.instanceOf(Date).isRequired,
-  click: PropTypes.func.isRequired
 };
-
-export { DateActionButton };
 
 export default DateRangeWidget;
