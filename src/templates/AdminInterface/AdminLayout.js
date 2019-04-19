@@ -17,63 +17,53 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import LoginScreen from './LoginScreen';
-import AdminPanel from './AdminPanel';
-import DummyScreen from './DummyScreen';
+import LoginScreen from '../../containers/AdminOverlay/LoginScreen';
+import AdminPanel from '../../containers/AdminOverlay/AdminPanel';
+import DummyScreen from '../../containers/AdminOverlay/DummyScreen';
 
 import './AdminScreen.less';
-import AdminTE from './AdminTE';
-import AdminSTV from './AdminSTV';
-import EditSTV from './EditSTV';
-import EditPRS from './EditPRS';
+import AdminTE from '../../containers/AdminOverlay/AdminTE';
+import AdminSTV from '../../containers/AdminOverlay/AdminSTV';
+import EditSTV from '../../containers/AdminOverlay/EditSTV';
+import EditPRS from '../../containers/AdminOverlay/EditPRS';
 
-const Grid = ({ children }) => (
-  <div className='admin-grid-container'>
-    {children}
-  </div>
-);
+import AdminBlock from './AdminBlock';
 
-const GridPanel = ({ position, children }) => (
-  <div style={{ gridArea: position }} className='admin-grid-panel'>
-    {children}
-  </div>
-);
+const Login = () => (<AdminBlock position='left'><LoginScreen /></AdminBlock>);
 
-const GridLoginScreen = () => (<Grid><GridPanel position='left'><LoginScreen /></GridPanel></Grid>);
-
-const GridTE = () => (
-  <Grid>
-    <GridPanel position='left'>
+const TE = () => (
+  <>
+    <AdminBlock position='left'>
       <AdminTE />
       <EditPRS />
-    </GridPanel>
-    <GridPanel position='right'>
+    </AdminBlock>
+    <AdminBlock position='right'>
       <AdminSTV />
       <EditSTV />
-    </GridPanel>
-  </Grid>
+    </AdminBlock>
+  </>
 );
 
-const GridWIP = () => (
-  <Grid>
-    <GridPanel position='left'>
+const WIP = () => (
+  <>
+    <AdminBlock position='left'>
       <AdminPanel />
       <DummyScreen />
-    </GridPanel>
-  </Grid>
+    </AdminBlock>
+  </>
 );
 
-const GridAdminPanel = () => (
-  <Grid>
-    <GridPanel position='left'>
+const Panel = () => (
+  <>
+    <AdminBlock position='left'>
       <AdminPanel />
-    </GridPanel>
-  </Grid>
+    </AdminBlock>
+  </>
 );
 
 export {
-  GridAdminPanel,
-  GridWIP,
-  GridTE,
-  GridLoginScreen,
+  Panel,
+  WIP,
+  TE,
+  Login,
 };

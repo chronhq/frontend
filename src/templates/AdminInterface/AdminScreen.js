@@ -24,11 +24,11 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import {
-  GridAdminPanel,
-  GridWIP,
-  GridTE,
-  GridLoginScreen,
-} from './AdminGrid';
+  Panel,
+  WIP,
+  TE,
+  Login,
+} from './AdminLayout';
 
 
 @inject('store')
@@ -51,9 +51,9 @@ class AdminScreen extends React.Component {
   }
 
   @computed get screen() {
-    if (this.admin.screens.panel) return GridAdminPanel;
-    if (this.admin.screens.te || this.admin.screens.stv) return GridTE;
-    return GridWIP;
+    if (this.admin.screens.panel) return Panel;
+    if (this.admin.screens.te || this.admin.screens.stv) return TE;
+    return WIP;
   }
 
   @action authStatusChanged(user) {
@@ -71,7 +71,7 @@ class AdminScreen extends React.Component {
 
   render() {
     if (!this.auth.initialized) return null;
-    const Screen = (!this.auth.isSignedIn) ? GridLoginScreen : this.screen;
+    const Screen = (!this.auth.isSignedIn) ? Login : this.screen;
     return <Screen />;
   }
 }

@@ -16,29 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React, { Suspense, lazy } from 'react';
-import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
+@import '../../styles/colors.less';
 
-import LoadingLogo from '../LoadingLogo';
-
-const AdminScreen = lazy(() => import('./AdminScreen'));
-
-@inject('store')
-@observer
-class AdminOverlay extends React.Component {
-  @computed get isOpen() {
-    return this.props.store.flags.runtime.get('admin');
+.admin-block {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 22rem;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 50;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  background-color: @light-grey;
+  padding: 1rem 0;
+  &__left {
+    left: 0;
+    top: 0;
   }
-
-  render() {
-    if (!this.isOpen) return null;
-    return (
-      <Suspense fallback={<LoadingLogo />}>
-        <AdminScreen />
-      </Suspense>
-    );
+  &__right {
+    right: 0;
+    top: 0;
   }
 }
-
-export default AdminOverlay;
