@@ -18,91 +18,31 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import SmoothCollapse from 'react-smooth-collapse';
 
+import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-import EditSTV from './STVEntity';
-import {
-  CreateActionButton, ChangeActionButton
-} from '../../components/ActionButtons/ActionButtons';
-import DateRangeWidget from '../../components/DateRangeWidget';
+import STVEntity from './STVEntity';
 
 import './AdminSTV.less';
-
-const Entity = ({
-  start, end, status, id, active, edit, clickView, clickEdit
-}) => (
-  <div className='stv-entities-container-row'>
-    <div
-      className='stv-entities-container-row--info'
-      onClick={() => clickView(id)}
-      onKeyDown={() => clickView(id)}
-      role='button'
-      tabIndex={0}
-    >
-      <span className={`lnr lnr-${status ? 'checkmark' : 'question'}-circle`} />
-      <DateRangeWidget start={start} end={end} />
-      <ChangeActionButton click={() => clickEdit(id)} text='' />
-    </div>
-    <SmoothCollapse expanded={id === active}>
-      <EditSTV edit={((id === active) && edit)} />
-    </SmoothCollapse>
-  </div>
-);
-
-const genDate = () => (new Date(+(new Date()) - Math.floor(Math.random() * 10000000000000)));
-const Entities = ({
-  data, active, edit, clickView, clickEdit
-}) => (
-  <div className='stv-entities-container'>
-    {data.map(d => (
-      <Entity
-        {...d}
-        key={d.key}
-        active={active}
-        edit={edit}
-        clickEdit={clickEdit}
-        clickView={clickView}
-      />
-    ))}
-  </div>
-);
 
 @inject('store')
 @observer
 class AdminSTV extends React.Component {
-  constructor() {
-    super();
-    const count = 10;
-    const dates = new Array(count * 2).fill(0).map(genDate)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
-    const data = new Array(count).fill(0).map((v, i) => {
-      const status = Boolean(Math.round(Math.random()));
-      const end = dates[i * 2];
-      const start = dates[i * 2 + 1];
-      const stars = Math.round(Math.random() * 5);
-      return {
-        status, start, end, stars, key: `stv-${i}`, id: i
-      };
-    });
-    this.state = { data, active: undefined, edit: false };
-  }
-
-  clickEdit = (i) => {
-    this.setState(s => ({ active: i, edit: !s.edit }));
-  }
-
-  clickView = (i) => {
-    this.setState(s => ({ active: s.active === i ? undefined : i, edit: false }));
-  }
-
   render() {
+    const data = this.props.store.admin.stvs;
     return (
       <AdminWrapper title='Spacetime volume'>
         <p>
           {'Chosen Territorial entity contains the following Spacetime volumes:'}
         </p>
-        <Entities {...this.state} clickView={this.clickView} clickEdit={this.clickEdit} />
+        <div className='stv-entities-container'>
+          {data.map(d => (
+            <STVEntity
+              {...d}
+              key={d.key}
+            />
+          ))}
+        </div>
         <CreateActionButton text='New' click={() => true} />
       </AdminWrapper>
     );

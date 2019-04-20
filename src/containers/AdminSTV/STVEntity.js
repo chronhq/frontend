@@ -18,85 +18,55 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { computed } from 'mobx';
 
-import TwoActions from '../../components/TwoActions/TwoActions';
-import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
-import UploadWidget from '../../components/ActionButtons/UploadWidget';
-import ActionButton, {
-  LabelActionButton, CreateActionButton
-} from '../../components/ActionButtons/ActionButtons';
+import SmoothCollapse from 'react-smooth-collapse';
 
-const References = ({ edit }) => (
-  <>
-    <p>
-      {'References'}
-    </p>
-    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '1rem' }}>
-      <i>http link a</i>
-      <i>http link b</i>
-      <i>more info</i>
-      {edit && <CreateActionButton text='Add' click={() => null} />}
-    </div>
-  </>
-);
+import DateRangeWidget from '../../components/DateRangeWidget';
 
-const DateSelector = () => (
-  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-    <CalendarWidget text='Start Date' save={d => console.log('Calendar Save Date', d)} />
-    <CalendarWidget text='End Date' save={d => console.log('Calendar Save Date', d)} />
-  </div>
-);
-
-const Problems = () => (
-  <>
-    <p>
-      {'Problems'}
-    </p>
-    <div>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <ActionButton text='C ∈ A' click={() => null} />
-        {' || '}
-        <ActionButton text='C ∈ B' click={() => null} />
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <ActionButton text='D ∈ A' click={() => null} />
-        {' || '}
-        <ActionButton text='D ∈ E' click={() => null} />
-      </div>
-    </div>
-  </>
-);
+import { ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
+import STVEntityEdit from './STVEntityEdit';
 
 @inject('store')
 @observer
-class EditSTV extends React.Component {
+class STVEntity extends React.Component {
+  @computed get form() {
+    return this.props.store.admin.forms.stv;
+  }
+
+  @computed get active() {
+    return this.form.selected === this.props.id;
+  }
+
+  @computed get edit() {
+    return this.active && this.form.edit;
+  }
+
+  click = (edit = false) => {
+    this.form.select(this.props.id, edit);
+  }
+
   render() {
-    return this.props.edit
-      ? (
-        <div className='adminContent'>
-          <DateSelector />
-          <References edit={this.props.edit} />
-          <UploadWidget />
-          <LabelActionButton text='Set visual center' click={() => null} />
-          <Problems />
-          <TwoActions
-            left='Cancel'
-            leftClick={() => null}
-            right='Save'
-            rightClick={() => null}
-          />
+    const { start, end, status } = this.props;
+    return (
+      <div className='stv-entities-container-row'>
+        <div
+          className='stv-entities-container-row--info'
+          onClick={() => this.click()}
+          onKeyDown={() => this.click()}
+          role='button'
+          tabIndex={0}
+        >
+          <span className={`lnr lnr-${status ? 'checkmark' : 'question'}-circle`} />
+          <DateRangeWidget start={start} end={end} />
+          <ChangeActionButton click={() => this.click(true)} text='' />
         </div>
-      )
-      : (
-        <div className='adminContent'>
-          <References edit={this.props.edit} />
-          <TwoActions
-            right='Edit'
-            rightClick={() => null}
-          />
-        </div>
-      );
+        <SmoothCollapse expanded={this.active}>
+          <STVEntityEdit edit={this.edit} {...this.props} />
+        </SmoothCollapse>
+      </div>
+    );
   }
 }
 
-export default EditSTV;
+export default STVEntity;

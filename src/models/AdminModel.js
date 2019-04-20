@@ -18,12 +18,56 @@
  */
 import { action, observable, computed } from 'mobx';
 
+const genDate = () => (new Date(+(new Date()) - Math.floor(Math.random() * 10000000000000)));
+
+const getSTVS = () => {
+  const count = 10;
+  const dates = new Array(count * 2).fill(0).map(genDate)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  const data = new Array(count).fill(0).map((v, i) => {
+    const status = Boolean(Math.round(Math.random()));
+    const end = dates[i * 2];
+    const start = dates[i * 2 + 1];
+    const stars = Math.round(Math.random() * 5);
+    return {
+      status, start, end, stars, key: `stv-${i}`, id: i
+    };
+  });
+  return data;
+};
+
+class FormModel {
+  @observable selected = undefined;
+
+  @observable edit = false;
+
+  @observable data = {};
+
+  @observable status = {};
+
+  @action select(id, edit = false) {
+    if (id !== this.selected) {
+      this.data = {};
+      this.selected = id;
+      this.edit = edit;
+    } else if (id === this.selected && !edit) {
+      this.selected = undefined;
+    } else {
+      this.edit = !this.edit;
+    }
+  }
+}
 export default class AdminModel {
   @observable isOpened = false;
 
-  @observable screenList = ['panel', 'pr', 'te', 'stv', 'sandbox'];
+  @observable screenList = ['panel', 'te', 'narrative', 'sandbox'];
+
+  @observable forms = ['te', 'pr', 'stv']
+    .reduce((prev, cur) => ({ ...prev, [cur]: new FormModel() }), {});
 
   @observable screens = {};
+
+  @observable stvs = getSTVS();
 
   @computed get screen() {
     return Object.keys(this.screens).find(s => this.screens[s] === true);
