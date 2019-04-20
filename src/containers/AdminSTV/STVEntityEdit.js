@@ -23,9 +23,11 @@ import { computed } from 'mobx';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
 import UploadWidget from '../../components/ActionButtons/UploadWidget';
-import ActionButton, {
+import {
   LabelActionButton, CreateActionButton
 } from '../../components/ActionButtons/ActionButtons';
+
+import Overlaps from './STVEntityOverlaps';
 
 const References = ({ edit }) => (
   <>
@@ -48,26 +50,6 @@ const DateSelector = () => (
   </div>
 );
 
-const Problems = () => (
-  <>
-    <p>
-      {'Problems'}
-    </p>
-    <div>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <ActionButton text='C ∈ A' click={() => null} />
-        {' || '}
-        <ActionButton text='C ∈ B' click={() => null} />
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <ActionButton text='D ∈ A' click={() => null} />
-        {' || '}
-        <ActionButton text='D ∈ E' click={() => null} />
-      </div>
-    </div>
-  </>
-);
-
 @inject('store')
 @observer
 class EditSTV extends React.Component {
@@ -87,7 +69,7 @@ class EditSTV extends React.Component {
           <References edit={this.props.edit} />
           <UploadWidget />
           <LabelActionButton text='Set visual center' click={() => null} />
-          <Problems />
+          <Overlaps overlaps={this.props.store.admin.overlaps} />
           <TwoActions
             left='Cancel'
             leftClick={() => this.click(this.props.id, false)}

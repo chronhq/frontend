@@ -20,20 +20,31 @@ import { action, observable, computed } from 'mobx';
 
 const genDate = () => (new Date(+(new Date()) - Math.floor(Math.random() * 10000000000000)));
 
+const getRange = () => {
+  const a = genDate();
+  const b = genDate();
+  return a > b
+    ? { start: b, end: a }
+    : { start: a, end: b };
+};
+
 const getSTVS = () => {
   const count = 10;
-  const dates = new Array(count * 2).fill(0).map(genDate)
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
   const data = new Array(count).fill(0).map((v, i) => {
     const status = Boolean(Math.round(Math.random()));
-    const end = dates[i * 2];
-    const start = dates[i * 2 + 1];
     const stars = Math.round(Math.random() * 5);
     return {
-      status, start, end, stars, key: `stv-${i}`, id: i
+      status, ...getRange(), stars, key: `stv-${i}`, id: i
     };
   });
   return data;
+};
+
+const getOverlaps = () => {
+  const labels = [
+    'First French Empire', 'Russian Empire', 'Second Polish Republic', 'Italy', 'Kingdom of Italy'
+  ];
+  return labels.map(l => ({ label: l, ...getRange() }));
 };
 
 class FormModel {
@@ -68,6 +79,8 @@ export default class AdminModel {
   @observable screens = {};
 
   @observable stvs = getSTVS();
+
+  @observable overlaps = getOverlaps();
 
   @computed get screen() {
     return Object.keys(this.screens).find(s => this.screens[s] === true);

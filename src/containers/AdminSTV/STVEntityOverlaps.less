@@ -16,44 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-@import '../../styles/colors.less';
-
-.adminContainer {
-  padding-bottom: 1rem;
-  user-select: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.stv-entity-overlap {
+  margin-top: 0.5rem;
 }
 
-.adminHeader {
-  color: @main-blue;
+.stv-entity-overlap-problem {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.stv-entity-overlap-problem--label {
+  font-weight: normal;
+}
+
+.stv-entity-overlap-problem--row {
   display: flex;
   flex-direction: row;
-  vertical-align: baseline;
-  text-align: justify;
-  width: 100%;
-  h2 {
-    font-size: 1.8rem;
-    font-weight: normal;
-    margin: auto;
+  justify-content: space-around;
+}
+
+.stv-entity-overlap-problem--solution {
+  border-radius: 2px;
+  padding: 0.25rem;
+  &:hover {
+    background-color: #ccc;
   }
-}
-
-.adminBody {
-  width: 100%;
-}
-
-.adminContent {
-  margin: 0.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-  color: black;
-  p {
-    max-width: 80%;
-    font-weight: normal;
-    font-size: 1rem;
-    margin: 0.5rem 0rem 0rem 0rem;
+  &__selected {
+    background-color: lightblue;
   }
 }
