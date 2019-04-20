@@ -21,7 +21,7 @@ import { inject, observer } from 'mobx-react';
 import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-import DateRangeWidget from '../../components/DateRangeWidget';
+import DateRangeWidget from '../../components/DatePicker/DateRangeWidget';
 import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 
 import './EditPRS.less';

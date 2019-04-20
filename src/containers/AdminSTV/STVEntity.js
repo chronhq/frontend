@@ -22,7 +22,7 @@ import { computed } from 'mobx';
 
 import SmoothCollapse from 'react-smooth-collapse';
 
-import DateRangeWidget from '../../components/DateRangeWidget';
+import DateRangeWidget from '../../components/DatePicker/DateRangeWidget';
 
 import { ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 import STVEntityEdit from './STVEntityEdit';

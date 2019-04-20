@@ -19,7 +19,7 @@
 import React from 'react';
 
 import ActionButton from '../../components/ActionButtons/ActionButtons';
-import DateRangeWidget from '../../components/DateRangeWidget';
+import DateRangeWidget from '../../components/DatePicker/DateRangeWidget';
 
 import './STVEntityOverlaps.less';
 

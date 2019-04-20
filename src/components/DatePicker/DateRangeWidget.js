@@ -20,14 +20,16 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { dateToLocaleString } from './DatePicker/DatePickerModal';
+import { dateToLocaleString } from './DatePickerModal';
+
+import './DateRangeWidget.less';
 
 const DateRangeWidget = ({ start, end }) => (
-  <>
+  <div className='date-range-widget'>
     <span>{dateToLocaleString(start)}</span>
     <span className='lnr lnr-chevron-right' />
     <span>{dateToLocaleString(end)}</span>
-  </>
+  </div>
 );
 
 DateRangeWidget.propTypes = {
