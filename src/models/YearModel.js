@@ -49,6 +49,11 @@ export default class YearModel {
   // for UI interface and 'year' sliders
   @observable tuneValue;
 
+  // Last day in current period (Dec 31)
+  @computed get end() {
+    return this.getDateByStep(true) - 1;
+  }
+
   @computed get tuneValueG() {
     return julian.toDate(this.tuneValue).getUTCFullYear();
   }

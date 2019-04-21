@@ -78,7 +78,11 @@ export default class CourseSideEffects {
   }
 
   @action updateCD() {
-    const filter = `?year=${this.rootStore.year.year}&has_location=false`;
+    const filter = [
+      `?start_date=${this.rootStore.year.now}`,
+      `&end_date=${this.rootStore.year.end}`,
+      '&has_location=false'
+    ].join('');
     this.rootStore.data.cachedData.filter = filter;
     this.rootStore.data.cachedData.wipe();
     if (this.courseId === 0) {
