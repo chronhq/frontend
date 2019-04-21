@@ -6,6 +6,7 @@
 
 * Node.js version 8 and later
 * Mapbox access token
+* Firebase access token
 
 ### Hot to run
 

@@ -31,8 +31,17 @@ const tooltip = [
 @inject('store')
 @observer
 class FreePinsWidget extends React.Component {
+  prevStatus = false;
+
   @computed get pins() {
     return this.props.store.pins.freePins;
+  }
+
+  @computed get status() {
+    if (this.props.store.data.cachedData.status.loaded) {
+      this.prevStatus = this.pins.length === 0;
+    }
+    return this.prevStatus;
   }
 
   setBalloon = (icon, e, force = false) => {
@@ -43,7 +52,7 @@ class FreePinsWidget extends React.Component {
   }
 
   render() {
-    return (
+    return this.status ? null : (
       <div className='float-container-shadow free-pins-container'>
         <Tooltip placement='right' content={tooltip}>
           <div className='free-pins-attention'>
