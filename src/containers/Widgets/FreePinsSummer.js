@@ -37,9 +37,13 @@ class FreePinsWidget extends React.Component {
     return this.props.store.pins.freePins;
   }
 
+  @computed get cachedData() {
+    return this.props.store.data.cachedData;
+  }
+
   @computed get status() {
-    if (this.props.store.data.cachedData.status.loaded) {
-      this.prevStatus = this.pins.length === 0;
+    if (this.cachedData.status.loaded) {
+      this.prevStatus = Object.keys(this.cachedData.data).length === 0;
     }
     return this.prevStatus;
   }
