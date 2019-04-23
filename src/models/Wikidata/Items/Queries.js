@@ -89,7 +89,9 @@ const population = {
 
 const event = {
   params: 'LIMIT 1',
-  fields: ['item', 'itemLabel', 'itemDescription', 'date', 'location', 'locationLabel', 'coordinates'],
+  fields: ['item', 'itemLabel', 'itemDescription', 'date',
+    'location', 'locationLabel', 'coordinates', 'image',
+    'effect', 'effectLabel', 'cause', 'causeLabel'],
   values: [
     'OPTIONAL { ?item wdt:P585 ?date. }',
     'OPTIONAL {',

@@ -22,6 +22,7 @@ import {
 
 import WikidataCountryItem from './Items/WikidataCountryItem';
 import WikidataPersonItem from './Items/WikidataPersonItem';
+import { WikidataTreatyItem, WikidataBattleItem } from './Items/WikidataItem';
 
 class Wikidata {
   constructor(rootStore) {
@@ -37,6 +38,8 @@ class Wikidata {
   @action add(type, id) {
     if (this.cache[id] === undefined) {
       if (type === 'country') this.cache[id] = new WikidataCountryItem(id, this.rootStore);
+      if (type === 'document') this.cache[id] = new WikidataTreatyItem(id, this.rootStore);
+      if (type === 'battle') this.cache[id] = new WikidataBattleItem(id, this.rootStore);
       if (type === 'birth' || type === 'death') {
         this.cache[id] = new WikidataPersonItem(id, this.rootStore);
       }

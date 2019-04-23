@@ -118,6 +118,43 @@ class WikidataItem {
   @computed get now() {
     return this.rootStore.year.now;
   }
+
+  @computed get item() {
+    if (this.data.event === undefined || !this.data.event.length) return {};
+    const raw = this.data.event[0];
+    const event = this.labelAndURI(raw, 'item');
+
+    const date = this.dateToString(this.dateFromLiteral(raw.date));
+    const location = this.labelAndURI(raw, 'location');
+    const effect = this.labelAndURI(raw, 'effect');
+    const cause = this.labelAndURI(raw, 'cause');
+    const description = raw.itemDescription ? raw.itemDescription.value : undefined;
+    const image = raw.image ? raw.image.value : undefined;
+    return {
+      ...raw,
+      id: this.id,
+      ...event,
+      description,
+      image,
+      date,
+      location,
+      effect,
+      cause,
+    };
+  }
 }
+
+class WikidataBattleItem extends WikidataItem {
+  @observable queries = ['event', 'battle'];
+}
+
+class WikidataTreatyItem extends WikidataItem {
+  @observable queries = ['event', 'treaty'];
+}
+
+export {
+  WikidataBattleItem,
+  WikidataTreatyItem,
+};
 
 export default WikidataItem;

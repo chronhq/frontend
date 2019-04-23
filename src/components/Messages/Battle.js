@@ -45,8 +45,8 @@ const Battle = ({ fact, i18n }) => (
         <div className='factImageDemo'>
           <img
             className='factImageDemo'
-            src={fact.image.thumburl}
-            alt={fact.image.title}
+            src={fact.image}
+            alt={fact.image}
           />
         </div>
       )

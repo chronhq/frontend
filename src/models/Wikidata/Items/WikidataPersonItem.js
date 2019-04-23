@@ -29,12 +29,12 @@ class WikidataPersonItem extends WikidataItem {
   @computed get item() {
     if (this.data.person === undefined || !this.data.person.length) return {};
     const raw = this.data.person[0];
-    // const fixedDates = this.fixDates(raw);
+
     const dateOfBirth = this.dateToString(this.dateFromLiteral(raw.dateOfBirth));
     const dateOfDeath = this.dateToString(this.dateFromLiteral(raw.dateOfDeath));
     const fixedBirth = this.labelAndURI(raw, 'placeOfBirth');
     const fixedDeath = this.labelAndURI(raw, 'placeOfDeath');
-    
+
     const person = this.labelAndURI(raw, 'item');
     const image = raw.image ? raw.image.value : undefined;
     return {

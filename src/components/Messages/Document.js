@@ -21,7 +21,7 @@ import React from 'react';
 const Document = ({ fact }) => (
   <div key={fact.key}>
     <p className='factDate'>
-      {fact.dateText}
+      {fact.date}
     </p>
     <p className='factTitle'>
       {fact.label}
@@ -34,8 +34,8 @@ const Document = ({ fact }) => (
         <div className='factImageDemo'>
           <img
             className='factImageDemo'
-            src={fact.image.thumburl}
-            alt={fact.image.title}
+            src={fact.image}
+            alt={fact.image}
           />
         </div>
       )
