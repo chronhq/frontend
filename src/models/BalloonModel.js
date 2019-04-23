@@ -160,8 +160,20 @@ export default class BalloonModel {
           if (this.rootStore.wikidata.cache[wId] === undefined) {
             return undefined;
           }
-          const layer = typesMapping[f.layer.id].store;
-          return this.rootStore.wikistore[layer].getEventFromWid(f.layer.id, wId);
+          // const layer = typesMapping[f.layer.id].store;
+          const type = f.layer.id;
+          return {
+            key: wId,
+            type,
+            [type]: this.rootStore.wikidata.cache[wId].item
+          };
+          // return this.rootStore.wikistore[layer].getEventFromWid(f.layer.id, wId);
+          // const event = {
+          //   key: cur.id,
+          //   type: this.type,
+          //   loc: cur.place || {}, // in case if place if undefined
+          //   [this.type]: cur,
+          // };
         }).filter(f => (f !== undefined && f !== null));
         return { info: data };
       } catch (e) {

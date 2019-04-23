@@ -119,7 +119,8 @@ const treaty = {
 
 const person = {
   params: 'LIMIT 1',
-  fields: ['placeOfBirth', 'placeOfDeath', 'dateOfBirth', 'dateOfDeath', 'image'],
+  fields: ['item', 'itemLabel', 'itemDescription', 'placeOfBirth', 'placeOfBirthLabel',
+    'placeOfDeath', 'placeOfDeathLabel', 'dateOfBirth', 'dateOfDeath', 'image'],
   values: [
     'OPTIONAL { ?item wdt:P569 ?dateOfBirth. }',
     'OPTIONAL { ?item wdt:P570 ?dateOfDeath. }',

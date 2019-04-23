@@ -19,7 +19,6 @@
 import { observable, computed } from 'mobx';
 import WikidataItem from './WikidataItem';
 
-
 class WikidataCountryItem extends WikidataItem {
   @observable queries = ['country', 'flag', 'capital', 'head', 'form', 'population'];
 

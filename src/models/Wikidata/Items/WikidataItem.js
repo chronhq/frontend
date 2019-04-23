@@ -21,10 +21,11 @@ import {
 } from 'mobx';
 import * as queries from './Queries';
 import { headers, buildURL } from './RequestBuilder';
-// import { getWikimediaURI } from '../WikidataHelper';
 
 class WikidataItem {
   @observable id;
+
+  errors = {};
 
   @observable data = {};
 
@@ -70,6 +71,15 @@ class WikidataItem {
     return res;
   }
 
+  dateToString = (date) => {
+    if (date instanceof Date) {
+      return date.toLocaleString(window.navigator.language || 'en-US', {
+        month: 'short', year: 'numeric', day: '2-digit', timeZone: 'UTC'
+      });
+    }
+    return undefined;
+  }
+
   @action async loadData(data, path) {
     const url = buildURL(this.qId, data);
     try {
@@ -82,8 +92,14 @@ class WikidataItem {
         }
       });
     } catch (e) {
-      console.error('Error while fetching', this.qId, path);
-      console.error(e);
+      if (this.errors[path] === undefined) this.errors[path] = 0;
+      this.errors[path] += 1;
+      if (this.errors[path] > 3) {
+        console.error('Error while fetching', this.qId, path);
+        console.error(e);
+      } else {
+        setTimeout(() => this.loadData(data, path), 350 + (Math.random() * 500));
+      }
     }
   }
 

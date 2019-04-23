@@ -21,6 +21,7 @@ import {
 } from 'mobx';
 
 import WikidataCountryItem from './Items/WikidataCountryItem';
+import WikidataPersonItem from './Items/WikidataPersonItem';
 
 class Wikidata {
   constructor(rootStore) {
@@ -36,6 +37,9 @@ class Wikidata {
   @action add(type, id) {
     if (this.cache[id] === undefined) {
       if (type === 'country') this.cache[id] = new WikidataCountryItem(id, this.rootStore);
+      if (type === 'birth' || type === 'death') {
+        this.cache[id] = new WikidataPersonItem(id, this.rootStore);
+      }
     }
   }
 }

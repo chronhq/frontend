@@ -38,7 +38,8 @@ const wikidataEndpoint = 'https://query.wikidata.org/sparql?query=';
 
 const buildURL = (id, params, lng = 'en') => [
   wikidataEndpoint,
-  encodeURI(buildRequest(id, params, lng))
+  encodeURI(buildRequest(id, params, lng)),
+  '&origin=*'
 ].join('');
 
 export {
