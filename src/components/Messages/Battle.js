@@ -21,7 +21,7 @@ import React from 'react';
 const Battle = ({ fact, i18n }) => (
   <div key={fact.key}>
     <p className='factDate'>
-      {fact.dateText}
+      {fact.date}
     </p>
     <p className='factTitle'>
       {fact.label}

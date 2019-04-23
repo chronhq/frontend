@@ -17,7 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, computed, action } from 'mobx';
-import { typesMapping } from './Wikidata/WikidataHelper';
 
 export default class BalloonModel {
   constructor(rootStore) {
@@ -127,6 +126,9 @@ export default class BalloonModel {
 
   // Set active pin by it's key for Deck GL layer and SVG Free pins
   @action setPinBalloon(a, free = false, force = false) {
+    if (Boolean(a) && (!this.pinHasNoLocation || a !== this.payload)) {
+      this.rootStore.wikidata.add(a.type, a.wikidata_id);
+    }
     this.changeBalloonStatus({
       a, force, pinHasNoLocation: free, deckPinId: Boolean(a)
     });
@@ -152,28 +154,24 @@ export default class BalloonModel {
     return this.rootStore.pins.freePins;
   }
 
+  wikidataInfo = (wId, type) => {
+    if (this.rootStore.wikidata.cache[wId] === undefined) {
+      return undefined;
+    }
+    return {
+      key: wId,
+      type,
+      [type]: this.rootStore.wikidata.cache[wId].item
+    };
+  }
+
   @computed get getSelectedEvents() {
     if (this.eventPin) {
       try {
         const data = this.payload.map((f) => {
           const wId = f.properties.wikidata_id;
-          if (this.rootStore.wikidata.cache[wId] === undefined) {
-            return undefined;
-          }
-          // const layer = typesMapping[f.layer.id].store;
           const type = f.layer.id;
-          return {
-            key: wId,
-            type,
-            [type]: this.rootStore.wikidata.cache[wId].item
-          };
-          // return this.rootStore.wikistore[layer].getEventFromWid(f.layer.id, wId);
-          // const event = {
-          //   key: cur.id,
-          //   type: this.type,
-          //   loc: cur.place || {}, // in case if place if undefined
-          //   [this.type]: cur,
-          // };
+          return this.wikidataInfo(wId, type);
         }).filter(f => (f !== undefined && f !== null));
         return { info: data };
       } catch (e) {
@@ -185,7 +183,8 @@ export default class BalloonModel {
 
   @computed get selected() {
     if (this.pinHasNoLocation) {
-      return this.freePins.find(pin => pin.key === this.payload);
+      const pin = this.wikidataInfo(this.payload.wikidata_id, this.payload.type);
+      return { info: pin ? [pin] : [] };
     } if (this.deckPin) {
       return this.pins.find(pin => pin.key === this.deckPin);
     } if (this.countryHover) {
