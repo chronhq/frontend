@@ -20,14 +20,14 @@ import React from 'react';
 import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 
-const InfoLink = ({ wId, label = null }) => (
+const InfoLink = ({ uri, label = null }) => (
   <a
     className='factSource'
-    href={`https://www.wikidata.org/wiki/${wId}`}
+    href={uri}
     target='_blank'
     rel='noopener noreferrer'
   >
-    {label !== null ? label : wId}
+    {label !== null ? label : uri}
   </a>
 );
 
@@ -43,7 +43,7 @@ class CountryHover extends React.Component {
   }
 
   @computed get wikidata() {
-    return this.props.store.wikidata.cache[this.props.data.wikidata_id];
+    return this.props.store.wikidata.cache[this.props.data.wikidata_id].current;
   }
 
   @computed get base() {
@@ -53,9 +53,9 @@ class CountryHover extends React.Component {
         subTitle: this.props.store.i18n.data.loading
       }
       : {
-        title: this.wikidata.label,
+        title: this.wikidata.country.label,
         subTitle: '', // TODO add subtitle based on Political Relations
-        government: this.wikidata.currentGovernment,
+        government: this.wikidata.form,
       };
   }
 
@@ -63,11 +63,11 @@ class CountryHover extends React.Component {
     return this.wikidata === undefined
       ? {}
       : {
-        flag: this.wikidata.activeFlag,
-        emblem: this.wikidata.emblem,
+        flag: this.wikidata.flag,
+        emblem: this.wikidata.country.emblem,
         capital: this.wikidata.capital,
-        head: this.wikidata.currentHead,
-        population: this.wikidata.currentPopulation,
+        head: this.wikidata.head,
+        population: this.wikidata.population,
       };
   }
 
@@ -98,8 +98,8 @@ class CountryHover extends React.Component {
     );
     return (
       <div className='countryHoverImage'>
-        {this.extra.flag !== undefined && img(this.extra.flag)}
-        {this.extra.emblem !== undefined && img(this.extra.emblem)}
+        {this.extra.flag !== undefined && img(this.extra.flag.uri)}
+        {this.extra.emblem !== undefined && img(this.extra.emblem.value)}
       </div>
     );
   }
@@ -114,7 +114,7 @@ class CountryHover extends React.Component {
 
   @computed get population() {
     if (this.pinned === false || this.extra.population === undefined) return null;
-    const pop = new Intl.NumberFormat().format(this.extra.population.amount);
+    const pop = new Intl.NumberFormat().format(this.extra.population.population);
     return (
       <p>
         <span className='factSubTitle'>
@@ -128,13 +128,14 @@ class CountryHover extends React.Component {
 
   @computed get head() {
     if (this.pinned === false || this.extra.head === undefined) return null;
+    if (this.extra.head.uri === undefined && this.extra.head.label === undefined) return null;
     return (
       <p>
         <span className='factSubTitle'>
           {this.messages.head}
           {': '}
         </span>
-        {<InfoLink wId={this.extra.head.id} label={this.extra.head.label} />}
+        {<InfoLink uri={this.extra.head.uri} label={this.extra.head.label} />}
       </p>
     );
   }
@@ -143,7 +144,7 @@ class CountryHover extends React.Component {
     if (
       this.pinned === false
       || this.extra.capital === undefined
-      || this.extra.capital.length === 0) return null;
+      || !this.extra.capital.length) return null;
     return (
       <p>
         <span className='factSubTitle'>
@@ -151,8 +152,8 @@ class CountryHover extends React.Component {
           {': '}
         </span>
         {this.extra.capital.map((c, idx, arr) => (
-          <span>
-            <InfoLink key={c.id} wId={c.id} label={c.label} />
+          <span key={`${encodeURI(c.uri)}`}>
+            <InfoLink uri={c.uri} label={c.label} />
             {idx + 1 < arr.length ? ', ' : ''}
           </span>
         ))}

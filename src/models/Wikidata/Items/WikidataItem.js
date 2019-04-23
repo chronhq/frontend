@@ -40,7 +40,7 @@ class WikidataItem {
     this.queries.map((q, i) => (
       setTimeout(
         () => this.loadData(queries[q], q),
-        Math.random() * 10 * i
+        Math.random() * 30 * i
       )
     ));
   }

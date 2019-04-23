@@ -61,17 +61,22 @@ class WikidataCountryItem extends WikidataItem {
 
   @computed get current() {
     const current = {};
-    current.head = (this.data.head) ? this.data.head.find(this.inRange) : null;
+    current.country = (this.data.country) ? this.data.country[0] : {};
+    current.head = (this.data.head) ? this.data.head.find(this.inRange) : {};
     // Can be more than one capital
-    current.capital = (this.data.capital) ? this.data.capital.filter(this.inRange) : null;
-    current.flag = (this.data.flag) ? this.data.flag.find(this.inRange) : null;
-    current.form = (this.data.form) ? this.data.form.find(this.inRange) : null;
+    current.capital = (this.data.capital) ? this.data.capital.filter(this.inRange) : {};
+    current.flag = (this.data.flag) ? this.data.flag.find(this.inRange) : {};
+    current.form = (this.data.form) ? this.data.form.find(this.inRange) : {};
     // DESC Ordered by date
     current.population = (this.data.population)
       ? this.data.population.find(p => (
         p.date !== null
         && p.date.getFullYear() <= this.now))
-      : null;
+      : {};
+    // ['country', 'head', 'capital', 'flag', 'form', 'population'].map((a) => {
+    //   if (current[a] === undefined) current[a] = {};
+    //   return false;
+    // });
     return current;
   }
 }
