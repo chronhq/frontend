@@ -39,7 +39,7 @@ const parseLink = (link) => {
 
 const linkKey = (name, l, id) => (`src_${name}_${l.length}_${id}`);
 
-const SourceInfo = ({ name, data = [] }) => (
+const SourceInfo = ({ name, data = [], metricHit }) => (
   data.length > 0 ? (
     <div className='sourcesInfo'>
       <p className='factSubTitle'>
@@ -52,7 +52,7 @@ const SourceInfo = ({ name, data = [] }) => (
           className='factSource factSourcesList'
           href={d}
           onClick={() => {
-            this.props.store.analytics.metricHit('goto_wikidata');
+            metricHit('goto_wikidata');
             return true;
           }}
           target='_blank'
@@ -88,10 +88,11 @@ class Sources extends React.Component {
   }
 
   render() {
+    const { metricHit } = this.props.store.analytics;
     return (
       <div>
-        <SourceInfo name={this.messages.origin} data={this.item.dataOrigin} />
-        <SourceInfo name={this.messages.sources} data={this.item.sources} />
+        <SourceInfo name={this.messages.origin} data={this.item.dataOrigin} metricHit={metricHit} />
+        <SourceInfo name={this.messages.sources} data={this.item.sources} metricHit={metricHit} />
         {this.props.type === 'countryHover' && <ClickPositionInfo />}
       </div>
     );
