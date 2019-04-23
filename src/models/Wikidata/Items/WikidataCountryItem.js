@@ -18,9 +18,12 @@
  */
 import { observable, computed } from 'mobx';
 import WikidataItem from './WikidataItem';
+import * as queries from './Queries';
 
 class WikidataCountryItem extends WikidataItem {
-  @observable queries = ['country', 'flag', 'capital', 'head', 'form', 'population'];
+  @observable queries = ['country', 'form'];
+
+  @observable extra = ['flag', 'capital', 'head', 'population'];
 
   @observable saveEffects = {
     country: this.fixData('country', 'item', false),
@@ -49,6 +52,15 @@ class WikidataCountryItem extends WikidataItem {
       ...h, start, end, date
     };
   }
+
+  loadExtraData = () => (
+    this.extra.map((q, i) => (
+      setTimeout(
+        () => this.loadData(queries[q], q),
+        Math.random() * 30 * i
+      )
+    ))
+  );
 
   inRange = f => ((
     f.start === null

@@ -120,6 +120,7 @@ export default class BalloonModel {
       this.rootStore.wikidata.add('country', a.wikidata_id);
       if (force === true) this.rootStore.analytics.metricHit('check_country');
     }
+    if (Boolean(a) && force) this.rootStore.wikidata.cache[a.wikidata_id].loadExtraData();
     this.changeBalloonStatus({ a, force, countryHover: Boolean(a) });
   }
 
