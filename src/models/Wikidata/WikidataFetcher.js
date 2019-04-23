@@ -73,7 +73,7 @@ export default class WikidataFetcher {
 
     idsPerReq.map(async (ids) => {
       const url = wdk.getEntities({
-        ids,
+        ids: ids.map(i => (Number(i) ? `Q${i}` : i)),
         format: 'json',
         languages: this.languages
       });

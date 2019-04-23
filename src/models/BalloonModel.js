@@ -105,8 +105,10 @@ export default class BalloonModel {
 
   @action setMVTEventBalloon(a, force = false) {
     if (Boolean(a) && (!this.eventPin || a !== this.payload)) {
-      const wIds = a.map(f => `Q${f.properties.wikidata_id}`);
-      this.rootStore.wikidata.getItems(wIds);
+      a.map((f) => {
+        this.rootStore.wikidata.add(f.layer.id, f.properties.wikidata_id);
+        return false;
+      });
       if (a.some(f => f.layer.id === 'battle')) {
         this.rootStore.analytics.metricHit('check_battle');
       }
@@ -116,7 +118,7 @@ export default class BalloonModel {
 
   @action setMVTCountryBalloon(a, force = false) {
     if (Boolean(a) && (!this.countryHover || a !== this.payload)) {
-      this.rootStore.wikidata.getItems([`Q${a.wikidata_id}`]);
+      this.rootStore.wikidata.add('country', a.wikidata_id);
       if (force === true) this.rootStore.analytics.metricHit('check_country');
     }
     this.changeBalloonStatus({ a, force, countryHover: Boolean(a) });
@@ -154,7 +156,7 @@ export default class BalloonModel {
     if (this.eventPin) {
       try {
         const data = this.payload.map((f) => {
-          const wId = `Q${f.properties.wikidata_id}`;
+          const wId = f.properties.wikidata_id;
           if (this.rootStore.wikidata.cache[wId] === undefined) {
             return undefined;
           }

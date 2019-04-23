@@ -29,7 +29,7 @@ const typesStub = Object.keys(typesMapping).reduce((p, c) => ({
 
 const getFreeEvents = (p, c) => ({
   ...p,
-  [c.event_type]: [...p[c.event_type], `Q${c.wikidata_id}`]
+  [c.event_type]: [...p[c.event_type], c.wikidata_id]
 });
 
 function getIcon(info) {
@@ -102,17 +102,17 @@ export default class PinsModel {
     return this.rootStore.flags.pins.list;
   }
 
-  @computed get personsRawPins() {
-    return this.rootStore.wikistore.actors.pins;
-  }
+  // @computed get personsRawPins() {
+  //   return this.rootStore.wikistore.actors.pins;
+  // }
 
-  @computed get battleRawPins() {
-    return this.rootStore.wikistore.battles.pins;
-  }
+  // @computed get battleRawPins() {
+  //   return this.rootStore.wikistore.battles.pins;
+  // }
 
-  @computed get documentRawPins() {
-    return this.rootStore.wikistore.documents.pins;
-  }
+  // @computed get documentRawPins() {
+  //   return this.rootStore.wikistore.documents.pins;
+  // }
 
   getActivePins = type => (
     this.pinsOrder.reduce((prev, flag) => {
@@ -171,23 +171,23 @@ export default class PinsModel {
     return Object.keys(typesStub).reduce((p, c) => ([...p, ...this.narrationFree[c]]), []);
   }
 
-  @computed get narrationFreePins() {
-    return Object.keys(typesMapping).reduce((prev, k) => {
-      const layer = typesMapping[k].store;
-      const pins = this.narrationFree[typesMapping[k].id].map(w => (
-        this.rootStore.wikistore[layer].getEventFromWid(k, w)
-      )).filter(f => (f !== undefined && f !== null));
-      return [...prev, ...pins];
-    }, []);
-  }
+  // @computed get narrationFreePins() {
+  //  return Object.keys(typesMapping).reduce((prev, k) => {
+  //   const layer = typesMapping[k].store;
+  //   const pins = this.narrationFree[typesMapping[k].id].map(w => (
+  //     this.rootStore.wikistore[layer].getEventFromWid(k, w)
+  //   )).filter(f => (f !== undefined && f !== null));
+  //   return [...prev, ...pins];
+  // }, []);
+  // }
 
   @computed get freePins() {
     const buildPin = p => new InteractivePin([p], getKey(p));
     const active = this.getActivePins('free').map(buildPin);
-    const narrative = this.narrationFreePins.map(buildPin);
+    // const narrative = this.narrationFreePins.map(buildPin);
     return [
       ...active,
-      ...narrative,
+      // ...narrative,
     ];
   }
 }

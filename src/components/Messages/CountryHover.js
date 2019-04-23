@@ -43,13 +43,13 @@ class CountryHover extends React.Component {
   }
 
   @computed get wikidata() {
-    return this.props.store.wikidata.cache[`Q${this.props.data.wikidata_id}`];
+    return this.props.store.wikidata.cache[this.props.data.wikidata_id];
   }
 
   @computed get base() {
     return this.wikidata === undefined
       ? {
-        title: `Q${this.props.data.wikidata_id}`,
+        title: this.props.data.wikidata_id,
         subTitle: this.props.store.i18n.data.loading
       }
       : {
