@@ -72,10 +72,6 @@ class WikidataCountryItem extends WikidataItem {
         p.date !== null
         && p.date.getFullYear() <= this.now))
       : {};
-    // ['country', 'head', 'capital', 'flag', 'form', 'population'].map((a) => {
-    //   if (current[a] === undefined) current[a] = {};
-    //   return false;
-    // });
     return current;
   }
 }
