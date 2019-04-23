@@ -1,0 +1,107 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+import {
+  computed, observable, action, runInAction
+} from 'mobx';
+import * as queries from './Queries';
+import { headers, buildURL } from './RequestBuilder';
+// import { getWikimediaURI } from '../WikidataHelper';
+
+class WikidataItem {
+  @observable id;
+
+  @observable data = {};
+
+  @observable media = {};
+
+  @observable queries = [];
+
+  @observable saveEffects = {};
+
+  constructor(id, rootStore) {
+    this.id = id;
+    this.rootStore = rootStore;
+    this.queries.map((q, i) => (
+      setTimeout(
+        () => this.loadData(queries[q], q),
+        Math.random() * 10 * i
+      )
+    ));
+  }
+
+  dateFromLiteral = (o) => {
+    if (!o) return null;
+    if (o.datatype === 'http://www.w3.org/2001/XMLSchema#dateTime' && o.type === 'literal') {
+      return new Date(o.value);
+    }
+    console.error('Failed to parse date', o);
+    return null;
+  }
+
+  labelAndURI = (o, key) => {
+    const res = {};
+    if (o[key]) {
+      if (o[key].type === 'uri') {
+        res.uri = o[key].value;
+      }
+      if (o[key].datatype === 'http://www.w3.org/2001/XMLSchema#decimal') {
+        res[key] = Number(o[key].value);
+      }
+    }
+    if (o[`${key}Label`] && o[`${key}Label`].type === 'literal') {
+      res.label = o[`${key}Label`].value;
+    }
+    return res;
+  }
+
+  @action async loadData(data, path) {
+    const url = buildURL(this.qId, data);
+    try {
+      const res = await fetch(url, headers);
+      const json = await res.json();
+      runInAction(() => {
+        this.data[path] = json.results.bindings;
+        if (this.saveEffects[path]) {
+          this.saveEffects[path]();
+        }
+      });
+    } catch (e) {
+      console.error('Error while fetching', this.qId, path);
+      console.error(e);
+    }
+  }
+
+  @computed get qId() {
+    return `Q${this.id}`;
+  }
+
+  @computed get dataOrigin() {
+    return [`https://www.wikidata.org/wiki/${this.qId}`];
+  }
+
+  @computed get lng() {
+    return this.rootStore.i18n.lng;
+  }
+
+  @computed get now() {
+    return this.rootStore.year.now;
+  }
+}
+
+export default WikidataItem;
