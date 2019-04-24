@@ -19,15 +19,16 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
+import { withRouter } from 'react-router-dom';
 
 import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 
-// dumbData object contains desciption of used layers and pins for eohd2018-mvp-chron project.
-// #HARDCODE #TODO
 const dumpData = {
   layer: ['borders', 'cities'],
   pins: ['persons', 'battle', 'document'],
 };
+
+const zoom = ['plus', 'minus'];
 
 @inject('store')
 @observer
@@ -46,6 +47,13 @@ class LayerControlWrapper extends React.Component {
     });
   }
 
+  handleZoom = (data) => {
+    const out = Boolean(data.payload.minus);
+    this.props.store.deck.zoomOut(out);
+  }
+
+  openAdmin = () => this.props.history.push('/admin');
+
   render() {
     return (
       <React.Fragment>
@@ -59,11 +67,28 @@ class LayerControlWrapper extends React.Component {
               name={id}
               click={this.handleLayer}
             />
-          ))
+          ))))}
+        {zoom.map(z => (
+          <LayerToggle
+            key={`layer_${z}`}
+            tooltip={`Zoom ${z}`}
+            place={z}
+            name={z}
+            extraClassName={`lnr lnr-${z}-circle`}
+            click={this.handleZoom}
+          />
         ))}
+        <LayerToggle
+          key='layer_admin'
+          tooltip='Open admin interface'
+          place='admin'
+          name='admin'
+          extraClassName='lnr lnr-magic-wand'
+          click={this.openAdmin}
+        />
       </React.Fragment>
     );
   }
 }
 
-export default LayerControlWrapper;
+export default withRouter(LayerControlWrapper);

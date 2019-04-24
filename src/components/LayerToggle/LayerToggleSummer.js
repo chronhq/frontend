@@ -24,12 +24,13 @@ import Tooltip from '../Tooltip/Tooltip';
 import './LayerToggleSummer.less';
 
 const LayerToggle = ({
-  checked, name, tooltip, click, place
+  checked, name, tooltip, click, place, extraClassName = ''
 }) => {
   const className = [
     'image-button',
     `image-button${checked ? '__checked' : ''}`,
-    `image-button-${name}`
+    `image-button-${name}`,
+    extraClassName,
   ].join(' ');
   const toggle = () => click({ payload: { [name]: !checked }, place });
   return (
