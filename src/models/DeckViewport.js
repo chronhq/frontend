@@ -35,7 +35,7 @@ export default class DeckViewportModel {
     this.rootStore = rootStore;
   }
 
-  @observable transition = 1000;
+  @observable transition = 500;
 
   @observable width = window.innerWidth;
 
@@ -106,6 +106,21 @@ export default class DeckViewportModel {
     };
   }
 
+  @computed get center() {
+    return [
+      this.viewState.longitude,
+      this.viewState.latitude
+    ];
+  }
+
+  // Center from narration or map settings
+  @computed get defaultCenter() {
+    return [
+      this.viewport.viewState.longitude,
+      this.viewport.viewState.latitude
+    ];
+  }
+
   set viewState(viewState) {
     Object.keys(viewState).map((field) => {
       this[field] = viewState[field];
@@ -130,33 +145,51 @@ export default class DeckViewportModel {
     this.flyToEnabled = !this.flyToEnabled;
   }
 
-  @action initLatLon() {
-    const center = this.flyToEnabled
-      ? [
-        this.viewport.viewState.longitude,
-        this.viewport.viewState.latitude
-      ]
-      : [
-        this.viewState.longitude,
-        this.viewState.latitude
-      ];
-
+  @action flyTo(center, zoom) {
     if (this.interactiveMap !== null) {
       const map = this.interactiveMap.getMap();
       map.flyTo({
         center,
-        zoom: this.validZoomValue,
+        zoom,
       });
     }
+  }
+
+  @action updatePosition(center, zoom) {
+    const [longitude, latitude] = Array.isArray(center) ? center : [0, 0];
     setTimeout(() => {
       if (this.flyToEnabled === true) {
-        this.longitude = this.viewport.viewState.longitude;
-        this.latitude = this.viewport.viewState.latitude;
+        this.longitude = longitude;
+        this.latitude = latitude;
       }
-      this.zoom = this.validZoomValue;
+      this.zoom = zoom;
     }, (this.interactiveMap !== null
       || (this.flyToEnabled !== true && this.zoom !== this.validZoomValue))
       ? this.transition : 0);
+  }
+
+  @action zoomOut(out = true) {
+    const m = out ? -1 : 1;
+    let zoom = this.zoom + m;
+    zoom = (zoom > this.maxZoom) ? this.maxZoom : zoom;
+    zoom = (zoom < this.minZoom) ? this.minZoom : zoom;
+    this.flyTo(this.center, zoom);
+    this.updatePosition(
+      this.center,
+      zoom
+    );
+  }
+
+  @action initLatLon() {
+    const center = this.flyToEnabled
+      ? this.center
+      : this.defaultCenter;
+    this.flyTo(center, this.validZoomValue);
+    this.updatePosition(
+      this.viewport.viewState.longitude,
+      this.viewport.viewState.latitude,
+      this.validZoomValue
+    );
   }
 
   @action updateSettings(mapSettings) {

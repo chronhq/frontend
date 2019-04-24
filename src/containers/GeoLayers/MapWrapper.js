@@ -58,7 +58,7 @@ class MapWrapper extends React.Component {
   }
 
   onBorderHoverCb = (features, position, force = false) => {
-    const feature = features.length > 0
+    const feature = (features && features.length > 0)
       ? features[0]
       : { layer: { id: '0', source: 'unknown' }, properties: { id: '1' } };
     try {
