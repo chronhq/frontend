@@ -50,7 +50,8 @@ class FreePinsWidget extends React.Component {
 
   setBalloon = (icon, e, force = false) => {
     const { pageX, pageY } = e;
-    this.props.store.balloon.setPinBalloon(icon.key, true, force);
+    const a = { wikidata_id: icon.key, type: icon.type };
+    this.props.store.balloon.setPinBalloon(a, true, force);
     this.props.store.balloon.setPosition(pageX, pageY);
     return true;
   }

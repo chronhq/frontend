@@ -16,24 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import wdk from 'wikidata-sdk';
 
-import WikidataEntity from './Entities/WikidataEntity';
-import WikidataTerritorialEntity from './Entities/WikidataTerritorialEntity';
-import {
-  wdTypesMap, instanceOf
-} from './WikidataHelper';
+const headers = {
+  method: 'GET',
+  headers: {
+    accept: 'application/sparql-results+json',
+  },
+  cache: 'no-cache'
+};
 
-const fallbackClass = 'misc';
+const buildRequest = (qId, { fields, values, params }, lng = 'en') => (`
+  SELECT ${fields.map(f => `?${f}`).join(' ')} WHERE {
+    BIND(wd:${qId} AS ?item)
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "${lng}". }
+    ${values.join('\n')}
+  }
+  ${params || ''}
+`);
 
-function wikidataEntityFactory(entity, rootStore) {
-  const simple = wdk.simplify.entity(entity);
-  const type = simple.claims[instanceOf] === undefined
-    ? fallbackClass
-    : simple.claims[instanceOf]
-      .reduce((prev, cur) => (wdTypesMap[cur] || prev), fallbackClass);
-  if (type === 'territorialEntities') return new WikidataTerritorialEntity(rootStore, type, entity, simple);
-  return new WikidataEntity(rootStore, type, entity, simple);
-}
+const wikidataEndpoint = 'https://query.wikidata.org/sparql?query=';
 
-export default wikidataEntityFactory;
+const buildURL = (id, params, lng = 'en') => [
+  wikidataEndpoint,
+  encodeURI(buildRequest(id, params, lng)),
+  '&origin=*'
+].join('');
+
+export {
+  headers, buildURL,
+};
