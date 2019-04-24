@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../../components/Button/Button';
 
 @inject('store')
 @observer
@@ -32,9 +32,12 @@ class YearButton extends React.Component {
     return (
       <Button
         btnType={BUTTON_TYPE.ICON}
+        btnSize={BUTTON_SIZE.HUGE}
         onClick={this.toggle}
       >
-        {this.props.store.year.tuneValue}
+        <span className='time-controls--year'>
+          {this.props.store.year.tuneValue}
+        </span>
       </Button>
     );
   }

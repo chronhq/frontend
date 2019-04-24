@@ -53,12 +53,14 @@ const NextYear = () => <TimeControlButton icon={Next} control='nextYear' />;
 
 const PlayYear = () => <TimeControlButton icon={Play} control='nextYear' />;
 
-
 const TimeControls = () => (
-  <div className='timepanel__controls'>
-    <PrevYear />
+  <div className='time-controls'>
     <YearSelectButton />
-    <NextYear />
+    <div className='time-controls--buttons'>
+      <PrevYear />
+      <PlayYear />
+      <NextYear />
+    </div>
   </div>
 );
 

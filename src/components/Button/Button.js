@@ -16,7 +16,8 @@ export const BUTTON_SIZE = {
   NORMAL: 'normal',
   SMALL: 'small',
   WIDE: 'wide',
-  AUTO: 'auto'
+  AUTO: 'auto',
+  HUGE: 'huge',
 };
 
 export const BUTTON_COLOR = {

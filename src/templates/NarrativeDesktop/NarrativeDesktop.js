@@ -18,18 +18,17 @@
  */
 import React from 'react';
 
-import TimeControlsSummer from './TimeControlsSummer';
-
 import './NarrativeDesktop.less';
 import FreePinsWidget from '../../containers/Widgets/FreePinsSummer';
 import LoadingWidget from '../../containers/Widgets/LoadingSummer';
 import SideBar from '../SideBar/SideBarSummer';
 import StoryList from '../../containers/StoryList/StoryListSummer';
+import TimeControls from '../../containers/TimeControls/TimeControls';
 
 const Controls = () => (
   <div className='narrative-desktop-controls'>
     <div className='narrative-desktop-controls-grid'>
-      <TimeControlsSummer />
+      <TimeControls />
       <LoadingWidget />
       <FreePinsWidget />
     </div>
