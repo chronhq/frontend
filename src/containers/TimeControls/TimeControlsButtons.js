@@ -18,7 +18,8 @@
  */
 import React from 'react';
 
-export const Play = ({ fill = '#686565' }) => (
+export const defaultFill = '#4A4A4A';
+export const Play = ({ fill = defaultFill }) => (
   <svg width='23px' height='23px' viewBox='0 0 32 32'>
     <path
       style={{ fill: { fill }, strokeWidth: 0.26458332, fillOpacity: 1 }}
@@ -28,7 +29,7 @@ export const Play = ({ fill = '#686565' }) => (
   </svg>
 );
 
-export const Next = ({ fill = '#686565' }) => (
+export const Next = ({ fill = defaultFill }) => (
   <svg width='23px' height='23px' viewBox='0 0 32 32'>
     <path
       style={{ fill: { fill }, strokeWidth: 0.26458332, fillOpacity: 1 }}
@@ -38,7 +39,7 @@ export const Next = ({ fill = '#686565' }) => (
   </svg>
 );
 
-export const Pause = ({ fill = '#686565' }) => (
+export const Pause = ({ fill = defaultFill }) => (
   <svg width='23px' height='23px' viewBox='0 0 32 32'>
     <path
       style={{ fill: { fill }, strokeWidth: 0.26458332, fillOpacity: 1 }}
@@ -47,7 +48,7 @@ export const Pause = ({ fill = '#686565' }) => (
   </svg>
 );
 
-export const Prev = ({ fill = '#686565' }) => (
+export const Prev = ({ fill = defaultFill }) => (
   <svg width='23px' height='23px' viewBox='0 0 32 32'>
     <path
       style={{ fill: { fill }, strokeWidth: 0.26458332, fillOpacity: 1 }}
@@ -57,7 +58,7 @@ export const Prev = ({ fill = '#686565' }) => (
   </svg>
 );
 
-export const Reset = ({ fill = '#686565' }) => (
+export const Reset = ({ fill = defaultFill }) => (
   <svg width='23px' height='23px' viewBox='0 0 32 32'>
     <path
       style={{ fill: { fill }, strokeWidth: 0.26458332, fillOpacity: 1 }}
