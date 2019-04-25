@@ -74,6 +74,7 @@ class LayerControlWrapper extends React.Component {
             tooltip={`Zoom ${z}`}
             place={z}
             name={z}
+            checked={false}
             extraClassName={`lnr lnr-${z}-circle`}
             click={this.handleZoom}
           />
@@ -83,6 +84,7 @@ class LayerControlWrapper extends React.Component {
           tooltip='Open admin interface'
           place='admin'
           name='admin'
+          checked={false}
           extraClassName='lnr lnr-magic-wand'
           click={this.openAdmin}
         />

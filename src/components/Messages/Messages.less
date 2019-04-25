@@ -1,20 +1,4 @@
-@black: #000000;
-@main-blue: #013243;
-@base02: #2c393f;
-@text: #576872;
-@link: #8aaddb;
-@border: #707880;
-@red: #ea4544;
-
-@dark-grey: #979797;
-@grey: #7f7f7f;
-@disable: #d5d5d5;
-@sidebar: #e9dac5;
-@light-grey: #fafafa;
-@button-text-inverse: #aaaaaa;
-@white: #ffffff;
-
-.factHeader {
+.message-fact__header {
   display: block;
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
@@ -22,26 +6,19 @@
   margin: 3px 0;
 }
 
-.factDate {
+.message-fact__date {
   display: block;
   font-size: 14px;
   margin: 2px 0;
 }
 
-.factDescription {
+.message-fact__description {
   display: block;
   font-size: 14px;
   margin: 3px 0;
 }
 
-.factAuthor {
-  display: block;
-  margin: 3px 0;
-  font-size: 14px;
-  font-style: italic;
-}
-
-.factInner {
+.message-fact__inner {
   display: block;
   margin: 0;
   font-size: 14px;
@@ -50,16 +27,16 @@
   }
 }
 
-.factTitle {
+.message-fact__title {
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
-  color: @red;
+  // color: @red;
   text-align: left;
   margin: 3px 0;
 }
 
-.factImageDemo {
+.message-fact__image {
   max-width: 95%;
   max-height: 164px;
   object-fit: contain;
@@ -74,7 +51,7 @@
   }
 }
 
-.countryHoverImage {
+.message-fact__country-flags {
   max-height: 100px;
   background-color: rgba(250, 250, 250, 0.7);
   display: flex;
@@ -88,21 +65,21 @@
   }
 }
 
-.factSubTitle {
+.message-fact__sub-title {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 14px;
   margin: 3px 0;
 }
 
-.factSource {
+.message-fact__source {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   font-size: 14px;
   box-shadow: none;
 }
 
-.factSourcesList {
+.message-fact__source-list {
   display: flex;
   flex-direction: column;
   word-break: break-all;
