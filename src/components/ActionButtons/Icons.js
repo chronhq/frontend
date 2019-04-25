@@ -18,7 +18,9 @@
  */
 import React from 'react';
 
-const Create = ({ fill = '#4A4A4A' }) => (
+const lightFill = '#fafafa';
+
+const Create = ({ fill = lightFill }) => (
   <svg width="16px" height="18px" version="1.1" viewBox="0 0 16 18" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <g transform="translate(-577 -546)" fill={fill}>
@@ -30,7 +32,7 @@ const Create = ({ fill = '#4A4A4A' }) => (
   </svg>
 );
 
-const Change = ({ fill = '#4A4A4A' }) => (
+const Change = ({ fill = lightFill }) => (
   <svg width="16px" height="18px" version="1.1" viewBox="0 0 16 18" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <g transform="translate(-577 -482)" fill={fill}>
@@ -42,7 +44,7 @@ const Change = ({ fill = '#4A4A4A' }) => (
   </svg>
 );
 
-const Sandbox = ({ fill = '#4A4A4A' }) => (
+const Sandbox = ({ fill = lightFill }) => (
   <svg width="16px" height="19px" version="1.1" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
     <g fill="none" fillRule="evenodd">
       <g transform="translate(-577 -578)" fill={fill}>
@@ -54,7 +56,7 @@ const Sandbox = ({ fill = '#4A4A4A' }) => (
   </svg>
 );
 
-const Calendar = ({ fill = '#4A4A4A' }) => (
+const Calendar = ({ fill = lightFill }) => (
   <svg width="16px" height="18px" viewBox="0 0 16 18" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="STV-New" transform="translate(-557.000000, -403.000000)" fill={fill}>
@@ -64,7 +66,7 @@ const Calendar = ({ fill = '#4A4A4A' }) => (
   </svg>
 );
 
-const Upload = ({ fill = '#4A4A4A' }) => (
+const Upload = ({ fill = lightFill }) => (
   <svg width="16px" height="18px" viewBox="0 0 32 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="Icon-Set" transform="translate(-464.000000, -1139.000000)" fill={fill}>
@@ -74,7 +76,7 @@ const Upload = ({ fill = '#4A4A4A' }) => (
   </svg>
 );
 
-const Label = ({ fill = '#4A4A4A' }) => (
+const Label = ({ fill = lightFill }) => (
   <svg width="16px" height="18px" viewBox="0 0 26 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="Icon-Set" transform="translate(-155.000000, -411.000000)" fill={fill}>

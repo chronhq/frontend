@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
 
 import {
   Create,
@@ -29,24 +30,22 @@ import {
 
 import './ActionButtons.less';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-const ActionButton = ({ text, Icon, click }) => (
-  <a
-    href=''
-    onClick={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      click();
-      return false;
-    }}
-    className='actionButton'
+const ActionButton = ({
+  text, Icon, click, enabled = true
+}) => (
+  <Button
+    btnType={BUTTON_TYPE.ICON}
+    btnSize={BUTTON_SIZE.AUTO}
+    onClick={enabled ? click : () => null}
   >
-    {Icon && <Icon />}
-    {Icon && ' '}
-    <span>
-      {text}
+    <span className={`action-button action-button--${enabled ? 'enabled' : 'disabled'}`}>
+      {Icon && <Icon />}
+      {Icon && ' '}
+      <span>
+        {text}
+      </span>
     </span>
-  </a>
+  </Button>
 );
 
 /* eslint-disable new-cap */
