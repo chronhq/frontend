@@ -58,7 +58,7 @@ class FreePinsWidget extends React.Component {
 
   render() {
     return this.status ? null : (
-      <div className='float-container-shadow free-pins-container'>
+      <div className='free-pins-container'>
         <Tooltip placement='right' content={tooltip}>
           <div className='free-pins-attention'>
             <span>Events without coordinates</span>

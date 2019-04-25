@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
 
 .admin-block {
   position: fixed;
@@ -25,16 +26,14 @@
   width: 22rem;
   height: 100vh;
   overflow-y: auto;
-  z-index: 50;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  background-color: @light-grey;
+  z-index: @z-index-admin;
+  .float-container();
   padding: 1rem 0;
-  &__left {
+  &--left {
     left: 0;
     top: 0;
   }
-  &__right {
+  &--right {
     right: 0;
     top: 0;
   }

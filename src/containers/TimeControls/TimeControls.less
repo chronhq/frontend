@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
 
 .time-controls {
   flex-direction: column;
@@ -26,13 +27,13 @@
 .time-controls--buttons {
   display: flex;
   flex-direction: row;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(@base-shadow);
 }
 
 .time-controls--year {
   font-size: 2rem;
   text-align: justify;
   font-weight: normal;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: @base-shadow;
   color: @main-blue;
 }
