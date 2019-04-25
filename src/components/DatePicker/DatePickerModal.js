@@ -24,7 +24,7 @@ import ModalWrapper from '../ModalWrapper';
 const DatePickerModal = ({
   close, save, date, isOpen
 }) => (
-  <ModalWrapper className='datePicker-modal' close={close} isOpen={isOpen}>
+  <ModalWrapper className='date-picker__modal' close={close} isOpen={isOpen}>
     <DatePicker save={save} date={date} />
   </ModalWrapper>
 );

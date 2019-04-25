@@ -23,7 +23,7 @@ const YearEntity = ({
   year, label, cb = () => true, selected
 }) => {
   const click = (e) => { e.preventDefault(); cb(year); return false; };
-  const cn = 'datePicker-years-row-item';
+  const cn = 'date-picker__years-row-item';
   const className = `${cn} ${selected ? `${cn}-selected` : ''}`;
   return (
     <a href='' onClick={click}>
@@ -39,7 +39,7 @@ const YearRow = ({
 }) => {
   const years = new Array(Number(width)).fill(Number(start)).map((y, i) => y + i);
   return (
-    <div className='datePicker-years-row'>
+    <div className='date-picker__years-row'>
       {years.map(y => (
         <YearEntity
           key={`yr-${y}`}
@@ -59,7 +59,7 @@ const DatePickerYears = ({
   const shift = new Array(length).fill(1).map((s, i) => ((i * width) + era));
 
   return (
-    <div className='datePicker-years'>
+    <div className='date-picker__years'>
       {shift.map(y => (
         <YearRow
           width={width}

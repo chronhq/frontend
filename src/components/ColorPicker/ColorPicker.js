@@ -35,7 +35,7 @@ const ColorBubble = ({
     }}
   >
     <span
-      className={selected ? 'pickedColor' : undefined}
+      className={selected ? 'color-picker__color' : undefined}
       style={{ backgroundColor: color }}
     />
   </a>
@@ -44,7 +44,7 @@ const ColorBubble = ({
 class ColorPicker extends React.Component {
   render() {
     return (
-      <div className='colorPicker'>
+      <div className='color-picker'>
         {Object.keys(mapColors).map(c => (
           <ColorBubble
             click={this.props.changeColor}

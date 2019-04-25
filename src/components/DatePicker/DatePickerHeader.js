@@ -24,7 +24,7 @@ import Select from '../SlimSelect';
 const eras = new Array(2050 / 50).fill(0).map((m, i) => ({ label: 50 * i, value: 50 * i }));
 
 const EraSelector = ({ era, changeEra }) => (
-  <div className='datePicker-date'>
+  <div className='date-picker__date'>
     <p style={{ width: '7rem' }}>Select Date</p>
     <Select
       onChange={y => changeEra(y.value)}
@@ -55,7 +55,7 @@ const DateSelector = ({
   const monthValue = monthEntity(month);
 
   return (
-    <div className='datePicker-date'>
+    <div className='date-picker__date'>
       <Select
         onChange={m => setDate(undefined, m.value)}
         placeholder='Month'
@@ -73,7 +73,7 @@ const DateSelector = ({
 };
 
 const DatePickerHeader = props => (
-  <div className='datePicker-header'>
+  <div className='date-picker__header'>
     <EraSelector
       era={props.era}
       changeEra={props.changeEra}
