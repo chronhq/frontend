@@ -21,24 +21,12 @@ import { inject, observer } from 'mobx-react';
 import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-import DateRangeWidget from '../../components/DatePicker/DateRangeWidget';
+import AdminTEAction from '../../components/AdminTEAction/AdminTEAction';
 import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 
 import './EditPRS.less';
 
 const genDate = () => (new Date(+(new Date()) - Math.floor(Math.random() * 10000000000000)));
-
-const Entity = ({ start, end }) => (
-  <div className='prs-row-grid'>
-    <p>
-      {'TE label for PR'}
-    </p>
-    <div className='prs-col-grid'>
-      <DateRangeWidget start={start} end={end} click={() => null} />
-      <span className='lnr lnr-cross-circle' />
-    </div>
-  </div>
-);
 
 
 const Entities = ({ title, click, expanded }) => {
@@ -56,7 +44,7 @@ const Entities = ({ title, click, expanded }) => {
       <ChangeActionButton text={title} click={click} />
       <SmoothCollapse expanded={expanded}>
         <div className='prs-container'>
-          {data.map(d => <Entity {...d} />)}
+          {data.map(d => <AdminTEAction label='Test TE Label' {...d} />)}
         </div>
         <CreateActionButton text='Add' click={() => null} />
       </SmoothCollapse>

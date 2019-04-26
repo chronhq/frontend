@@ -16,27 +16,47 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import AdminTEAction from '../../components/AdminTEAction/AdminTEAction';
+@import '../../styles/colors.less';
 
-import './STVEntityOverlaps.less';
+.te-action {
+  border-color: @dark-grey-blue;
+  color: @black;
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+  border: solid 1px;
+  border-radius: 2px;
+  display: grid;
+  grid-template-columns: auto 2rem;
+}
 
-class Overlaps extends React.Component {
-  render() {
-    return (
-      <div className='stv-entity-overlap'>
-        <div style={{ color: 'red', fontWeight: 'bold' }}>
-          {this.props.overlaps.length}
-          {' '}
-          {'Overlaps'}
-        </div>
-        <div>
-          {'Subtract overlap from:'}
-        </div>
-        {this.props.overlaps.map(o => <AdminTEAction {...o} />)}
-      </div>
-    );
+.te-action--dimmed {
+  border-color: @warm-grey;
+  color: @warm-grey;
+}
+
+.te-action__label {
+  font-weight: normal;
+}
+
+.te-action__button {
+  outline: none;
+  place-self: center center;
+  &:hover {
+    color: @warm-grey;
+  }
+  &:active {
+    transform: translateY(1px);
+    filter: saturate(150%);
   }
 }
 
-export default Overlaps;
+.te-action__button--dimmed {
+  &:hover {
+    color: @black;
+  }
+}
+
+.te-action__button--no-click {
+  pointer-events:none;
+  color: @warm-grey;
+}
