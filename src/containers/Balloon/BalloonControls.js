@@ -54,9 +54,9 @@ class BalloonControls extends React.Component {
     if (!this.props.store.balloon.pinned) return '';
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
-      <div className='balloonControls'>
+      <div className='balloon-controls'>
         <div
-          className='balloonDrag'
+          className='balloon-drag'
           onMouseDown={this.mouseDragDown}
           onMouseUp={() => this.props.store.balloon.dragClick(false)}
           onMouseLeave={() => this.props.store.balloon.dragClick(false)}

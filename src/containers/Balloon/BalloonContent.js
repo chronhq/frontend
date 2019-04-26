@@ -50,7 +50,7 @@ class BalloonContent extends React.Component {
       switch (pin.type) {
         case 'countryHover':
           return {
-            id: 'countryHoverBaloon',
+            id: 'countryHoverBalloon',
             message: <CountryHover id={this.data.info[0].data.id} data={this.data.info[0].data} />,
             sources: <Sources
               id={this.data.info[0].data.wikidata_id}
@@ -106,12 +106,12 @@ class BalloonContent extends React.Component {
   }
 
   render() {
-    const news = 'balloonNews balloonMain';
-    const sources = 'balloonNews balloonSources';
+    const news = 'balloon__news balloon__main';
+    const sources = 'balloon__news balloon__sources';
     return (
-      <div className='balloonNewsContainer'>
+      <div className='balloon__news-container'>
         {this.news.map(n => (
-          <div key={`news_${n.id}`} className='balloonNewsRow'>
+          <div key={`news_${n.id}`} className='balloon__news-row'>
             <div className={news}>{n.message}</div>
             {this.balloon.pinned && (<div className={sources}>{n.sources}</div>)}
           </div>

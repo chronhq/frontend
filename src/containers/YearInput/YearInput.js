@@ -48,7 +48,7 @@ class TypeOne extends React.Component {
         value={this.props.now}
         onKeyDown={event => this.handlePress(event)}
         onChange={event => this.props.cb(event.target.value)}
-        className='yearInput'
+        className='yearinput__input'
       />
     );
   }

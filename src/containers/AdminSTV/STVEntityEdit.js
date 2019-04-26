@@ -64,7 +64,7 @@ class EditSTV extends React.Component {
   render() {
     return this.props.edit
       ? (
-        <div className='adminContent'>
+        <div className='admin__content'>
           <DateSelector />
           <References edit={this.props.edit} />
           <UploadWidget />
@@ -79,7 +79,7 @@ class EditSTV extends React.Component {
         </div>
       )
       : (
-        <div className='adminContent'>
+        <div className='admin__content'>
           <References edit={this.props.edit} />
           <TwoActions
             right='Edit'

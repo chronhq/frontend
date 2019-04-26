@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import './AdminWrapper.less';
 
 const AdminHeader = ({ title }) => (
-  <div className='adminHeader'>
+  <div className='admin__header'>
     <h2>
       {title}
     </h2>
@@ -30,9 +30,9 @@ const AdminHeader = ({ title }) => (
 );
 
 const AdminWrapper = ({ title, children }) => (
-  <div className='adminContainer'>
-    <div className='adminBody'>
-      <div className='adminContent'>
+  <div className='admin__container'>
+    <div className='admin__body'>
+      <div className='admin__content'>
         <AdminHeader title={title} />
         {children}
       </div>

@@ -1,32 +1,32 @@
-.balloonControls {
-  .balloonDrag {
+.balloon-controls {
+  .balloon-drag {
     padding-top: 0.2rem;
     margin-right: 1rem;
     cursor: move;
   }
 }
 
-.balloonTopLeft {transform: translate(-10%, 20px);}
+.balloon--top-left {transform: translate(-10%, 20px);}
 
-.balloonTopRight {transform: translate(-90%, 20px);}
+.balloon--top-right {transform: translate(-90%, 20px);}
 
-.balloonBottomLeft {transform: translate(-10%, calc(-100% - 20px));}
+.balloon--bottom-left {transform: translate(-10%, calc(-100% - 20px));}
 
-.balloonBottomRight {transform: translate(-90%, calc(-100% - 20px));}
+.balloon--bottom-right {transform: translate(-90%, calc(-100% - 20px));}
 
-.balloonNewsContainer {
+.balloon__news-container {
   max-height: 50vh;
   overflow-y: auto;
 }
 
-.balloonClickNotice {
+.balloon__click-notice {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   font-size: 10px;
   text-align: center;
 }
 
-.balloonContainer {
+.balloon-container {
   max-width: 30vw;
   max-height: auto;
   position: absolute;
@@ -41,18 +41,18 @@
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  .balloonNewsRow {
+  .balloon__news-row {
     display: flex;
     flex-direction: row;
-    .balloonMain {
+    .balloon__main {
       min-width: 200px;
       max-width: 370px;
       user-select: none;
     }
-    .balloonSources {
+    .balloon__sources {
       min-width: 80px;
     }
-    .balloonNews {
+    .balloon__news {
       & h6 {
         text-align: center;
       }

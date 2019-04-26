@@ -40,10 +40,10 @@ const Button = ({
 const TwoActions = ({
   left, right, leftClick, rightClick
 }) => (
-  <div className='twoActionsContainer'>
-    <div className='twoActions'>
-      <Button position='leftFooter' text={left} click={leftClick} />
-      <Button position='rightFooter' text={right} click={rightClick} />
+  <div className='two-actions__container'>
+    <div className='two-actions'>
+      <Button position='two-actions--left' text={left} click={leftClick} />
+      <Button position='two-actions--right' text={right} click={rightClick} />
     </div>
   </div>
 );

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-.twoActionsContainer {
+.two-actions__container {
   a {
     color: #9b9b9b;
     text-decoration: underline;
@@ -26,14 +26,14 @@
   margin-top: 0.5rem;
 }
 
-.twoActions {
+.two-actions {
   display: grid;
   grid-template-columns: minmax(5rem, auto) minmax(5rem, auto);
-  .leftFooter {
+  &--left {
     grid-column-start: 1;
     justify-self: start;
   }
-  .rightFooter {
+  &--right {
     grid-column-start: 2;
     justify-self: end;
   }
