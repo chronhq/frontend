@@ -20,46 +20,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TwoActions.less';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-const Button = ({
-  click, text, position
-}) => (text && (
-  <a
-    href=''
-    onClick={(e) => {
-      e.preventDefault();
-      click();
-      return false;
-    }}
-    className={position}
-  >
-    {text}
-  </a>
-));
-
 const TwoActions = ({
-  left, right, leftClick, rightClick
-}) => (
-  <div className='two-actions__container'>
-    <div className='two-actions'>
-      <Button position='two-actions--left' text={left} click={leftClick} />
-      <Button position='two-actions--right' text={right} click={rightClick} />
+  children,
+}) => {
+  const [left, right] = children;
+  return (
+    <div className='two-actions__container'>
+      <div className='two-actions'>
+        <div className='two-actions--left'>
+          {left}
+        </div>
+        <div className='two-actions--right'>
+          {right}
+        </div>
+      </div>
     </div>
-  </div>
-);
-
-TwoActions.defaultProps = {
-  left: null,
-  right: null,
-  leftClick: () => false,
-  rightClick: () => false,
+  );
 };
 
 TwoActions.propTypes = {
-  left: PropTypes.string,
-  right: PropTypes.string,
-  leftClick: PropTypes.any,
-  rightClick: PropTypes.any,
+  children: PropTypes.array.isRequired
 };
 
 export default TwoActions;

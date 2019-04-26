@@ -26,7 +26,7 @@ import 'firebase/auth';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 
-import {
+import ActionButton, {
   CreateActionButton, ChangeActionButton, SandboxActionButton
 } from '../../components/ActionButtons/ActionButtons';
 
@@ -57,7 +57,11 @@ class AdminPanel extends React.Component {
         </p>
         <CreateActionButton text='New' click={() => true} />
         <ChangeActionButton text='Edit' click={() => true} />
-        <TwoActions right='Sign Out' rightClick={() => firebase.auth().signOut()} />
+        <TwoActions>
+          <></>
+          <ActionButton text='Sign Out' click={() => firebase.auth().signOut()} />
+        </TwoActions>
+
       </AdminWrapper>
     );
   }

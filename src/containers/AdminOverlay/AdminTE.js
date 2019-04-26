@@ -23,7 +23,7 @@ import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
-import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
+import ActionButton, { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import Select from '../../components/SlimSelect';
 
@@ -102,14 +102,14 @@ class AdminTE extends React.Component {
           </div>
         </SmoothCollapse>
         <CreateActionButton text='New' click={() => true} />
-        <TwoActions
-          left='Delete'
-          right='Save'
-        />
-        <TwoActions
-          left='Back'
-          leftClick={() => this.props.store.admin.nextScreen('panel')}
-        />
+        <TwoActions>
+          <ActionButton text='Delete' />
+          <ActionButton text='Save' />
+        </TwoActions>
+        <TwoActions>
+          <ActionButton text='Back' click={() => this.props.store.admin.nextScreen('panel')} />
+          <></>
+        </TwoActions>
       </AdminWrapper>
     );
   }

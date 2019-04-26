@@ -23,6 +23,7 @@ import DatePickerHeader from './DatePickerHeader';
 import DatePickerYears from './DatePickerYears';
 
 import TwoActions from '../TwoActions/TwoActions';
+import ActionButton, { ChangeActionButton } from '../ActionButtons/ActionButtons';
 
 import './DatePicker.less';
 
@@ -53,7 +54,7 @@ class DatePicker extends React.Component {
     return d;
   }
 
-  eraCalculator = nextYear => nextYear - (nextYear % 150)
+  eraCalculator = nextYear => nextYear - (nextYear % 100 % 50)
 
   propsToState = next => ({
     era: this.eraCalculator(next.date.getUTCFullYear()),
@@ -96,12 +97,10 @@ class DatePicker extends React.Component {
           setDate={this.setDate}
         />
         <hr />
-        <TwoActions
-          left={dateToLocaleString(this.date)}
-          leftClick={this.resetEra}
-          right='Save'
-          rightClick={this.save}
-        />
+        <TwoActions>
+          <ActionButton text={dateToLocaleString(this.date)} click={this.resetEra} />
+          <ChangeActionButton text='Save' click={this.save} />
+        </TwoActions>
       </div>
     );
   }

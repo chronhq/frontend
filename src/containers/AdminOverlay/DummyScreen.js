@@ -23,6 +23,7 @@ import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
 import UploadWidget from '../../components/ActionButtons/UploadWidget';
+import ActionButton from '../../components/ActionButtons/ActionButtons';
 
 @inject('store')
 @observer
@@ -32,10 +33,13 @@ class DummyScreen extends React.Component {
       <AdminWrapper title='Under Construction' position='middle'>
         <CalendarWidget save={d => console.log('Calendar Save Date', d)} />
         <UploadWidget />
-        <TwoActions
-          right='Back'
-          rightClick={() => this.props.store.admin.nextScreen('panel')}
-        />
+        <TwoActions>
+          <ActionButton
+            text='Back'
+            click={() => this.props.store.admin.nextScreen('panel')}
+          />
+          <></>
+        </TwoActions>
       </AdminWrapper>
     );
   }

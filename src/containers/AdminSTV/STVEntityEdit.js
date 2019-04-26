@@ -23,7 +23,7 @@ import { computed } from 'mobx';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
 import UploadWidget from '../../components/ActionButtons/UploadWidget';
-import {
+import ActionButton, {
   LabelActionButton, CreateActionButton
 } from '../../components/ActionButtons/ActionButtons';
 
@@ -70,21 +70,21 @@ class EditSTV extends React.Component {
           <UploadWidget />
           <LabelActionButton text='Set visual center' click={() => null} />
           <Overlaps overlaps={this.props.store.admin.overlaps} />
-          <TwoActions
-            left='Cancel'
-            leftClick={() => this.click(this.props.id, false)}
-            right='Save'
-            rightClick={() => null}
-          />
+          <TwoActions>
+            <ActionButton text='Cancel' click={() => this.click(this.props.id, false)} />
+            <ActionButton text='Save' click={() => null} />
+          </TwoActions>
         </div>
       )
       : (
         <div className='admin__content'>
           <References edit={this.props.edit} />
-          <TwoActions
-            right='Edit'
-            rightClick={() => this.click(true)}
-          />
+          <TwoActions>
+            <ActionButton
+              text='Edit'
+              click={() => this.click(true)}
+            />
+          </TwoActions>
         </div>
       );
   }
