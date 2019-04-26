@@ -30,6 +30,16 @@ import {
 
 import './ActionButtons.less';
 
+const ActionButtonBody = ({ enabled, Icon, text }) => (
+  <span className={`action-button action-button--${enabled ? 'enabled' : 'disabled'}`}>
+    {Icon && <Icon />}
+    {Icon && ' '}
+    <span>
+      {text}
+    </span>
+  </span>
+);
+
 const ActionButton = ({
   text, Icon, click, enabled = true
 }) => (
@@ -38,15 +48,22 @@ const ActionButton = ({
     btnSize={BUTTON_SIZE.AUTO}
     onClick={enabled ? click : () => null}
   >
-    <span className={`action-button action-button--${enabled ? 'enabled' : 'disabled'}`}>
-      {Icon && <Icon />}
-      {Icon && ' '}
-      <span>
-        {text}
-      </span>
-    </span>
+    <ActionButtonBody enabled={enabled} Icon={Icon} text={text} />
   </Button>
 );
+
+const ActionButtonFill = ({
+  click, enabled = true
+}) => (
+  <div
+    className={`action-button-stretch action-button--${enabled ? 'enabled' : 'disabled'}`}
+    role='button'
+    tabIndex={0}
+    onKeyDown={enabled ? click : () => null}
+    onClick={enabled ? click : () => null}
+  />
+);
+
 
 /* eslint-disable new-cap */
 const SandboxActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Sandbox });
@@ -64,6 +81,7 @@ export {
   CalendarActionButton,
   UploadActionButton,
   LabelActionButton,
+  ActionButtonFill,
 };
 
 export default ActionButton;

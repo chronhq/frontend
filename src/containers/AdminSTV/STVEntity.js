@@ -24,7 +24,8 @@ import SmoothCollapse from 'react-smooth-collapse';
 
 import DateRangeWidget from '../../components/DatePicker/DateRangeWidget';
 
-import { ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
+import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
+
 import STVEntityEdit from './STVEntityEdit';
 
 @inject('store')
@@ -49,9 +50,9 @@ class STVEntity extends React.Component {
   render() {
     const { start, end, status } = this.props;
     return (
-      <div className='stv-entities-container-row'>
+      <div className='stv-entities-row'>
         <div
-          className='stv-entities-container-row--info'
+          className='stv-entities-row__info'
           onClick={() => this.click()}
           onKeyDown={() => this.click()}
           role='button'
@@ -59,7 +60,10 @@ class STVEntity extends React.Component {
         >
           <span className={`lnr lnr-${status ? 'checkmark' : 'question'}-circle`} />
           <DateRangeWidget start={start} end={end} />
-          <ChangeActionButton click={() => this.click(true)} text='' />
+          <ActionButtonFill
+            click={(e) => { this.click(true); e.stopPropagation(); return false; }}
+            enabled={!this.edit}
+          />
         </div>
         <SmoothCollapse expanded={this.active}>
           <STVEntityEdit edit={this.edit} {...this.props} />
