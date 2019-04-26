@@ -19,6 +19,7 @@
 @import '../../styles/colors.less';
 
 .action-button {
+  transition: background-color 100ms ease-in-out;
   padding: 0.2rem 0.4rem;
   font-weight: 300;
   border: solid 1px;
@@ -33,11 +34,13 @@
 .action-button-stretch {
   height: 100%;
   width: 100%;
-  // background-color: @dark-grey-blue;
   background-position: center center;
   background-image: url('./Change.svg');
   background-repeat: no-repeat;
   outline: none;
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .action-button--enabled {
@@ -46,6 +49,7 @@
   &:active {
     transform: translateY(1px);
     filter: saturate(150%);
+    background-color: @blue-grey;
   }
 }
 

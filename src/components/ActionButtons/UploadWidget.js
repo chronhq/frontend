@@ -24,8 +24,8 @@ import { UploadActionButton } from './ActionButtons';
 import './UploadWidget.less';
 
 const ProgressBar = ({ progress }) => (
-  <div className='progressBar-container'>
-    <div className='progressBar-fill' style={{ width: `${progress}%` }} />
+  <div className='progress-bar__container'>
+    <div className='progress-bar__fill' style={{ width: `${progress}%` }} />
   </div>
 );
 class UploadWidget extends React.Component {
@@ -47,7 +47,7 @@ class UploadWidget extends React.Component {
 
   render() {
     return (
-      <div className='uploadWidget-container'>
+      <div className='upload-widget'>
         <ProgressBar progress={30} />
         <Upload
           multiple
