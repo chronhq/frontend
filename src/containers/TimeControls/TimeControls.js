@@ -22,17 +22,13 @@ import YearSelectButton from './YearSelectButton';
 
 import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 
-import {
-  Prev, Next, Play
-} from './TimeControlsButtons';
-
 import './TimeControls.less';
 
 @inject('store')
 @observer
 class TimeControlButton extends React.Component {
   render() {
-    const Icon = this.props.icon;
+    const { icon } = this.props;
     return (
       <Button
         btnType={BUTTON_TYPE.ICON}
@@ -41,22 +37,22 @@ class TimeControlButton extends React.Component {
           this.props.store.analytics.metricHit('year_change');
         }}
       >
-        <Icon />
+        <div className={`time-controls__button-size icon icon-${icon}`} />
       </Button>
     );
   }
 }
 
-const PrevYear = () => <TimeControlButton icon={Prev} control='prevYear' />;
+const PrevYear = () => <TimeControlButton icon='rewind' control='prevYear' />;
 
-const NextYear = () => <TimeControlButton icon={Next} control='nextYear' />;
+const NextYear = () => <TimeControlButton icon='forward' control='nextYear' />;
 
-const PlayYear = () => <TimeControlButton icon={Play} control='nextYear' />;
+const PlayYear = () => <TimeControlButton icon='play' control='nextYear' />;
 
 const TimeControls = () => (
   <div className='time-controls'>
     <YearSelectButton />
-    <div className='time-controls--buttons'>
+    <div className='time-controls__buttons'>
       <PrevYear />
       <PlayYear />
       <NextYear />

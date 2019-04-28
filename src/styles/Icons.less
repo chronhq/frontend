@@ -31,6 +31,7 @@
 // @t: fade(@black, 99%);
 @dark-color: replace(@black, '#', '%23');
 @light-color: replace(@light-grey, '#', '%23');
+@play-controls-color: replace(@text-grey, '#', '%23');
 
 .icon-cross {  
   .lnr-cross(@dark-color);
@@ -130,4 +131,16 @@
 
 .icon-group-indirect--light {
   .al-group-indirect(@light-color);
+}
+
+.icon-play {
+  .line-play(@play-controls-color);
+}
+
+.icon-forward {
+  .line-forward(@play-controls-color);
+}
+
+.icon-rewind {
+  .line-rewind(@play-controls-color);
 }
