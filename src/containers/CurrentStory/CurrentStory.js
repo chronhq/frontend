@@ -59,7 +59,7 @@ class CurrentStory extends Component {
                 this.props.changeUi();
               }}
             >
-              <i className='lnr lnr-chevron-left' aria-hidden='true' />
+              <i className='icon icon-chevron-left' aria-hidden='true' />
               {this.dashboard.back}
             </Button>
           )}

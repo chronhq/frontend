@@ -1,0 +1,105 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+@import './colors';
+@import './IconsSource.less';
+
+.icon {
+  width: 100%;
+  height: 100%;
+  background-size:100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  outline: none;
+}
+
+// @t: fade(@black, 99%);
+@dark-color: replace(@black, '#', '%23');
+@light-color: replace(@light-grey, '#', '%23');
+
+.icon-cross {  
+  .lnr-cross(@dark-color);
+}
+
+.icon-checkmark-circle {  
+  .lnr-checkmark-circle(@dark-color);
+}
+
+.icon-question-circle {
+  .lnr-question-circle(@dark-color);
+}
+
+.icon-chevron-right {
+  .lnr-chevron-right(@dark-color);
+}
+
+.icon-chevron-left {
+  .lnr-chevron-left(@dark-color);
+}
+
+.icon-chevron-up {
+  .lnr-chevron-up(@dark-color);
+}
+
+.icon-chevron-down {
+  .lnr-chevron-down(@dark-color);
+}
+
+.icon-plus {
+  .line-plus(@dark-color);
+}
+
+.icon-minus {
+  .line-minus(@dark-color);
+}
+
+.icon-location {
+  .lnr-location(@dark-color);
+}
+
+.icon-magic-wand {
+  .lnr-magic-wand(@dark-color);
+}
+
+.icon-save--light {
+  .line-save(@light-color);
+}
+
+.icon-edit--light {
+  .line-edit(@light-color);
+}
+
+.icon-delete--light {
+  .line-delete(@light-color);
+}
+
+.icon-cancel--light {
+  .line-cancel(@light-color);
+}
+
+.icon-calendar--light {
+  .line-calendar(@light-color);
+}
+
+.icon-add--light {
+  .line-add(@light-color);
+}
+
+.icon-road-sign--light {
+  .line-road-sign(@light-color);
+}

@@ -43,7 +43,7 @@ class NarrativeMobileBar extends React.Component {
             onClick={() => this.unHide()}
           >
             <i
-              className={`lnr lnr-chevron-${this.state.isHidden ? 'down' : 'up'}`}
+              className={`icon icon-chevron-${this.state.isHidden ? 'down' : 'up'}`}
               aria-hidden='true'
               title='Open Panel'
             />
@@ -55,7 +55,7 @@ class NarrativeMobileBar extends React.Component {
             onClick={() => this.unHide()}
           >
             <i
-              className={`lnr lnr-chevron-${this.state.isHidden ? 'down' : 'up'}`}
+              className={`icon icon-chevron-${this.state.isHidden ? 'down' : 'up'}`}
               aria-hidden='true'
               title='Open Panel'
             />

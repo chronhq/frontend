@@ -42,13 +42,13 @@ class RateBar extends Component {
     return (
       <div className='rate-widget'>
         <button disabled={!this.state.canVote} type='button' onClick={() => this.decriment()}>
-          <i className='lnr lnr-arrow-down' aria-hidden='true' />
+          <i className='icon icon-arrow-down' aria-hidden='true' />
         </button>
         <span>
           {this.state.rate}
         </span>
         <button disabled={!this.state.canVote} type='button' onClick={() => this.increment()}>
-          <i className='lnr lnr-arrow-up' aria-hidden='true' />
+          <i className='icon icon-arrow-up' aria-hidden='true' />
         </button>
       </div>
     );

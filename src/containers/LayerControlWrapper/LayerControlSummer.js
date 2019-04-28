@@ -75,7 +75,7 @@ class LayerControlWrapper extends React.Component {
             place={z}
             name={z}
             checked={false}
-            extraClassName={`lnr lnr-${z}-circle`}
+            extraClassName={`icon icon-${z}`}
             click={this.handleZoom}
           />
         ))}
@@ -85,7 +85,7 @@ class LayerControlWrapper extends React.Component {
           place='admin'
           name='admin'
           checked={false}
-          extraClassName='lnr lnr-magic-wand'
+          extraClassName='icon icon-magic-wand'
           click={this.openAdmin}
         />
       </React.Fragment>

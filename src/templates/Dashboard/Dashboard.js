@@ -113,14 +113,14 @@ class Dashboard extends React.Component {
         <div className='dashboard-hide layer-2'>
           <Tooltip placement='right' content={this.chevronMsg}>
             <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggle}>
-              <span className={`lnr lnr-chevron-${this.chevron}`} aria-hidden='true' title={this.chevronMsg} />
+              <span className={`icon icon-chevron-${this.chevron}`} aria-hidden='true' title={this.chevronMsg} />
             </Button>
           </Tooltip>
         </div>
         <div className='dashboard-hide layer-2' style={this.flyToStyle}>
           <Tooltip placement='right' content={this.locMsg}>
             <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggleFlyTo}>
-              <span className='lnr lnr-location' aria-hidden='true' title={this.locMsg} />
+              <span className='icon icon-location' aria-hidden='true' title={this.locMsg} />
             </Button>
           </Tooltip>
         </div>

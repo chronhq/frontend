@@ -27,7 +27,7 @@ const TEAction = ({
 }) => {
   const teAction = `te-action ${checked ? '' : 'te-action--dimmed'}`;
   const teActionButton = [
-    `lnr lnr-${icon}`,
+    `icon icon-${icon}`,
     'te-action__button',
     checked ? '' : 'te-action__button--dimmed',
     noClick ? 'te-action__button--no-click' : '',
