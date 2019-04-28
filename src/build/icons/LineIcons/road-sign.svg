@@ -1,0 +1,19 @@
+
+<svg width="34px" height="40px" viewBox="0 0 34 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter x="-1.7%" y="-0.9%" width="103.4%" height="101.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-Set" filter="url(#filter-1)" transform="translate(-151.000000, -409.000000)" fill="#FFFFFE">
+            <path d="M176.537,428.822 C176.38,428.925 176.202,429 176,429 L158,429 C157.448,429 157,428.553 157,428 L157,420 C157,419.448 157.448,419 158,419 L176,419 C176.213,419 176.399,419.081 176.561,419.194 L178.963,423.984 L176.537,428.822 L176.537,428.822 Z M169,439 C169,440.104 168.104,441 167,441 L165,441 C163.896,441 163,440.104 163,439 L163,431 L169,431 L169,439 L169,439 Z M163,415 C163,413.896 163.896,413 165,413 L167,413 C168.104,413 169,413.896 169,415 L169,417 L163,417 L163,415 L163,415 Z M180.717,423.224 L177.737,417.282 C177.524,417.069 177.241,416.982 176.962,417 L171,417 L171,415 C171,412.791 169.209,411 167,411 L165,411 C162.791,411 161,412.791 161,415 L161,417 L157,417 C155.896,417 155,417.896 155,419 L155,429 C155,430.104 155.896,431 157,431 L161,431 L161,439 C161,441.209 162.791,443 165,443 L167,443 C169.209,443 171,441.209 171,439 L171,431 L177,431 L177,430.976 C177.266,430.982 177.534,430.89 177.737,430.688 L180.717,424.745 C180.942,424.325 180.972,424.188 181.002,423.984 C181.016,423.711 180.927,423.604 180.717,423.224 L180.717,423.224 Z" id="Fill-161"></path>
+        </g>
+    </g>
+</svg>

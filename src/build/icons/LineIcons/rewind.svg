@@ -1,0 +1,19 @@
+
+<svg width="40px" height="36px" viewBox="0 0 40 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter x="-1.7%" y="-0.9%" width="103.4%" height="101.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-Set" filter="url(#filter-1)" transform="translate(-96.000000, -619.000000)" fill="#FFFFFE">
+            <path d="M129.998,646.2 L117.986,637.8 L117.986,646.2 L101.971,635 L117.986,623.8 L117.986,632.2 L129.998,623.8 L129.998,646.2 L129.998,646.2 Z M129.583,621.372 L119.988,628.257 L119.988,622.951 C119.988,620.625 118.698,620.768 117.572,621.372 L100.584,633.561 C99.803,634.355 99.803,635.645 100.584,636.44 L117.572,648.628 C118.604,649.296 119.988,648.969 119.988,646.986 L119.988,641.744 L129.583,648.628 C130.615,649.296 131.968,649 132,646.955 L132,623.014 C132.031,620.75 130.709,620.768 129.583,621.372 L129.583,621.372 Z" id="Fill-122"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,19 @@
+
+<svg width="31px" height="32px" viewBox="0 0 31 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter x="-1.7%" y="-0.9%" width="103.4%" height="101.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-Set" filter="url(#filter-1)" transform="translate(-257.000000, -621.000000)" fill="#FFFFFE">
+            <path d="M275.418,634.984 L283.692,626.713 C284.085,626.32 284.085,625.683 283.692,625.289 C283.299,624.896 282.662,624.896 282.269,625.289 L273.358,634.197 C273.142,634.413 273.057,634.701 273.078,634.984 C273.057,635.268 273.142,635.556 273.358,635.772 L282.269,644.679 C282.662,645.072 283.299,645.072 283.692,644.679 C284.085,644.286 284.085,643.648 283.692,643.256 L275.418,634.984 L275.418,634.984 Z M263.336,634.984 L273.624,624.7 C274.017,624.307 274.017,623.67 273.624,623.276 C273.23,622.883 272.593,622.883 272.2,623.276 L261.276,634.197 C261.06,634.413 260.975,634.701 260.996,634.984 C260.975,635.268 261.06,635.556 261.276,635.772 L272.2,646.692 C272.593,647.085 273.23,647.085 273.624,646.692 C274.017,646.299 274.017,645.662 273.624,645.269 L263.336,634.984 L263.336,634.984 Z" id="Fill-119"></path>
+        </g>
+    </g>
+</svg>
