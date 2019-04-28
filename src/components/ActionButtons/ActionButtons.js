@@ -19,21 +19,11 @@
 import React from 'react';
 import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
 
-import {
-  Create,
-  Change,
-  Sandbox,
-  Calendar,
-  Upload,
-  Label,
-} from './Icons';
-
 import './ActionButtons.less';
 
-const ActionButtonBody = ({ enabled, Icon, text }) => (
+const ActionButtonBody = ({ enabled, icon, text }) => (
   <span className={`action-button action-button--${enabled ? 'enabled' : 'disabled'}`}>
-    {Icon && <Icon />}
-    {Icon && ' '}
+    <div className={`icon ${icon ? `icon-${icon}--light action-button__icon` : ''}`} />
     <span>
       {text}
     </span>
@@ -41,14 +31,14 @@ const ActionButtonBody = ({ enabled, Icon, text }) => (
 );
 
 const ActionButton = ({
-  text, Icon, click, enabled = true
+  text, icon, click, enabled = true
 }) => (
   <Button
     btnType={BUTTON_TYPE.ICON}
     btnSize={BUTTON_SIZE.AUTO}
     onClick={enabled ? click : () => null}
   >
-    <ActionButtonBody enabled={enabled} Icon={Icon} text={text} />
+    <ActionButtonBody enabled={enabled} icon={icon} text={text} />
   </Button>
 );
 
@@ -66,12 +56,12 @@ const ActionButtonFill = ({
 
 
 /* eslint-disable new-cap */
-const SandboxActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Sandbox });
-const CreateActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Create });
-const ChangeActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Change });
-const CalendarActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Calendar });
-const UploadActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Upload });
-const LabelActionButton = ({ text, click }) => ActionButton({ text, click, Icon: Label });
+const SandboxActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'sandbox' });
+const CreateActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'add' });
+const ChangeActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'edit' });
+const CalendarActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'calendar' });
+const UploadActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'upload' });
+const LabelActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'road-sign' });
 
 
 export {

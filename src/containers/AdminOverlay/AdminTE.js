@@ -104,7 +104,7 @@ class AdminTE extends React.Component {
         <CreateActionButton text='New' click={() => true} />
         <TwoActions>
           <ActionButton text='Delete' />
-          <ActionButton text='Save' />
+          <ActionButton text='Save' icon='save' />
         </TwoActions>
         <TwoActions>
           <ActionButton text='Back' click={() => this.props.store.admin.nextScreen('panel')} />

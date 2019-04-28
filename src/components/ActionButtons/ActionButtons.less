@@ -17,27 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 @import '../../styles/colors.less';
+@import '../../styles/Icons.less';
 
 .action-button {
-  transition: background-color 100ms ease-in-out;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto auto;
   padding: 0.2rem 0.4rem;
+  transition: background-color 100ms ease-in-out;
   font-weight: 300;
   border: solid 1px;
   font-size: 1rem;
   text-align: justify;
   border-radius: 2px;
-  svg {
-    vertical-align: middle;
-  }
+}
+
+.action-button__icon {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .action-button-stretch {
-  height: 100%;
-  width: 100%;
-  background-position: center center;
-  background-image: url('./Change.svg');
-  background-repeat: no-repeat;
-  outline: none;
+  .icon();
+  .icon-edit--light();
   &:hover {
     opacity: 0.7;
   }

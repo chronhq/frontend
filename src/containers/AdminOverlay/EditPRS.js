@@ -22,7 +22,7 @@ import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import AdminTEAction from '../../components/AdminTEAction/AdminTEAction';
-import { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
+import ActionButton, { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 
 import './EditPRS.less';
 
@@ -39,9 +39,14 @@ const Entities = ({ title, click, expanded }) => {
     return { start, end };
   });
 
+  let icon = 'group';
+  if (title !== 'Group') {
+    icon += title === 'Direct' ? '-direct' : '-indirect';
+  }
+
   return (
     <div>
-      <ChangeActionButton text={title} click={click} />
+      <ActionButton icon={icon} text={title} click={click} />
       <SmoothCollapse expanded={expanded}>
         <div className='prs-container'>
           {data.map(d => <AdminTEAction label='Test TE Label' {...d} />)}

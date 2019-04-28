@@ -71,8 +71,8 @@ class EditSTV extends React.Component {
           <LabelActionButton text='Set visual center' click={() => null} />
           <Overlaps overlaps={this.props.store.admin.overlaps} />
           <TwoActions>
-            <ActionButton text='Cancel' click={() => this.click(this.props.id, false)} />
-            <ActionButton text='Save' click={() => null} />
+            <ActionButton text='Cancel' icon='cancel' click={() => this.click(this.props.id, false)} />
+            <ActionButton text='Save' icon='save' click={() => null} />
           </TwoActions>
         </div>
       )
@@ -81,6 +81,7 @@ class EditSTV extends React.Component {
           <References edit={this.props.edit} />
           <TwoActions>
             <ActionButton
+              icon='edit'
               text='Edit'
               click={() => this.click(true)}
             />

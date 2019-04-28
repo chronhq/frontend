@@ -98,8 +98,8 @@ class DatePicker extends React.Component {
         />
         <hr />
         <TwoActions>
-          <ActionButton text={dateToLocaleString(this.date)} click={this.resetEra} />
-          <ChangeActionButton text='Save' click={this.save} />
+          <ActionButton icon='redo' text={dateToLocaleString(this.date)} click={this.resetEra} />
+          <ChangeActionButton icon='save' text='Save' click={this.save} />
         </TwoActions>
       </div>
     );
