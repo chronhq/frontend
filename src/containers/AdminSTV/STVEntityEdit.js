@@ -84,6 +84,7 @@ class EditSTV extends React.Component {
               text='Edit'
               click={() => this.click(true)}
             />
+            <></>
           </TwoActions>
         </div>
       );
