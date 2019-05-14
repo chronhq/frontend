@@ -1,19 +1,7 @@
-
-<svg width="31px" height="32px" viewBox="0 0 31 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <filter x="-1.7%" y="-0.9%" width="103.4%" height="101.8%" filterUnits="objectBoundingBox" id="filter-1">
-            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
-                <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-        </filter>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Icon-Set" filter="url(#filter-1)" transform="translate(-308.000000, -621.000000)" fill="#FFFFFE">
-            <path d="M322.905,634.984 C322.927,634.701 322.841,634.413 322.625,634.197 L313.702,625.289 C313.309,624.896 312.671,624.896 312.276,625.289 C311.883,625.683 311.883,626.32 312.276,626.713 L320.562,634.984 L312.276,643.256 C311.883,643.648 311.883,644.286 312.276,644.679 C312.671,645.072 313.309,645.072 313.702,644.679 L322.625,635.772 C322.841,635.556 322.927,635.268 322.905,634.984 L322.905,634.984 Z M334.724,634.197 L323.785,623.276 C323.392,622.883 322.753,622.883 322.359,623.276 C321.965,623.67 321.965,624.307 322.359,624.7 L332.66,634.984 L322.359,645.269 C321.965,645.662 321.965,646.299 322.359,646.692 C322.753,647.085 323.392,647.085 323.785,646.692 L334.724,635.772 C334.939,635.556 335.025,635.268 335.004,634.984 C335.025,634.701 334.939,634.413 334.724,634.197 L334.724,634.197 Z" id="Fill-118"></path>
-        </g>
-    </g>
+<svg width="31" height="32" version="1.1" viewBox="0 -2 31 32" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" fill-rule="evenodd">
+  <g transform="translate(-308,-621)" fill="#f00">
+   <path d="m322.9 634.98c0.022-0.283-0.064-0.571-0.28-0.787l-8.923-8.908c-0.393-0.393-1.031-0.393-1.426 0-0.393 0.394-0.393 1.031 0 1.424l8.286 8.271-8.286 8.272c-0.393 0.392-0.393 1.03 0 1.423 0.395 0.393 1.033 0.393 1.426 0l8.923-8.907c0.216-0.216 0.302-0.504 0.28-0.788zm11.819-0.787-10.939-10.921c-0.393-0.393-1.032-0.393-1.426 0-0.394 0.394-0.394 1.031 0 1.424l10.301 10.284-10.301 10.285c-0.394 0.393-0.394 1.03 0 1.423s1.033 0.393 1.426 0l10.939-10.92c0.215-0.216 0.301-0.504 0.28-0.788 0.021-0.283-0.065-0.571-0.28-0.787z"/>
+  </g>
+ </g>
 </svg>

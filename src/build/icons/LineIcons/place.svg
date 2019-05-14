@@ -1,19 +1,7 @@
-
-<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <filter x="-1.7%" y="-0.9%" width="103.4%" height="101.8%" filterUnits="objectBoundingBox" id="filter-1">
-            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
-                <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-        </filter>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Icon-Set" filter="url(#filter-1)" transform="translate(-512.000000, -877.000000)" fill="#FFFFFE">
-            <path d="M544,879 L536,879 L536,881 L544,881 C545.104,881 546,881.896 546,883 L546,891 L548,891 L548,883 C548,880.791 546.209,879 544,879 L544,879 Z M546,907 C546,908.104 545.104,909 544,909 L536,909 L536,911 L544,911 C546.209,911 548,909.209 548,907 L548,899 L546,899 L546,907 L546,907 Z M518,907 L518,899 L516,899 L516,907 C516,909.209 517.791,911 520,911 L528,911 L528,909 L520,909 C518.896,909 518,908.104 518,907 L518,907 Z M516,883 L516,891 L518,891 L518,883 C518,881.896 518.896,881 520,881 L528,881 L528,879 L520,879 C517.791,879 516,880.791 516,883 L516,883 Z" id="Fill-64"></path>
-        </g>
-    </g>
+<svg width="40" height="40" version="1.1" viewBox="0 -2 40 40" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" fill-rule="evenodd">
+  <g transform="translate(-512,-877)" fill="#f00">
+   <path d="m544 879h-8v2h8c1.104 0 2 0.896 2 2v8h2v-8c0-2.209-1.791-4-4-4zm2 28c0 1.104-0.896 2-2 2h-8v2h8c2.209 0 4-1.791 4-4v-8h-2v8zm-28 0v-8h-2v8c0 2.209 1.791 4 4 4h8v-2h-8c-1.104 0-2-0.896-2-2zm-2-24v8h2v-8c0-1.104 0.896-2 2-2h8v-2h-8c-2.209 0-4 1.791-4 4z"/>
+  </g>
+ </g>
 </svg>

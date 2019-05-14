@@ -1,19 +1,7 @@
-
-<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <filter x="-1.7%" y="-0.9%" width="103.4%" height="101.8%" filterUnits="objectBoundingBox" id="filter-1">
-            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
-                <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-        </filter>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Icon-Set" filter="url(#filter-1)" transform="translate(-148.000000, -1137.000000)" fill="#FFFFFE">
-            <path d="M175.74,1141 L183,1141 C183.552,1141 184,1140.55 184,1140 C184,1139.45 183.552,1139 183,1139 L173,1139 C172.879,1139 172,1139 172,1140 L172,1150 C172,1150.55 172.448,1151 173,1151 C173.552,1151 174,1150.55 174,1150 L174,1142.36 C178.728,1144.61 182,1149.42 182,1155 C182,1162.73 175.732,1169 168,1169 C160.268,1169 154,1162.73 154,1155 C154,1147.95 159.218,1142.13 166,1141.16 L166,1139.14 C158.109,1140.13 152,1146.84 152,1155 C152,1163.84 159.164,1171 168,1171 C176.836,1171 184,1163.84 184,1155 C184,1148.97 180.664,1143.73 175.74,1141" id="Fill-21"></path>
-        </g>
-    </g>
+<svg width="40" height="40" version="1.1" viewBox="0 -2 40 40" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" fill-rule="evenodd">
+  <g transform="translate(-148,-1137)" fill="#f00">
+   <path d="m175.74 1141h7.26c0.552 0 1-0.45 1-1s-0.448-1-1-1h-10c-0.121 0-1 0-1 1v10c0 0.55 0.448 1 1 1s1-0.45 1-1v-7.64c4.728 2.25 8 7.06 8 12.64 0 7.73-6.268 14-14 14s-14-6.27-14-14c0-7.05 5.218-12.87 12-13.84v-2.02c-7.891 0.99-14 7.7-14 15.86 0 8.84 7.164 16 16 16s16-7.16 16-16c0-6.03-3.336-11.27-8.26-14"/>
+  </g>
+ </g>
 </svg>

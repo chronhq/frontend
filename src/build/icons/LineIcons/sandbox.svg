@@ -1,19 +1,7 @@
-
-<svg width="36px" height="40px" viewBox="0 0 36 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <filter x="-1.7%" y="-0.9%" width="103.4%" height="101.8%" filterUnits="objectBoundingBox" id="filter-1">
-            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
-                <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-        </filter>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Icon-Set" filter="url(#filter-1)" transform="translate(-515.000000, -929.000000)" fill="#FFFFFE">
-            <path d="M543,935 L540,935 L540,937 L543,937 C544.104,937 545,937.896 545,939 L545,959 C545,960.104 544.104,961 543,961 L523,961 C521.896,961 521,960.104 521,959 L521,939 C521,937.896 521.896,937 523,937 L526,937 L526,935 L523,935 C520.791,935 519,936.791 519,939 L519,959 C519,961.209 520.791,963 523,963 L543,963 C545.209,963 547,961.209 547,959 L547,939 C547,936.791 545.209,935 543,935 L543,935 Z M525.343,949.758 L532.242,956.657 C532.451,956.865 532.728,956.954 533,956.939 C533.272,956.954 533.549,956.865 533.758,956.657 L540.657,949.758 C541.048,949.367 541.048,948.733 540.657,948.343 C540.267,947.953 539.633,947.953 539.242,948.343 L534,953.586 L534,932 C534,931.447 533.553,931 533,931 C532.448,931 532,931.447 532,932 L532,953.586 L526.757,948.343 C526.367,947.953 525.733,947.953 525.343,948.343 C524.952,948.733 524.952,949.367 525.343,949.758 L525.343,949.758 Z" id="Fill-54"></path>
-        </g>
-    </g>
+<svg width="36" height="40" version="1.1" viewBox="0 -2 36 40" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" fill-rule="evenodd">
+  <g transform="translate(-515,-929)" fill="#f00">
+   <path d="m543 935h-3v2h3c1.104 0 2 0.896 2 2v20c0 1.104-0.896 2-2 2h-20c-1.104 0-2-0.896-2-2v-20c0-1.104 0.896-2 2-2h3v-2h-3c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zm-17.657 14.758 6.899 6.899c0.209 0.208 0.486 0.297 0.758 0.282 0.272 0.015 0.549-0.074 0.758-0.282l6.899-6.899c0.391-0.391 0.391-1.025 0-1.415-0.39-0.39-1.024-0.39-1.415 0l-5.242 5.243v-21.586c0-0.553-0.447-1-1-1-0.552 0-1 0.447-1 1v21.586l-5.243-5.243c-0.39-0.39-1.024-0.39-1.414 0-0.391 0.39-0.391 1.024 0 1.415z"/>
+  </g>
+ </g>
 </svg>
