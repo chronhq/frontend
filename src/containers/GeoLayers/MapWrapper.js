@@ -109,7 +109,29 @@ class MapWrapper extends React.Component {
   }
 
   render() {
-    if (disabled.map) return null;
+    if (disabled.map) {
+      const stripes = [
+        '-45deg',
+        'rgba(0, 0, 0, 0.2)',
+        'rgba(0, 0, 0, 0.2) 10px',
+        'rgba(0, 0, 0, 0.3) 10px',
+        'rgba(0, 0, 0, 0.3) 20px'].join(',');
+
+      const background = `repeating-linear-gradient(${stripes})`;
+      return (
+        <div
+          id='map-wrapper'
+          style={{
+            zIndex: 1, width: '100vw%', height: '100vh', background
+          }}
+          role='button'
+          tabIndex={0}
+          onClick={() => this.props.store.balloon.unpin()}
+          onMouseEnter={this.setHoverBalloon(true)}
+          onKeyPress={this.setHoverBalloon(true)}
+        />
+      );
+    }
 
     return (
       <InteractiveMap
