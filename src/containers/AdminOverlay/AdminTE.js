@@ -60,7 +60,7 @@ class AdminTE extends React.Component {
 
   render() {
     return (
-      <AdminWrapper title='Territorial Entity'>
+      <AdminWrapper title='Territorial Entity' back='panel'>
         <p>
           {'Enter wikidata id'}
         </p>
@@ -105,10 +105,6 @@ class AdminTE extends React.Component {
         <TwoActions>
           <ActionButton text='Delete' />
           <ActionButton text='Save' icon='save' />
-        </TwoActions>
-        <TwoActions>
-          <ActionButton text='Back' click={() => this.props.store.admin.nextScreen('panel')} />
-          <></>
         </TwoActions>
       </AdminWrapper>
     );

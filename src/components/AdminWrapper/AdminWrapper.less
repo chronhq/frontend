@@ -19,7 +19,7 @@
 @import '../../styles/colors.less';
 
 .admin__container {
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
   user-select: none;
   display: flex;
   flex-direction: column;
@@ -28,32 +28,34 @@
 }
 
 .admin__header {
-  color: @main-blue;
+  width: 100%;
+  text-align: justify;
   display: flex;
   flex-direction: row;
   vertical-align: baseline;
-  text-align: justify;
-  width: 100%;
-  h2 {
-    font-size: 1.8rem;
-    font-weight: normal;
-    margin: auto;
-  }
 }
 
-.admin__body {
-  width: 100%;
+.admin__header--grid {
+  display: grid;
+  grid-template-columns: 2.5rem auto;
+}
+
+.admin__title {
+  color: @main-blue;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: auto;
 }
 
 .admin__content {
-  margin: 0.5rem 1rem;
   display: flex;
   flex-direction: column;
   color: black;
+  width: calc(100% - 1rem);
   p {
     max-width: 80%;
     font-weight: normal;
     font-size: 1rem;
-    margin: 0.5rem 0rem 0rem 0rem;
+    // margin: 0.5rem 0rem 0rem 0rem;
   }
 }

@@ -18,33 +18,60 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { inject, observer } from 'mobx-react';
 
+import Button, { BUTTON_TYPE } from '../Button/Button';
 import './AdminWrapper.less';
 
-const AdminHeader = ({ title }) => (
-  <div className='admin__header'>
-    <h2>
-      {title}
-    </h2>
-  </div>
-);
+@inject('store')
+@observer
+class AdminHeader extends React.Component {
+  get backButton() {
+    return this.props.back === undefined
+      ? null
+      : (
+        <Button
+          btnType={BUTTON_TYPE.ICON}
+          onClick={() => this.props.store.admin.nextScreen(this.props.back)}
+        >
+          <div
+            className='icon icon__shadow--hard icon-double-arrow-left--light'
+            style={{ width: '2rem', height: '2rem' }}
+          />
+        </Button>
+      );
+  }
 
-const AdminWrapper = ({ title, children }) => (
-  <div className='admin__container'>
-    <div className='admin__body'>
-      <div className='admin__content'>
-        <AdminHeader title={title} />
-        {children}
+  render() {
+    const { title } = this.props;
+    return (
+      <div className={`admin__header ${this.backButton ? 'admin__header--grid' : ''}`}>
+        {this.backButton}
+        <div className='admin__title'>
+          {title}
+        </div>
       </div>
+    );
+  }
+}
+
+const AdminWrapper = ({ title, children, back }) => (
+  <div className='admin__container'>
+    <div className='admin__content'>
+      <AdminHeader title={title} back={back} />
+      {children}
     </div>
   </div>
 );
 
+AdminWrapper.defaultProps = {
+  back: undefined
+};
 
 AdminWrapper.propTypes = {
-  // position: PropTypes.string,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  back: PropTypes.string,
 };
 
 export default AdminWrapper;
