@@ -19,8 +19,6 @@
 @import '../../styles/colors.less';
 
 .te-action {
-  border-color: @dark-grey-blue;
-  color: @black;
   margin-top: 0.25rem;
   padding-left: 0.5rem;
   border: solid 1px;
@@ -30,8 +28,7 @@
 }
 
 .te-action--dimmed {
-  border-color: @warm-grey;
-  color: @warm-grey;
+  opacity: .5;
 }
 
 .te-action__label {
@@ -39,24 +36,25 @@
 }
 
 .te-action__button {
+  cursor: pointer;
+  background-size: 1.25rem 1.25rem;
   outline: none;
-  place-self: center center;
   &:hover {
-    color: @warm-grey;
+    opacity: .5;
   }
   &:active {
     transform: translateY(1px);
-    filter: saturate(150%);
   }
 }
 
 .te-action__button--dimmed {
   &:hover {
-    color: @black;
+    opacity: 1;
   }
 }
 
 .te-action__button--no-click {
   pointer-events:none;
-  color: @warm-grey;
+  cursor: not-allowed;
+  opacity: .5;
 }

@@ -45,7 +45,8 @@ class AdminPanel extends React.Component {
     return (
       <AdminWrapper title='User Panel'>
         <p>
-          {'Profile'}
+          {'Hello, '}
+          {this.auth.user.displayName}
         </p>
         <p>
           {'Territorial Entity'}

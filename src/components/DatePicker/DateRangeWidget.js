@@ -27,7 +27,7 @@ import './DateRangeWidget.less';
 const DateRangeWidget = ({ start, end }) => (
   <div className='date-range-widget'>
     <span>{dateToLocaleString(start)}</span>
-    <span className='icon icon-chevron-right' />
+    <span className='icon icon-chevron-right date-range-widget__icon' />
     <span>{dateToLocaleString(end)}</span>
   </div>
 );

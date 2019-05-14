@@ -58,7 +58,10 @@ class STVEntity extends React.Component {
           role='button'
           tabIndex={0}
         >
-          <div className={`icon icon-${status ? 'checkmark' : 'question'}-circle`} />
+          <div
+            className={`icon icon-${status ? 'checkmark' : 'question'}-circle`}
+            style={{ backgroundSize: '1.25rem 1.25rem' }}
+          />
           <DateRangeWidget start={start} end={end} />
           <ActionButtonFill
             click={(e) => { this.click(true); e.stopPropagation(); return false; }}
