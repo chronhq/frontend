@@ -56,6 +56,12 @@ class FreePinsWidget extends React.Component {
     return true;
   }
 
+  hideBalloon = () => this.props.store.balloon.pinned === false
+    && this.props.store.balloon.setPinBalloon(null);
+
+  updateBalloon = icon => e => this.props.store.balloon.pinned === false
+    && this.setBalloon(icon, e);
+
   render() {
     return this.status ? null : (
       <div className='free-pins-container'>
@@ -72,11 +78,10 @@ class FreePinsWidget extends React.Component {
                 role='button'
                 tabIndex={0}
                 onKeyDown={e => this.setBalloon(icon, e, true)}
-                onMouseEnter={e => this.setBalloon(icon, e)}
                 onClick={e => this.setBalloon(icon, e, true)}
-                onMouseLeave={() => this.props.store.balloon.pinned === false
-                  && this.props.store.balloon.setPinBalloon(null)}
-                onMouseMove={e => this.setBalloon(icon, e)}
+                onMouseEnter={this.updateBalloon(icon)}
+                onMouseMove={this.updateBalloon(icon)}
+                onMouseLeave={this.hideBalloon}
                 className={`sprite sprite-${icon.type}`}
               />
             ))
