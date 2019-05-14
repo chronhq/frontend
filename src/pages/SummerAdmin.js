@@ -27,10 +27,6 @@ import AdminInterface from '../templates/AdminInterface/AdminInterface';
 @inject('store')
 @observer
 class SummerAdmin extends React.Component {
-  componentDidMount() {
-    this.props.store.flags.runtime.set('admin', true);
-  }
-
   render() {
     return (
       <Wrapper story='world' fake='0' metric='check_admin'>

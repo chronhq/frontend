@@ -17,28 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React, { Suspense, lazy } from 'react';
-import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
-
 import LoadingLogo from '../../containers/LoadingLogo';
 
 const AdminScreen = lazy(() => import('./AdminScreen'));
 
-@inject('store')
-@observer
-class AdminInterface extends React.Component {
-  @computed get isOpen() {
-    return this.props.store.flags.runtime.get('admin');
-  }
-
-  render() {
-    if (!this.isOpen) return null;
-    return (
-      <Suspense fallback={<LoadingLogo />}>
-        <AdminScreen />
-      </Suspense>
-    );
-  }
-}
+const AdminInterface = () => (
+  <Suspense fallback={<LoadingLogo />}>
+    <AdminScreen />
+  </Suspense>
+);
 
 export default AdminInterface;

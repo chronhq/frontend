@@ -23,7 +23,6 @@ import Overlays from '../templates/Overlays/Overlays';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';
 import Wrapper from './Wrapper';
-import AdminInterface from '../templates/AdminInterface/AdminInterface';
 import NarrativeDesktop from '../templates/NarrativeDesktop/NarrativeDesktop';
 
 const SummerStory = ({ story, fake, metric }) => (
@@ -32,7 +31,6 @@ const SummerStory = ({ story, fake, metric }) => (
     <NarrativeDesktop />
     <Balloon />
     <Overlays />
-    <AdminInterface />
   </Wrapper>
 );
 

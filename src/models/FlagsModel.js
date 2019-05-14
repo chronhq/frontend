@@ -21,15 +21,8 @@ import { observable, action, computed } from 'mobx';
 const flags = {
   runtime: {
     SelectedCourse: null,
-    alignPanel: 'right',
     article: false,
     yearInput: false,
-    SidePanelTab: 0,
-    SidePanelIsOpen: false,
-    TimelineIsMinified: false,
-    BioIsOpen: false,
-    cluster: true,
-    admin: false,
   },
   layer: {
     borders: true,
