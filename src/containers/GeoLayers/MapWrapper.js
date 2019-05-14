@@ -96,6 +96,8 @@ class MapWrapper extends React.Component {
   dataLoadingListener = e => this.deck.isLoaded(e)
 
   toggleDataLoadingEventListeners = (t = 'on') => {
+    // when map is disabled
+    if (!this.deck.interactiveMap) return;
     const map = this.deck.interactiveMap.getMap();
     map[t]('dataloading', this.dataLoadingListener);
     map[t]('data', this.dataLoadingListener);
