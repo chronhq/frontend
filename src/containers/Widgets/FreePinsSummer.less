@@ -1,5 +1,6 @@
 @import '../../styles/colors.less';
 @import '../../styles/Layers.less';
+@import '../../styles/IconsSource.less';
 
 @containerBorders: .25rem;
 
@@ -18,7 +19,9 @@
 }
 
 .free-pins-attention {
-  background-image: url('./attention.svg');
+  user-select: none;
+  background-size: 25% 25%;
+  .line-error(replace(@warm-grey, '#', '%23'));
   background-repeat: no-repeat;
   background-position: right center;
 }
