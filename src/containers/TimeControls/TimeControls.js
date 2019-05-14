@@ -37,7 +37,7 @@ class TimeControlButton extends React.Component {
           this.props.store.analytics.metricHit('year_change');
         }}
       >
-        <div className={`time-controls__button-size icon icon-${icon}`} />
+        <div className={`time-controls__button-size icon icon__shadow--soft icon-${icon}`} />
       </Button>
     );
   }

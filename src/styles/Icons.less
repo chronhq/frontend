@@ -18,6 +18,7 @@
  */
 @import './colors';
 @import './IconsSource.less';
+@import './Layers.less';
 
 .icon {
   width: 100%;
@@ -26,6 +27,18 @@
   background-position: center center;
   background-repeat: no-repeat;
   outline: none;
+}
+
+.icon__shadow {
+  filter: drop-shadow(@base-shadow);
+}
+
+.icon__shadow--soft {
+  filter: drop-shadow(@icon-shadow--soft);
+}
+
+.icon__shadow--hard {
+  filter: drop-shadow(@icon-shadow--hard);
 }
 
 // @t: fade(@black, 99%);
@@ -79,6 +92,14 @@
 
 .icon-magic-wand {
   .lnr-magic-wand(@dark-color);
+}
+
+.icon-double-arrow-left--light {
+  .line-double-arrow-left(@light-color)
+}
+
+.icon-double-arrow-right--light {
+  .line-double-arrow-right(@light-color)
 }
 
 .icon-save--light {
