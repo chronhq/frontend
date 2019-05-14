@@ -24,7 +24,7 @@ import Tooltip from '../Tooltip/Tooltip';
 import './LayerToggleSummer.less';
 
 const LayerToggle = ({
-  checked, name, tooltip, click, place, extraClassName = ''
+  checked, name, tooltip, click, place, extraClassName = '', extraStyle = {}
 }) => {
   const className = [
     'image-button',
@@ -43,6 +43,7 @@ const LayerToggle = ({
         onClick={toggle}
       >
         <div
+          style={extraStyle}
           className={className}
         />
       </div>

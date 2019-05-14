@@ -86,6 +86,7 @@ class LayerControlWrapper extends React.Component {
           name='admin'
           checked={false}
           extraClassName='icon icon-magic-wand'
+          extraStyle={{ backgroundSize: '80% 80%' }}
           click={this.openAdmin}
         />
       </React.Fragment>
