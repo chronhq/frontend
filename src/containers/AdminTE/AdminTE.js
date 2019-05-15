@@ -19,13 +19,15 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
-import SmoothCollapse from 'react-smooth-collapse';
+// import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
-import ActionButton, { CreateActionButton, ChangeActionButton } from '../../components/ActionButtons/ActionButtons';
+import ActionButton, { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import Select from '../../components/SlimSelect';
+
+import AdminLevels from '../../components/AdminLevels/AdminLevels';
 
 const keyVal = arr => arr.map(a => ({ value: a, label: a }));
 @inject('store')
@@ -33,7 +35,7 @@ const keyVal = arr => arr.map(a => ({ value: a, label: a }));
 class AdminTE extends React.Component {
   @observable color = 1;
 
-  @observable adminLevel = { value: 'Country', label: 'Country' };
+  @observable adminLevel = 2;
 
   @observable teId = undefined;
 
@@ -61,9 +63,9 @@ class AdminTE extends React.Component {
   render() {
     return (
       <AdminWrapper title='Territorial Entity' back='panel'>
-        <p>
-          {'Enter wikidata id'}
-        </p>
+        <span className='admin__text--topic'>
+          {'1. Find or add TE'}
+        </span>
         <Select
           containerWidth='14rem'
           options={keyVal(['Union', 'Country', 'Region'])}
@@ -71,39 +73,36 @@ class AdminTE extends React.Component {
           placeholder='Territorial Entity id'
           onClick={(e) => { this.teId = e; return false; }}
         />
-        <span>Label placeholder</span>
-        <ChangeActionButton text={this.edit ? 'Cancel' : 'Edit'} click={() => { this.edit = !this.edit; return false; }} />
-        <SmoothCollapse expanded={this.edit}>
-          <div>
-            <p>
-              {'Select color'}
-            </p>
-            <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
-            <p>
-              {'Select admin level'}
-            </p>
-            <Select
-              containerWidth='14rem'
-              options={keyVal(['Union', 'Country', 'Region'])}
-              value={this.adminLevel}
-              placeholder='Admin Level'
-              onClick={(e) => { this.adminLevel = e; return false; }}
-            />
-            <p>
-              {'Predecessor wikidata id'}
-            </p>
-            <Select
-              containerWidth='14rem'
-              options={keyVal(['Union', 'Country', 'Region'])}
-              value={this.predecessorId}
-              placeholder='Predecessor wikidata id'
-              onClick={(e) => { this.predecessorId = e; return false; }}
-            />
-          </div>
-        </SmoothCollapse>
+        <span className='admin__text--topic'>
+          {'2. Check main settings'}
+        </span>
+        <span className='admin__text--label'>Label placeholder</span>
+        <div>
+          <span>
+            {'Admin level'}
+          </span>
+          <AdminLevels
+            selected={this.adminLevel}
+            select={(e) => { this.adminLevel = e; return false; }}
+          />
+          <span>
+            {'Color'}
+          </span>
+          <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
+          <span className='admin__text--topic'>
+            {'Predecessor wikidata id'}
+          </span>
+          <Select
+            containerWidth='14rem'
+            options={keyVal(['Union', 'Country', 'Region'])}
+            value={this.predecessorId}
+            placeholder='Predecessor wikidata id'
+            onClick={(e) => { this.predecessorId = e; return false; }}
+          />
+        </div>
         <CreateActionButton text='New' click={() => true} />
         <TwoActions>
-          <ActionButton text='Delete' />
+          <ActionButton text='Delete' icon='delete' />
           <ActionButton text='Save' icon='save' />
         </TwoActions>
       </AdminWrapper>

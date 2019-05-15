@@ -16,46 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-@import '../../styles/colors.less';
-@import '../../styles/Icons.less';
+import React from 'react';
+import './AdminLevels.less';
 
-.action-button {
-  display: grid;
-  align-items: center;
-  grid-template-columns: auto auto;
-  padding: .2rem .4rem .2rem .2rem;
-  transition: background-color 100ms ease-in-out;
-  font-weight: 300;
-  border: solid 1px;
-  font-size: 1rem;
-  text-align: justify;
-  border-radius: 2px;
-}
+const levels = ['Union', 'Country', 'Region', 'District', 'Municipality', 'City'];
 
-.action-button__icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
+const Level = ({ selected, select, label }) => (
+  <div
+    className={`admin-level ${selected ? 'admin-level-selected' : ''}`}
+    onClick={() => select()}
+    onKeyPress={() => select()}
+    tabIndex={0}
+    role='button'
+  >
+    {label}
+  </div>
+);
 
-.action-button-stretch {
-  .icon();
-  .icon-edit--light();
-  &:hover {
-    opacity: 0.7;
-  }
-}
+const AdminLevels = ({ selected, select }) => (
+  <div className='admin-levels'>
+    {levels.map((c, i) => (
+      <Level selected={(i + 1) === selected} select={() => select(i + 1)} label={c} />
+    ))}
+  </div>
+);
 
-.action-button--enabled {
-  color: @light-grey;
-  background-color: @dark-grey-blue;
-  &:active {
-    transform: translateY(1px);
-    filter: saturate(150%);
-    background-color: @blue-grey;
-  }
-}
-
-.action-button--disabled {
-  color: @light-grey;
-  background-color: @blue-grey;
-}
+export default AdminLevels;
