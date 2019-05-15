@@ -19,6 +19,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
 import mapColors from '../../models/MVTStyles/colors';
 import './ColorPicker.less';
 
@@ -26,19 +27,16 @@ import './ColorPicker.less';
 const ColorBubble = ({
   color, id, selected, click
 }) => (
-  <a
-    href=''
-    onClick={(e) => {
-      e.preventDefault();
-      click(Number(id));
-      return false;
-    }}
+  <Button
+    btnType={BUTTON_TYPE.ICON}
+    btnSize={BUTTON_SIZE.AUTO}
+    onClick={() => click(Number(id))}
   >
     <span
       className={selected ? 'color-picker__color' : undefined}
       style={{ backgroundColor: color }}
     />
-  </a>
+  </Button>
 );
 
 class ColorPicker extends React.Component {

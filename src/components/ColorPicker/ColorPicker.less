@@ -1,6 +1,8 @@
+@import '../../styles/Layers.less';
+
 .color-picker {
   display: flex;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   flex-direction: row;
   justify-content: space-around;
   span {
@@ -9,9 +11,15 @@
     background-color: rgb(127,127,127);
     border-radius: 50%;
     display: inline-block;
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+  button {
+    padding: 0px;
   }
 }
 
 .color-picker__color {
-  box-shadow: 0 0px 5px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: @color-picker-shadow;
 }
