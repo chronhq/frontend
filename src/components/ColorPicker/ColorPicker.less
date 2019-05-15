@@ -1,25 +1,37 @@
 @import '../../styles/Layers.less';
 
+.color--selected {
+  box-shadow: @icon-shadow--hard;
+  margin: 0rem;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.color {
+  height: 1rem;
+  width: 1rem;
+  margin: 0.25rem;
+}
+
+.color-button {
+  background-color: rgb(127,127,127);
+  border-radius: 50%;
+  display: inline-block;
+  transition: width 100ms, height 100ms, margin 100ms;
+  &:active {
+    transform: translateY(1px);
+  }
+  &:hover {
+    .color--selected
+  }
+}
+
 .color-picker {
   display: flex;
   margin: 0.5rem 0;
   flex-direction: row;
   justify-content: space-around;
-  span {
-    height: 1rem;
-    width: 1rem;
-    background-color: rgb(127,127,127);
-    border-radius: 50%;
-    display: inline-block;
-    &:active {
-      transform: translateY(1px);
-    }
-  }
   button {
     padding: 0px;
   }
-}
-
-.color-picker__color {
-  box-shadow: @color-picker-shadow;
 }

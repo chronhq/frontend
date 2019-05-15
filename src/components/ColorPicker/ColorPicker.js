@@ -33,7 +33,7 @@ const ColorBubble = ({
     onClick={() => click(Number(id))}
   >
     <span
-      className={selected ? 'color-picker__color' : undefined}
+      className={selected ? 'color-button color--selected' : 'color-button color'}
       style={{ backgroundColor: color }}
     />
   </Button>
