@@ -29,7 +29,12 @@ const Level = ({ selected, select, label }) => (
     tabIndex={0}
     role='button'
   >
-    {label}
+    <div className='admin-level__radio-container'>
+      <div className={`admin-level__radio-marker admin-level__radio-marker--hover ${selected ? 'admin-level__radio-marker--selected' : ''}`} />
+    </div>
+    <div className='admin-level__label admin-level__label--hover'>
+      {label}
+    </div>
   </div>
 );
 
