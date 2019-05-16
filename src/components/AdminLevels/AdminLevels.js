@@ -19,29 +19,14 @@
 import React from 'react';
 import './AdminLevels.less';
 
-const levels = ['Union', 'Country', 'Region', 'District', 'Municipality', 'City'];
+import RadioButton from '../RadioButton/RadioButton';
 
-const Level = ({ selected, select, label }) => (
-  <div
-    className={`admin-level ${selected ? 'admin-level-selected' : ''}`}
-    onClick={() => select()}
-    onKeyPress={() => select()}
-    tabIndex={0}
-    role='button'
-  >
-    <div className='admin-level__radio-container'>
-      <div className={`admin-level__radio-marker admin-level__radio-marker--hover ${selected ? 'admin-level__radio-marker--selected' : ''}`} />
-    </div>
-    <div className='admin-level__label admin-level__label--hover'>
-      {label}
-    </div>
-  </div>
-);
+const levels = ['Union', 'Country', 'Region', 'District', 'Municipality', 'City'];
 
 const AdminLevels = ({ selected, select }) => (
   <div className='admin-levels'>
     {levels.map((c, i) => (
-      <Level selected={(i + 1) === selected} select={() => select(i + 1)} label={c} />
+      <RadioButton selected={(i + 1) === selected} select={() => select(i + 1)} label={c} />
     ))}
   </div>
 );

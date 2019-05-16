@@ -16,7 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-.admin-levels {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import './RadioButton.less';
+
+
+const RadioButton = ({ selected, select, label }) => (
+  <div
+    className='rbtn'
+    onClick={() => select()}
+    onKeyPress={() => select()}
+    tabIndex={0}
+    role='button'
+  >
+    <div className='rbtn__container'>
+      <div className={`rbtn__marker rbtn__marker--hover ${selected ? 'rbtn__marker--selected' : ''}`} />
+    </div>
+    <div className='rbtn__label rbtn__label--hover'>
+      {label}
+    </div>
+  </div>
+);
+
+RadioButton.propTypes = {
+  selected: PropTypes.bool.isRequired,
+  select: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+};
+
+export default RadioButton;
