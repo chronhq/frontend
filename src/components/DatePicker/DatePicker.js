@@ -31,11 +31,15 @@ const minEra = 0;
 const maxEra = 2000;
 
 
-export const dateToLocaleString = date => (
-  date.toLocaleString(window.navigator.language || 'en-US', {
-    month: 'short', year: 'numeric', day: '2-digit', timeZone: 'UTC'
-  })
-);
+export const dateToLocaleString = (date) => {
+  try {
+    return date.toLocaleString(window.navigator.language || 'en-US', {
+      month: 'short', year: 'numeric', day: '2-digit', timeZone: 'UTC'
+    });
+  } catch (e) {
+    return 'No Date';
+  }
+};
 
 class DatePicker extends React.Component {
   constructor(props) {
