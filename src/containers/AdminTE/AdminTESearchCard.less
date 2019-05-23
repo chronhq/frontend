@@ -1,0 +1,50 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+@import '../../styles/colors.less';
+
+.te-search-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  padding: 0 0.5rem;
+  border: solid 1px;
+  border-radius: 2px;
+  border-color: @dark-grey-blue;
+  a {
+    pointer-events: all;
+  }
+  &:hover {
+    background-color: #ccc;
+  }
+  &--selected {
+    border-color: @main-blue;
+    pointer-events: none;
+    background: repeating-linear-gradient(-45deg,#ccc,#ccc 10px,#ddd 10px,#ddd 20px);
+  }
+}
+
+.te-search-card__label {
+  font-weight: normal;
+}
+
+.te-search-card__info {
+  margin-top: 0.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
