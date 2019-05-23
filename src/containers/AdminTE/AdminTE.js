@@ -19,13 +19,14 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
-// import SmoothCollapse from 'react-smooth-collapse';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
-import ActionButton, { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
+import ActionButton from '../../components/ActionButtons/ActionButtons';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import Select from '../../components/SlimSelect';
+import AdminTESelector from './AdminTESelector';
+import TextTopic from './TextTopic';
 
 import AdminLevels from '../../components/AdminLevels/AdminLevels';
 
@@ -63,35 +64,19 @@ class AdminTE extends React.Component {
   render() {
     return (
       <AdminWrapper title='Territorial Entity' back='panel'>
-        <span className='admin__text--topic'>
-          {'1. Find or add TE'}
-        </span>
-        <Select
-          containerWidth='14rem'
-          options={keyVal(['Union', 'Country', 'Region'])}
-          value={this.teId}
-          placeholder='Territorial Entity id'
-          onClick={(e) => { this.teId = e; return false; }}
-        />
-        <span className='admin__text--topic'>
-          {'2. Check main settings'}
-        </span>
+        <TextTopic text='1. Choose Territorial Entity' />
+        <AdminTESelector />
+        <TextTopic text='2. Check main settings' />
         <span className='admin__text--label'>Label placeholder</span>
         <div>
-          <span>
-            {'Admin level'}
-          </span>
+          <TextTopic text='2.1 Admin level' />
           <AdminLevels
             selected={this.adminLevel}
             select={(e) => { this.adminLevel = e; return false; }}
           />
-          <span>
-            {'Color'}
-          </span>
+          <TextTopic text='2.2 Color' />
           <ColorPicker selected={this.color} changeColor={c => this.changeColor(c)} />
-          <span className='admin__text--topic'>
-            {'Predecessor wikidata id'}
-          </span>
+          <TextTopic text='Predecessor wikidata id' />
           <Select
             containerWidth='14rem'
             options={keyVal(['Union', 'Country', 'Region'])}
@@ -100,7 +85,6 @@ class AdminTE extends React.Component {
             onClick={(e) => { this.predecessorId = e; return false; }}
           />
         </div>
-        <CreateActionButton text='New' click={() => true} />
         <TwoActions>
           <ActionButton text='Delete' icon='delete' />
           <ActionButton text='Save' icon='save' />
