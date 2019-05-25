@@ -46,7 +46,12 @@ class AdminTESearchBar extends React.Component {
           onChange={e => this.input(e.target.value)}
           onKeyPress={e => e.key === 'Enter' && this.search()}
         />
-        <ActionButtonFill click={this.search} text='Search' icon='search--light' />
+        <ActionButtonFill
+          click={this.search}
+          text='Search'
+          icon='search--light'
+          style={{ borderRadius: '0 2px 2px 0' }}
+        />
       </div>
     );
   }

@@ -43,11 +43,12 @@ const ActionButton = ({
 );
 
 const ActionButtonFill = ({
-  click, enabled = true, text = '', icon = 'edit--light'
+  click, enabled = true, text = '', icon = 'edit--light', style = {}
 }) => (
   <div
     className={`action-button--inline action-button--${enabled ? 'enabled' : 'disabled'}`}
     role='button'
+    style={style}
     tabIndex={0}
     onKeyDown={enabled ? click : () => null}
     onClick={enabled ? click : () => null}
