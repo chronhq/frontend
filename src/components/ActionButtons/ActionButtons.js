@@ -43,15 +43,20 @@ const ActionButton = ({
 );
 
 const ActionButtonFill = ({
-  click, enabled = true
+  click, enabled = true, text = '', icon = 'edit--light'
 }) => (
   <div
-    className={`action-button-stretch action-button--${enabled ? 'enabled' : 'disabled'}`}
+    className={`action-button--inline action-button--${enabled ? 'enabled' : 'disabled'}`}
     role='button'
     tabIndex={0}
     onKeyDown={enabled ? click : () => null}
     onClick={enabled ? click : () => null}
-  />
+  >
+    <div className={`icon icon-${icon} ${text ? 'action-button__icon' : ''}`} />
+    <div>
+      {text}
+    </div>
+  </div>
 );
 
 
