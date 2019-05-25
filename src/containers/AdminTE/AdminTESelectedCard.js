@@ -17,50 +17,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-
-import { observer, inject, PropTypes as PropTypesMobx } from 'mobx-react';
-import { computed, action } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import { computed } from 'mobx';
 
 import AdminTESearchCard from './AdminTESearchCard';
 
 @inject('store')
 @observer
-class AdminTESearchResults extends React.Component {
+class AdminTESelected extends React.Component {
   @computed get form() {
     return this.props.store.admin.forms.te;
   }
 
-  @computed get empty() {
-    return this.form.data.search ? 'No results' : '';
+  @computed get visible() {
+    return (this.form.data.new || this.form.data.te);
   }
 
-  @action select(te) {
-    // TODO clean the form
-    this.form.data.new = false;
-    this.form.data.search = '';
-    this.form.data.te = te;
+  @computed get data() {
+    return this.form.data.new
+      ? this.form.data.data
+      : undefined;
+  }
+
+  @computed get te() {
+    return this.form.data.te || 0;
   }
 
   render() {
-    return (
-      <div className='te-selector__results'>
-        {this.props.results.length > 0
-          ? this.props.results.map(c => (
-            <AdminTESearchCard key={`sc_${c}`} te={c} select={() => this.select(c)} />
-          ))
-          : this.empty
-        }
-      </div>
-    );
+    // {this.form.data.te && <AdminTESearchCard te={this.form.data.te} selected />}
+    return this.visible
+      ? (
+        <AdminTESearchCard te={this.te} data={this.data} selected />
+      )
+      : null;
   }
 }
 
-AdminTESearchResults.defaultProps = {
-  results: []
-};
-
-AdminTESearchResults.propTypes = {
-  results: PropTypesMobx.observableArray
-};
-
-export default AdminTESearchResults;
+export default AdminTESelected;

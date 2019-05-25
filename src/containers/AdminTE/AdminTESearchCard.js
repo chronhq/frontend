@@ -19,7 +19,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { observer, inject } from 'mobx-react';
+import { observer, inject, PropTypes as PropTypesMobx } from 'mobx-react';
 import { computed } from 'mobx';
 
 import DateRangeWidget from '../../components/DatePicker/DateRangeWidget';
@@ -30,22 +30,21 @@ import './AdminTESearchCard.less';
 @inject('store')
 @observer
 class AdminTESearchCard extends React.Component {
-  @computed get tes() {
-    return this.props.store.data.territorialEntities.data;
+  @computed get teData() {
+    return this.props.store.data.territorialEntities.data[this.props.te] || {};
   }
 
   @computed get te() {
     return {
-      ...this.tes[this.props.te],
-      label: 'TE Label',
-      inception: new Date('2000-01-01'),
-      dissolution: new Date('2000-01-02'),
-      stv: Math.round(Math.random() * 20),
+      ...this.props.data,
+      ...this.teData,
     };
   }
 
   @computed get label() {
-    return `(${this.te.id}) ${this.te.label}`;
+    return this.te.id
+      ? `(${this.te.id}) ${this.te.label}`
+      : this.te.label;
   }
 
   render() {
@@ -77,12 +76,20 @@ class AdminTESearchCard extends React.Component {
 }
 
 AdminTESearchCard.defaultProps = {
+  te: 0,
+  data: {
+    label: 'TE Label',
+    inception: new Date('2000-01-01'),
+    dissolution: new Date('2000-01-02'),
+    stv: Math.round(Math.random() * 20)
+  },
   selected: false,
   select: () => true,
 };
 
 AdminTESearchCard.propTypes = {
-  te: PropTypes.number.isRequired,
+  data: PropTypesMobx.objectOrObservableObject,
+  te: PropTypes.number,
   select: PropTypes.func,
   selected: PropTypes.bool,
 };
