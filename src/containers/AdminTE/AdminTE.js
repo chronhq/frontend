@@ -29,6 +29,7 @@ import AdminTESelector from './AdminTESelector';
 import TextTopic from './TextTopic';
 
 import AdminLevels from '../../components/AdminLevels/AdminLevels';
+import AdminTESelectedCard from './AdminTESelectedCard';
 
 const keyVal = arr => arr.map(a => ({ value: a, label: a }));
 @inject('store')
@@ -64,10 +65,9 @@ class AdminTE extends React.Component {
   render() {
     return (
       <AdminWrapper title='Territorial Entity' back='panel'>
-        <TextTopic text='1. Choose Territorial Entity' />
         <AdminTESelector />
         <TextTopic text='2. Check main settings' />
-        <span className='admin__text--label'>Label placeholder</span>
+        <AdminTESelectedCard />
         <div>
           <TextTopic text='2.1 Admin level' />
           <AdminLevels

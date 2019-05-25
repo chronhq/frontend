@@ -21,6 +21,7 @@ import { observer, inject } from 'mobx-react';
 import { computed, action, runInAction } from 'mobx';
 
 import AdminTESearchResults from './AdminTESearchResults';
+import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
 import AdminTENew from './AdminTENew';
 import TextTopic from './TextTopic';
 
@@ -30,7 +31,6 @@ class AdminTESelector extends React.Component {
   componentDidMount() {
     runInAction(() => {
       this.form.data.search = '';
-      this.form.data.wikidataId = '';
       this.form.data.te = undefined;
       this.form.data.new = false;
     });
@@ -54,16 +54,16 @@ class AdminTESelector extends React.Component {
   }
 
   @action input(a) {
-    this.form.data.search = a.target.value;
+    this.form.data.search = a;
   }
 
   render() {
     return (
       <div className='te-selector'>
+        <TextTopic text='1. Choose Territorial Entity' />
+        <br />
         <TextTopic text='1.1 Search by wikidata id' />
-        <div className='te-selector__search'>
-          <input type='search' value={this.form.data.search} onChange={e => this.input(e)} />
-        </div>
+        <AdminTESearchBar search={e => this.input(e)} />
         <AdminTESearchResults results={this.results} />
         <AdminTENew />
       </div>

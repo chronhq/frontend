@@ -18,38 +18,59 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed, action } from 'mobx';
-import SmoothCollapse from 'react-smooth-collapse';
-
-import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
+import { computed, action, observable } from 'mobx';
+import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
 import TextTopic from './TextTopic';
+import AdminTESearchCard from './AdminTESearchCard';
+
 
 @inject('store')
 @observer
 class AdminTENew extends React.Component {
+  @observable wId = undefined;
+
+  @computed get wikidata() {
+    return this.wId in this.props.store.wikidata.cache
+      ? this.props.store.wikidata.cache[this.wId].current
+      : { country: {} };
+  }
+
+  @computed get data() {
+    return {
+      label: this.wikidata.country.label,
+      inception: this.wikidata.country.inception,
+      dissolution: this.wikidata.country.dissolution,
+      wikidata_id: this.wId,
+      stv: 0,
+    };
+  }
+
   @computed get form() {
     return this.props.store.admin.forms.te;
   }
 
-  @action input(a) {
-    this.form.data.wikidataId = a.target.value;
+  @action search(a) {
+    this.form.data.te = undefined;
+    this.wId = a;
+    this.props.store.wikidata.add('country', a);
   }
 
-  @action show() {
-    this.form.data.te = undefined;
+  @action select() {
+    // TODO clean the form
+    this.form.data.search = '';
     this.form.data.new = true;
+    this.form.data.data = this.data;
+    this.form.data.wikidata_id = this.wId;
   }
 
   render() {
     return this.form.data.search ? (
       <div className='te-selector'>
         <TextTopic text='1.2 Add new entity' />
-        <CreateActionButton text='New' click={() => this.show()} />
-        <SmoothCollapse expanded={this.form.data.new}>
-          <div className='te-selector__search'>
-            <input type='search' value={this.form.data.wikidataId} onChange={e => this.input(e)} />
-          </div>
-        </SmoothCollapse>
+        <AdminTESearchBar search={e => this.search(e)} />
+        {this.data.label !== undefined && (
+          <AdminTESearchCard data={this.data} select={() => this.select()} />
+        )}
       </div>
     ) : null;
   }
