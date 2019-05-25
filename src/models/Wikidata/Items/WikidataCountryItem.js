@@ -37,11 +37,17 @@ class WikidataCountryItem extends WikidataItem {
   fixData(key, label, dates = true) {
     return () => {
       this.data[key] = this.data[key].map((d) => {
-        const fixedDates = dates ? this.fixDates(d) : {};
+        const fixedDates = dates ? this.fixDates(d) : this.fixCountryDates(d);
         const fixedLabel = label ? this.labelAndURI(d, label) : {};
         return { ...d, ...fixedDates, ...fixedLabel };
       });
     };
+  }
+
+  fixCountryDates = (h) => {
+    const inception = this.dateFromLiteral(h.inception);
+    const dissolution = this.dateFromLiteral(h.dissolution);
+    return { ...h, inception, dissolution };
   }
 
   fixDates = (h) => {
