@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { computed, action, observable } from 'mobx';
 import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
@@ -37,6 +38,7 @@ class AdminTENew extends React.Component {
 
   @computed get data() {
     return {
+      id: undefined,
       label: this.wikidata.country.label,
       inception: this.wikidata.country.inception,
       dissolution: this.wikidata.country.dissolution,
@@ -50,21 +52,16 @@ class AdminTENew extends React.Component {
   }
 
   @action search(a) {
-    this.form.data.te = undefined;
     this.wId = a;
     this.props.store.wikidata.add('country', a);
   }
 
   @action select() {
-    // TODO clean the form
-    this.form.data.search = '';
-    this.form.data.new = true;
-    this.form.data.data = this.data;
-    this.form.data.wikidata_id = this.wId;
+    this.props.select(undefined, this.data);
   }
 
   render() {
-    return this.form.data.search ? (
+    return (
       <div className='te-selector'>
         <TextTopic text='1.2 Add new entity' />
         <AdminTESearchBar search={e => this.search(e)} />
@@ -72,8 +69,12 @@ class AdminTENew extends React.Component {
           <AdminTESearchCard data={this.data} select={() => this.select()} />
         )}
       </div>
-    ) : null;
+    );
   }
 }
+
+AdminTENew.propTypes = {
+  select: PropTypes.func.isRequired,
+};
 
 export default AdminTENew;

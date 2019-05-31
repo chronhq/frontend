@@ -17,8 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { observer, inject } from 'mobx-react';
-import { computed, action, runInAction } from 'mobx';
+import {
+  computed, action, observable, /* runInAction */
+} from 'mobx';
 
 import AdminTESearchResults from './AdminTESearchResults';
 import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
@@ -28,20 +32,14 @@ import TextTopic from './TextTopic';
 @inject('store')
 @observer
 class AdminTESelector extends React.Component {
-  componentDidMount() {
-    runInAction(() => {
-      this.form.data.search = '';
-      this.form.data.te = undefined;
-      this.form.data.new = false;
-    });
+  @observable search = '';
+
+  @computed get new() {
+    return (this.props.add && this.search);
   }
 
   @computed get form() {
     return this.props.store.admin.forms.te;
-  }
-
-  @computed get search() {
-    return this.form.data.search;
   }
 
   @computed get tes() {
@@ -50,25 +48,63 @@ class AdminTESelector extends React.Component {
 
   @computed get results() {
     return Object.keys(this.tes)
-      .filter(f => String(this.tes[f].wikidata_id) === this.form.data.search);
+      .filter(f => String(this.tes[f].wikidata_id) === this.search);
+  }
+
+  select = (te, data) => {
+    this.input('');
+    const d = te !== undefined
+      ? {
+        id: this.tes[te].id,
+        label: this.tes[te].label || 'Label',
+        inception: this.tes[te].inception || '2000-01-01',
+        dissolution: this.tes[te].dissolution || '2000-01-02',
+        wikidata_id: this.tes[te].wikidata_id,
+        stv: this.tes[te].stv || 0,
+      }
+      : data;
+    const f = {
+      id: d.id,
+      wikidata_id: d.wikidata_id,
+      color: te !== undefined ? this.tes[te].color : 1,
+      admin_level: te !== undefined ? this.tes[te].admin_level : 2,
+      predecessor: [],
+    };
+
+    this.props.select(d, f);
   }
 
   @action input(a) {
-    this.form.data.search = a;
+    this.search = a;
   }
 
   render() {
     return (
       <div className='te-selector'>
-        <TextTopic text='1. Choose Territorial Entity' />
-        <br />
-        <TextTopic text='1.1 Search by wikidata id' />
+        <TextTopic text='Search by wikidata id' />
         <AdminTESearchBar search={e => this.input(e)} />
-        <AdminTESearchResults results={this.results} />
-        <AdminTENew />
+        <AdminTESearchResults
+          results={this.results}
+          select={this.select}
+          dirty={Boolean(this.search)}
+        />
+        {this.new && <AdminTENew select={this.select} />}
       </div>
     );
   }
 }
+
+AdminTESelector.defaultProps = {
+  add: true,
+  select: (data, form) => {
+    if (data) console.log('Selecting data', data);
+    if (form) console.log('Selecting form', form);
+  }
+};
+
+AdminTESelector.propTypes = {
+  add: PropTypes.bool,
+  select: PropTypes.func,
+};
 
 export default AdminTESelector;

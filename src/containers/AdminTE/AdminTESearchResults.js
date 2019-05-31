@@ -17,9 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { observer, inject, PropTypes as PropTypesMobx } from 'mobx-react';
-import { computed, action } from 'mobx';
+import { computed } from 'mobx';
 
 import AdminTESearchCard from './AdminTESearchCard';
 
@@ -31,22 +32,16 @@ class AdminTESearchResults extends React.Component {
   }
 
   @computed get empty() {
-    return this.form.data.search ? 'No results' : '';
+    return this.props.dirty ? 'No results' : '';
   }
 
-  @action select(te) {
-    // TODO clean the form
-    this.form.data.new = false;
-    this.form.data.search = '';
-    this.form.data.te = te;
-  }
 
   render() {
     return (
       <div className='te-selector__results'>
         {this.props.results.length > 0
           ? this.props.results.map(c => (
-            <AdminTESearchCard key={`sc_${c}`} te={c} select={() => this.select(c)} />
+            <AdminTESearchCard key={`sc_${c}`} te={c} select={() => this.props.select(c)} />
           ))
           : this.empty
         }
@@ -56,11 +51,13 @@ class AdminTESearchResults extends React.Component {
 }
 
 AdminTESearchResults.defaultProps = {
-  results: []
+  results: [],
+  dirty: false,
 };
 
 AdminTESearchResults.propTypes = {
-  results: PropTypesMobx.observableArray
+  results: PropTypesMobx.observableArray,
+  dirty: PropTypes.bool,
 };
 
 export default AdminTESearchResults;
