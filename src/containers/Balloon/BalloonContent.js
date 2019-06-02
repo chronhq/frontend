@@ -62,14 +62,19 @@ class BalloonContent extends React.Component {
         case 'birth':
         // actor from wikidata
           return {
-            id: `personHoverBalloon_${pin.person.id}`,
+            id: `personHoverBalloon_${pin[pin.type].id}`,
             message: (
               <PersonFact
-                person={pin.person}
-                key={`balloon_person_${pin.type}_${pin.person.id}`}
+                person={pin[pin.type]}
+                type={pin.type === 'death'
+                  ? this.i18n.personDeath
+                  : this.i18n.personBirth
+                }
+                event={pin[pin.type][[pin.type]] || {}}
+                key={`balloon_person_${pin.type}_${pin[pin.type].id}`}
               />
             ),
-            sources: <Sources id={pin.person.id} type={pin.type} />
+            sources: <Sources id={pin[pin.type].id} type={pin.type} />
           };
         case 'battle':
           return {

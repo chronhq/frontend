@@ -31,10 +31,9 @@ import DeckViewport from './DeckViewport';
 import AnalyticModel from './AnalyticModel';
 
 import MapStyle from './MVTStyles/MapStyleModel';
-import WikidataFetcher from './Wikidata/WikidataFetcher';
-import WikidataStore from './Wikidata/WikidataStore';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
+import Wikidata from './Wikidata/Wikidata';
 
 export default class storeModel {
   @observable fonts = {};
@@ -47,14 +46,13 @@ export default class storeModel {
     this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
-    this.wikidata = new WikidataFetcher(this);
-    this.wikistore = new WikidataStore(this);
     this.courseSelection = new CourseSelection(this);
     this.pins = new PinsModel(this);
     this.balloon = new BalloonModel(this);
     this.i18n = new Internationalization(this);
     this.mapStyle = new MapStyle(this);
     this.search = new DashboardSearch(this);
+    this.wikidata = new Wikidata(this);
     this.analytics = new AnalyticModel();
   }
 }
