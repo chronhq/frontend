@@ -100,11 +100,25 @@ module.exports = (env = {}) => ({
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,
-        loader: 'url-loader?limit=4096&name=[name].[ext]'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096,
+            },
+          },
+        ],
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?limit=10000&name=[name].[ext]'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
       }
     ]
   },
