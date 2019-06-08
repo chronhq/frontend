@@ -164,8 +164,6 @@ export default class YearModel {
       const date = new Date(narration.map_datetime);
       this.setDate(julianInt(date));
       this.tick = tick;
-      // Fetch free data for free pins
-      this.rootStore.wikidata.getItems(this.rootStore.pins.narrationFreeDeps);
       if (this.maxTick === tick && this.rootStore.courseSelection.courseId > 0) {
         this.rootStore.analytics.metricHit('narrative_completed');
       }

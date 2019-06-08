@@ -18,21 +18,21 @@
  */
 import React from 'react';
 
-const PersonFact = ({ person }) => (
+const PersonFact = ({ person, type, event }) => (
   <div key={person.key}>
     <p className='factTitle'>
-      {person.title}
-    </p>
-    <p className='factHeader'>
       {person.label}
     </p>
+    <p className='factHeader'>
+      {type}
+    </p>
     <p className='factDate'>
-      {person.birthDate}
+      {person.dateOfBirth}
       <br />
-      {person.deathDate}
+      {person.dateOfDeath}
     </p>
     <p className='factDescription'>
-      {person.location}
+      {event.label}
     </p>
   </div>
 );

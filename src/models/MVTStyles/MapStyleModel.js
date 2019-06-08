@@ -62,9 +62,9 @@ export default class MapStyleModel {
     return stvBorders(this.rootStore.year.now);
   }
 
-  @computed get pinsGJ() {
-    return legacyPinsStyle(this.rootStore.pins.pins, 'pinsGJ');
-  }
+  // @computed get pinsGJ() {
+  //   return legacyPinsStyle(this.rootStore.pins.pins, 'pinsGJ');
+  // }
 
   @computed get dummyPinsGJ() {
     return legacyPinsStyle(this.rootStore.pins.dummyPinsGJ, 'dummyPinsGJ');
@@ -103,7 +103,7 @@ export default class MapStyleModel {
         ...this.decor.sources,
         ...this.bordersStyle.sources,
         ...this.cities.sources,
-        ...this.pinsGJ.sources,
+        // ...this.pinsGJ.sources,
         ...this.dummyPinsGJ.sources,
         ...this.pins.sources,
       }
@@ -115,7 +115,7 @@ export default class MapStyleModel {
         ...this.decor.layers,
         ...this.bordersStyle.layers,
         ...this.cities.layers,
-        ...this.pinsGJ.layers,
+        // ...this.pinsGJ.layers,
         ...this.dummyPinsGJ.layers,
         ...this.pins.layers,
       ]

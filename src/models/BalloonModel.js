@@ -17,7 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, computed, action } from 'mobx';
-import { typesMapping } from './Wikidata/WikidataHelper';
 
 export default class BalloonModel {
   constructor(rootStore) {
@@ -105,8 +104,10 @@ export default class BalloonModel {
 
   @action setMVTEventBalloon(a, force = false) {
     if (Boolean(a) && (!this.eventPin || a !== this.payload)) {
-      const wIds = a.map(f => `Q${f.properties.wikidata_id}`);
-      this.rootStore.wikidata.getItems(wIds);
+      a.map((f) => {
+        this.rootStore.wikidata.add(f.layer.id, f.properties.wikidata_id);
+        return false;
+      });
       if (a.some(f => f.layer.id === 'battle')) {
         this.rootStore.analytics.metricHit('check_battle');
       }
@@ -116,15 +117,19 @@ export default class BalloonModel {
 
   @action setMVTCountryBalloon(a, force = false) {
     if (Boolean(a) && (!this.countryHover || a !== this.payload)) {
-      this.rootStore.wikidata.getItems([`Q${a.wikidata_id}`]);
+      this.rootStore.wikidata.add('country', a.wikidata_id);
       if (force === true) this.rootStore.analytics.metricHit('check_country');
     }
+    if (Boolean(a) && force) this.rootStore.wikidata.cache[a.wikidata_id].loadExtraData();
     this.changeBalloonStatus({ a, force, countryHover: Boolean(a) });
   }
 
 
   // Set active pin by it's key for Deck GL layer and SVG Free pins
   @action setPinBalloon(a, free = false, force = false) {
+    if (Boolean(a) && (!this.pinHasNoLocation || a !== this.payload)) {
+      this.rootStore.wikidata.add(a.type, a.wikidata_id);
+    }
     this.changeBalloonStatus({
       a, force, pinHasNoLocation: free, deckPinId: Boolean(a)
     });
@@ -150,16 +155,24 @@ export default class BalloonModel {
     return this.rootStore.pins.freePins;
   }
 
+  wikidataInfo = (wId, type) => {
+    if (this.rootStore.wikidata.cache[wId] === undefined) {
+      return undefined;
+    }
+    return {
+      key: wId,
+      type,
+      [type]: this.rootStore.wikidata.cache[wId].item
+    };
+  }
+
   @computed get getSelectedEvents() {
     if (this.eventPin) {
       try {
         const data = this.payload.map((f) => {
-          const wId = `Q${f.properties.wikidata_id}`;
-          if (this.rootStore.wikidata.cache[wId] === undefined) {
-            return undefined;
-          }
-          const layer = typesMapping[f.layer.id].store;
-          return this.rootStore.wikistore[layer].getEventFromWid(f.layer.id, wId);
+          const wId = f.properties.wikidata_id;
+          const type = f.layer.id;
+          return this.wikidataInfo(wId, type);
         }).filter(f => (f !== undefined && f !== null));
         return { info: data };
       } catch (e) {
@@ -171,7 +184,8 @@ export default class BalloonModel {
 
   @computed get selected() {
     if (this.pinHasNoLocation) {
-      return this.freePins.find(pin => pin.key === this.payload);
+      const pin = this.wikidataInfo(this.payload.wikidata_id, this.payload.type);
+      return { info: pin ? [pin] : [] };
     } if (this.deckPin) {
       return this.pins.find(pin => pin.key === this.deckPin);
     } if (this.countryHover) {

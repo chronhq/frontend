@@ -103,7 +103,6 @@
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
-    "webpack-bundle-analyzer": "^3.1.0",
-    "wikidata-sdk": "^5.16.2"
+    "webpack-bundle-analyzer": "^3.1.0"
   }
 }

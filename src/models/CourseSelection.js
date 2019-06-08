@@ -87,14 +87,6 @@ export default class CourseSideEffects {
     this.rootStore.data.cachedData.wipe();
     if (this.courseId === 0) {
       this.rootStore.data.cachedData.get();
-      when(
-        () => this.rootStore.data.cachedData.status.loaded,
-        () => {
-          const wIds = Object.values(this.rootStore.data.cachedData.data)
-            .map(c => `Q${c.wikidata_id}`);
-          this.rootStore.wikidata.getItems(wIds);
-        }
-      );
     }
   }
 

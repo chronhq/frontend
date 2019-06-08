@@ -51,7 +51,7 @@ class DashboardSearch {
       d.attached_events.map(a => (
         // in case of ids instead of objects;
         a.wikidata_id !== undefined
-          ? this.wikidataLabel(`Q${a.wikidata_id}`)
+          ? this.wikidataLabel(a.wikidata_id)
           : ''
       )).join(' ')
     ];
