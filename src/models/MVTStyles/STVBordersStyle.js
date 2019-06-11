@@ -20,7 +20,7 @@ import mapColors from './colors';
 
 const colors = Object.keys(mapColors).reduce((p, c) => ([...p, String(mapColors[c]), c]), []);
 
-const STVBorders = (now) => {
+const STVBorders = (now, visible) => {
   const url = 'stv';
   const opacity = {
     min: 0.75,
@@ -30,6 +30,8 @@ const STVBorders = (now) => {
     type: 'vector',
     tiles: [`${window.location.origin}/mvt/${url}/{z}/{x}/{y}`]
   };
+
+  const visibility = visible ? 'visible' : 'none';
 
   // Filter benchmark:
   // None:
@@ -76,6 +78,7 @@ const STVBorders = (now) => {
       'line-join': 'round',
     },
     filter,
+    visibility,
     type: 'line',
     paint: {
       'line-color': 'rgb(127, 127, 127)',

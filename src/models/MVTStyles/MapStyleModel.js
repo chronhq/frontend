@@ -59,7 +59,10 @@ export default class MapStyleModel {
   @observable backgroundStyle = { ...BODY, sources: {}, layers: [] };
 
   @computed get bordersStyle() {
-    return stvBorders(this.rootStore.year.now);
+    // Remove layer from style is faster than change visibility property
+    return this.rootStore.flags.layer.borders.value
+      ? stvBorders(this.rootStore.year.now, true)
+      : { sources: {}, layers: [] };
   }
 
   // @computed get pinsGJ() {
