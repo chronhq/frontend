@@ -19,6 +19,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
+import { withRouter } from 'react-router-dom';
 
 import StoryCard from '../../components/StoryCard/StoryCard';
 import './StoryListSummer.less';
@@ -30,6 +31,13 @@ class StoryList extends React.Component {
     return this.props.store.search.Narratives.entities;
   }
 
+  handleStorySelection = (url) => {
+    this.props.store.courseSelection.cleanup();
+    const course = this.props.store.courseSelection.find(url);
+    this.props.store.courseSelection.select(course.id, course.url);
+    this.props.history.push(`/${url}`);
+  }
+
   render() {
     return (
       <div className='story-list'>
@@ -37,7 +45,7 @@ class StoryList extends React.Component {
           <StoryCard
             key={`card_${story.url}`}
             story={story}
-            handleStorySelection={this.props.handleStorySelection}
+            handleStorySelection={this.handleStorySelection}
           />
         ))}
       </div>
@@ -45,4 +53,4 @@ class StoryList extends React.Component {
   }
 }
 
-export default StoryList;
+export default withRouter(StoryList);
