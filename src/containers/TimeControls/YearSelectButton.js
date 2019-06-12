@@ -28,14 +28,16 @@ class YearButton extends React.Component {
     this.props.store.analytics.metricHit('year_change');
   }
 
+  // ids are important for correct closing of Modal window of YearInput
   render() {
     return (
       <Button
+        id='yearInputButton'
         btnType={BUTTON_TYPE.ICON}
         btnSize={BUTTON_SIZE.HUGE}
         onClick={this.toggle}
       >
-        <span className='time-controls__year'>
+        <span id='yearInputText' className='time-controls__year'>
           {String(this.props.store.year.tuneValueG)}
         </span>
       </Button>
