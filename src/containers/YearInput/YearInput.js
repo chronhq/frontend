@@ -60,7 +60,7 @@ class YearInput extends React.Component {
   @observable disabled = false;
 
   @computed get items() {
-    const { min: start, max: end } = this.props.store.year;
+    const { min: start, max: end } = this.props.store.year.limits;
     const len = end - start;
     return new Array(len).fill(start).map((v, i) => {
       const y = v + i;
@@ -91,9 +91,9 @@ class YearInput extends React.Component {
     this.props.store.year.resetTuneValue();
   }
 
-  saveTuneValue = value => this.props.store.year.setTuneValue(value);
+  setTuneValue = value => this.props.store.year.setTuneValue(value);
 
-  handleSet = () => {
+  handleSave = () => {
     this.props.store.year.saveTuneValue();
     this.close();
   }
@@ -104,25 +104,25 @@ class YearInput extends React.Component {
       <div className='yearinput__window layer-3'>
         <div className={this.className}>
           <TypeOne
-            now={this.props.store.year.tuneValue}
-            cb={this.saveTuneValue}
+            now={this.props.store.year.tuneValueG}
+            cb={this.setTuneValue}
           />
         </div>
         <div
           onWheel={this.handleWheel}
         >
           <Picker
-            selectedValue={this.props.store.year.tuneValue}
+            selectedValue={this.props.store.year.tuneValueG}
             disabled={this.disabled}
-            defaultSelectedValue={this.props.store.year.tuneValue}
-            onValueChange={this.saveTuneValue}
+            defaultSelectedValue={this.props.store.year.tuneValueG}
+            onValueChange={this.setTuneValue}
           >
             {this.items}
           </Picker>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button
-            onClick={this.handleSet}
+            onClick={this.handleSave}
             btnColor={BUTTON_COLOR.LIGHT}
             btnSize={BUTTON_SIZE.WIDE}
             disabled={!this.props.store.year.tuneIsValid}

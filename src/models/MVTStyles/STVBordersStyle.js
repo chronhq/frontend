@@ -34,17 +34,14 @@ const STVBorders = (now, visible) => {
   const visibility = visible ? 'visible' : 'none';
 
   // Filter benchmark:
-  // None:
+  // None: ['none', ['>', 'start_date', now], ['<', 'end_date', now]]
   // Max:  508.68505859375 ; Min:  53.138916015625 ; Avg: 164.41848609561012
-  // All:
+  // All: ['all', ['<=', 'start_date', now], ['>=', 'end_date', now]]
   // Max:  567.376953125 ; Min:  44.275146484375 ; Avg: 153.68534226190476
   const filter = [
-    // 'none',
-    // ['>', 'start', now],
-    // ['<', 'end', now],
     'all',
-    ['<=', 'start', now],
-    ['>=', 'end', now]
+    ['<=', 'start_date', now],
+    ['>=', 'end_date', now]
   ];
 
   const fill = {

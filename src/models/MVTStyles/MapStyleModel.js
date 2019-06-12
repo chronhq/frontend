@@ -83,6 +83,7 @@ export default class MapStyleModel {
 
   @computed get pins() {
     const { now, tick } = this.rootStore.year;
+    const next = this.rootStore.year.getDateByStep();
     const { courseId } = this.rootStore.courseSelection;
     const narrations = this.rootStore.data.narrations.data;
     const wIds = (courseId > 0 && narrations[tick] !== undefined)
@@ -91,6 +92,7 @@ export default class MapStyleModel {
 
     return pinsStyle(
       now,
+      next,
       this.rootStore.flags.pins.list,
       courseId,
       wIds.length > 0 ? wIds : null,

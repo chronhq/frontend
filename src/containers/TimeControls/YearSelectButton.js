@@ -36,7 +36,7 @@ class YearButton extends React.Component {
         onClick={this.toggle}
       >
         <span className='time-controls__year'>
-          {this.props.store.year.tuneValue}
+          {String(this.props.store.year.tuneValueG)}
         </span>
       </Button>
     );
