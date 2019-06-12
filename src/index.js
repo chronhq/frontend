@@ -26,15 +26,25 @@ import './styles/Icons.less';
 import StoreModel from './models';
 import App from './App';
 
+const rootId = 'root';
+
 window.store = new StoreModel();
 window.store.data.narratives.get();
 window.store.courseSelection.loadBaseData();
 
 function renderApp(component) {
   const Application = component;
+  let appRoot = document.getElementById(rootId);
+  if (!appRoot) {
+    appRoot = document.createElement('div');
+    appRoot.id = rootId;
+    document.body.appendChild(appRoot);
+    appRoot = document.getElementById(rootId);
+  }
+
   ReactDOM.render(
     <Application store={window.store} />,
-    document.body.appendChild(document.createElement('div'))
+    appRoot
   );
 }
 
@@ -42,12 +52,7 @@ renderApp(App);
 
 if (module.hot) {
   module.hot.accept(['./App'], () => {
-    const script = [];
-    while (document.body.firstChild) {
-      const s = document.body.removeChild(document.body.firstChild);
-      if (s.type === 'text/javascript') script.push(s);
-    }
-    script.map(s => document.body.appendChild(s));
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     // eslint-disable-next-line global-require
     const NextApp = require('./App').default;
     renderApp(NextApp);
