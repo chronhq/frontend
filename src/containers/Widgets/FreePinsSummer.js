@@ -34,7 +34,7 @@ class FreePinsWidget extends React.Component {
   prevStatus = false;
 
   @computed get pins() {
-    return this.props.store.pins.freePins;
+    return this.props.store.pins.freePins.slice(0, 30);
   }
 
   @computed get cachedData() {
