@@ -20,7 +20,7 @@ import mapColors from './colors';
 
 const colors = Object.keys(mapColors).reduce((p, c) => ([...p, String(mapColors[c]), c]), []);
 
-const STVBorders = (now, visible) => {
+const STVBorders = (now) => {
   const url = 'stv';
   const opacity = {
     min: 0.75,
@@ -30,8 +30,6 @@ const STVBorders = (now, visible) => {
     type: 'vector',
     tiles: [`${window.location.origin}/mvt/${url}/{z}/{x}/{y}`]
   };
-
-  const visibility = visible ? 'visible' : 'none';
 
   // Filter benchmark:
   // None: ['none', ['>', 'start_date', now], ['<', 'end_date', now]]
@@ -75,7 +73,9 @@ const STVBorders = (now, visible) => {
       'line-join': 'round',
     },
     filter,
-    visibility,
+    // Using visibility key will result with mapbox diff error
+    // Full style reloaded would be invoked.
+    // Do not set visibility flag,
     type: 'line',
     paint: {
       'line-color': 'rgb(127, 127, 127)',
