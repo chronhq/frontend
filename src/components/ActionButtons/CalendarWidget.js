@@ -41,8 +41,10 @@ class CalendarWidget extends React.Component {
     }
   }
 
-  componentWillReceiveProps(props) {
-    if (props.date !== undefined) this.setState(this.stateFromYear(props.date));
+  getDerivedStateFromProps(props) {
+    return (props.date !== undefined)
+      ? this.stateFromYear(props.date)
+      : null;
   }
 
   saveDate = (d) => {

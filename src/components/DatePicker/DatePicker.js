@@ -47,8 +47,8 @@ class DatePicker extends React.Component {
     this.state = this.propsToState(props);
   }
 
-  componentWillReceiveProps(props) {
-    this.setState(this.propsToState(props));
+  getDerivedStateFromProps(props) {
+    return this.propsToState(props);
   }
 
   get date() {
