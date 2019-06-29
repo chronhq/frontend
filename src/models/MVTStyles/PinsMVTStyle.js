@@ -18,7 +18,12 @@
  */
 import { typesMapping } from '../Wikidata/WikidataHelper';
 
-const getLayer = (now, id, wIds = null) => ({
+const filter = (now, next, wIds) => (wIds === null
+  ? [['>=', 'date', now], ['<=', 'date', next]]
+  : [['in', 'wikidata_id', ...wIds]]
+);
+
+const getLayer = (now, next, id, wIds = null) => ({
   id,
   layout: {
     'icon-image': `pin-${typesMapping[id].pic}`,
@@ -29,9 +34,7 @@ const getLayer = (now, id, wIds = null) => ({
   minzoom: 1,
   filter: [
     'all',
-    wIds === null
-      ? ['==', 'year', now]
-      : ['in', 'wikidata_id', ...wIds],
+    ...filter(now, next, wIds),
     ['==', 'event_type', typesMapping[id].id]
   ],
   type: 'symbol',
@@ -39,7 +42,7 @@ const getLayer = (now, id, wIds = null) => ({
   'source-layer': 'events'
 });
 
-const pins = (now, flags, courseId, wIds = null) => {
+const pins = (now, next, flags, courseId, wIds = null) => {
   if (courseId < 0) return { sources: {}, layers: [] };
   const url = courseId > 0
     ? `narratives/${courseId}`
@@ -51,11 +54,11 @@ const pins = (now, flags, courseId, wIds = null) => {
   const layers = [];
 
   if (flags.persons === true) {
-    layers.push(getLayer(now, 'birth', wIds));
-    layers.push(getLayer(now, 'death', wIds));
+    layers.push(getLayer(now, next, 'birth', wIds));
+    layers.push(getLayer(now, next, 'death', wIds));
   }
-  if (flags.battle === true) layers.push(getLayer(now, 'battle', wIds));
-  if (flags.document === true) layers.push(getLayer(now, 'document', wIds));
+  if (flags.battle === true) layers.push(getLayer(now, next, 'battle', wIds));
+  if (flags.document === true) layers.push(getLayer(now, next, 'document', wIds));
 
 
   return {

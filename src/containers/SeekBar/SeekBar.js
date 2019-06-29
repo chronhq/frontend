@@ -41,7 +41,7 @@ class SeekBar extends React.Component {
       const rectId = this.svgTime.childNodes[0];
       const mouseX = mouse(rectId)[0];
       if (mouseX > 0 && mouseX < this.width) {
-        this.props.store.year.setYear(Math.round(this.scale.invert(mouseX)));
+        this.year.setYear(Math.round(this.scale.invert(mouseX)));
         this.props.store.analytics.metricHit('check_timepanel');
       }
     });
@@ -57,19 +57,23 @@ class SeekBar extends React.Component {
       : this.props.store.deck.width - 300;
   }
 
+  @computed get year() {
+    return this.props.store.year;
+  }
+
   @computed get scale() {
     return scaleLinear()
-      .domain([this.props.store.year.min, this.props.store.year.max])
+      .domain([this.year.limits.min, this.year.limits.max])
       .range([0, this.width]);
   }
 
   @computed get translate() {
-    return this.scale(this.props.store.year.tuneValue) || 0;
+    return this.scale(this.year.tuneValueG) || 0;
   }
 
   @computed get ticks() {
     const ticks = parseInt(this.width / 45, 10);
-    const maxTicks = this.props.store.year.max - this.props.store.year.min;
+    const maxTicks = this.year.limits.max - this.year.limits.min;
     return (Number.isNaN(maxTicks) || ticks <= maxTicks) ? ticks : maxTicks;
   }
 
@@ -81,7 +85,7 @@ class SeekBar extends React.Component {
         const mouseX = mouse(rectId)[0];
         if (mouseX >= 0 && mouseX <= this.width) {
           const now = Math.round(this.scale.invert(mouseX));
-          this.props.store.year.setTuneValue(now);
+          this.year.setTuneValue(now);
         }
       });
   }
