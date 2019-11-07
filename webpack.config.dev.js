@@ -62,7 +62,7 @@ module.exports = (env = {}) => ({
         changeOrigin: true,
       }]
       : {
-        '/api': 'http://api/',
+        '/api': 'http://api:3080/',
         '/mvt': {
           target: 'http://localhost:5000',
           pathRewrite: { '^/mvt': '' }
