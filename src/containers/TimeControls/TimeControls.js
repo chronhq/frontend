@@ -29,12 +29,15 @@ import './TimeControls.less';
 class TimeControlButton extends React.Component {
   render() {
     const { icon } = this.props;
+    const mod = this.props.store.flags.runtime.get('SelectedCourse') ? 'Tick' : 'Year';
+    const control = `${this.props.control}${mod}`;
+    const metric = `${mod.toLocaleLowerCase()}_change`;
     return (
       <Button
         btnType={BUTTON_TYPE.ICON}
         onClick={() => {
-          this.props.store.year[this.props.control]();
-          this.props.store.analytics.metricHit('year_change');
+          this.props.store.year[control]();
+          this.props.store.analytics.metricHit(metric);
         }}
       >
         <div className={`time-controls__button-size icon icon__shadow--soft icon-${icon}`} />
@@ -43,11 +46,11 @@ class TimeControlButton extends React.Component {
   }
 }
 
-const PrevYear = () => <TimeControlButton icon='rewind' control='prevYear' />;
+const PrevYear = () => <TimeControlButton icon='rewind' control='prev' />;
 
-const NextYear = () => <TimeControlButton icon='forward' control='nextYear' />;
+const NextYear = () => <TimeControlButton icon='forward' control='next' />;
 
-const PlayYear = () => <TimeControlButton icon='play' control='nextYear' />;
+const PlayYear = () => <TimeControlButton icon='play' control='next' />;
 
 const TimeControls = () => (
   <div className='time-controls'>
