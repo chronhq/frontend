@@ -71,6 +71,15 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
+    "pin-narration": {
+        "x": 192,
+        "y": 0,
+        "width": 64,
+        "height": 64,
+        "anchorY": 0,
+        "anchorX": 0,
+        "pixelRatio": 1
+    },
     "decoration-1": {
         "x": 0,
         "y": 64,
