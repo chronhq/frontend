@@ -49,12 +49,12 @@ class AdminPanel extends React.Component {
           {this.auth.user.displayName}
         </p>
         <p>
-          {'Territorial Entity'}
+          Territorial Entity
         </p>
         <ChangeActionButton text='New/Edit' click={() => this.admin.nextScreen('te')} />
         <SandboxActionButton text='Sandbox' click={() => this.admin.nextScreen('sandbox')} />
         <p>
-          {'Narrative'}
+          Narrative
         </p>
         <CreateActionButton text='New' click={() => true} />
         <ChangeActionButton text='Edit' click={() => true} />

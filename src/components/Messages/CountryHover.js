@@ -89,7 +89,7 @@ class CountryHover extends React.Component {
 
   @computed get images() {
     if (this.pinned === false) return null;
-    const img = i => (
+    const img = (i) => (
       <img
         className='message-fact__country-flags'
         src={i}
@@ -135,7 +135,7 @@ class CountryHover extends React.Component {
           {this.messages.head}
           {': '}
         </span>
-        {<InfoLink uri={this.extra.head.uri} label={this.extra.head.label} />}
+        <InfoLink uri={this.extra.head.uri} label={this.extra.head.label} />
       </p>
     );
   }

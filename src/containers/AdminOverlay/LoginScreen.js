@@ -43,7 +43,7 @@ class LoginScreen extends React.Component {
   @computed get uiConfig() {
     return {
       signInFlow: 'popup',
-      signInOptions: this.auth.methods.map(m => firebase.auth[m].PROVIDER_ID),
+      signInOptions: this.auth.methods.map((m) => firebase.auth[m].PROVIDER_ID),
       callbacks: {
         signInSuccessWithAuthResult: () => false
       },

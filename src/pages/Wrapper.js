@@ -35,7 +35,7 @@ class Wrapper extends React.Component {
       () => this.checkForErrors('narratives', () => this.selectCourse())
     );
     // TODO test against various conditions
-    this.props.store.data.camelDeps.base.map(d => when(
+    this.props.store.data.camelDeps.base.map((d) => when(
       () => this.props.store.data[d].status.loaded,
       () => this.checkForErrors(d)
     ));
@@ -51,7 +51,7 @@ class Wrapper extends React.Component {
     return (!(this.props.store.deck.mapInitialized
       && this.props.store.data.narratives.status.loaded
       && this.props.store.data.camelDeps.base
-        .every(d => this.props.store.data[d].status.loaded)
+        .every((d) => this.props.store.data[d].status.loaded)
     ));
   }
 

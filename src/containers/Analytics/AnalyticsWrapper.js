@@ -36,13 +36,13 @@ class AnalyticsWrapper extends React.Component {
     // Skip notification if no analytics
     const disabled = (!config.ym.enabled && !config.ga.enabled);
     return (
-      <React.Fragment>
+      <>
         {
           (this.props.store.analytics.agreement || disabled)
             ? <Analytics config={config} />
             : this.renderNotification
         }
-      </React.Fragment>
+      </>
     );
   }
 }

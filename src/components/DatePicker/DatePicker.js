@@ -58,9 +58,9 @@ class DatePicker extends React.Component {
     return d;
   }
 
-  eraCalculator = nextYear => nextYear - (nextYear % 100 % 50)
+  eraCalculator = (nextYear) => nextYear - (nextYear % 100 % 50)
 
-  propsToState = next => ({
+  propsToState = (next) => ({
     era: this.eraCalculator(next.date.getUTCFullYear()),
     year: next.date.getUTCFullYear(),
     month: next.date.getUTCMonth() + 1,
@@ -68,14 +68,14 @@ class DatePicker extends React.Component {
   })
 
   setDate = (year, month, day) => (
-    this.setState(s => ({
+    this.setState((s) => ({
       era: this.eraCalculator(year !== undefined ? year : s.year),
       year: year !== undefined ? year : s.year,
       month: month || s.month,
       day: day || s.day,
     })))
 
-  changeEra = era => (
+  changeEra = (era) => (
     this.setState(
       (minEra <= era && maxEra >= era) ? { era } : {}
     ))

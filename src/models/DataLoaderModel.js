@@ -33,7 +33,7 @@ export default class DataLoaderModel {
   @observable sortId = 'id';
 
   // Use special class instead of pure data
-  @observable wrapData = d => d;
+  @observable wrapData = (d) => d;
 
   // etend this.data or overwrite
   @observable append = false;
@@ -123,7 +123,7 @@ export default class DataLoaderModel {
 
   @action processData(res) {
     if (res.status === 200) {
-      res.json().then(json => this.saveData(json));
+      res.json().then((json) => this.saveData(json));
     } else {
       this.setError(res);
     }
@@ -133,8 +133,8 @@ export default class DataLoaderModel {
     this.status = { error: null, loading: true, loaded: false };
     const url = this.getLink(params, id);
     fetch(url)
-      .then(res => this.processData(res))
-      .catch(res => this.setError(res));
+      .then((res) => this.processData(res))
+      .catch((res) => this.setError(res));
   }
 
   @action downloadModel(force = false) {

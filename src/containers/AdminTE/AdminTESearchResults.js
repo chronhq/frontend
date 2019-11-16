@@ -40,11 +40,10 @@ class AdminTESearchResults extends React.Component {
     return (
       <div className='te-selector__results'>
         {this.props.results.length > 0
-          ? this.props.results.map(c => (
+          ? this.props.results.map((c) => (
             <AdminTESearchCard key={`sc_${c}`} te={c} select={() => this.props.select(c)} />
           ))
-          : this.empty
-        }
+          : this.empty}
       </div>
     );
   }

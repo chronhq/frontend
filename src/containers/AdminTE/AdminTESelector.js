@@ -48,7 +48,7 @@ class AdminTESelector extends React.Component {
 
   @computed get results() {
     return Object.keys(this.tes)
-      .filter(f => String(this.tes[f].wikidata_id) === this.search);
+      .filter((f) => String(this.tes[f].wikidata_id) === this.search);
   }
 
   select = (te, data) => {
@@ -82,7 +82,7 @@ class AdminTESelector extends React.Component {
     return (
       <div className='te-selector'>
         <TextTopic text='Search by wikidata id' />
-        <AdminTESearchBar search={e => this.input(e)} />
+        <AdminTESearchBar search={(e) => this.input(e)} />
         <AdminTESearchResults
           results={this.results}
           select={this.select}

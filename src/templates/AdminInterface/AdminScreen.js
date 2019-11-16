@@ -66,7 +66,7 @@ class AdminScreen extends React.Component {
       this.auth.initialized = true;
     }
     this.unregisterAuthObserver = firebase.auth()
-      .onAuthStateChanged(u => this.authStatusChanged(u));
+      .onAuthStateChanged((u) => this.authStatusChanged(u));
   }
 
   render() {

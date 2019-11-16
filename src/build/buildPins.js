@@ -26,8 +26,8 @@ const mapPicsOutPath = path
   .normalize(path.join(__dirname, '../containers/Widgets/mapPics.json'));
 
 
-const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
-const camelCase = string => string.trim()
+const capitalizeFirstLetter = (s) => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
+const camelCase = (string) => string.trim()
   .split('-').map((s, idx) => ((idx === 0) ? s : capitalizeFirstLetter(s))).join('');
 
 const files = fs.readdirSync(pinsSrcPath);
@@ -35,10 +35,10 @@ const res = files.reduce((prev, cur) => {
   const [y, x, id, box, name] = cur.split('_');
   const file = fs.readFileSync(path.join(pinsSrcPath, cur), 'UTF-8')
     .split('\n')
-    .filter(f => !(f.match(/<\?xml/)))
-    .map(m => m.replace('\r', ''));
+    .filter((f) => !(f.match(/<\?xml/)))
+    .map((m) => m.replace('\r', ''));
 
-  const paths = file.filter(f => f.match(/<path/)).map((p) => {
+  const paths = file.filter((f) => f.match(/<path/)).map((p) => {
     const style = p.match(/style="([\w.,:;#\s-]+)"/)[1]
       .split(';').reduce((pp, c) => {
         const [k, v] = c.split(':');
@@ -74,13 +74,13 @@ const pinsJson = res.reduce((prev, cur) => ({
   }
 }), {});
 
-const pinsSvg = res.map(m => ([
+const pinsSvg = res.map((m) => ([
   `<svg width="1024" height="1024" x="${m.x * 1024}" y="${m.y * 1024}">`,
   ...m.file,
   '</svg>'
 ].join('\n'))).join('\n');
 
-const fixReactStyles = g => (
+const fixReactStyles = (g) => (
   g.map((p) => {
     if (p.style === undefined) return p;
     const style = Object.keys(p.style).reduce((pp, cc) => ({

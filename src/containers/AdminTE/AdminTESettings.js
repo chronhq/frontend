@@ -46,7 +46,7 @@ class AdminTESettings extends React.Component {
 
   @action selectPredecessor(d) {
     if (d.id === this.selected.id) return;
-    const idx = this.data.predecessor.findIndex(v => v === d.id);
+    const idx = this.data.predecessor.findIndex((v) => v === d.id);
     if (idx === -1) {
       this.data.predecessor = [...this.data.predecessor, d.id];
     }
@@ -73,10 +73,10 @@ class AdminTESettings extends React.Component {
           <TextTopic text='2.1 Admin level' />
           <AdminLevels
             selected={this.data.admin_level}
-            select={a => this.changeAdmin(a)}
+            select={(a) => this.changeAdmin(a)}
           />
           <TextTopic text='2.2 Color' />
-          <ColorPicker selected={Number(this.data.color)} changeColor={c => this.changeColor(c)} />
+          <ColorPicker selected={Number(this.data.color)} changeColor={(c) => this.changeColor(c)} />
           <TextTopic text='Predecessor wikidata id' />
           {this.data.predecessor.map((p, idx) => (
             <div
@@ -89,7 +89,7 @@ class AdminTESettings extends React.Component {
               {p}
             </div>
           ))}
-          <AdminTESelector add={false} select={d => this.selectPredecessor(d)} />
+          <AdminTESelector add={false} select={(d) => this.selectPredecessor(d)} />
         </div>
       </div>
     ) : null;

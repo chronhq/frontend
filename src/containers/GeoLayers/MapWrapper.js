@@ -68,7 +68,7 @@ class MapWrapper extends React.Component {
         this.props.store.balloon.setPosition(...position);
         return true;
       } if (feature.layer.source === 'events') {
-        const events = features.filter(f => f.layer.source === 'events');
+        const events = features.filter((f) => f.layer.source === 'events');
         this.props.store.balloon.setMVTEventBalloon(events, force);
         this.props.store.balloon.setPosition(...position);
         return true;
@@ -85,7 +85,7 @@ class MapWrapper extends React.Component {
     return true;
   };
 
-  setHoverBalloon = force => (
+  setHoverBalloon = (force) => (
     (pointerEvent) => {
       if (force === false && this.props.store.balloon.pinned === true) return;
       const { features, point } = pointerEvent;
@@ -93,7 +93,7 @@ class MapWrapper extends React.Component {
     }
   )
 
-  dataLoadingListener = e => this.deck.isLoaded(e)
+  dataLoadingListener = (e) => this.deck.isLoaded(e)
 
   toggleDataLoadingEventListeners = (t = 'on') => {
     // when map is disabled

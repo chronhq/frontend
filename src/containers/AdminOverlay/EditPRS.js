@@ -49,7 +49,7 @@ const Entities = ({ title, click, expanded }) => {
       <ActionButton icon={icon} text={title} click={click} />
       <SmoothCollapse expanded={expanded}>
         <div className='prs-container'>
-          {data.map(d => <AdminTEAction label='Test TE Label' {...d} />)}
+          {data.map((d) => <AdminTEAction label='Test TE Label' {...d} />)}
         </div>
         <CreateActionButton text='Add' click={() => null} />
       </SmoothCollapse>
@@ -66,7 +66,7 @@ class EditPRS extends React.Component {
     group: false,
   }
 
-  click = d => this.setState(s => ({ [d]: !s[d] }))
+  click = (d) => this.setState((s) => ({ [d]: !s[d] }))
 
   render() {
     return (

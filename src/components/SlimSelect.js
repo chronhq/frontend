@@ -19,13 +19,13 @@
 import React from 'react';
 import Select from 'react-select';
 
-const styles = width => ({
-  container: c => ({ ...c, width }),
-  valueContainer: c => ({ ...c, padding: '0px 4px' }),
-  input: c => ({
+const styles = (width) => ({
+  container: (c) => ({ ...c, width }),
+  valueContainer: (c) => ({ ...c, padding: '0px 4px' }),
+  input: (c) => ({
     ...c, paddingBottom: 0, paddingTop: 0, margin: 0
   }),
-  dropdownIndicator: c => ({ ...c, padding: 0 }),
+  dropdownIndicator: (c) => ({ ...c, padding: 0 }),
 });
 
 const SlimSelect = (props) => {

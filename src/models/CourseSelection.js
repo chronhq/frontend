@@ -28,7 +28,7 @@ export default class CourseSideEffects {
   find(name) {
     return Object
       .values(this.rootStore.data.narratives.data)
-      .find(cur => cur.url === name);
+      .find((cur) => cur.url === name);
   }
 
   @computed get deps() {
@@ -48,7 +48,7 @@ export default class CourseSideEffects {
   }
 
   @computed get loadingIsComplete() {
-    return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded);
+    return this.listOfDeps.every((d) => this.rootStore.data[d].status.loaded);
   }
 
   @computed get courseInfo() {
@@ -62,7 +62,7 @@ export default class CourseSideEffects {
       }
     });
 
-    const wipe = d => this.rootStore.data[d].wipe();
+    const wipe = (d) => this.rootStore.data[d].wipe();
 
     // Wipe data except base deps
     this.deps.course.map(wipe);

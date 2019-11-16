@@ -68,7 +68,7 @@ class WikidataCountryItem extends WikidataItem {
     ))
   );
 
-  inRange = f => ((
+  inRange = (f) => ((
     f.start === null
     || f.start.getFullYear() <= this.now
   ) && (
@@ -86,7 +86,7 @@ class WikidataCountryItem extends WikidataItem {
     current.form = (this.data.form) ? this.data.form.find(this.inRange) : {};
     // DESC Ordered by date
     current.population = (this.data.population)
-      ? this.data.population.find(p => (
+      ? this.data.population.find((p) => (
         p.date !== null
         && p.date.getFullYear() <= this.now))
       : {};

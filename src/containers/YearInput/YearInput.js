@@ -50,7 +50,7 @@ class TypeOne extends React.Component {
         min={this.props.limits.min}
         max={this.props.limits.max}
         value={this.props.now}
-        onChange={event => this.props.cb(event.target.value)}
+        onChange={(event) => this.props.cb(event.target.value)}
         className='yearinput__input'
       />
     );
@@ -98,7 +98,7 @@ class YearInput extends React.Component {
     }
   }
 
-  setTuneValue = value => this.props.store.year.setTuneValue(value)
+  setTuneValue = (value) => this.props.store.year.setTuneValue(value)
 
   handleSave = () => {
     this.props.store.year.saveTuneValue();

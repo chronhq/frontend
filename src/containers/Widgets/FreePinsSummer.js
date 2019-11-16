@@ -59,7 +59,7 @@ class FreePinsWidget extends React.Component {
   hideBalloon = () => this.props.store.balloon.pinned === false
     && this.props.store.balloon.setPinBalloon(null);
 
-  updateBalloon = icon => e => this.props.store.balloon.pinned === false
+  updateBalloon = (icon) => (e) => this.props.store.balloon.pinned === false
     && this.setBalloon(icon, e);
 
   render() {
@@ -72,13 +72,13 @@ class FreePinsWidget extends React.Component {
         </Tooltip>
         <div className='free-pins-grid'>
           {
-            this.pins.map(icon => (
+            this.pins.map((icon) => (
               <span
                 key={icon.key}
                 role='button'
                 tabIndex={0}
-                onKeyDown={e => this.setBalloon(icon, e, true)}
-                onClick={e => this.setBalloon(icon, e, true)}
+                onKeyDown={(e) => this.setBalloon(icon, e, true)}
+                onClick={(e) => this.setBalloon(icon, e, true)}
                 onMouseEnter={this.updateBalloon(icon)}
                 onMouseMove={this.updateBalloon(icon)}
                 onMouseLeave={this.hideBalloon}

@@ -18,7 +18,7 @@ class LayerControlWrapper extends React.Component {
     return this.props.store.i18n.data;
   }
 
-  nameToTooltip = id => this.msg.layerNames[id];
+  nameToTooltip = (id) => this.msg.layerNames[id];
 
   handleLayer = (data) => {
     Object.keys(data.payload).map((cur) => {
@@ -30,9 +30,9 @@ class LayerControlWrapper extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        {Object.keys(dumpData).map(place => (
-          dumpData[place].map(id => (
+      <>
+        {Object.keys(dumpData).map((place) => (
+          dumpData[place].map((id) => (
             <LayerToggle
               id={id}
               key={`layer_${id}`}
@@ -45,7 +45,7 @@ class LayerControlWrapper extends React.Component {
             />
           ))
         ))}
-      </React.Fragment>
+      </>
     );
   }
 }

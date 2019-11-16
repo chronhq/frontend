@@ -32,7 +32,7 @@ import Overlaps from './STVEntityOverlaps';
 const References = ({ edit }) => (
   <>
     <p>
-      {'References'}
+      References
     </p>
     <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '1rem' }}>
       <i>http link a</i>
@@ -45,8 +45,8 @@ const References = ({ edit }) => (
 
 const DateSelector = () => (
   <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-    <CalendarWidget text='Start Date' save={d => console.log('Calendar Save Date', d)} />
-    <CalendarWidget text='End Date' save={d => console.log('Calendar Save Date', d)} />
+    <CalendarWidget text='Start Date' save={(d) => console.log('Calendar Save Date', d)} />
+    <CalendarWidget text='End Date' save={(d) => console.log('Calendar Save Date', d)} />
   </div>
 );
 

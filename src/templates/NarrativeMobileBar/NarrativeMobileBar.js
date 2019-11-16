@@ -30,7 +30,7 @@ class NarrativeMobileBar extends React.Component {
   }
 
   unHide() {
-    this.setState(state => ({ isHidden: !state.isHidden }));
+    this.setState((state) => ({ isHidden: !state.isHidden }));
   }
 
   render() {

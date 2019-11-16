@@ -73,7 +73,7 @@ class FlagList {
   }
 
   update(list) {
-    Object.keys(list).map(c => this.set(c, list[c]));
+    Object.keys(list).map((c) => this.set(c, list[c]));
   }
 
   get(flag) {
@@ -105,11 +105,11 @@ export default class FlagsModel {
 
   @action set(f) {
     Object.keys(f)
-      .map(branch => Object.keys(f[branch])
-        .map(flag => this[branch].set(flag, f[branch][flag])));
+      .map((branch) => Object.keys(f[branch])
+        .map((flag) => this[branch].set(flag, f[branch][flag])));
   }
 
   print() {
-    this.branches.map(b => console.log(b, this[b].list));
+    this.branches.map((b) => console.log(b, this[b].list));
   }
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const getLayer = layerName => ({
+const getLayer = (layerName) => ({
   id: layerName,
   layout: {
     'icon-image': 'pin-{img}',

@@ -38,8 +38,7 @@ const Battle = ({ fact, i18n }) => (
           </i>
         </p>
       )
-      : null
-    }
+      : null}
     {fact.image !== undefined
       ? (
         <div className='message-fact__image'>
@@ -50,8 +49,7 @@ const Battle = ({ fact, i18n }) => (
           />
         </div>
       )
-      : null
-    }
+      : null}
   </div>
 );
 

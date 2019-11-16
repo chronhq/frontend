@@ -43,7 +43,7 @@ class ColorPicker extends React.Component {
   render() {
     return (
       <div className='color-picker'>
-        {Object.keys(mapColors).map(c => (
+        {Object.keys(mapColors).map((c) => (
           <ColorBubble
             click={this.props.changeColor}
             color={c}

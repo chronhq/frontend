@@ -40,7 +40,7 @@ const YearRow = ({
   const years = new Array(Number(width)).fill(Number(start)).map((y, i) => y + i);
   return (
     <div className='date-picker__years-row'>
-      {years.map(y => (
+      {years.map((y) => (
         <YearEntity
           key={`yr-${y}`}
           year={y}
@@ -60,7 +60,7 @@ const DatePickerYears = ({
 
   return (
     <div className='date-picker__years'>
-      {shift.map(y => (
+      {shift.map((y) => (
         <YearRow
           width={width}
           key={`yr-${y}`}

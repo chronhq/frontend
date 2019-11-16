@@ -27,7 +27,7 @@ const mapSettings = buildMapSettings({
   zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
 });
 
-const createTick = year => (e, idx) => ({
+const createTick = (year) => (e, idx) => ({
   map_datetime: String(year),
   order: idx,
   courseId: -1,
@@ -37,7 +37,7 @@ const createTick = year => (e, idx) => ({
   id: idx
 });
 
-const newPoint = p => ({ img: 26, loc: p });
+const newPoint = (p) => ({ img: 26, loc: p });
 
 const timeline = [{
   date: '7 March 2017',

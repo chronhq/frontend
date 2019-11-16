@@ -52,7 +52,7 @@ class CalendarWidget extends React.Component {
     this.props.save(d);
   }
 
-  stateFromYear = d => ({
+  stateFromYear = (d) => ({
     date: d,
     // TODO check for undefined
     text: dateToLocaleString(d),
@@ -60,7 +60,7 @@ class CalendarWidget extends React.Component {
   });
 
   toggleCalendar = () => (
-    this.setState(s => ({
+    this.setState((s) => ({
       modal: !s.modal
     })))
 

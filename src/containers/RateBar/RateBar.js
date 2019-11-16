@@ -29,12 +29,12 @@ class RateBar extends Component {
   }
 
   increment() {
-    this.setState(state => ({ rate: state.rate + 1 }));
+    this.setState((state) => ({ rate: state.rate + 1 }));
     this.putVoteCookie();
   }
 
   decriment() {
-    this.setState(state => ({ rate: state.rate - 1 }));
+    this.setState((state) => ({ rate: state.rate - 1 }));
     this.putVoteCookie();
   }
 

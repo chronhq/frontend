@@ -34,7 +34,7 @@ class DashboardSearch {
     return this.rootStore.wikidata.cache;
   }
 
-  wikidataLabel = id => (
+  wikidataLabel = (id) => (
     (this.wikidata[id] !== undefined)
       ? `${this.wikidata[id].label} ${this.wikidata[id].description}`
       : ''
@@ -44,11 +44,11 @@ class DashboardSearch {
     this.rootStore = rootStore;
 
     this.Narrations = new GenericFilter(this.rootStore, 'narrations', true);
-    this.Narrations.selectText = d => [
+    this.Narrations.selectText = (d) => [
       d.description,
       d.title,
       d.date_label,
-      d.attached_events.map(a => (
+      d.attached_events.map((a) => (
         // in case of ids instead of objects;
         a.wikidata_id !== undefined
           ? this.wikidataLabel(a.wikidata_id)
@@ -57,7 +57,7 @@ class DashboardSearch {
     ];
 
     this.Narratives = new GenericFilter(this.rootStore, 'narratives', false);
-    this.Narratives.selectText = d => [d.author, d.description, d.title, d.tags.join(' ')];
+    this.Narratives.selectText = (d) => [d.author, d.description, d.title, d.tags.join(' ')];
   }
 }
 

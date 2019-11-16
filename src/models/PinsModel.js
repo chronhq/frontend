@@ -71,7 +71,7 @@ export default class PinsModel {
 
   @computed get dummyPinsGJ() {
     const features = this.dummyPins
-      .map(d => pinToGeoPointRaw([], d.loc, d.img));
+      .map((d) => pinToGeoPointRaw([], d.loc, d.img));
     return {
       type: 'FeatureCollection',
       features
@@ -89,7 +89,7 @@ export default class PinsModel {
   @computed get narrationFree() {
     const { courseId } = this.rootStore.courseSelection;
     if (courseId > 0) {
-      const events = this.narrationEvents.filter(a => a.location === null);
+      const events = this.narrationEvents.filter((a) => a.location === null);
       return events.reduce(getFreeEvents, { ...typesStub });
     } if (courseId === 0 && this.rootStore.data.cachedData.status.loaded) {
       return Object.values(this.rootStore.data.cachedData.data)
@@ -100,7 +100,7 @@ export default class PinsModel {
 
   @computed get freePins() {
     return Object.keys(typesMapping).reduce((prev, type) => {
-      const pins = this.narrationFree[typesMapping[type].id].map(wId => (
+      const pins = this.narrationFree[typesMapping[type].id].map((wId) => (
         {
           key: wId,
           type,
@@ -109,7 +109,7 @@ export default class PinsModel {
             ? this.rootStore.wikidata.cache[wId].item
             : { info: [] }
         }
-      )).filter(f => (f !== undefined && f !== null));
+      )).filter((f) => (f !== undefined && f !== null));
       return [...prev, ...pins];
     }, []);
   }

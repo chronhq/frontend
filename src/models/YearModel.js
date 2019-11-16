@@ -19,7 +19,7 @@
 import { observable, action, computed } from 'mobx';
 import julian from 'julian';
 
-const julianInt = date => Math.round(Number(julian(date)));
+const julianInt = (date) => Math.round(Number(julian(date)));
 const yearToJulian = (year) => {
   // Date in ISO would be treated as UTC date
   const date = new Date('2000-01-01');

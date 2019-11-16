@@ -31,9 +31,9 @@ class Overlaps extends React.Component {
           {'Overlaps'}
         </div>
         <div>
-          {'Subtract overlap from:'}
+          Subtract overlap from:
         </div>
-        {this.props.overlaps.map(o => <AdminTEAction {...o} />)}
+        {this.props.overlaps.map((o) => <AdminTEAction {...o} />)}
       </div>
     );
   }

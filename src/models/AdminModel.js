@@ -44,7 +44,7 @@ const getOverlaps = () => {
   const labels = [
     'First French Empire', 'Russian Empire', 'Second Polish Republic', 'Italy', 'Kingdom of Italy'
   ];
-  return labels.map(l => ({ label: l, ...getRange() }));
+  return labels.map((l) => ({ label: l, ...getRange() }));
 };
 
 class FormModel {
@@ -83,7 +83,7 @@ export default class AdminModel {
   @observable overlaps = getOverlaps();
 
   @computed get screen() {
-    return Object.keys(this.screens).find(s => this.screens[s] === true);
+    return Object.keys(this.screens).find((s) => this.screens[s] === true);
   }
 
   @action toggle() {

@@ -108,7 +108,7 @@ export default class BalloonModel {
         this.rootStore.wikidata.add(f.layer.id, f.properties.wikidata_id);
         return false;
       });
-      if (a.some(f => f.layer.id === 'battle')) {
+      if (a.some((f) => f.layer.id === 'battle')) {
         this.rootStore.analytics.metricHit('check_battle');
       }
     }
@@ -173,7 +173,7 @@ export default class BalloonModel {
           const wId = f.properties.wikidata_id;
           const type = f.layer.id;
           return this.wikidataInfo(wId, type);
-        }).filter(f => (f !== undefined && f !== null));
+        }).filter((f) => (f !== undefined && f !== null));
         return { info: data };
       } catch (e) {
         console.error('Failed to parse Balloon payload', e, this.payload);
@@ -187,7 +187,7 @@ export default class BalloonModel {
       const pin = this.wikidataInfo(this.payload.wikidata_id, this.payload.type);
       return { info: pin ? [pin] : [] };
     } if (this.deckPin) {
-      return this.pins.find(pin => pin.key === this.deckPin);
+      return this.pins.find((pin) => pin.key === this.deckPin);
     } if (this.countryHover) {
       // InteractivePin
       return { info: [{ type: 'countryHover', data: this.payload }] };

@@ -47,12 +47,12 @@ class DashboardFeed extends React.Component {
     return (
       <div className='dashboard-content'>
         <h2>
-          {Object.keys(this.timeline).map(event => (
+          {Object.keys(this.timeline).map((event) => (
             event !== null && (
               <NarrativeEvent
                 key={`events_${event}`}
                 event={this.timeline[event]}
-                cb={v => this.props.store.year.setTick(v)} // event.tick in value
+                cb={(v) => this.props.store.year.setTick(v)} // event.tick in value
                 currentTick={this.tick}
                 truncateText={truncateText}
               />

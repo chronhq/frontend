@@ -102,7 +102,7 @@ const getWikimediaURI = (names) => {
   // thumbwidth in pixels
   const width = 250;
   const api = 'commons.wikimedia.org/w/api.php';
-  const files = names.map(name => `File:${encodeURI(name)}`).join('|');
+  const files = names.map((name) => `File:${encodeURI(name)}`).join('|');
   const params = [
     'action=query',
     'prop=imageinfo',

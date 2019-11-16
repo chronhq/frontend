@@ -33,10 +33,10 @@ class AdminSTV extends React.Component {
     return (
       <AdminWrapper title='Spacetime volume'>
         <p>
-          {'Chosen Territorial entity contains the following Spacetime volumes:'}
+          Chosen Territorial entity contains the following Spacetime volumes:
         </p>
         <div className='stv-entities'>
-          {data.map(d => (
+          {data.map((d) => (
             <STVEntity
               {...d}
               key={d.key}

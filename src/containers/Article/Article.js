@@ -73,8 +73,7 @@ class Article extends React.Component {
                     alt=''
                   />
                 )
-                : ''
-              }
+                : ''}
             </div>
           </div>
         </div>

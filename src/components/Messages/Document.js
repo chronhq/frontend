@@ -39,8 +39,7 @@ const Document = ({ fact }) => (
           />
         </div>
       )
-      : null
-    }
+      : null}
   </div>
 );
 

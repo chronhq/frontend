@@ -107,8 +107,7 @@ class Dashboard extends React.Component {
         />
         {this.isStorySelected
           ? <DashboardFeed />
-          : <StoryList changeUi={this.changeUI} handleStorySelection={this.handleStorySelection} />
-        }
+          : <StoryList changeUi={this.changeUI} handleStorySelection={this.handleStorySelection} />}
         <DashboardFooter />
         <div className='dashboard-hide layer-2'>
           <Tooltip placement='right' content={this.chevronMsg}>

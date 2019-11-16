@@ -67,12 +67,11 @@ class CurrentStory extends Component {
           className='currentstory--title'
           role='button'
           tabIndex={0}
-          onKeyDown={e => this.handleTitleEnter(e)}
+          onKeyDown={(e) => this.handleTitleEnter(e)}
         >
           {(this.props.store.courseSelection.courseId !== null)
             ? this.narratives[this.props.store.courseSelection.courseId].title
-            : ''
-          }
+            : ''}
         </div>
         <RateBar />
       </div>

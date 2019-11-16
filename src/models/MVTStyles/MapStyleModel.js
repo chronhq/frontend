@@ -87,7 +87,7 @@ export default class MapStyleModel {
     const { courseId } = this.rootStore.courseSelection;
     const narrations = this.rootStore.data.narrations.data;
     const wIds = (courseId > 0 && narrations[tick] !== undefined)
-      ? narrations[tick].attached_events.map(e => e.wikidata_id)
+      ? narrations[tick].attached_events.map((e) => e.wikidata_id)
       : [];
 
     return pinsStyle(

@@ -37,7 +37,7 @@ class LayerControlWrapper extends React.Component {
     return this.props.store.i18n.data;
   }
 
-  nameToTooltip = id => this.msg.layerNames[id];
+  nameToTooltip = (id) => this.msg.layerNames[id];
 
   handleLayer = (data) => {
     Object.keys(data.payload).map((cur) => {
@@ -56,9 +56,9 @@ class LayerControlWrapper extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        {Object.keys(dumpData).map(place => (
-          dumpData[place].map(id => (
+      <>
+        {Object.keys(dumpData).map((place) => (
+          dumpData[place].map((id) => (
             <LayerToggle
               key={`layer_${id}`}
               tooltip={this.nameToTooltip(id)}
@@ -68,7 +68,7 @@ class LayerControlWrapper extends React.Component {
               click={this.handleLayer}
             />
           ))))}
-        {zoom.map(z => (
+        {zoom.map((z) => (
           <LayerToggle
             key={`layer_${z}`}
             tooltip={`Zoom ${z}`}
@@ -89,7 +89,7 @@ class LayerControlWrapper extends React.Component {
           extraStyle={{ backgroundSize: '80% 80%' }}
           click={this.openAdmin}
         />
-      </React.Fragment>
+      </>
     );
   }
 }

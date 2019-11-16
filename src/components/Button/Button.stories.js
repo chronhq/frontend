@@ -15,73 +15,73 @@ storiesOf('Button', module)
   .add('sizes', () => (
     <div>
       <Button btnSize={BUTTON_SIZE.NORMAL}>
-        {'Normal'}
+        Normal
       </Button>
       <hr />
       <Button btnSize={BUTTON_SIZE.SMALL}>
-        {'Small'}
+        Small
       </Button>
     </div>
   ))
   .add('colors', () => (
     <div style={style}>
       <b>
-        {'Enabled'}
+        Enabled
       </b>
       <Button>
-        {'Default'}
+        Default
       </Button>
       <Button btnColor={BUTTON_COLOR.RED}>
-        {'RED'}
+        RED
       </Button>
       <Button btnColor={BUTTON_COLOR.VK}>
-        {'VK'}
+        VK
       </Button>
       <Button btnColor={BUTTON_COLOR.BLACK}>
-        {'BLACK'}
+        BLACK
       </Button>
       <Button btnColor={BUTTON_COLOR.LIGHT}>
-        {'LIGHT'}
+        LIGHT
       </Button>
       <Button btnColor={BUTTON_COLOR.TRANSP}>
-        {'TRANSP'}
+        TRANSP
       </Button>
       <b>
-        {'Disabled'}
+        Disabled
       </b>
       <Button disabled>
-        {'Default'}
+        Default
       </Button>
       <Button disabled btnColor={BUTTON_COLOR.RED}>
-        {'RED'}
+        RED
       </Button>
       <Button disabled btnColor={BUTTON_COLOR.VK}>
-        {'VK'}
+        VK
       </Button>
       <Button disabled btnColor={BUTTON_COLOR.BLACK}>
-        {'BLACK'}
+        BLACK
       </Button>
       <Button disabled btnColor={BUTTON_COLOR.LIGHT}>
-        {'LIGHT'}
+        LIGHT
       </Button>
       <Button disabled btnColor={BUTTON_COLOR.TRANSP}>
-        {'TRANSP'}
+        TRANSP
       </Button>
     </div>
   ))
   .add('types', () => (
     <div style={style}>
       <Button btnType={BUTTON_TYPE.BASIC}>
-        {'BASIC'}
+        BASIC
       </Button>
       <Button btnType={BUTTON_TYPE.GHOST}>
-        {'GHOST'}
+        GHOST
       </Button>
       <Button btnType={BUTTON_TYPE.READMORE}>
-        {'READMORE'}
+        READMORE
       </Button>
       <Button btnType={BUTTON_TYPE.CLOSE}>
-        {'X'}
+        X
       </Button>
       <div
         style={{
@@ -89,7 +89,7 @@ storiesOf('Button', module)
         }}
       >
         <Button btnType={BUTTON_TYPE.TRUNCATE}>
-          {'truncate'}
+          truncate
         </Button>
       </div>
       <div
@@ -106,34 +106,34 @@ storiesOf('Button', module)
   .add('normal', () => (
     <div>
       <Button>
-        {'Futsu'}
+        Futsu
       </Button>
       <Button disabled>
-        {'disabled'}
+        disabled
       </Button>
     </div>
   ))
   .add('close', () => (
     <div>
       <Button btnType={BUTTON_TYPE.CLOSE}>
-        {'Close'}
+        Close
       </Button>
     </div>
   ))
   .add('readmore', () => (
     <div>
       <Button btnType={BUTTON_TYPE.READMORE}>
-        {'Readmore'}
+        Readmore
       </Button>
     </div>
   ))
   .add('ghost', () => (
     <div>
       <Button btnType={BUTTON_TYPE.GHOST}>
-        {'Ghost'}
+        Ghost
       </Button>
       <Button btnType={BUTTON_TYPE.GHOST} disabled>
-        {'Ghostdisabled'}
+        Ghostdisabled
       </Button>
     </div>
   ));

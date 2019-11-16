@@ -27,7 +27,7 @@ const EraSelector = ({ era, changeEra }) => (
   <div className='date-picker__date'>
     <p style={{ width: '7rem' }}>Select Date</p>
     <Select
-      onChange={y => changeEra(y.value)}
+      onChange={(y) => changeEra(y.value)}
       placeholder='Era'
       value={{ label: era, value: era }}
       options={eras}
@@ -42,7 +42,7 @@ const monthEntity = (n, l = window.navigator.language || 'en-US') => ({
 
 const months = new Array(12).fill(1).map((m, i) => monthEntity(m + i));
 
-const getDays = max => new Array(max).fill(1).map((m, i) => ({ label: m + i, value: m + i }));
+const getDays = (max) => new Array(max).fill(1).map((m, i) => ({ label: m + i, value: m + i }));
 
 const DateSelector = ({
   year, month, day, setDate
@@ -57,13 +57,13 @@ const DateSelector = ({
   return (
     <div className='date-picker__date'>
       <Select
-        onChange={m => setDate(undefined, m.value)}
+        onChange={(m) => setDate(undefined, m.value)}
         placeholder='Month'
         value={monthValue}
         options={months}
       />
       <Select
-        onChange={d => setDate(undefined, undefined, d.value)}
+        onChange={(d) => setDate(undefined, undefined, d.value)}
         placeholder='Day'
         value={dayValue}
         options={days}
@@ -72,7 +72,7 @@ const DateSelector = ({
   );
 };
 
-const DatePickerHeader = props => (
+const DatePickerHeader = (props) => (
   <div className='date-picker__header'>
     <EraSelector
       era={props.era}

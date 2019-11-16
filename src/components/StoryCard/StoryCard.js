@@ -8,7 +8,7 @@ const StoryCardInfo = ({ hover, story }) => (
   <div className={`story-card-info ${hover ? '' : 'story-card-info__hidden'}`}>
     <div className='story-card--author'>
       <b>
-        {'Author'}
+        Author
       </b>
       <p>
         {story.author}
@@ -16,7 +16,7 @@ const StoryCardInfo = ({ hover, story }) => (
     </div>
     <div className='story-card--author'>
       <b>
-        {'Description'}
+        Description
       </b>
       <p>
         {story.description}

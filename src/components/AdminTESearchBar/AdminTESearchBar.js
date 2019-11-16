@@ -43,8 +43,8 @@ class AdminTESearchBar extends React.Component {
         <input
           type={this.props.type}
           value={this.value}
-          onChange={e => this.input(e.target.value)}
-          onKeyPress={e => e.key === 'Enter' && this.search()}
+          onChange={(e) => this.input(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && this.search()}
         />
         <ActionButtonFill
           click={this.search}
@@ -59,7 +59,7 @@ class AdminTESearchBar extends React.Component {
 
 AdminTESearchBar.defaultProps = {
   type: 'number',
-  search: e => console.log('Search button pressed', e),
+  search: (e) => console.log('Search button pressed', e),
 };
 
 AdminTESearchBar.propTypes = {

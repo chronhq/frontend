@@ -41,7 +41,7 @@ class StoryList extends React.Component {
   render() {
     return (
       <div className='story-list'>
-        {Object.values(this.courses).map(story => (
+        {Object.values(this.courses).map((story) => (
           <StoryCard
             key={`card_${story.url}`}
             story={story}

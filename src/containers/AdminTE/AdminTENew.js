@@ -64,7 +64,7 @@ class AdminTENew extends React.Component {
     return (
       <div className='te-selector'>
         <TextTopic text='1.2 Add new entity' />
-        <AdminTESearchBar search={e => this.search(e)} />
+        <AdminTESearchBar search={(e) => this.search(e)} />
         {this.data.label !== undefined && (
           <AdminTESearchCard data={this.data} select={() => this.select()} />
         )}
