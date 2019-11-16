@@ -37,7 +37,7 @@ const createTick = (year) => (e, idx) => ({
   id: idx
 });
 
-const newPoint = (p) => ({ img: 26, loc: p });
+const newPoint = (p) => ({ img: 'birth', loc: p });
 
 const timeline = [{
   date: '7 March 2017',

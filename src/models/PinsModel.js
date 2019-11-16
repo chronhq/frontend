@@ -104,7 +104,7 @@ export default class PinsModel {
         {
           key: wId,
           type,
-          pic: typesMapping[type].pic,
+          pic: type,
           [type]: this.rootStore.wikidata.cache[wId]
             ? this.rootStore.wikidata.cache[wId].item
             : { info: [] }

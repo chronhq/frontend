@@ -1,5 +1,5 @@
 {
-    "pin-24": {
+  "pin-document": {
         "x": 0,
         "y": 0,
         "width": 32,
@@ -8,7 +8,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-26": {
+  "pin-birth": {
         "x": 32,
         "y": 0,
         "width": 32,
@@ -17,7 +17,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-27": {
+  "pin-bulb": {
         "x": 64,
         "y": 0,
         "width": 32,
@@ -26,7 +26,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-28": {
+  "pin-death": {
         "x": 96,
         "y": 0,
         "width": 32,
@@ -35,7 +35,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-29": {
+  "pin-house": {
         "x": 0,
         "y": 32,
         "width": 32,
@@ -44,7 +44,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-30": {
+  "pin-info": {
         "x": 32,
         "y": 32,
         "width": 32,
@@ -53,7 +53,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-31": {
+  "pin-star": {
         "x": 64,
         "y": 32,
         "width": 32,
@@ -62,7 +62,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-32": {
+  "pin-battle": {
         "x": 96,
         "y": 32,
         "width": 32,
@@ -71,7 +71,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "pin-narration": {
+  "pin-narration": {
         "x": 192,
         "y": 0,
         "width": 64,
@@ -80,7 +80,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-1": {
+  "decoration-bear": {
         "x": 0,
         "y": 64,
         "width": 64,
@@ -89,7 +89,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-2": {
+  "decoration-kraken": {
         "x": 64,
         "y": 64,
         "width": 64,
@@ -98,7 +98,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-3": {
+  "decoration-mountaun": {
         "x": 128,
         "y": 64,
         "width": 64,
@@ -107,7 +107,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-4": {
+  "decoration-nessie": {
         "x": 192,
         "y": 64,
         "width": 64,
@@ -116,7 +116,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-5": {
+  "decoration-palm": {
         "x": 0,
         "y": 128,
         "width": 64,
@@ -125,7 +125,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-6": {
+  "decoration-paw": {
         "x": 64,
         "y": 128,
         "width": 64,
@@ -134,7 +134,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-7": {
+  "decoration-pine": {
         "x": 128,
         "y": 128,
         "width": 64,
@@ -143,8 +143,8 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-8": {
-        "x": 64,
+  "decoration-seagull": {
+        "x": 192,
         "y": 128,
         "width": 64,
         "height": 64,
@@ -152,7 +152,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-9": {
+  "decoration-tree": {
         "x": 0,
         "y": 192,
         "width": 64,
@@ -161,7 +161,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-10": {
+  "decoration-tree2": {
         "x": 64,
         "y": 192,
         "width": 64,
@@ -170,7 +170,7 @@
         "anchorX": 0,
         "pixelRatio": 1
     },
-    "decoration-11": {
+  "decoration-waves": {
         "x": 128,
         "y": 192,
         "width": 64,

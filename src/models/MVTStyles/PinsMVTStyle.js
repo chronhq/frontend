@@ -23,10 +23,10 @@ const filter = (now, next, wIds) => (wIds === null
   : [['in', 'wikidata_id', ...wIds]]
 );
 
-const getLayer = (now, next, id, wIds = null) => ({
-  id,
+const getLayer = (now, next, layer, wIds = null) => ({
+  id: layer,
   layout: {
-    'icon-image': `pin-${typesMapping[id].pic}`,
+    'icon-image': `pin-${layer}`,
     'icon-rotate': -135,
     'icon-size': 1,
     'icon-anchor': 'top-left',
@@ -35,7 +35,7 @@ const getLayer = (now, next, id, wIds = null) => ({
   filter: [
     'all',
     ...filter(now, next, wIds),
-    ['==', 'event_type', typesMapping[id].id]
+    ['==', 'event_type', typesMapping[layer].id]
   ],
   type: 'symbol',
   source: 'events',
