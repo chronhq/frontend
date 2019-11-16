@@ -76,7 +76,10 @@ class AdminTESettings extends React.Component {
             select={(a) => this.changeAdmin(a)}
           />
           <TextTopic text='2.2 Color' />
-          <ColorPicker selected={Number(this.data.color)} changeColor={(c) => this.changeColor(c)} />
+          <ColorPicker
+            selected={Number(this.data.color)}
+            changeColor={(c) => this.changeColor(c)}
+          />
           <TextTopic text='Predecessor wikidata id' />
           {this.data.predecessor.map((p, idx) => (
             <div

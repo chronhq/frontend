@@ -10,7 +10,9 @@ const LayerToggle = ({ ...props }) => (
     <label
       htmlFor={props.name}
       className={props.checked ? 'layer-toggle__checked layer-toggle ' : 'layer-toggle '}
-      onChange={(e) => props.cb({ payload: { [props.name]: e.target.checked }, place: props.place })}
+      onChange={
+        (e) => props.cb({ payload: { [props.name]: e.target.checked }, place: props.place })
+      }
     >
       <input
         id={props.name}
