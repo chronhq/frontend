@@ -159,10 +159,9 @@ export default class YearModel {
       const narration = this.narrations[tick];
       if (narration.settings) {
         const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
-        this.rootStore.deck.updateSettings(mapSetting);
+        this.rootStore.deck.updateSettings(mapSetting, narration.location.coordinates);
       }
-      const date = new Date(narration.map_datetime);
-      this.setDate(julianInt(date));
+      this.setDate(Number(narration.map_datetime));
       this.tick = tick;
       if (this.maxTick === tick && this.rootStore.courseSelection.courseId > 0) {
         this.rootStore.analytics.metricHit('narrative_completed');
