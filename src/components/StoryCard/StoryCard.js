@@ -6,7 +6,7 @@ import './StoryCard.less';
 
 const StoryCardInfo = ({ hover, story }) => (
   <div className={`story-card-info ${hover ? '' : 'story-card-info__hidden'}`}>
-    <div className='story-card--author'>
+    <div className='story-card__author'>
       <b>
         Author
       </b>
@@ -14,7 +14,7 @@ const StoryCardInfo = ({ hover, story }) => (
         {story.author}
       </p>
     </div>
-    <div className='story-card--author'>
+    <div className='story-card__author'>
       <b>
         Description
       </b>
@@ -25,20 +25,6 @@ const StoryCardInfo = ({ hover, story }) => (
   </div>
 );
 
-const StoryCardStatus = () => (
-  <div className='story-card-status'>
-    <div>
-      {'XX'}
-      {' '}
-      {'cards'}
-    </div>
-    <div>
-      {'0'}
-      {' '}
-      {'votes'}
-    </div>
-  </div>
-);
 // TODO i18n for author
 @observer
 class StoryCard extends React.Component {
@@ -61,17 +47,21 @@ class StoryCard extends React.Component {
         onKeyPress={() => handleStorySelection(story.url)}
       >
         <StoryCardInfo hover={this.hover} story={story} />
-        <div>
-          <div className='story-card--title'>
+        <div className='story-card-grid decoration-fire'>
+          <div className='story-card__title'>
             <h5>
               {story.title}
             </h5>
           </div>
-          <div className='story-card--dates'>
+          <div className='story-card__title story-card__title--dates'>
+            {'in '}
             {[story.start_year, story.end_year].join(' - ')}
           </div>
+          <div className='story-card__counter'>
+            {story.narration_count || '∞'}
+            {' cards'}
+          </div>
         </div>
-        <StoryCardStatus />
       </div>
     );
   }
