@@ -17,7 +17,7 @@ git clone https://github.com/chronhq/frontend.git
 cd frontend
 
 # Install dependencies
-npm i
+npm ci
 
 # Create an empty disabled.json file
 echo '{}' > disabled.json
