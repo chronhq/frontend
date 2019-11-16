@@ -117,9 +117,9 @@ export default class CourseSideEffects {
     });
 
     this.rootStore.year.setup({
-      min: this.courseInfo.start_year,
-      max: this.courseInfo.end_year,
-      now: this.courseInfo.start_year,
+      min: Number(this.courseInfo.start_year),
+      max: Number(this.courseInfo.end_year),
+      now: Number(this.courseInfo.start_year),
       tick: 0,
     });
 
@@ -130,7 +130,7 @@ export default class CourseSideEffects {
     this.loadCourseData();
 
     this.rootStore.flags.set({
-      projection: this.rootStore.flags.defaultFlags.projection
+      deck: this.rootStore.flags.defaultFlags.deck
     });
 
     when(

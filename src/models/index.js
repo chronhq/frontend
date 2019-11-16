@@ -20,7 +20,6 @@ import { observable } from 'mobx';
 
 import Data from './DataModel';
 import Flags from './FlagsModel';
-import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSelection from './CourseSelection';
 
@@ -45,7 +44,6 @@ export default class storeModel {
     this.flags = new Flags();
     this.data = new Data();
     this.dashboard = new Dashboard(this);
-    this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
     this.courseSelection = new CourseSelection(this);

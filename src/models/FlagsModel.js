@@ -35,14 +35,11 @@ const flags = {
     battle: true,
     document: true,
   },
-  zoom: {
+  deck: {
     minZoom: 1,
     maxZoom: 8,
+    center: [2, 50],
   },
-  projection: {
-    center: [0, 0],
-    clip: [[-180, 90], [180, -90]],
-  }
 };
 
 class Flag {

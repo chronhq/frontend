@@ -43,25 +43,16 @@ export default class DeckViewportModel {
 
   @observable mapInitialized = false;
 
-  @computed get clipEnabled() {
-    return this.rootStore.projection.clipEnabled === true;
-  }
-
   @computed get viewport() {
-    const zoom = this.rootStore.flags.zoom.list;
-    const center = this.rootStore.projection.data.center !== undefined
-      ? {
-        longitude: this.rootStore.projection.data.center[0],
-        latitude: this.rootStore.projection.data.center[1],
-      }
-      : {};
-    const { minZoom, maxZoom } = zoom;
+    const { minZoom, maxZoom, center } = this.rootStore.flags.deck.list;
+
     const vState = {
       width: this.width,
       height: this.height,
       viewState: {
         ...INITIAL_VIEW_STATE,
-        ...center,
+        longitude: center[0],
+        latitude: center[1],
         zoom: minZoom,
         minZoom,
         maxZoom,
@@ -84,7 +75,7 @@ export default class DeckViewportModel {
 
   @computed get validZoomValue() {
     // Do not reset zoom if current value is in range
-    const { minZoom, maxZoom } = this.rootStore.flags.zoom.list;
+    const { minZoom, maxZoom } = this.rootStore.flags.deck.list;
     const { zoom } = this.viewState;
     return (maxZoom >= zoom && minZoom <= zoom)
       ? zoom // Keep current zoom if in range
@@ -92,7 +83,7 @@ export default class DeckViewportModel {
   }
 
   @computed get viewState() {
-    const { minZoom, maxZoom } = this.rootStore.flags.zoom.list;
+    const { minZoom, maxZoom } = this.rootStore.flags.deck.list;
     return {
       width: this.width,
       height: this.height,
@@ -115,10 +106,7 @@ export default class DeckViewportModel {
 
   // Center from narration or map settings
   @computed get defaultCenter() {
-    return [
-      this.viewport.viewState.longitude,
-      this.viewport.viewState.latitude
-    ];
+    return this.rootStore.flags.deck.list.center;
   }
 
   set viewState(viewState) {
@@ -155,6 +143,12 @@ export default class DeckViewportModel {
     }
   }
 
+  @action moveCamera(center, zoom) {
+    // console.log('Moving Camera to', center, zoom);
+    this.flyTo(center, zoom);
+    this.updatePosition(center, zoom);
+  }
+
   @action updatePosition(center, zoom) {
     const [longitude, latitude] = Array.isArray(center) ? center : [0, 0];
     setTimeout(() => {
@@ -173,45 +167,27 @@ export default class DeckViewportModel {
     let zoom = this.zoom + m;
     zoom = (zoom > this.maxZoom) ? this.maxZoom : zoom;
     zoom = (zoom < this.minZoom) ? this.minZoom : zoom;
-    this.flyTo(this.center, zoom);
-    this.updatePosition(
-      this.center,
-      zoom
-    );
+    this.moveCamera(this.center, zoom);
   }
 
-  @action initLatLon() {
-    const center = this.flyToEnabled
-      ? this.center
-      : this.defaultCenter;
-    this.flyTo(center, this.validZoomValue);
-    this.updatePosition(
-      this.viewport.viewState.longitude,
-      this.viewport.viewState.latitude,
-      this.validZoomValue
-    );
-  }
-
-  @action updateSettings(mapSettings) {
+  @action updateSettings(mapSettings, center) {
     if (mapSettings === undefined) {
       console.error('Undefined Map Settings');
       return;
     }
-    const center = [
-      (mapSettings.bbox.coordinates[1][0] + mapSettings.bbox.coordinates[0][0]) / 2,
-      (mapSettings.bbox.coordinates[1][1] + mapSettings.bbox.coordinates[0][1]) / 2,
-    ];
     this.rootStore.flags.set({
-      zoom: {
+      deck: {
         minZoom: mapSettings.zoom_min,
         maxZoom: mapSettings.zoom_max,
-      },
-      projection: {
-        clip: [[-180, 90], [180, -90]],
-        center
+        center: center || this.defaultCenter
       },
     });
     // update viewport position
-    this.initLatLon();
+    this.moveCamera(
+      this.flyToEnabled
+        ? center || this.defaultCenter
+        : this.defaultCenter,
+      this.validZoomValue
+    );
   }
 }
