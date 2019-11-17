@@ -23,9 +23,12 @@ import { UploadActionButton } from './ActionButtons';
 
 import './UploadWidget.less';
 
-const ProgressBar = ({ progress }) => (
+const ProgressBar = ({ progress, total = 10, current = 5 }) => (
   <div className='progress-bar__container'>
-    <div className='progress-bar__fill' style={{ width: `${progress}%` }} />
+    <div
+      className='progress-bar__fill'
+      style={{ width: `${progress !== undefined ? progress : (current / total) * 100}%` }}
+    />
   </div>
 );
 class UploadWidget extends React.Component {
@@ -67,5 +70,7 @@ class UploadWidget extends React.Component {
     );
   }
 }
+
+export { ProgressBar };
 
 export default UploadWidget;
