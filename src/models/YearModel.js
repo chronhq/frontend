@@ -154,7 +154,9 @@ export default class YearModel {
     this.setDate(this.min);
   }
 
-  @action setTick(tick) {
+  @action setTick(rawTick) {
+    // rawTick -1 will be used for Narrative overview screen
+    const tick = rawTick === -1 ? this.maxTick : rawTick;
     if (tick in this.narrations) {
       const narration = this.narrations[tick];
       if (narration.settings) {
@@ -162,8 +164,8 @@ export default class YearModel {
         this.rootStore.deck.updateSettings(mapSetting, narration.location.coordinates);
       }
       this.setDate(Number(narration.map_datetime));
-      this.tick = tick;
-      if (this.maxTick === tick && this.rootStore.courseSelection.courseId > 0) {
+      this.tick = rawTick;
+      if (this.maxTick === rawTick && this.rootStore.courseSelection.courseId > 0) {
         this.rootStore.analytics.metricHit('narrative_completed');
       }
     }

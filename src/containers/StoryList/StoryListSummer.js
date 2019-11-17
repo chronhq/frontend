@@ -32,10 +32,7 @@ class StoryList extends React.Component {
   }
 
   handleStorySelection = (url) => {
-    this.props.store.courseSelection.cleanup();
-    const course = this.props.store.courseSelection.find(url);
-    this.props.store.courseSelection.select(course.id, course.url);
-    this.props.history.push(`/${url}`);
+    this.props.store.courseSelection.handleSelect(url, this.props.history);
   }
 
   render() {

@@ -143,11 +143,23 @@ export default class CourseSideEffects {
           // Fake courses or Global Narrative
           this.rootStore.deck.updateSettings(this.courseInfo.mapSettings);
         }
-        this.rootStore.year.setTick(0);
+        this.rootStore.year.setTick(-1);
         this.updateCD();
       }
     );
 
     return true;
+  }
+
+  @action handleSelect(
+    url,
+    history = {
+      push: (u) => console.warn('No history provided for story selection, ingoring', u)
+    }
+  ) {
+    this.cleanup();
+    const course = this.find(url);
+    this.select(course.id, course.url);
+    history.push(`/${url}`);
   }
 }
