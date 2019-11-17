@@ -31,12 +31,16 @@ class StoryList extends React.Component {
     return this.props.store.search.Narratives.entities;
   }
 
+  @computed get enabled() {
+    return this.props.store.courseSelection.courseId === 0;
+  }
+
   handleStorySelection = (url) => {
     this.props.store.courseSelection.handleSelect(url, this.props.history);
   }
 
   render() {
-    return (
+    return this.enabled ? (
       <div className='story-list'>
         {Object.values(this.courses).map((story) => (
           <StoryCard
@@ -46,7 +50,7 @@ class StoryList extends React.Component {
           />
         ))}
       </div>
-    );
+    ) : null;
   }
 }
 
