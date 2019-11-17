@@ -65,7 +65,7 @@ class NarrativeOverview extends React.Component {
   }
 
   @computed get disabled() {
-    return (this.tick !== -1 || this.order.length === 0);
+    return (this.tick !== -1);
   }
 
   render() {
