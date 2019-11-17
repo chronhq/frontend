@@ -32,6 +32,7 @@ import Tooltip from '../../components/Tooltip/Tooltip';
 
 import './Dashboard.less';
 
+const DashboardFeed = () => null;
 @inject('store')
 @observer
 class Dashboard extends React.Component {
