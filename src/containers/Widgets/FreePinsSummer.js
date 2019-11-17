@@ -64,7 +64,7 @@ class FreePinsWidget extends React.Component {
 
   render() {
     return this.status ? null : (
-      <div className='free-pins-container'>
+      <div className='free-pins-container' style={this.props.style}>
         <Tooltip placement='right' content={tooltip}>
           <div className='free-pins-attention'>
             <span>Events without coordinates</span>
@@ -91,5 +91,9 @@ class FreePinsWidget extends React.Component {
     );
   }
 }
+
+FreePinsWidget.defaultProps = {
+  style: {}
+};
 
 export default FreePinsWidget;

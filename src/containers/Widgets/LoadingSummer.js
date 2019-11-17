@@ -19,16 +19,26 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
+const style = {
+  userSelect: 'none',
+  textAlign: 'center',
+  fontSize: '1rem'
+};
+
 @inject('store')
 @observer
 class LoadingWidget extends React.Component {
   render() {
     return (
-      <span style={{ userSelect: 'none', textAlign: 'center', fontSize: '1rem' }}>
+      <span style={{ ...style, ...this.props.style }}>
         {this.props.store.deck.loadingStatus ? '' : this.props.store.i18n.data.loading}
       </span>
     );
   }
 }
+
+LoadingWidget.defaultProps = {
+  style: {}
+};
 
 export default LoadingWidget;
