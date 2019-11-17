@@ -26,6 +26,7 @@ import StoryList from '../../containers/StoryList/StoryListSummer';
 import TimeControls from '../../containers/TimeControls/TimeControls';
 import WinterNarration from '../../containers/WinterNarration/WinterNarration';
 import NarrativeOverview from '../../containers/NarrativeOverview/NarrativeOverview';
+import StoryInfoWidget from '../../containers/Widgets/StoryInfoWidget';
 
 const Controls = () => (
   <div className='narrative-desktop-controls'>
@@ -33,6 +34,7 @@ const Controls = () => (
       <TimeControls style={{ gridArea: '1 / 1 / 1 / 3' }} />
       <LoadingWidget style={{ gridArea: '2 / 1 / 2 / 2' }} />
       <FreePinsWidget style={{ gridArea: '3 / 1 / 3 / 2' }} />
+      <StoryInfoWidget style={{ gridArea: '3 / 1 / 3 / 3' }} />
     </div>
   </div>
 );

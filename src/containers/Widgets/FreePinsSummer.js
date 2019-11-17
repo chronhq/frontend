@@ -41,6 +41,10 @@ class FreePinsWidget extends React.Component {
     return this.props.store.data.cachedData;
   }
 
+  @computed get narrativeOverview() {
+    return this.props.store.year.tick === -1;
+  }
+
   @computed get status() {
     if (this.cachedData.status.loaded) {
       this.prevStatus = Object.keys(this.cachedData.data).length === 0;
@@ -63,7 +67,7 @@ class FreePinsWidget extends React.Component {
     && this.setBalloon(icon, e);
 
   render() {
-    return this.status ? null : (
+    return (this.status || this.narrativeOverview) ? null : (
       <div className='free-pins-container' style={this.props.style}>
         <Tooltip placement='right' content={tooltip}>
           <div className='free-pins-attention'>

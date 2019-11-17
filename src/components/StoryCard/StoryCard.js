@@ -4,8 +4,16 @@ import { observer } from 'mobx-react';
 
 import './StoryCard.less';
 
-const StoryCardInfo = ({ hover, story }) => (
-  <div className={`story-card-info ${hover ? '' : 'story-card-info__hidden'}`}>
+const StoryCardInfo = ({
+  hover, story, standalone, style = {}
+}) => (
+  <div
+    className={[
+      'float-container',
+      standalone ? '' : 'story-card-info',
+      hover ? '' : 'story-card-info__hidden'].join(' ')}
+    style={style}
+  >
     <div className='story-card__author'>
       <b>
         Author
@@ -64,5 +72,7 @@ class StoryCard extends React.Component {
     );
   }
 }
+
+export { StoryCardInfo };
 
 export default StoryCard;
