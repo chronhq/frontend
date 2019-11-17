@@ -78,6 +78,26 @@ export default class PinsModel {
     };
   }
 
+  @computed get narrativeOverview() {
+    const { entities } = this.rootStore.search.Narrations;
+    const data = {
+      type: 'FeatureCollection',
+      features: Object.keys(entities).map((id) => ({
+        type: 'Feature',
+        geometry: entities[id].location,
+        properties: {
+          id,
+          img: 'narration',
+          // order: entities[id].order,
+          // date_label: entities[id].date_label,
+          // title: entities[id].title,
+          // description: entities[id].description,
+        }
+      }))
+    };
+    return data || { type: 'FeatureCollection', features: [] };
+  }
+
   @computed get narrationEvents() {
     const { tick } = this.rootStore.year;
     const narrations = this.rootStore.data.narrations.data;

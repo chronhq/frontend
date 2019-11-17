@@ -69,6 +69,12 @@ export default class MapStyleModel {
   //   return legacyPinsStyle(this.rootStore.pins.pins, 'pinsGJ');
   // }
 
+  @computed get narrativeOverview() {
+    return this.rootStore.year.tick === -1
+      ? legacyPinsStyle(this.rootStore.pins.narrativeOverview, 'narrativeOverview')
+      : { sources: {}, layers: [] };
+  }
+
   @computed get dummyPinsGJ() {
     return legacyPinsStyle(this.rootStore.pins.dummyPinsGJ, 'dummyPinsGJ');
   }
@@ -108,6 +114,7 @@ export default class MapStyleModel {
         ...this.cities.sources,
         // ...this.pinsGJ.sources,
         ...this.dummyPinsGJ.sources,
+        ...this.narrativeOverview.sources,
         ...this.pins.sources,
       }
       : this.bordersStyle.sources;
@@ -120,6 +127,7 @@ export default class MapStyleModel {
         ...this.cities.layers,
         // ...this.pinsGJ.layers,
         ...this.dummyPinsGJ.layers,
+        ...this.narrativeOverview.layers,
         ...this.pins.layers,
       ]
       : this.bordersStyle.layers;
