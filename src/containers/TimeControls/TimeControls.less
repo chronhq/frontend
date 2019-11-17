@@ -20,7 +20,6 @@
 @import '../../styles/Layers.less';
 
 .time-controls {
-  flex-direction: column;
   user-select: none;
 }
 
@@ -32,6 +31,7 @@
 .time-controls__buttons {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .time-controls__year {
@@ -40,4 +40,8 @@
   font-weight: normal;
   text-shadow: @base-shadow;
   color: @main-blue;
+}
+
+.time-controls__text {
+  text-shadow: @base-shadow;
 }

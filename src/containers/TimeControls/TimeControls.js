@@ -17,56 +17,65 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import YearSelectButton from './YearSelectButton';
-
-import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+import TimeControlButtons from './TimeControlButtons';
+import { ProgressBar } from '../../components/ActionButtons/UploadWidget';
 
 import './TimeControls.less';
 
-@inject('store')
-@observer
-class TimeControlButton extends React.Component {
-  render() {
-    const { icon } = this.props;
-    const mod = this.props.store.flags.runtime.get('SelectedCourse') ? 'Tick' : 'Year';
-    const control = `${this.props.control}${mod}`;
-    const metric = `${mod.toLocaleLowerCase()}_change`;
-    return (
-      <Button
-        btnType={BUTTON_TYPE.ICON}
-        onClick={() => {
-          this.props.store.year[control]();
-          this.props.store.analytics.metricHit(metric);
-        }}
-      >
-        <div className={`time-controls__button-size icon icon__shadow--soft icon-${icon}`} />
-      </Button>
-    );
-  }
-}
-
-const PrevYear = () => <TimeControlButton icon='rewind' control='prev' />;
-
-const NextYear = () => <TimeControlButton icon='forward' control='next' />;
-
-const PlayYear = () => <TimeControlButton icon='play' control='next' />;
-
-const TimeControls = () => (
+const TimeControlsGlobal = () => (
   <div className='time-controls'>
     <YearSelectButton />
-    <div className='time-controls__buttons'>
-      <PrevYear />
-      <PlayYear />
-      <NextYear />
-    </div>
+    <TimeControlButtons />
   </div>
 );
 
-export {
-  PrevYear,
-  NextYear,
-  PlayYear,
+@inject('store')
+@observer
+class TimeControlsWrapper extends React.Component {
+  @computed get courseId() {
+    return this.props.store.courseSelection.courseId;
+  }
+
+  @computed get narrative() {
+    return this.props.store.data.narratives.data[this.courseId] || {};
+  }
+
+  @computed get current() {
+    return this.props.store.year.tick + 1;
+  }
+
+  @computed get narrations() {
+    return this.props.store.year.narrations;
+  }
+
+  @computed get cards() {
+    return Object.keys(this.narrations).length;
+  }
+
+  render() {
+    return this.courseId !== 0 ? (
+      <div className='time-controls' style={this.props.style}>
+        <div className='text__narrative--header time-controls__text'>
+          {this.narrative.title}
+        </div>
+        <TimeControlButtons back />
+        <ProgressBar total={this.cards} current={this.current} />
+        <div className='time-controls__text'>
+          {this.current}
+          {'/'}
+          {this.cards}
+          {' Cards'}
+        </div>
+      </div>
+    ) : <TimeControlsGlobal />;
+  }
+}
+
+TimeControlsWrapper.defaultProps = {
+  style: {}
 };
 
-export default TimeControls;
+export default TimeControlsWrapper;
