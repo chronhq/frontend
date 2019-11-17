@@ -15,32 +15,38 @@
  * -----
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
+// @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
 
-@import './colors.less';
-
-.text__narrative--header {
-  color: @article-title;
-  font-family: 'Lora', serif;
-  font-weight: bold;
-  line-height: 1.25rem;
-  align-items: center;
-  font-size: 1rem;
-  text-align: center;
+.narrative-overview {
+  z-index: 2;
+  position: fixed;
+  top: 10%;
+  right: 4rem;
+  width: 34rem;
+  max-height: 80%;
+  overflow-y: auto;
 }
 
-.text__narrative--body {
-  color: @black;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: lighter;
-  font-size: .875rem;
-  line-height: 1.25rem;
-}
-
-.text__narrative--date {
-  color: @text-grey;
-  font-family: OpenSans;
-  font-size: 1rem;
-  line-height: 1rem;
+.narration-preview {
+  .float-container();
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  margin: .5rem;
+  opacity: .75;
+  padding: .25rem;
+  transition: opacity 300ms ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+  &__date {
+    width: 5rem;
+    text-align: center;
+    align-self: center;
+  }
+  &__text {
+    align-self: center;
+  }
 }
