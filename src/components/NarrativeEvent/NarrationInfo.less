@@ -1,0 +1,40 @@
+@import '../../styles/colors.less';
+.narration {
+  display: grid;
+  grid-template-columns: 10fr 3.5fr;
+  grid-template-rows: 5.5rem 10.5rem;
+  grid-template-areas:
+  'title dates'
+  'paragraph paragraph';
+  &--title {
+    grid-area: title;
+    color: @article-title;
+    align-self: center;
+    font-family: 'Lora', serif;
+    font-weight: bold;
+    line-height: 20px;
+    align-items: center;
+    font-size: 1rem;
+    margin-top: .25rem;
+    margin-left: .5rem;
+  }
+  &--dates {
+    box-sizing: border-box;
+    grid-area: dates;
+    color: @story-card-dates;
+    align-self: center;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: .5rem;
+  }
+  &--paragraph {
+    padding: 0 .5rem .25rem .5rem;
+    grid-area: paragraph;
+    overflow-y: auto;
+    max-height: 10.5rem;
+    font-size: 0.875rem;
+    text-align: justify;
+  }
+}

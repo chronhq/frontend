@@ -26,7 +26,7 @@ import StoryList from '../../containers/StoryList/StoryList';
 import DashboardFooter from '../../containers/DashboardFooter/DashboardFooter';
 import DashboardSearch from '../../containers/DashboardSearch/DashboardSearch';
 import CurrentStory from '../../containers/CurrentStory/CurrentStory';
-import DashboardFeed from '../../containers/DashboardFeed/DashboardFeed';
+// import DashboardFeed from '../../containers/DashboardFeed/DashboardFeed';
 import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 import Tooltip from '../../components/Tooltip/Tooltip';
 

@@ -24,6 +24,7 @@ import LoadingWidget from '../../containers/Widgets/LoadingSummer';
 import SideBar from '../SideBar/SideBarSummer';
 import StoryList from '../../containers/StoryList/StoryListSummer';
 import TimeControls from '../../containers/TimeControls/TimeControls';
+import WinterNarration from '../../containers/WinterNarration/WinterNarration';
 
 const Controls = () => (
   <div className='narrative-desktop-controls'>
@@ -39,6 +40,7 @@ class NarrativeDesktop extends React.Component {
   render() {
     return (
       <div>
+        <WinterNarration />
         <Controls />
         <SideBar />
         <StoryList />

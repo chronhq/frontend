@@ -17,34 +17,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { inject, observer } from 'mobx-react';
+import { computed } from 'mobx';
 
-import './NarrativeEvent.less';
+import NarrativeEvent from '../../components/NarrativeEvent/NarrationInfo';
+import './WinterNarration.less';
 
-const NarrativeEvent = ({
-  event,
-  currentTick,
-  cb,
-  truncateText
-}) => (
-  <div
-    role='button'
-    tabIndex={0}
-    onClick={() => cb(event.order)}
-    onKeyPress={() => cb(event.order)}
-    className={`nevent ${(currentTick === event.order) ? 'nevent__selected' : ''}`}
-  >
-    <div className='nevent--title'>
-      <b>
-        {event.title}
-      </b>
-    </div>
-    <div className='nevent--dates'>
-      {event.date_label}
-    </div>
-    <div className='nevent--paragraph'>
-      {truncateText(event.description)}
-    </div>
-  </div>
-);
+@inject('store')
+@observer
+class WinterNarration extends React.Component {
+  @computed get tick() {
+    return this.props.store.year.tick;
+  }
 
-export default NarrativeEvent;
+  @computed get narration() {
+    return this.props.store.year.narrations[this.tick];
+  }
+
+  render() {
+    return this.narration === undefined ? null : (
+      <div className='winter-narration'>
+        <NarrativeEvent event={this.narration} />
+      </div>
+    );
+  }
+}
+
+export default WinterNarration;

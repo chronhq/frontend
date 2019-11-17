@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import NarrativeEvent from './NarrativeEvent';
+import NarrativeEvent from './NarrationInfo';
 
 const style = {
   display: 'flex',
