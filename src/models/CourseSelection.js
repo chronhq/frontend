@@ -69,6 +69,8 @@ export default class CourseSideEffects {
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
     this.rootStore.pins.wipeDummyPins();
+    this.rootStore.search.Narrations.setText('');
+    this.rootStore.search.Narratives.setText('');
   }
 
   @action configureDataFilters() {

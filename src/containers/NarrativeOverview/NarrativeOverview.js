@@ -22,6 +22,7 @@ import { computed } from 'mobx';
 
 // import NarrativeEvent from '../../components/NarrativeEvent/NarrationInfo';
 import './NarrativeOverview.less';
+import DashboardSearch from '../DashboardSearch/DashboardSearch';
 
 const stringLimit = 60;
 const truncate = (str) => (
@@ -63,21 +64,24 @@ class NarrativeOverview extends React.Component {
     return Object.keys(this.narrations).sort((a, b) => Number(a) > Number(b));
   }
 
-  @computed get enabled() {
-    return (this.tick !== -1 && this.order.length !== 0);
+  @computed get disabled() {
+    return (this.tick !== -1 || this.order.length === 0);
   }
 
   render() {
-    return this.enabled ? null : (
-      <div className='narrative-overview'>
-        {this.order.map((id) => (
-          <NarrationPreview
-            key={`npreview-${id}`}
-            date={this.narrations[id].date_label}
-            text={this.narrations[id].title}
-            action={() => this.props.store.year.setTick(Number(id))}
-          />
-        ))}
+    return this.disabled ? null : (
+      <div className='narrative-overview__container'>
+        <DashboardSearch />
+        <div className='narrative-overview'>
+          {this.order.map((id) => (
+            <NarrationPreview
+              key={`npreview-${id}`}
+              date={this.narrations[id].date_label}
+              text={this.narrations[id].title}
+              action={() => this.props.store.year.setTick(Number(id))}
+            />
+          ))}
+        </div>
       </div>
     );
   }
