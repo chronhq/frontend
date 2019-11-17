@@ -26,7 +26,7 @@ const NarrationInfo = ({
   <div
     className='narration narration__selected'
   >
-    <div className='narration--title'>
+    <div className='text__narrative--header narration--title'>
       <b>
         {event.title}
       </b>

@@ -48,12 +48,10 @@ class StoryCard extends React.Component {
       >
         <StoryCardInfo hover={this.hover} story={story} />
         <div className='story-card-grid decoration-fire'>
-          <div className='story-card__title'>
-            <h5>
-              {story.title}
-            </h5>
+          <div className='text__narrative--header'>
+            {story.title}
           </div>
-          <div className='story-card__title story-card__title--dates'>
+          <div className='text__narrative--header story-card__title--dates'>
             {'in '}
             {[story.start_year, story.end_year].join(' - ')}
           </div>
