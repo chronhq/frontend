@@ -54,6 +54,7 @@ export default class YearModel {
   // timeout before change year
   @observable yearInterval = 4000;
 
+  timeout = '';
 
   // Last day in current period (Dec 31)
   @computed get end() {
@@ -92,7 +93,7 @@ export default class YearModel {
   }
 
   @action setup(year) {
-    this.playing = false;
+    this.togglePlay(false);
     this.min = yearToJulian(year.min);
     this.max = yearToJulian(year.max);
     this.now = yearToJulian(year.now);
@@ -195,11 +196,12 @@ export default class YearModel {
       if (this.maxTick === this.tick) { this.togglePlay(); }
       this.nextTick();
     }
-    setTimeout(() => this.play(), this.yearInterval);
+    this.timeout = setTimeout(() => this.play(), this.yearInterval);
   }
 
   @action togglePlay(playing = !this.playing) {
     this.playing = playing;
+    clearTimeout(this.timeout);
     this.play();
   }
 }
