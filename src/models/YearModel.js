@@ -49,6 +49,12 @@ export default class YearModel {
   // for UI interface and 'year' sliders
   @observable tuneValue;
 
+  @observable playing = false;
+
+  // timeout before change year
+  @observable yearInterval = 4000;
+
+
   // Last day in current period (Dec 31)
   @computed get end() {
     return this.getDateByStep(true) - 1;
@@ -86,6 +92,7 @@ export default class YearModel {
   }
 
   @action setup(year) {
+    this.playing = false;
     this.min = yearToJulian(year.min);
     this.max = yearToJulian(year.max);
     this.now = yearToJulian(year.now);
@@ -177,5 +184,22 @@ export default class YearModel {
 
   prevTick() {
     this.setTick(this.tick - 1);
+  }
+
+  play() {
+    if (this.playing === false) return;
+    if (this.rootStore.courseSelection.courseId === 0) {
+      if (this.now === this.max) { this.togglePlay(); }
+      this.nextYear();
+    } else {
+      if (this.maxTick === this.tick) { this.togglePlay(); }
+      this.nextTick();
+    }
+    setTimeout(() => this.play(), this.yearInterval);
+  }
+
+  @action togglePlay(playing = !this.playing) {
+    this.playing = playing;
+    this.play();
   }
 }

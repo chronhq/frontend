@@ -60,11 +60,34 @@ class BackFromRegimeButton extends React.Component {
 
 const BackFromRegimeButtonWithRouter = withRouter(BackFromRegimeButton);
 
+@inject('store')
+@observer
+class PlayPauseButton extends React.Component {
+  @computed get isPlaying() {
+    return this.props.store.year.playing;
+  }
+
+  control = () => {
+    this.props.store.year.togglePlay();
+    this.props.store.analytics.metricHit('play_button');
+  }
+
+  render() {
+    return (
+      <TimeControlButton
+        icon={this.isPlaying ? 'pause' : 'play'}
+        control={this.props.control}
+        action={this.control}
+      />
+    );
+  }
+}
+
 const PrevYear = () => <TimeControlButton icon='rewind' control='prev' />;
 
 const NextYear = () => <TimeControlButton icon='forward' control='next' />;
 
-const MenuPlay = () => <TimeControlButton icon='play' control='play' />;
+const MenuPlayPause = () => <PlayPauseButton />;
 
 const MenuBack = () => <BackFromRegimeButtonWithRouter icon='back' control='back' />;
 
@@ -72,7 +95,7 @@ const TimeControlButtons = ({ back = false }) => (
   <div className='time-controls__buttons'>
     {back && <MenuBack />}
     <PrevYear />
-    <MenuPlay />
+    <MenuPlayPause />
     <NextYear />
   </div>
 );
@@ -81,7 +104,7 @@ export {
   PrevYear,
   NextYear,
   MenuBack,
-  MenuPlay,
+  MenuPlayPause,
 };
 
 export default TimeControlButtons;
