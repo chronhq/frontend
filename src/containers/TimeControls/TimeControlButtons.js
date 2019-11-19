@@ -40,6 +40,7 @@ class BackFromRegimeButton extends React.Component {
   }
 
   control = () => {
+    this.props.store.year.togglePlay(false);
     const res = this.overview
       ? this.props.store.courseSelection.handleSelect('world', this.props.history)
       : this.props.store.year.setTick(-1);
