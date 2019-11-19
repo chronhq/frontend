@@ -79,7 +79,7 @@ class LayerControlWrapper extends React.Component {
             click={this.handleZoom}
           />
         ))}
-        <LayerToggle
+        {/* <LayerToggle
           key='layer_admin'
           tooltip='Open admin interface'
           place='admin'
@@ -88,7 +88,7 @@ class LayerControlWrapper extends React.Component {
           extraClassName='icon icon-magic-wand'
           extraStyle={{ backgroundSize: '80% 80%' }}
           click={this.openAdmin}
-        />
+        /> */}
       </>
     );
   }
