@@ -18,7 +18,7 @@
  */
 import * as React from 'react';
 
-import LayerControlWrapper from '../../containers/LayerControlWrapper/LayerControlWrapper';
+import SideBar from '../../containers/SideBar/SideBar';
 import ControlButtons from '../../containers/TimeControls/TimeControls';
 import StoryList from '../../containers/StoryList/StoryList';
 
@@ -63,7 +63,7 @@ class NarrativeMobileBar extends React.Component {
         </div>
         <div className='narrative-mobile-bar-hiddenpart'>
           <div className='narrative-mobile-bar__layers'>
-            <LayerControlWrapper />
+            <SideBar />
           </div>
           <div className='narrative-mobile-bar__stories'>
             <StoryList />

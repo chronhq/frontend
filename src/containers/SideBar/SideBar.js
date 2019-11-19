@@ -23,6 +23,8 @@ import { withRouter } from 'react-router-dom';
 
 import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 
+import './SideBar.less';
+
 const dumpData = {
   layer: ['borders', 'cities'],
   pins: ['persons', 'battle', 'document'],
@@ -56,7 +58,7 @@ class LayerControlWrapper extends React.Component {
 
   render() {
     return (
-      <>
+      <div className='side-bar__grid'>
         {Object.keys(dumpData).map((place) => (
           dumpData[place].map((id) => (
             <LayerToggle
@@ -68,10 +70,12 @@ class LayerControlWrapper extends React.Component {
               click={this.handleLayer}
             />
           ))))}
+        <div />
+        <div />
         {zoom.map((z) => (
           <LayerToggle
             key={`layer_${z}`}
-            tooltip={`Zoom ${z}`}
+            tooltip={`Zoom ${z === 'minus' ? 'Out' : 'In'}`}
             place={z}
             name={z}
             checked={false}
@@ -89,7 +93,7 @@ class LayerControlWrapper extends React.Component {
           extraStyle={{ backgroundSize: '80% 80%' }}
           click={this.openAdmin}
         /> */}
-      </>
+      </div>
     );
   }
 }

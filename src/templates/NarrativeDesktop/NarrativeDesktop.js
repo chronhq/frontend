@@ -21,7 +21,7 @@ import React from 'react';
 import './NarrativeDesktop.less';
 import FreePinsWidget from '../../containers/Widgets/FreePinsSummer';
 import LoadingWidget from '../../containers/Widgets/LoadingSummer';
-import SideBar from '../SideBar/SideBarSummer';
+import SideBar from '../../containers/SideBar/SideBar';
 import StoryList from '../../containers/StoryList/StoryListSummer';
 import TimeControls from '../../containers/TimeControls/TimeControls';
 import WinterNarration from '../../containers/WinterNarration/WinterNarration';
