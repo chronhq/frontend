@@ -24,17 +24,17 @@ const NarrationInfo = ({
   event,
 }) => (
   <div
-    className='narration narration__selected'
+    className={`narration ${event.description.length === 0 ? 'narration--no-body' : ''}`}
   >
-    <div className='text__narrative--header narration--title'>
+    <div className='text__narrative__header narration__title'>
       <b>
         {event.title}
       </b>
     </div>
-    <div className='narration--dates'>
+    <div className='narration__dates'>
       {event.date_label}
     </div>
-    <div className='narration--paragraph'>
+    <div className='narration__paragraph'>
       {event.description}
     </div>
   </div>

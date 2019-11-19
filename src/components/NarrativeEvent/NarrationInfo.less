@@ -7,14 +7,17 @@
   grid-template-areas:
   'title dates'
   'paragraph paragraph';
-  &--title {
+  &--no-body {
+    grid-template-rows: 5.5rem auto;
+  }
+  &__title {
     grid-area: title;
     align-self: center;
     text-align: left;
     margin-top: .25rem;
     margin-left: .5rem;
   }
-  &--dates {
+  &__dates {
     box-sizing: border-box;
     grid-area: dates;
     color: @story-card-dates;
@@ -25,7 +28,7 @@
     text-align: center;
     margin-right: .5rem;
   }
-  &--paragraph {
+  &__paragraph {
     padding: 0 .5rem .25rem .5rem;
     grid-area: paragraph;
     overflow-y: auto;

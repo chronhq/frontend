@@ -36,7 +36,7 @@ class WinterNarration extends React.Component {
 
   render() {
     return this.narration === undefined ? null : (
-      <div className='winter-narration'>
+      <div className='float-container winter-narration'>
         <NarrativeEvent event={this.narration} />
       </div>
     );
