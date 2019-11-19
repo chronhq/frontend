@@ -52,7 +52,14 @@ export default class CourseSideEffects {
   }
 
   @computed get courseInfo() {
-    return this.rootStore.data.narratives.data[this.courseId];
+    const info = this.rootStore.data.narratives.data[this.courseId];
+    return info !== undefined
+      ? {
+        ...info,
+        start_year: Number(info.start_year),
+        end_year: Number(info.end_year),
+      }
+      : info;
   }
 
   @action cleanup() {
@@ -118,10 +125,16 @@ export default class CourseSideEffects {
       }
     });
 
+    // Use random year for global narrative
+    const now = id === 0
+      ? this.courseInfo.start_year + Math.round(Math.random()
+        * (this.courseInfo.end_year - this.courseInfo.start_year))
+      : this.courseInfo.start_year;
+
     this.rootStore.year.setup({
-      min: Number(this.courseInfo.start_year),
-      max: Number(this.courseInfo.end_year),
-      now: Number(this.courseInfo.start_year),
+      min: this.courseInfo.start_year,
+      max: this.courseInfo.end_year,
+      now,
       tick: 0,
     });
 
