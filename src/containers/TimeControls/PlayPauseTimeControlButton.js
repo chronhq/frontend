@@ -17,32 +17,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { computed } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import TimeControlButton from './GenericTimeControlButton';
-import PlayPauseButton from './PlayPauseTimeControlButton';
-import BackFromRegimeButton from './BackTimeControlButton';
 
-const PrevYear = () => <TimeControlButton icon='rewind' control='prev' />;
+@inject('store')
+@observer
+class PlayPauseButton extends React.Component {
+  @computed get isPlaying() {
+    return this.props.store.year.playing;
+  }
 
-const NextYear = () => <TimeControlButton icon='forward' control='next' />;
+  control = () => {
+    this.props.store.year.togglePlay();
+    this.props.store.analytics.metricHit('play_button');
+  }
 
-const MenuPlayPause = () => <PlayPauseButton />;
+  render() {
+    return (
+      <TimeControlButton
+        icon={this.isPlaying ? 'pause' : 'play'}
+        control={this.props.control}
+        action={this.control}
+      />
+    );
+  }
+}
 
-const MenuBack = () => <BackFromRegimeButton icon='back' control='back' />;
-
-const TimeControlButtons = ({ back = false }) => (
-  <div className='time-controls__buttons'>
-    {back && <MenuBack />}
-    <PrevYear />
-    <MenuPlayPause />
-    <NextYear />
-  </div>
-);
-
-export {
-  PrevYear,
-  NextYear,
-  MenuBack,
-  MenuPlayPause,
-};
-
-export default TimeControlButtons;
+export default PlayPauseButton;

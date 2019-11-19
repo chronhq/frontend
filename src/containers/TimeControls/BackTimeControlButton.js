@@ -17,32 +17,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { computed } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
 import TimeControlButton from './GenericTimeControlButton';
-import PlayPauseButton from './PlayPauseTimeControlButton';
-import BackFromRegimeButton from './BackTimeControlButton';
 
-const PrevYear = () => <TimeControlButton icon='rewind' control='prev' />;
+@inject('store')
+@observer
+class BackFromRegimeButton extends React.Component {
+  @computed get overview() {
+    return this.props.store.year.tick === -1;
+  }
 
-const NextYear = () => <TimeControlButton icon='forward' control='next' />;
+  @computed get metric() {
+    return this.overview ? 'narrative_back' : 'narrative_open';
+  }
 
-const MenuPlayPause = () => <PlayPauseButton />;
+  control = () => {
+    this.props.store.year.togglePlay(false);
+    const res = this.overview
+      ? this.props.store.courseSelection.handleSelect('world', this.props.history)
+      : this.props.store.year.setTick(-1);
+    this.props.store.analytics.metricHit(this.metric);
+    return res;
+  }
 
-const MenuBack = () => <BackFromRegimeButton icon='back' control='back' />;
+  render() {
+    return (
+      <TimeControlButton
+        icon={this.props.icon}
+        control={this.props.control}
+        action={this.control}
+      />
+    );
+  }
+}
 
-const TimeControlButtons = ({ back = false }) => (
-  <div className='time-controls__buttons'>
-    {back && <MenuBack />}
-    <PrevYear />
-    <MenuPlayPause />
-    <NextYear />
-  </div>
-);
-
-export {
-  PrevYear,
-  NextYear,
-  MenuBack,
-  MenuPlayPause,
-};
-
-export default TimeControlButtons;
+export default withRouter(BackFromRegimeButton);
