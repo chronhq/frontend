@@ -16,32 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const decor = (lng) => {
-  const text = lng === 'ru' ? '{name-ru}' : '{name-en}';
-  const layer = {
-    type: 'symbol',
-    layout: {
-      'icon-image': 'decoration-{img}',
-      'icon-size': 1.28,
-      'text-field': text,
-      'text-offset': [
-        0.5,
-        -1
-      ],
-      'text-max-width': 15,
-      'text-size': 16
-    },
-    paint: {
-      'text-color': '#80CDDD',
-      'text-halo-width': 1.5,
-      'text-halo-color': 'rgba(255,255,255,0.7)'
-    },
-    minzoom: 0,
-    maxzoom: 4,
-    source: 'decor',
-    id: 'decor',
-  };
-  return [layer];
-};
+import OceanDecor from './OceanDecor';
 
-export default decor;
+const vector = (url, api = 'api/mvt') => ({
+  type: 'vector',
+  tiles: [`${window.location.origin}/${api}/${url}/{z}/{x}/{y}`]
+});
+
+const geojson = (data) => ({ type: 'geojson', data });
+
+const sources = (legacyPins) => ({
+  stv: vector('stv', 'mvt'),
+  events: vector('cached-data'),
+  cities: vector('cities'),
+  visual_center: vector('cities'),
+  narratives: vector('narratives'),
+  symbols: vector('narratives'),
+  decor: geojson(OceanDecor),
+  ...Object.keys(legacyPins)
+    .reduce((prev, cur) => ({ ...prev, [cur]: geojson(legacyPins[cur]) }), {})
+});
+
+export default sources;

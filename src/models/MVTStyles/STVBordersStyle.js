@@ -21,14 +21,9 @@ import mapColors from './colors';
 const colors = Object.keys(mapColors).reduce((p, c) => ([...p, String(mapColors[c]), c]), []);
 
 const STVBorders = (now) => {
-  const url = 'stv';
   const opacity = {
     min: 0.75,
     max: 0.25
-  };
-  const source = {
-    type: 'vector',
-    tiles: [`${window.location.origin}/mvt/${url}/{z}/{x}/{y}`]
   };
 
   // Filter benchmark:
@@ -91,9 +86,7 @@ const STVBorders = (now) => {
     id: 'stv-lines',
     'source-layer': 'stv'
   };
-  return {
-    sources: { stv: source }, layers: [fill, borders]
-  };
+  return [fill, borders];
 };
 
 export default STVBorders;

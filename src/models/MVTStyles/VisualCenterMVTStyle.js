@@ -16,59 +16,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const citiesStyle = (now, flags) => {
-  // this one will not work because of 'dissolution_date' null value
-  // const filter = [
-  //   'all',
-  //   ['<=', 'inception_date', now],
-  //   ['>=', 'dissolution_date', now]
-  // ];
 
+const VisualCenter = (now) => {
   const filter = [
-    'none',
-    ['>', 'inception_date', now],
-    ['<', 'dissolution_date', now]
+    'all',
+    ['<=', 'start_date', now],
+    ['>=', 'end_date', now]
   ];
 
-  const layer = {
-    layout: {},
-    minzoom: 3,
-    filter,
-    type: 'circle',
-    paint: {
-      'circle-radius': 2,
-      'circle-color': 'rgba(238,78,139, 0.4)',
-      'circle-stroke-color': 'rgba(238,78,139, 1)',
-      'circle-stroke-width': 1
-    },
-    source: 'cities',
-    id: 'dots',
-    'source-layer': 'cities'
-  };
-
   const labels = {
-    id: 'labels',
+    id: 'visual_center',
     type: 'symbol',
     filter,
-    source: 'cities',
-    minzoom: 3,
-    'source-layer': 'cities',
+    source: 'visual_center',
+    maxzoom: 8,
+    'source-layer': 'visual_center',
     layout: {
       'text-field': '{label}',
-      'text-offset': [
-        0,
-        0.6
-      ],
       'text-max-width': 5,
-      'text-size': 12
+      'text-size': 14
     },
     paint: {
       'text-color': '#000',
-      'text-halo-width': 1.5,
+      'text-halo-width': 1,
       'text-halo-color': 'rgba(255,255,255,0.7)'
     }
   };
-  return flags.cities === true ? [layer, labels] : [];
+
+  return [labels];
 };
 
-export default citiesStyle;
+export default VisualCenter;

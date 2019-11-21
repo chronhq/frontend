@@ -16,18 +16,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const getLayer = (layerName) => ({
-  id: layerName,
+
+const filter = (course, tick, layer) => ([
+  'all',
+  ['==', 'layer', layer],
+  ['==', 'order', tick],
+  ['==', 'narrative_id', course],
+]);
+
+const pins = (course, tick) => ({
+  id: 'symbols-pins',
+  filter: filter(course, tick, 'pin'),
   layout: {
-    'icon-image': 'pin-{img}',
+    'icon-image': 'pin-narration',
     'icon-rotate': -135,
     'icon-size': 1,
     'icon-anchor': 'top-left',
   },
   type: 'symbol',
-  source: layerName,
+  source: 'symbols',
+  'source-layer': 'symbols'
 });
 
-const pins = (layers) => layers.map((layerName) => getLayer(layerName));
+const lineDash = (course, tick) => ({
+  id: 'symbols-lines',
+  filter: filter(course, tick, 'line-dasharray'),
+  // layout: {
+  //   'icon-image': 'pin-{pic}',
+  //   'icon-rotate': -135,
+  //   'icon-size': 1,
+  //   'icon-anchor': 'top-left',
+  // },
+  paint: {
+    'line-color': 'rgb(127, 127, 127)',
+    // 'line-dasharray': 1,
+  },
+  type: 'line',
+  source: 'symbols',
+  'source-layer': 'symbols'
+});
 
-export default pins;
+const Symbols = (course, tick) => ([pins(course, tick), lineDash(course, tick)]);
+
+export default Symbols;
