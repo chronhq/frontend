@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, observable } from 'mobx';
 import { withRouter } from 'react-router-dom';
 
 import StoryCard from '../../components/StoryCard/StoryCard';
@@ -27,6 +27,19 @@ import './StoryListSummer.less';
 @inject('store')
 @observer
 class StoryList extends React.Component {
+  @observable shiftX = 0;
+
+  @computed get maxShit() { // it's a negative value
+    if (this.ref === undefined) return 0;
+    return this.props.store.deck.width - this.ref.offsetWidth - this.props.store.remToPixel(2);
+  }
+
+  @computed get translateX() {
+    if (this.shiftX > 0) return 0;
+    if (this.shiftX < this.maxShit) return this.maxShit;
+    return this.shiftX;
+  }
+
   @computed get courses() {
     return this.props.store.search.Narratives.entities;
   }
@@ -39,9 +52,22 @@ class StoryList extends React.Component {
     this.props.store.courseSelection.handleSelect(url, this.props.history);
   }
 
+  handleWheel = (event) => {
+    const delta = event.deltaY || event.deltaX;
+    if (delta === 0) return null;
+    this.shiftX = this.translateX - delta;
+    return true;
+  }
+
   render() {
     return this.enabled ? (
-      <div className='story-list'>
+      <div
+        className='story-list'
+        // ref={'storyList'}
+        ref={(r) => { this.ref = r; return false; }}
+        onWheel={this.handleWheel}
+        style={{ transform: `translateX(${this.translateX}px)` }}
+      >
         {Object.values(this.courses).map((story) => (
           <StoryCard
             key={`card_${story.url}`}

@@ -56,5 +56,8 @@ export default class storeModel {
     this.analytics = new AnalyticModel();
     this.auth = new AuthModel();
     this.admin = new AdminModel();
+    this.remToPixel = (rem) => rem * parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
   }
 }
