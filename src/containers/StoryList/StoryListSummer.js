@@ -30,7 +30,7 @@ class StoryList extends React.Component {
   @observable shiftX = 0;
 
   @computed get maxShit() { // it's a negative value
-    if (this.ref === undefined) return 0;
+    if (this.ref === undefined && this.ref !== null) return 0;
     return this.props.store.deck.width - this.ref.offsetWidth - this.props.store.remToPixel(2);
   }
 
