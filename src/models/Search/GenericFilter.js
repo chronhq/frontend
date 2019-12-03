@@ -43,11 +43,11 @@ class GenericFilter {
   }
 
 
-  selectText = d => ([d.description]);
+  selectText = (d) => ([d.description]);
 
-  textCb = t => t;
+  textCb = (t) => t;
 
-  filterCb = cur => (
+  filterCb = (cur) => (
     this.textCb(cur).toLowerCase().indexOf(this.text.toLowerCase()) > -1);
 
   filter = (id) => {

@@ -17,45 +17,65 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import YearSelectButton from './YearSelectButton';
-
-import Button, { BUTTON_TYPE } from '../../components/Button/Button';
-
-import {
-  Prev, Next
-} from './TimeControlsButtons';
+import TimeControlButtons from './TimeControlButtons';
+import { ProgressBar } from '../../components/ActionButtons/UploadWidget';
 
 import './TimeControls.less';
 
+const TimeControlsGlobal = () => (
+  <div className='time-controls'>
+    <YearSelectButton />
+    <TimeControlButtons />
+  </div>
+);
+
 @inject('store')
 @observer
-class TimeControls extends React.Component {
+class TimeControlsWrapper extends React.Component {
+  @computed get courseId() {
+    return this.props.store.courseSelection.courseId;
+  }
+
+  @computed get narrative() {
+    return this.props.store.data.narratives.data[this.courseId] || {};
+  }
+
+  @computed get current() {
+    return this.props.store.year.tick + 1;
+  }
+
+  @computed get narrations() {
+    return this.props.store.year.narrations;
+  }
+
+  @computed get cards() {
+    return Object.keys(this.narrations).length;
+  }
+
   render() {
-    return (
-      <div className='timepanel__controls'>
-        <Button
-          btnType={BUTTON_TYPE.ICON}
-          onClick={() => {
-            this.props.store.year.prevYear();
-            this.props.store.analytics.metricHit('year_change');
-          }}
-        >
-          <Prev />
-        </Button>
-        <YearSelectButton />
-        <Button
-          btnType={BUTTON_TYPE.ICON}
-          onClick={() => {
-            this.props.store.year.nextYear();
-            this.props.store.analytics.metricHit('year_change');
-          }}
-        >
-          <Next />
-        </Button>
+    return this.courseId !== 0 ? (
+      <div className='time-controls' style={this.props.style}>
+        <div className='text__narrative--header time-controls__text'>
+          {this.narrative.title}
+        </div>
+        <TimeControlButtons back />
+        <ProgressBar total={this.cards} current={this.current} />
+        <div className='time-controls__text'>
+          {this.current}
+          {'/'}
+          {this.cards}
+          {' Cards'}
+        </div>
       </div>
-    );
+    ) : <TimeControlsGlobal />;
   }
 }
 
-export default TimeControls;
+TimeControlsWrapper.defaultProps = {
+  style: {}
+};
+
+export default TimeControlsWrapper;

@@ -28,7 +28,7 @@ export default class CourseSideEffects {
   find(name) {
     return Object
       .values(this.rootStore.data.narratives.data)
-      .find(cur => cur.url === name);
+      .find((cur) => cur.url === name);
   }
 
   @computed get deps() {
@@ -48,11 +48,18 @@ export default class CourseSideEffects {
   }
 
   @computed get loadingIsComplete() {
-    return this.listOfDeps.every(d => this.rootStore.data[d].status.loaded);
+    return this.listOfDeps.every((d) => this.rootStore.data[d].status.loaded);
   }
 
   @computed get courseInfo() {
-    return this.rootStore.data.narratives.data[this.courseId];
+    const info = this.rootStore.data.narratives.data[this.courseId];
+    return info !== undefined
+      ? {
+        ...info,
+        start_year: Number(info.start_year),
+        end_year: Number(info.end_year),
+      }
+      : info;
   }
 
   @action cleanup() {
@@ -62,13 +69,15 @@ export default class CourseSideEffects {
       }
     });
 
-    const wipe = d => this.rootStore.data[d].wipe();
+    const wipe = (d) => this.rootStore.data[d].wipe();
 
     // Wipe data except base deps
     this.deps.course.map(wipe);
     this.deps.world.map(wipe);
     this.deps.heavy.map(wipe);
     this.rootStore.pins.wipeDummyPins();
+    this.rootStore.search.Narrations.setText('');
+    this.rootStore.search.Narratives.setText('');
   }
 
   @action configureDataFilters() {
@@ -116,10 +125,16 @@ export default class CourseSideEffects {
       }
     });
 
+    // Use random year for global narrative
+    const now = id === 0
+      ? this.courseInfo.start_year + Math.round(Math.random()
+        * (this.courseInfo.end_year - this.courseInfo.start_year))
+      : this.courseInfo.start_year;
+
     this.rootStore.year.setup({
       min: this.courseInfo.start_year,
       max: this.courseInfo.end_year,
-      now: this.courseInfo.start_year,
+      now,
       tick: 0,
     });
 
@@ -130,7 +145,7 @@ export default class CourseSideEffects {
     this.loadCourseData();
 
     this.rootStore.flags.set({
-      projection: this.rootStore.flags.defaultFlags.projection
+      deck: this.rootStore.flags.defaultFlags.deck
     });
 
     when(
@@ -143,11 +158,23 @@ export default class CourseSideEffects {
           // Fake courses or Global Narrative
           this.rootStore.deck.updateSettings(this.courseInfo.mapSettings);
         }
-        this.rootStore.year.setTick(0);
+        this.rootStore.year.setTick(-1);
         this.updateCD();
       }
     );
 
     return true;
+  }
+
+  @action handleSelect(
+    url,
+    history = {
+      push: (u) => console.warn('No history provided for story selection, ingoring', u)
+    }
+  ) {
+    this.cleanup();
+    const course = this.find(url);
+    this.select(course.id, course.url);
+    history.push(`/${url}`);
   }
 }

@@ -1,0 +1,48 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+@import './colors.less';
+
+@z-index-base: 1;
+@z-index-interface: 2;
+@z-index-admin: 50;
+@z-index-overlay: 99;
+@z-index-tooltip: 1070;
+
+@base-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+@color-picker-shadow: 0 0px 5px 4px grey;
+
+@icon-shadow--hard: 0 2px 2px black;
+@icon-shadow--soft: 0 2px 2px grey;
+
+@inner-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+
+.float-container {
+  background-color: @light-grey;
+  border-radius: 2px;
+  box-shadow: @base-shadow;
+}
+
+.text-input {
+  border-radius: 2px 0 0 2px;
+  padding: 0 0.35rem;
+  box-shadow: @inner-shadow;
+  border: none;
+  outline: none;
+}

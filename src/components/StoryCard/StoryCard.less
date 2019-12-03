@@ -1,46 +1,54 @@
 @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
 
-.storycard {
-  border-radius: 6px;
-  background-color: rgba(250,250,250,0.8);
-  margin: 10px 0;
+.story-card-info {
+  user-select: none;
+  position: absolute;
+  bottom: 105%;
+  opacity: 1;
   padding: 0.5rem;
-  display: grid;
-  grid-template-columns: 6fr 2fr;
-  grid-template-rows: auto;
-  cursor: pointer;
-  &:hover {
-    background-color: rgba(250,250,250,0.3);
-  }
-  &--title {
-    color: #2E4474;
-    font-family: 'Lora', serif;
-    font-size: 1.125rem;
-    text-align: left;
-  }
-  &--dates {
-    color: #80CECE;
-    font-size: 16px;
-    text-align: center;
-  }
-  &--author {
-    margin: 0 10px;
-    &:first-child {
-      font-weight: 700;
-      background-color: red;
-    }
-    & p {
-      margin: 0;
-    }
-    color: #4A4A4A;
-    font-size: 0.75rem;
-  }
-  &--rating {
-    text-align: center;
-  }
-  @media screen and (max-width: 600px) {
-    background-color: transparent;
-    &--dates, &--author {display: none;}
+  transition: opacity 300ms ease-in-out;
+  &__hidden {
+    display:none;
+    opacity: 0;
   }
 }
 
+.story-card-grid {
+  display: grid;
+  align-items: center;
+  width: 12rem;
+  height: 7rem;
+}
+
+.story-card__counter {
+  align-self: end;
+}
+
+.story-card {
+  .float-container();
+  user-select: none;
+  margin: 0 1rem 0 0;
+  transition: opacity 200ms ease-in-out;
+  opacity: .75;
+  padding: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
+  &__title--dates {
+    font-weight: normal;
+  }
+  &__author {
+    margin: 0 10px;
+    & p {
+      margin: 0;
+    }
+    color: @text-grey;
+    font-size: 0.75rem;
+  }
+  @media screen and (max-width: 600px) {
+    background-color: transparent;
+    &__dates, &__author {display: none;}
+  }
+}

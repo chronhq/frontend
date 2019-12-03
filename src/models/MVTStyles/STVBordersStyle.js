@@ -16,15 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import mapColors from './colors';
+
+const colors = Object.keys(mapColors).reduce((p, c) => ([...p, String(mapColors[c]), c]), []);
+
 const STVBorders = (now) => {
-  const url = 'stv';
   const opacity = {
     min: 0.75,
     max: 0.25
-  };
-  const source = {
-    type: 'vector',
-    tiles: [`${window.location.origin}/mvt/${url}/{z}/{x}/{y}`]
   };
 
   // Filter benchmark:
@@ -46,19 +45,7 @@ const STVBorders = (now) => {
       'fill-color': [
         'match',
         ['get', 'color'],
-        '1', '#ff6161',
-        '2', '#263f66',
-        '3', '#f9aa54',
-        '4', '#f9ff56',
-        '5', '#089195',
-        '6', '#669966',
-        '7', '#044e7b',
-        '8', '#935a41',
-        '9', '#80d0dd',
-        '10', '#944564',
-        '11', '#acb537',
-        '12', '#9561ba',
-        '13', '#a55f94',
+        ...colors,
         'rgb(127, 127, 127)' // Disputed
       ],
       'fill-opacity': {
@@ -81,6 +68,9 @@ const STVBorders = (now) => {
       'line-join': 'round',
     },
     filter,
+    // Using visibility key will result with mapbox diff error
+    // Full style reloaded would be invoked.
+    // Do not set visibility flag,
     type: 'line',
     paint: {
       'line-color': 'rgb(127, 127, 127)',
@@ -96,9 +86,7 @@ const STVBorders = (now) => {
     id: 'stv-lines',
     'source-layer': 'stv'
   };
-  return {
-    sources: { stv: source }, layers: [fill, borders]
-  };
+  return [fill, borders];
 };
 
 export default STVBorders;

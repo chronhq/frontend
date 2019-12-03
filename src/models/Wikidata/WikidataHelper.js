@@ -102,7 +102,7 @@ const getWikimediaURI = (names) => {
   // thumbwidth in pixels
   const width = 250;
   const api = 'commons.wikimedia.org/w/api.php';
-  const files = names.map(name => `File:${encodeURI(name)}`).join('|');
+  const files = names.map((name) => `File:${encodeURI(name)}`).join('|');
   const params = [
     'action=query',
     'prop=imageinfo',
@@ -116,13 +116,10 @@ const getWikimediaURI = (names) => {
 };
 
 const typesMapping = {
-  // { id: 'geo', pic: 30 }, // SimpleInfoPin
-  // { id: 'inv', pic: 27 }, // SimpleBulb
-  // { id: 'star', pic: 31 }, // SimpleStar
-  battle: { id: 178561, pic: 32, store: 'battles', },
-  document: { id: 131569, pic: 24, store: 'documents', },
-  birth: { id: 569, pic: 26, store: 'actors', },
-  death: { id: 570, pic: 28, store: 'actors', },
+  battle: { id: 178561, store: 'battles', },
+  document: { id: 131569, store: 'documents', },
+  birth: { id: 569, store: 'actors', },
+  death: { id: 570, store: 'actors', },
 };
 
 export {

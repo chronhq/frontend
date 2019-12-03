@@ -22,7 +22,7 @@ import { observer, inject } from 'mobx-react';
 
 const InfoLink = ({ uri, label = null }) => (
   <a
-    className='factSource'
+    className='message-fact__source'
     href={uri}
     target='_blank'
     rel='noopener noreferrer'
@@ -73,7 +73,7 @@ class CountryHover extends React.Component {
 
   @computed get factHeader() {
     return (
-      <p className='factHeader'>
+      <p className='message-fact__header'>
         {this.base.title}
       </p>
     );
@@ -89,15 +89,15 @@ class CountryHover extends React.Component {
 
   @computed get images() {
     if (this.pinned === false) return null;
-    const img = i => (
+    const img = (i) => (
       <img
-        className='countryHoverImage'
+        className='message-fact__country-flags'
         src={i}
         alt=''
       />
     );
     return (
-      <div className='countryHoverImage'>
+      <div className='message-fact__country-flags'>
         {this.extra.flag !== undefined && img(this.extra.flag.uri)}
         {this.extra.emblem !== undefined && img(this.extra.emblem.value)}
       </div>
@@ -117,7 +117,7 @@ class CountryHover extends React.Component {
     const pop = new Intl.NumberFormat().format(this.extra.population.population);
     return (
       <p>
-        <span className='factSubTitle'>
+        <span className='message-fact__sub-title'>
           {this.messages.population}
           {': '}
         </span>
@@ -131,11 +131,11 @@ class CountryHover extends React.Component {
     if (this.extra.head.uri === undefined && this.extra.head.label === undefined) return null;
     return (
       <p>
-        <span className='factSubTitle'>
+        <span className='message-fact__sub-title'>
           {this.messages.head}
           {': '}
         </span>
-        {<InfoLink uri={this.extra.head.uri} label={this.extra.head.label} />}
+        <InfoLink uri={this.extra.head.uri} label={this.extra.head.label} />
       </p>
     );
   }
@@ -147,7 +147,7 @@ class CountryHover extends React.Component {
       || !this.extra.capital.length) return null;
     return (
       <p>
-        <span className='factSubTitle'>
+        <span className='message-fact__sub-title'>
           {this.messages.capital}
           {': '}
         </span>
@@ -163,7 +163,7 @@ class CountryHover extends React.Component {
 
   render() {
     return (
-      <div className='factInner'>
+      <div className='message-fact__inner'>
         {this.factHeader}
         {this.subTitleMessage}
         {this.government}

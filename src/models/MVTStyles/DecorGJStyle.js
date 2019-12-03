@@ -16,14 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import OceanDecor from './OceanDecor';
-
 const decor = (lng) => {
   const text = lng === 'ru' ? '{name-ru}' : '{name-en}';
-  const source = {
-    type: 'geojson',
-    data: OceanDecor
-  };
   const layer = {
     type: 'symbol',
     layout: {
@@ -47,9 +41,7 @@ const decor = (lng) => {
     source: 'decor',
     id: 'decor',
   };
-  return {
-    sources: { decor: source }, layers: [layer]
-  };
+  return [layer];
 };
 
 export default decor;

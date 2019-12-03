@@ -25,6 +25,8 @@ import {
   computed, action
 } from 'mobx';
 
+import disabled from '../../../disabled.json';
+
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
@@ -32,6 +34,10 @@ class MapWrapper extends React.Component {
     window.addEventListener('resize', () => this.resize(), false);
     window.addEventListener('orientationchange', () => this.resize(), false);
     this.resize();
+    if (disabled.map) {
+      this.deck.initialLoad(true);
+      console.info('Geometry Layers were disabled by ENV');
+    }
   }
 
 
@@ -52,7 +58,7 @@ class MapWrapper extends React.Component {
   }
 
   onBorderHoverCb = (features, position, force = false) => {
-    const feature = features.length > 0
+    const feature = (features && features.length > 0)
       ? features[0]
       : { layer: { id: '0', source: 'unknown' }, properties: { id: '1' } };
     try {
@@ -62,7 +68,7 @@ class MapWrapper extends React.Component {
         this.props.store.balloon.setPosition(...position);
         return true;
       } if (feature.layer.source === 'events') {
-        const events = features.filter(f => f.layer.source === 'events');
+        const events = features.filter((f) => f.layer.source === 'events');
         this.props.store.balloon.setMVTEventBalloon(events, force);
         this.props.store.balloon.setPosition(...position);
         return true;
@@ -79,7 +85,7 @@ class MapWrapper extends React.Component {
     return true;
   };
 
-  setHoverBalloon = force => (
+  setHoverBalloon = (force) => (
     (pointerEvent) => {
       if (force === false && this.props.store.balloon.pinned === true) return;
       const { features, point } = pointerEvent;
@@ -87,9 +93,11 @@ class MapWrapper extends React.Component {
     }
   )
 
-  dataLoadingListener = e => this.deck.isLoaded(e)
+  dataLoadingListener = (e) => this.deck.isLoaded(e)
 
   toggleDataLoadingEventListeners = (t = 'on') => {
+    // when map is disabled
+    if (!this.deck.interactiveMap) return;
     const map = this.deck.interactiveMap.getMap();
     map[t]('dataloading', this.dataLoadingListener);
     map[t]('data', this.dataLoadingListener);
@@ -101,6 +109,30 @@ class MapWrapper extends React.Component {
   }
 
   render() {
+    if (disabled.map) {
+      const stripes = [
+        '-45deg',
+        'rgba(0, 0, 0, 0.2)',
+        'rgba(0, 0, 0, 0.2) 10px',
+        'rgba(0, 0, 0, 0.3) 10px',
+        'rgba(0, 0, 0, 0.3) 20px'].join(',');
+
+      const background = `repeating-linear-gradient(${stripes})`;
+      return (
+        <div
+          id='map-wrapper'
+          style={{
+            zIndex: 1, width: '100vw%', height: '100vh', background
+          }}
+          role='button'
+          tabIndex={0}
+          onClick={() => this.props.store.balloon.unpin()}
+          onMouseEnter={this.setHoverBalloon(true)}
+          onKeyPress={this.setHoverBalloon(true)}
+        />
+      );
+    }
+
     return (
       <InteractiveMap
         style={{ zIndex: 1 }}

@@ -21,14 +21,8 @@ import { observable, action, computed } from 'mobx';
 const flags = {
   runtime: {
     SelectedCourse: null,
-    alignPanel: 'right',
     article: false,
     yearInput: false,
-    SidePanelTab: 0,
-    SidePanelIsOpen: false,
-    TimelineIsMinified: false,
-    BioIsOpen: false,
-    cluster: true,
   },
   layer: {
     borders: true,
@@ -41,14 +35,11 @@ const flags = {
     battle: true,
     document: true,
   },
-  zoom: {
+  deck: {
     minZoom: 1,
     maxZoom: 8,
+    center: [2, 50],
   },
-  projection: {
-    center: [0, 0],
-    clip: [[-180, 90], [180, -90]],
-  }
 };
 
 class Flag {
@@ -79,7 +70,7 @@ class FlagList {
   }
 
   update(list) {
-    Object.keys(list).map(c => this.set(c, list[c]));
+    Object.keys(list).map((c) => this.set(c, list[c]));
   }
 
   get(flag) {
@@ -111,11 +102,11 @@ export default class FlagsModel {
 
   @action set(f) {
     Object.keys(f)
-      .map(branch => Object.keys(f[branch])
-        .map(flag => this[branch].set(flag, f[branch][flag])));
+      .map((branch) => Object.keys(f[branch])
+        .map((flag) => this[branch].set(flag, f[branch][flag])));
   }
 
   print() {
-    this.branches.map(b => console.log(b, this[b].list));
+    this.branches.map((b) => console.log(b, this[b].list));
   }
 }

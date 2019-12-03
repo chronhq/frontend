@@ -26,7 +26,7 @@ const headers = {
 };
 
 const buildRequest = (qId, { fields, values, params }, lng = 'en') => (`
-  SELECT ${fields.map(f => `?${f}`).join(' ')} WHERE {
+  SELECT ${fields.map((f) => `?${f}`).join(' ')} WHERE {
     BIND(wd:${qId} AS ?item)
     SERVICE wikibase:label { bd:serviceParam wikibase:language "${lng}". }
     ${values.join('\n')}

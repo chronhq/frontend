@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import NarrativeEvent from './NarrativeEvent';
+import NarrativeEvent from './NarrationInfo';
 
 const style = {
   display: 'flex',
@@ -21,7 +21,7 @@ const eventData = {
   },
   currentTick: 1,
   cb: () => console.log('cb'),
-  truncateText: text => text
+  truncateText: (text) => text
 };
 
 storiesOf('NarrativeEvent', module)

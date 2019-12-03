@@ -62,22 +62,22 @@ class Balloon extends React.Component {
     const { width, height } = this.props.store.deck;
     if (pageX > 0.5 * width) {
       return (pageY < 0.7 * height)
-        ? 'balloonTopRight'
-        : 'balloonBottomRight';
+        ? 'balloon--top-right'
+        : 'balloon--bottom-right';
     }
     return (pageY < 0.7 * height)
-      ? 'balloonTopLeft'
-      : 'balloonBottomLeft';
+      ? 'balloon--top-left'
+      : 'balloon--bottom-left';
   }
 
   render() {
-    const container = `balloonContainer ${this.positionClassName}`;
+    const container = `balloon-container ${this.positionClassName}`;
     return (
       <div style={{ ...this.style }} className={container}>
         <BalloonControls cachePosition={() => this.cachePosition()} />
         <BalloonContent />
         {!this.balloon.pinned && (
-          <div className='balloonClickNotice'>
+          <div className='balloon__click-notice'>
             {this.props.store.i18n.data.messages.balloonExpand}
           </div>
         )}

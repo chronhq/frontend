@@ -1,0 +1,39 @@
+@import '../../styles/colors.less';
+
+.narration {
+  display: grid;
+  grid-template-columns: 10fr 3.5fr;
+  grid-template-rows: 5.5rem 10.5rem;
+  grid-template-areas:
+  'title dates'
+  'paragraph paragraph';
+  &--no-body {
+    grid-template-rows: 5.5rem auto;
+  }
+  &__title {
+    grid-area: title;
+    align-self: center;
+    text-align: left;
+    margin-top: .25rem;
+    margin-left: .5rem;
+  }
+  &__dates {
+    box-sizing: border-box;
+    grid-area: dates;
+    color: @story-card-dates;
+    align-self: center;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: .5rem;
+  }
+  &__paragraph {
+    padding: 0 .5rem .25rem .5rem;
+    grid-area: paragraph;
+    overflow-y: auto;
+    max-height: 10.5rem;
+    font-size: 0.875rem;
+    text-align: justify;
+  }
+}

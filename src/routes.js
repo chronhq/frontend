@@ -26,7 +26,8 @@ import {
 import LoadingLogo from './containers/LoadingLogo';
 import AnalyticsWrapper from './containers/Analytics/AnalyticsWrapper';
 
-const Narrative = lazy(() => import('./pages/Narrative'));
+const Story = lazy(() => import('./pages/SummerStory'));
+// const Admin = lazy(() => import('./pages/SummerAdmin'));
 const NotFound = lazy(() => import('./pages/404'));
 const BadGateway = lazy(() => import('./pages/502'));
 const GatewayTimeout = lazy(() => import('./pages/504'));
@@ -42,7 +43,8 @@ const AppRouter = () => (
       <Route path='/502' render={() => <BadGateway />} />
       <Route path='/404' render={() => <NotFound />} />
       <Route path='/about' render={() => <About />} />
-      <Route path='/:id' render={({ match }) => <Narrative story={match.params.id} />} />
+      {/* <Route path='/admin' render={() => <Admin />} /> */}
+      <Route path='/:id' render={({ match }) => <Story story={match.params.id} />} />
     </Switch>
   </Suspense>
 );

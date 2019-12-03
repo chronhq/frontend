@@ -23,8 +23,8 @@ import {
 import DataLoaderModel from './DataLoaderModel';
 import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 
-const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
-const camelCase = string => string.trim()
+const capitalizeFirstLetter = (s) => s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
+const camelCase = (string) => string.trim()
   .split('-').map((s, idx) => ((idx === 0) ? s : capitalizeFirstLetter(s))).join('');
 
 export default class DataModel {
@@ -42,6 +42,8 @@ export default class DataModel {
     ],
     heavy: [
       'cached-data',
+      'territorial-entities',
+      'spacetime-volumes',
     ]
   };
 

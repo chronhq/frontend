@@ -18,7 +18,7 @@
  */
 import * as React from 'react';
 
-import LayerControlWrapper from '../../containers/LayerControlWrapper/LayerControlWrapper';
+import SideBar from '../../containers/SideBar/SideBar';
 import ControlButtons from '../../containers/TimeControls/TimeControls';
 import StoryList from '../../containers/StoryList/StoryList';
 
@@ -30,7 +30,7 @@ class NarrativeMobileBar extends React.Component {
   }
 
   unHide() {
-    this.setState(state => ({ isHidden: !state.isHidden }));
+    this.setState((state) => ({ isHidden: !state.isHidden }));
   }
 
   render() {
@@ -43,7 +43,7 @@ class NarrativeMobileBar extends React.Component {
             onClick={() => this.unHide()}
           >
             <i
-              className={`lnr lnr-chevron-${this.state.isHidden ? 'down' : 'up'}`}
+              className={`icon icon-chevron-${this.state.isHidden ? 'down' : 'up'}`}
               aria-hidden='true'
               title='Open Panel'
             />
@@ -55,7 +55,7 @@ class NarrativeMobileBar extends React.Component {
             onClick={() => this.unHide()}
           >
             <i
-              className={`lnr lnr-chevron-${this.state.isHidden ? 'down' : 'up'}`}
+              className={`icon icon-chevron-${this.state.isHidden ? 'down' : 'up'}`}
               aria-hidden='true'
               title='Open Panel'
             />
@@ -63,7 +63,7 @@ class NarrativeMobileBar extends React.Component {
         </div>
         <div className='narrative-mobile-bar-hiddenpart'>
           <div className='narrative-mobile-bar__layers'>
-            <LayerControlWrapper />
+            <SideBar />
           </div>
           <div className='narrative-mobile-bar__stories'>
             <StoryList />

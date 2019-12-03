@@ -7,14 +7,14 @@ storiesOf('Overlay', module)
   .add('black overlay', () => (
     <Overlay type={overlayType.BLACK}>
       <Button>
-        {'Button'}
+        Button
       </Button>
     </Overlay>
   ))
   .add('white overlay', () => (
     <Overlay type={overlayType.WHITE}>
       <Button>
-        {'Button'}
+        Button
       </Button>
     </Overlay>
   ));

@@ -28,6 +28,10 @@ import decorStyle from './DecorGJStyle';
 import legacyPinsStyle from './PinsGJStyle';
 
 import stvBorders from './STVBordersStyle';
+import visualCenterMVT from './VisualCenterMVTStyle';
+import symbolsMVT from './SymbolsMVTStyle';
+
+import getSources from './MVTSources';
 
 const BODY = {
   version: 8,
@@ -59,15 +63,22 @@ export default class MapStyleModel {
   @observable backgroundStyle = { ...BODY, sources: {}, layers: [] };
 
   @computed get bordersStyle() {
-    return stvBorders(this.rootStore.year.now);
+    // Remove layer from style is faster than change visibility property
+    return this.rootStore.flags.layer.borders.value
+      ? stvBorders(this.rootStore.year.now, true)
+      : [];
   }
 
   // @computed get pinsGJ() {
   //   return legacyPinsStyle(this.rootStore.pins.pins, 'pinsGJ');
   // }
 
-  @computed get dummyPinsGJ() {
-    return legacyPinsStyle(this.rootStore.pins.dummyPinsGJ, 'dummyPinsGJ');
+  @computed get legacyPins() {
+    const pins = ['dummyPinsGJ'];
+    if (this.rootStore.year.tick === -1) {
+      pins.push('narrativeOverview');
+    }
+    return legacyPinsStyle(pins);
   }
 
   @computed get decor() {
@@ -84,7 +95,7 @@ export default class MapStyleModel {
     const { courseId } = this.rootStore.courseSelection;
     const narrations = this.rootStore.data.narrations.data;
     const wIds = (courseId > 0 && narrations[tick] !== undefined)
-      ? narrations[tick].attached_events.map(e => e.wikidata_id)
+      ? narrations[tick].attached_events.map((e) => e.wikidata_id)
       : [];
 
     return pinsStyle(
@@ -96,30 +107,44 @@ export default class MapStyleModel {
     );
   }
 
+  @computed get visualCenter() {
+    return visualCenterMVT(this.rootStore.year.now);
+  }
+
+  @computed get symbols() {
+    return this.rootStore.courseSelection.courseId > 0
+      ? symbolsMVT(this.rootStore.courseSelection.courseId, this.rootStore.year.tick)
+      : [];
+  }
+
   @computed get style() {
+    const staticSources = getSources({
+      dummyPinsGJ: this.rootStore.pins.dummyPinsGJ,
+      narrativeOverview: this.rootStore.pins.narrativeOverview
+    });
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,
-        ...this.decor.sources,
-        ...this.bordersStyle.sources,
-        ...this.cities.sources,
-        // ...this.pinsGJ.sources,
-        ...this.dummyPinsGJ.sources,
-        ...this.pins.sources,
+        ...staticSources,
       }
-      : this.bordersStyle.sources;
+      : staticSources;
+
+    const generatedLayers = [
+      ...this.decor,
+      ...this.bordersStyle,
+      ...this.visualCenter,
+      ...this.cities,
+      ...this.symbols,
+      ...this.legacyPins,
+      ...this.pins,
+    ];
 
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')
       ? [
         ...this.backgroundStyle.layers,
-        ...this.decor.layers,
-        ...this.bordersStyle.layers,
-        ...this.cities.layers,
-        // ...this.pinsGJ.layers,
-        ...this.dummyPinsGJ.layers,
-        ...this.pins.layers,
+        ...generatedLayers,
       ]
-      : this.bordersStyle.layers;
+      : generatedLayers;
 
     return {
       glyphs: '',

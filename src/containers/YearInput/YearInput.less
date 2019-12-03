@@ -1,29 +1,30 @@
 @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
+@import '../TimeControls/TimeControls.less';
 
 .yearinput__window {
+  .float-container();
   position: fixed;
-  z-index: 50;
-  bottom: 60px;
+  z-index: @z-index-overlay;
+  top: 2rem;
   box-sizing: border-box;
-  left: 100px;
-  width: 300px;
-  background: white;
-  border: 1px solid @border;
-  border-radius: 2px;
+  left: 10rem;
+  width: 12rem;
   text-align: center;
   display: block;
   height: auto;
   @media screen and (max-width: 540px) {
     width: 90%;
-    bottom: 130px;
+    top: auto;
+    bottom: 5rem;
     left: 5%;
   }
 }
 
 .yearinput__title {
-  border-bottom: 1px solid rgba(0, 0, 255, 0.5);
-  padding: 0.5rem;
-  margin: 0.5rem;
+  padding: 5px;
+  margin: 0.4rem;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.5);
 }
 
 .yearinput__form {
@@ -52,13 +53,11 @@
   }
 }
 
-.yearinput__window .yearInput {
+.yearinput__window .yearinput__input {
   border: none;
-  font-size: 36px;
-  line-height: 36px;
-  color: #666;
-  height: 36px;
-  margin: 0 auto;
+  .time-controls__year();
+  .text-input();
+  background-color: white;
   width: 100%;
   text-align: center;
 }

@@ -1,0 +1,187 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+@import './colors';
+@import './IconsSource.less';
+@import './Layers.less';
+
+.icon {
+  width: 100%;
+  height: 100%;
+  background-size:100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  outline: none;
+}
+
+.icon__shadow {
+  filter: drop-shadow(@base-shadow);
+}
+
+.icon__shadow--soft {
+  filter: drop-shadow(@icon-shadow--soft);
+}
+
+.icon__shadow--hard {
+  filter: drop-shadow(@icon-shadow--hard);
+}
+
+// @t: fade(@black, 99%);
+@dark-color: replace(@black, '#', '%23');
+@light-color: replace(@light-grey, '#', '%23');
+@play-controls-color: replace(@text-grey, '#', '%23');
+
+.icon-cross {  
+  .lnr-cross(@dark-color);
+}
+
+.icon-cross-circle {  
+  .lnr-cross-circle(@dark-color);
+}
+
+.icon-checkmark-circle {  
+  .lnr-checkmark-circle(@dark-color);
+}
+
+.icon-question-circle {
+  .lnr-question-circle(@dark-color);
+}
+
+.icon-chevron-right {
+  .lnr-chevron-right(@dark-color);
+}
+
+.icon-chevron-left {
+  .lnr-chevron-left(@dark-color);
+}
+
+.icon-chevron-up {
+  .lnr-chevron-up(@dark-color);
+}
+
+.icon-chevron-down {
+  .lnr-chevron-down(@dark-color);
+}
+
+.icon-plus {
+  .line-plus(@dark-color);
+}
+
+.icon-minus {
+  .line-minus(@dark-color);
+}
+
+.icon-location {
+  .lnr-location(@dark-color);
+}
+
+.icon-magic-wand {
+  .lnr-magic-wand(@dark-color);
+}
+
+.icon-double-arrow-left--light {
+  .line-double-arrow-left(@light-color)
+}
+
+.icon-double-arrow-right--light {
+  .line-double-arrow-right(@light-color)
+}
+
+.icon-save--light {
+  .line-save(@light-color);
+}
+
+.icon-search--light {
+  .line-search(@light-color);
+}
+
+.icon-edit--light {
+  .line-edit(@light-color);
+}
+
+.icon-delete--light {
+  .line-delete(@light-color);
+}
+
+.icon-cancel--light {
+  .line-cancel(@light-color);
+}
+
+.icon-calendar--light {
+  .line-calendar(@light-color);
+}
+
+.icon-add--light {
+  .line-add(@light-color);
+}
+
+.icon-road-sign--light {
+  .line-road-sign(@light-color);
+}
+
+.icon-sandbox--light {
+  .line-sandbox(@light-color);
+}
+
+.icon-upload--light {
+  .line-upload(@light-color);
+}
+
+.icon-download--light {
+  .line-download(@light-color);
+}
+
+.icon-exit--light {
+  .lnr-exit(@light-color);
+}
+
+.icon-redo--light {
+  .line-redo(@light-color);
+}
+
+.icon-group--light {
+  .al-group(@light-color);
+}
+
+.icon-group-direct--light {
+  .al-group-direct(@light-color);
+}
+
+.icon-group-indirect--light {
+  .al-group-indirect(@light-color);
+}
+
+.icon-play {
+  .line-play(@play-controls-color);
+}
+
+.icon-pause {
+  .line-pause(@play-controls-color);
+}
+
+.icon-forward {
+  .line-forward(@play-controls-color);
+}
+
+.icon-rewind {
+  .line-rewind(@play-controls-color);
+}
+
+.icon-back {
+  .line-back(@play-controls-color);
+}

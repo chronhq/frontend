@@ -6,6 +6,7 @@
 
 * Node.js version 8 and later
 * Mapbox access token
+* Firebase access token
 
 ### Hot to run
 
@@ -16,7 +17,10 @@ git clone https://github.com/chronhq/frontend.git
 cd frontend
 
 # Install dependencies
-npm i
+npm ci
+
+# Create an empty disabled.json file
+echo '{}' > disabled.json
 
 # Create a settings.json file from settings.json.example
 
@@ -25,6 +29,10 @@ npm i
 
 sed 's/MAPBOX_TOKEN/past_your_token_here/' settings.json.example > settings.json
 # Optional: configure analytics in the same config
+
+# Create project in Firebase https://console.firebase.google.com/
+# Configure firebase and auth methods https://github.com/firebase/firebaseui-web#available-providers
+cp firebase-config.json.example firebase-config.json
 
 # Run the app in development environment
 # webpack-dev-server - 0.0.0.0:3000

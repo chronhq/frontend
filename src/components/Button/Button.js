@@ -7,6 +7,7 @@ export const BUTTON_TYPE = {
   GHOST: 'ghost',
   READMORE: 'readmore',
   CLOSE: 'close',
+  COMPACT: 'close compact',
   TRUNCATE: 'truncate',
   ICON: 'icon'
 };
@@ -15,7 +16,8 @@ export const BUTTON_SIZE = {
   NORMAL: 'normal',
   SMALL: 'small',
   WIDE: 'wide',
-  AUTO: 'auto'
+  AUTO: 'auto',
+  HUGE: 'huge',
 };
 
 export const BUTTON_COLOR = {

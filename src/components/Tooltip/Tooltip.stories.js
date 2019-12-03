@@ -8,27 +8,27 @@ storiesOf('Tooltip', module)
     <div>
       <Tooltip placement='left' content='content'>
         <Button type='button'>
-          {'left'}
+          left
         </Button>
       </Tooltip>
       <Tooltip placement='right' content='content'>
         <Button type='button'>
-          {'right'}
+          right
         </Button>
       </Tooltip>
       <Tooltip placement='top' content='content'>
         <Button type='button'>
-          {'top'}
+          top
         </Button>
       </Tooltip>
       <Tooltip placement='bottom' content='content'>
         <Button type='button'>
-          {'bottom'}
+          bottom
         </Button>
       </Tooltip>
       <Tooltip placement='bottom' dark content='content'>
         <Button type='button'>
-          {'bottom dark'}
+          bottom dark
         </Button>
       </Tooltip>
     </div>

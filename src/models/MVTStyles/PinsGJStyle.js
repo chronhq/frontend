@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const getLayer = layerName => ({
+const getLayer = (layerName) => ({
   id: layerName,
   layout: {
     'icon-image': 'pin-{img}',
@@ -28,14 +28,6 @@ const getLayer = layerName => ({
   source: layerName,
 });
 
-const pins = (data, layerName) => {
-  const source = {
-    type: 'geojson',
-    data
-  };
-  return {
-    sources: { [layerName]: source }, layers: [getLayer(layerName)]
-  };
-};
+const pins = (layers) => layers.map((layerName) => getLayer(layerName));
 
 export default pins;

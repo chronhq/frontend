@@ -23,10 +23,10 @@ const filter = (now, next, wIds) => (wIds === null
   : [['in', 'wikidata_id', ...wIds]]
 );
 
-const getLayer = (now, next, id, wIds = null) => ({
-  id,
+const getLayer = (now, next, layer, wIds = null, source) => ({
+  id: layer,
   layout: {
-    'icon-image': `pin-${typesMapping[id].pic}`,
+    'icon-image': `pin-${layer}`,
     'icon-rotate': -135,
     'icon-size': 1,
     'icon-anchor': 'top-left',
@@ -35,35 +35,25 @@ const getLayer = (now, next, id, wIds = null) => ({
   filter: [
     'all',
     ...filter(now, next, wIds),
-    ['==', 'event_type', typesMapping[id].id]
+    ['==', 'event_type', typesMapping[layer].id]
   ],
   type: 'symbol',
-  source: 'events',
-  'source-layer': 'events'
+  source,
+  'source-layer': source
 });
 
-const pins = (now, next, flags, courseId, wIds = null) => {
-  if (courseId < 0) return { sources: {}, layers: [] };
-  const url = courseId > 0
-    ? `narratives/${courseId}`
-    : 'cached-data';
-  const source = {
-    type: 'vector',
-    tiles: [`${window.location.origin}/api/mvt/${url}/{z}/{x}/{y}`]
-  };
+const pins = (now, next, flags, courseId, wIds = null, source = 'events') => {
+  if (courseId < 0) return [];
   const layers = [];
 
   if (flags.persons === true) {
-    layers.push(getLayer(now, next, 'birth', wIds));
-    layers.push(getLayer(now, next, 'death', wIds));
+    layers.push(getLayer(now, next, 'birth', wIds, source));
+    layers.push(getLayer(now, next, 'death', wIds, source));
   }
-  if (flags.battle === true) layers.push(getLayer(now, next, 'battle', wIds));
-  if (flags.document === true) layers.push(getLayer(now, next, 'document', wIds));
+  if (flags.battle === true) layers.push(getLayer(now, next, 'battle', wIds, source));
+  if (flags.document === true) layers.push(getLayer(now, next, 'document', wIds, source));
 
-
-  return {
-    sources: { events: source }, layers
-  };
+  return layers;
 };
 
 export default pins;

@@ -51,7 +51,7 @@ class TrucatePart extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <div
           className='truncate--text'
           onMouseOver={() => this.setState({ showButton: true })}
@@ -62,7 +62,7 @@ class TrucatePart extends React.Component {
           {this.props.string.substring(0, stringLimit)}
         </div>
         <Button
-          onClick={e => this.toggleArticle(e)}
+          onClick={(e) => this.toggleArticle(e)}
           btnType={BUTTON_TYPE.TRUNCATE}
           onMouseOver={() => this.setState({ blockHover: true })}
           onFocus={() => this.setState({ blockHover: true })}
@@ -72,12 +72,12 @@ class TrucatePart extends React.Component {
         >
           {this.dashboard.expand}
         </Button>
-      </React.Fragment>
+      </>
     );
   }
 }
 
-const truncateText = string => ((string.length < stringLimit)
+const truncateText = (string) => ((string.length < stringLimit)
   ? <div>{string}</div>
   : <TrucatePart string={string} />
 );

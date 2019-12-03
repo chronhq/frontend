@@ -26,12 +26,13 @@ import StoryList from '../../containers/StoryList/StoryList';
 import DashboardFooter from '../../containers/DashboardFooter/DashboardFooter';
 import DashboardSearch from '../../containers/DashboardSearch/DashboardSearch';
 import CurrentStory from '../../containers/CurrentStory/CurrentStory';
-import DashboardFeed from '../../containers/DashboardFeed/DashboardFeed';
+// import DashboardFeed from '../../containers/DashboardFeed/DashboardFeed';
 import Button, { BUTTON_TYPE } from '../../components/Button/Button';
 import Tooltip from '../../components/Tooltip/Tooltip';
 
 import './Dashboard.less';
 
+const DashboardFeed = () => null;
 @inject('store')
 @observer
 class Dashboard extends React.Component {
@@ -107,20 +108,19 @@ class Dashboard extends React.Component {
         />
         {this.isStorySelected
           ? <DashboardFeed />
-          : <StoryList changeUi={this.changeUI} handleStorySelection={this.handleStorySelection} />
-        }
+          : <StoryList changeUi={this.changeUI} handleStorySelection={this.handleStorySelection} />}
         <DashboardFooter />
         <div className='dashboard-hide layer-2'>
           <Tooltip placement='right' content={this.chevronMsg}>
             <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggle}>
-              <span className={`lnr lnr-chevron-${this.chevron}`} aria-hidden='true' title={this.chevronMsg} />
+              <span className={`icon icon-chevron-${this.chevron}`} aria-hidden='true' title={this.chevronMsg} />
             </Button>
           </Tooltip>
         </div>
         <div className='dashboard-hide layer-2' style={this.flyToStyle}>
           <Tooltip placement='right' content={this.locMsg}>
             <Button btnType={BUTTON_TYPE.ICON} onClick={this.toggleFlyTo}>
-              <span className='lnr lnr-location' aria-hidden='true' title={this.locMsg} />
+              <span className='icon icon-location' aria-hidden='true' title={this.locMsg} />
             </Button>
           </Tooltip>
         </div>

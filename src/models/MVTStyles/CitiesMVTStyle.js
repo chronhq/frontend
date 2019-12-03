@@ -17,12 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 const citiesStyle = (now, flags) => {
-  const url = 'cities';
-  const source = {
-    type: 'vector',
-    tiles: [`${window.location.origin}/api/mvt/${url}/{z}/{x}/{y}`]
-  };
-
   // this one will not work because of 'dissolution_date' null value
   // const filter = [
   //   'all',
@@ -74,10 +68,7 @@ const citiesStyle = (now, flags) => {
       'text-halo-color': 'rgba(255,255,255,0.7)'
     }
   };
-  const layers = flags.cities === true ? [layer, labels] : [];
-  return {
-    sources: { cities: source }, layers
-  };
+  return flags.cities === true ? [layer, labels] : [];
 };
 
 export default citiesStyle;

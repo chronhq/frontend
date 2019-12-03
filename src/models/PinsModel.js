@@ -71,11 +71,31 @@ export default class PinsModel {
 
   @computed get dummyPinsGJ() {
     const features = this.dummyPins
-      .map(d => pinToGeoPointRaw([], d.loc, d.img));
+      .map((d) => pinToGeoPointRaw([], d.loc, d.img));
     return {
       type: 'FeatureCollection',
       features
     };
+  }
+
+  @computed get narrativeOverview() {
+    const { entities } = this.rootStore.search.Narrations;
+    const data = {
+      type: 'FeatureCollection',
+      features: Object.keys(entities).map((id) => ({
+        type: 'Feature',
+        geometry: entities[id].location,
+        properties: {
+          id,
+          img: 'narration',
+          // order: entities[id].order,
+          // date_label: entities[id].date_label,
+          // title: entities[id].title,
+          // description: entities[id].description,
+        }
+      }))
+    };
+    return data || { type: 'FeatureCollection', features: [] };
   }
 
   @computed get narrationEvents() {
@@ -89,7 +109,7 @@ export default class PinsModel {
   @computed get narrationFree() {
     const { courseId } = this.rootStore.courseSelection;
     if (courseId > 0) {
-      const events = this.narrationEvents.filter(a => a.location === null);
+      const events = this.narrationEvents.filter((a) => a.location === null);
       return events.reduce(getFreeEvents, { ...typesStub });
     } if (courseId === 0 && this.rootStore.data.cachedData.status.loaded) {
       return Object.values(this.rootStore.data.cachedData.data)
@@ -100,16 +120,16 @@ export default class PinsModel {
 
   @computed get freePins() {
     return Object.keys(typesMapping).reduce((prev, type) => {
-      const pins = this.narrationFree[typesMapping[type].id].map(wId => (
+      const pins = this.narrationFree[typesMapping[type].id].map((wId) => (
         {
           key: wId,
           type,
-          pic: typesMapping[type].pic,
+          pic: type,
           [type]: this.rootStore.wikidata.cache[wId]
             ? this.rootStore.wikidata.cache[wId].item
             : { info: [] }
         }
-      )).filter(f => (f !== undefined && f !== null));
+      )).filter((f) => (f !== undefined && f !== null));
       return [...prev, ...pins];
     }, []);
   }

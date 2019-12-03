@@ -21,13 +21,20 @@ import { inject, observer } from 'mobx-react';
 import { runInAction, when } from 'mobx';
 
 import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
-import Narrative from './Narrative';
+import Narrative from './SummerStory';
+
+const description = {
+  description: 'The journey of this project',
+  author: 'Team of chronmaps',
+  title: 'About Us',
+  url: 'about'
+};
 
 const mapSettings = buildMapSettings({
-  zoom_min: 1, zoom_max: 7.5, coordinates: [[0, 0], [0, 0]]
+  zoom_min: 1, zoom_max: 7.5
 });
 
-const createTick = year => (e, idx) => ({
+const createTick = (year) => (e, idx) => ({
   map_datetime: String(year),
   order: idx,
   courseId: -1,
@@ -37,7 +44,7 @@ const createTick = year => (e, idx) => ({
   id: idx
 });
 
-const newPoint = p => ({ img: 26, loc: p });
+const newPoint = (p) => ({ img: 'birth', loc: p });
 
 const timeline = [{
   date: '7 March 2017',
@@ -64,6 +71,9 @@ const timeline = [{
 }, {
   date: '26 February 2019',
   text: 'United Chron team launched first demo'
+}, {
+  date: '19 November 2019',
+  text: 'Full design update released'
 }, {
   date: 'Now',
   text: ['We are a community of enthusiasts behind Chron.',
@@ -97,7 +107,7 @@ class About extends React.Component {
 
     // Create a fake course
     const about = buildNarrative({
-      start_year: year, end_year: year, url: 'about', title: 'About Us', mapSettings
+      start_year: year, end_year: year, mapSettings, ...description
     });
 
     const ticks = timeline.map(createTick(year));

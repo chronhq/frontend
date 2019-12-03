@@ -1,0 +1,47 @@
+@import '../../styles/colors.less';
+@import '../../styles/Layers.less';
+
+.round-button {
+  pointer-events: all;
+  box-shadow: @base-shadow;
+  outline: none;
+  transition: background-color ease-in-out 60ms;
+  // transition: opacity ease-in-out 300ms;
+  border-radius: 100%;
+  // background-repeat: no-repeat;
+  background-color: @sidebar;
+  // background-position: center center;
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.image-button {
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  background-position: center center;
+  background-repeat: no-repeat;
+  outline: none;
+  &:active {
+    transform: translateY(1px);
+  }
+  &-borders {
+    background-image: url('./icons/map_icon.svg');
+  }
+  &-cities {
+    background-image: url('./icons/city_icon.svg');
+  }
+  &-persons {
+    background-image: url('./icons/ppl_icon.svg');
+  }
+  &-battle {
+    background-image: url('./icons/battles_icon.svg');
+  }
+  &-document {
+    background-image: url('./icons/documents_icon.svg');
+  }
+  &__checked {
+    opacity: 1;
+  }
+}

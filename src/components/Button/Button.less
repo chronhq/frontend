@@ -19,7 +19,6 @@ button {
   &::-moz-focus-inner {
     border: 0;
   }
-  &:focus,
   &:active,
   &:focus {
     outline: none !important;
@@ -41,9 +40,14 @@ button {
     height: auto;
     width: auto;
   }
+  &.huge {
+    height: auto;
+    width: 100%;
+  }
 }
 
 button.close {
+  vertical-align: baseline;
   position: absolute;
   right: 0;
   top: 0;
@@ -73,6 +77,13 @@ button.close {
   }
 }
 
+button.compact {
+  margin-right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+}
+
 button.readmore {
   color: @dark-grey;
   overflow: visible;
@@ -98,6 +109,7 @@ button.readmore {
     color: inherit;
     content: '\f105';
     display: inline-block;
+    /* stylelint-disable font-family-no-missing-generic-family-keyword */
     font-family: 'fontello';
     font-style: normal;
     font-weight: inherit;

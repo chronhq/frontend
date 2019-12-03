@@ -73,7 +73,7 @@
   "dashboard" : {
     "wiki": "Wiki",
     "about": "About Us",
-    "license": "License",
+    "admin": "Contribute",
     "report": "Report error",
     "back": "Back",
     "expand": "Expand"

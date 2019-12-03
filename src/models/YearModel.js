@@ -19,7 +19,7 @@
 import { observable, action, computed } from 'mobx';
 import julian from 'julian';
 
-const julianInt = date => Math.round(Number(julian(date)));
+const julianInt = (date) => Math.round(Number(julian(date)));
 const yearToJulian = (year) => {
   // Date in ISO would be treated as UTC date
   const date = new Date('2000-01-01');
@@ -48,6 +48,13 @@ export default class YearModel {
 
   // for UI interface and 'year' sliders
   @observable tuneValue;
+
+  @observable playing = false;
+
+  // timeout before change year
+  @observable yearInterval = 4000;
+
+  timeout = '';
 
   // Last day in current period (Dec 31)
   @computed get end() {
@@ -86,6 +93,7 @@ export default class YearModel {
   }
 
   @action setup(year) {
+    this.togglePlay(false);
     this.min = yearToJulian(year.min);
     this.max = yearToJulian(year.max);
     this.now = yearToJulian(year.now);
@@ -154,17 +162,18 @@ export default class YearModel {
     this.setDate(this.min);
   }
 
-  @action setTick(tick) {
+  @action setTick(rawTick) {
+    // rawTick -1 will be used for Narrative overview screen
+    const tick = Number(rawTick) === -1 ? this.maxTick : Number(rawTick);
     if (tick in this.narrations) {
       const narration = this.narrations[tick];
       if (narration.settings) {
         const mapSetting = this.rootStore.data.mapSettings.data[narration.settings];
-        this.rootStore.deck.updateSettings(mapSetting);
+        this.rootStore.deck.updateSettings(mapSetting, narration.location.coordinates);
       }
-      const date = new Date(narration.map_datetime);
-      this.setDate(julianInt(date));
-      this.tick = tick;
-      if (this.maxTick === tick && this.rootStore.courseSelection.courseId > 0) {
+      this.setDate(Number(narration.map_datetime));
+      this.tick = Number(rawTick);
+      if (this.maxTick === rawTick && this.rootStore.courseSelection.courseId > 0) {
         this.rootStore.analytics.metricHit('narrative_completed');
       }
     }
@@ -176,5 +185,23 @@ export default class YearModel {
 
   prevTick() {
     this.setTick(this.tick - 1);
+  }
+
+  play() {
+    if (this.playing === false) return;
+    if (this.rootStore.courseSelection.courseId === 0) {
+      if (this.now === this.max) { this.togglePlay(); }
+      this.nextYear();
+    } else {
+      if (this.maxTick === this.tick) { this.togglePlay(); }
+      this.nextTick();
+    }
+    this.timeout = setTimeout(() => this.play(), this.yearInterval);
+  }
+
+  @action togglePlay(playing = !this.playing) {
+    this.playing = playing;
+    clearTimeout(this.timeout);
+    this.play();
   }
 }

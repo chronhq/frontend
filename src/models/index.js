@@ -20,7 +20,6 @@ import { observable } from 'mobx';
 
 import Data from './DataModel';
 import Flags from './FlagsModel';
-import Projection from './ProjectionModel';
 import Year from './YearModel';
 import CourseSelection from './CourseSelection';
 
@@ -33,6 +32,8 @@ import AnalyticModel from './AnalyticModel';
 import MapStyle from './MVTStyles/MapStyleModel';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
+import AuthModel from './AuthModel';
+import AdminModel from './AdminModel';
 import Wikidata from './Wikidata/Wikidata';
 
 export default class storeModel {
@@ -43,7 +44,6 @@ export default class storeModel {
     this.flags = new Flags();
     this.data = new Data();
     this.dashboard = new Dashboard(this);
-    this.projection = new Projection(this);
     this.deck = new DeckViewport(this);
     this.year = new Year(this);
     this.courseSelection = new CourseSelection(this);
@@ -54,5 +54,10 @@ export default class storeModel {
     this.search = new DashboardSearch(this);
     this.wikidata = new Wikidata(this);
     this.analytics = new AnalyticModel();
+    this.auth = new AuthModel();
+    this.admin = new AdminModel();
+    this.remToPixel = (rem) => rem * parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
   }
 }

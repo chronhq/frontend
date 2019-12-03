@@ -1,0 +1,70 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+@import '../../styles/colors.less';
+@import '../../styles/Layers.less';
+
+.date-picker__modal {
+  position: absolute;
+  transform: translate(-50%, 0%);
+  left: 50%;
+  min-width: 16rem;
+  max-width: 20rem;
+}
+
+.date-picker__container {
+  padding: 1rem 0.25rem;
+  user-select: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 60;
+  .float-container();
+}
+
+.date-picker__date {
+  display: flex;
+  margin: 0.5rem;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.date-picker__years {
+  display: flex;
+  margin: 0.5rem;
+  flex-direction: column;
+}
+
+.date-picker__years-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.date-picker__years-row-item {
+  padding: 1px;
+  border-radius: 0.2rem;
+  &:hover {
+    padding: 0px;
+    border: 1px solid @footer-border;
+  }
+  &-selected {
+    background-color: @footer-border;
+    transition: background-color 150ms ease-in-out;
+  }
+}

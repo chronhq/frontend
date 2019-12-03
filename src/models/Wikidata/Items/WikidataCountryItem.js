@@ -37,11 +37,17 @@ class WikidataCountryItem extends WikidataItem {
   fixData(key, label, dates = true) {
     return () => {
       this.data[key] = this.data[key].map((d) => {
-        const fixedDates = dates ? this.fixDates(d) : {};
+        const fixedDates = dates ? this.fixDates(d) : this.fixCountryDates(d);
         const fixedLabel = label ? this.labelAndURI(d, label) : {};
         return { ...d, ...fixedDates, ...fixedLabel };
       });
     };
+  }
+
+  fixCountryDates = (h) => {
+    const inception = this.dateFromLiteral(h.inception);
+    const dissolution = this.dateFromLiteral(h.dissolution);
+    return { ...h, inception, dissolution };
   }
 
   fixDates = (h) => {
@@ -62,7 +68,7 @@ class WikidataCountryItem extends WikidataItem {
     ))
   );
 
-  inRange = f => ((
+  inRange = (f) => ((
     f.start === null
     || f.start.getFullYear() <= this.now
   ) && (
@@ -80,7 +86,7 @@ class WikidataCountryItem extends WikidataItem {
     current.form = (this.data.form) ? this.data.form.find(this.inRange) : {};
     // DESC Ordered by date
     current.population = (this.data.population)
-      ? this.data.population.find(p => (
+      ? this.data.population.find((p) => (
         p.date !== null
         && p.date.getFullYear() <= this.now))
       : {};

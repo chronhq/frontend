@@ -36,14 +36,8 @@ const buildNarrative = ({
 const buildMapSettings = ({
   id = -1,
   zoom_min = 1, zoom_max = 7.5,
-  // [[left, bottom], [right, top]]
-  coordinates = [[0, 0], [0, 0]]
 }) => ({
   id,
-  bbox: {
-    type: 'MultiPoint',
-    coordinates
-  },
   zoom_min,
   zoom_max
 });

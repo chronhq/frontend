@@ -1,0 +1,27 @@
+@import '../../styles/colors.less';
+@import '../../styles/Layers.less';
+@import '../../styles/IconsSource.less';
+
+@containerBorders: .25rem;
+
+@pinSize: calc((6rem - 2 * @containerBorders) / 3);
+
+.free-pins-container {
+  padding: 0rem @containerBorders;
+  .float-container();
+}
+
+.free-pins-grid {
+  display: grid;
+  grid-template-columns: repeat(3, @pinSize);
+  grid-auto-rows: @pinSize;
+  padding: 0.5rem 0;
+}
+
+.free-pins-attention {
+  user-select: none;
+  background-size: 25% 25%;
+  .line-error(replace(@warm-grey, '#', '%23'));
+  background-repeat: no-repeat;
+  background-position: right center;
+}

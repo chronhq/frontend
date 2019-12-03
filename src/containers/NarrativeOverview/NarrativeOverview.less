@@ -1,0 +1,55 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+// @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
+
+.narrative-overview__container {
+  z-index: 2;
+  position: fixed;
+  top: 5vh;
+  right: 4rem;
+}
+
+.narrative-overview {
+  width: 34rem;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.narration-preview {
+  .float-container();
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  margin: .5rem;
+  opacity: .75;
+  padding: .25rem;
+  transition: opacity 300ms ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+  &__date {
+    width: 5rem;
+    text-align: center;
+    align-self: center;
+  }
+  &__text {
+    align-self: center;
+  }
+}

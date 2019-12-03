@@ -1,23 +1,47 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
 
-.timepanel__controls {
+.time-controls {
   user-select: none;
-  width: 100%;
-  color: inherit;
-  fill: inherit;
-  height: 50px;
-  padding: auto;
-  text-align: right;
+}
+
+.time-controls__button-size {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.time-controls__buttons {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-content: flex-start;
-  vertical-align: middle;
-  font-size: 1.8rem;
-  line-height: 1.8rem;
-  font-weight: 300;
-  margin: auto;
-  // * {
-  //   margin: 0;
-  //   font-weight: 300;
-  // }
+}
+
+.time-controls__year {
+  font-size: 2rem;
+  text-align: justify;
+  font-weight: normal;
+  text-shadow: @base-shadow;
+  color: @main-blue;
+}
+
+.time-controls__text {
+  text-shadow: @base-shadow;
 }

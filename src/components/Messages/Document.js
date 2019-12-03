@@ -20,27 +20,26 @@ import React from 'react';
 
 const Document = ({ fact }) => (
   <div key={fact.key}>
-    <p className='factDate'>
+    <p className='message-fact__date'>
       {fact.date}
     </p>
-    <p className='factTitle'>
+    <p className='message-fact__title'>
       {fact.label}
     </p>
-    <p className='factDescription'>
+    <p className='message-fact__description'>
       {fact.description}
     </p>
     {fact.image !== undefined
       ? (
-        <div className='factImageDemo'>
+        <div className='message-fact__image'>
           <img
-            className='factImageDemo'
+            className='message-fact__image'
             src={fact.image}
             alt={fact.image}
           />
         </div>
       )
-      : null
-    }
+      : null}
   </div>
 );
 

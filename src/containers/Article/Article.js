@@ -20,13 +20,18 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed } from 'mobx';
 
-import Button, { BUTTON_TYPE } from '../../components/Button/Button';
+import CloseButton from '../../components/Button/CloseButton';
+import ModalWrapper from '../../components/ModalWrapper';
+
 import './Article.less';
 
 @inject('store')
 @observer
 class Article extends React.Component {
+  modal = React.createRef();
+
   @computed get isOpen() {
+    // TODO set UI flags in a different place
     return this.props.store.flags.runtime.get('article');
   }
 
@@ -39,47 +44,19 @@ class Article extends React.Component {
     return this.props.store.year.tick;
   }
 
-  closeFeedback(e) {
-    e.stopPropagation();
+  closeFeedback = () => {
     this.props.store.flags.runtime.set('article', false);
   }
 
-  handleOverlay(e) {
-    if (e.keyCode === 13) {
-      this.closeFeedback(e);
-    }
-  }
-
-  clickOutside(e) {
-    if (!this.modal || this.modal.contains(e.target)) {
-      return;
-    }
-    this.closeFeedback(e);
-  }
-
   render() {
-    if (this.isOpen === false) {
-      return null;
-    }
     const data = this.timeline[this.tick];
     return (
-      <div
-        className='black-overlay'
-        role='button'
-        tabIndex='0'
-        onClick={e => this.clickOutside(e)}
-        onKeyUp={e => this.handleOverlay(e)}
-      >
+      <ModalWrapper close={this.closeFeedback} modal={this.modal} isOpen={this.isOpen}>
         <div
           className='article'
-          ref={(ref) => { this.modal = ref; }}
+          ref={this.modal}
         >
-          <Button
-            btnType={BUTTON_TYPE.CLOSE}
-            onClick={e => this.closeFeedback(e)}
-          >
-            <span className="lnr lnr-cross" />
-          </Button>
+          <CloseButton onClick={this.closeFeedback} />
           <div className='article--title'>
             <b>
               {data ? data.title : ''}
@@ -96,12 +73,11 @@ class Article extends React.Component {
                     alt=''
                   />
                 )
-                : ''
-              }
+                : ''}
             </div>
           </div>
         </div>
-      </div>
+      </ModalWrapper>
     );
   }
 }

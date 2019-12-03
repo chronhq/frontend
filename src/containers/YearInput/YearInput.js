@@ -22,10 +22,11 @@ import { computed, observable } from 'mobx';
 import Picker from 'rmc-picker';
 
 import Button, { BUTTON_COLOR, BUTTON_SIZE } from '../../components/Button/Button';
+import ModalWrapper from '../../components/ModalWrapper';
+
 import './Picker.less';
 import './YearInput.less';
 
-@inject('store')
 @observer
 class TypeOne extends React.Component {
   handlePress(event) {
@@ -38,17 +39,19 @@ class TypeOne extends React.Component {
     }
   }
 
+  // {/* onKeyDown={event => this.handlePress(event)} */}
   render() {
     return (
       <input
-        type="text"
+        type="number"
         pattern="[0-9]*"
         length={4}
         maxLength={4}
+        min={this.props.limits.min}
+        max={this.props.limits.max}
         value={this.props.now}
-        onKeyDown={event => this.handlePress(event)}
-        onChange={event => this.props.cb(event.target.value)}
-        className='yearInput'
+        onChange={(event) => this.props.cb(event.target.value)}
+        className='yearinput__input'
       />
     );
   }
@@ -62,6 +65,7 @@ class YearInput extends React.Component {
   @computed get items() {
     const { min: start, max: end } = this.props.store.year.limits;
     const len = end - start;
+    if (Number.isNaN(len) || len < 1) return null;
     return new Array(len).fill(start).map((v, i) => {
       const y = v + i;
       return (
@@ -78,20 +82,23 @@ class YearInput extends React.Component {
       : 'yearinput__title yearinput__error';
   }
 
-  @computed get hidden() {
-    return !this.props.store.flags.runtime.get('yearInput');
+  @computed get isOpen() {
+    return this.props.store.flags.runtime.get('yearInput');
   }
 
   handleWheel = (event) => {
     this.props.store.year.followWheel(event.deltaY);
   }
 
-  close = () => {
-    this.props.store.flags.runtime.set('yearInput', false);
+  close = (e = { target: { id: '' } }) => {
     this.props.store.year.resetTuneValue();
+    // prevent flickering when pressed on open button
+    if (e.target.id !== 'yearInputButton' && e.target.id !== 'yearInputText') {
+      this.props.store.flags.runtime.set('yearInput', false);
+    }
   }
 
-  setTuneValue = value => this.props.store.year.setTuneValue(value);
+  setTuneValue = (value) => this.props.store.year.setTuneValue(value)
 
   handleSave = () => {
     this.props.store.year.saveTuneValue();
@@ -99,13 +106,13 @@ class YearInput extends React.Component {
   }
 
   render() {
-    if (this.hidden) return null;
     return (
-      <div className='yearinput__window layer-3'>
+      <ModalWrapper className='yearinput__window' close={this.close} isOpen={this.isOpen}>
         <div className={this.className}>
           <TypeOne
             now={this.props.store.year.tuneValueG}
             cb={this.setTuneValue}
+            limits={this.props.store.year.limits}
           />
         </div>
         <div
@@ -137,7 +144,7 @@ class YearInput extends React.Component {
             {this.props.store.i18n.data.buttons.dismiss}
           </Button>
         </div>
-      </div>
+      </ModalWrapper>
     );
   }
 }
