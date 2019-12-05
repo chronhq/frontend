@@ -24,11 +24,13 @@ import TimeControlButtons from './TimeControlButtons';
 import { ProgressBar } from '../../components/ActionButtons/UploadWidget';
 
 import './TimeControls.less';
+import StepTimeButtons from './StepTimeButtons';
 
 const TimeControlsGlobal = () => (
   <div className='time-controls'>
     <YearSelectButton />
     <TimeControlButtons />
+    <StepTimeButtons />
   </div>
 );
 
