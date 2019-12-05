@@ -64,7 +64,7 @@ class StepTimeButtons extends React.Component {
 
   render() {
     return (
-      <div className='time-controls__buttons' style={{ justifyContent: 'space-between' }}>
+      <div className='time-controls__buttons'>
         <TimeControlButton
           icon='step-backward'
           control={this.props.control}
