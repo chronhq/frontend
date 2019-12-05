@@ -42,6 +42,29 @@
   color: @main-blue;
 }
 
+.time-controls__input {
+  text-shadow: @base-shadow;
+  border: none;
+  margin: 2px;
+  text-align: center; 
+  background: transparent;
+  width: 7rem;
+  resize: none;
+  &:hover {
+    margin: 0;
+    border-radius: 2px;
+    box-shadow: @inner-shadow;
+    border: 2px solid green;
+  }
+  &--invalid {
+    margin: 0;
+    border: 2px solid red;
+    &:hover {
+      border: 2px solid red;
+    }
+  }
+}
+
 .time-controls__text {
   text-shadow: @base-shadow;
 }

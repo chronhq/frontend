@@ -17,30 +17,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../../components/Button/Button';
 
 @inject('store')
 @observer
 class YearButton extends React.Component {
-  toggle = () => {
-    this.props.store.flags.runtime.toggle('yearInput');
-    this.props.store.analytics.metricHit('year_change');
+  @computed get year() {
+    return this.props.store.year;
   }
 
-  // ids are important for correct closing of Modal window of YearInput
+  @computed get invalid() {
+    return this.year.tuneIsValid ? '' : 'time-controls__input--invalid';
+  }
+
+  handlePress = (event) => {
+    switch (event.key) {
+      case 'Enter':
+        if (this.year.tuneIsValid) {
+          this.year.saveTuneValue();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
   render() {
     return (
-      <Button
-        id='yearInputButton'
-        btnType={BUTTON_TYPE.ICON}
-        btnSize={BUTTON_SIZE.HUGE}
-        onClick={this.toggle}
-      >
-        <span id='yearInputText' className='time-controls__year'>
-          {String(this.props.store.year.tuneValueG)}
-        </span>
-      </Button>
+      <input
+        type="text"
+        pattern="[0-9]*"
+        min={this.year.limits.min}
+        max={this.year.limits.max}
+        value={this.year.tuneValueG}
+        onChange={(event) => this.year.setTuneValue(event.target.value)}
+        onKeyDown={this.handlePress}
+        className={`time-controls__year time-controls__input ${this.invalid}`}
+      />
     );
   }
 }
