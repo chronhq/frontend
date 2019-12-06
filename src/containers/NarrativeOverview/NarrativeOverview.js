@@ -24,12 +24,6 @@ import { computed } from 'mobx';
 import './NarrativeOverview.less';
 import DashboardSearch from '../DashboardSearch/DashboardSearch';
 
-const stringLimit = 60;
-const truncate = (str) => (
-  str.length > stringLimit ? `${str.substring(0, stringLimit)}...` : str
-);
-
-
 const NarrationPreview = ({ date, text, action }) => (
   <div
     role='button'
@@ -43,7 +37,7 @@ const NarrationPreview = ({ date, text, action }) => (
       {date}
     </div>
     <div className='text__narrative--body narration-preview__text'>
-      {truncate(text)}
+      {text}
     </div>
   </div>
 );
