@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-// @import '../../styles/colors.less';
 @import '../../styles/Layers.less';
 
 .narrative-overview__container {
@@ -24,10 +23,13 @@
   position: fixed;
   top: 5vh;
   right: 4rem;
+  max-width: 34rem;
+  width: 50%;
+  transition: width 300ms ease-in-out;
 }
 
 .narrative-overview {
-  width: 34rem;
+  width: 100%;
   max-height: 85vh;
   overflow-y: auto;
 }
@@ -40,6 +42,9 @@
   margin: .5rem;
   opacity: .75;
   padding: .25rem;
+  @media screen and (max-width: @narrow-screen) {
+    flex-direction: column;
+  }
   transition: opacity 300ms ease-in-out;
   &:hover {
     opacity: 1;
@@ -54,5 +59,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    @media screen and (max-width: @narrow-screen) {
+      align-self: initial;
+      text-align: center;
+    }
   }
 }
