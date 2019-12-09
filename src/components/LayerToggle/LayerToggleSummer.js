@@ -19,8 +19,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Tooltip from '../Tooltip/Tooltip';
-
 import './LayerToggleSummer.less';
 
 const LayerToggle = ({
@@ -34,7 +32,7 @@ const LayerToggle = ({
   ].join(' ');
   const toggle = () => click({ payload: { [name]: !checked }, place });
   return (
-    <Tooltip placement='left' content={tooltip}>
+    <div className='layer-toggle__container'>
       <div
         role='button'
         className='round-button'
@@ -47,14 +45,13 @@ const LayerToggle = ({
           className={className}
         />
       </div>
-    </Tooltip>
+      <div className='tooltip-author layer-toggle__label'>{tooltip}</div>
+    </div>
   );
 };
 
 LayerToggle.propTypes = {
-  // id: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
-  // label: PropTypes.string.isRequired,
   place: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,

@@ -16,16 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+@import '../../styles/Layers.less';
+
 .side-bar__grid {
   display: grid;
-  grid-template-columns: 2rem;
-  grid-auto-rows: 2rem;
-  grid-gap: 1rem 0.25rem;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 3rem;
+  grid-template-rows: repeat(12, 3.25rem);
+  grid-gap: .25rem 0.25rem;
   position: fixed;
   pointer-events: none;
-  z-index: 2;
-  right: 0;
+  z-index: @z-index-interface;
+  right: .25rem;
   top: 1rem;
-  width: 2.5rem;
   height: 100vh;
 }

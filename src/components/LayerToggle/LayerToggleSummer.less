@@ -1,7 +1,26 @@
 @import '../../styles/colors.less';
 @import '../../styles/Layers.less';
 
+.layer-toggle__container {
+  display: grid;
+  grid-template-columns: 3rem;
+  grid-template-rows: 2rem 1rem;
+  grid-gap: .25rem 0.25rem;
+  align-items: center;
+  justify-items: center;
+}
+
+.layer-toggle__label {
+  align-self: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 3rem;
+}
+
 .round-button {
+  width: 2rem;
+  height: 2rem;
+  align-self: center;
   pointer-events: all;
   box-shadow: @base-shadow;
   outline: none;
