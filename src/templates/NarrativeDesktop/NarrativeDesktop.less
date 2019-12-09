@@ -1,8 +1,13 @@
+@import '../../styles/Layers.less';
 .narrative-desktop-controls {
-  z-index: 2;
+  z-index: @z-index-interface;
   position: fixed;
   left: 2rem;
   top: 2rem;
+  @media screen and (max-width: @mobile-screen) {
+    left: 0.5rem;
+    top: 0.5rem;
+  }
 }
 
 .narrative-desktop-controls-grid {

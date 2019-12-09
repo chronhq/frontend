@@ -9,6 +9,9 @@
 .free-pins-container {
   padding: 0rem @containerBorders;
   .float-container();
+  @media screen and (max-width: @mobile-screen) {
+    display: none;
+  }
 }
 
 .free-pins-grid {

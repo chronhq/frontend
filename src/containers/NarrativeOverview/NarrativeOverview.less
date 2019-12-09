@@ -19,18 +19,29 @@
 @import '../../styles/Layers.less';
 
 .narrative-overview__container {
-  z-index: 2;
+  z-index: @z-index-priority;
   position: fixed;
   top: 5vh;
   right: 4rem;
   max-width: 34rem;
   width: 50%;
   transition: width 300ms ease-in-out;
+  @media screen and (max-width: @mobile-screen) {
+    width: 100vw;
+    left: 0;
+    top: auto;
+    bottom: 1rem;
+    max-height: 65%;
+  }
+  
 }
 
 .narrative-overview {
   width: 100%;
   max-height: 85vh;
+  @media screen and (max-width: @mobile-screen) {
+    max-height: 60vh;
+  }
   overflow-y: auto;
 }
 
