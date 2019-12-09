@@ -29,7 +29,7 @@ const CloseButton = ({
     btnType={compact ? BUTTON_TYPE.COMPACT : BUTTON_TYPE.CLOSE}
     onClick={onClick}
   >
-    <span className="icon icon-cross" />
+    <div className="icon icon-cross" />
   </Button>
 );
 

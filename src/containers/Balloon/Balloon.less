@@ -1,3 +1,5 @@
+@import '../../styles/Layers.less';
+
 .balloon-controls {
   .balloon-drag {
     padding-top: 0.2rem;
@@ -30,8 +32,16 @@
   max-width: 30vw;
   max-height: auto;
   position: absolute;
-  z-index: 100;
+  z-index: @z-index-priority;
   padding: 6px;
+
+  @media screen and (max-width: @mobile-screen) {
+    max-width: 85vw;
+    width: 85vw;
+    left: 0px!important;
+    top: 6rem!important;
+    transform: initial!important;
+  }
 
   border-radius: 2px;
   background-color: rgba(255, 255, 255, 0.9);
