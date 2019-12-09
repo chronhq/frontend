@@ -30,7 +30,10 @@ const LayerToggle = ({
     `image-button-${name}`,
     extraClassName,
   ].join(' ');
-  const toggle = () => click({ payload: { [name]: !checked }, place });
+  const toggle = (e) => {
+    e.preventDefault();
+    click({ payload: { [name]: !checked }, place });
+  };
   return (
     <div className='layer-toggle__container'>
       <div

@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, observable, action } from 'mobx';
 import { withRouter } from 'react-router-dom';
 
 import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
@@ -26,7 +26,7 @@ import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 import './SideBar.less';
 
 const dumpData = {
-  layer: ['borders', 'cities'],
+  layer: ['cities'],
   pins: ['persons', 'battle', 'document'],
 };
 
@@ -35,6 +35,15 @@ const zoom = ['plus', 'minus'];
 @inject('store')
 @observer
 class LayerControlWrapper extends React.Component {
+  @observable events = false;
+
+  @computed get eventsStyle() {
+    return {
+      display: 'flex',
+      visibility: this.events === true ? 'initial' : 'hidden'
+    };
+  }
+
   @computed get msg() {
     return this.props.store.i18n.data;
   }
@@ -56,43 +65,91 @@ class LayerControlWrapper extends React.Component {
 
   openAdmin = () => this.props.history.push('/admin');
 
+  openGithub = () => this.github.click();
+
+  openDiscord = () => this.discord.click();
+
+  @action toggleEvents = () => {
+    this.events = !this.events;
+  }
+
   render() {
     return (
       <div className='side-bar__grid'>
-        {Object.keys(dumpData).map((place) => (
-          dumpData[place].map((id) => (
-            <LayerToggle
-              key={`layer_${id}`}
-              tooltip={this.nameToTooltip(id)}
-              place={place}
-              checked={this.props.store.flags[place].list[id]}
-              name={id}
-              click={this.handleLayer}
-            />
-          ))))}
-        <div />
-        <div />
-        {zoom.map((z) => (
-          <LayerToggle
-            key={`layer_${z}`}
-            tooltip={`Zoom ${z === 'minus' ? 'Out' : 'In'}`}
-            place={z}
-            name={z}
-            checked={false}
-            extraClassName={`icon icon-${z}`}
-            click={this.handleZoom}
-          />
-        ))}
-        {/* <LayerToggle
-          key='layer_admin'
-          tooltip='Open admin interface'
-          place='admin'
-          name='admin'
+        <div style={this.eventsStyle}>
+          {Object.keys(dumpData).map((place) => (
+            dumpData[place].map((id) => (
+              <LayerToggle
+                key={`layer_${id}`}
+                tooltip={this.nameToTooltip(id)}
+                place={place}
+                checked={this.props.store.flags[place].list[id]}
+                name={id}
+                click={this.handleLayer}
+              />
+            ))))}
+        </div>
+        <LayerToggle
+          key='layer_events'
+          tooltip='Events'
+          place=''
           checked={false}
+          name='events'
+          click={this.toggleEvents}
+        />
+        <div />
+        <LayerToggle
+          key='layer_admin'
+          tooltip='Admin'
+          place=''
           extraClassName='icon icon-magic-wand'
           extraStyle={{ backgroundSize: '80% 80%' }}
+          checked={false}
+          name='admin'
           click={this.openAdmin}
-        /> */}
+        />
+        <div />
+        <LayerToggle
+          key='layer_github'
+          tooltip='Github'
+          place=''
+          checked={false}
+          name='github'
+          click={this.openGithub}
+        />
+        <div />
+        <LayerToggle
+          key='layer_discord'
+          tooltip='Discord'
+          place=''
+          extraClassName='icon image-button-discord'
+          checked={false}
+          name='discord'
+          click={this.openDiscord}
+        />
+        <div style={{ visibility: 'hidden' }}>
+          <a href='https://discord.gg/rN3uen5' target='_blank' rel='noopener noreferrer' ref={(r) => { this.discord = r; return false; }}>
+            Link to Discord chat
+          </a>
+          <a href='https://github.com/chronhq/' target='_blank' rel='noopener noreferrer' ref={(r) => { this.github = r; return false; }}>
+            Link to Github Page
+          </a>
+        </div>
+        <div />
+        {zoom.map((z) => (
+          <>
+            <div />
+            <LayerToggle
+              key={`layer_${z}`}
+              tooltip=''
+              place={z}
+              name={z}
+              checked={false}
+              extraClassName={`icon icon-${z}`}
+              click={this.handleZoom}
+            />
+          </>
+        ))}
       </div>
     );
   }
