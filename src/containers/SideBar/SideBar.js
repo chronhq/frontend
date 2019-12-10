@@ -19,7 +19,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed, observable, action } from 'mobx';
-import { withRouter } from 'react-router-dom';
 
 import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 
@@ -30,8 +29,6 @@ const dumpData = {
   pins: ['persons', 'battle', 'document'],
 };
 
-const zoom = ['plus', 'minus'];
-
 @inject('store')
 @observer
 class LayerControlWrapper extends React.Component {
@@ -39,6 +36,8 @@ class LayerControlWrapper extends React.Component {
 
   @computed get eventsStyle() {
     return {
+      justifyContent: 'flex-end',
+      width: '100%',
       display: 'flex',
       visibility: this.events === true ? 'initial' : 'hidden'
     };
@@ -63,7 +62,7 @@ class LayerControlWrapper extends React.Component {
     this.props.store.deck.zoomOut(out);
   }
 
-  openAdmin = () => this.props.history.push('/admin');
+  openAdmin = () => this.openAdmin.click();
 
   openGithub = () => this.github.click();
 
@@ -102,8 +101,7 @@ class LayerControlWrapper extends React.Component {
           key='layer_admin'
           tooltip='Admin'
           place=''
-          extraClassName='icon icon-magic-wand'
-          extraStyle={{ backgroundSize: '80% 80%' }}
+          // extraClassName='icon icon-magic-wand'
           checked={false}
           name='admin'
           click={this.openAdmin}
@@ -122,12 +120,15 @@ class LayerControlWrapper extends React.Component {
           key='layer_discord'
           tooltip='Discord'
           place=''
-          extraClassName='icon image-button-discord'
+          extraStyle={{ backgroundSize: '90% 90%' }}
           checked={false}
           name='discord'
           click={this.openDiscord}
         />
         <div style={{ visibility: 'hidden' }}>
+          <a href='/admin' target='_blank' rel='noopener noreferrer' ref={(r) => { this.discord = r; return false; }}>
+              Link to admin interface
+          </a>
           <a href='https://discord.gg/rN3uen5' target='_blank' rel='noopener noreferrer' ref={(r) => { this.discord = r; return false; }}>
             Link to Discord chat
           </a>
@@ -136,7 +137,7 @@ class LayerControlWrapper extends React.Component {
           </a>
         </div>
         <div />
-        {zoom.map((z) => (
+        {['plus', 'minus'].map((z) => (
           <>
             <div />
             <LayerToggle
@@ -155,4 +156,4 @@ class LayerControlWrapper extends React.Component {
   }
 }
 
-export default withRouter(LayerControlWrapper);
+export default LayerControlWrapper;
