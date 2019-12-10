@@ -62,7 +62,7 @@ class LayerControlWrapper extends React.Component {
     this.props.store.deck.zoomOut(out);
   }
 
-  openAdmin = () => this.openAdmin.click();
+  openAdmin = () => this.admin.click();
 
   openGithub = () => this.github.click();
 
@@ -126,7 +126,7 @@ class LayerControlWrapper extends React.Component {
           click={this.openDiscord}
         />
         <div style={{ visibility: 'hidden' }}>
-          <a href='/admin' target='_blank' rel='noopener noreferrer' ref={(r) => { this.discord = r; return false; }}>
+          <a href='/admin' target='_blank' rel='noopener noreferrer' ref={(r) => { this.admin = r; return false; }}>
               Link to admin interface
           </a>
           <a href='https://discord.gg/rN3uen5' target='_blank' rel='noopener noreferrer' ref={(r) => { this.discord = r; return false; }}>
