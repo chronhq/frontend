@@ -8,6 +8,10 @@
   grid-gap: .25rem 0.25rem;
   align-items: center;
   justify-items: center;
+  @media screen and (max-width: @mobile-screen) {
+    grid-template-columns: initial;
+    grid-template-rows: initial;
+  }
 }
 
 .layer-toggle__label {

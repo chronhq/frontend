@@ -39,6 +39,8 @@ class LayerControlWrapper extends React.Component {
         <HiddenURLButton name='discord' styles='menu-discord' href='https://discord.gg/rN3uen5' />
         <div />
         <div />
+        <div />
+        <div />
         {['plus', 'minus'].map((z) => (
           <>
             <div key={`layer_div_${z}`} />
