@@ -60,16 +60,21 @@ class EventsMenu extends React.Component {
       <>
         <div style={this.eventsStyle} className='side-bar__extra'>
           {Object.keys(dumpData).map((place) => (
-            dumpData[place].map((id) => (
-              <LayerToggle
-                key={`layer_${id}`}
-                tooltip={this.nameToTooltip(id)}
-                checked={this.props.store.flags[place].list[id]}
-                extraClassName={`sprite sprite-${id === 'persons' ? 'birth' : id}`}
-                name={id}
-                click={(layer, status) => this.handleLayer(place, layer, status)}
-              />
-            ))))}
+            dumpData[place].map((id) => {
+              const checked = this.props.store.flags[place].list[id];
+              const sprite = `image-button-sprite sprite sprite-${id === 'persons' ? 'birth' : id}`;
+              const image = checked ? sprite : `${sprite}-contour`;
+              return (
+                <LayerToggle
+                  key={`layer_${id}`}
+                  tooltip={this.nameToTooltip(id)}
+                  checked={checked}
+                  extraClassName={image}
+                  name={id}
+                  click={(layer, status) => this.handleLayer(place, layer, status)}
+                />
+              );
+            })))}
         </div>
         <LayerToggle
           key='layer_events'
