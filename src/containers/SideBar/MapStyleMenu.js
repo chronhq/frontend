@@ -109,6 +109,7 @@ class MapStyleMenu extends React.Component {
         key='layer_map'
         tooltip='Map'
         extraClassName='menu-map'
+        wrapper='side-bar__desktop'
         name='map'
         click={this.toggleMenu}
       >

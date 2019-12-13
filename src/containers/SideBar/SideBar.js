@@ -36,7 +36,7 @@ class SideBar extends React.Component {
       <div className='side-bar__grid'>
         <MapStyleMenu />
         <EventsMenu />
-        <HiddenURLButton name='admin' styles='menu-admin' href='/admin' />
+        <HiddenURLButton name='admin' styles='menu-admin' wrapper='side-bar__desktop' href='/admin' />
         <HiddenURLButton name='github' styles='menu-github' href='https://github.com/chronhq/' />
         <HiddenURLButton name='discord' styles='menu-discord' href='https://discord.gg/rN3uen5' />
         <div />

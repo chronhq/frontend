@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import './LayerToggleSummer.less';
 
 const LayerToggle = ({
-  checked, name, tooltip, click, extraClassName = '', extraStyle = {}, children
+  checked, name, tooltip, click, extraClassName = '', extraStyle = {}, children, wrapper = ''
 }) => {
   const className = [
     'image-button',
@@ -34,7 +34,7 @@ const LayerToggle = ({
     click(name, !checked);
   };
   return (
-    <div className='layer-toggle__wrapper'>
+    <div className={`layer-toggle__wrapper ${wrapper}`}>
       {children}
       <div className='layer-toggle__container'>
         <div

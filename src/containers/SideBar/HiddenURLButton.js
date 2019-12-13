@@ -30,6 +30,7 @@ class HiddenURLButton extends React.Component {
         key={`layer_${this.props.name}`}
         tooltip={capitalizeFirstLetter(this.props.name)}
         extraClassName={this.props.styles}
+        wrapper={this.props.wrapper}
         name={this.props.name}
         click={() => this.ref.click()}
       >
@@ -48,12 +49,14 @@ class HiddenURLButton extends React.Component {
 }
 
 HiddenURLButton.defaultProps = {
-  styles: ''
+  styles: '',
+  wrapper: '',
 };
 
 HiddenURLButton.propTypes = {
   name: PropTypes.string.isRequired,
   styles: PropTypes.string,
+  wrapper: PropTypes.string,
   href: PropTypes.string.isRequired,
 };
 
