@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import './LayerToggleSummer.less';
 
 const LayerToggle = ({
-  checked, name, tooltip, click, place, extraClassName = '', extraStyle = {}
+  checked, name, tooltip, click, extraClassName = '', extraStyle = {}
 }) => {
   const className = [
     'image-button',
@@ -32,7 +32,7 @@ const LayerToggle = ({
   ].join(' ');
   const toggle = (e) => {
     e.preventDefault();
-    click({ payload: { [name]: !checked }, place });
+    click(name, !checked);
   };
   return (
     <div className='layer-toggle__container'>
@@ -53,10 +53,13 @@ const LayerToggle = ({
   );
 };
 
+LayerToggle.defaultProps = {
+  checked: true
+};
+
 LayerToggle.propTypes = {
   tooltip: PropTypes.string.isRequired,
-  place: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
+  checked: PropTypes.bool,
   name: PropTypes.string.isRequired,
   click: PropTypes.func.isRequired,
 };

@@ -40,21 +40,15 @@ class EventsMenu extends React.Component {
 
   @computed get eventsStyle() {
     return {
-      justifyContent: 'flex-end',
-      width: '100%',
-      display: 'flex',
       visibility: this.events === true ? 'initial' : 'hidden'
     };
   }
 
   nameToTooltip = (id) => this.msg.layerNames[id];
 
-  handleLayer = (data) => {
-    Object.keys(data.payload).map((cur) => {
-      this.props.store.flags[data.place].set(cur, data.payload[cur]);
-      this.props.store.analytics.metricHit(`main_${cur}`);
-      return false;
-    });
+  handleLayer = (place, layer, status) => {
+    this.props.store.flags[place].set(layer, status);
+    this.props.store.analytics.metricHit(`main_${layer}`);
   }
 
   @action toggleEvents = () => {
@@ -64,24 +58,22 @@ class EventsMenu extends React.Component {
   render() {
     return (
       <>
-        <div style={this.eventsStyle}>
+        <div style={this.eventsStyle} className='side-bar__extra'>
           {Object.keys(dumpData).map((place) => (
             dumpData[place].map((id) => (
               <LayerToggle
                 key={`layer_${id}`}
                 tooltip={this.nameToTooltip(id)}
-                place={place}
                 checked={this.props.store.flags[place].list[id]}
                 name={id}
-                click={this.handleLayer}
+                click={(layer, status) => this.handleLayer(place, layer, status)}
               />
             ))))}
         </div>
         <LayerToggle
           key='layer_events'
           tooltip='Events'
-          place=''
-          checked={false}
+          checked={this.events}
           name='events'
           click={this.toggleEvents}
         />
