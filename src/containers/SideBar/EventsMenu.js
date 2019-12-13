@@ -20,6 +20,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed, observable, action } from 'mobx';
 
+import ModalWrapper from '../../components/ModalWrapper';
 import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 
 import './SideBar.less';
@@ -65,24 +66,26 @@ class EventsMenu extends React.Component {
         name='events'
         click={this.toggleEvents}
       >
-        <div style={this.eventsStyle} className='side-bar__extra'>
-          {Object.keys(dumpData).map((place) => (
-            dumpData[place].map((id) => {
-              const checked = this.props.store.flags[place].list[id];
-              const sprite = `image-button-sprite sprite sprite-${id === 'persons' ? 'birth' : id}`;
-              const image = checked ? sprite : `${sprite}-contour`;
-              return (
-                <LayerToggle
-                  key={`layer_${id}`}
-                  tooltip={this.nameToTooltip(id)}
-                  checked={checked}
-                  extraClassName={image}
-                  name={id}
-                  click={(layer, status) => this.handleLayer(place, layer, status)}
-                />
-              );
-            })))}
-        </div>
+        <ModalWrapper close={this.toggleEvents} isOpen={this.events}>
+          <div style={this.eventsStyle} className='side-bar__extra'>
+            {Object.keys(dumpData).map((place) => (
+              dumpData[place].map((id) => {
+                const checked = this.props.store.flags[place].list[id];
+                const sprite = `image-button-sprite sprite sprite-${id === 'persons' ? 'birth' : id}`;
+                const image = checked ? sprite : `${sprite}-contour`;
+                return (
+                  <LayerToggle
+                    key={`layer_${id}`}
+                    tooltip={this.nameToTooltip(id)}
+                    checked={checked}
+                    extraClassName={image}
+                    name={id}
+                    click={(layer, status) => this.handleLayer(place, layer, status)}
+                  />
+                );
+              })))}
+          </div>
+        </ModalWrapper>
       </LayerToggle>
     );
   }

@@ -24,6 +24,7 @@ import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 import './SideBar.less';
 import EventsMenu from './EventsMenu';
 import HiddenURLButton from './HiddenURLButton';
+import MapStyleMenu from './MapStyleMenu';
 
 @inject('store')
 @observer
@@ -33,6 +34,7 @@ class SideBar extends React.Component {
   render() {
     return (
       <div className='side-bar__grid'>
+        <MapStyleMenu />
         <EventsMenu />
         <HiddenURLButton name='admin' styles='menu-admin' href='/admin' />
         <HiddenURLButton name='github' styles='menu-github' href='https://github.com/chronhq/' />
