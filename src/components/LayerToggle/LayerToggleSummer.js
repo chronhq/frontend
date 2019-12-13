@@ -34,21 +34,23 @@ const LayerToggle = ({
     click(name, !checked);
   };
   return (
-    <div className='layer-toggle__container'>
-      <div
-        role='button'
-        className='round-button'
-        tabIndex={0}
-        onKeyPress={toggle}
-        onClick={toggle}
-      >
-        {children}
+    <div className='layer-toggle__wrapper'>
+      {children}
+      <div className='layer-toggle__container'>
         <div
-          style={extraStyle}
-          className={className}
-        />
+          role='button'
+          className='round-button'
+          tabIndex={0}
+          onKeyPress={toggle}
+          onClick={toggle}
+        >
+          <div
+            style={extraStyle}
+            className={className}
+          />
+        </div>
+        <div className='tooltip-author tooltip-author--shadow layer-toggle__label'>{tooltip}</div>
       </div>
-      <div className='tooltip-author layer-toggle__label'>{tooltip}</div>
     </div>
   );
 };
