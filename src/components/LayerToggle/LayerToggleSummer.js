@@ -26,8 +26,7 @@ const LayerToggle = ({
 }) => {
   const className = [
     'image-button',
-    `image-button${checked ? '__checked' : ''}`,
-    `image-button-${name}`,
+    checked ? 'image-button__checked' : '',
     extraClassName,
   ].join(' ');
   const toggle = (e) => {

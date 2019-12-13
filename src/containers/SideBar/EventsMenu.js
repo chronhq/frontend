@@ -65,6 +65,7 @@ class EventsMenu extends React.Component {
                 key={`layer_${id}`}
                 tooltip={this.nameToTooltip(id)}
                 checked={this.props.store.flags[place].list[id]}
+                extraClassName={`sprite sprite-${id === 'persons' ? 'birth' : id}`}
                 name={id}
                 click={(layer, status) => this.handleLayer(place, layer, status)}
               />
@@ -74,6 +75,7 @@ class EventsMenu extends React.Component {
           key='layer_events'
           tooltip='Events'
           checked={this.events}
+          extraClassName='menu-events'
           name='events'
           click={this.toggleEvents}
         />

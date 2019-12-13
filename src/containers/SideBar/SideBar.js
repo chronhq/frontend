@@ -34,9 +34,9 @@ class LayerControlWrapper extends React.Component {
     return (
       <div className='side-bar__grid'>
         <EventsMenu />
-        <HiddenURLButton name='admin' href='/admin' />
-        <HiddenURLButton name='github' href='https://github.com/chronhq/' />
-        <HiddenURLButton name='discord' href='https://discord.gg/rN3uen5' />
+        <HiddenURLButton name='admin' styles='menu-admin' href='/admin' />
+        <HiddenURLButton name='github' styles='menu-github' href='https://github.com/chronhq/' />
+        <HiddenURLButton name='discord' styles='menu-discord' href='https://discord.gg/rN3uen5' />
         <div />
         <div />
         {['plus', 'minus'].map((z) => (
