@@ -42,35 +42,13 @@
   background-position: center center;
   background-repeat: no-repeat;
   outline: none;
+  -webkit-transition: background-image 0.2s ease-in-out;
+  transition: background-image 0.2s ease-in-out;
   &:active {
     transform: translateY(1px);
   }
-  &-events {
-    background-image: url('./icons/events_icon.svg');
-  }
-  &-admin {
-    background-image: url('./icons/admin_icon.svg');
-  }
-  &-github {
-    background-image: url('./icons/github_icon.svg');
-  }
-  &-discord {
-    background-image: url('./icons/discord_icon.svg');
-  }
-  &-borders {
-    background-image: url('./icons/map_icon.svg');
-  }
-  &-cities {
-    background-image: url('./icons/cities_icon.svg');
-  }
-  &-persons {
-    background-image: url('./icons/ppl_icon.svg');
-  }
-  &-battle {
-    background-image: url('./icons/battles_icon.svg');
-  }
-  &-document {
-    background-image: url('./icons/documents_icon.svg');
+  &-sprite:active {
+    transform: rotate(-135deg) translateY(1px);
   }
   &__checked {
     opacity: 1;
