@@ -22,8 +22,8 @@
   display: grid;
   align-items: center;
   justify-items: center;
-  grid-template-columns: auto 3rem;
-  grid-template-rows: repeat(12, 3.25rem);
+  grid-template-columns: 3rem;
+  grid-template-rows: repeat(8, 3.25rem);
   grid-gap: .25rem 0.25rem;
   position: fixed;
   pointer-events: none;
@@ -37,8 +37,16 @@
 }
 
 .side-bar__extra {
+  right: 100%;
+  position: absolute;
   justify-content: flex-end;
   width: 100%;
   display: flex;
   visibility: initial;
+}
+
+.side-bar__extra--menu {
+  pointer-events: all;
+  flex-direction: column;
+  width: 40rem;
 }

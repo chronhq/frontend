@@ -27,7 +27,7 @@ import HiddenURLButton from './HiddenURLButton';
 
 @inject('store')
 @observer
-class LayerControlWrapper extends React.Component {
+class SideBar extends React.Component {
   handleZoom = (layer) => this.props.store.deck.zoomOut(layer === 'minus');
 
   render() {
@@ -38,24 +38,18 @@ class LayerControlWrapper extends React.Component {
         <HiddenURLButton name='github' styles='menu-github' href='https://github.com/chronhq/' />
         <HiddenURLButton name='discord' styles='menu-discord' href='https://discord.gg/rN3uen5' />
         <div />
-        <div />
-        <div />
-        <div />
         {['plus', 'minus'].map((z) => (
-          <>
-            <div key={`layer_div_${z}`} />
-            <LayerToggle
-              key={`layer_${z}`}
-              tooltip=''
-              name={z}
-              extraClassName={`icon icon-${z}`}
-              click={this.handleZoom}
-            />
-          </>
+          <LayerToggle
+            key={`layer_${z}`}
+            tooltip=''
+            name={z}
+            extraClassName={`icon icon-${z}`}
+            click={this.handleZoom}
+          />
         ))}
       </div>
     );
   }
 }
 
-export default LayerControlWrapper;
+export default SideBar;

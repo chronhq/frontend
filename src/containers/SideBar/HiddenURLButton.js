@@ -26,24 +26,23 @@ const capitalizeFirstLetter = (s) => s.charAt(0).toUpperCase() + s.toLowerCase()
 class HiddenURLButton extends React.Component {
   render() {
     return (
-      <>
+      <LayerToggle
+        key={`layer_${this.props.name}`}
+        tooltip={capitalizeFirstLetter(this.props.name)}
+        extraClassName={this.props.styles}
+        name={this.props.name}
+        click={() => this.ref.click()}
+      >
         <a
           href={this.props.href}
           target='_blank'
           rel='noopener noreferrer'
           ref={(r) => { this.ref = r; return false; }}
-          style={{ visibility: 'hidden' }}
+          style={{ visibility: 'hidden', position: 'absolute' }}
         >
           {`Link to ${this.props.name}`}
         </a>
-        <LayerToggle
-          key={`layer_${this.props.name}`}
-          tooltip={capitalizeFirstLetter(this.props.name)}
-          extraClassName={this.props.styles}
-          name={this.props.name}
-          click={() => this.ref.click()}
-        />
-      </>
+      </LayerToggle>
     );
   }
 }

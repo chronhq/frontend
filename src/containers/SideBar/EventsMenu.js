@@ -57,7 +57,14 @@ class EventsMenu extends React.Component {
 
   render() {
     return (
-      <>
+      <LayerToggle
+        key='layer_events'
+        tooltip='Events'
+        checked={this.events}
+        extraClassName='menu-events'
+        name='events'
+        click={this.toggleEvents}
+      >
         <div style={this.eventsStyle} className='side-bar__extra'>
           {Object.keys(dumpData).map((place) => (
             dumpData[place].map((id) => {
@@ -76,15 +83,7 @@ class EventsMenu extends React.Component {
               );
             })))}
         </div>
-        <LayerToggle
-          key='layer_events'
-          tooltip='Events'
-          checked={this.events}
-          extraClassName='menu-events'
-          name='events'
-          click={this.toggleEvents}
-        />
-      </>
+      </LayerToggle>
     );
   }
 }
