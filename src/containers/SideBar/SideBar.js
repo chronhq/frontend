@@ -29,6 +29,14 @@ const dumpData = {
   pins: ['persons', 'battle', 'document'],
 };
 
+const Link = ({
+  href, name, setRef, text
+}) => (
+  <a href={href} target='_blank' rel='noopener noreferrer' ref={(r) => { setRef(name, r); return false; }}>
+    {text}
+  </a>
+);
+
 @inject('store')
 @observer
 class LayerControlWrapper extends React.Component {
@@ -62,11 +70,11 @@ class LayerControlWrapper extends React.Component {
     this.props.store.deck.zoomOut(out);
   }
 
-  openAdmin = () => this.admin.click();
+  setRef = (name, ref) => {
+    this[name] = ref;
+  }
 
-  openGithub = () => this.github.click();
-
-  openDiscord = () => this.discord.click();
+  click = (name) => this[name].click();
 
   @action toggleEvents = () => {
     this.events = !this.events;
@@ -104,7 +112,7 @@ class LayerControlWrapper extends React.Component {
           // extraClassName='icon icon-magic-wand'
           checked={false}
           name='admin'
-          click={this.openAdmin}
+          click={() => this.click('admin')}
         />
         <div />
         <LayerToggle
@@ -113,7 +121,7 @@ class LayerControlWrapper extends React.Component {
           place=''
           checked={false}
           name='github'
-          click={this.openGithub}
+          click={() => this.click('github')}
         />
         <div />
         <LayerToggle
@@ -123,18 +131,12 @@ class LayerControlWrapper extends React.Component {
           extraStyle={{ backgroundSize: '90% 90%' }}
           checked={false}
           name='discord'
-          click={this.openDiscord}
+          click={() => this.click('discord')}
         />
         <div style={{ visibility: 'hidden' }}>
-          <a href='/admin' target='_blank' rel='noopener noreferrer' ref={(r) => { this.admin = r; return false; }}>
-              Link to admin interface
-          </a>
-          <a href='https://discord.gg/rN3uen5' target='_blank' rel='noopener noreferrer' ref={(r) => { this.discord = r; return false; }}>
-            Link to Discord chat
-          </a>
-          <a href='https://github.com/chronhq/' target='_blank' rel='noopener noreferrer' ref={(r) => { this.github = r; return false; }}>
-            Link to Github Page
-          </a>
+          <Link href='/admin' name='admin' setRef={this.setRef} text='Link to admin interface' />
+          <Link href='https://discord.gg/rN3uen5' name='discord' setRef={this.setRef} text='Link to Discord chat' />
+          <Link href='https://github.com/chronhq/' name='github' setRef={this.setRef} text='Link to Github Page' />
         </div>
         <div />
         {['plus', 'minus'].map((z) => (
