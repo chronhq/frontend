@@ -111,6 +111,7 @@ class MapStyleMenu extends React.Component {
         extraClassName='menu-map'
         wrapper='side-bar__desktop'
         name='map'
+        checked={this.menu}
         click={this.toggleMenu}
       >
         <ModalWrapper close={this.toggleMenu} isOpen={this.menu}>

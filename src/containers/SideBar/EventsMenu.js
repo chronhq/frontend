@@ -67,7 +67,7 @@ class EventsMenu extends React.Component {
         click={this.toggleEvents}
       >
         <ModalWrapper close={this.toggleEvents} isOpen={this.events}>
-          <div style={this.eventsStyle} className='side-bar__extra'>
+          <div style={this.eventsStyle} className='side-bar__extra side-bar__vertical'>
             {Object.keys(dumpData).map((place) => (
               dumpData[place].map((id) => {
                 const checked = this.props.store.flags[place].list[id];

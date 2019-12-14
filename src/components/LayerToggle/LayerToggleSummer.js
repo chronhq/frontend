@@ -18,50 +18,74 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { observer } from 'mobx-react';
+import { computed, action, observable } from 'mobx';
 import './LayerToggleSummer.less';
 
-const LayerToggle = ({
-  checked, name, tooltip, click, extraClassName = '', extraStyle = {}, children, wrapper = ''
-}) => {
-  const className = [
-    'image-button',
-    checked ? 'image-button__checked' : '',
-    extraClassName,
-  ].join(' ');
-  const toggle = (e) => {
+@observer
+class LayerToggle extends React.Component {
+  @observable keyDownStatus = false;
+
+  @computed get className() {
+    return [
+      'image-button',
+      this.props.checked ? 'image-button__checked' : '',
+      this.props.extraClassName,
+    ].join(' ');
+  }
+
+  toggle = (e) => {
     e.preventDefault();
-    click(name, !checked);
+    // prevent updating props during the key down event (aka hook for ModalWrapper)
+    if (this.keyDownStatus === this.props.checked) {
+      this.props.click(this.props.name, !this.props.checked);
+    }
   };
-  return (
-    <div className={`layer-toggle__wrapper ${wrapper}`}>
-      {children}
-      <div className='layer-toggle__container'>
-        <div
-          role='button'
-          className='round-button'
-          tabIndex={0}
-          onKeyPress={toggle}
-          onClick={toggle}
-        >
+
+  @action keepStatus = () => {
+    this.keyDownStatus = this.props.checked;
+  }
+
+  render() {
+    return (
+      <div className={`layer-toggle__wrapper ${this.props.wrapper}`}>
+        {this.props.children}
+        <div className='layer-toggle__container'>
           <div
-            style={extraStyle}
-            className={className}
-          />
+            role='button'
+            className='round-button'
+            tabIndex={0}
+            onKeyPress={this.toggle}
+            onClick={this.toggle}
+            onMouseDown={this.keepStatus}
+          >
+            <div
+              style={this.props.extraStyle}
+              className={this.className}
+            />
+          </div>
+          <div className='tooltip-author tooltip-author--shadow layer-toggle__label'>
+            {this.props.tooltip}
+          </div>
         </div>
-        <div className='tooltip-author tooltip-author--shadow layer-toggle__label'>{tooltip}</div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 LayerToggle.defaultProps = {
-  checked: true
+  checked: true,
+  wrapper: '',
+  extraClassName: '',
+  extraStyle: {},
 };
 
 LayerToggle.propTypes = {
   tooltip: PropTypes.string.isRequired,
   checked: PropTypes.bool,
+  wrapper: PropTypes.string,
+  extraClassName: PropTypes.string,
+  extraStyle: PropTypes.object,
   name: PropTypes.string.isRequired,
   click: PropTypes.func.isRequired,
 };

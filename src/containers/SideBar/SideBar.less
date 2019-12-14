@@ -52,6 +52,12 @@
 
 .side-bar__desktop {
   @media screen and (max-width: @mobile-screen) {
-    display: hidden;
+    display: none;
+  }
+}
+
+.side-bar__vertical {
+  @media screen and (max-width: @mobile-screen) {
+    flex-direction: column;
   }
 }
