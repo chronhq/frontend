@@ -18,15 +18,21 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, action, observable } from 'mobx';
 import { withRouter } from 'react-router-dom';
 
-import StoryCard from '../../components/StoryCard/StoryCard';
+import StoryCard, { StoryCardInfo } from '../../components/StoryCard/StoryCard';
 import './StoryListSummer.less';
 
 @inject('store')
 @observer
 class StoryList extends React.Component {
+  @observable hover = false;
+
+  @observable story = { author: '', description: '' };
+
+  @observable box;
+
   @computed get courses() {
     return this.props.store.search.Narratives.entities;
   }
@@ -35,21 +41,44 @@ class StoryList extends React.Component {
     return this.props.store.courseSelection.courseId === 0;
   }
 
+  @computed get style() {
+    return this.box
+      ? {
+        zIndex: 2,
+        position: 'fixed',
+        left: this.box.left,
+        top: this.box.top,
+        width: this.box.width,
+        transform: 'translateY(-105%)',
+      }
+      : {};
+  }
+
+  @action setHover = (h, story, ref) => {
+    this.hover = h;
+    this.story = story;
+    this.box = ref.getBoundingClientRect();
+  }
+
   handleStorySelection = (url) => {
     this.props.store.courseSelection.handleSelect(url, this.props.history);
   }
 
   render() {
     return this.enabled ? (
-      <div className='story-list'>
-        {Object.values(this.courses).map((story) => (
-          <StoryCard
-            key={`card_${story.url}`}
-            story={story}
-            handleStorySelection={this.handleStorySelection}
-          />
-        ))}
-      </div>
+      <>
+        <StoryCardInfo hover={this.hover} story={this.story} standalone style={this.style} />
+        <div className='story-list'>
+          {Object.values(this.courses).map((story) => (
+            <StoryCard
+              setHover={this.setHover}
+              key={`card_${story.url}`}
+              story={story}
+              handleStorySelection={this.handleStorySelection}
+            />
+          ))}
+        </div>
+      </>
     ) : null;
   }
 }
