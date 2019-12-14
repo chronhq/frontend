@@ -26,6 +26,8 @@ import './LayerToggleSummer.less';
 class LayerToggle extends React.Component {
   @observable keyDownStatus = false;
 
+  @observable lastEventTime = 0;
+
   @computed get className() {
     return [
       'image-button',
@@ -43,7 +45,12 @@ class LayerToggle extends React.Component {
   };
 
   @action keepStatus = () => {
-    this.keyDownStatus = this.props.checked;
+    const time = Math.round(Number(new Date()) / 500);
+    // Keep value received from first event in sequence from [touchStart, mouseDown]
+    if (time !== this.lastEventTime) {
+      this.lastEventTime = time;
+      this.keyDownStatus = this.props.checked;
+    }
   }
 
   render() {
@@ -57,6 +64,8 @@ class LayerToggle extends React.Component {
             tabIndex={0}
             onKeyPress={this.toggle}
             onClick={this.toggle}
+            onKeyDown={this.keepStatus}
+            onTouchStart={this.keepStatus}
             onMouseDown={this.keepStatus}
           >
             <div
