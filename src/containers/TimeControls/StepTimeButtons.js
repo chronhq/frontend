@@ -76,7 +76,7 @@ class StepTimeButtons extends React.Component {
           btnSize={BUTTON_SIZE.HUGE}
           onClick={() => this.changeStep()}
         >
-          <span style={{ fontWeight: 400 }}>
+          <span className='controls-text-shadow' style={{ fontWeight: 400 }}>
             {this.label}
           </span>
         </Button>

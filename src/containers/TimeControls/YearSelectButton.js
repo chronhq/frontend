@@ -53,7 +53,7 @@ class YearButton extends React.Component {
         value={this.year.tuneValueG}
         onChange={(event) => this.year.setTuneValue(event.target.value)}
         onKeyDown={this.handlePress}
-        className={`time-controls__year time-controls__input ${this.invalid}`}
+        className={`time-controls__year controls-text-shadow time-controls__input ${this.invalid}`}
       />
     );
   }

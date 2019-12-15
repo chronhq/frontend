@@ -73,7 +73,7 @@ class LayerToggle extends React.Component {
               className={this.className}
             />
           </div>
-          <div className='tooltip-author tooltip-author--shadow layer-toggle__label'>
+          <div className='tooltip-author controls-text-shadow layer-toggle__label'>
             {this.props.tooltip}
           </div>
         </div>
