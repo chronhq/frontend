@@ -28,6 +28,8 @@ const yearToJulian = (year) => {
   return julianInt(date);
 };
 
+export { julianInt, yearToJulian };
+
 export default class YearModel {
   @observable step = {
     year: 1,
