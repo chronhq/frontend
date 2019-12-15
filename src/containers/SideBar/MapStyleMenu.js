@@ -24,8 +24,9 @@ import ModalWrapper from '../../components/ModalWrapper';
 import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import ActionButton from '../../components/ActionButtons/ActionButtons';
+import CloseButton from '../../components/Button/CloseButton';
 
-const inputClass = 'text-input icon--input dashboard-search';
+const inputClass = 'text-input icon--input dashboard-search input-text';
 
 const Input = ({
   label, value, setText, valid, placeholder
@@ -107,8 +108,11 @@ class MapStyleMenu extends React.Component {
       >
         <ModalWrapper close={this.toggleMenu} isOpen={this.menu}>
           <div style={this.menuStyle} className='float-container side-bar__extra side-bar__extra--menu'>
-            <div className='text__narrative--body'>
-              Try your mapbox styled design by uploading it here.
+            <div style={{ display: 'flex', minHeight: '2rem' }}>
+              <div className='text__narrative--body'>
+                Try your mapbox styled design by uploading it here.
+              </div>
+              <CloseButton compact onClick={this.toggleMenu} />
             </div>
             <div className='text__narrative--menu'>
               The style will only be applied for one session.
@@ -129,8 +133,8 @@ class MapStyleMenu extends React.Component {
               placeholder='pk.eyJ1IjoibWlrbGVyZ20...'
             />
             <TwoActions>
+              <ActionButton text='Reset' icon='recycle' click={this.clean} />
               <ActionButton text='Save' icon='save' click={this.save} enabled={this.valid} />
-              <ActionButton text='Defaults' icon='redo' click={this.clean} />
             </TwoActions>
           </div>
         </ModalWrapper>

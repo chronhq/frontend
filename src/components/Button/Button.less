@@ -79,7 +79,7 @@ button.close {
 
 button.compact {
   margin-right: 0.5rem;
-  width: 2rem;
+  width: 1rem;
   height: 2rem;
   padding: 0;
 }
@@ -262,5 +262,16 @@ button.icon {
     border: none;
     box-shadow: none;
     text-shadow: 2px 2px 5px black;
+  }
+}
+
+button.disabled {
+  cursor: initial;
+  &:hover {
+    text-shadow: none;
+    opacity: 1;
+  }
+  &:hover span {
+    text-shadow: none;
   }
 }

@@ -37,6 +37,7 @@ const ActionButton = ({
     btnType={BUTTON_TYPE.ICON}
     btnSize={BUTTON_SIZE.AUTO}
     onClick={enabled ? click : () => null}
+    enabled={enabled}
   >
     <ActionButtonBody enabled={enabled} icon={icon} text={text} />
   </Button>

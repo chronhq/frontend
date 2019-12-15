@@ -34,13 +34,14 @@ const Button = ({
   btnType,
   btnColor,
   children,
+  enabled,
   // type,
   ...props
 }) => (
   <button
     type='button'
     {...props}
-    className={`${btnSize} ${btnType} ${btnColor}`}
+    className={`${btnSize} ${btnType} ${btnColor} ${enabled ? '' : 'disabled'}`}
   >
     {children}
   </button>
@@ -50,6 +51,7 @@ Button.defaultProps = {
   btnSize: BUTTON_SIZE.NORMAL,
   btnType: BUTTON_TYPE.BASIC,
   btnColor: BUTTON_COLOR.DEFAULT,
+  enabled: true,
   children: '',
   type: 'button'
 };
@@ -57,6 +59,7 @@ Button.defaultProps = {
 Button.propTypes = {
   children: PropTypes.any,
   type: PropTypes.string,
+  enabled: PropTypes.bool,
   btnType: PropTypes.string,
   btnColor: PropTypes.string,
   btnSize: PropTypes.string
