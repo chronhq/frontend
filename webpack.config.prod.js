@@ -1,10 +1,13 @@
 const path = require('path');
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const mode = 'production';
+
 module.exports = {
-  mode: 'production',
+  mode,
   devtool: 'eval',
   entry: {
     main: path.resolve(__dirname, 'src'),
@@ -27,7 +30,7 @@ module.exports = {
   },
   optimization: {
     noEmitOnErrors: true,
-    nodeEnv: 'production',
+    nodeEnv: mode,
     runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
@@ -111,6 +114,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(mode),
+    }),
     new MiniCssExtractPlugin({
       filename: 'style.bundle.css',
     }),

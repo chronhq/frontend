@@ -28,8 +28,9 @@ import AnalyticsWrapper from './containers/Analytics/AnalyticsWrapper';
 
 const Story = lazy(() => import('./pages/SummerStory'));
 
-// const Admin = lazy(() => import('./pages/SummerAdmin'));
-const Construction = lazy(() => import('./pages/Construction'));
+const Admin = process.env.NODE_ENV === 'development'
+  ? lazy(() => import('./pages/SummerAdmin'))
+  : lazy(() => import('./pages/Construction'));
 const NotFound = lazy(() => import('./pages/404'));
 const BadGateway = lazy(() => import('./pages/502'));
 const GatewayTimeout = lazy(() => import('./pages/504'));
@@ -40,13 +41,12 @@ const AppRouter = () => (
     <AnalyticsWrapper />
     <Switch>
       <Route exact path='/' render={() => <Redirect to='/world' />} />
-      <Route path='/admin' render={() => <Construction />} />
       <Route path='/404' render={() => <NotFound />} />
       <Route path='/504' render={() => <GatewayTimeout />} />
       <Route path='/502' render={() => <BadGateway />} />
       <Route path='/404' render={() => <NotFound />} />
       <Route path='/about' render={() => <About />} />
-      {/* <Route path='/admin' render={() => <Admin />} /> */}
+      <Route path='/admin' render={() => <Admin />} />
       <Route path='/:id' render={({ match }) => <Story story={match.params.id} />} />
     </Switch>
   </Suspense>

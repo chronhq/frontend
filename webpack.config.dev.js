@@ -21,8 +21,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const mode = 'development';
+
 module.exports = (env = {}) => ({
-  mode: 'development',
+  mode,
   devtool: 'source-map',
   entry: {
     main: path.resolve(__dirname, 'src'),
@@ -40,7 +42,7 @@ module.exports = (env = {}) => ({
     ]
   },
   optimization: {
-    nodeEnv: 'development',
+    nodeEnv: mode,
   },
   devServer: {
     host: '0.0.0.0',
@@ -124,6 +126,9 @@ module.exports = (env = {}) => ({
   },
   plugins:
   [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(mode),
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new BundleAnalyzerPlugin({
       analyzerPort: '3001',
