@@ -16,13 +16,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+@import '../../styles/Layers.less';
+
 .story-list {
   display: flex;
   flex-direction: row;
   position: fixed;
-  left: 2rem;
   bottom: 2rem;
-  z-index: 2;
-  transition: transform 100ms ease-in-out, -webkit-transform 100ms ease-in-out;
-  transition-property: transform, -webkit-transform;
+  left: 2rem;
+  padding: .25rem 0;
+  max-width: calc(100vw - 4rem);
+  z-index: @z-index-interface;
+  // disable scroll bar https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll
+  &::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
+  }
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  @media screen and (max-width: @mobile-screen) {
+    left: 0.25rem;
+    max-width: calc(100vw - 0.5rem);
+    bottom: 1rem;
+  }
 }

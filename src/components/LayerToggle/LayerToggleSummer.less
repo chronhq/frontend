@@ -1,7 +1,32 @@
 @import '../../styles/colors.less';
 @import '../../styles/Layers.less';
 
+.layer-toggle__container {
+  display: grid;
+  cursor: pointer;
+  grid-template-columns: 3rem;
+  grid-template-rows: 2rem 1rem;
+  grid-gap: .25rem 0.25rem;
+  align-items: center;
+  justify-items: center;
+  @media screen and (max-width: @mobile-screen) {
+    grid-template-columns: initial;
+    grid-template-rows: initial;
+  }
+}
+
+.layer-toggle__label {
+  align-self: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 3rem;
+  user-select: none;
+}
+
 .round-button {
+  width: 2rem;
+  height: 2rem;
+  align-self: center;
   pointer-events: all;
   box-shadow: @base-shadow;
   outline: none;
@@ -19,27 +44,17 @@
 .image-button {
   width: 100%;
   height: 100%;
-  opacity: .5;
+  opacity: .75;
   background-position: center center;
   background-repeat: no-repeat;
   outline: none;
+  -webkit-transition: background-image 0.2s ease-in-out;
+  transition: background-image 0.2s ease-in-out;
   &:active {
     transform: translateY(1px);
   }
-  &-borders {
-    background-image: url('./icons/map_icon.svg');
-  }
-  &-cities {
-    background-image: url('./icons/city_icon.svg');
-  }
-  &-persons {
-    background-image: url('./icons/ppl_icon.svg');
-  }
-  &-battle {
-    background-image: url('./icons/battles_icon.svg');
-  }
-  &-document {
-    background-image: url('./icons/documents_icon.svg');
+  &-sprite:active {
+    transform: rotate(-135deg) translateY(1px);
   }
   &__checked {
     opacity: 1;

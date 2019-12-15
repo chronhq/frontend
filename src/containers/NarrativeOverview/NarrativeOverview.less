@@ -16,19 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-// @import '../../styles/colors.less';
 @import '../../styles/Layers.less';
 
 .narrative-overview__container {
-  z-index: 2;
+  z-index: @z-index-priority;
   position: fixed;
   top: 5vh;
   right: 4rem;
+  max-width: 34rem;
+  width: 50%;
+  transition: width 300ms ease-in-out;
+  @media screen and (max-width: @mobile-screen) {
+    width: 100vw;
+    left: 0;
+    top: auto;
+    bottom: 1rem;
+    max-height: 65%;
+  }
+  
 }
 
 .narrative-overview {
-  width: 34rem;
+  width: 100%;
   max-height: 85vh;
+  @media screen and (max-width: @mobile-screen) {
+    max-height: 60vh;
+  }
   overflow-y: auto;
 }
 
@@ -40,16 +53,26 @@
   margin: .5rem;
   opacity: .75;
   padding: .25rem;
+  @media screen and (max-width: @narrow-screen) {
+    flex-direction: column;
+  }
   transition: opacity 300ms ease-in-out;
   &:hover {
     opacity: 1;
   }
   &__date {
-    width: 5rem;
+    min-width: 6rem;
     text-align: center;
     align-self: center;
   }
   &__text {
     align-self: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    @media screen and (max-width: @narrow-screen) {
+      align-self: initial;
+      text-align: center;
+    }
   }
 }

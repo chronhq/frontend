@@ -1,5 +1,4 @@
 import React from 'react';
-import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 
 import './StoryCard.less';
@@ -36,25 +35,19 @@ const StoryCardInfo = ({
 // TODO i18n for author
 @observer
 class StoryCard extends React.Component {
-  @observable hover = false;
-
-  @action setHover(h) {
-    this.hover = h;
-  }
-
   render() {
     const { story, handleStorySelection } = this.props;
     return (
       <div
+        ref={(r) => { this.ref = r; }}
         role='button'
         tabIndex={0}
-        onMouseEnter={() => this.setHover(true)}
-        onMouseLeave={() => this.setHover(false)}
+        onMouseEnter={() => this.props.setHover(true, story, this.ref)}
+        onMouseLeave={() => this.props.setHover(false, story, this.ref)}
         className='story-card'
         onClick={() => handleStorySelection(story.url)}
         onKeyPress={() => handleStorySelection(story.url)}
       >
-        <StoryCardInfo hover={this.hover} story={story} />
         <div className='story-card-grid decoration-fire'>
           <div className='text__narrative--header'>
             {story.title}

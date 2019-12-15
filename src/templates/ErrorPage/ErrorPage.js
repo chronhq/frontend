@@ -50,12 +50,12 @@ class ErrorPage extends React.Component {
           <TitleLogo logo={this.props.store.i18n.logo} />
         </Suspense>
         <h1>
-          {this.props.store.i18n.data.error.message}
+          {this.props.title || this.props.store.i18n.data.error.message}
         </h1>
         <h4>
-          {this.props.code}
+          {this.props.short || this.props.code}
           {'... '}
-          {this.props.store.i18n.data.error[this.props.code]}
+          {this.props.message || this.props.store.i18n.data.error[this.props.code]}
         </h4>
         <Image />
       </div>

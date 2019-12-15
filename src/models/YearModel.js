@@ -28,6 +28,8 @@ const yearToJulian = (year) => {
   return julianInt(date);
 };
 
+export { julianInt, yearToJulian };
+
 export default class YearModel {
   @observable step = {
     year: 1,
@@ -103,7 +105,13 @@ export default class YearModel {
   }
 
   @action setTuneValue(year) {
-    this.tuneValue = yearToJulian(year);
+    const input = Number.isNaN(Number(year))
+      ? year.match(/-?\d+/)
+      : [Number(year)];
+    const value = yearToJulian(input === null ? 0 : input[0]);
+    if (!Number.isNaN(value)) {
+      this.tuneValue = value;
+    }
   }
 
   @action setYear(year) {
@@ -119,24 +127,9 @@ export default class YearModel {
     this.tuneValue = this.now;
   }
 
-  @action followWheel(deltaY) {
-    if (deltaY > 1) {
-      if (this.tuneValue < this.max) {
-        this.setTuneValue(this.tuneValueG + 1);
-      }
-    } else if (deltaY < 1) {
-      if (this.tuneValue > this.min) {
-        this.setTuneValue(this.tuneValueG - 1);
-      }
-    }
-  }
 
   saveTuneValue() {
     this.setDate(this.tuneValue);
-  }
-
-  resetTuneValue() {
-    if (this.tuneValue !== this.now) this.setDate(this.now);
   }
 
   getDateByStep(next = true, c = 1) {

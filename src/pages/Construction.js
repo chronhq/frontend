@@ -16,48 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-@import '../../styles/Layers.less';
+import React from 'react';
 
-.side-bar__grid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  position: fixed;
-  pointer-events: none;
-  z-index: @z-index-interface;
-  right: .25rem;
-  top: 1rem;
-  height: 100vh;
-}
+import ErrorPage from '../templates/ErrorPage/ErrorPage';
 
-.side-bar__extra {
-  right: 100%;
-  position: absolute;
-  justify-content: flex-end;
-  width: 100%;
-  display: flex;
-  visibility: initial;
-}
+const Construction = () => (
+  <ErrorPage code={404} title='Time travel detected' short='Sorry' message='This page is still under construction' />
+);
 
-.side-bar__extra--menu {
-  pointer-events: all;
-  flex-direction: column;
-  width: 30rem;
-  padding: 0.5rem;
-  input {
-    width: 90%;
-  }
-}
-
-.side-bar__desktop {
-  @media screen and (max-width: @mobile-screen) {
-    display: none;
-  }
-}
-
-.side-bar__vertical {
-  @media screen and (max-width: @mobile-screen) {
-    flex-direction: column;
-  }
-}
+export default Construction;

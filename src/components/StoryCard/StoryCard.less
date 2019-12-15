@@ -19,6 +19,9 @@
   align-items: center;
   width: 12rem;
   height: 7rem;
+  @media screen and (max-width: @mobile-screen) {
+    height: auto;
+  }
 }
 
 .story-card__counter {
@@ -33,6 +36,10 @@
   opacity: .75;
   padding: 0.5rem;
   cursor: pointer;
+  @media screen and (max-width: @mobile-screen) {
+    padding: 0;
+    padding-top: .25rem;
+  }
   &:hover {
     opacity: 1;
   }
@@ -48,7 +55,6 @@
     font-size: 0.75rem;
   }
   @media screen and (max-width: 600px) {
-    background-color: transparent;
     &__dates, &__author {display: none;}
   }
 }

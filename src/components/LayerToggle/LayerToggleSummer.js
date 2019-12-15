@@ -18,45 +18,83 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Tooltip from '../Tooltip/Tooltip';
-
+import { observer } from 'mobx-react';
+import { computed, action, observable } from 'mobx';
 import './LayerToggleSummer.less';
 
-const LayerToggle = ({
-  checked, name, tooltip, click, place, extraClassName = '', extraStyle = {}
-}) => {
-  const className = [
-    'image-button',
-    `image-button${checked ? '__checked' : ''}`,
-    `image-button-${name}`,
-    extraClassName,
-  ].join(' ');
-  const toggle = () => click({ payload: { [name]: !checked }, place });
-  return (
-    <Tooltip placement='left' content={tooltip}>
-      <div
-        role='button'
-        className='round-button'
-        tabIndex={0}
-        onKeyPress={toggle}
-        onClick={toggle}
-      >
-        <div
-          style={extraStyle}
-          className={className}
-        />
+@observer
+class LayerToggle extends React.Component {
+  @observable keyDownStatus = false;
+
+  @observable lastEventTime = 0;
+
+  @computed get className() {
+    return [
+      'image-button',
+      this.props.checked ? 'image-button__checked' : '',
+      this.props.extraClassName,
+    ].join(' ');
+  }
+
+  toggle = (e) => {
+    e.preventDefault();
+    // prevent updating props during the key down event (aka hook for ModalWrapper)
+    if (this.keyDownStatus === this.props.checked) {
+      this.props.click(this.props.name, !this.props.checked);
+    }
+  };
+
+  @action keepStatus = () => {
+    const time = Math.round(Number(new Date()) / 500);
+    // Keep value received from first event in sequence from [touchStart, mouseDown]
+    if (time !== this.lastEventTime) {
+      this.lastEventTime = time;
+      this.keyDownStatus = this.props.checked;
+    }
+  }
+
+  render() {
+    return (
+      <div className={`layer-toggle__wrapper ${this.props.wrapper}`}>
+        {this.props.children}
+        <div className='layer-toggle__container'>
+          <div
+            role='button'
+            className='round-button'
+            tabIndex={0}
+            onKeyPress={this.toggle}
+            onClick={this.toggle}
+            onKeyDown={this.keepStatus}
+            onTouchStart={this.keepStatus}
+            onMouseDown={this.keepStatus}
+          >
+            <div
+              style={this.props.extraStyle}
+              className={this.className}
+            />
+          </div>
+          <div className='tooltip-author controls-text-shadow layer-toggle__label'>
+            {this.props.tooltip}
+          </div>
+        </div>
       </div>
-    </Tooltip>
-  );
+    );
+  }
+}
+
+LayerToggle.defaultProps = {
+  checked: true,
+  wrapper: '',
+  extraClassName: '',
+  extraStyle: {},
 };
 
 LayerToggle.propTypes = {
-  // id: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
-  // label: PropTypes.string.isRequired,
-  place: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
+  checked: PropTypes.bool,
+  wrapper: PropTypes.string,
+  extraClassName: PropTypes.string,
+  extraStyle: PropTypes.object,
   name: PropTypes.string.isRequired,
   click: PropTypes.func.isRequired,
 };

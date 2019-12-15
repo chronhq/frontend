@@ -31,17 +31,34 @@
 .time-controls__buttons {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .time-controls__year {
   font-size: 2rem;
   text-align: justify;
   font-weight: normal;
-  text-shadow: @base-shadow;
   color: @main-blue;
 }
 
-.time-controls__text {
-  text-shadow: @base-shadow;
+.time-controls__input {
+  border: none;
+  margin: 2px;
+  text-align: center; 
+  background: transparent;
+  width: 7rem;
+  resize: none;
+  &:hover {
+    margin: 0;
+    border-radius: 2px;
+    box-shadow: @inner-shadow;
+    border: 2px solid green;
+  }
+  &--invalid {
+    margin: 0;
+    border: 2px solid red;
+    &:hover {
+      border: 2px solid red;
+    }
+  }
 }

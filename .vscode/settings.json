@@ -1,5 +1,6 @@
 {
   "editor.tabSize": 2,
+  "editor.stopRenderingLineAfter" : -1,
   "psi-header.changes-tracking.autoHeader" : "manualSave",
   "psi-header.templates": [
     {

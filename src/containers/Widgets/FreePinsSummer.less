@@ -9,13 +9,18 @@
 .free-pins-container {
   padding: 0rem @containerBorders;
   .float-container();
+  @media screen and (max-width: @mobile-screen) {
+    display: none;
+  }
 }
 
 .free-pins-grid {
   display: grid;
   grid-template-columns: repeat(3, @pinSize);
   grid-auto-rows: @pinSize;
+  grid-column-gap: .4rem;
   padding: 0.5rem 0;
+  justify-content: center;
 }
 
 .free-pins-attention {

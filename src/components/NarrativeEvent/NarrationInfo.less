@@ -1,14 +1,18 @@
 @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
 
 .narration {
   display: grid;
   grid-template-columns: 10fr 3.5fr;
   grid-template-rows: 5.5rem 10.5rem;
+  @media screen and (max-width: @mobile-screen) {
+    grid-template-rows: auto auto;
+  }
   grid-template-areas:
   'title dates'
   'paragraph paragraph';
   &--no-body {
-    grid-template-rows: 5.5rem auto;
+    grid-template-rows: auto auto;
   }
   &__title {
     grid-area: title;

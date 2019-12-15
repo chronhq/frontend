@@ -24,11 +24,13 @@ import TimeControlButtons from './TimeControlButtons';
 import { ProgressBar } from '../../components/ActionButtons/UploadWidget';
 
 import './TimeControls.less';
+import StepTimeButtons from './StepTimeButtons';
 
 const TimeControlsGlobal = () => (
   <div className='time-controls'>
     <YearSelectButton />
     <TimeControlButtons />
+    <StepTimeButtons />
   </div>
 );
 
@@ -58,12 +60,12 @@ class TimeControlsWrapper extends React.Component {
   render() {
     return this.courseId !== 0 ? (
       <div className='time-controls' style={this.props.style}>
-        <div className='text__narrative--header time-controls__text'>
+        <div className='text__narrative--header controls-text-shadow'>
           {this.narrative.title}
         </div>
         <TimeControlButtons back />
         <ProgressBar total={this.cards} current={this.current} />
-        <div className='time-controls__text'>
+        <div className='controls-text-shadow'>
           {this.current}
           {'/'}
           {this.cards}

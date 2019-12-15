@@ -18,84 +18,40 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { computed } from 'mobx';
-import { withRouter } from 'react-router-dom';
 
 import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 
 import './SideBar.less';
-
-const dumpData = {
-  layer: ['borders', 'cities'],
-  pins: ['persons', 'battle', 'document'],
-};
-
-const zoom = ['plus', 'minus'];
+import EventsMenu from './EventsMenu';
+import HiddenURLButton from './HiddenURLButton';
+import MapStyleMenu from './MapStyleMenu';
 
 @inject('store')
 @observer
-class LayerControlWrapper extends React.Component {
-  @computed get msg() {
-    return this.props.store.i18n.data;
-  }
-
-  nameToTooltip = (id) => this.msg.layerNames[id];
-
-  handleLayer = (data) => {
-    Object.keys(data.payload).map((cur) => {
-      this.props.store.flags[data.place].set(cur, data.payload[cur]);
-      this.props.store.analytics.metricHit(`main_${cur}`);
-      return false;
-    });
-  }
-
-  handleZoom = (data) => {
-    const out = Boolean(data.payload.minus);
-    this.props.store.deck.zoomOut(out);
-  }
-
-  openAdmin = () => this.props.history.push('/admin');
+class SideBar extends React.Component {
+  handleZoom = (layer) => this.props.store.deck.zoomOut(layer === 'minus');
 
   render() {
     return (
       <div className='side-bar__grid'>
-        {Object.keys(dumpData).map((place) => (
-          dumpData[place].map((id) => (
-            <LayerToggle
-              key={`layer_${id}`}
-              tooltip={this.nameToTooltip(id)}
-              place={place}
-              checked={this.props.store.flags[place].list[id]}
-              name={id}
-              click={this.handleLayer}
-            />
-          ))))}
+        <MapStyleMenu />
+        <EventsMenu />
+        <HiddenURLButton name='admin' styles='menu-admin' wrapper='side-bar__desktop' href='/admin' />
+        <HiddenURLButton name='github' styles='menu-github' href='https://github.com/chronhq/' />
+        <HiddenURLButton name='discord' styles='menu-discord' href='https://discord.gg/rN3uen5' />
         <div />
-        <div />
-        {zoom.map((z) => (
+        {['plus', 'minus'].map((z) => (
           <LayerToggle
             key={`layer_${z}`}
-            tooltip={`Zoom ${z === 'minus' ? 'Out' : 'In'}`}
-            place={z}
+            tooltip=''
             name={z}
-            checked={false}
             extraClassName={`icon icon-${z}`}
             click={this.handleZoom}
           />
         ))}
-        {/* <LayerToggle
-          key='layer_admin'
-          tooltip='Open admin interface'
-          place='admin'
-          name='admin'
-          checked={false}
-          extraClassName='icon icon-magic-wand'
-          extraStyle={{ backgroundSize: '80% 80%' }}
-          click={this.openAdmin}
-        /> */}
       </div>
     );
   }
 }
 
-export default withRouter(LayerControlWrapper);
+export default SideBar;

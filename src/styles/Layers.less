@@ -20,18 +20,24 @@
 
 @z-index-base: 1;
 @z-index-interface: 2;
+@z-index-priority: 3;
 @z-index-admin: 50;
 @z-index-overlay: 99;
 @z-index-tooltip: 1070;
 
 @base-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
+@controls-shadow: 0 0 5px @light-grey;
+
 @color-picker-shadow: 0 0px 5px 4px grey;
 
 @icon-shadow--hard: 0 2px 2px black;
-@icon-shadow--soft: 0 2px 2px grey;
+@icon-shadow--soft: 0 0 5px @light-grey;
 
 @inner-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+
+@narrow-screen: 700px;
+@mobile-screen: 600px;
 
 .float-container {
   background-color: @light-grey;
@@ -45,4 +51,8 @@
   box-shadow: @inner-shadow;
   border: none;
   outline: none;
+}
+
+.controls-text-shadow {
+  text-shadow: @controls-shadow;
 }

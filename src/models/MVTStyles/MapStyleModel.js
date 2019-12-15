@@ -166,6 +166,11 @@ export default class MapStyleModel {
     return `${link}?access_token=${this.accessToken}`;
   }
 
+  @action async setUpConfig(config = settings.mapbox) {
+    this.accessToken = config.token;
+    this.setUpBackground(config.style);
+  }
+
   @action async setUpBackground(styleLink) {
     this.desiredMapBoxStyle = styleLink;
     try {
@@ -191,6 +196,6 @@ export default class MapStyleModel {
 
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.setUpBackground(settings.mapbox.style);
+    this.setUpConfig();
   }
 }

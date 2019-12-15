@@ -18,13 +18,11 @@
  */
 import React from 'react';
 
-import YearInput from '../../containers/YearInput/YearInput';
 import Article from '../../containers/Article/Article';
 
 const Overlays = () => (
   <div id='overlays'>
     <Article />
-    <YearInput />
   </div>
 );
 

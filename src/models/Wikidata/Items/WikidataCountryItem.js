@@ -20,6 +20,8 @@ import { observable, computed } from 'mobx';
 import WikidataItem from './WikidataItem';
 import * as queries from './Queries';
 
+import { julianInt } from '../../YearModel';
+
 class WikidataCountryItem extends WikidataItem {
   @observable queries = ['country', 'form'];
 
@@ -70,10 +72,10 @@ class WikidataCountryItem extends WikidataItem {
 
   inRange = (f) => ((
     f.start === null
-    || f.start.getFullYear() <= this.now
+    || julianInt(f.start) <= this.now
   ) && (
     f.end === null
-    || f.end.getFullYear() >= this.now
+    || julianInt(f.end) >= this.now
   ))
 
   @computed get current() {
@@ -88,7 +90,7 @@ class WikidataCountryItem extends WikidataItem {
     current.population = (this.data.population)
       ? this.data.population.find((p) => (
         p.date !== null
-        && p.date.getFullYear() <= this.now))
+        && julianInt(p.date) <= this.now))
       : {};
     return current;
   }

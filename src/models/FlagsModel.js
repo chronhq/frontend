@@ -22,7 +22,6 @@ const flags = {
   runtime: {
     SelectedCourse: null,
     article: false,
-    yearInput: false,
   },
   layer: {
     borders: true,
