@@ -31,7 +31,7 @@ class DashboardSearch extends React.Component {
   render() {
     return (
       <input
-        className='float-container dashboard-search'
+        className='float-container icon--input icon-search--blue dashboard-search'
         type='text'
         value={this.props.store.search.filter.text}
         onChange={this.setText}

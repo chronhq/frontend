@@ -25,29 +25,20 @@ import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import ActionButton from '../../components/ActionButtons/ActionButtons';
 
+const inputClass = 'text-input icon--input dashboard-search';
+
 const Input = ({
   label, value, setText, valid, placeholder
 }) => (
   <label className='tooltip-author' htmlFor='token'>
     <div className='tooltip-author'>{label}</div>
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <input
-        className='text-input'
-        type='text'
-        placeholder={placeholder}
-        value={value}
-        onChange={setText}
-      />
-      <div
-        className={`icon ${valid ? 'icon-checkmark-circle' : 'icon-cross-circle'}`}
-        style={{
-          width: '1rem',
-          height: '1rem',
-          display: value === '' ? 'initial' : 'hidden',
-          paddingLeft: '1rem',
-        }}
-      />
-    </div>
+    <input
+      className={`${inputClass} ${valid ? 'icon-checkmark-circle' : 'icon-cross-circle'}`}
+      type='text'
+      placeholder={placeholder}
+      value={value}
+      onChange={setText}
+    />
   </label>
 );
 
