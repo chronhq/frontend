@@ -19,6 +19,7 @@
 
 @import './colors.less';
 
+@32px: 2rem;
 @20px: 1.25rem;
 @16px: 1rem;
 @14px: .875rem;
@@ -40,6 +41,10 @@
 .sans--light {
   .sans();
   font-weight: lighter;
+}
+
+.text__size--header {
+  font-size: @32px;
 }
 
 .text__size--body {
@@ -95,4 +100,11 @@
 .input-text {
   .sans();
   .text__size--body();
+}
+
+.time-controls__year {
+  .sans();
+  .text__size--header();
+  text-align: justify;
+  color: @main-blue;
 }
