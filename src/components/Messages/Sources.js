@@ -41,7 +41,7 @@ const linkKey = (name, l, id) => (`src_${name}_${l.length}_${id}`);
 
 const SourceInfo = ({ name, data = [], metricHit }) => (
   data.length > 0 ? (
-    <div className='sourcesInfo'>
+    <div className='message-text sourcesInfo'>
       <div className='message-text--body'>
         {name}
         {': '}
