@@ -24,6 +24,7 @@
 @16px: 1rem;
 @14px: .875rem;
 @12px: .75rem;
+@10px: .625rem;
 
 .serif--bold {
   font-family: 'Lora', serif;
@@ -63,6 +64,11 @@
 .text__size--secondary {
   font-size: @12px;
   line-height: @16px;
+}
+
+.text__size--small {
+  font-size: @10px;
+  line-height: @10px;
 }
 
 .text__size--date {
@@ -132,4 +138,10 @@
 .message-text--light {
   .sans--light();
   font-size: @14px;
+}
+
+.balloon__click--small {
+  .sans--light();
+  .text__size--small();
+  text-align: center;
 }

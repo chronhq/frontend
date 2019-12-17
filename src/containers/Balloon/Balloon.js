@@ -77,7 +77,7 @@ class Balloon extends React.Component {
         <BalloonControls cachePosition={() => this.cachePosition()} />
         <BalloonContent />
         {!this.balloon.pinned && (
-          <div className='balloon__click-notice'>
+          <div className='balloon__click--small'>
             {this.props.store.i18n.data.messages.balloonExpand}
           </div>
         )}
