@@ -31,14 +31,12 @@ const Battle = ({ fact, i18n }) => (
       ? (
         <div className='message-fact__row'>
           {`${i18n.participants}: `}
-          <div className='message-text--participants'>
-            {(fact.participants.map((p) => (
-              <>
-                <InfoLink key={encodeURI(p.uri)} label={p.label} uri={p.uri} />
-                {' '}
-              </>
-            )))}
-          </div>
+          {(fact.participants.map((p, i) => (
+            <div key={encodeURI(`${i}${fact.key}${p.uri}`)}>
+              <InfoLink label={p.label} uri={p.uri} />
+              {fact.participants[i + 1] !== undefined ? ', ' : null}
+            </div>
+          )))}
         </div>
       )
       : null}
