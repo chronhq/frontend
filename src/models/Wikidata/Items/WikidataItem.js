@@ -71,6 +71,12 @@ class WikidataItem {
     return res;
   }
 
+  multiRowItems = (o, key) => (
+    (o !== undefined && o.length > 0)
+      ? o.map((i) => this.labelAndURI(i, key)).filter((f) => f.label !== undefined)
+      : undefined
+  )
+
   dateToString = (date) => {
     if (date instanceof Date) {
       return date.toLocaleString(window.navigator.language || 'en-US', {
@@ -128,6 +134,8 @@ class WikidataItem {
     const location = this.labelAndURI(raw, 'location');
     const effect = this.labelAndURI(raw, 'effect');
     const cause = this.labelAndURI(raw, 'cause');
+    const participants = this.multiRowItems(this.data.battle, 'participant');
+    const signed = this.multiRowItems(this.data.treaty, 'sign');
     const description = raw.itemDescription ? raw.itemDescription.value : undefined;
     const image = raw.image ? raw.image.value : undefined;
     return {
@@ -138,6 +146,8 @@ class WikidataItem {
       image,
       date,
       location,
+      participants,
+      signed,
       effect,
       cause,
     };
