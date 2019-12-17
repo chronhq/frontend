@@ -22,7 +22,7 @@ import { observer, inject } from 'mobx-react';
 
 const InfoLink = ({ uri, label = null }) => (
   <a
-    className='message-fact__source'
+    className='message-text--light'
     href={uri}
     target='_blank'
     rel='noopener noreferrer'
@@ -30,6 +30,8 @@ const InfoLink = ({ uri, label = null }) => (
     {label !== null ? label : uri}
   </a>
 );
+
+export { InfoLink };
 
 @inject('store')
 @observer
@@ -73,17 +75,17 @@ class CountryHover extends React.Component {
 
   @computed get factHeader() {
     return (
-      <p className='message-fact__header'>
+      <div className='message-text--header'>
         {this.base.title}
-      </p>
+      </div>
     );
   }
 
   @computed get subTitleMessage() {
     return this.base.title === this.base.subTitle ? '' : (
-      <p>
+      <div>
         {this.base.subTitle}
-      </p>
+      </div>
     );
   }
 
@@ -116,13 +118,13 @@ class CountryHover extends React.Component {
     if (this.pinned === false || this.extra.population === undefined) return null;
     const pop = new Intl.NumberFormat().format(this.extra.population.population);
     return (
-      <p>
-        <span className='message-fact__sub-title'>
+      <div className='message-fact__row'>
+        <div className='message-text--body '>
           {this.messages.population}
           {': '}
-        </span>
+        </div>
         {pop}
-      </p>
+      </div>
     );
   }
 
@@ -130,13 +132,13 @@ class CountryHover extends React.Component {
     if (this.pinned === false || this.extra.head === undefined) return null;
     if (this.extra.head.uri === undefined && this.extra.head.label === undefined) return null;
     return (
-      <p>
-        <span className='message-fact__sub-title'>
+      <div className='message-fact__row'>
+        <div className='message-text--body '>
           {this.messages.head}
           {': '}
-        </span>
+        </div>
         <InfoLink uri={this.extra.head.uri} label={this.extra.head.label} />
-      </p>
+      </div>
     );
   }
 
@@ -146,24 +148,24 @@ class CountryHover extends React.Component {
       || this.extra.capital === undefined
       || !this.extra.capital.length) return null;
     return (
-      <p>
-        <span className='message-fact__sub-title'>
+      <div className='message-fact__row'>
+        <div className='message-text--body '>
           {this.messages.capital}
           {': '}
-        </span>
+        </div>
         {this.extra.capital.map((c, idx, arr) => (
-          <span key={`${encodeURI(c.uri)}`}>
+          <div key={`${encodeURI(c.uri)}`}>
             <InfoLink uri={c.uri} label={c.label} />
             {idx + 1 < arr.length ? ', ' : ''}
-          </span>
+          </div>
         ))}
-      </p>
+      </div>
     );
   }
 
   render() {
     return (
-      <div className='message-fact__inner'>
+      <>
         {this.factHeader}
         {this.subTitleMessage}
         {this.government}
@@ -171,7 +173,7 @@ class CountryHover extends React.Component {
         {this.head}
         {this.population}
         {this.images}
-      </div>
+      </>
     );
   }
 }

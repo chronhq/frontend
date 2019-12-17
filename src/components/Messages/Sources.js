@@ -42,14 +42,14 @@ const linkKey = (name, l, id) => (`src_${name}_${l.length}_${id}`);
 const SourceInfo = ({ name, data = [], metricHit }) => (
   data.length > 0 ? (
     <div className='sourcesInfo'>
-      <p className='message-fact__sub-title'>
+      <div className='message-text--body'>
         {name}
-        {':'}
-      </p>
+        {': '}
+      </div>
       {data.map((d, id) => (
         <a
           key={linkKey(name, d, id)}
-          className='message-fact__source message-fact__source-list'
+          className='message-text--light message-fact__source-list'
           href={d}
           onClick={() => {
             metricHit('goto_wikidata');

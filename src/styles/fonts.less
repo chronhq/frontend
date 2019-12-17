@@ -26,13 +26,11 @@
 @12px: .75rem;
 
 .serif--bold {
-  color: @black;
   font-family: 'Lora', serif;
   font-weight: bold;
 }
 
 .sans {
-  color: @black;
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -41,6 +39,11 @@
 .sans--light {
   .sans();
   font-weight: lighter;
+}
+
+.sans--bold {
+  .sans();
+  font-weight: 600;
 }
 
 .text__size--header {
@@ -107,4 +110,26 @@
   .text__size--header();
   text-align: justify;
   color: @main-blue;
+}
+
+.message-text {
+  .sans--light();
+  color: @text;
+  font-size: @14px;
+  line-height: @20px;
+}
+
+.message-text--header {
+  .sans--bold();
+  font-size: @14px;
+}
+
+.message-text--body {
+  .sans();
+  font-size: @14px;
+}
+
+.message-text--light {
+  .sans--light();
+  font-size: @14px;
 }
