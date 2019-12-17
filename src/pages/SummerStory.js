@@ -19,7 +19,6 @@
 
 import React from 'react';
 
-import Overlays from '../templates/Overlays/Overlays';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';
 import Wrapper from './Wrapper';
@@ -30,7 +29,6 @@ const SummerStory = ({ story, fake, metric }) => (
     <GeoLayers />
     <NarrativeDesktop />
     <Balloon />
-    <Overlays />
   </Wrapper>
 );
 

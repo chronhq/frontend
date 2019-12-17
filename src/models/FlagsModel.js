@@ -21,7 +21,6 @@ import { observable, action, computed } from 'mobx';
 const flags = {
   runtime: {
     SelectedCourse: null,
-    article: false,
   },
   layer: {
     borders: true,
