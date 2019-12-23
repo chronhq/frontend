@@ -4,11 +4,8 @@ import './Button.less';
 
 export const BUTTON_TYPE = {
   BASIC: 'basic',
-  GHOST: 'ghost',
-  READMORE: 'readmore',
   CLOSE: 'close',
   COMPACT: 'close compact',
-  TRUNCATE: 'truncate',
   ICON: 'icon'
 };
 
@@ -41,7 +38,7 @@ const Button = ({
   <button
     type='button'
     {...props}
-    className={`${btnSize} ${btnType} ${btnColor} ${enabled ? '' : 'disabled'}`}
+    className={`button-font ${btnSize} ${btnType} ${btnColor} ${enabled ? '' : 'disabled'}`}
   >
     {children}
   </button>
