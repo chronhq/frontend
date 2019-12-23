@@ -29,6 +29,7 @@
 }
 
 .text__narrative--body {
+  color: @black;
   .sans--light();
   .text__size--main();
 }
@@ -93,3 +94,32 @@
 .button-font {
   .sans--light();
 }
+
+.story-card__font--author {
+  color: @text-grey;
+  font-size: 0.75rem;
+}
+
+.story-card__title--dates {
+  font-weight: normal;
+}
+
+.narration-info__font--dates {
+  // .sans--bold();
+  color: @story-card-dates;
+  align-self: center;
+  font-size: @16px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.narration-info__font--paragraph {
+  font-size: @14px;
+  text-align: justify;
+}
+
+@tooltip-font-size: @10px;
+
+@action-button-font-size: @16px;
+
+@close-button-font-size: @24px;

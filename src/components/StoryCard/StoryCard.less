@@ -1,5 +1,6 @@
 @import '../../styles/colors.less';
 @import '../../styles/Layers.less';
+@import '../../styles/Typography.less';
 
 .story-card-info {
   user-select: none;
@@ -43,16 +44,12 @@
   &:hover {
     opacity: 1;
   }
-  &__title--dates {
-    font-weight: normal;
-  }
   &__author {
     margin: 0 10px;
     & p {
       margin: 0;
     }
-    color: @text-grey;
-    font-size: 0.75rem;
+    .story-card__font--author();
   }
   @media screen and (max-width: 600px) {
     &__dates, &__author {display: none;}
