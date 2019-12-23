@@ -4,14 +4,13 @@ import { observer } from 'mobx-react';
 import './StoryCard.less';
 
 const StoryCardInfo = ({
-  hover, story, standalone, style = {}
+  hover, story, style = {}
 }) => (
   <div
     className={[
       'float-container',
-      standalone ? '' : 'story-card-info',
       hover ? '' : 'story-card-info__hidden'].join(' ')}
-    style={style}
+    style={{ pointerEvents: 'all', ...style }}
   >
     <div className='story-card__author'>
       <b>

@@ -41,7 +41,6 @@ class StoryInfoWidget extends React.Component {
     return this.enabled && (
       <StoryCardInfo
         story={this.story}
-        standalone
         hover
         style={this.props.style}
       />
