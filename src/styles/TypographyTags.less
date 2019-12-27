@@ -17,71 +17,67 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@40px: 2.5rem;
-@32px: 2rem;
-@28px: 1.75rem;
-@24px: 1.5rem;
-@20px: 1.25rem;
-@16px: 1rem;
-@14px: .875rem;
-@12px: .75rem;
-@10px: .625rem;
+@import './Typeface.less';
 
-.serif {
-  font-family: 'Lora', serif;
-  font-weight: normal;
-}
-.serif--light {
-  .serif();
-  font-weight: lighter;
+ html, body {
+  .sans--light();
+  color: @text;
+  font-size: 100%;
+  text-rendering: optimizeLegibility;
+  word-wrap: break-word;
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "clig", "calt";
 }
 
-.serif--bold {
+h1 {
   .serif();
-  font-weight: bold;
+  font-size: @40px;
 }
- 
-.sans {
-  font-family: 'Open Sans', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-}
- 
-.sans--light {
+
+h2 {
   .sans();
-  font-weight: lighter;
-}
- 
-.sans--bold {
-  .sans();
-  font-weight: bold;
-}
- 
-.text__size--header {
   font-size: @32px;
+  text-align: left;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  &.invert {
+    color: #D3C6C0;
+  }
 }
- 
-.text__size--body {
-  font-size: @16px;
-  line-height: @20px;
+
+h3 {
+  .sans();
+  font-size: @28px;
+  margin: 0.5rem auto;
 }
- 
-.text__size--main {
+
+h4 {
+  .sans();
+  font-size: @24px;
+}
+
+h5 {
+  .sans();
+  font-size: @20px;
+  margin: 0.4rem auto;
+}
+
+h6 {
+  .sans();
   font-size: @14px;
-  line-height: @20px;
+  margin: 0.25rem 0;
 }
- 
-.text__size--secondary {
-  font-size: @12px;
-  line-height: @16px;
+
+p {
+  .sans--light();
+  font-size: @14px;
 }
- 
-.text__size--small {
-  font-size: @10px;
-  line-height: @10px;
+
+b {
+  .sans--bold();
 }
- 
-.text__size--date {
-  font-size: @16px;
-  line-height: @16px;
+
+i {
+  .sans--light();
+  font-style: italic;
 }
