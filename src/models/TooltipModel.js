@@ -16,28 +16,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { inject, observer } from 'mobx-react';
+import {
+  observable, action, computed
+} from 'mobx';
 
-import GeoLayers from '../containers/GeoLayers';
-import Balloon from '../containers/Balloon';
-import Wrapper from './Wrapper';
-import AdminInterface from '../templates/AdminInterface/AdminInterface';
-import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
+export default class TooltipModel {
+  @observable content = '';
 
-@inject('store')
-@observer
-class SummerAdmin extends React.Component {
-  render() {
-    return (
-      <Wrapper story='world' fake='0' metric='check_admin'>
-        <GeoLayers />
-        <Balloon />
-        <AdminInterface />
-        <TooltipOverlay />
-      </Wrapper>
-    );
+  @observable visible = false;
+
+  @observable left = 0;
+
+  @observable top = 0;
+
+  @observable transform = undefined;
+
+  @computed get style() {
+    return {
+      left: this.left,
+      top: this.top,
+      transform: this.transform
+    };
+  }
+
+  @action onMouseEvent = (visible, style, content) => {
+    this.visible = visible;
+    this.left = style.left;
+    this.top = style.top;
+    this.transform = style.transform;
+    this.content = content;
   }
 }
-
-export default SummerAdmin;
