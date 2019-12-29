@@ -1,6 +1,5 @@
 @import '../../styles/colors.less';
 @import '../../styles/Layers.less';
-@import '../../styles/Typography.less';
 
 .narration {
   display: grid;
@@ -25,7 +24,6 @@
   &__dates {
     box-sizing: border-box;
     grid-area: dates;
-    .narration-info__font--dates();
     margin-right: .5rem;
   }
   &__paragraph {
@@ -33,6 +31,5 @@
     grid-area: paragraph;
     overflow-y: auto;
     max-height: 10.5rem;
-    .narration-info__font--paragraph();
   }
 }

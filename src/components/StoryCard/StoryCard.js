@@ -12,7 +12,7 @@ const StoryCardInfo = ({
       hover ? '' : 'story-card-info__hidden'].join(' ')}
     style={{ pointerEvents: 'all', ...style }}
   >
-    <div className='story-card__author'>
+    <div className='story-card__font--author story-card__author'>
       <b>
         Author
       </b>
@@ -20,7 +20,7 @@ const StoryCardInfo = ({
         {story.author}
       </p>
     </div>
-    <div className='story-card__author'>
+    <div className='story-card__font--author story-card__author'>
       <b>
         Description
       </b>
