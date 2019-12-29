@@ -16,23 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-@import '../../styles/colors.less';
-@import '../../styles/Layers.less';
+@import './Layers.less';
+@import './colors.less';
 
-.admin-block {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  width: 22rem;
-  height: 100vh;
-  overflow-y: scroll;
-  z-index: @z-index-admin;
-  &--left {
-    left: 0;
-    top: 0;
-  }
-  &--right {
-    right: 0;
-    top: 0;
-  }
+.float-container {
+  background-color: @light-grey;
+  border-radius: 2px;
+  box-shadow: @base-shadow;
+}
+
+.text-input {
+  border-radius: 2px 0 0 2px;
+  padding: 0 0.35rem;
+  box-shadow: @inner-shadow;
+  border: none;
+  outline: none;
+}
+
+.controls-text-shadow {
+  text-shadow: @controls-shadow;
 }

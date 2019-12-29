@@ -43,7 +43,7 @@ class StoryCard extends React.Component {
         tabIndex={0}
         onMouseEnter={() => this.props.setHover(true, story, this.ref)}
         onMouseLeave={() => this.props.setHover(false, story, this.ref)}
-        className='story-card'
+        className='float-container story-card'
         onClick={() => handleStorySelection(story.url)}
         onKeyPress={() => handleStorySelection(story.url)}
       >

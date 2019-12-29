@@ -31,7 +31,7 @@ const NarrationPreview = ({ date, text, action }) => (
     onClick={action}
     // onMouseEnter={action}
     onKeyPress={action}
-    className='narration-preview'
+    className='float-container narration-preview'
   >
     <div className='text__narrative--date narration-preview__date'>
       {date}
