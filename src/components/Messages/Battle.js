@@ -18,25 +18,26 @@
  */
 import React from 'react';
 
+import { InfoLink } from './CountryHover';
+
 const Battle = ({ fact, i18n }) => (
-  <div key={fact.key}>
-    <p className='message-fact__date'>
-      {fact.date}
-    </p>
-    <p className='message-fact__title'>
+  <>
+    {fact.date}
+    <div className='message-text--header'>
       {fact.label}
-    </p>
-    <p className='message-fact__description'>
-      {fact.description}
-    </p>
-    {fact.participant !== undefined
+    </div>
+    {fact.description}
+    {fact.participants !== undefined
       ? (
-        <p className='message-fact__description'>
+        <div className='message-fact__row'>
           {`${i18n.participants}: `}
-          <i>
-            {Object.values(fact.participant).join(', ')}
-          </i>
-        </p>
+          {(fact.participants.map((p, i) => (
+            <div key={encodeURI(`${i}${fact.key}${p.uri}`)}>
+              <InfoLink label={p.label} uri={p.uri} />
+              {fact.participants[i + 1] !== undefined ? ', ' : null}
+            </div>
+          )))}
+        </div>
       )
       : null}
     {fact.image !== undefined
@@ -50,7 +51,7 @@ const Battle = ({ fact, i18n }) => (
         </div>
       )
       : null}
-  </div>
+  </>
 );
 
 export default Battle;

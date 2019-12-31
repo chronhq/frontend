@@ -22,7 +22,7 @@ import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
 import './ActionButtons.less';
 
 const ActionButtonBody = ({ enabled, icon, text }) => (
-  <span className={`action-button action-button--${enabled ? 'enabled' : 'disabled'}`}>
+  <span className={`action-button action-button__font action-button--${enabled ? 'enabled' : 'disabled'}`}>
     <div className={`icon ${icon ? `icon-${icon}--light action-button__icon` : ''}`} />
     <span>
       {text}
@@ -37,6 +37,7 @@ const ActionButton = ({
     btnType={BUTTON_TYPE.ICON}
     btnSize={BUTTON_SIZE.AUTO}
     onClick={enabled ? click : () => null}
+    enabled={enabled}
   >
     <ActionButtonBody enabled={enabled} icon={icon} text={text} />
   </Button>

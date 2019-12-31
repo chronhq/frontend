@@ -19,18 +19,18 @@
 
 import React from 'react';
 
-import Overlays from '../templates/Overlays/Overlays';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';
 import Wrapper from './Wrapper';
 import NarrativeDesktop from '../templates/NarrativeDesktop/NarrativeDesktop';
+import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
 
 const SummerStory = ({ story, fake, metric }) => (
   <Wrapper story={story} fake={fake} metric={metric}>
     <GeoLayers />
     <NarrativeDesktop />
     <Balloon />
-    <Overlays />
+    <TooltipOverlay />
   </Wrapper>
 );
 

@@ -74,24 +74,9 @@ storiesOf('Button', module)
       <Button btnType={BUTTON_TYPE.BASIC}>
         BASIC
       </Button>
-      <Button btnType={BUTTON_TYPE.GHOST}>
-        GHOST
-      </Button>
-      <Button btnType={BUTTON_TYPE.READMORE}>
-        READMORE
-      </Button>
       <Button btnType={BUTTON_TYPE.CLOSE}>
         X
       </Button>
-      <div
-        style={{
-          width: '200px', height: '200px', backgroundColor: '#fafafa', position: 'relative', margin: 'auto'
-        }}
-      >
-        <Button btnType={BUTTON_TYPE.TRUNCATE}>
-          truncate
-        </Button>
-      </div>
       <div
         style={{
           width: '50px', height: '50px', backgroundColor: '#fafafa', position: 'relative', margin: 'auto'
@@ -117,23 +102,6 @@ storiesOf('Button', module)
     <div>
       <Button btnType={BUTTON_TYPE.CLOSE}>
         Close
-      </Button>
-    </div>
-  ))
-  .add('readmore', () => (
-    <div>
-      <Button btnType={BUTTON_TYPE.READMORE}>
-        Readmore
-      </Button>
-    </div>
-  ))
-  .add('ghost', () => (
-    <div>
-      <Button btnType={BUTTON_TYPE.GHOST}>
-        Ghost
-      </Button>
-      <Button btnType={BUTTON_TYPE.GHOST} disabled>
-        Ghostdisabled
       </Button>
     </div>
   ));

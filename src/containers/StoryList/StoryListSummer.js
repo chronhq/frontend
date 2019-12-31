@@ -49,7 +49,7 @@ class StoryList extends React.Component {
         left: this.box.left,
         top: this.box.top,
         width: this.box.width,
-        transform: 'translateY(-105%)',
+        transform: 'translateY(calc(-100% - .5rem))',
       }
       : {};
   }
@@ -67,7 +67,7 @@ class StoryList extends React.Component {
   render() {
     return this.enabled ? (
       <>
-        <StoryCardInfo hover={this.hover} story={this.story} standalone style={this.style} />
+        <StoryCardInfo hover={this.hover} story={this.story} style={this.style} />
         <div className='story-list'>
           {Object.values(this.courses).map((story) => (
             <StoryCard

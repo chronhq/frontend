@@ -31,8 +31,6 @@ import TwoActions from '../../components/TwoActions/TwoActions';
 import ActionButton from '../../components/ActionButtons/ActionButtons';
 import disabled from '../../../disabled.json';
 
-import './LoginScreen.less';
-
 @inject('store')
 @observer
 class LoginScreen extends React.Component {

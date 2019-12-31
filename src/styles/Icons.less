@@ -29,6 +29,12 @@
   outline: none;
 }
 
+.icon--input {
+  background-position: calc(100% - .25rem) 50%;
+  background-size: auto 1.25rem;
+  background-repeat: no-repeat;
+}
+
 .icon__shadow {
   filter: drop-shadow(@base-shadow);
 }
@@ -44,6 +50,8 @@
 // @t: fade(@black, 99%);
 @dark-color: replace(@black, '#', '%23');
 @light-color: replace(@light-grey, '#', '%23');
+@blue-color: replace(@dirty-blue, '#', '%23');
+@red-color: replace(@red, '#', '%23');
 @play-controls-color: replace(@text-grey, '#', '%23');
 
 .icon-cross {  
@@ -51,11 +59,11 @@
 }
 
 .icon-cross-circle {  
-  .lnr-cross-circle(@dark-color);
+  .figma-cross-circle(@red-color);
 }
 
 .icon-checkmark-circle {  
-  .lnr-checkmark-circle(@dark-color);
+  .figma-checkmark-circle(@blue-color);
 }
 
 .icon-question-circle {
@@ -106,6 +114,10 @@
   .line-save(@light-color);
 }
 
+.icon-search--blue {
+  .line-search(@blue-color);
+}
+
 .icon-search--light {
   .line-search(@light-color);
 }
@@ -152,6 +164,10 @@
 
 .icon-redo--light {
   .line-redo(@light-color);
+}
+
+.icon-recycle--light {
+  .figma-recycle(@light-color);
 }
 
 .icon-group--light {

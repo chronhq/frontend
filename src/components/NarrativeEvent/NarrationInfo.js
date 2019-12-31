@@ -31,10 +31,10 @@ const NarrationInfo = ({
         {event.title}
       </b>
     </div>
-    <div className='narration__dates'>
+    <div className='narration-info__font--dates narration__dates'>
       {event.date_label}
     </div>
-    <div className='narration__paragraph'>
+    <div className='narration-info__font--paragraph narration__paragraph'>
       {event.description}
     </div>
   </div>

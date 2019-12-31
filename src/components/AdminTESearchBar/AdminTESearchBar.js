@@ -41,6 +41,7 @@ class AdminTESearchBar extends React.Component {
     return (
       <div className='te-search'>
         <input
+          className='text-input'
           type={this.props.type}
           value={this.value}
           onChange={(e) => this.input(e.target.value)}

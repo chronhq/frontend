@@ -16,28 +16,65 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { inject, observer } from 'mobx-react';
 
-import GeoLayers from '../containers/GeoLayers';
-import Balloon from '../containers/Balloon';
-import Wrapper from './Wrapper';
-import AdminInterface from '../templates/AdminInterface/AdminInterface';
-import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
+@import './Typeface.less';
 
-@inject('store')
-@observer
-class SummerAdmin extends React.Component {
-  render() {
-    return (
-      <Wrapper story='world' fake='0' metric='check_admin'>
-        <GeoLayers />
-        <Balloon />
-        <AdminInterface />
-        <TooltipOverlay />
-      </Wrapper>
-    );
-  }
+html, body {
+  .sans--light();
+  color: @text;
+  font-size: 100%;
+  text-rendering: optimizeLegibility;
+  word-wrap: break-word;
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "clig", "calt";
 }
 
-export default SummerAdmin;
+h1 {
+  .serif();
+  font-size: @40px;
+}
+
+h2 {
+  .sans();
+  font-size: @32px;
+  text-align: left;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+h3 {
+  .sans();
+  font-size: @28px;
+  margin: 0.5rem auto;
+}
+
+h4 {
+  .sans();
+  font-size: @24px;
+}
+
+h5 {
+  .sans();
+  font-size: @20px;
+  margin: 0.4rem auto;
+}
+
+h6 {
+  .sans();
+  font-size: @14px;
+  margin: 0.25rem 0;
+}
+
+p {
+  .sans--light();
+  font-size: @14px;
+}
+
+b {
+  .sans--bold();
+}
+
+i {
+  .sans--light();
+  font-style: italic;
+}

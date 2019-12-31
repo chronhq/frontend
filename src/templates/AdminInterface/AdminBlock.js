@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import './AdminBlock.less';
 
 const AdminBlock = ({ children, position }) => (
-  <div className={`admin-block admin-block--${position}`}>
+  <div className={`float-container admin-block admin-block--${position}`}>
     {children}
   </div>
 );

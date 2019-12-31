@@ -105,7 +105,7 @@ class BalloonContent extends React.Component {
   }
 
   render() {
-    const news = 'balloon__news balloon__main';
+    const news = 'message-text balloon__news balloon__main';
     const sources = 'balloon__news balloon__sources';
     return (
       <div className='balloon__news-container'>

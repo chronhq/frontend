@@ -1,0 +1,131 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+@import './colors.less';
+@import './Typeface.less';
+@import './TypographyTags.less';
+
+.text__narrative--header {
+  .serif--bold();
+  .text__size--body();
+  color: @article-title;
+  align-items: center;
+  text-align: center;
+}
+
+.text__narrative--body {
+  color: @black;
+  .sans--light();
+  .text__size--main();
+}
+
+.text__narrative--menu {
+  .sans--light();
+  .text__size--secondary();
+}
+
+.text__narrative--date {
+  .sans();
+  .text__size--date();
+  color: @text-grey;
+}
+
+.tooltip-author {
+  .sans();
+  .text__size--secondary();
+  color: @black;
+}
+
+.input-text {
+  .sans();
+  .text__size--body();
+}
+
+.time-controls__year {
+  .sans();
+  .text__size--header();
+  text-align: center;
+  color: @main-blue;
+}
+
+.message-text {
+  .sans--light();
+  .text__size--main();
+  color: @text;
+}
+
+.message-text--header {
+  .sans--bold();
+}
+
+.message-text--body {
+  .sans();
+}
+
+.message-text--light {
+  .sans--light();
+}
+
+.balloon__click--small {
+  .sans--light();
+  .text__size--small();
+  text-align: center;
+}
+
+.mdl-button {
+  .sans--bold();
+  letter-spacing: 0;
+}
+
+.button-font {
+  .sans--light();
+}
+
+.story-card__font--author {
+  color: @text-grey;
+  font-size: @12px;
+}
+
+.story-card__title--dates {
+  font-weight: normal;
+}
+
+.narration-info__font--dates {
+  // .sans--bold();
+  color: @story-card-dates;
+  align-self: center;
+  font-size: @16px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.narration-info__font--paragraph {
+  font-size: @14px;
+  text-align: justify;
+}
+
+.tooltip-overlay__font {
+  .sans--light();
+  color: @black;
+  font-size: @10px;
+}
+
+.action-button__font {
+  font-size: @16px;
+}

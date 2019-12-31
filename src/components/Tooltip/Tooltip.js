@@ -1,6 +1,6 @@
 /*
  * Chron.
- * Copyright (c) 2018 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
  * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
  * -----
  * This program is free software: you can redistribute it and/or modify
@@ -16,39 +16,71 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 import React from 'react';
-import Tooltip from 'rc-tooltip';
-import PropTypes from 'prop-types';
+import { inject, observer } from 'mobx-react';
 
-import './Tooltip.less';
-
-const Component = ({
-  children, placement, dark, content
-}) => (
-  <Tooltip
-    placement={placement}
-    trigger={['hover']}
-    overlay={() => (
-      <span>
-        {content}
-      </span>
-    )}
-    overlayClassName={dark ? 'rc-tooltip-dark' : ''}
-  >
-    {children}
-  </Tooltip>
-);
-
-Component.defaultProps = {
-  placement: 'left',
-  dark: false
+// translateY(calc(-100% - .5rem))
+const getTranslate = (placement, offset) => {
+  switch (placement) {
+    case 'left':
+      return `translate(calc(-100% - ${offset}), -50%)`;
+    case 'right':
+      return `translate(${offset}, -50%)`;
+    case 'bottom':
+      return `translate(-50%, ${offset})`;
+    case 'top':
+    default:
+      return `translate(-50%, calc(-100% - ${offset}))`;
+  }
 };
 
-Component.propTypes = {
-  children: PropTypes.element.isRequired,
-  placement: PropTypes.string,
-  dark: PropTypes.bool,
-  content: PropTypes.string.isRequired
+@inject('store')
+@observer
+class Tooltip extends React.Component {
+  constructor(props) {
+    super();
+    this.transform = getTranslate(props.placement, props.offset);
+  }
+
+  setHover = (h) => {
+    const position = this.position(this.ref.getBoundingClientRect());
+    const style = { ...position, transform: this.transform };
+    this.props.store.tooltip.onMouseEvent(h, style, this.props.content);
+  }
+
+  position = (box) => {
+    if (!box) return {};
+    const { placement } = this.props;
+    if (placement === 'left' || placement === 'right') {
+      return {
+        left: placement === 'left' ? box.left : box.left + box.width,
+        top: box.top + (box.height / 2),
+      };
+    }
+    return {
+      left: box.left + (box.width / 2),
+      top: placement === 'top' ? box.top : box.top + box.height,
+    };
+  }
+
+  render() {
+    return (
+      <div
+        ref={(r) => { this.ref = r; }}
+        onMouseEnter={() => this.setHover(true)}
+        onMouseLeave={() => this.setHover(false)}
+      >
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
+Tooltip.defaultProps = {
+  placement: 'top',
+  content: '',
+  offset: '.25rem'
 };
 
-export default Component;
+export default Tooltip;

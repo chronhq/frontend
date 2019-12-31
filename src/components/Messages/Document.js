@@ -19,16 +19,12 @@
 import React from 'react';
 
 const Document = ({ fact }) => (
-  <div key={fact.key}>
-    <p className='message-fact__date'>
-      {fact.date}
-    </p>
-    <p className='message-fact__title'>
+  <>
+    {fact.date}
+    <div className='message-text--header'>
       {fact.label}
-    </p>
-    <p className='message-fact__description'>
-      {fact.description}
-    </p>
+    </div>
+    {fact.description}
     {fact.image !== undefined
       ? (
         <div className='message-fact__image'>
@@ -40,7 +36,7 @@ const Document = ({ fact }) => (
         </div>
       )
       : null}
-  </div>
+  </>
 );
 
 export default Document;

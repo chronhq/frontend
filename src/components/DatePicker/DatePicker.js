@@ -88,7 +88,7 @@ class DatePicker extends React.Component {
 
   render() {
     return (
-      <div className='date-picker__container'>
+      <div className='float-container date-picker__container'>
         <DatePickerHeader
           {...this.state}
           changeEra={this.changeEra}

@@ -19,22 +19,18 @@
 import React from 'react';
 
 const PersonFact = ({ person, type, event }) => (
-  <div key={person.key}>
-    <p className='message-fact__title'>
+  <>
+    <div className='message-text--header'>
       {person.label}
-    </p>
-    <p className='message-fact__header'>
-      {type}
-    </p>
-    <p className='message-fact__date'>
-      {person.dateOfBirth}
       <br />
-      {person.dateOfDeath}
-    </p>
-    <p className='message-fact__description'>
-      {event.label}
-    </p>
-  </div>
+      {type}
+    </div>
+    {person.dateOfBirth}
+    <br />
+    {person.dateOfDeath}
+    <br />
+    {event.label}
+  </>
 );
 
 export default PersonFact;

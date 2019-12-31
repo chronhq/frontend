@@ -16,28 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { computed } from 'mobx';
 
-import GeoLayers from '../containers/GeoLayers';
-import Balloon from '../containers/Balloon';
-import Wrapper from './Wrapper';
-import AdminInterface from '../templates/AdminInterface/AdminInterface';
-import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
+import './TooltipOverlay.less';
 
 @inject('store')
 @observer
-class SummerAdmin extends React.Component {
+class TooltipOverlay extends React.Component {
+  @computed get tooltip() {
+    return this.props.store.tooltip;
+  }
+
   render() {
-    return (
-      <Wrapper story='world' fake='0' metric='check_admin'>
-        <GeoLayers />
-        <Balloon />
-        <AdminInterface />
-        <TooltipOverlay />
-      </Wrapper>
+    return !this.tooltip.visible ? null : (
+      <div className='float-container tooltip-overlay tooltip-overlay__font' style={this.tooltip.style}>
+        {this.tooltip.content}
+      </div>
     );
   }
 }
 
-export default SummerAdmin;
+export default TooltipOverlay;

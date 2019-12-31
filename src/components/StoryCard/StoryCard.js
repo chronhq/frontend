@@ -4,16 +4,15 @@ import { observer } from 'mobx-react';
 import './StoryCard.less';
 
 const StoryCardInfo = ({
-  hover, story, standalone, style = {}
+  hover, story, style = {}
 }) => (
   <div
     className={[
       'float-container',
-      standalone ? '' : 'story-card-info',
       hover ? '' : 'story-card-info__hidden'].join(' ')}
-    style={style}
+    style={{ pointerEvents: 'all', ...style }}
   >
-    <div className='story-card__author'>
+    <div className='story-card__font--author story-card__author'>
       <b>
         Author
       </b>
@@ -21,7 +20,7 @@ const StoryCardInfo = ({
         {story.author}
       </p>
     </div>
-    <div className='story-card__author'>
+    <div className='story-card__font--author story-card__author'>
       <b>
         Description
       </b>
@@ -44,7 +43,7 @@ class StoryCard extends React.Component {
         tabIndex={0}
         onMouseEnter={() => this.props.setHover(true, story, this.ref)}
         onMouseLeave={() => this.props.setHover(false, story, this.ref)}
-        className='story-card'
+        className='float-container story-card'
         onClick={() => handleStorySelection(story.url)}
         onKeyPress={() => handleStorySelection(story.url)}
       >

@@ -38,6 +38,12 @@ class YearButton extends React.Component {
           this.year.saveTuneValue();
         }
         break;
+      case 'ArrowUp':
+        this.year.setTuneValue(this.year.tuneValueG + 1);
+        break;
+      case 'ArrowDown':
+        this.year.setTuneValue(this.year.tuneValueG - 1);
+        break;
       default:
         break;
     }
