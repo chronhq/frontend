@@ -68,10 +68,14 @@ class LoginScreen extends React.Component {
   render() {
     const Skip = this.skip;
     return (
-      <AdminWrapper title='Log In'>
-        <FirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
-        <Skip />
-      </AdminWrapper>
+      <div className='admin__container--middle'>
+        <div />
+        <AdminWrapper title='Log In'>
+          <FirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+          <Skip />
+        </AdminWrapper>
+        <div />
+      </div>
     );
   }
 }
