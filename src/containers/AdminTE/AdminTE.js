@@ -49,10 +49,9 @@ class AdminTE extends React.Component {
   render() {
     return (
       <AdminWrapper>
-        {this.loaded 
+        {this.loaded
           ? <AdminTESelector add select={(d, f) => this.selectTE(d, f)} />
-          : <Spinner />
-        }
+          : <Spinner />}
       </AdminWrapper>
     );
   }
