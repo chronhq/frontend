@@ -60,7 +60,7 @@ class AdminHeader extends React.Component {
 const AdminWrapper = ({ title, children, back }) => (
   <div className='admin__container'>
     <div className='admin__content'>
-      <AdminHeader title={title} back={back} />
+      {title && <AdminHeader title={title} back={back} />}
       {children}
     </div>
     <LogoutButton />

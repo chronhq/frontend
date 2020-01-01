@@ -20,7 +20,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const TextTopic = ({ text }) => (
-  <span className='admin__text--topic'>
+  <span className='admin-text-topic__font'>
     {text}
   </span>
 );

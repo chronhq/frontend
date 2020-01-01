@@ -21,12 +21,8 @@ import { observer, inject } from 'mobx-react';
 import { action, computed } from 'mobx';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-import TwoActions from '../../components/TwoActions/TwoActions';
-import ActionButton from '../../components/ActionButtons/ActionButtons';
-
-import TextTopic from './TextTopic';
 import AdminTESelector from './AdminTESelector';
-import AdminTESettings from './AdminTESettings';
+import Spinner from '../../components/Spinner/Spinner';
 
 @inject('store')
 @observer
@@ -52,14 +48,11 @@ class AdminTE extends React.Component {
 
   render() {
     return (
-      <AdminWrapper title='Territorial Entity' back='panel'>
-        <TextTopic text='1. Choose Territorial Entity' />
-        <AdminTESelector add select={(d, f) => this.selectTE(d, f)} />
-        <AdminTESettings />
-        <TwoActions>
-          <ActionButton text='Delete' icon='delete' />
-          <ActionButton text='Save' icon='save' />
-        </TwoActions>
+      <AdminWrapper>
+        {this.loaded 
+          ? <AdminTESelector add select={(d, f) => this.selectTE(d, f)} />
+          : <Spinner />
+        }
       </AdminWrapper>
     );
   }
