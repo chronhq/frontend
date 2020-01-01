@@ -25,6 +25,8 @@ class DashboardSearch {
 
   @observable Narrations;
 
+  @observable TerritorialEntities;
+
   @computed get filter() {
     return this.rootStore.dashboard.isStorySelected
       ? this.Narrations : this.Narratives;
@@ -58,6 +60,9 @@ class DashboardSearch {
 
     this.Narratives = new GenericFilter(this.rootStore, 'narratives', false);
     this.Narratives.selectText = (d) => [d.author, d.description, d.title, d.tags.join(' ')];
+
+    this.TerritorialEntities = new GenericFilter(this.rootStore, 'territorialEntities', false);
+    this.TerritorialEntities.selectText = (d) => [d.wikidata_id, d.label];
   }
 }
 
