@@ -19,10 +19,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { observer, inject, PropTypes as PropTypesMobx } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
-
-import DateRangeWidget from '../../components/DatePicker/DateRangeWidget';
 
 import './AdminTESearchCard.less';
 
@@ -57,18 +55,26 @@ class AdminTESearchCard extends React.Component {
         role='button'
       >
         <div className='te-search-card__label'>{this.label}</div>
-        <DateRangeWidget start={this.te.inception} end={this.te.dissolution} />
-        <div className='te-search-card__info'>
-          <span>Wikidata ID:</span>
+        <div className='te-search-card__date--inception'>
+          {this.te.inception || 'No date'}
+        </div>
+        <div className='te-search-card__date--dissolution'>
+          {this.te.dissolution || 'No date'}
+        </div>
+        <div className='te-search-card__link'>
           <a
+            className='admin-te-wikidata-link__font'
             href={`https://www.wikidata.org/wiki/Q${this.te.wikidata_id}`}
             target='_blank'
             rel="noopener noreferrer"
           >
+            Q
             {this.te.wikidata_id}
           </a>
-          <span>Geometry entities:</span>
-          <span>{this.te.stv}</span>
+        </div>
+        <div className='te-search-card__stv'>
+          {'Entities: '}
+          {this.te.stv_count}
         </div>
       </div>
     );
@@ -77,18 +83,11 @@ class AdminTESearchCard extends React.Component {
 
 AdminTESearchCard.defaultProps = {
   te: 0,
-  data: {
-    label: 'TE Label',
-    inception: new Date('2000-01-01'),
-    dissolution: new Date('2000-01-02'),
-    stv: Math.round(Math.random() * 20)
-  },
   selected: false,
   select: () => true,
 };
 
 AdminTESearchCard.propTypes = {
-  data: PropTypesMobx.objectOrObservableObject,
   te: PropTypes.number,
   select: PropTypes.func,
   selected: PropTypes.bool,

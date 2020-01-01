@@ -18,11 +18,17 @@
  */
 @import '../../styles/colors.less';
 
+@link-width: 7rem;
+
 .te-search-card {
-  display: flex;
-  flex-direction: column;
-  margin-top: 0.5rem;
-  padding: 0 0.5rem;
+  display: grid;
+  grid-template-columns: 6fr 2fr @link-width;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+  'title inception link'
+  'title dissolution stv';
+  margin: 1rem .5rem;
+  padding: .5rem;
   border: solid 1px;
   border-radius: 2px;
   border-color: @dark-grey-blue;
@@ -40,11 +46,29 @@
 }
 
 .te-search-card__label {
-  font-weight: normal;
+  grid-area: title;
 }
 
-.te-search-card__info {
-  margin-top: 0.25rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.te-search-card__date {
+  &--inception {
+    grid-area: inception;
+  }
+  &--dissolution {
+    grid-area: dissolution;
+  }
+}
+
+.te-search-card__link {
+  padding: .1rem .25rem .1rem .25rem;
+  grid-area: link;
+  transform: translate(.75rem, -50%);
+  background-color: @sidebar;
+  border: 1px solid @dark-grey;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+.te-search-card__stv {
+  grid-area: stv;
+  max-width: calc(@link-width - 1rem);
+  transform: translate(1rem, -30%);
 }
