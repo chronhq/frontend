@@ -18,12 +18,10 @@
  */
 import React from 'react';
 import LoginScreen from '../../containers/AdminOverlay/LoginScreen';
-import AdminPanel from '../../containers/AdminOverlay/AdminPanel';
 import DummyScreen from '../../containers/AdminOverlay/DummyScreen';
 
 import AdminTE from '../../containers/AdminTE/AdminTE';
 import AdminSTV from '../../containers/AdminSTV/AdminSTV';
-import EditPRS from '../../containers/AdminOverlay/EditPRS';
 
 import AdminBlock from './AdminBlock';
 
@@ -33,7 +31,6 @@ const TE = () => (
   <>
     <AdminBlock position='left'>
       <AdminTE />
-      <EditPRS />
     </AdminBlock>
     <AdminBlock position='right'>
       <AdminSTV />
@@ -44,22 +41,12 @@ const TE = () => (
 const WIP = () => (
   <>
     <AdminBlock position='left'>
-      <AdminPanel />
       <DummyScreen />
     </AdminBlock>
   </>
 );
 
-const Panel = () => (
-  <>
-    <AdminBlock position='left'>
-      <AdminPanel />
-    </AdminBlock>
-  </>
-);
-
 export {
-  Panel,
   WIP,
   TE,
   Login,

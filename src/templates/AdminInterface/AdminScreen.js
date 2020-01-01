@@ -24,7 +24,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import {
-  Panel,
   WIP,
   TE,
   Login,
@@ -51,7 +50,7 @@ class AdminScreen extends React.Component {
   }
 
   @computed get screen() {
-    if (this.admin.screens.panel) return Panel;
+    if (this.admin.screens.panel) return TE;
     if (this.admin.screens.te || this.admin.screens.stv) return TE;
     return WIP;
   }
