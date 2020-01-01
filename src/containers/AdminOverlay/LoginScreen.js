@@ -27,7 +27,6 @@ import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 
-import TwoActions from '../../components/TwoActions/TwoActions';
 import ActionButton from '../../components/ActionButtons/ActionButtons';
 import disabled from '../../../disabled.json';
 
@@ -53,10 +52,7 @@ class LoginScreen extends React.Component {
   @computed get skip() {
     return disabled.login
       ? () => (
-        <TwoActions>
-          <ActionButton text='Let Me Through' click={() => this.dummyUser()} />
-          <></>
-        </TwoActions>
+        <ActionButton text='Let Me Through' click={() => this.dummyUser()} />
       )
       : () => null;
   }

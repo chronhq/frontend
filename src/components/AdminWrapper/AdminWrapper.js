@@ -21,6 +21,8 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
 import Button, { BUTTON_TYPE } from '../Button/Button';
+import LogoutButton from './LogoutButton';
+
 import './AdminWrapper.less';
 
 @inject('store')
@@ -61,6 +63,7 @@ const AdminWrapper = ({ title, children, back }) => (
       <AdminHeader title={title} back={back} />
       {children}
     </div>
+    <LogoutButton />
   </div>
 );
 
