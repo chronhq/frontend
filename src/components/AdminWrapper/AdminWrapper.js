@@ -68,11 +68,12 @@ const AdminWrapper = ({ title, children, back }) => (
 );
 
 AdminWrapper.defaultProps = {
-  back: undefined
+  back: undefined,
+  title: undefined,
 };
 
 AdminWrapper.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   children: PropTypes.node.isRequired,
   back: PropTypes.string,
 };

@@ -17,9 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { observer, inject, PropTypes as PropTypesMobx } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
 
 import AdminTESearchCard from './AdminTESearchCard';
@@ -27,36 +26,30 @@ import AdminTESearchCard from './AdminTESearchCard';
 @inject('store')
 @observer
 class AdminTESearchResults extends React.Component {
-  @computed get form() {
-    return this.props.store.admin.forms.te;
+  @computed get search() {
+    return this.props.store.search.TerritorialEntities;
+  }
+
+  @computed get results() {
+    return Object.keys(this.search.filtered).sort((a, b) => Number(a) > Number(b));
   }
 
   @computed get empty() {
-    return this.props.dirty ? 'No results' : '';
+    return this.search.text ? 'No results' : '';
   }
 
 
   render() {
     return (
       <div className='te-selector__results'>
-        {this.props.results.length > 0
-          ? this.props.results.map((c) => (
-            <AdminTESearchCard key={`sc_${c}`} te={c} select={() => this.props.select(c)} />
+        {this.results.length > 0
+          ? this.results.map((c) => (
+            <AdminTESearchCard key={`sc_${c}`} te={c} select={() => console.log('Select TE', c)} />
           ))
           : this.empty}
       </div>
     );
   }
 }
-
-AdminTESearchResults.defaultProps = {
-  results: [],
-  dirty: false,
-};
-
-AdminTESearchResults.propTypes = {
-  results: PropTypesMobx.observableArray,
-  dirty: PropTypes.bool,
-};
 
 export default AdminTESearchResults;

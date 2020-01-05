@@ -17,8 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 @import '../../styles/colors.less';
+@import '../../styles/Layers.less';
 
 @link-width: 7rem;
+
+.te-search-card--border {
+  border: 1px solid @dark-grey;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
 
 .te-search-card {
   display: grid;
@@ -29,14 +36,13 @@
   'title dissolution stv';
   margin: 1rem .5rem;
   padding: .5rem;
-  border: solid 1px;
-  border-radius: 2px;
+  .te-search-card--border();
   border-color: @dark-grey-blue;
   a {
     pointer-events: all;
   }
   &:hover {
-    background-color: #ccc;
+    box-shadow: @admin-shadow;
   }
   &--selected {
     border-color: @main-blue;
@@ -63,9 +69,7 @@
   grid-area: link;
   transform: translate(.75rem, -50%);
   background-color: @sidebar;
-  border: 1px solid @dark-grey;
-  box-sizing: border-box;
-  border-radius: 2px;
+  .te-search-card--border();
 }
 
 .te-search-card__stv {

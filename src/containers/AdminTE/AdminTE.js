@@ -21,7 +21,9 @@ import { observer, inject } from 'mobx-react';
 import { action, computed } from 'mobx';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-import AdminTESelector from './AdminTESelector';
+import AdminTESearchResults from './AdminTESearchResults';
+import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
+import TextTopic from './TextTopic';
 import Spinner from '../../components/Spinner/Spinner';
 
 @inject('store')
@@ -29,8 +31,13 @@ import Spinner from '../../components/Spinner/Spinner';
 class AdminTE extends React.Component {
   componentDidMount() {
     if (!this.loaded) {
+      // TODO Invoke query earlier (on Admin open)
       this.props.store.data.territorialEntities.get();
     }
+  }
+
+  @computed get search() {
+    return this.props.store.search.TerritorialEntities;
   }
 
   @computed get loaded() {
@@ -50,7 +57,13 @@ class AdminTE extends React.Component {
     return (
       <AdminWrapper>
         {this.loaded
-          ? <AdminTESelector add select={(d, f) => this.selectTE(d, f)} />
+          ? (
+            <div className='te-selector'>
+              <TextTopic text='Find territorial entity in the database' />
+              <AdminTESearchBar search={(e) => this.search.setText(e)} />
+              <AdminTESearchResults />
+            </div>
+          )
           : <Spinner />}
       </AdminWrapper>
     );
