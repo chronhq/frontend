@@ -33,7 +33,8 @@
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
   'title inception link'
-  'title dissolution stv';
+  'title dissolution stv'
+  'color color color';
   margin: 1rem .5rem;
   padding: .5rem;
   .te-search-card--border();
@@ -76,4 +77,12 @@
   grid-area: stv;
   max-width: calc(@link-width - 1rem);
   transform: translate(1rem, -30%);
+}
+
+.te-search-card__color {
+  grid-area: color;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }

@@ -22,7 +22,7 @@ import { observer, inject } from 'mobx-react';
 import { computed, action, observable } from 'mobx';
 import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
 import TextTopic from './TextTopic';
-import AdminTESearchCard from './AdminTESearchCard';
+import AdminTESearchCard from './AdminTECard';
 
 
 @inject('store')
