@@ -26,16 +26,6 @@ import julian from 'julian';
 import './AdminTECard.less';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 
-import colors from '../../models/MVTStyles/colors';
-
-const colorMarker = (color) => (
-  [
-    '<svg width="70px" height="150px" version="1.1" xmlns="http://www.w3.org/2000/svg">',
-    `<path transform="scale(.26458)" d="m0 0v566.79l132.21-133.49 132.35 133.63v-566.93h-264.57z" fill="${color.replace('#', '%23')}"/>`,
-    '</svg>'
-  ].join('')
-);
-
 const DateFromJulian = ({ date = undefined }) => {
   if (date === undefined || date === null) return 'No Date';
   try {
@@ -54,14 +44,7 @@ const DateFromJulian = ({ date = undefined }) => {
 @observer
 class AdminTECard extends React.Component {
   @computed get style() {
-    const color = Object.keys(colors).reduce((prev, cur) => (colors[cur] === Number(this.te.color) ? cur : prev), '#7F7F7F');
-    const img = colorMarker(color);
-    return ({
-      backgroundSize: '3%',
-      backgroundPosition: '8px 0',
-      backgroundRepeat: 'no-repeat',
-      backgroundImage: `url('data:image/svg+xml;utf8,${img}')`
-    });
+    return `color-flag color-flag--${(this.te.color > 0 && this.te.color < 14) ? this.te.color : 0}`;
   }
 
   @computed get form() {
@@ -96,8 +79,7 @@ class AdminTECard extends React.Component {
   render() {
     return (
       <div
-        className={`te-search-card ${this.props.selected ? 'te-search-card--selected' : ''}`}
-        style={this.style}
+        className={`${this.style} te-search-card ${this.props.selected ? 'te-search-card--selected' : ''}`}
         onClick={this.props.select}
         onKeyPress={this.props.select}
         tabIndex={0}
