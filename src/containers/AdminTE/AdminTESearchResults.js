@@ -20,6 +20,7 @@ import React from 'react';
 
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
+import { withRouter } from 'react-router-dom';
 
 import AdminTECard from './AdminTECard';
 
@@ -44,7 +45,7 @@ class AdminTESearchResults extends React.Component {
       <div className='te-selector__results'>
         {this.results.length > 0
           ? this.results.map((c) => (
-            <AdminTECard key={`sc_${c}`} te={c} select={() => console.log('Select TE', c)} />
+            <AdminTECard key={`sc_${c}`} te={c} select={() => this.props.history.push(`/admin/te/${c}`)} />
           ))
           : this.empty}
       </div>
@@ -52,4 +53,4 @@ class AdminTESearchResults extends React.Component {
   }
 }
 
-export default AdminTESearchResults;
+export default withRouter(AdminTESearchResults);

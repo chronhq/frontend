@@ -33,7 +33,7 @@ class SummerAdmin extends React.Component {
       <Wrapper story='world' fake='0' metric='check_admin'>
         <GeoLayers />
         <Balloon />
-        <AdminInterface />
+        <AdminInterface params={this.props.params} />
         <TooltipOverlay />
       </Wrapper>
     );

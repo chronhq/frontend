@@ -24,15 +24,31 @@ import './AdminInterface.less';
 const AdminLoginGuard = lazy(() => import('./AdminLoginGuard'));
 
 const AdminTE = lazy(() => import('../../containers/AdminTE/AdminTE'));
+const AdminSTV = lazy(() => import('../../containers/AdminSTV/AdminSTV'));
 
-const AdminInterface = () => (
-  <Suspense fallback={<LoadingLogo />}>
-    <div className='float-container admin-block'>
-      <AdminLoginGuard>
-        <AdminTE />
-      </AdminLoginGuard>
-    </div>
-  </Suspense>
-);
+class AdminInterface extends React.Component {
+  get screen() {
+    const { type, entity, sub } = this.props.params;
+    if (type === 'te') {
+      if (sub !== undefined) return AdminSTV;
+      if (entity !== undefined) return AdminSTV;
+      return AdminTE;
+    }
+    return AdminTE;
+  }
+
+  render() {
+    const Screen = this.screen;
+    return (
+      <Suspense fallback={<LoadingLogo />}>
+        <div className='float-container admin-block'>
+          <AdminLoginGuard>
+            <Screen params={this.props.params} />
+          </AdminLoginGuard>
+        </div>
+      </Suspense>
+    );
+  }
+}
 
 export default AdminInterface;
