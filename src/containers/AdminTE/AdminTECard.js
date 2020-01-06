@@ -126,7 +126,7 @@ AdminTECard.defaultProps = {
 };
 
 AdminTECard.propTypes = {
-  te: PropTypes.number,
+  te: PropTypes.any,
   select: PropTypes.func,
   selected: PropTypes.bool,
 };

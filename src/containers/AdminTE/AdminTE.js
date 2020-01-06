@@ -24,24 +24,12 @@ import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import AdminTESearchResults from './AdminTESearchResults';
 import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
 import TextTopic from './TextTopic';
-import Spinner from '../../components/Spinner/Spinner';
 
 @inject('store')
 @observer
 class AdminTE extends React.Component {
-  componentDidMount() {
-    if (!this.loaded) {
-      // TODO Invoke query earlier (on Admin open)
-      this.props.store.data.territorialEntities.get();
-    }
-  }
-
   @computed get search() {
     return this.props.store.search.TerritorialEntities;
-  }
-
-  @computed get loaded() {
-    return this.props.store.data.territorialEntities.status.loaded;
   }
 
   @computed get form() {
@@ -56,15 +44,11 @@ class AdminTE extends React.Component {
   render() {
     return (
       <AdminWrapper>
-        {this.loaded
-          ? (
-            <div className='te-selector'>
-              <TextTopic text='Find territorial entity in the database' />
-              <AdminTESearchBar search={(e) => this.search.setText(e)} />
-              <AdminTESearchResults />
-            </div>
-          )
-          : <Spinner />}
+        <div className='te-selector'>
+          <TextTopic text='Find territorial entity in the database' />
+          <AdminTESearchBar search={(e) => this.search.setText(e)} />
+          <AdminTESearchResults />
+        </div>
       </AdminWrapper>
     );
   }
