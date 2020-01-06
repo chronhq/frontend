@@ -38,8 +38,11 @@ class AdminSTVCard extends React.Component {
             <div className='stv-entity--overflow'>{this.props.stv.visual_center.coordinates[1]}</div>
           </div>
           <div className='stv-entity--source'>
-            <div className='stv-entity--overflow'>https://medium.com/@melih193/react-with-react-router-5-9bdc9d427bfd</div>
-            <div className='stv-entity--overflow'>https://medium.com/@melih193/react-with-react-router-5-9bdc9d427bfd</div>
+            {this.props.stv.references.map((r, idx) => (
+              <a target='_blank' rel="noopener noreferrer" key={`sr_${idx + 0}`} className='stv-entity--overflow' href={r}>
+                {r}
+              </a>
+            ))}
           </div>
           <div className='stv-entity--buttons'>
             <ActionButtonFill
