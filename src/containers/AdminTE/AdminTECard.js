@@ -71,7 +71,7 @@ class AdminTECard extends React.Component {
   render() {
     return (
       <div
-        className={`${this.style} te-search-card ${this.props.selected ? 'te-search-card--selected' : ''}`}
+        className={`admin-te-card-main__font ${this.style} te-search-card ${this.props.selected ? 'te-search-card--selected' : ''}`}
         onClick={this.props.select}
         onKeyPress={this.props.select}
         tabIndex={0}
@@ -103,7 +103,7 @@ class AdminTECard extends React.Component {
             />
           )}
         </div>
-        <div className='te-search-card__stv'>
+        <div className='admin-te-card-light__font te-search-card__stv'>
           {'Entities: '}
           {this.te.stv_count}
         </div>
