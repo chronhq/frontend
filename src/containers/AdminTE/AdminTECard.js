@@ -20,11 +20,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { observer, inject } from 'mobx-react';
-import { computed, action } from 'mobx';
+import { computed, action, observable } from 'mobx';
 import julian from 'julian';
 
 import './AdminTECard.less';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
+import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
 
 const DateFromJulian = ({ date = undefined }) => {
   if (date === undefined || date === null) return 'No Date';
@@ -43,6 +44,8 @@ const DateFromJulian = ({ date = undefined }) => {
 @inject('store')
 @observer
 class AdminTECard extends React.Component {
+  @observable edit = false;
+
   @computed get style() {
     return `color-flag color-flag--${(this.te.color > 0 && this.te.color < 14) ? this.te.color : 0}`;
   }
@@ -51,18 +54,20 @@ class AdminTECard extends React.Component {
     return this.props.store.admin.forms.te;
   }
 
-  @computed get data() {
-    return this.form.data.form || {};
-  }
-
   @computed get teData() {
     return this.props.store.data.territorialEntities.data[this.props.te] || {};
   }
 
   @computed get te() {
+    const data = Object.keys(this.props.data)
+      .reduce(((prev, cur) => (
+        this.props.data[cur] === undefined
+          ? prev
+          : { ...prev, [cur]: this.props.data[cur] }
+      )), {});
     return {
-      ...this.props.data,
       ...this.teData,
+      ...data,
     };
   }
 
@@ -72,8 +77,8 @@ class AdminTECard extends React.Component {
       : this.te.label;
   }
 
-  @action changeColor(c) {
-    this.data.color = c;
+  @action toggleEdit = () => {
+    this.edit = !this.edit;
   }
 
   render() {
@@ -102,18 +107,28 @@ class AdminTECard extends React.Component {
             Q
             {this.te.wikidata_id}
           </a>
+          {this.props.change && (
+            <ActionButtonFill
+              click={this.toggleEdit}
+              text=''
+              icon='edit--blue'
+              style={{ height: '1.25rem', width: '1.25rem', backgroundColor: 'transparent' }}
+            />
+          )}
         </div>
         <div className='te-search-card__stv'>
           {'Entities: '}
           {this.te.stv_count}
         </div>
-        <div className='te-search-card__color'>
-          Color:
-          <ColorPicker
-            selected={Number(this.te.color)}
-            changeColor={(c) => this.changeColor(c)}
-          />
-        </div>
+        {this.props.change && (
+          <div className='te-search-card__color' style={{ visibility: this.edit ? 'inherit' : 'hidden' }}>
+            Color:
+            <ColorPicker
+              selected={Number(this.te.color)}
+              changeColor={(c) => this.props.change('color', c)}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -121,12 +136,16 @@ class AdminTECard extends React.Component {
 
 AdminTECard.defaultProps = {
   te: 0,
+  change: undefined,
+  data: {},
   selected: false,
   select: () => true,
 };
 
 AdminTECard.propTypes = {
   te: PropTypes.any,
+  change: PropTypes.any,
+  data: PropTypes.any,
   select: PropTypes.func,
   selected: PropTypes.bool,
 };
