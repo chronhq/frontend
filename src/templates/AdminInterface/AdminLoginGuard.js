@@ -23,16 +23,11 @@ import { inject, observer } from 'mobx-react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import {
-  WIP,
-  TE,
-  Login,
-} from './AdminLayout';
-
+import LoginScreen from '../../containers/AdminOverlay/LoginScreen';
 
 @inject('store')
 @observer
-class AdminScreen extends React.Component {
+class AdminLoginGuard extends React.Component {
   componentDidMount() {
     this.initFirebase();
   }
@@ -47,12 +42,6 @@ class AdminScreen extends React.Component {
 
   @computed get admin() {
     return this.props.store.admin;
-  }
-
-  @computed get screen() {
-    if (this.admin.screens.panel) return TE;
-    if (this.admin.screens.te || this.admin.screens.stv) return TE;
-    return WIP;
   }
 
   @action authStatusChanged(user) {
@@ -70,9 +59,10 @@ class AdminScreen extends React.Component {
 
   render() {
     if (!this.auth.initialized) return null;
-    const Screen = (!this.auth.isSignedIn) ? Login : this.screen;
-    return <Screen />;
+    return (!this.auth.isSignedIn)
+      ? <LoginScreen />
+      : this.props.children;
   }
 }
 
-export default AdminScreen;
+export default AdminLoginGuard;

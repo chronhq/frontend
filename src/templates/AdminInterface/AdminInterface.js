@@ -19,11 +19,19 @@
 import React, { Suspense, lazy } from 'react';
 import LoadingLogo from '../../containers/LoadingLogo';
 
-const AdminScreen = lazy(() => import('./AdminScreen'));
+import './AdminInterface.less';
+
+const AdminLoginGuard = lazy(() => import('./AdminLoginGuard'));
+
+const AdminTE = lazy(() => import('../../containers/AdminTE/AdminTE'));
 
 const AdminInterface = () => (
   <Suspense fallback={<LoadingLogo />}>
-    <AdminScreen />
+    <div className='float-container admin-block'>
+      <AdminLoginGuard>
+        <AdminTE />
+      </AdminLoginGuard>
+    </div>
   </Suspense>
 );
 
