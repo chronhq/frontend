@@ -23,7 +23,7 @@ import { withRouter } from 'react-router-dom';
 
 import ActionButton, { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-// import STVEntity from './STVEntity';
+import AdminSTVCard from './AdminSTVCard';
 
 import './AdminSTV.less';
 import TwoActions from '../../components/TwoActions/TwoActions';
@@ -33,6 +33,14 @@ import AdminTECard from '../AdminTE/AdminTECard';
 @observer
 class AdminSTV extends React.Component {
   @observable color = undefined;
+
+  @computed get stvs() {
+    const { stvs } = this.props.store.data.territorialEntities.data[this.props.params.entity];
+    return Object.keys(stvs)
+      .sort((a, b) => Number(stvs[a].start_date) - Number(stvs[b].start_date))
+      .map((a) => stvs[a]);
+  }
+
 
   @computed get data() {
     return { color: this.color };
@@ -56,14 +64,6 @@ class AdminSTV extends React.Component {
     return (
       <AdminWrapper>
         <AdminTECard te={this.props.params.entity} data={this.data} change={this.change} />
-        {/* <div className='stv-entities'>
-          {data.map((d) => (
-            <STVEntity
-              {...d}
-              key={d.key}
-            />
-          ))}
-        </div> */}
         <TwoActions>
           {this.dirty
             ? <ActionButton text='Cancel' icon='cancel' click={this.clean} />
@@ -74,6 +74,16 @@ class AdminSTV extends React.Component {
           <></>
           <CreateActionButton text='Add' click={() => true} />
         </TwoActions>
+        <div className='tooltip-author stv-entity--grid'>
+          <div style={{ justifySelf: 'center' }}>Dates</div>
+          <div style={{ justifySelf: 'center' }}>Visual Center</div>
+          <div style={{ justifySelf: 'center' }}>Source URL</div>
+          <div style={{ justifySelf: 'center' }}>Download Delete</div>
+        </div>
+        {this.stvs.map((v) => (
+          <AdminSTVCard key={`stv_card_${v.id}}`} te={this.props.params.entity} stv={v} />
+        ))}
+
       </AdminWrapper>
     );
   }

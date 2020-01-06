@@ -1,19 +1,33 @@
 @import '../../styles/colors.less';
 
-.stv-entities {
-  margin: 1rem 0;
+.stv-entity--grid {
+  display: grid;
+  grid-column-gap: .25rem;
+  grid-template-columns: 6rem 6rem 14rem auto;
 }
 
-.stv-entities-row__info {
-  display: grid;
-  grid-template-columns: 2rem auto 2rem;
-  align-items: center;
-  border: solid 1px;
-  margin: 0.5rem 0;
-  padding-left: 0.5rem;
-  border-color: @dark-grey-blue;
+.stv-entity {
+  margin: .25rem;
+  padding: .25rem;
+  border: 1px solid @dark-grey;
+  box-sizing: border-box;
   border-radius: 2px;
-  &:hover {
-    background-color: #ccc;
-  }
+  border-color: @dark-grey-blue;
+}
+
+.stv-entity--overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.stv-entity--vc {
+  align-self: center;
+  .stv-entity--overflow();
+}
+
+.stv-entity--buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
