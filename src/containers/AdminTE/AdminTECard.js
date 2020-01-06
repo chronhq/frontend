@@ -21,24 +21,11 @@ import PropTypes from 'prop-types';
 
 import { observer, inject } from 'mobx-react';
 import { computed, action, observable } from 'mobx';
-import julian from 'julian';
 
 import './AdminTECard.less';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
-
-const DateFromJulian = ({ date = undefined }) => {
-  if (date === undefined || date === null) return 'No Date';
-  try {
-    const d = julian.toDate(Number(date));
-    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d.getUTCMonth()];
-    return `${d.getUTCFullYear()} ${month} ${d.getUTCDate()}`;
-  } catch (e) {
-    console.error('Invalid date', date);
-    console.error(e);
-    return 'Failed';
-  }
-};
+import { DateFromJulian } from '../../components/DatePicker/DatePicker';
 
 
 @inject('store')

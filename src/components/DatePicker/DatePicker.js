@@ -18,6 +18,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import julian from 'julian';
 
 import DatePickerHeader from './DatePickerHeader';
 import DatePickerYears from './DatePickerYears';
@@ -38,6 +39,18 @@ export const dateToLocaleString = (date) => {
     });
   } catch (e) {
     return 'No Date';
+  }
+};
+
+export const DateFromJulian = ({ date = undefined }) => {
+  if (date === undefined || date === null) return 'No Date';
+  try {
+    const d = julian.toDate(Number(date));
+    return dateToLocaleString(d);
+  } catch (e) {
+    console.error('Invalid date', date);
+    console.error(e);
+    return 'Failed';
   }
 };
 
