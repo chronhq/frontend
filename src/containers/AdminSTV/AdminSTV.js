@@ -20,6 +20,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed, observable, action } from 'mobx';
 import { withRouter } from 'react-router-dom';
+import SmoothCollapse from 'react-smooth-collapse';
 
 import ActionButton, { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
@@ -28,11 +29,25 @@ import AdminSTVCard from './AdminSTVCard';
 import './AdminSTV.less';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import AdminTECard from '../AdminTE/AdminTECard';
+import UploadWidget from '../../components/ActionButtons/UploadWidget';
+import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
+import DateInput from '../../components/ActionButtons/DateInput';
+
+const STVTableHeader = () => (
+  <div className='tooltip-author stv-entity--grid'>
+    <div style={{ justifySelf: 'center' }}>Dates</div>
+    <div style={{ justifySelf: 'center' }}>Visual Center</div>
+    <div style={{ justifySelf: 'center' }}>Source URL</div>
+    <div style={{ justifySelf: 'center' }}>Download Delete</div>
+  </div>
+);
 
 @inject('store')
 @observer
 class AdminSTV extends React.Component {
   @observable color = undefined;
+
+  @observable add = false;
 
   @computed get stvs() {
     const { stvs } = this.props.store.data.territorialEntities.data[this.props.params.entity];
@@ -67,19 +82,28 @@ class AdminSTV extends React.Component {
         <TwoActions>
           {this.dirty
             ? <ActionButton text='Cancel' icon='cancel' click={this.clean} />
-            : <ActionButton text='Back' icon='cancel' click={() => this.props.history.push('/admin/te/')} />}
+            : <ActionButton text='Back' icon='exit' click={() => this.props.history.push('/admin/te/')} />}
           <ActionButton text='Save' icon='save' click={() => null} />
         </TwoActions>
+        <SmoothCollapse expanded={this.add}>
+          <div className='stv-entity stv-entity--grid stv-entity--new'>
+            <div style={{ gridArea: '1 / 1 / 1 / 3' }}>
+              <CalendarWidget />
+              <DateInput />
+              <DateInput />
+            </div>
+            <div style={{ gridArea: '1 / 3 / 1 / 5' }}>
+              <UploadWidget />
+            </div>
+          </div>
+        </SmoothCollapse>
         <TwoActions>
           <></>
-          <CreateActionButton text='Add' click={() => true} />
+          {this.add
+            ? <ActionButton text='Cancel' icon='cancel' click={() => this.change('add', false)} />
+            : <CreateActionButton text='Add' click={() => this.change('add', true)} />}
         </TwoActions>
-        <div className='tooltip-author stv-entity--grid'>
-          <div style={{ justifySelf: 'center' }}>Dates</div>
-          <div style={{ justifySelf: 'center' }}>Visual Center</div>
-          <div style={{ justifySelf: 'center' }}>Source URL</div>
-          <div style={{ justifySelf: 'center' }}>Download Delete</div>
-        </div>
+        <STVTableHeader />
         {this.stvs.map((v) => (
           <AdminSTVCard key={`stv_card_${v.id}}`} te={this.props.params.entity} stv={v} />
         ))}
