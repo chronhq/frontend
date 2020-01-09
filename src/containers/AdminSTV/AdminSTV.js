@@ -49,6 +49,10 @@ class AdminSTV extends React.Component {
 
   @observable add = false;
 
+  change = action((t, v) => {
+    this[t] = v;
+  })
+
   @computed get stvs() {
     const { stvs } = this.props.store.data.territorialEntities.data[this.props.params.entity];
     return Object.keys(stvs)
@@ -68,11 +72,6 @@ class AdminSTV extends React.Component {
   clean = () => {
     Object.keys(this.data).map((t) => this.change(t, undefined));
   }
-
-  @action change = (t, v) => {
-    this[t] = v;
-  }
-
 
   render() {
     // const data = this.props.store.admin.stvs;

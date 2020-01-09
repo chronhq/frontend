@@ -30,6 +30,11 @@ import disabled from '../../../disabled.json';
 @inject('store')
 @observer
 class MapWrapper extends React.Component {
+  resize = action(() => {
+    this.props.store.deck.width = window.innerWidth;
+    this.props.store.deck.height = window.innerHeight;
+  })
+
   componentDidMount() {
     window.addEventListener('resize', () => this.resize(), false);
     window.addEventListener('orientationchange', () => this.resize(), false);
@@ -101,11 +106,6 @@ class MapWrapper extends React.Component {
     const map = this.deck.interactiveMap.getMap();
     map[t]('dataloading', this.dataLoadingListener);
     map[t]('data', this.dataLoadingListener);
-  }
-
-  @action resize() {
-    this.props.store.deck.width = window.innerWidth;
-    this.props.store.deck.height = window.innerHeight;
   }
 
   render() {

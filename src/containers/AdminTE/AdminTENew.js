@@ -30,6 +30,15 @@ import AdminTESearchCard from './AdminTECard';
 class AdminTENew extends React.Component {
   @observable wId = undefined;
 
+  search = action((a) => {
+    this.wId = a;
+    this.props.store.wikidata.add('country', a);
+  })
+
+  select = action(() => {
+    this.props.select(undefined, this.data);
+  })
+
   @computed get wikidata() {
     return this.wId in this.props.store.wikidata.cache
       ? this.props.store.wikidata.cache[this.wId].current
@@ -49,15 +58,6 @@ class AdminTENew extends React.Component {
 
   @computed get form() {
     return this.props.store.admin.forms.te;
-  }
-
-  @action search(a) {
-    this.wId = a;
-    this.props.store.wikidata.add('country', a);
-  }
-
-  @action select() {
-    this.props.select(undefined, this.data);
   }
 
   render() {

@@ -33,6 +33,10 @@ import { DateFromJulian } from '../../components/DatePicker/DatePicker';
 class AdminTECard extends React.Component {
   @observable edit = false;
 
+  toggleEdit = action(() => {
+    this.edit = !this.edit;
+  })
+
   @computed get style() {
     return `color-flag color-flag--${(this.te.color > 0 && this.te.color < 14) ? this.te.color : 0}`;
   }
@@ -62,10 +66,6 @@ class AdminTECard extends React.Component {
     return this.te.id
       ? `(${this.te.id}) ${this.te.label}`
       : this.te.label;
-  }
-
-  @action toggleEdit = () => {
-    this.edit = !this.edit;
   }
 
   render() {

@@ -33,6 +33,10 @@ import disabled from '../../../disabled.json';
 @inject('store')
 @observer
 class LoginScreen extends React.Component {
+  dummyUser = action(() => {
+    this.auth.user = {};
+  })
+
   @computed get auth() {
     return this.props.store.auth;
   }
@@ -55,10 +59,6 @@ class LoginScreen extends React.Component {
         <ActionButton text='Let Me Through' click={() => this.dummyUser()} />
       )
       : () => null;
-  }
-
-  @action dummyUser() {
-    this.auth.user = {};
   }
 
   render() {

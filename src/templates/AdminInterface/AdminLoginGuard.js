@@ -28,6 +28,19 @@ import LoginScreen from '../../containers/AdminOverlay/LoginScreen';
 @inject('store')
 @observer
 class AdminLoginGuard extends React.Component {
+  authStatusChanged = action((user) => {
+    this.auth.user = user;
+  })
+
+  initFirebase = action(() => {
+    if (this.auth.initialized === false) {
+      firebase.initializeApp(this.auth.firebase);
+      this.auth.initialized = true;
+    }
+    this.unregisterAuthObserver = firebase.auth()
+      .onAuthStateChanged((u) => this.authStatusChanged(u));
+  })
+
   componentDidMount() {
     this.initFirebase();
   }
@@ -42,19 +55,6 @@ class AdminLoginGuard extends React.Component {
 
   @computed get admin() {
     return this.props.store.admin;
-  }
-
-  @action authStatusChanged(user) {
-    this.auth.user = user;
-  }
-
-  @action initFirebase() {
-    if (this.auth.initialized === false) {
-      firebase.initializeApp(this.auth.firebase);
-      this.auth.initialized = true;
-    }
-    this.unregisterAuthObserver = firebase.auth()
-      .onAuthStateChanged((u) => this.authStatusChanged(u));
   }
 
   render() {

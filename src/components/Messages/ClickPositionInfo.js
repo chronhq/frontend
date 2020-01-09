@@ -29,6 +29,16 @@ class ClickPositionInfo extends React.Component {
 
   @observable textRef = '';
 
+  copy = action(() => {
+    if (document.queryCommandSupported('copy')) {
+      this.textRef.select();
+      document.execCommand('copy');
+      this.copied = true;
+    } else {
+      console.error('copy method is not supported in your browser');
+    }
+  })
+
   @computed get messages() {
     return this.props.store.i18n.data.messages;
   }
@@ -49,16 +59,6 @@ class ClickPositionInfo extends React.Component {
 
   @computed get lng() {
     return `Lng: ${this.clickPosition.lng}`;
-  }
-
-  @action copy() {
-    if (document.queryCommandSupported('copy')) {
-      this.textRef.select();
-      document.execCommand('copy');
-      this.copied = true;
-    } else {
-      console.error('copy method is not supported in your browser');
-    }
   }
 
   render() {

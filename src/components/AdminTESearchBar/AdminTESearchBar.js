@@ -29,12 +29,12 @@ import { ActionButtonFill } from '../ActionButtons/ActionButtons';
 class AdminTESearchBar extends React.Component {
   @observable value = '';
 
+  input = action((e) => {
+    this.value = e.target.value;
+  })
+
   search = () => {
     this.props.search(this.value);
-  }
-
-  @action input(e) {
-    this.value = e;
   }
 
   render() {
@@ -44,7 +44,7 @@ class AdminTESearchBar extends React.Component {
           className='text-input input-text'
           type={this.props.type}
           value={this.value}
-          onChange={(e) => this.input(e.target.value)}
+          onChange={this.input}
           onKeyPress={(e) => e.key === 'Enter' && this.search()}
         />
         <ActionButtonFill

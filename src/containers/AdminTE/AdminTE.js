@@ -28,17 +28,17 @@ import TextTopic from './TextTopic';
 @inject('store')
 @observer
 class AdminTE extends React.Component {
+  selectTE = action((data, form) => {
+    this.form.data.selected = data;
+    this.form.data.form = form;
+  })
+
   @computed get search() {
     return this.props.store.search.TerritorialEntities;
   }
 
   @computed get form() {
     return this.props.store.admin.forms.te;
-  }
-
-  @action selectTE(data, form) {
-    this.form.data.selected = data;
-    this.form.data.form = form;
   }
 
   render() {

@@ -38,6 +38,66 @@ class DateInput extends React.Component {
     day: 0,
   };
 
+  setCursor = action((start, end) => {
+    this.cursor.start = start;
+    this.cursor.end = end;
+  })
+
+  setValue = action((e) => {
+    this.setCursor(e.target.selectionStart, e.target.selectionEnd);
+
+    const clean = e.target.value.match(/[-0-9/]/g);
+    if (clean === null) {
+      this.value = null;
+      return;
+    }
+
+    const values = clean.join('').match(re);
+    const year = Number(values[1]);
+    const month = Number(values[2].slice(0, 2));
+    const day = Number(values[3].slice(0, 2));
+
+    this.old.negative = Boolean(values[1].match(/^-/));
+
+    if (year > -4713 && year <= maxYear) {
+      this.old.year = this.old.negative ? year * -1 : year;
+    }
+
+    if (!Number.isNaN(month) && month !== undefined) {
+      this.old.month = (month >= 0 && month < 13) ? month : 12;
+    }
+
+    this.old.day = (day >= 0 && day < this.maxDay) ? day : this.maxDay;
+  })
+
+  keyDown = action((e) => {
+    if (e.key === 'Backspace') { // ignore / while deleting
+      if (this.value[e.target.selectionStart - 1] === '/') {
+        e.target.setSelectionRange(e.target.selectionStart - 1, e.target.selectionStart - 1);
+      }
+    } else if (e.key.match(/[0-9]/)) { // replace existing symbols
+      if (this.value[e.target.selectionStart] !== '/') {
+        e.target.setSelectionRange(e.target.selectionStart, e.target.selectionStart + 1);
+      }
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      const inc = e.key === 'ArrowUp' ? 1 : -1;
+      const d = this.date;
+      const curPos = this.getPosition(this.date);
+      if (e.target.selectionStart <= curPos.y) {
+        d.setUTCFullYear(d.getUTCFullYear() + inc);
+        this.setCursor(0, this.getPosition(d).y);
+      } else if (e.target.selectionStart > curPos.y && e.target.selectionStart <= curPos.m) {
+        d.setUTCFullYear(d.getUTCFullYear(), d.getUTCMonth() + inc);
+        this.setCursor(curPos.y + 1, this.getPosition(d).m);
+      } else if (e.target.selectionStart > curPos.m) {
+        d.setUTCFullYear(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + inc);
+        this.setCursor(curPos.m + 1, this.getPosition(d).d);
+      }
+      this.value = d.getUTCFullYear() === 0 ? null : d;
+      e.preventDefault();
+    }
+  })
+
   componentDidUpdate() {
     this.ref.setSelectionRange(this.cursor.start, this.cursor.end);
   }
@@ -94,66 +154,6 @@ class DateInput extends React.Component {
     const m = y + String(date.getUTCMonth() + 1).length + 1;
     const d = m + String(date.getUTCDate()).length + 1;
     return { y, m, d };
-  }
-
-  @action setCursor(start, end) {
-    this.cursor.start = start;
-    this.cursor.end = end;
-  }
-
-  @action setValue = (e) => {
-    this.setCursor(e.target.selectionStart, e.target.selectionEnd);
-
-    const clean = e.target.value.match(/[-0-9/]/g);
-    if (clean === null) {
-      this.value = null;
-      return;
-    }
-
-    const values = clean.join('').match(re);
-    const year = Number(values[1]);
-    const month = Number(values[2].slice(0, 2));
-    const day = Number(values[3].slice(0, 2));
-
-    this.old.negative = Boolean(values[1].match(/^-/));
-
-    if (year > -4713 && year <= maxYear) {
-      this.old.year = this.old.negative ? year * -1 : year;
-    }
-
-    if (!Number.isNaN(month) && month !== undefined) {
-      this.old.month = (month >= 0 && month < 13) ? month : 12;
-    }
-
-    this.old.day = (day >= 0 && day < this.maxDay) ? day : this.maxDay;
-  }
-
-  @action keyDown = (e) => {
-    if (e.key === 'Backspace') { // ignore / while deleting
-      if (this.value[e.target.selectionStart - 1] === '/') {
-        e.target.setSelectionRange(e.target.selectionStart - 1, e.target.selectionStart - 1);
-      }
-    } else if (e.key.match(/[0-9]/)) { // replace existing symbols
-      if (this.value[e.target.selectionStart] !== '/') {
-        e.target.setSelectionRange(e.target.selectionStart, e.target.selectionStart + 1);
-      }
-    } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-      const inc = e.key === 'ArrowUp' ? 1 : -1;
-      const d = this.date;
-      const curPos = this.getPosition(this.date);
-      if (e.target.selectionStart <= curPos.y) {
-        d.setUTCFullYear(d.getUTCFullYear() + inc);
-        this.setCursor(0, this.getPosition(d).y);
-      } else if (e.target.selectionStart > curPos.y && e.target.selectionStart <= curPos.m) {
-        d.setUTCFullYear(d.getUTCFullYear(), d.getUTCMonth() + inc);
-        this.setCursor(curPos.y + 1, this.getPosition(d).m);
-      } else if (e.target.selectionStart > curPos.m) {
-        d.setUTCFullYear(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + inc);
-        this.setCursor(curPos.m + 1, this.getPosition(d).d);
-      }
-      this.value = d.getUTCFullYear() === 0 ? null : d;
-      e.preventDefault();
-    }
   }
 
   render() {
