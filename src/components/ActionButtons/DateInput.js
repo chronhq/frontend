@@ -19,6 +19,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
+import { ActionButtonFill } from './ActionButtons';
 
 const re = new RegExp('(^-?[0-9]*)/?([0-9]*)/?([0-9]*)');
 const maxYear = new Date().getUTCFullYear();
@@ -66,11 +67,12 @@ class DateInput extends React.Component {
   }
 
   @computed get value() {
-    const year = this.prepared.year !== 0 ? this.prepared.year : '';
+    const negative = this.old.negative ? '-' : '';
+    const year = this.old.year !== 0 ? this.old.year : '';
     const month = this.old.month !== 0 ? `/${this.old.month}` : '';
     const day = this.old.day !== 0 ? `/${this.old.day}` : '';
     const trailing = (year && !day) ? '/' : '';
-    return `${year}${month}${day}${trailing}`;
+    return `${negative}${year}${month}${day}${trailing}`;
   }
 
   set value(d) {
@@ -156,14 +158,22 @@ class DateInput extends React.Component {
 
   render() {
     return (
-      <input
-        ref={(r) => { this.ref = r; }}
-        placeholder='YYYY/MM/DD'
-        className='text=input input-text'
-        value={this.value}
-        onChange={this.setValue}
-        onKeyDown={this.keyDown}
-      />
+      <div style={{ display: 'grid', height: '2rem', gridTemplateColumns: '7rem 2rem' }}>
+        <input
+          ref={(r) => { this.ref = r; }}
+          placeholder='YYYY/MM/DD'
+          className='text=input input-text'
+          value={this.value}
+          onChange={this.setValue}
+          onKeyDown={this.keyDown}
+        />
+        <ActionButtonFill
+          click={this.search}
+          text=''
+          icon='calendar--light'
+          style={{ borderRadius: '0 2px 2px 0' }}
+        />
+      </div>
     );
   }
 }
