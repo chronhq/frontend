@@ -20,7 +20,7 @@ import {
   observable, action, computed
 } from 'mobx';
 
-export default class TooltipModel {
+class GenericOverlayModel {
   @observable content = '';
 
   @observable visible = false;
@@ -46,4 +46,10 @@ export default class TooltipModel {
     this.transform = style.transform;
     this.content = content;
   }
+}
+
+export default class OverlayModel {
+  @observable tooltip = new GenericOverlayModel();
+
+  @observable calendar = new GenericOverlayModel();
 }

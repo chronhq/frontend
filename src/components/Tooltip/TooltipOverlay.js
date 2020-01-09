@@ -27,7 +27,7 @@ import './TooltipOverlay.less';
 @observer
 class TooltipOverlay extends React.Component {
   @computed get tooltip() {
-    return this.props.store.tooltip;
+    return this.props.store.overlays.tooltip;
   }
 
   render() {

@@ -35,7 +35,7 @@ import DashboardSearch from './Search/DashboardSearch';
 import AuthModel from './AuthModel';
 import AdminModel from './AdminModel';
 import Wikidata from './Wikidata/Wikidata';
-import TooltipModel from './TooltipModel';
+import OverlayModel from './OverlayModel';
 
 export default class storeModel {
   @observable fonts = {};
@@ -57,7 +57,7 @@ export default class storeModel {
     this.analytics = new AnalyticModel();
     this.auth = new AuthModel();
     this.admin = new AdminModel();
-    this.tooltip = new TooltipModel();
+    this.overlays = new OverlayModel();
     this.remToPixel = (rem) => rem * parseFloat(
       getComputedStyle(document.documentElement).fontSize
     );

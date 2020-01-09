@@ -46,7 +46,7 @@ class Tooltip extends React.Component {
   setHover = (h) => {
     const position = this.position(this.ref.getBoundingClientRect());
     const style = { ...position, transform: this.transform };
-    this.props.store.tooltip.onMouseEvent(h, style, this.props.content);
+    this.props.store.overlays.tooltip.onMouseEvent(h, style, this.props.content);
   }
 
   position = (box) => {
