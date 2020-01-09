@@ -34,7 +34,7 @@ import disabled from '../../../disabled.json';
 @observer
 class LoginScreen extends React.Component {
   dummyUser = action(() => {
-    this.auth.user = {};
+    this.auth.user = { dummy: true };
   })
 
   @computed get auth() {

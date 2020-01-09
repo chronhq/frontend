@@ -29,7 +29,13 @@ import LoginScreen from '../../containers/AdminOverlay/LoginScreen';
 @observer
 class AdminLoginGuard extends React.Component {
   authStatusChanged = action((user) => {
-    this.auth.user = user;
+    // Prevent logout on hot reload
+    if (process.env.NODE_ENV === 'development'
+      && this.auth.user !== null && user === null) {
+      console.info('Ignoring user change', this.auth.user, user);
+    } else {
+      this.auth.user = user;
+    }
   })
 
   initFirebase = action(() => {
