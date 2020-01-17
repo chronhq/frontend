@@ -17,17 +17,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { observer } from 'mobx-react';
 import DatePicker, { dateToLocaleString } from './DatePicker';
 import ModalWrapper from '../ModalWrapper';
 
+const id = 'modal-overlay';
 
-const DatePickerModal = ({
-  close, save, date, isOpen
-}) => (
-  <ModalWrapper className='date-picker__modal' close={close} isOpen={isOpen}>
-    <DatePicker save={save} date={date} />
-  </ModalWrapper>
-);
+@observer
+class DatePickerModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.el = document.createElement('div');
+  }
+
+  componentDidMount() {
+    document.getElementById(id).appendChild(this.el);
+  }
+
+  componentWillUnmount() {
+    document.getElementById(id).removeChild(this.el);
+  }
+
+  render() {
+    const {
+      close, save, date, isOpen
+    } = this.props;
+
+    return (
+      ReactDOM.createPortal(isOpen ? (
+        <ModalWrapper className='date-picker__modal' close={close} isOpen={isOpen}>
+          <DatePicker save={save} date={date} />
+        </ModalWrapper>
+      ) : null, this.el)
+    );
+  }
+}
 
 export { dateToLocaleString };
 

@@ -87,8 +87,9 @@ class AdminSTV extends React.Component {
         <SmoothCollapse expanded={this.add}>
           <div className='stv-entity stv-entity--grid stv-entity--new'>
             <div style={{ gridArea: '1 / 1 / 1 / 3' }}>
-              <CalendarWidget />
+              Start Date
               <DateInput />
+              End Date
               <DateInput />
             </div>
             <div style={{ gridArea: '1 / 3 / 1 / 5' }}>

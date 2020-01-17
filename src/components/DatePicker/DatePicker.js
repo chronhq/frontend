@@ -42,6 +42,15 @@ export const dateToLocaleString = (date) => {
   }
 };
 
+const eraCalculator = (nextYear) => nextYear - (nextYear % 100 % 50);
+
+const propsToState = (next) => ({
+  era: eraCalculator(next.date.getUTCFullYear()),
+  year: next.date.getUTCFullYear(),
+  month: next.date.getUTCMonth() + 1,
+  day: next.date.getDate(),
+});
+
 export const DateFromJulian = ({ date = undefined }) => {
   if (date === undefined || date === null) return 'No Date';
   try {
@@ -57,11 +66,11 @@ export const DateFromJulian = ({ date = undefined }) => {
 class DatePicker extends React.Component {
   constructor(props) {
     super();
-    this.state = this.propsToState(props);
+    this.state = propsToState(props);
   }
 
-  getDerivedStateFromProps(props) {
-    return this.propsToState(props);
+  static getDerivedStateFromProps(props) {
+    return propsToState(props);
   }
 
   get date() {
@@ -71,18 +80,9 @@ class DatePicker extends React.Component {
     return d;
   }
 
-  eraCalculator = (nextYear) => nextYear - (nextYear % 100 % 50)
-
-  propsToState = (next) => ({
-    era: this.eraCalculator(next.date.getUTCFullYear()),
-    year: next.date.getUTCFullYear(),
-    month: next.date.getUTCMonth() + 1,
-    day: next.date.getDate(),
-  })
-
   setDate = (year, month, day) => (
     this.setState((s) => ({
-      era: this.eraCalculator(year !== undefined ? year : s.year),
+      era: eraCalculator(year !== undefined ? year : s.year),
       year: year !== undefined ? year : s.year,
       month: month || s.month,
       day: day || s.day,

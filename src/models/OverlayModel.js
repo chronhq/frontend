@@ -50,6 +50,4 @@ class GenericOverlayModel {
 
 export default class OverlayModel {
   @observable tooltip = new GenericOverlayModel();
-
-  @observable calendar = new GenericOverlayModel();
 }

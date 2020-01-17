@@ -35,6 +35,7 @@ class SummerAdmin extends React.Component {
         <Balloon />
         <AdminInterface params={this.props.params} />
         <TooltipOverlay />
+        <div id='modal-overlay' />
       </Wrapper>
     );
   }

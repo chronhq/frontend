@@ -20,12 +20,15 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
 import { ActionButtonFill } from './ActionButtons';
+import DatePickerModal from '../DatePicker/DatePickerModal';
 
 const re = new RegExp('(^-?[0-9]*)/?([0-9]*)/?([0-9]*)');
 const maxYear = new Date().getUTCFullYear();
 
 @observer
 class DateInput extends React.Component {
+  @observable visible = false;
+
   @observable cursor = {
     start: 0,
     end: 0,
@@ -168,10 +171,17 @@ class DateInput extends React.Component {
           onKeyDown={this.keyDown}
         />
         <ActionButtonFill
-          click={this.search}
+          click={action(() => { this.visible = true; })}
           text=''
+          disabled={!this.visible}
           icon='calendar--light'
           style={{ borderRadius: '0 2px 2px 0' }}
+        />
+        <DatePickerModal
+          save={(d) => { this.value = d; }}
+          date={this.date}
+          close={action(() => { this.visible = false; })}
+          isOpen={this.visible}
         />
       </div>
     );
