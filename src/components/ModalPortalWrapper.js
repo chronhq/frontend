@@ -17,29 +17,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { inject, observer } from 'mobx-react';
+import ReactDOM from 'react-dom';
+import { observer } from 'mobx-react';
+import ModalWrapper from './ModalWrapper';
 
-import GeoLayers from '../containers/GeoLayers';
-import Balloon from '../containers/Balloon';
-import Wrapper from './Wrapper';
-import AdminInterface from '../templates/AdminInterface/AdminInterface';
-import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
-import { ModalPortalContainer } from '../components/ModalPortalWrapper';
+const id = 'modal-overlay';
 
-@inject('store')
 @observer
-class SummerAdmin extends React.Component {
+class ModalPortalWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.el = document.createElement('div');
+  }
+
+  componentDidMount() {
+    document.getElementById(id).appendChild(this.el);
+  }
+
+  componentWillUnmount() {
+    document.getElementById(id).removeChild(this.el);
+  }
+
   render() {
+    const {
+      close, className, isOpen
+    } = this.props;
+
     return (
-      <Wrapper story='world' fake='0' metric='check_admin'>
-        <GeoLayers />
-        <Balloon />
-        <AdminInterface params={this.props.params} />
-        <TooltipOverlay />
-        <ModalPortalContainer />
-      </Wrapper>
+      ReactDOM.createPortal(isOpen ? (
+        <ModalWrapper className={className} close={close} isOpen={isOpen}>
+          {this.props.children}
+        </ModalWrapper>
+      ) : null, this.el)
     );
   }
 }
 
-export default SummerAdmin;
+export const ModalPortalContainer = () => (<div id={id} />);
+
+export default ModalPortalWrapper;
