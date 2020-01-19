@@ -40,12 +40,12 @@ class ModalPortalWrapper extends React.Component {
 
   render() {
     const {
-      close, className, isOpen
+      close, className, isOpen, style
     } = this.props;
 
     return (
       ReactDOM.createPortal(isOpen ? (
-        <ModalWrapper className={className} close={close} isOpen={isOpen}>
+        <ModalWrapper style={style} className={className} close={close} isOpen={isOpen}>
           {this.props.children}
         </ModalWrapper>
       ) : null, this.el)

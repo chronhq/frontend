@@ -17,20 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
+import { observable, computed, action } from 'mobx';
+
 import julian from 'julian';
 
-import DatePickerHeader from './DatePickerHeader';
-import DatePickerYears from './DatePickerYears';
-
-import TwoActions from '../TwoActions/TwoActions';
-import ActionButton, { ChangeActionButton } from '../ActionButtons/ActionButtons';
+import { ActionButtonFill } from '../ActionButtons/ActionButtons';
 
 import './DatePicker.less';
-
-const minEra = 0;
-const maxEra = 2000;
-
 
 export const dateToLocaleString = (date) => {
   try {
@@ -42,14 +36,11 @@ export const dateToLocaleString = (date) => {
   }
 };
 
-const eraCalculator = (nextYear) => nextYear - (nextYear % 100 % 50);
+const monthLabel = (n, l = window.navigator.language || 'en-US') => (
+  new Date(`2000-${n}-10`).toLocaleString(l, { month: 'short' })
+);
 
-const propsToState = (next) => ({
-  era: eraCalculator(next.date.getUTCFullYear()),
-  year: next.date.getUTCFullYear(),
-  month: next.date.getUTCMonth() + 1,
-  day: next.date.getDate(),
-});
+const monthLabels = new Array(12).fill(1).map((v, idx) => monthLabel(idx + v));
 
 export const DateFromJulian = ({ date = undefined }) => {
   if (date === undefined || date === null) return 'No Date';
@@ -63,73 +54,224 @@ export const DateFromJulian = ({ date = undefined }) => {
   }
 };
 
+const DatePickerHeaderLite = ({ text, back, close }) => (
+  <div className='date-picker__header'>
+    <ActionButtonFill
+      click={back}
+      text=''
+      icon={close ? 'cross--blue' : 'back--blue'}
+      style={{ height: '1.25rem', width: '1.25rem', backgroundColor: 'transparent' }}
+    />
+    <div>
+      {text}
+    </div>
+  </div>
+);
+
+const PickerEntity = ({
+  label, onClick = () => true, selected, sideEffect
+}) => {
+  const classNames = [];
+  if (selected) classNames.push('date-picker__entity--selected');
+  if (sideEffect) classNames.push('admin-stv-card-main__font');
+  const className = classNames.join(' ');
+  return (
+    <div
+      className={className}
+      onClick={() => onClick(label)}
+      onKeyPress={() => onClick(label)}
+      tabIndex={0}
+      role='button'
+    >
+      {label}
+    </div>
+  );
+};
+
+@observer
 class DatePicker extends React.Component {
-  constructor(props) {
-    super();
-    this.state = propsToState(props);
+  @observable screenList = ['century', 'decade', 'year', 'month', 'day'];
+
+  @observable stepList = [100, 10, 1];
+
+  @observable screen = 0;
+
+  @observable shiftList = [0, 0, 0];
+
+  @observable yearList = [0, 0, 0];
+
+  setYear = (y) => {
+    const { month, day } = this.props.parent.prepared.date;
+    this.props.parent.setValues(y, y, month + 1, day);
   }
 
-  static getDerivedStateFromProps(props) {
-    return propsToState(props);
+  setMonth = (m) => {
+    const p = this.props.parent.prepared;
+    this.props.parent.setValues(p.year, p.year, m, p.date.day);
   }
 
-  get date() {
-    const d = new Date('2000-01-01');
-    // UTC Month start from 0
-    d.setUTCFullYear(this.state.year, this.state.month - 1, this.state.day);
-    return d;
+  setDay = (d) => {
+    const p = this.props.parent.prepared;
+    this.props.parent.setValues(p.year, p.year, p.date.month + 1, d);
   }
 
-  setDate = (year, month, day) => (
-    this.setState((s) => ({
-      era: eraCalculator(year !== undefined ? year : s.year),
-      year: year !== undefined ? year : s.year,
-      month: month || s.month,
-      day: day || s.day,
-    })))
+  setShift = action((b) => {
+    const v = this.yearValues.values.length;
+    const maxScreen = this.rangeLimits.steps - (v + 1);
+    let s = b
+      ? this.shiftList[this.screen] + v
+      : this.shiftList[this.screen] - v;
+    if (s < 0) s = 0;
+    if (s > maxScreen) s = maxScreen;
+    this.shiftList[this.screen] = s;
+  })
 
-  changeEra = (era) => (
-    this.setState(
-      (minEra <= era && maxEra >= era) ? { era } : {}
-    ))
+  setScreenDate = action((y) => {
+    this.yearList[this.screen] = y;
+    let next = this.screen + 1;
+    if (next < 3) {
+      const limits = this.limits[next];
+      let s = (limits.max - y - this.rangeLimits.step) / limits.step;
+      if (s < 0) s = 0;
+      if (s > limits.steps) s = limits.steps;
+      this.shiftList[next] = s;
+    } else if (y !== 0) {
+      this.setYear(y);
+    } else {
+      this.props.parent.setValues(0, 0, 0, 0);
+      next = 0;
+    }
+    this.screen = next;
+  })
 
-  resetEra = () => this.setDate(this.state.year);
+  setScreenMonth = action((m) => {
+    this.setMonth(m);
+    this.screen = this.screen + 1;
+  });
 
-  save = () => {
-    this.props.save(this.date);
+  setScreenDay = (d) => {
+    this.setDay(d);
+    this.props.parent.close();
+  }
+
+  @computed get limits() {
+    const { minYear, maxYear } = this.props.parent;
+    return this.stepList.map((step) => {
+      const max = maxYear - (maxYear % step);
+      const min = minYear - (minYear % step);
+      const steps = (max - min) / step;
+      return {
+        max, min, steps, step,
+      };
+    });
+  }
+
+  @computed get rangeLimits() {
+    return this.limits[this.screen];
+  }
+
+  @computed get yearValues() {
+    const shift = this.shiftList[this.screen];
+    const values = [];
+    while ((values.length < 10)) {
+      const tmp = this.rangeLimits.max - ((values.length + shift + 1) * this.rangeLimits.step);
+      if (tmp <= this.rangeLimits.min) break;
+      values.push(tmp);
+    }
+    const max = this.rangeLimits.max - (shift * this.rangeLimits.step);
+    const min = this.rangeLimits.max - ((values.length + shift + 1) * this.rangeLimits.step);
+    values.reverse();
+    return {
+      max,
+      min,
+      values
+    };
+  }
+
+  @computed get yearsSelected() {
+    const { year } = this.props.parent.prepared;
+    return year - (year % this.rangeLimits.step);
+  }
+
+  @computed get yearsScreen() {
+    const isMin = this.yearValues.min === this.rangeLimits.min;
+    const isMax = this.yearValues.max === this.rangeLimits.max;
+    return (
+      <div className='date-picker__content'>
+        <PickerEntity
+          key={`year-${this.yearValues.min}`}
+          label={this.yearValues.min}
+          // selected={this.yearValues.min === this.yearsSelected}
+          sideEffect={!isMin}
+          onClick={isMin
+            ? () => this.setScreenDate(this.yearValues.min)
+            : () => this.setShift(true)}
+        />
+        {this.yearValues.values.map((v) => (
+          <PickerEntity
+            key={`year-${v}`}
+            label={v}
+            selected={v === this.yearsSelected}
+            onClick={() => this.setScreenDate(v)}
+          />
+        ))}
+        <PickerEntity
+          key={`year-${this.yearValues.max}`}
+          label={this.yearValues.max}
+          // selected={this.yearValues.max === this.yearsSelected}
+          sideEffect={!isMax}
+          onClick={isMax
+            ? () => this.setScreenDate(this.yearValues.max)
+            : () => this.setShift(false)}
+        />
+      </div>
+    );
+  }
+
+  @computed get daysScreen() {
+    const max = new Array(this.props.parent.maxDay).fill(1).map((v, idx) => idx + v);
+    const { day } = this.props.parent.prepared.date;
+    return (
+      <div className='date-picker__content date-picker__content--days'>
+        {max.map((v) => (
+          <PickerEntity key={`day-${v}`} selected={day === v} label={v} onClick={() => this.setScreenDay(v)} />
+        ))}
+      </div>
+    );
+  }
+
+  @computed get monthsScreen() {
+    const { month } = this.props.parent.prepared.date;
+    return (
+      <div className='date-picker__content'>
+        {monthLabels.map((v, idx) => (
+          <PickerEntity
+            key={`month-${v}`}
+            selected={month === idx}
+            label={v}
+            onClick={() => this.setScreenMonth(idx + 1)}
+          />
+        ))}
+      </div>
+    );
   }
 
   render() {
+    const screen = this.screenList[this.screen];
+    const back = this.screen === 0
+      ? () => this.props.parent.close()
+      : () => { this.screen = this.screen - 1; };
+
     return (
       <div className='float-container date-picker__container'>
-        <DatePickerHeader
-          {...this.state}
-          changeEra={this.changeEra}
-          setDate={this.setDate}
-        />
-        <hr />
-        <DatePickerYears
-          era={this.state.era}
-          year={this.state.year}
-          setDate={this.setDate}
-        />
-        <hr />
-        <TwoActions>
-          <ActionButton icon='redo' text={dateToLocaleString(this.date)} click={this.resetEra} />
-          <ChangeActionButton icon='save' text='Save' click={this.save} />
-        </TwoActions>
+        <DatePickerHeaderLite text={`Choose ${screen}`} back={back} close={this.screen === 0} />
+        {screen === 'day' && this.daysScreen}
+        {screen === 'month' && this.monthsScreen}
+        {this.screen < 3 && this.yearsScreen}
       </div>
     );
   }
 }
 
-DatePicker.defaultProps = {
-  date: new Date('1800-01-01')
-};
-
-DatePicker.propTypes = {
-  date: PropTypes.instanceOf(Date),
-  save: PropTypes.func.isRequired
-};
 
 export default DatePicker;

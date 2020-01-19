@@ -20,13 +20,17 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
 import { ActionButtonFill } from './ActionButtons';
-import DatePickerModal from '../DatePicker/DatePickerModal';
+import ModalPortalWrapper from '../ModalPortalWrapper';
+import DatePicker from '../DatePicker/DatePicker';
 
 const re = new RegExp('(^-?[0-9]*)/?([0-9]*)/?([0-9]*)');
-const maxYear = new Date().getUTCFullYear();
 
 @observer
 class DateInput extends React.Component {
+  @observable maxYear = new Date().getUTCFullYear();
+
+  @observable minYear = -4713;
+
   @observable visible = false;
 
   @observable cursor = {
@@ -41,12 +45,41 @@ class DateInput extends React.Component {
     day: 0,
   };
 
+  @observable topPos = 0;
+
+  @observable leftPos = 0;
+
+  close = action(() => {
+    this.visible = false;
+  })
+
+  open = action((e) => {
+    this.visible = true;
+    const box = e.target.getBoundingClientRect();
+    this.topPos = box.top;
+    this.leftPos = `calc(${box.right}px + .5rem)`;
+  })
+
   setCursor = action((start, end) => {
     this.cursor.start = start;
     this.cursor.end = end;
   })
 
-  setValue = action((e) => {
+  setValues = action((raw, year, month, day) => {
+    this.old.negative = Boolean(String(raw).match(/^-/));
+
+    if (year > this.minYear && year <= this.maxYear) {
+      this.old.year = this.old.negative ? year * -1 : year;
+    }
+
+    if (!Number.isNaN(month) && month !== undefined) {
+      this.old.month = (month >= 0 && month < 13) ? month : 12;
+    }
+
+    this.old.day = (day >= 0 && day < this.maxDay) ? day : this.maxDay;
+  })
+
+  parseAndSave = action((e) => {
     this.setCursor(e.target.selectionStart, e.target.selectionEnd);
 
     const clean = e.target.value.match(/[-0-9/]/g);
@@ -60,17 +93,7 @@ class DateInput extends React.Component {
     const month = Number(values[2].slice(0, 2));
     const day = Number(values[3].slice(0, 2));
 
-    this.old.negative = Boolean(values[1].match(/^-/));
-
-    if (year > -4713 && year <= maxYear) {
-      this.old.year = this.old.negative ? year * -1 : year;
-    }
-
-    if (!Number.isNaN(month) && month !== undefined) {
-      this.old.month = (month >= 0 && month < 13) ? month : 12;
-    }
-
-    this.old.day = (day >= 0 && day < this.maxDay) ? day : this.maxDay;
+    this.setValues(values[1], year, month, day);
   })
 
   keyDown = action((e) => {
@@ -160,6 +183,7 @@ class DateInput extends React.Component {
   }
 
   render() {
+    const style = { top: this.topPos, left: this.leftPos };
     return (
       <div style={{ display: 'grid', height: '2rem', gridTemplateColumns: '7rem 2rem' }}>
         <input
@@ -167,22 +191,24 @@ class DateInput extends React.Component {
           placeholder='YYYY/MM/DD'
           className='text=input input-text'
           value={this.value}
-          onChange={this.setValue}
+          onChange={this.parseAndSave}
           onKeyDown={this.keyDown}
         />
         <ActionButtonFill
-          click={action(() => { this.visible = true; })}
+          click={this.open}
           text=''
           disabled={!this.visible}
           icon='calendar--light'
           style={{ borderRadius: '0 2px 2px 0' }}
         />
-        <DatePickerModal
-          save={(d) => { this.value = d; }}
-          date={this.date}
-          close={action(() => { this.visible = false; })}
+        <ModalPortalWrapper
+          className='date-picker__modal admin-te-card-main__font'
           isOpen={this.visible}
-        />
+          close={this.close}
+          style={style}
+        >
+          <DatePicker parent={this} />
+        </ModalPortalWrapper>
       </div>
     );
   }

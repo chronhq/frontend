@@ -30,7 +30,6 @@ import './AdminSTV.less';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import AdminTECard from '../AdminTE/AdminTECard';
 import UploadWidget from '../../components/ActionButtons/UploadWidget';
-import CalendarWidget from '../../components/ActionButtons/CalendarWidget';
 import DateInput from '../../components/ActionButtons/DateInput';
 
 const STVTableHeader = () => (
@@ -74,7 +73,6 @@ class AdminSTV extends React.Component {
   }
 
   render() {
-    // const data = this.props.store.admin.stvs;
     return (
       <AdminWrapper>
         <AdminTECard te={this.props.params.entity} data={this.data} change={this.change} />

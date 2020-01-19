@@ -21,51 +21,45 @@
 
 .date-picker__modal {
   position: absolute;
-  transform: translate(-50%, 0%);
-  left: 50%;
-  top: 10%;
-  z-index: 999;
-  min-width: 16rem;
-  max-width: 20rem;
+  z-index: @z-index-overlay;
+  width: 12rem;
 }
 
 .date-picker__container {
-  padding: 1rem 0.25rem;
+  padding: .5rem;
   user-select: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: @z-index-overlay;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  // z-index: @z-index-overlay;
 }
 
-.date-picker__date {
-  display: flex;
-  margin: 0.5rem;
-  flex-direction: row;
-  justify-content: space-around;
+.date-picker__header {
+  display: grid;
+  grid-template-columns: 2rem auto;
+  justify-content: stretch;
+  justify-items: center;
 }
 
-.date-picker__years {
-  display: flex;
-  margin: 0.5rem;
-  flex-direction: column;
-}
-
-.date-picker__years-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.date-picker__years-row-item {
-  padding: 1px;
-  border-radius: 0.2rem;
-  &:hover {
-    padding: 0px;
-    border: 1px solid @dark-grey;
+.date-picker__content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: .25rem;
+  &--days {
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: .05rem;
   }
-  &-selected {
-    background-color: @dark-grey;
-    transition: background-color 150ms ease-in-out;
+
+  div {
+    padding: 5px;
+    border-radius: 0.2rem;
+    &:hover {
+      padding: 4px;
+      border: 1px solid @dark-grey;
+    }
   }
+}
+.date-picker__entity--selected {
+  background-color: @panel;
+  transition: background-color 150ms ease-in-out;
 }
