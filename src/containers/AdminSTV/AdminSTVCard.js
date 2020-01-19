@@ -45,8 +45,17 @@ class AdminSTVCard extends React.Component {
             ))}
           </div>
           <div className='stv-entity--buttons'>
+            <a
+              href={`/api/spacetime-volumes/${this.props.stv.id}/download`}
+              target='_blank'
+              rel='noopener noreferrer'
+              ref={(r) => { this.ref = r; }}
+              style={{ visibility: 'hidden', position: 'absolute' }}
+            >
+              Download STV
+            </a>
             <ActionButtonFill
-              click={() => console.log('Click download')}
+              click={() => this.ref.click()}
               text=''
               icon='download--blue'
               style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}
