@@ -19,7 +19,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { DateFromJulian } from '../../components/DatePicker/DatePicker';
+import { DateFromJulian } from '../../components/DateInput/DatePicker';
 import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
 
 @inject('store')

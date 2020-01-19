@@ -25,7 +25,7 @@ import { computed, action, observable } from 'mobx';
 import './AdminTECard.less';
 import ColorPicker from '../../components/ColorPicker/ColorPicker';
 import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
-import { DateFromJulian } from '../../components/DatePicker/DatePicker';
+import { DateFromJulian } from '../../components/DateInput/DatePicker';
 
 
 @inject('store')
