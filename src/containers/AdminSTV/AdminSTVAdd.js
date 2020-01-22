@@ -23,6 +23,7 @@ import SmoothCollapse from 'react-smooth-collapse';
 
 import UploadWidget from './UploadWidget';
 import DateInput from '../../components/DateInput/DateInput';
+import { julianInt } from '../../models/YearModel';
 
 @inject('store')
 @observer
@@ -47,8 +48,8 @@ class AdminSTVAdd extends React.Component {
 
   @computed get data() {
     return this.error ? {} : {
-      end_date: this.endDate,
-      start_date: this.startDate
+      end_date: julianInt(this.endDate),
+      start_date: julianInt(this.startDate)
     };
   }
 
