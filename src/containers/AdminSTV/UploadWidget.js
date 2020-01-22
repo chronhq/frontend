@@ -18,8 +18,9 @@
  */
 import React from 'react';
 import Upload from 'rc-upload';
+import { observer, inject } from 'mobx-react';
 
-import { UploadActionButton } from './ActionButtons';
+import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
 
 import './UploadWidget.less';
 
@@ -31,7 +32,19 @@ const ProgressBar = ({ progress, total = 10, current = 5 }) => (
     />
   </div>
 );
+
+@inject('store')
+@observer
 class UploadWidget extends React.Component {
+  componentDidMount() {
+    this.props.store.auth.syncToken(true);
+  }
+
+  beforeUpload = () => {
+    console.log('starting upload');
+    return (Object.keys(this.props.data).length !== 0);
+  }
+
   onStart = (file) => {
     console.log('onStart', file, file.name);
   }
@@ -53,18 +66,24 @@ class UploadWidget extends React.Component {
       <div className='upload-widget'>
         <ProgressBar progress={30} />
         <Upload
-          multiple
+          accept='.json, .geojson'
+          multiple={false}
+          name='territory'
           style={{ width: '10rem', textAlign: 'right' }}
-          // data={{ a: 1, b: 2 }}
-          // headers={{
-          //   Authorization: '$prefix $token',
-          // }}
-          action='http://localhost:8000/upload'
+          data={this.props.data}
+          headers={this.props.store.auth.headers}
+          action='/api/spacetime-volumes/'
+          beforeUpload={this.beforeUpload}
           onStart={this.onStart}
           onSuccess={this.onSuccess}
           onError={this.onError}
         >
-          <UploadActionButton text='Upload' click={() => null} />
+          <ActionButtonFill
+            click={() => null}
+            text=''
+            icon='upload--blue'
+            style={{ height: '4rem', width: '4rem', backgroundColor: 'transparent' }}
+          />
         </Upload>
       </div>
     );

@@ -67,7 +67,6 @@ const SandboxActionButton = ({ text, click }) => ActionButton({ text, click, ico
 const CreateActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'add' });
 const ChangeActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'edit' });
 const CalendarActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'calendar' });
-const UploadActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'upload' });
 const LabelActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'road-sign' });
 
 
@@ -76,7 +75,6 @@ export {
   ChangeActionButton,
   SandboxActionButton,
   CalendarActionButton,
-  UploadActionButton,
   LabelActionButton,
   ActionButtonFill,
 };

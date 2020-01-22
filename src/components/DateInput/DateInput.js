@@ -19,6 +19,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, computed, action } from 'mobx';
+import PropTypes from 'prop-types';
+
 import { ActionButtonFill } from '../ActionButtons/ActionButtons';
 import ModalPortalWrapper from '../ModalPortalWrapper';
 import DatePicker from './DatePicker';
@@ -77,6 +79,7 @@ class DateInput extends React.Component {
     }
 
     this.old.day = (day >= 0 && day < this.maxDay) ? day : this.maxDay;
+    this.props.save(this.date);
   })
 
   parseAndSave = action((e) => {
@@ -213,5 +216,9 @@ class DateInput extends React.Component {
     );
   }
 }
+
+DateInput.propTypes = {
+  save: PropTypes.any.isRequired
+};
 
 export default DateInput;
