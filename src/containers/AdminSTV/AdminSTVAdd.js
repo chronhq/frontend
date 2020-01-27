@@ -21,7 +21,7 @@ import { observer, inject } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
 import SmoothCollapse from 'react-smooth-collapse';
 
-import UploadWidget from './UploadWidget';
+import UploadWidget from './UploadWidget/UploadWidget';
 import DateInput from '../../components/DateInput/DateInput';
 import { julianInt } from '../../models/YearModel';
 
@@ -31,6 +31,8 @@ class AdminSTVAdd extends React.Component {
   @observable startDate = undefined;
 
   @observable endDate = undefined;
+
+  @observable files = [];
 
   setDate = action((d, type) => {
     this[type] = d;
@@ -56,17 +58,21 @@ class AdminSTVAdd extends React.Component {
   render() {
     return (
       <SmoothCollapse expanded={this.props.add}>
-        <div className='stv-entity stv-entity--grid stv-entity--new'>
-          <div style={{ gridArea: '1 / 1 / 1 / 3' }}>
+        <div className='stv-entity stv-entity__new--grid'>
+          <div style={{ gridArea: 'dates' }}>
             Start Date
             <DateInput save={(d) => this.setDate(d, 'startDate')} />
             End Date
             <DateInput save={(d) => this.setDate(d, 'endDate')} />
           </div>
-          <div style={{ gridArea: '1 / 3 / 1 / 5' }}>
-            <UploadWidget data={this.data} />
-            {this.error && <div>{this.error}</div>}
+          <div style={{ gridArea: 'content' }}>
+            <UploadWidget
+              data={this.data}
+              files={this.files}
+              selectFiles={(f) => { this.files = f; }}
+            />
           </div>
+          {this.error && <div style={{ gridArea: 'message' }}>{this.error}</div>}
         </div>
       </SmoothCollapse>
     );

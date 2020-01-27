@@ -17,10 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import Upload from 'rc-upload';
 import { observer, inject } from 'mobx-react';
+import { computed } from 'mobx';
 
-import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
+import OptionsList from './OptionsList';
+import SelectFiles from './SelectFiles';
+import { ActionButtonFillText } from '../../../components/ActionButtons/ActionButtons';
 
 import './UploadWidget.less';
 
@@ -33,58 +35,55 @@ const ProgressBar = ({ progress, total = 10, current = 5 }) => (
   </div>
 );
 
+
 @inject('store')
 @observer
 class UploadWidget extends React.Component {
-  componentDidMount() {
-    this.props.store.auth.syncToken(true);
+  @computed get stage() {
+    // if (this.props.edit) return 'edit';
+    if (this.props.progress) return 'uploading';
+    return !this.props.files.length ? 'select' : 'ready';
   }
 
-  beforeUpload = () => {
-    console.log('starting upload');
-    return (Object.keys(this.props.data).length !== 0);
+  @computed get screen() {
+    switch (this.stage) {
+      case 'uploading':
+        return (<ProgressBar progress={this.props.progress} />);
+      case 'ready':
+        return (
+          <>
+            <OptionsList
+              options={this.props.files}
+              selectOptions={this.props.selectFiles}
+            />
+            <ActionButtonFillText
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              click={() => null}
+              icon='upload--blue'
+              size='4rem'
+              text='Upload'
+            />
+          </>
+        );
+      case 'select':
+      default:
+        return (
+          <>
+            <div />
+            <SelectFiles
+              accept='.json, .geojson'
+              multiple={false}
+              selectFiles={this.props.selectFiles}
+            />
+          </>
+        );
+    }
   }
-
-  onStart = (file) => {
-    console.log('onStart', file, file.name);
-  }
-
-  onSuccess = (ret) => {
-    console.log('onSuccess', ret);
-  }
-
-  onError = (err) => {
-    console.log('onError', err);
-  }
-
-  // onProgress({ percent }, file) {
-  //   console.log('onProgress', `${percent}%`, file.name);
-  // }
 
   render() {
     return (
       <div className='upload-widget'>
-        <ProgressBar progress={30} />
-        <Upload
-          accept='.json, .geojson'
-          multiple={false}
-          name='territory'
-          style={{ width: '10rem', textAlign: 'right' }}
-          data={this.props.data}
-          headers={this.props.store.auth.headers}
-          action='/api/spacetime-volumes/'
-          beforeUpload={this.beforeUpload}
-          onStart={this.onStart}
-          onSuccess={this.onSuccess}
-          onError={this.onError}
-        >
-          <ActionButtonFill
-            click={() => null}
-            text=''
-            icon='upload--blue'
-            style={{ height: '4rem', width: '4rem', backgroundColor: 'transparent' }}
-          />
-        </Upload>
+        {this.screen}
       </div>
     );
   }

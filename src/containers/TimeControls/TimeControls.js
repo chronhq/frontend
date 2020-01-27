@@ -21,7 +21,7 @@ import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import YearSelectButton from './YearSelectButton';
 import TimeControlButtons from './TimeControlButtons';
-import { ProgressBar } from '../AdminSTV/UploadWidget';
+import { ProgressBar } from '../AdminSTV/UploadWidget/UploadWidget';
 
 import './TimeControls.less';
 import StepTimeButtons from './StepTimeButtons';

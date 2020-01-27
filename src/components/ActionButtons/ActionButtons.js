@@ -55,12 +55,22 @@ const ActionButtonFill = ({
     onClick={enabled ? click : () => null}
   >
     <div className={`icon icon-${icon} ${text ? 'action-button__icon' : ''}`} />
-    <div>
-      {text}
-    </div>
+    {text && <div>{text}</div>}
   </div>
 );
 
+const ActionButtonFillText = ({
+  click, icon, size, text, className, style
+}) => (
+  <div className={className} style={style}>
+    <ActionButtonFill
+      click={click}
+      icon={icon}
+      style={{ height: size, width: size, backgroundColor: 'transparent' }}
+    />
+    <div>{text}</div>
+  </div>
+);
 
 /* eslint-disable new-cap */
 const SandboxActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'sandbox' });
@@ -77,6 +87,7 @@ export {
   CalendarActionButton,
   LabelActionButton,
   ActionButtonFill,
+  ActionButtonFillText,
 };
 
 export default ActionButton;
