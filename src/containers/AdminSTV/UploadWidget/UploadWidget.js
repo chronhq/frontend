@@ -43,16 +43,25 @@ class UploadWidget extends React.Component {
     switch (this.props.stage) {
       case 'uploading':
         return (
-          <div>
-            <OptionsList
-              options={this.props.files}
-              selectOptions={() => null}
-            />
-            <div style={{ display: 'flex' }}>
-              <ProgressBar progress={this.props.progress} />
-              {` ${this.props.progress}%`}
+          <>
+            <div>
+              <OptionsList
+                options={this.props.files}
+                selectOptions={() => null}
+              />
+              <div style={{ display: 'flex' }}>
+                <ProgressBar progress={this.props.progress} />
+                {` ${this.props.progress}%`}
+              </div>
             </div>
-          </div>
+            <ActionButtonFillText
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              click={this.props.upload}
+              icon='redo--blue'
+              size='4rem'
+              text='Redo'
+            />
+          </>
         );
       case 'ready':
         return (

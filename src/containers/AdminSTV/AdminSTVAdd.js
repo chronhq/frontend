@@ -31,6 +31,8 @@ class AdminSTVAdd extends React.Component {
 
   @observable endDate = undefined;
 
+  @observable references = ['https://chronmaps.com'];
+
   @observable files = [];
 
   @observable uploadError;
@@ -70,6 +72,8 @@ class AdminSTVAdd extends React.Component {
   @computed get data() {
     const territory = this.files.length ? this.files[0] : undefined;
     return this.error ? {} : {
+      entity: this.props.entity,
+      references: this.references,
       end_date: julianInt(this.endDate),
       start_date: julianInt(this.startDate),
       territory,

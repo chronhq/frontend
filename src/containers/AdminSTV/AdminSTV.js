@@ -20,7 +20,6 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { computed, observable, action } from 'mobx';
 import { withRouter } from 'react-router-dom';
-// import SmoothCollapse from 'react-smooth-collapse';
 
 import ActionButton, { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
@@ -81,9 +80,7 @@ class AdminSTV extends React.Component {
             : <ActionButton text='Back' icon='exit' click={() => this.props.history.push('/admin/te/')} />}
           <ActionButton text='Save' icon='save' click={() => null} />
         </TwoActions>
-        {/* <SmoothCollapse expanded={this.add}> */}
-        {this.add && <AdminSTVAdd />}
-        {/* </SmoothCollapse> */}
+        {this.add && <AdminSTVAdd entity={this.props.params.entity} />}
         <TwoActions>
           <></>
           {this.add
