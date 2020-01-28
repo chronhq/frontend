@@ -19,7 +19,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
-import SmoothCollapse from 'react-smooth-collapse';
 
 import UploadWidget from './UploadWidget/UploadWidget';
 import DateInput from '../../components/DateInput/DateInput';
@@ -34,9 +33,28 @@ class AdminSTVAdd extends React.Component {
 
   @observable files = [];
 
+  @observable uploadError;
+
+  @observable form = this.props.store.auth.createForm(
+    '/api/spacetime-volumes/',
+    'POST',
+    action((context, error) => {
+      if (error) {
+        console.log('Error during upload', context.response.response);
+        this.uploadError = context.response.response.statusText;
+      }
+    })
+  );
+
   setDate = action((d, type) => {
     this[type] = d;
   });
+
+  @computed get stage() {
+    // if (this.props.edit) return 'edit';
+    if (this.form.progress) return 'uploading';
+    return !this.files.length ? 'select' : 'ready';
+  }
 
   @computed get error() {
     if (!(this.startDate instanceof Date && this.endDate instanceof Date)) {
@@ -45,36 +63,49 @@ class AdminSTVAdd extends React.Component {
     if (this.startDate > this.endDate) {
       return 'Start date should be earlier than end date';
     }
+    if (!this.files.length) return 'Select file';
     return false;
   }
 
   @computed get data() {
+    const territory = this.files.length ? this.files[0] : undefined;
     return this.error ? {} : {
       end_date: julianInt(this.endDate),
-      start_date: julianInt(this.startDate)
+      start_date: julianInt(this.startDate),
+      territory,
     };
+  }
+
+  @computed get message() {
+    if (this.stage === 'uploading') return this.uploadError;
+    return this.error;
+  }
+
+  upload = () => {
+    this.form.submit(this.data);
   }
 
   render() {
     return (
-      <SmoothCollapse expanded={this.props.add}>
-        <div className='stv-entity stv-entity__new--grid'>
-          <div style={{ gridArea: 'dates' }}>
-            Start Date
-            <DateInput save={(d) => this.setDate(d, 'startDate')} />
-            End Date
-            <DateInput save={(d) => this.setDate(d, 'endDate')} />
-          </div>
-          <div style={{ gridArea: 'content' }}>
-            <UploadWidget
-              data={this.data}
-              files={this.files}
-              selectFiles={(f) => { this.files = f; }}
-            />
-          </div>
-          {this.error && <div style={{ gridArea: 'message' }}>{this.error}</div>}
+      <div className='stv-entity stv-entity__new--grid'>
+        <div style={{ gridArea: 'dates' }}>
+          Start Date
+          <DateInput save={(d) => this.setDate(d, 'startDate')} />
+          End Date
+          <DateInput save={(d) => this.setDate(d, 'endDate')} />
         </div>
-      </SmoothCollapse>
+        <div style={{ gridArea: 'content' }}>
+          <UploadWidget
+            data={this.data}
+            files={this.files}
+            selectFiles={(f) => { this.files = f; }}
+            stage={this.stage}
+            progress={this.form.progress}
+            upload={this.upload}
+          />
+        </div>
+        {this.message && <div style={{ gridArea: 'message' }}>{this.message}</div>}
+      </div>
     );
   }
 }

@@ -39,16 +39,21 @@ const ProgressBar = ({ progress, total = 10, current = 5 }) => (
 @inject('store')
 @observer
 class UploadWidget extends React.Component {
-  @computed get stage() {
-    // if (this.props.edit) return 'edit';
-    if (this.props.progress) return 'uploading';
-    return !this.props.files.length ? 'select' : 'ready';
-  }
-
   @computed get screen() {
-    switch (this.stage) {
+    switch (this.props.stage) {
       case 'uploading':
-        return (<ProgressBar progress={this.props.progress} />);
+        return (
+          <div>
+            <OptionsList
+              options={this.props.files}
+              selectOptions={() => null}
+            />
+            <div style={{ display: 'flex' }}>
+              <ProgressBar progress={this.props.progress} />
+              {` ${this.props.progress}%`}
+            </div>
+          </div>
+        );
       case 'ready':
         return (
           <>
@@ -58,7 +63,7 @@ class UploadWidget extends React.Component {
             />
             <ActionButtonFillText
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-              click={() => null}
+              click={this.props.upload}
               icon='upload--blue'
               size='4rem'
               text='Upload'

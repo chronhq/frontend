@@ -19,6 +19,7 @@
 import { observable, computed, action } from 'mobx';
 
 import firebaseConfig from '../../firebase-config.json';
+import AdminFormModel from './AdminFormModel';
 
 export default class AuthModel {
   @observable initialized = false;
@@ -53,4 +54,6 @@ export default class AuthModel {
       console.error('Problem with token', e);
     }
   }
+
+  createForm = (url, method, onResult) => new AdminFormModel(this, url, method, onResult);
 }

@@ -33,7 +33,6 @@ import MapStyle from './MVTStyles/MapStyleModel';
 import Dashboard from './DashboardModel';
 import DashboardSearch from './Search/DashboardSearch';
 import AuthModel from './AuthModel';
-import AdminModel from './AdminModel';
 import Wikidata from './Wikidata/Wikidata';
 import OverlayModel from './OverlayModel';
 
@@ -56,7 +55,6 @@ export default class storeModel {
     this.wikidata = new Wikidata(this);
     this.analytics = new AnalyticModel();
     this.auth = new AuthModel();
-    this.admin = new AdminModel();
     this.overlays = new OverlayModel();
     this.remToPixel = (rem) => rem * parseFloat(
       getComputedStyle(document.documentElement).fontSize
