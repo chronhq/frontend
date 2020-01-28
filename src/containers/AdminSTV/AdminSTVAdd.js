@@ -42,8 +42,12 @@ class AdminSTVAdd extends React.Component {
     'POST',
     action((context, error) => {
       if (error) {
-        console.log('Error during upload', context.response.response);
-        this.uploadError = context.response.response.statusText;
+        const { response } = context.response;
+        console.log('Error during upload', response);
+
+        this.uploadError = response.data.error || response.statusText;
+      } else {
+        this.uploadError = undefined;
       }
     })
   );
