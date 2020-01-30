@@ -89,7 +89,7 @@ class AdminSTV extends React.Component {
         </TwoActions>
         <STVTableHeader />
         {this.stvs.map((v) => (
-          <AdminSTVCard key={`stv_card_${v.id}}`} te={this.props.params.entity} stv={v} />
+          <AdminSTVCard key={`stv_card_${v.id}}`} entity={this.props.params.entity} stv={v} />
         ))}
 
       </AdminWrapper>

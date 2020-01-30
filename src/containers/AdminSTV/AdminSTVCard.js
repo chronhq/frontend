@@ -18,6 +18,7 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { observable, action, computed } from 'mobx';
 
 import { DateFromJulian } from '../../components/DateInput/DatePicker';
 import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
@@ -25,6 +26,33 @@ import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
 @inject('store')
 @observer
 class AdminSTVCard extends React.Component {
+  @observable removing = false;
+
+  @observable form;
+
+  clickDelete = action(() => {
+    this.removing = 1;
+    this.form = this.props.store.auth.createForm(
+      `/api/spacetime-volumes/${this.props.stv.id}/`,
+      'delete',
+      action((context, error) => {
+        this.removing = false;
+        if (error && context.response.response.status !== 410) {
+          const { response } = context.response;
+          console.log('Error during upload', response);
+        } else {
+          this.te.stv_count -= 1;
+          this.te.stvs = this.te.stvs.filter((c) => c.id !== this.props.stv.id);
+        }
+      })
+    );
+    this.form.submit(undefined);
+  });
+
+  @computed get te() {
+    return this.props.store.data.territorialEntities.data[this.props.entity];
+  }
+
   render() {
     return (
       <div className='stv-entity admin-stv-card-main__font'>
@@ -61,7 +89,9 @@ class AdminSTVCard extends React.Component {
               style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}
             />
             <ActionButtonFill
-              click={() => console.log('Click delete')}
+              click={() => this.clickDelete()}
+              className={this.removing ? 'fly-away' : ''}
+              disabled={this.removing}
               text=''
               icon='delete--blue'
               style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}

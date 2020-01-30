@@ -65,13 +65,17 @@ export default class AdminFormModel {
       });
     }
 
-    axios
-      .post(this.url, formData, {
-        headers,
-        onUploadProgress: ({ total, loaded }) => {
-          this.onProgress(total, loaded);
-        },
-      })
+    const d = this.method === 'DELETE' ? {} : { data: formData };
+
+    axios({
+      url: this.url,
+      method: this.method,
+      headers,
+      ...d,
+      onUploadProgress: ({ total, loaded }) => {
+        this.onProgress(total, loaded);
+      },
+    })
       .then(this.onSuccess)
       .catch(this.onError);
   }

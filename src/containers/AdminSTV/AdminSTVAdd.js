@@ -39,7 +39,7 @@ class AdminSTVAdd extends React.Component {
 
   @observable form = this.props.store.auth.createForm(
     '/api/spacetime-volumes/',
-    'POST',
+    'post',
     action((context, error) => {
       if (error) {
         const { response } = context.response;
