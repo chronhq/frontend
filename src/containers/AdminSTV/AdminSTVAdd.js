@@ -110,9 +110,10 @@ class AdminSTVAdd extends React.Component {
             stage={this.stage}
             progress={this.form.progress}
             upload={this.upload}
+            uploadError={this.uploadError}
           />
         </div>
-        {this.message && <div style={{ gridArea: 'message' }}>{this.message}</div>}
+        <div style={{ gridArea: 'message', justifySelf: 'center' }}>{this.message}</div>
       </div>
     );
   }

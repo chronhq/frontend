@@ -54,13 +54,15 @@ class UploadWidget extends React.Component {
                 {` ${this.props.progress}%`}
               </div>
             </div>
-            <ActionButtonFillText
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-              click={this.props.upload}
-              icon='redo--blue'
-              size='4rem'
-              text='Redo'
-            />
+            {this.props.uploadError && (
+              <ActionButtonFillText
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                click={this.props.upload}
+                icon='redo--blue'
+                size='4rem'
+                text='Try Again'
+              />
+            )}
           </>
         );
       case 'ready':

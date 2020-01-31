@@ -42,6 +42,20 @@ const STVTableHeader = () => (
 @inject('store')
 @observer
 class AdminSTV extends React.Component {
+  @observable form = this.props.store.auth.createForm(
+    `/api/territorial-entities/${this.props.params.entity}/`,
+    'put',
+    action((context, error) => {
+      if (error) {
+        const { response } = context.response;
+        console.error('Error during upload', response);
+        console.error(response.data.error || response.statusText);
+      } else {
+        this.color = undefined;
+      }
+    })
+  );
+
   @observable color = undefined;
 
   @observable add = false;
@@ -50,16 +64,41 @@ class AdminSTV extends React.Component {
     this[t] = v;
   })
 
+  componentDidMount() {
+    this.props.store.wikidata.add('country', this.entity.wikidata_id);
+  }
+
+  @computed get entity() {
+    return this.props.store.data.territorialEntities.data[this.props.params.entity];
+  }
+
+  @computed get wikidata() {
+    return this.props.store.wikidata.cache[this.props.params.entity];
+  }
+
   @computed get stvs() {
-    const { stvs } = this.props.store.data.territorialEntities.data[this.props.params.entity];
+    const { stvs } = this.entity;
     return Object.keys(stvs)
       .sort((a, b) => Number(stvs[a].start_date) - Number(stvs[b].start_date))
       .map((a) => stvs[a]);
   }
 
-
   @computed get data() {
     return { color: this.color };
+  }
+
+  @computed get formData() {
+    let { label } = this.entity;
+    if (this.wikidata && this.wikidata.current.country.label !== label) {
+      label = this.wikidata.current.country.label;
+    }
+    return {
+      label,
+      color: String(this.entity.color),
+      admin_level: this.entity.admin_level,
+      wikidata_id: this.entity.wikidata_id,
+      ...this.data,
+    };
   }
 
   @computed get dirty() {
@@ -70,16 +109,27 @@ class AdminSTV extends React.Component {
     Object.keys(this.data).map((t) => this.change(t, undefined));
   }
 
+  submit = () => {
+    this.form.submit(this.formData);
+  }
+
   render() {
     return (
       <AdminWrapper>
         <AdminTECard te={this.props.params.entity} data={this.data} change={this.change} />
-        <TwoActions>
-          {this.dirty
-            ? <ActionButton text='Cancel' icon='cancel' click={this.clean} />
-            : <ActionButton text='Back' icon='exit' click={() => this.props.history.push('/admin/te/')} />}
-          <ActionButton text='Save' icon='save' click={() => null} />
-        </TwoActions>
+        {this.dirty
+          ? (
+            <TwoActions>
+              <ActionButton text='Cancel' icon='cancel' click={this.clean} />
+              <ActionButton text='Save' icon='save' click={this.submit} />
+            </TwoActions>
+          )
+          : (
+            <TwoActions>
+              <ActionButton text='Back' icon='exit' click={() => this.props.history.push('/admin/te/')} />
+              <></>
+            </TwoActions>
+          )}
         {this.add && <AdminSTVAdd entity={this.props.params.entity} />}
         <TwoActions>
           <></>
