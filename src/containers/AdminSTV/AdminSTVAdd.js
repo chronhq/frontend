@@ -23,6 +23,7 @@ import { observable, action, computed } from 'mobx';
 import UploadWidget from './UploadWidget/UploadWidget';
 import DateInput from '../../components/DateInput/DateInput';
 import { julianInt } from '../../models/YearModel';
+import { WaitWindow } from '../../components/ModalWindow/ModalWindow';
 
 @inject('store')
 @observer
@@ -37,18 +38,30 @@ class AdminSTVAdd extends React.Component {
 
   @observable uploadError;
 
+  @observable waiting = false;
+
+  @observable edit = false;
+
   @observable form = this.props.store.auth.createForm(
     '/api/spacetime-volumes/',
     'post',
     action((context, error) => {
+      this.waiting = false;
       if (error) {
         const { response } = context.response;
         console.log('Error during upload', response);
-
-        this.uploadError = response.data.error || response.statusText;
+        if (response !== undefined) {
+          this.uploadError = response.data.error || response.statusText;
+        } else {
+          this.uploadError = 'Unknown Error';
+        }
       } else {
         this.uploadError = undefined;
+        this.edit = true;
       }
+    }),
+    action(() => {
+      this.waiting = true;
     })
   );
 
@@ -57,7 +70,7 @@ class AdminSTVAdd extends React.Component {
   });
 
   @computed get stage() {
-    // if (this.props.edit) return 'edit';
+    if (this.edit) return 'edit';
     if (this.form.progress) return 'uploading';
     return !this.files.length ? 'select' : 'ready';
   }
@@ -96,6 +109,7 @@ class AdminSTVAdd extends React.Component {
   render() {
     return (
       <div className='stv-entity stv-entity__new--grid'>
+        <WaitWindow isOpen={this.waiting} />
         <div style={{ gridArea: 'dates' }}>
           Start Date
           <DateInput save={(d) => this.setDate(d, 'startDate')} />

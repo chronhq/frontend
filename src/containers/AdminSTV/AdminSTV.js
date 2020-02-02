@@ -29,6 +29,7 @@ import './AdminSTV.less';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import AdminTECard from '../AdminTE/AdminTECard';
 import AdminSTVAdd from './AdminSTVAdd';
+import { ConfirmationWindow } from '../../components/ModalWindow/ModalWindow';
 
 const STVTableHeader = () => (
   <div className='tooltip-author stv-entity--grid'>
@@ -51,7 +52,12 @@ class AdminSTV extends React.Component {
         console.error('Error during upload', response);
         console.error(response.data.error || response.statusText);
       } else {
+        const { data } = context.response;
         this.color = undefined;
+        Object.keys(data).map((k) => {
+          this.entity[k] = data[k];
+          return null;
+        });
       }
     })
   );
@@ -59,6 +65,8 @@ class AdminSTV extends React.Component {
   @observable color = undefined;
 
   @observable add = false;
+
+  @observable confirmationIsOpen = false;
 
   change = action((t, v) => {
     this[t] = v;
@@ -111,23 +119,32 @@ class AdminSTV extends React.Component {
 
   submit = () => {
     this.form.submit(this.formData);
+    this.change('confirmationIsOpen', false);
   }
 
   render() {
     return (
       <AdminWrapper>
+        <ConfirmationWindow
+          isOpen={this.confirmationIsOpen}
+          cancel={() => this.change('confirmationIsOpen', false)}
+          confirm={this.submit}
+          text='Do you wish to save changes?'
+        />
         <AdminTECard te={this.props.params.entity} data={this.data} change={this.change} />
         {this.dirty
           ? (
             <TwoActions>
               <ActionButton text='Cancel' icon='cancel' click={this.clean} />
-              <ActionButton text='Save' icon='save' click={this.submit} />
+              <ActionButton text='Save' icon='save' click={() => this.change('confirmationIsOpen', true)} />
             </TwoActions>
           )
           : (
             <TwoActions>
               <ActionButton text='Back' icon='exit' click={() => this.props.history.push('/admin/te/')} />
-              <></>
+              {this.entity.stv_count === 0
+                ? <ActionButton text='Delete' icon='delete' click={() => null} />
+                : <></>}
             </TwoActions>
           )}
         {this.add && <AdminSTVAdd entity={this.props.params.entity} />}

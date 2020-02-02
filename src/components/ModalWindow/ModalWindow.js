@@ -28,7 +28,9 @@ class ModalWindow extends React.Component {
 
 @observer
 class WaitWindow extends React.Component {
-  @observable timer = 300;
+  @observable timerMax = this.props.timerMax || 300;
+
+  @observable timer = this.timerMax;
 
   tick = action(() => {
     this.timer -= 1;
@@ -36,12 +38,24 @@ class WaitWindow extends React.Component {
     this.timeout = setTimeout(() => this.tick(), 1000);
   })
 
+  resetTimer = action(() => {
+    clearTimeout(this.timeout);
+    this.timer = this.timerMax;
+  })
+
   componentDidMount() {
-    this.tick();
+    if (this.props.isOpen) this.tick();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.isOpen !== prevProps.isOpen) {
+      this.resetTimer();
+      if (this.props.isOpen) this.tick();
+    }
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
+    this.resetTimer();
   }
 
   render() {
@@ -75,8 +89,8 @@ class ConfirmationWindow extends React.Component {
         close={this.props.cancel}
         isOpen={this.props.isOpen}
       >
-        <h3>Please confirm</h3>
-        <p>Some text goes here</p>
+        <h3>{this.props.title || 'Please confirm'}</h3>
+        <p>{this.props.text}</p>
         <TwoActions>
           <ActionButton text='Cancel' icon='cancel' click={this.props.cancel} />
           <ActionButton text='Confirm' icon='checkmark' click={this.props.confirm} />

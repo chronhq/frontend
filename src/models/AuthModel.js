@@ -55,5 +55,7 @@ export default class AuthModel {
     }
   }
 
-  createForm = (url, method, onResult) => new AdminFormModel(this, url, method, onResult);
+  createForm = (
+    url, method, onResult, onComplete
+  ) => new AdminFormModel(this, url, method, onResult, onComplete);
 }

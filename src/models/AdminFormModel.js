@@ -30,11 +30,12 @@ export default class AdminFormModel {
 
   @observable response;
 
-  constructor(auth, url, method, onResult) {
+  constructor(auth, url, method, onResult, onComplete = () => null) {
     this.auth = auth;
     this.url = url;
     this.method = method;
     this.onResult = onResult;
+    this.onComplete = onComplete;
   }
 
   @action onSuccess = (ret) => {
@@ -49,9 +50,11 @@ export default class AdminFormModel {
     this.onResult(this, true);
   }
 
-  @action onProgress = (total, loaded) => {
+  @action onProgress = (progressEvent) => {
+    const { total, loaded } = progressEvent;
     const percent = (Math.round((loaded / total) * 10000) / 100);
     this.progress = percent.toFixed(percent === 100 ? 0 : 1);
+    if (loaded === total) this.onComplete(progressEvent);
   }
 
   submit = async (data) => {
@@ -72,9 +75,7 @@ export default class AdminFormModel {
       method: this.method,
       headers,
       ...d,
-      onUploadProgress: ({ total, loaded }) => {
-        this.onProgress(total, loaded);
-      },
+      onUploadProgress: this.onProgress,
     })
       .then(this.onSuccess)
       .catch(this.onError);
