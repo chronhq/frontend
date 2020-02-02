@@ -18,7 +18,9 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { runInAction } from 'mobx';
 
+import { buildNarrative, buildMapSettings } from '../FakeNarrativeBuilder';
 import GeoLayers from '../containers/GeoLayers';
 import Balloon from '../containers/Balloon';
 import Wrapper from './Wrapper';
@@ -26,12 +28,39 @@ import AdminInterface from '../templates/AdminInterface/AdminInterface';
 import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
 import { ModalPortalContainer } from '../components/ModalPortalWrapper';
 
+const description = {
+  description: 'Admin interface',
+  author: 'Anyone',
+  title: 'Admin interface',
+  url: 'admin'
+};
+
+const mapSettings = buildMapSettings({
+  zoom_min: 1, zoom_max: 7.5
+});
+
 @inject('store')
 @observer
 class SummerAdmin extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // Create a fake course
+    const admin = buildNarrative({
+      start_year: -4713, end_year: new Date().getUTCFullYear(), mapSettings, ...description
+    });
+
+    // clean data from previous selected narrative
+    this.props.store.courseSelection.cleanup();
+    runInAction(() => {
+      this.props.store.flags.set({ layer: { cities: false } });
+      this.props.store.data.narratives.data[-1] = admin;
+    });
+  }
+
   render() {
     return (
-      <Wrapper story='world' fake='0' metric='check_admin'>
+      <Wrapper story='admin' fake='0' metric='check_admin'>
         <GeoLayers />
         <Balloon />
         <AdminInterface params={this.props.params} />

@@ -1,6 +1,6 @@
 /*
  * Chron.
- * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Copyright (c) 2020 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
  * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
  * -----
  * This program is free software: you can redistribute it and/or modify
@@ -16,25 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import OceanDecor from './OceanDecor';
+import mapColors from './colors';
 
-const vector = (url, api = 'api/mvt') => ({
-  type: 'vector',
-  tiles: [`${window.location.origin}/${api}/${url}/{z}/{x}/{y}`]
-});
+const colors = Object.keys(mapColors)
+  .reduce((prev, cur) => ({ ...prev, [mapColors[cur]]: cur }), {});
 
-export const geojson = (data) => ({ type: 'geojson', data });
+const STVGJStyle = (enabled, color) => (enabled ? [{
+  layout: {},
+  type: 'fill',
+  paint: {
+    'fill-color': colors[color],
+    'fill-opacity': 0.75,
+  },
+  source: 'adminUploadGJ',
+  id: 'adminUploadGJ',
+}] : []);
 
-const sources = (legacyPins) => ({
-  stv: vector('stv', 'mvt'),
-  events: vector('cached-data'),
-  cities: vector('cities'),
-  visual_center: vector('cities'),
-  narratives: vector('narratives'),
-  symbols: vector('narratives'),
-  decor: geojson(OceanDecor),
-  ...Object.keys(legacyPins)
-    .reduce((prev, cur) => ({ ...prev, [cur]: geojson(legacyPins[cur]) }), {})
-});
-
-export default sources;
+export default STVGJStyle;

@@ -71,6 +71,10 @@ class AdminSTVAdd extends React.Component {
     })
   );
 
+  componentWillUnmount() {
+    this.props.store.mapStyle.uploadedGeoJSON = undefined;
+  }
+
   setDate = action((d, type) => {
     this[type] = d;
   });
@@ -112,6 +116,34 @@ class AdminSTVAdd extends React.Component {
     this.form.submit(this.data);
   }
 
+  selectFiles = (f) => {
+    this.files = f;
+    const file = f.length ? f[0] : undefined;
+    if (!file) {
+      this.files = [];
+      return;
+    }
+    this.files = f;
+
+    const reader = new FileReader();
+    reader.readAsText(file, 'UTF-8');
+    this.props.store.mapStyle.uploadedGeoJSON = undefined;
+    reader.onload = action((e) => {
+      try {
+        this.props.store.mapStyle.uploadedGeoJSONColor = this.props.store.data
+          .territorialEntities.data[this.props.entity].color;
+        this.props.store.mapStyle.uploadedGeoJSON = JSON.parse(e.target.result);
+      } catch {
+        this.files = [];
+        this.uploadError = 'File must be in a valid GeoJSON';
+      }
+    });
+    reader.onerror = action(() => {
+      this.files = [];
+      this.uploadError = 'File can not be read';
+    });
+  }
+
   render() {
     return (
       <div className='stv-entity stv-entity__new--grid'>
@@ -126,7 +158,7 @@ class AdminSTVAdd extends React.Component {
           <UploadWidget
             data={this.data}
             files={this.files}
-            selectFiles={(f) => { this.files = f; }}
+            selectFiles={this.selectFiles}
             stage={this.stage}
             progress={this.form.progress}
             upload={this.upload}
