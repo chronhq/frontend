@@ -21,15 +21,43 @@ import mapColors from './colors';
 const colors = Object.keys(mapColors)
   .reduce((prev, cur) => ({ ...prev, [mapColors[cur]]: cur }), {});
 
-const STVGJStyle = (enabled, color) => (enabled ? [{
-  layout: {},
-  type: 'fill',
+const border = (id, paint = {}) => ({
+  layout: {
+    'line-cap': 'round',
+    'line-join': 'round',
+  },
+  type: 'line',
   paint: {
-    'fill-color': colors[color],
-    'fill-opacity': 0.75,
+    'line-color': 'rgb(255,255,255)',
+    'line-width': {
+      base: 0.5,
+      stops: [
+        [3, 0.8],
+        [20, 2]
+      ]
+    },
+    ...paint,
   },
   source: 'adminUploadGJ',
-  id: 'adminUploadGJ',
-}] : []);
+  id: `adminUploadGJ-${id}`,
+});
+
+const STVGJStyle = (enabled, color) => (enabled ? [
+  {
+    layout: {},
+    type: 'fill',
+    paint: {
+      'fill-color': colors[color],
+      'fill-opacity': 0.75,
+    },
+    source: 'adminUploadGJ',
+    id: 'adminUploadGJ',
+  },
+  border('lines'),
+  border('lines2', {
+    'line-color': 'rgb(30,30,30)',
+    'line-dasharray': [2, 3],
+  })
+] : []);
 
 export default STVGJStyle;

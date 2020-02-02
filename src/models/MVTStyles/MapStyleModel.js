@@ -61,6 +61,8 @@ export default class MapStyleModel {
 
   @observable backgroundStyle = { ...BODY, sources: {}, layers: [] };
 
+  @observable visibleSTVs = [];
+
   @observable uploadedGeoJSONColor = 1;
 
   @observable uploadedGeoJSON;
@@ -73,8 +75,12 @@ export default class MapStyleModel {
 
   @computed get bordersStyle() {
     // Remove layer from style is faster than change visibility property
+    if (this.rootStore.flags.runtime.SelectedCourseName.value === 'admin') {
+      return stvBorders(this.rootStore.year.now, this.visibleSTVs);
+    }
+
     return this.rootStore.flags.layer.borders.value
-      ? stvBorders(this.rootStore.year.now, true)
+      ? stvBorders(this.rootStore.year.now)
       : [];
   }
 

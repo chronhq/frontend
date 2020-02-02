@@ -24,6 +24,7 @@ import UploadWidget from './UploadWidget/UploadWidget';
 import DateInput from '../../components/DateInput/DateInput';
 import { julianInt } from '../../models/YearModel';
 import { WaitWindow } from '../../components/ModalWindow/ModalWindow';
+import { DateString } from '../../components/DateInput/DatePicker';
 
 @inject('store')
 @observer
@@ -53,6 +54,7 @@ class AdminSTVAdd extends React.Component {
       if (error) {
         const { response } = context.response;
         if (response !== undefined) {
+          console.log(response);
           this.uploadError = response.data.error || response.statusText;
           if (response.status === 409) {
             this.overlapConflicts = response.data.overlaps;
@@ -151,9 +153,13 @@ class AdminSTVAdd extends React.Component {
         <WaitWindow isOpen={this.waiting} />
         <div style={{ gridArea: 'dates' }}>
           Start Date
-          <DateInput save={(d) => this.setDate(d, 'startDate')} readOnly={this.specialScreen} />
+          {!this.specialScreen
+            ? <DateInput save={(d) => this.setDate(d, 'startDate')} />
+            : <div className='input-text'><DateString date={this.startDate} /></div>}
           End Date
-          <DateInput save={(d) => this.setDate(d, 'endDate')} readOnly={this.specialScreen} />
+          {!this.specialScreen
+            ? <DateInput save={(d) => this.setDate(d, 'endDate')} />
+            : <div className='input-text'><DateString date={this.endDate} /></div>}
         </div>
         <div style={{ gridArea: 'content' }}>
           <UploadWidget

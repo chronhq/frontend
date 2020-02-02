@@ -20,7 +20,7 @@ import mapColors from './colors';
 
 const colors = Object.keys(mapColors).reduce((p, c) => ([...p, String(mapColors[c]), c]), []);
 
-const STVBorders = (now) => {
+const STVBorders = (now, ids = undefined) => {
   const opacity = {
     min: 0.75,
     max: 0.25
@@ -31,11 +31,13 @@ const STVBorders = (now) => {
   // Max:  508.68505859375 ; Min:  53.138916015625 ; Avg: 164.41848609561012
   // All: ['all', ['<=', 'start_date', now], ['>=', 'end_date', now]]
   // Max:  567.376953125 ; Min:  44.275146484375 ; Avg: 153.68534226190476
-  const filter = [
-    'all',
-    ['<=', 'start_date', now],
-    ['>=', 'end_date', now]
-  ];
+  const filter = ids
+    ? ['all', ['in', 'id', ...ids]]
+    : [
+      'all',
+      ['<=', 'start_date', now],
+      ['>=', 'end_date', now]
+    ];
 
   const fill = {
     layout: {},

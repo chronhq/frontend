@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 
 import { ActionButtonFill } from '../ActionButtons/ActionButtons';
 import ModalPortalWrapper from '../ModalPortalWrapper';
-import DatePicker, { DateString } from './DatePicker';
+import DatePicker from './DatePicker';
 
 const re = new RegExp('(^-?[0-9]*)/?([0-9]*)/?([0-9]*)');
 
@@ -187,7 +187,7 @@ class DateInput extends React.Component {
 
   render() {
     const style = { top: this.topPos, left: this.leftPos };
-    return this.props.readOnly ? <div className='input-text'><DateString date={this.date} /></div> : (
+    return (
       <div style={{ display: 'grid', height: '2rem', gridTemplateColumns: '7rem 2rem' }}>
         <input
           ref={(r) => { this.ref = r; }}
