@@ -113,6 +113,7 @@ class AdminSTVAdd extends React.Component {
   }
 
   upload = () => {
+    this.uploadError = undefined;
     this.form.submit(this.data);
   }
 
