@@ -40,24 +40,30 @@ class AdminSTVAdd extends React.Component {
 
   @observable waiting = false;
 
-  @observable edit = false;
+  @observable specialScreen = undefined;
+
+  @observable overlapConflicts = {};
 
   @observable form = this.props.store.auth.createForm(
     '/api/spacetime-volumes/',
     'post',
     action((context, error) => {
       this.waiting = false;
+      this.specialScreen = undefined;
       if (error) {
         const { response } = context.response;
-        console.log('Error during upload', response);
         if (response !== undefined) {
           this.uploadError = response.data.error || response.statusText;
+          if (response.status === 409) {
+            this.overlapConflicts = response.data.overlaps;
+            this.specialScreen = 'overlaps';
+          }
         } else {
           this.uploadError = 'Unknown Error';
         }
       } else {
         this.uploadError = undefined;
-        this.edit = true;
+        this.specialScreen = 'edit';
       }
     }),
     action(() => {
@@ -70,7 +76,7 @@ class AdminSTVAdd extends React.Component {
   });
 
   @computed get stage() {
-    if (this.edit) return 'edit';
+    if (this.specialScreen) return this.specialScreen;
     if (this.form.progress) return 'uploading';
     return !this.files.length ? 'select' : 'ready';
   }
@@ -112,9 +118,9 @@ class AdminSTVAdd extends React.Component {
         <WaitWindow isOpen={this.waiting} />
         <div style={{ gridArea: 'dates' }}>
           Start Date
-          <DateInput save={(d) => this.setDate(d, 'startDate')} />
+          <DateInput save={(d) => this.setDate(d, 'startDate')} readOnly={this.specialScreen} />
           End Date
-          <DateInput save={(d) => this.setDate(d, 'endDate')} />
+          <DateInput save={(d) => this.setDate(d, 'endDate')} readOnly={this.specialScreen} />
         </div>
         <div style={{ gridArea: 'content' }}>
           <UploadWidget

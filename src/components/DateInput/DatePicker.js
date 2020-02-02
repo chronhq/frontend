@@ -54,6 +54,8 @@ export const DateFromJulian = ({ date = undefined }) => {
   }
 };
 
+export const DateString = ({ date = undefined }) => dateToLocaleString(date);
+
 const DatePickerHeaderLite = ({ text, back, close }) => (
   <div className='date-picker__header'>
     <ActionButtonFill
