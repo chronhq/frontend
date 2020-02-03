@@ -31,8 +31,13 @@ import disabled from '../../../disabled.json';
 @observer
 class MapWrapper extends React.Component {
   resize = action(() => {
-    this.props.store.deck.width = window.innerWidth;
-    this.props.store.deck.height = window.innerHeight;
+    // TODO better mapbox position handling
+    const box = this.ref.getBoundingClientRect();
+    this.props.store.deck.top = box.top;
+    this.props.store.deck.left = box.left;
+    // This will work only with shift from the left side
+    this.props.store.deck.width = window.innerWidth - box.left;
+    this.props.store.deck.height = window.innerHeight - box.top;
   })
 
   componentDidMount() {
@@ -93,7 +98,8 @@ class MapWrapper extends React.Component {
   setHoverBalloon = (force) => (
     (pointerEvent) => {
       if (force === false && this.props.store.balloon.pinned === true) return;
-      const { features, point } = pointerEvent;
+      const { features } = pointerEvent;
+      const point = [pointerEvent.center.x, pointerEvent.center.y];
       this.onBorderHoverCb(features, point, force);
     }
   )
@@ -134,36 +140,38 @@ class MapWrapper extends React.Component {
     }
 
     return (
-      <InteractiveMap
-        style={{ zIndex: 1 }}
-        {...this.deck.viewState}
-        onViewStateChange={(e) => {
-          this.deck.updateViewState(e.viewState);
-        }}
-        mapStyle={this.props.store.mapStyle.style}
-        mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
-        ref={(ref) => {
-          this.deck.interactiveMap = ref;
-        }}
-        onLoad={() => {
-          this.deck.initialLoad(true);
-          this.toggleDataLoadingEventListeners('on');
-        }}
-        onHover={this.setHoverBalloon(false)}
-        onClick={(pointerEvent) => {
-          if (this.props.store.balloon.unpin() !== true) {
-            this.props.store.analytics.metricHit('check_map');
-            this.props.store.balloon.clickPosition = pointerEvent.lngLat;
-            this.setHoverBalloon(true)(pointerEvent);
-          }
-        }}
-        // keep pinned balloon oppened onMouseLeave
-        onMouseOut={() => (this.props.store.balloon.pinned === false
-          && this.props.store.balloon.setPinBalloon(null))}
-        // There is no such event for mapbox gl
-        // eslint(jsx-a11y/mouse-events-have-key-events)
-        onBlur={() => ''}
-      />
+      <div id='map-wrapper' ref={(r) => { this.ref = r; }}>
+        <InteractiveMap
+          style={{ zIndex: 1 }}
+          {...this.deck.viewState}
+          onViewStateChange={(e) => {
+            this.deck.updateViewState(e.viewState);
+          }}
+          mapStyle={this.props.store.mapStyle.style}
+          mapboxApiAccessToken={this.props.store.mapStyle.accessToken}
+          ref={(ref) => {
+            this.deck.interactiveMap = ref;
+          }}
+          onLoad={() => {
+            this.deck.initialLoad(true);
+            this.toggleDataLoadingEventListeners('on');
+          }}
+          onHover={this.setHoverBalloon(false)}
+          onClick={(pointerEvent) => {
+            if (this.props.store.balloon.unpin() !== true) {
+              this.props.store.analytics.metricHit('check_map');
+              this.props.store.balloon.clickPosition = pointerEvent.lngLat;
+              this.setHoverBalloon(true)(pointerEvent);
+            }
+          }}
+          // keep pinned balloon oppened onMouseLeave
+          onMouseOut={() => (this.props.store.balloon.pinned === false
+            && this.props.store.balloon.setPinBalloon(null))}
+          // There is no such event for mapbox gl
+          // eslint(jsx-a11y/mouse-events-have-key-events)
+          onBlur={() => ''}
+        />
+      </div>
     );
   }
 }

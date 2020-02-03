@@ -22,7 +22,6 @@ import { computed } from 'mobx';
 
 import LoadingLogo from '../../containers/LoadingLogo';
 
-import './AdminInterface.less';
 import Spinner from '../../components/Spinner/Spinner';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 
@@ -58,7 +57,7 @@ class AdminInterface extends React.Component {
     const Screen = this.screen;
     return (
       <Suspense fallback={<LoadingLogo />}>
-        <div className='float-container admin-block'>
+        <div className='float-container'>
           <AdminLoginGuard>
             {this.loaded
               ? <Screen params={this.props.params} />

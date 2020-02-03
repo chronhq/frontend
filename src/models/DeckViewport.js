@@ -41,6 +41,10 @@ export default class DeckViewportModel {
 
   @observable height = window.innerHeight;
 
+  @observable left = 0;
+
+  @observable top = 0;
+
   @observable mapInitialized = false;
 
   @computed get viewport() {

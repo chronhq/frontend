@@ -61,9 +61,11 @@ class SummerAdmin extends React.Component {
   render() {
     return (
       <Wrapper story='admin' fake='0' metric='check_admin'>
-        <GeoLayers />
+        <div style={{ display: 'grid', gridTemplateColumns: '36rem auto' }}>
+          <AdminInterface params={this.props.params} />
+          <GeoLayers />
+        </div>
         <Balloon />
-        <AdminInterface params={this.props.params} />
         <TooltipOverlay />
         <ModalPortalContainer />
       </Wrapper>
