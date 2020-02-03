@@ -36,7 +36,7 @@ const STVTableHeader = () => (
     <div style={{ justifySelf: 'center' }}>Dates</div>
     <div style={{ justifySelf: 'center' }}>Visual Center</div>
     <div style={{ justifySelf: 'center' }}>Source URL</div>
-    <div style={{ justifySelf: 'center' }}>Download Delete</div>
+    <div style={{ justifySelf: 'center' }}>Actions</div>
   </div>
 );
 

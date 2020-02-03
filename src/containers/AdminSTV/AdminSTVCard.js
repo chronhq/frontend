@@ -22,11 +22,15 @@ import { observable, action, computed } from 'mobx';
 
 import { DateFromJulian } from '../../components/DateInput/DatePicker';
 import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
+import { ConfirmationWindow } from '../../components/ModalWindow/ModalWindow';
+import Tooltip from '../../components/Tooltip/Tooltip';
 
 @inject('store')
 @observer
 class AdminSTVCard extends React.Component {
   @observable removing = false;
+
+  @observable isOpen = false;
 
   @observable form;
 
@@ -49,6 +53,18 @@ class AdminSTVCard extends React.Component {
     this.form.submit(undefined);
   });
 
+  preview = action(() => {
+    this.props.store.mapStyle.visibleSTVs = this.previewIsSet ? [] : [this.props.stv.id];
+  })
+
+  @computed get previewIsSet() {
+    const { visibleSTVs } = this.props.store.mapStyle;
+    if (visibleSTVs.length > 0) {
+      return visibleSTVs[0] === this.props.stv.id;
+    }
+    return false;
+  }
+
   @computed get te() {
     return this.props.store.data.territorialEntities.data[this.props.entity];
   }
@@ -56,6 +72,12 @@ class AdminSTVCard extends React.Component {
   render() {
     return (
       <div className='stv-entity admin-stv-card-main__font'>
+        <ConfirmationWindow
+          text='Do you want to delete this territory?'
+          isOpen={this.isOpen}
+          confirm={this.clickDelete}
+          cancel={action(() => { this.isOpen = false; })}
+        />
         <div className='stv-entity--grid'>
           <div className='stv-entity--dates'>
             <div><DateFromJulian date={this.props.stv.start_date} /></div>
@@ -82,20 +104,32 @@ class AdminSTVCard extends React.Component {
             >
               Download STV
             </a>
-            <ActionButtonFill
-              click={() => this.ref.click()}
-              text=''
-              icon='download--blue'
-              style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}
-            />
-            <ActionButtonFill
-              click={() => this.clickDelete()}
-              className={this.removing ? 'fly-away' : ''}
-              disabled={this.removing}
-              text=''
-              icon='delete--blue'
-              style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}
-            />
+            <Tooltip placement='bottom' content='Preview'>
+              <ActionButtonFill
+                click={this.preview}
+                text=''
+                icon={this.previewIsSet ? 'no-eye--blue' : 'eye--blue'}
+                style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}
+              />
+            </Tooltip>
+            <Tooltip placement='bottom' content='Download'>
+              <ActionButtonFill
+                click={() => this.ref.click()}
+                text=''
+                icon='download--blue'
+                style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}
+              />
+            </Tooltip>
+            <Tooltip placement='bottom' content='Delete'>
+              <ActionButtonFill
+                click={action(() => { this.isOpen = true; })}
+                className={this.removing ? 'fly-away' : ''}
+                disabled={this.removing}
+                text=''
+                icon='delete--blue'
+                style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}
+              />
+            </Tooltip>
           </div>
         </div>
       </div>
