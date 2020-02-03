@@ -38,6 +38,7 @@ class STVOverlapsHandler extends React.Component {
 
   componentDidMount() {
     this.setVisibleSTVs();
+    this.props.confirmOverlaps(this.entity.id, this.subtract);
   }
 
   componentWillUnmount() {

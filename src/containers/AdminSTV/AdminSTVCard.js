@@ -80,6 +80,10 @@ class AdminSTVCard extends React.Component {
   }
 
   render() {
+    const { visual_center: visualCenter } = this.props.stv;
+    const coordinates = visualCenter !== null && 'coordinates' in visualCenter
+      ? visualCenter.coordinates
+      : ['Not set', 'Not set'];
     return (
       <div className='stv-entity admin-stv-card-main__font'>
         <ConfirmationWindow
@@ -94,8 +98,8 @@ class AdminSTVCard extends React.Component {
             <div><DateFromJulian date={this.props.stv.end_date} /></div>
           </div>
           <div className='stv-entity--vc'>
-            <div className='stv-entity--overflow'>{this.props.stv.visual_center.coordinates[0]}</div>
-            <div className='stv-entity--overflow'>{this.props.stv.visual_center.coordinates[1]}</div>
+            <div className='stv-entity--overflow'>{coordinates[0]}</div>
+            <div className='stv-entity--overflow'>{coordinates[1]}</div>
           </div>
           <div className='stv-entity--source'>
             {this.props.stv.references.map((r, idx) => (

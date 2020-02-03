@@ -58,6 +58,8 @@ class AdminSTVAdd extends React.Component {
         const { response } = context.response;
         if (response !== undefined) {
           console.log(response);
+          this.conflicts = undefined;
+          this.overlaps = undefined;
           this.uploadError = response.data.error || response.statusText;
           if (response.status === 409) {
             this.conflicts = response.data.overlaps;
@@ -66,7 +68,9 @@ class AdminSTVAdd extends React.Component {
         } else {
           this.uploadError = 'Unknown Error';
         }
-      } else {
+      } else { // success
+        this.props.store.data.territorialEntities
+          .data[this.props.entity].stvs.push(context.response.data);
         this.uploadError = undefined;
         this.specialScreen = 'edit';
       }

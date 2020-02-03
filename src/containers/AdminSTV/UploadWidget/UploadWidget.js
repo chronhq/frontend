@@ -41,6 +41,16 @@ const ProgressBar = ({ progress, total = 10, current = 5 }) => (
 class UploadWidget extends React.Component {
   @computed get screen() {
     switch (this.props.stage) {
+      case 'edit':
+        return (
+          <>
+            Welcome to the edit screen
+            <br />
+            This screen is not ready yet
+            <br />
+            Press /Cancel/ to clear the form
+          </>
+        );
       case 'uploading':
         return (
           <>
