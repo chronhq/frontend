@@ -54,7 +54,17 @@ class AdminSTVCard extends React.Component {
   });
 
   preview = action(() => {
-    this.props.store.mapStyle.visibleSTVs = this.previewIsSet ? [] : [this.props.stv.id];
+    if (!this.previewIsSet) {
+      this.props.store.mapStyle.visibleSTVs = [this.props.stv.id];
+      if (this.props.stv.visual_center.coordinates) {
+        this.props.store.deck.moveCamera(
+          this.props.stv.visual_center.coordinates,
+          this.props.store.deck.zoom
+        );
+      }
+    } else {
+      this.props.store.mapStyle.visibleSTVs = [];
+    }
   })
 
   @computed get previewIsSet() {
