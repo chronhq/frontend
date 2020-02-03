@@ -18,6 +18,7 @@
  */
 import React from 'react';
 
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { InteractiveMap } from 'react-map-gl';
 
 import { observer, inject } from 'mobx-react';
