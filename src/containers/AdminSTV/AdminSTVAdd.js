@@ -25,6 +25,7 @@ import DateInput from '../../components/DateInput/DateInput';
 import { julianInt } from '../../models/YearModel';
 import { WaitWindow } from '../../components/ModalWindow/ModalWindow';
 import { DateString } from '../../components/DateInput/DatePicker';
+import STVOverlapsHandler from './AdminSTVOverlaps';
 
 @inject('store')
 @observer
@@ -43,7 +44,9 @@ class AdminSTVAdd extends React.Component {
 
   @observable specialScreen = undefined;
 
-  @observable overlapConflicts = {};
+  @observable conflicts = {};
+
+  @observable overlaps;
 
   @observable form = this.props.store.auth.createForm(
     '/api/spacetime-volumes/',
@@ -57,8 +60,8 @@ class AdminSTVAdd extends React.Component {
           console.log(response);
           this.uploadError = response.data.error || response.statusText;
           if (response.status === 409) {
-            this.overlapConflicts = response.data.overlaps;
-            this.specialScreen = 'overlaps';
+            this.conflicts = response.data.overlaps;
+            this.specialScreen = 'conflict';
           }
         } else {
           this.uploadError = 'Unknown Error';
@@ -100,11 +103,13 @@ class AdminSTVAdd extends React.Component {
 
   @computed get data() {
     const territory = this.files.length ? this.files[0] : undefined;
+    const overlaps = this.overlaps ? { overlaps: this.overlaps } : {};
     return this.error ? {} : {
       entity: this.props.entity,
       references: this.references,
       end_date: julianInt(this.endDate),
       start_date: julianInt(this.startDate),
+      ...overlaps,
       territory,
     };
   }
@@ -147,6 +152,18 @@ class AdminSTVAdd extends React.Component {
     });
   }
 
+  cancelOverlap = () => {
+    this.uploadError = 'Overlps Conflict';
+    this.overlaps = {};
+  }
+
+  confirmOverlaps = (entity, value) => {
+    this.overlaps = observable({
+      ...(this.overlaps || {}),
+      [entity]: value
+    });
+  }
+
   render() {
     return (
       <div className='stv-entity stv-entity__new--grid'>
@@ -162,15 +179,28 @@ class AdminSTVAdd extends React.Component {
             : <div className='input-text'><DateString date={this.endDate} /></div>}
         </div>
         <div style={{ gridArea: 'content' }}>
-          <UploadWidget
-            data={this.data}
-            files={this.files}
-            selectFiles={this.selectFiles}
-            stage={this.stage}
-            progress={this.form.progress}
-            upload={this.upload}
-            uploadError={this.uploadError}
-          />
+          {this.stage !== 'conflict'
+            ? (
+              <UploadWidget
+                data={this.data}
+                files={this.files}
+                selectFiles={this.selectFiles}
+                stage={this.stage}
+                progress={this.form.progress}
+                upload={this.upload}
+                uploadError={this.uploadError}
+              />
+            )
+            : (
+              <STVOverlapsHandler
+                upload={this.upload}
+                back={this.cancelOverlap}
+                confirmOverlaps={this.confirmOverlaps}
+                overlaps={this.overlaps || {}}
+                conflicts={this.conflicts}
+              />
+            )}
+          <br />
         </div>
         <div style={{ gridArea: 'message', justifySelf: 'center' }}>{this.message}</div>
       </div>

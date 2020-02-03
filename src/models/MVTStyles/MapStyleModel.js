@@ -75,7 +75,8 @@ export default class MapStyleModel {
 
   @computed get bordersStyle() {
     // Remove layer from style is faster than change visibility property
-    if (this.rootStore.flags.runtime.SelectedCourseName.value === 'admin') {
+    const { SelectedCourseName } = this.rootStore.flags.runtime;
+    if (SelectedCourseName && SelectedCourseName.value === 'admin') {
       return stvBorders(this.rootStore.year.now, this.visibleSTVs);
     }
 

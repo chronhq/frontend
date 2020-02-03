@@ -21,6 +21,10 @@ import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
 
 import './ActionButtons.less';
 
+const handleKeyboard = (cb) => (
+  (e) => (e.key === 'Enter' ? cb() : null)
+);
+
 const ActionButtonBody = ({ enabled, icon, text }) => (
   <span className={`action-button action-button__font action-button--${enabled ? 'enabled' : 'disabled'}`}>
     <div className={`icon ${icon ? `icon-${icon}--light action-button__icon` : ''}`} />
@@ -51,7 +55,7 @@ const ActionButtonFill = ({
     role='button'
     style={style}
     tabIndex={0}
-    onKeyDown={enabled ? click : () => null}
+    onKeyDown={enabled ? handleKeyboard(click) : () => null}
     onClick={enabled ? click : () => null}
   >
     <div className={`icon icon-${icon} ${text ? 'action-button__icon' : ''}`} />
