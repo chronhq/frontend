@@ -25,6 +25,7 @@ import SelectFiles from './SelectFiles';
 import { ActionButtonFillText } from '../../../components/ActionButtons/ActionButtons';
 
 import './UploadWidget.less';
+import AdminTESearchBar from '../../../components/AdminTESearchBar/AdminTESearchBar';
 
 const ProgressBar = ({ progress, total = 10, current = 5 }) => (
   <div className='progress-bar__container'>
@@ -44,11 +45,24 @@ class UploadWidget extends React.Component {
       case 'edit':
         return (
           <>
-            Welcome to the edit screen
-            <br />
-            This screen is not ready yet
-            <br />
-            Press /Cancel/ to clear the form
+            <div>
+              <AdminTESearchBar
+                iconLabel='Add'
+                icon='save--light'
+                // search
+              />
+              <OptionsList
+                options={['ref1sdfsadfsadf', 'ref2sadasdsad', 'ref3asw332ddsasaddd']}
+                selectOptions={this.props.addReferences}
+              />
+            </div>
+            <ActionButtonFillText
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              click={this.props.upload}
+              icon='save--blue'
+              size='4rem'
+              text='Save'
+            />
           </>
         );
       case 'uploading':

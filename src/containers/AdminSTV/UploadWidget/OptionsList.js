@@ -31,12 +31,13 @@ class OptionsList extends React.Component {
   }
 
   render() {
+    const getName = (o) => o.name || o;
     return (
       <div>
         {this.props.options.map((f, idx) => (
           <ActionButtonFillText
-            key={`options_${encodeURI(f.name)}`}
-            text={f.name}
+            key={`options_${encodeURI(getName(f))}`}
+            text={getName(f)}
             style={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-between' }}
             click={() => this.removeFromList(idx)}
             icon='delete--blue'

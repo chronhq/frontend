@@ -35,11 +35,12 @@ class AdminTESearchBar extends React.Component {
 
   search = () => {
     this.props.search(this.value);
+    if (this.props.clean) this.input('');
   }
 
   render() {
     return (
-      <div className='te-search'>
+      <div className={this.props.className}>
         <input
           className='text-input input-text'
           type={this.props.type}
@@ -49,8 +50,8 @@ class AdminTESearchBar extends React.Component {
         />
         <ActionButtonFill
           click={this.search}
-          text='Search'
-          icon='search--light'
+          text={this.props.iconLabel}
+          icon={this.props.icon}
           style={{ borderRadius: '0 2px 2px 0' }}
         />
       </div>
@@ -61,11 +62,19 @@ class AdminTESearchBar extends React.Component {
 AdminTESearchBar.defaultProps = {
   type: 'text',
   search: (e) => console.log('Search button pressed', e),
+  iconLabel: 'Search',
+  icon: 'search--light',
+  className: 'te-search',
+  clean: false,
 };
 
 AdminTESearchBar.propTypes = {
   type: PropTypes.string,
   search: PropTypes.func,
+  iconLabel: PropTypes.string,
+  icon: PropTypes.string,
+  className: PropTypes.string,
+  clean: PropTypes.bool,
 };
 
 export default AdminTESearchBar;
