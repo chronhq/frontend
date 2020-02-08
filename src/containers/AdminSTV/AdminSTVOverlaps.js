@@ -19,8 +19,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { action, observable, computed } from 'mobx';
-import TwoActions from '../../components/TwoActions/TwoActions';
-import ActionButton, { ActionButtonFillText } from '../../components/ActionButtons/ActionButtons';
+import ActionButton, { GiantActionButtonFillText } from '../../components/ActionButtons/ActionButtons';
 
 @inject('store')
 @observer
@@ -75,24 +74,22 @@ class STVOverlapsHandler extends React.Component {
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           {this.entity.label}
-          <ActionButtonFillText
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+          <GiantActionButtonFillText
             click={() => this.props.form.confirmOverlaps(this.entity.id, !this.subtract)}
-            icon={this.subtract ? 'checkmark--blue' : 'magic-wand--blue'}
-            size='4rem'
+            icon={this.subtract ? 'scissors--blue' : 'lock--blue'}
             text={this.subtract ? 'Subtracted' : 'Preserved'}
           />
         </div>
-        <TwoActions>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           {this.entityKey === 0
             ? <ActionButton text='Abort' icon='cancel' click={this.props.form.cancelOverlap} />
-            : <ActionButton text='Prev' icon='cancel' click={() => this.changeScreen(-1)} />}
+            : <ActionButton text='Previous' icon='arrow-box__left' click={() => this.changeScreen(-1)} />}
+          <div style={{ textAlign: 'center' }} className='admin-stv-card-main__font'>
+            {`Step ${this.entityKey + 1} of ${this.maxScreen + 1}`}
+          </div>
           {this.entityKey === this.maxScreen
             ? <ActionButton text='Save' icon='checkmark' click={this.props.form.upload} />
-            : <ActionButton text='Next' icon='checkmark' click={() => this.changeScreen(1)} />}
-        </TwoActions>
-        <div style={{ textAlign: 'center' }}>
-          {`Step ${this.entityKey + 1} of ${this.maxScreen + 1}`}
+            : <ActionButton text='Next' icon='arrow-box__right' click={() => this.changeScreen(1)} />}
         </div>
       </div>
     );

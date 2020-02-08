@@ -36,6 +36,7 @@ class OptionsList extends React.Component {
       <div>
         {this.props.options.map((f, idx) => (
           <ActionButtonFillText
+            className='admin-stv-card-main__font'
             key={`options_${encodeURI(getName(f))}`}
             text={getName(f)}
             style={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-between' }}

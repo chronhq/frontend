@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 
 import UploadWidget from './UploadWidget/UploadWidget';
 import DateInput from '../../components/DateInput/DateInput';
@@ -28,20 +28,22 @@ import { DateString } from '../../components/DateInput/DatePicker';
 import STVOverlapsHandler from './AdminSTVOverlaps';
 import CloseButton from '../../components/Button/CloseButton';
 import AdminSTVAddModel from './AdminSTVAddModel';
+import AdminAdvice, { AdminAdviceButton } from './AdminAdvice';
 
 @observer
 class STVDates extends React.Component {
   render() {
+    const { startDate, endDate, specialScreen } = this.props.form;
     return (
       <div style={{ gridArea: 'dates' }}>
-        Start Date
-        {!this.props.form.specialScreen
-          ? <DateInput save={(d) => this.props.form.setDate(d, 'startDate')} />
-          : <div className='input-text'><DateString date={this.props.form.startDate} /></div>}
-        End Date
-        {!this.props.form.specialScreen
-          ? <DateInput save={(d) => this.props.form.setDate(d, 'endDate')} />
-          : <div className='input-text'><DateString date={this.props.form.endDate} /></div>}
+        <div className='admin-stv-card-main__font'>Start Date</div>
+        {!specialScreen
+          ? <DateInput date={startDate} save={(d) => this.props.form.setDate(d, 'startDate')} />
+          : <div className='input-text'><DateString date={startDate} /></div>}
+        <div className='admin-stv-card-main__font'>End Date</div>
+        {!specialScreen
+          ? <DateInput date={endDate} save={(d) => this.props.form.setDate(d, 'endDate')} />
+          : <div className='input-text'><DateString date={endDate} /></div>}
       </div>
     );
   }
@@ -50,26 +52,45 @@ class STVDates extends React.Component {
 @inject('store')
 @observer
 class AdminSTVAdd extends React.Component {
-  @observable form = new AdminSTVAddModel(this.props.store, this.props.entity);
+  @observable enabled = false;
+
+  @observable form;
+
+  toggleForm = action(() => {
+    this.form = this.enabled
+      ? undefined
+      : new AdminSTVAddModel(this.props.store, this.props.entity);
+    this.enabled = !this.enabled;
+  });
 
   componentWillUnmount() {
     this.props.store.mapStyle.uploadedGeoJSON = undefined;
   }
 
   render() {
-    return (
-      <div className='stv-entity__new'>
-        <CloseButton compact onClick={this.props.cancel} />
-        <WaitWindow isOpen={this.waiting} />
-        <div className='stv-entity__new--grid'>
-          <STVDates form={this.form} />
-          <div style={{ gridArea: 'content' }}>
-            {this.form.stage !== 'conflict'
-              ? <UploadWidget form={this.form} />
-              : <STVOverlapsHandler form={this.form} />}
+    return this.enabled ? (
+      <div>
+        <AdminAdvice text={this.form.advice} />
+        <div className='stv-entity__new'>
+          <CloseButton compact onClick={this.toggleForm} />
+          <WaitWindow isOpen={this.form.waiting} />
+          <div className='stv-entity__new--grid'>
+            <STVDates form={this.form} />
+            <div style={{ gridArea: 'content' }}>
+              {this.form.stage !== 'conflict'
+                ? <UploadWidget form={this.form} />
+                : <STVOverlapsHandler form={this.form} />}
+            </div>
           </div>
         </div>
       </div>
+    ) : (
+      <AdminAdviceButton
+        text='You can upload new territory by pressing the button'
+        button='Add'
+        icon='add--blue'
+        click={this.toggleForm}
+      />
     );
   }
 }

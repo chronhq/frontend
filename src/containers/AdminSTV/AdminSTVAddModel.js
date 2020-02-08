@@ -82,6 +82,16 @@ class AdminSTVAddModel {
     return !this.files.length ? 'select' : 'ready';
   }
 
+  @computed get advice() {
+    if (this.specialScreen === 'conflict') {
+      return 'Make a descision overwrite territories on server or change newly uploaded territory';
+    }
+    if (!(this.startDate instanceof Date && this.endDate instanceof Date)) {
+      return 'If there is not enough data - set start date to January 1, and end date to the December 31';
+    }
+    return 'You know what to do';
+  }
+
   @computed get error() {
     if (!(this.startDate instanceof Date && this.endDate instanceof Date)) {
       return 'Set the dates first';

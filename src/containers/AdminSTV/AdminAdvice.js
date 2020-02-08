@@ -17,35 +17,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
-import { observer } from 'mobx-react';
-import { GiantActionButtonFillText } from '../../../components/ActionButtons/ActionButtons';
+import { GiantActionButtonFillText } from '../../components/ActionButtons/ActionButtons';
 
-@observer
-class SelectFiles extends React.Component {
-  onChange = (e) => {
-    const { files } = e.target;
-    this.props.selectFiles(Array.from(files));
-  }
-
+class AdminAdvice extends React.Component {
   render() {
     return (
-      <>
-        <input
-          type="file"
-          style={{ display: 'none' }}
-          onChange={this.onChange}
-          accept={this.props.accept}
-          multiple={this.props.multiple}
-          ref={(r) => { this.ref = r; }}
-        />
-        <GiantActionButtonFillText
-          click={() => this.ref.click()}
-          icon='plus-circle--blue'
-          text='Select File'
-        />
-      </>
+      <div className='admin-advice'>
+        {this.props.text && (
+          <div className='admin-stv-card-main__font'>
+            TIP:
+            {' '}
+            {this.props.text}
+          </div>
+        )}
+        {this.props.children}
+      </div>
     );
   }
 }
 
-export default SelectFiles;
+const AdminAdviceButton = ({
+  click, text, button, icon
+}) => (
+  <AdminAdvice text={text}>
+    <GiantActionButtonFillText
+      text={button}
+      icon={icon}
+      size='2rem'
+      click={click}
+    />
+  </AdminAdvice>
+);
+
+export { AdminAdviceButton };
+export default AdminAdvice;

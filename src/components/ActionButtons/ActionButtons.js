@@ -83,6 +83,19 @@ const ChangeActionButton = ({ text, click }) => ActionButton({ text, click, icon
 const CalendarActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'calendar' });
 const LabelActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'road-sign' });
 
+const GiantActionButtonFillText = ({
+  text, icon, click, size = '4rem'
+}) => (
+  <ActionButtonFillText
+    className='admin-te-card-main__font'
+    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    click={click}
+    icon={icon}
+    size={size}
+    text={text}
+  />
+);
+
 
 export {
   CreateActionButton,
@@ -92,6 +105,7 @@ export {
   LabelActionButton,
   ActionButtonFill,
   ActionButtonFillText,
+  GiantActionButtonFillText,
 };
 
 export default ActionButton;

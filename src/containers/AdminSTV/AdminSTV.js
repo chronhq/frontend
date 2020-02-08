@@ -21,7 +21,7 @@ import { inject, observer } from 'mobx-react';
 import { computed, observable, action } from 'mobx';
 import { withRouter } from 'react-router-dom';
 
-import ActionButton, { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
+import ActionButton from '../../components/ActionButtons/ActionButtons';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import AdminSTVCard from './AdminSTVCard';
 
@@ -147,14 +147,8 @@ class AdminSTV extends React.Component {
                 : <></>}
             </TwoActions>
           )}
-        {this.add && <AdminSTVAdd entity={this.props.params.entity} cancel={() => this.change('add', false)} />}
-        <TwoActions>
-          <></>
-          {this.add
-            ? <ActionButton text='Cancel' icon='cancel' click={() => this.change('add', false)} />
-            : <CreateActionButton text='Add' click={() => this.change('add', true)} />}
-        </TwoActions>
-        <STVTableHeader />
+        <AdminSTVAdd entity={this.props.params.entity} cancel={() => this.change('add', false)} />
+        {this.stvs.length ? <STVTableHeader /> : null}
         {this.stvs.map((v) => (
           <AdminSTVCard key={`stv_card_${v.id}}`} entity={this.props.params.entity} stv={v} />
         ))}

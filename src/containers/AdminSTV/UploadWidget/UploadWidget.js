@@ -22,7 +22,7 @@ import { computed } from 'mobx';
 
 import OptionsList from './OptionsList';
 import SelectFiles from './SelectFiles';
-import { ActionButtonFillText } from '../../../components/ActionButtons/ActionButtons';
+import { GiantActionButtonFillText } from '../../../components/ActionButtons/ActionButtons';
 
 import './UploadWidget.less';
 import AdminTESearchBar from '../../../components/AdminTESearchBar/AdminTESearchBar';
@@ -55,11 +55,9 @@ class UploadWidget extends React.Component {
                 selectOptions={this.props.form.addReferences}
               />
             </div>
-            <ActionButtonFillText
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+            <GiantActionButtonFillText
               click={this.props.form.upload}
               icon='save--blue'
-              size='4rem'
               text='Save'
             />
           </>
@@ -78,11 +76,9 @@ class UploadWidget extends React.Component {
               </div>
             </div>
             {this.props.form.uploadError && (
-              <ActionButtonFillText
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+              <GiantActionButtonFillText
                 click={this.props.form.upload}
                 icon='redo--blue'
-                size='4rem'
                 text='Try Again'
               />
             )}
@@ -95,11 +91,9 @@ class UploadWidget extends React.Component {
               options={this.props.form.files}
               selectOptions={this.props.form.selectFiles}
             />
-            <ActionButtonFillText
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+            <GiantActionButtonFillText
               click={this.props.form.upload}
               icon='upload--blue'
-              size='4rem'
               text='Upload'
             />
           </>
@@ -125,7 +119,9 @@ class UploadWidget extends React.Component {
         <div className='upload-widget'>
           {this.screen}
         </div>
-        <div style={{ textAlign: 'center' }}>{this.props.form.message}</div>
+        <div style={{ textAlign: 'center' }} className='admin-stv-card-main__font'>
+          {this.props.form.message}
+        </div>
       </div>
     );
   }

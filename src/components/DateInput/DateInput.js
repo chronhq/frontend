@@ -127,6 +127,12 @@ class DateInput extends React.Component {
     }
   })
 
+  componentDidMount() {
+    if (this.props.date) {
+      this.value = this.props.date;
+    }
+  }
+
   componentDidUpdate() {
     this.ref.setSelectionRange(this.cursor.start, this.cursor.end);
   }
