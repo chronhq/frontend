@@ -147,7 +147,7 @@ class AdminSTV extends React.Component {
                 : <></>}
             </TwoActions>
           )}
-        {this.add && <AdminSTVAdd entity={this.props.params.entity} />}
+        {this.add && <AdminSTVAdd entity={this.props.params.entity} cancel={() => this.change('add', false)} />}
         <TwoActions>
           <></>
           {this.add

@@ -27,7 +27,9 @@ import ActionButton, { ActionButtonFillText } from '../../components/ActionButto
 class STVOverlapsHandler extends React.Component {
   @observable entityKey = 0;
 
-  setVisibleSTVs = action(() => { this.props.store.mapStyle.visibleSTVs = this.overlaps.stvs; })
+  setVisibleSTVs = action(() => {
+    this.props.store.mapStyle.visibleSTVs = this.overlaps.stvs;
+  })
 
   changeScreen = action((mod) => {
     this.entityKey += mod;
@@ -38,7 +40,7 @@ class STVOverlapsHandler extends React.Component {
 
   componentDidMount() {
     this.setVisibleSTVs();
-    this.props.confirmOverlaps(this.entity.id, this.subtract);
+    this.props.form.confirmOverlaps(this.entity.id, this.subtract);
   }
 
   componentWillUnmount() {
@@ -46,7 +48,7 @@ class STVOverlapsHandler extends React.Component {
   }
 
   @computed get maxScreen() {
-    return Object.keys(this.props.conflicts).length - 1;
+    return Object.keys(this.props.form.conflicts).length - 1;
   }
 
   @computed get lastScreen() {
@@ -54,8 +56,8 @@ class STVOverlapsHandler extends React.Component {
   }
 
   @computed get overlaps() {
-    const key = Object.keys(this.props.conflicts)[this.entityKey];
-    return { entity: key, stvs: this.props.conflicts[key] };
+    const key = Object.keys(this.props.form.conflicts)[this.entityKey];
+    return { entity: key, stvs: this.props.form.conflicts[key] };
   }
 
   @computed get entity() {
@@ -63,7 +65,9 @@ class STVOverlapsHandler extends React.Component {
   }
 
   @computed get subtract() {
-    return this.props.overlaps[this.entity.id];
+    return this.props.form.overlaps
+      ? this.props.form.overlaps[this.entity.id]
+      : undefined;
   }
 
   render() {
@@ -73,7 +77,7 @@ class STVOverlapsHandler extends React.Component {
           {this.entity.label}
           <ActionButtonFillText
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            click={() => this.props.confirmOverlaps(this.entity.id, !this.subtract)}
+            click={() => this.props.form.confirmOverlaps(this.entity.id, !this.subtract)}
             icon={this.subtract ? 'checkmark--blue' : 'magic-wand--blue'}
             size='4rem'
             text={this.subtract ? 'Subtracted' : 'Preserved'}
@@ -81,10 +85,10 @@ class STVOverlapsHandler extends React.Component {
         </div>
         <TwoActions>
           {this.entityKey === 0
-            ? <ActionButton text='Abort' icon='cancel' click={this.props.cancelOverlap} />
+            ? <ActionButton text='Abort' icon='cancel' click={this.props.form.cancelOverlap} />
             : <ActionButton text='Prev' icon='cancel' click={() => this.changeScreen(-1)} />}
           {this.entityKey === this.maxScreen
-            ? <ActionButton text='Save' icon='checkmark' click={this.props.upload} />
+            ? <ActionButton text='Save' icon='checkmark' click={this.props.form.upload} />
             : <ActionButton text='Next' icon='checkmark' click={() => this.changeScreen(1)} />}
         </TwoActions>
         <div style={{ textAlign: 'center' }}>

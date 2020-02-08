@@ -36,12 +36,11 @@ const ProgressBar = ({ progress, total = 10, current = 5 }) => (
   </div>
 );
 
-
 @inject('store')
 @observer
 class UploadWidget extends React.Component {
   @computed get screen() {
-    switch (this.props.stage) {
+    switch (this.props.form.stage) {
       case 'edit':
         return (
           <>
@@ -53,12 +52,12 @@ class UploadWidget extends React.Component {
               />
               <OptionsList
                 options={['ref1sdfsadfsadf', 'ref2sadasdsad', 'ref3asw332ddsasaddd']}
-                selectOptions={this.props.addReferences}
+                selectOptions={this.props.form.addReferences}
               />
             </div>
             <ActionButtonFillText
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-              click={this.props.upload}
+              click={this.props.form.upload}
               icon='save--blue'
               size='4rem'
               text='Save'
@@ -70,18 +69,18 @@ class UploadWidget extends React.Component {
           <>
             <div>
               <OptionsList
-                options={this.props.files}
+                options={this.props.form.files}
                 selectOptions={() => null}
               />
               <div style={{ display: 'flex' }}>
-                <ProgressBar progress={this.props.progress} />
-                {` ${this.props.progress}%`}
+                <ProgressBar progress={this.props.form.form.progress} />
+                {` ${this.props.form.form.progress}%`}
               </div>
             </div>
-            {this.props.uploadError && (
+            {this.props.form.uploadError && (
               <ActionButtonFillText
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-                click={this.props.upload}
+                click={this.props.form.upload}
                 icon='redo--blue'
                 size='4rem'
                 text='Try Again'
@@ -93,12 +92,12 @@ class UploadWidget extends React.Component {
         return (
           <>
             <OptionsList
-              options={this.props.files}
-              selectOptions={this.props.selectFiles}
+              options={this.props.form.files}
+              selectOptions={this.props.form.selectFiles}
             />
             <ActionButtonFillText
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-              click={this.props.upload}
+              click={this.props.form.upload}
               icon='upload--blue'
               size='4rem'
               text='Upload'
@@ -113,7 +112,7 @@ class UploadWidget extends React.Component {
             <SelectFiles
               accept='.json, .geojson'
               multiple={false}
-              selectFiles={this.props.selectFiles}
+              selectFiles={this.props.form.selectFiles}
             />
           </>
         );
@@ -122,8 +121,11 @@ class UploadWidget extends React.Component {
 
   render() {
     return (
-      <div className='upload-widget'>
-        {this.screen}
+      <div>
+        <div className='upload-widget'>
+          {this.screen}
+        </div>
+        <div style={{ textAlign: 'center' }}>{this.props.form.message}</div>
       </div>
     );
   }
