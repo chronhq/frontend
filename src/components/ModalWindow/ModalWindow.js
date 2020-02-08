@@ -12,13 +12,15 @@ import ActionButton from '../ActionButtons/ActionButtons';
 @observer
 class ModalWindow extends React.Component {
   render() {
+    const modalCN = this.props.blockBackground ? 'modal-window__background' : '';
+    const extraCN = this.props.className || '';
     return (
       <ModalPortalWrapper
         isOpen={this.props.isOpen}
         close={this.props.close}
-        className={`${this.props.blockBackground ? 'modal-window__background' : ''}`}
+        className={modalCN}
       >
-        <div className='float-container modal-window__position'>
+        <div className={`float-container modal-window__position ${extraCN}`}>
           {this.props.children}
         </div>
       </ModalPortalWrapper>
@@ -64,16 +66,20 @@ class WaitWindow extends React.Component {
         blockBackground
         isOpen={this.props.isOpen}
         close={() => null}
+        className='modal-window__timer'
       >
-        <h3>Please wait</h3>
-        <p>Calculating overlaps</p>
-        <p>It might take up to 300 seconds</p>
-        <div className='modal-window__timer'>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+          <div className='admin-te-card-header__font'>Calculating overlaps</div>
+          <div className='admin-te-card-main__font'>
+            Please wait, it might take up to 300 seconds
+          </div>
+        </div>
+        <div style={{ padding: '0 1rem' }}>
           <SpinnerInline />
-          <h3>
-            {this.timer}
-            s
-          </h3>
+        </div>
+        <div style={{ alignSelf: 'center' }} className='admin-te-card-header__font'>
+          {this.timer}
+          s
         </div>
       </ModalWindow>
     );
