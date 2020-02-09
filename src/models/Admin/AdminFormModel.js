@@ -57,22 +57,31 @@ export default class AdminFormModel {
     if (loaded === total) this.onComplete(progressEvent);
   }
 
-  submit = async (data) => {
+  submit = async (data, overwite = {}) => {
     await this.auth.syncToken(true);
     const { headers } = this.auth;
 
     const formData = new FormData();
     if (data) {
       Object.keys(data).forEach((key) => {
-        formData.append(key, data[key]);
+        if (Array.isArray(data[key])) {
+          data[key].forEach((v) => {
+            formData.append(key, v);
+          });
+        } else {
+          formData.set(key, data[key]);
+        }
       });
     }
 
-    const d = this.method === 'DELETE' ? {} : { data: formData };
+    const url = overwite.url || this.url;
+    const method = overwite.method || this.method;
 
+    const d = method.match(/DELETE/i) ? {} : { data: formData };
+    console.log('Sending', d);
     axios({
-      url: this.url,
-      method: this.method,
+      url,
+      method,
       headers,
       ...d,
       onUploadProgress: this.onProgress,
