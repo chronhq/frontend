@@ -35,6 +35,7 @@ import DashboardSearch from './Search/DashboardSearch';
 import AuthModel from './AuthModel';
 import Wikidata from './Wikidata/Wikidata';
 import OverlayModel from './OverlayModel';
+import AdminModel from './Admin/AdminModel';
 
 export default class storeModel {
   @observable fonts = {};
@@ -53,6 +54,7 @@ export default class storeModel {
     this.mapStyle = new MapStyle(this);
     this.search = new DashboardSearch(this);
     this.wikidata = new Wikidata(this);
+    this.admin = new AdminModel(this);
     this.analytics = new AnalyticModel();
     this.auth = new AuthModel();
     this.overlays = new OverlayModel();

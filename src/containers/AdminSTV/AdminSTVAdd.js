@@ -18,7 +18,7 @@
  */
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 import UploadWidget from './UploadWidget/UploadWidget';
 import DateInput from '../../components/DateInput/DateInput';
@@ -27,8 +27,7 @@ import { WaitWindow } from '../../components/ModalWindow/ModalWindow';
 import { DateString } from '../../components/DateInput/DatePicker';
 import STVOverlapsHandler from './AdminSTVOverlaps';
 import CloseButton from '../../components/Button/CloseButton';
-import AdminSTVAddModel from './AdminSTVAddModel';
-import AdminAdvice, { AdminAdviceButton } from './AdminAdvice';
+import AdminAdvice, { AdminAdviceButton } from '../../components/AdminAdvice/AdminAdvice';
 
 @observer
 class STVDates extends React.Component {
@@ -54,17 +53,17 @@ class STVDates extends React.Component {
 class AdminSTVAdd extends React.Component {
   @observable enabled = false;
 
-  @observable form;
-
   toggleForm = action(() => {
-    this.form = this.enabled
-      ? undefined
-      : new AdminSTVAddModel(this.props.store, this.props.entity);
     this.enabled = !this.enabled;
+    this.props.store.admin.stvAddFormToggle(this.enabled, this.props.entity);
   });
 
   componentWillUnmount() {
     this.props.store.mapStyle.uploadedGeoJSON = undefined;
+  }
+
+  @computed get form() {
+    return this.props.store.admin.stvAddForm;
   }
 
   render() {

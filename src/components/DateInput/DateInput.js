@@ -123,6 +123,7 @@ class DateInput extends React.Component {
         this.setCursor(curPos.m + 1, this.getPosition(d).d);
       }
       this.value = d.getUTCFullYear() === 0 ? null : d;
+      this.props.save(this.date);
       e.preventDefault();
     }
   })

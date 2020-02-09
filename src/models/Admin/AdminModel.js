@@ -16,38 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { GiantActionButtonFillText } from '../../components/ActionButtons/ActionButtons';
+import { observable, action } from 'mobx';
+import AdminSTVAddModel from './AdminSTVAddModel';
 
-class AdminAdvice extends React.Component {
-  render() {
-    return (
-      <div className='admin-advice'>
-        {this.props.text && (
-          <div className='admin-stv-card-main__font'>
-            TIP:
-            {' '}
-            {this.props.text}
-          </div>
-        )}
-        {this.props.children}
-      </div>
-    );
+class AdminModel {
+  @observable stvAddForm;
+
+  @action stvAddFormToggle(enable, entity) {
+    if (enable) {
+      this.stvAddForm = new AdminSTVAddModel(this.rootStore, entity);
+    } else {
+      this.stvAddForm = undefined;
+    }
+  }
+
+  constructor(rootStore) {
+    this.rootStore = rootStore;
   }
 }
 
-const AdminAdviceButton = ({
-  click, text, button, icon
-}) => (
-  <AdminAdvice text={text}>
-    <GiantActionButtonFillText
-      text={button}
-      icon={icon}
-      size='2rem'
-      click={click}
-    />
-  </AdminAdvice>
-);
-
-export { AdminAdviceButton };
-export default AdminAdvice;
+export default AdminModel;

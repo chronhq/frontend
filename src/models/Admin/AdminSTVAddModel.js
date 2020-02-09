@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, action, computed } from 'mobx';
-import { julianInt } from '../../models/YearModel';
+import { julianInt } from '../YearModel';
 
 class AdminSTVAddModel {
   @observable entity;

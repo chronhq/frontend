@@ -45,13 +45,14 @@ class UploadWidget extends React.Component {
         return (
           <>
             <div>
+              <div className='admin-stv-card-main__font'>Enter references for this territory</div>
               <AdminTESearchBar
                 iconLabel='Add'
-                icon='save--light'
+                icon='add--light'
                 // search
               />
               <OptionsList
-                options={['ref1sdfsadfsadf', 'ref2sadasdsad', 'ref3asw332ddsasaddd']}
+                options={this.props.form.references}
                 selectOptions={this.props.form.addReferences}
               />
             </div>

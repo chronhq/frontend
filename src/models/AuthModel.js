@@ -19,7 +19,7 @@
 import { observable, computed, action } from 'mobx';
 
 import firebaseConfig from '../../firebase-config.json';
-import AdminFormModel from './AdminFormModel';
+import AdminFormModel from './Admin/AdminFormModel';
 
 export default class AuthModel {
   @observable initialized = false;
