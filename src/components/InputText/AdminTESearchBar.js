@@ -24,6 +24,7 @@ import { observable, action } from 'mobx';
 
 import './AdminTESearchBar.less';
 import { ActionButtonFill } from '../ActionButtons/ActionButtons';
+import InputText from './InputText';
 
 @observer
 class AdminTESearchBar extends React.Component {
@@ -35,19 +36,13 @@ class AdminTESearchBar extends React.Component {
 
   search = () => {
     this.props.search(this.value);
-    if (this.props.clean) this.input('');
+    if (this.props.clean) this.input({ target: { value: '' } });
   }
 
   render() {
     return (
-      <div className={this.props.className}>
-        <input
-          className='text-input input-text'
-          type={this.props.type}
-          value={this.value}
-          onChange={this.input}
-          onKeyPress={(e) => e.key === 'Enter' && this.search()}
-        />
+      <div className={this.props.className} style={this.props.style}>
+        <InputText value={this.value} onChange={this.input} onEnterPress={this.search} />
         <ActionButtonFill
           click={this.search}
           text={this.props.iconLabel}
@@ -60,7 +55,7 @@ class AdminTESearchBar extends React.Component {
 }
 
 AdminTESearchBar.defaultProps = {
-  type: 'text',
+  style: {},
   search: (e) => console.log('Search button pressed', e),
   iconLabel: 'Search',
   icon: 'search--light',
@@ -69,7 +64,7 @@ AdminTESearchBar.defaultProps = {
 };
 
 AdminTESearchBar.propTypes = {
-  type: PropTypes.string,
+  style: PropTypes.object,
   search: PropTypes.func,
   iconLabel: PropTypes.string,
   icon: PropTypes.string,

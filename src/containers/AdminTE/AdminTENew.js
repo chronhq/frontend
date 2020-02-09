@@ -20,7 +20,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { computed, action, observable } from 'mobx';
-import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
+import AdminTESearchBar from '../../components/InputText/AdminTESearchBar';
 import TextTopic from './TextTopic';
 import AdminTESearchCard from './AdminTECard';
 

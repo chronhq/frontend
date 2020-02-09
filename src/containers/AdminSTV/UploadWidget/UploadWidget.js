@@ -25,7 +25,6 @@ import SelectFiles from './SelectFiles';
 import { GiantActionButtonFillText } from '../../../components/ActionButtons/ActionButtons';
 
 import './UploadWidget.less';
-import AdminTESearchBar from '../../../components/AdminTESearchBar/AdminTESearchBar';
 
 const ProgressBar = ({ progress, total = 10, current = 5 }) => (
   <div className='progress-bar__container'>
@@ -46,20 +45,17 @@ class UploadWidget extends React.Component {
           <>
             <div>
               <div className='admin-stv-card-main__font'>Enter references for this territory</div>
-              <AdminTESearchBar
-                iconLabel='Add'
-                icon='add--light'
-                // search
-              />
               <OptionsList
                 options={this.props.form.references}
                 selectOptions={this.props.form.addReferences}
+                add
               />
             </div>
             <GiantActionButtonFillText
               click={this.props.form.upload}
               icon='save--blue'
               text='Save'
+              enabled={!this.props.form.error}
             />
           </>
         );

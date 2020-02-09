@@ -22,7 +22,7 @@ import { action, computed } from 'mobx';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import AdminTESearchResults from './AdminTESearchResults';
-import AdminTESearchBar from '../../components/AdminTESearchBar/AdminTESearchBar';
+import AdminTESearchBar from '../../components/InputText/AdminTESearchBar';
 import TextTopic from './TextTopic';
 
 @inject('store')
