@@ -78,7 +78,6 @@ export default class AdminFormModel {
     const method = overwite.method || this.method;
 
     const d = method.match(/DELETE/i) ? {} : { data: formData };
-    console.log('Sending', d);
     axios({
       url,
       method,

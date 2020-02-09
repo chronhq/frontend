@@ -24,6 +24,7 @@ import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import AdminTESearchResults from './AdminTESearchResults';
 import AdminTESearchBar from '../../components/InputText/AdminTESearchBar';
 import TextTopic from './TextTopic';
+import AdminTEAdd from './AdminTEAdd';
 
 @inject('store')
 @observer
@@ -48,6 +49,7 @@ class AdminTE extends React.Component {
           <TextTopic text='Find territorial entity in the database' />
           <AdminTESearchBar search={(e) => this.search.setText(e)} />
           <AdminTESearchResults />
+          <AdminTEAdd />
         </div>
       </AdminWrapper>
     );

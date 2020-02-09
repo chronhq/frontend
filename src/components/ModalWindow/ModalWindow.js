@@ -69,7 +69,9 @@ class WaitWindow extends React.Component {
         className='modal-window__timer'
       >
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
-          <div className='admin-te-card-header__font'>Calculating overlaps</div>
+          <div className='admin-te-card-header__font'>
+            {this.props.task || 'Calculating overlaps'}
+          </div>
           <div className='admin-te-card-main__font'>
             Please wait, it might take up to 300 seconds
           </div>

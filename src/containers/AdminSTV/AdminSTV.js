@@ -51,13 +51,18 @@ class AdminSTV extends React.Component {
         const { response } = context.response;
         console.error('Error during upload', response);
         console.error(response.data.error || response.statusText);
-      } else {
+      } else if (context.method === 'put') {
         const { data } = context.response;
         this.color = undefined;
         Object.keys(data).map((k) => {
           this.entity[k] = data[k];
           return null;
         });
+      }
+      if (context.method === 'DELETE') {
+        this.goBack();
+        this.props.store.data
+          .territorialEntities.data[this.props.params.entity] = undefined;
       }
     })
   );
@@ -68,16 +73,25 @@ class AdminSTV extends React.Component {
 
   @observable confirmationIsOpen = false;
 
+  @observable deleteIsOpen = false;
+
   change = action((t, v) => {
     this[t] = v;
   })
 
   componentDidMount() {
+    if (this.entity.empty) {
+      this.goBack();
+      return;
+    }
     this.props.store.wikidata.add('country', this.entity.wikidata_id);
   }
 
   @computed get entity() {
-    return this.props.store.data.territorialEntities.data[this.props.params.entity];
+    return this.props.store.data.territorialEntities.data[this.props.params.entity] || {
+      empty: true,
+      stvs: [],
+    };
   }
 
   @computed get wikidata() {
@@ -117,8 +131,15 @@ class AdminSTV extends React.Component {
     Object.keys(this.data).map((t) => this.change(t, undefined));
   }
 
+  goBack = () => this.props.history.push('/admin/te/')
+
   submit = () => {
     this.form.submit(this.formData);
+    this.change('confirmationIsOpen', false);
+  }
+
+  delete = () => {
+    this.form.submit({}, { method: 'DELETE' });
     this.change('confirmationIsOpen', false);
   }
 
@@ -129,7 +150,13 @@ class AdminSTV extends React.Component {
           isOpen={this.confirmationIsOpen}
           cancel={() => this.change('confirmationIsOpen', false)}
           confirm={this.submit}
-          text='Do you wish to save changes?'
+          text='Do you want to save changes?'
+        />
+        <ConfirmationWindow
+          isOpen={this.deleteIsOpen}
+          cancel={() => this.change('deleteIsOpen', false)}
+          confirm={this.delete}
+          text='Do you want to delete this entity?'
         />
         <AdminTECard te={this.props.params.entity} data={this.data} change={this.change} />
         {this.dirty
@@ -141,9 +168,9 @@ class AdminSTV extends React.Component {
           )
           : (
             <TwoActions>
-              <ActionButton text='Back' icon='exit' click={() => this.props.history.push('/admin/te/')} />
-              {this.entity.stv_count === 0
-                ? <ActionButton text='Delete' icon='delete' click={() => null} />
+              <ActionButton text='Back' icon='exit' click={this.goBack} />
+              {!this.entity.stv_count
+                ? <ActionButton text='Delete' icon='delete' click={() => this.change('deleteIsOpen', true)} />
                 : <></>}
             </TwoActions>
           )}

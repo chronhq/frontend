@@ -31,7 +31,7 @@ class AdminTESearchBar extends React.Component {
   @observable value = '';
 
   input = action((e) => {
-    this.value = e.target.value;
+    this.value = this.props.validate(e.target.value);
   })
 
   search = () => {
@@ -61,6 +61,7 @@ AdminTESearchBar.defaultProps = {
   icon: 'search--light',
   className: 'te-search',
   clean: false,
+  validate: (v) => v,
 };
 
 AdminTESearchBar.propTypes = {
@@ -70,6 +71,7 @@ AdminTESearchBar.propTypes = {
   icon: PropTypes.string,
   className: PropTypes.string,
   clean: PropTypes.bool,
+  validate: PropTypes.func,
 };
 
 export default AdminTESearchBar;

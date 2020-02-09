@@ -41,10 +41,6 @@ class AdminTECard extends React.Component {
     return `color-flag color-flag--${(this.te.color > 0 && this.te.color < 14) ? this.te.color : 0}`;
   }
 
-  @computed get form() {
-    return this.props.store.admin.forms.te;
-  }
-
   @computed get teData() {
     return this.props.store.data.territorialEntities.data[this.props.te] || {};
   }
