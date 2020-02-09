@@ -19,6 +19,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { ActionButtonFillText } from '../../../components/ActionButtons/ActionButtons';
+import AdminTESearchBar from '../../../components/InputText/AdminTESearchBar';
 
 @observer
 class OptionsList extends React.Component {
@@ -30,10 +31,24 @@ class OptionsList extends React.Component {
     this.props.selectOptions(res);
   }
 
+  addToList = (item) => {
+    this.props.selectOptions([...this.props.options, item]);
+  }
+
   render() {
+    // to support file list
     const getName = (o) => o.name || o;
     return (
       <div>
+        {this.props.add ? (
+          <AdminTESearchBar
+            clean
+            iconLabel='Add'
+            icon='add--light'
+            search={this.addToList}
+            style={{ gridTemplateColumns: 'auto auto' }}
+          />
+        ) : null}
         {this.props.options.map((f, idx) => (
           <ActionButtonFillText
             className='admin-stv-card-main__font'

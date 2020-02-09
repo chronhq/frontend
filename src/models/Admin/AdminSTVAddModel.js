@@ -22,6 +22,8 @@ import { julianInt } from '../YearModel';
 class AdminSTVAddModel {
   @observable entity;
 
+  @observable stvId;
+
   @observable startDate = undefined;
 
   @observable endDate = undefined;
@@ -43,38 +45,56 @@ class AdminSTVAddModel {
   @observable form = this.rootStore.auth.createForm(
     '/api/spacetime-volumes/',
     'post',
-    action((context, error) => {
-      this.waiting = false;
-      this.specialScreen = undefined;
-      if (error) {
-        const { response } = context.response;
-        if (response !== undefined) {
-          console.log(response);
-          this.conflicts = undefined;
-          this.overlaps = undefined;
-          this.uploadError = response.data.error || response.statusText;
-          if (response.status === 409) {
-            this.conflicts = response.data.overlaps;
-            this.specialScreen = 'conflict';
-          }
-        } else {
-          this.uploadError = 'Unknown Error';
-        }
-      } else { // success
-        this.rootStore.data.territorialEntities
-          .data[this.entity].stvs.push(context.response.data);
-        this.uploadError = undefined;
-        this.specialScreen = 'edit';
-      }
-    }),
+    action(this.handleSubmit),
     action(() => {
       this.waiting = true;
     })
   );
 
+  handleSubmit = action((context, error) => {
+    this.waiting = false;
+    this.specialScreen = undefined;
+    if (error) {
+      this.handleError(context);
+    } else { // success
+      this.handleSuccess(context);
+    }
+  })
+
+  handleError = action((context) => {
+    const { response } = context.response;
+    if (response !== undefined) {
+      console.log(response);
+      this.conflicts = undefined;
+      this.overlaps = undefined;
+      this.uploadError = response.data.error || response.statusText;
+      if (response.status === 409) {
+        this.conflicts = response.data.overlaps;
+        this.specialScreen = 'conflict';
+      }
+    } else {
+      this.uploadError = 'Unknown Error';
+    }
+  })
+
+  handleSuccess = action((context) => {
+    const { stvs } = this.entityData;
+    this.stvId = context.response.data.id;
+    this.entityData.stvs = [
+      ...stvs.filter((i) => i.id !== this.stvId),
+      context.response.data
+    ];
+    this.uploadError = undefined;
+    this.specialScreen = 'edit';
+  })
+
   setDate = action((d, type) => {
     this[type] = d;
   });
+
+  @computed get entityData() {
+    return this.rootStore.data.territorialEntities.data[this.entity];
+  }
 
   @computed get stage() {
     if (this.specialScreen) return this.specialScreen;
@@ -104,6 +124,7 @@ class AdminSTVAddModel {
       return 'Start date should be earlier than end date';
     }
     if (!this.files.length) return 'Select file';
+    if (!this.references.length) return 'Territory must have at least one reference';
     return false;
   }
 
@@ -120,6 +141,11 @@ class AdminSTVAddModel {
     };
   }
 
+  @computed get dataUpdate() {
+    const { references, entity } = this.data;
+    return { references, entity };
+  }
+
   @computed get message() {
     if (this.stage === 'uploading') return this.uploadError;
     return this.error;
@@ -127,7 +153,18 @@ class AdminSTVAddModel {
 
   upload = action(() => {
     this.uploadError = undefined;
-    this.form.submit(this.data);
+    if (!this.stvId) {
+      this.form.submit(this.data);
+    } else {
+      this.form.submit(this.dataUpdate, {
+        method: 'put',
+        url: `/api/spacetime-volumes/${this.stvId}/`
+      });
+    }
+  })
+
+  addReferences = action((refs) => {
+    this.references = refs;
   })
 
   selectFiles = action((f) => {
