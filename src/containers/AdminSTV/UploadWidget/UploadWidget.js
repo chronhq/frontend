@@ -95,6 +95,7 @@ class UploadWidget extends React.Component {
               click={this.props.form.upload}
               icon='upload--blue'
               text='Upload'
+              enabled={!this.props.form.error}
             />
           </>
         );

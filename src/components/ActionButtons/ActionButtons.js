@@ -64,13 +64,14 @@ const ActionButtonFill = ({
 );
 
 const ActionButtonFillText = ({
-  click, icon, size, text, className, style
+  click, icon, size, text, className, style, enabled = true
 }) => (
   <div className={className} style={style}>
     <ActionButtonFill
       click={click}
       icon={icon}
       style={{ height: size, width: size, backgroundColor: 'transparent' }}
+      enabled={enabled}
     />
     <div>{text}</div>
   </div>
@@ -84,7 +85,7 @@ const CalendarActionButton = ({ text, click }) => ActionButton({ text, click, ic
 const LabelActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'road-sign' });
 
 const GiantActionButtonFillText = ({
-  text, icon, click, size = '4rem'
+  text, icon, click, size = '4rem', enabled = true
 }) => (
   <ActionButtonFillText
     className='admin-te-card-main__font'
@@ -93,6 +94,7 @@ const GiantActionButtonFillText = ({
     icon={icon}
     size={size}
     text={text}
+    enabled={enabled}
   />
 );
 

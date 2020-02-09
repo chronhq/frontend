@@ -27,6 +27,7 @@ import Wrapper from './Wrapper';
 import AdminInterface from '../templates/AdminInterface/AdminInterface';
 import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
 import { ModalPortalContainer } from '../components/ModalPortalWrapper';
+import SideBar from '../containers/SideBar/SideBar';
 
 const description = {
   description: 'Admin interface',
@@ -66,6 +67,7 @@ class SummerAdmin extends React.Component {
           <GeoLayers />
         </div>
         <Balloon />
+        <SideBar admin />
         <TooltipOverlay />
         <ModalPortalContainer />
       </Wrapper>

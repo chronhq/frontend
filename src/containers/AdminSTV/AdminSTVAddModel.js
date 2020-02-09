@@ -83,13 +83,17 @@ class AdminSTVAddModel {
   }
 
   @computed get advice() {
+    if (this.specialScreen === 'edit') return 'References are important for users and other contributors';
     if (this.specialScreen === 'conflict') {
-      return 'Make a descision overwrite territories on server or change newly uploaded territory';
+      return 'Make a descision to overwrite territories on server or change newly uploaded territory';
     }
-    if (!(this.startDate instanceof Date && this.endDate instanceof Date)) {
-      return 'If there is not enough data - set start date to January 1, and end date to the December 31';
+    if (this.uploadError) {
+      return [
+        'If there was an error during upload -',
+        'try again or change your data.',
+        'Feel free to contact us on Discord or Github'].join(' ');
     }
-    return 'You know what to do';
+    return 'If there is not enough data - set start date to January 1, and end date to December 31';
   }
 
   @computed get error() {
