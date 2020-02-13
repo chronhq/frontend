@@ -100,6 +100,7 @@ class MapWrapper extends React.Component {
     (pointerEvent) => {
       if (force === false && this.props.store.balloon.pinned === true) return;
       const { features } = pointerEvent;
+      if (pointerEvent.center === undefined) return;
       const point = [pointerEvent.center.x, pointerEvent.center.y];
       this.onBorderHoverCb(features, point, force);
     }
@@ -128,6 +129,7 @@ class MapWrapper extends React.Component {
       return (
         <div
           id='map-wrapper'
+          ref={(r) => { this.ref = r; }}
           style={{
             zIndex: 1, width: '100vw%', height: '100vh', background
           }}
