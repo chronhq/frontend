@@ -36,3 +36,15 @@
 .controls-text-shadow {
   text-shadow: @controls-shadow;
 }
+
+.fly-away {
+  animation-name: fly-away-frames;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+}
+
+@keyframes fly-away-frames {
+  from { transform: rotate(360deg) scale(1);}
+  to {transform: rotate(-360deg) scale(0);}
+}

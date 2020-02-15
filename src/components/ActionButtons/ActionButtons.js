@@ -21,6 +21,10 @@ import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
 
 import './ActionButtons.less';
 
+const handleKeyboard = (cb) => (
+  (e) => (e.key === 'Enter' ? cb() : null)
+);
+
 const ActionButtonBody = ({ enabled, icon, text }) => (
   <span className={`action-button action-button__font action-button--${enabled ? 'enabled' : 'disabled'}`}>
     <div className={`icon ${icon ? `icon-${icon}--light action-button__icon` : ''}`} />
@@ -44,31 +48,55 @@ const ActionButton = ({
 );
 
 const ActionButtonFill = ({
-  click, enabled = true, text = '', icon = 'edit--light', style = {}
+  click, enabled = true, text = '', icon = 'edit--light', style = {}, className = ''
 }) => (
   <div
-    className={`action-button--inline action-button--${enabled ? 'enabled' : 'disabled'}`}
+    className={`action-button--inline action-button--${enabled ? 'enabled' : 'disabled'} ${className}`}
     role='button'
     style={style}
     tabIndex={0}
-    onKeyDown={enabled ? click : () => null}
+    onKeyDown={enabled ? handleKeyboard(click) : () => null}
     onClick={enabled ? click : () => null}
   >
     <div className={`icon icon-${icon} ${text ? 'action-button__icon' : ''}`} />
-    <div>
-      {text}
-    </div>
+    {text && <div>{text}</div>}
   </div>
 );
 
+const ActionButtonFillText = ({
+  click, icon, size, text, className, style, enabled = true
+}) => (
+  <div className={className} style={style}>
+    <ActionButtonFill
+      click={click}
+      icon={icon}
+      style={{ height: size, width: size, backgroundColor: 'transparent' }}
+      enabled={enabled}
+    />
+    <div>{text}</div>
+  </div>
+);
 
 /* eslint-disable new-cap */
 const SandboxActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'sandbox' });
 const CreateActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'add' });
 const ChangeActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'edit' });
 const CalendarActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'calendar' });
-const UploadActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'upload' });
 const LabelActionButton = ({ text, click }) => ActionButton({ text, click, icon: 'road-sign' });
+
+const GiantActionButtonFillText = ({
+  text, icon, click, size = '4rem', enabled = true
+}) => (
+  <ActionButtonFillText
+    className='admin-te-card-main__font'
+    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    click={click}
+    icon={icon}
+    size={size}
+    text={text}
+    enabled={enabled}
+  />
+);
 
 
 export {
@@ -76,9 +104,10 @@ export {
   ChangeActionButton,
   SandboxActionButton,
   CalendarActionButton,
-  UploadActionButton,
   LabelActionButton,
   ActionButtonFill,
+  ActionButtonFillText,
+  GiantActionButtonFillText,
 };
 
 export default ActionButton;

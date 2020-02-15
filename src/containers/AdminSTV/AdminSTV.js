@@ -18,35 +18,171 @@
  */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { computed, observable, action } from 'mobx';
+import { withRouter } from 'react-router-dom';
 
-import { CreateActionButton } from '../../components/ActionButtons/ActionButtons';
+import ActionButton from '../../components/ActionButtons/ActionButtons';
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-import STVEntity from './STVEntity';
+import AdminSTVCard from './AdminSTVCard';
 
 import './AdminSTV.less';
+import TwoActions from '../../components/TwoActions/TwoActions';
+import AdminTECard from '../AdminTE/AdminTECard';
+import AdminSTVAdd from './AdminSTVAdd';
+import { ConfirmationWindow } from '../../components/ModalWindow/ModalWindow';
+
+const STVTableHeader = () => (
+  <div className='tooltip-author stv-entity--grid'>
+    <div style={{ justifySelf: 'center' }}>Dates</div>
+    <div style={{ justifySelf: 'center' }}>Visual Center</div>
+    <div style={{ justifySelf: 'center' }}>Source URL</div>
+    <div style={{ justifySelf: 'center' }}>Actions</div>
+  </div>
+);
 
 @inject('store')
 @observer
 class AdminSTV extends React.Component {
+  @observable form = this.props.store.auth.createForm(
+    `/api/territorial-entities/${this.props.params.entity}/`,
+    'put',
+    action((context, error) => {
+      if (error) {
+        const { response } = context.response;
+        console.error('Error during upload', response);
+        console.error(response.data.error || response.statusText);
+      } else if (context.method === 'put') {
+        const { data } = context.response;
+        this.color = undefined;
+        Object.keys(data).map((k) => {
+          this.entity[k] = data[k];
+          return null;
+        });
+      }
+      if (context.method === 'DELETE') {
+        this.goBack();
+        this.props.store.data
+          .territorialEntities.data[this.props.params.entity] = undefined;
+      }
+    })
+  );
+
+  @observable color = undefined;
+
+  @observable add = false;
+
+  @observable confirmationIsOpen = false;
+
+  @observable deleteIsOpen = false;
+
+  change = action((t, v) => {
+    this[t] = v;
+  })
+
+  componentDidMount() {
+    if (this.entity.empty) {
+      this.goBack();
+      return;
+    }
+    this.props.store.wikidata.add('country', this.entity.wikidata_id);
+  }
+
+  @computed get entity() {
+    return this.props.store.data.territorialEntities.data[this.props.params.entity] || {
+      empty: true,
+      stvs: [],
+    };
+  }
+
+  @computed get wikidata() {
+    return this.props.store.wikidata.cache[this.props.params.entity];
+  }
+
+  @computed get stvs() {
+    const { stvs } = this.entity;
+    return Object.keys(stvs)
+      .sort((a, b) => Number(stvs[a].start_date) - Number(stvs[b].start_date))
+      .map((a) => stvs[a]);
+  }
+
+  @computed get data() {
+    return { color: this.color };
+  }
+
+  @computed get formData() {
+    let { label } = this.entity;
+    if (this.wikidata && this.wikidata.current.country.label !== label) {
+      label = this.wikidata.current.country.label;
+    }
+    return {
+      label,
+      color: String(this.entity.color),
+      admin_level: this.entity.admin_level,
+      wikidata_id: this.entity.wikidata_id,
+      ...this.data,
+    };
+  }
+
+  @computed get dirty() {
+    return !Object.keys(this.data).every((c) => this.data[c] === undefined);
+  }
+
+  clean = () => {
+    Object.keys(this.data).map((t) => this.change(t, undefined));
+  }
+
+  goBack = () => this.props.history.push('/admin/te/')
+
+  submit = () => {
+    this.form.submit(this.formData);
+    this.change('confirmationIsOpen', false);
+  }
+
+  delete = () => {
+    this.form.submit({}, { method: 'DELETE' });
+    this.change('confirmationIsOpen', false);
+  }
+
   render() {
-    const data = this.props.store.admin.stvs;
     return (
-      <AdminWrapper title='Spacetime volume'>
-        <p>
-          Chosen Territorial entity contains the following Spacetime volumes:
-        </p>
-        <div className='stv-entities'>
-          {data.map((d) => (
-            <STVEntity
-              {...d}
-              key={d.key}
-            />
-          ))}
-        </div>
-        <CreateActionButton text='New' click={() => true} />
+      <AdminWrapper>
+        <ConfirmationWindow
+          isOpen={this.confirmationIsOpen}
+          cancel={() => this.change('confirmationIsOpen', false)}
+          confirm={this.submit}
+          text='Do you want to save changes?'
+        />
+        <ConfirmationWindow
+          isOpen={this.deleteIsOpen}
+          cancel={() => this.change('deleteIsOpen', false)}
+          confirm={this.delete}
+          text='Do you want to delete this entity?'
+        />
+        <AdminTECard te={this.props.params.entity} data={this.data} change={this.change} />
+        {this.dirty
+          ? (
+            <TwoActions>
+              <ActionButton text='Cancel' icon='cancel' click={this.clean} />
+              <ActionButton text='Save' icon='save' click={() => this.change('confirmationIsOpen', true)} />
+            </TwoActions>
+          )
+          : (
+            <TwoActions>
+              <ActionButton text='Back' icon='exit' click={this.goBack} />
+              {!this.entity.stv_count
+                ? <ActionButton text='Delete' icon='delete' click={() => this.change('deleteIsOpen', true)} />
+                : <></>}
+            </TwoActions>
+          )}
+        <AdminSTVAdd entity={this.props.params.entity} cancel={() => this.change('add', false)} />
+        {this.stvs.length ? <STVTableHeader /> : null}
+        {this.stvs.map((v) => (
+          <AdminSTVCard key={`stv_card_${v.id}}`} entity={this.props.params.entity} stv={v} />
+        ))}
+
       </AdminWrapper>
     );
   }
 }
 
-export default AdminSTV;
+export default withRouter(AdminSTV);

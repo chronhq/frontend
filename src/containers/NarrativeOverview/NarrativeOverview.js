@@ -22,7 +22,7 @@ import { computed } from 'mobx';
 
 // import NarrativeEvent from '../../components/NarrativeEvent/NarrationInfo';
 import './NarrativeOverview.less';
-import DashboardSearch from '../DashboardSearch/DashboardSearch';
+import DashboardSearch from '../../components/InputText/DashboardSearch';
 
 const NarrationPreview = ({ date, text, action }) => (
   <div

@@ -31,7 +31,8 @@ import stvBorders from './STVBordersStyle';
 import visualCenterMVT from './VisualCenterMVTStyle';
 import symbolsMVT from './SymbolsMVTStyle';
 
-import getSources from './MVTSources';
+import getSources, { geojson } from './MVTSources';
+import stvGJStyle from './STVGJStyle';
 
 const BODY = {
   version: 8,
@@ -52,8 +53,6 @@ const BODY = {
 };
 
 export default class MapStyleModel {
-  @observable atomicBorders;
-
   @observable desiredMapBoxStyle;
 
   @observable installedMapBoxStyle;
@@ -62,10 +61,27 @@ export default class MapStyleModel {
 
   @observable backgroundStyle = { ...BODY, sources: {}, layers: [] };
 
+  @observable visibleSTVs = [];
+
+  @observable uploadedGeoJSONColor = 1;
+
+  @observable uploadedGeoJSON;
+
+  @computed get adminGeoJSON() {
+    return geojson(
+      this.uploadedGeoJSON || { type: 'Polygon', coordinates: [[[0, 0], [15, 0], [15, 10], [15, 10], [0, 0]]] }
+    );
+  }
+
   @computed get bordersStyle() {
     // Remove layer from style is faster than change visibility property
+    const { SelectedCourseName } = this.rootStore.flags.runtime;
+    if (SelectedCourseName && SelectedCourseName.value === 'admin') {
+      return stvBorders(this.rootStore.year.now, this.visibleSTVs);
+    }
+
     return this.rootStore.flags.layer.borders.value
-      ? stvBorders(this.rootStore.year.now, true)
+      ? stvBorders(this.rootStore.year.now)
       : [];
   }
 
@@ -120,12 +136,13 @@ export default class MapStyleModel {
   @computed get style() {
     const staticSources = getSources({
       dummyPinsGJ: this.rootStore.pins.dummyPinsGJ,
-      narrativeOverview: this.rootStore.pins.narrativeOverview
+      narrativeOverview: this.rootStore.pins.narrativeOverview,
     });
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,
         ...staticSources,
+        adminUploadGJ: this.adminGeoJSON,
       }
       : staticSources;
 
@@ -137,6 +154,7 @@ export default class MapStyleModel {
       ...this.symbols,
       ...this.legacyPins,
       ...this.pins,
+      ...stvGJStyle(Boolean(this.uploadedGeoJSON), this.uploadedGeoJSONColor)
     ];
 
     const layers = (typeof this.backgroundStyle.layers !== 'undefined')

@@ -47,32 +47,32 @@ const createTick = (year) => (e, idx) => ({
 const newPoint = (p) => ({ img: 'birth', loc: p });
 
 const timeline = [{
-  date: '7 March 2017',
+  date: '7 Mar 2017',
   text: 'Chronist team launched first demo'
 }, {
-  date: '11 November 2017',
+  date: '11 Nov 2017',
   text: 'First narrative made by Chronist'
 }, {
-  date: '12 January 2018',
+  date: '12 Jan 2018',
   text: 'Launch of first demo by ChronoScio announced by Ollie Bye'
 }, {
-  date: '6 July 2018',
+  date: '6 Jul 2018',
   text: ['With the addition of new members,',
     'ChronoScio team started to work on the second iteration of their website'].join(' ')
 }, {
-  date: '1 August 2018',
+  date: '1 Aug 2018',
   text: 'Chronist team published 220 years of world history maps'
 }, {
-  date: '9 September 2018',
+  date: '9 Sep 2018',
   text: 'ChronoScio team began mapping past 1789'
 }, {
-  date: '19 October 2018',
+  date: '19 Oct 2018',
   text: 'ChronoScio and Chronist teams came together'
 }, {
-  date: '26 February 2019',
+  date: '26 Feb 2019',
   text: 'United Chron team launched first demo'
 }, {
-  date: '19 November 2019',
+  date: '19 Nov 2019',
   text: 'Full design update released'
 }, {
   date: 'Now',

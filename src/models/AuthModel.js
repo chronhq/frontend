@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 import firebaseConfig from '../../firebase-config.json';
+import AdminFormModel from './Admin/AdminFormModel';
 
 export default class AuthModel {
   @observable initialized = false;
@@ -29,7 +30,32 @@ export default class AuthModel {
 
   @observable user;
 
+  @observable token;
+
   @computed get isSignedIn() {
     return !!this.user;
   }
+
+  @computed get headers() {
+    if (!this.token) {
+      this.syncToken();
+    }
+
+    return {
+      Authorization: `JWT ${this.token}`
+    };
+  }
+
+  @action syncToken = async (force) => {
+    try {
+      const t = await this.user.getIdToken(force);
+      this.token = t;
+    } catch (e) {
+      console.error('Problem with token', e);
+    }
+  }
+
+  createForm = (
+    url, method, onResult, onComplete
+  ) => new AdminFormModel(this, url, method, onResult, onComplete);
 }

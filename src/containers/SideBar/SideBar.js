@@ -34,10 +34,16 @@ class SideBar extends React.Component {
   render() {
     return (
       <div className='side-bar__grid'>
-        <MapStyleMenu />
-        <EventsMenu />
-        <HiddenURLButton name='admin' styles='menu-admin' wrapper='side-bar__desktop' href='/admin' />
-        <HiddenURLButton name='github' styles='menu-github' href='https://github.com/chronhq/' />
+        {!this.props.admin ? (
+          <>
+            <MapStyleMenu />
+            <EventsMenu />
+            <HiddenURLButton name='admin' styles='menu-admin' wrapper='side-bar__desktop' href='/admin' />
+          </>
+        ) : (
+          <HiddenURLButton name='world' styles='menu-admin' wrapper='side-bar__desktop' href='/world' />
+        )}
+        <HiddenURLButton name='github' styles='menu-github' href='https://chronhq.github.io/wiki/' />
         <HiddenURLButton name='discord' styles='menu-discord' href='https://discord.gg/rN3uen5' />
         <div />
         {['plus', 'minus'].map((z) => (

@@ -21,45 +21,36 @@ import { observer, inject } from 'mobx-react';
 import { action, computed } from 'mobx';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
-import TwoActions from '../../components/TwoActions/TwoActions';
-import ActionButton from '../../components/ActionButtons/ActionButtons';
-
+import AdminTESearchResults from './AdminTESearchResults';
+import AdminTESearchBar from '../../components/InputText/AdminTESearchBar';
 import TextTopic from './TextTopic';
-import AdminTESelector from './AdminTESelector';
-import AdminTESettings from './AdminTESettings';
+import AdminTEAdd from './AdminTEAdd';
 
 @inject('store')
 @observer
 class AdminTE extends React.Component {
-  componentDidMount() {
-    if (!this.loaded) {
-      this.props.store.data.territorialEntities.get();
-    }
-  }
+  selectTE = action((data, form) => {
+    this.form.data.selected = data;
+    this.form.data.form = form;
+  })
 
-  @computed get loaded() {
-    return this.props.store.data.territorialEntities.status.loaded;
+  @computed get search() {
+    return this.props.store.search.TerritorialEntities;
   }
 
   @computed get form() {
     return this.props.store.admin.forms.te;
   }
 
-  @action selectTE(data, form) {
-    this.form.data.selected = data;
-    this.form.data.form = form;
-  }
-
   render() {
     return (
-      <AdminWrapper title='Territorial Entity' back='panel'>
-        <TextTopic text='1. Choose Territorial Entity' />
-        <AdminTESelector add select={(d, f) => this.selectTE(d, f)} />
-        <AdminTESettings />
-        <TwoActions>
-          <ActionButton text='Delete' icon='delete' />
-          <ActionButton text='Save' icon='save' />
-        </TwoActions>
+      <AdminWrapper>
+        <div className='te-selector'>
+          <TextTopic text='Find territorial entity in the database' />
+          <AdminTESearchBar search={(e) => this.search.setText(e)} />
+          <AdminTESearchResults />
+          <AdminTEAdd />
+        </div>
       </AdminWrapper>
     );
   }

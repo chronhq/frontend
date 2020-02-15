@@ -35,6 +35,10 @@ const dumpData = {
 class EventsMenu extends React.Component {
   @observable events = false;
 
+  toggleEvents = action(() => {
+    this.events = !this.events;
+  })
+
   @computed get msg() {
     return this.props.store.i18n.data;
   }
@@ -50,10 +54,6 @@ class EventsMenu extends React.Component {
   handleLayer = (place, layer, status) => {
     this.props.store.flags[place].set(layer, status);
     this.props.store.analytics.metricHit(`main_${layer}`);
-  }
-
-  @action toggleEvents = () => {
-    this.events = !this.events;
   }
 
   render() {

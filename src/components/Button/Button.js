@@ -5,6 +5,7 @@ import './Button.less';
 export const BUTTON_TYPE = {
   BASIC: 'basic',
   CLOSE: 'close',
+  GHOST: 'ghost',
   COMPACT: 'close compact',
   ICON: 'icon'
 };

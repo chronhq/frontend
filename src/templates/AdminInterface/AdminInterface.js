@@ -17,14 +17,56 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React, { Suspense, lazy } from 'react';
+import { observer, inject } from 'mobx-react';
+import { computed } from 'mobx';
+
 import LoadingLogo from '../../containers/LoadingLogo';
 
-const AdminScreen = lazy(() => import('./AdminScreen'));
+import Spinner from '../../components/Spinner/Spinner';
+import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 
-const AdminInterface = () => (
-  <Suspense fallback={<LoadingLogo />}>
-    <AdminScreen />
-  </Suspense>
-);
+const AdminLoginGuard = lazy(() => import('./AdminLoginGuard'));
+
+const AdminTE = lazy(() => import('../../containers/AdminTE/AdminTE'));
+const AdminSTV = lazy(() => import('../../containers/AdminSTV/AdminSTV'));
+
+@inject('store')
+@observer
+class AdminInterface extends React.Component {
+  componentDidMount() {
+    if (!this.loaded) {
+      this.props.store.data.territorialEntities.get();
+    }
+  }
+
+  @computed get loaded() {
+    return this.props.store.data.territorialEntities.status.loaded;
+  }
+
+  get screen() {
+    const { type, entity, sub } = this.props.params;
+    if (type === 'te') {
+      if (sub !== undefined) return AdminSTV;
+      if (entity !== undefined) return AdminSTV;
+      return AdminTE;
+    }
+    return AdminTE;
+  }
+
+  render() {
+    const Screen = this.screen;
+    return (
+      <Suspense fallback={<LoadingLogo />}>
+        <div className='float-container'>
+          <AdminLoginGuard>
+            {this.loaded
+              ? <Screen params={this.props.params} />
+              : <AdminWrapper><Spinner /></AdminWrapper>}
+          </AdminLoginGuard>
+        </div>
+      </Suspense>
+    );
+  }
+}
 
 export default AdminInterface;

@@ -29,10 +29,10 @@ class BalloonControls extends React.Component {
 
   @observable mouseY = 0;
 
-  @action setMousePosition(e) {
+  setMousePosition = action((e) => {
     this.mouseX = e.pageX;
     this.mouseY = e.pageY;
-  }
+  })
 
   mouseDragDown = (e) => {
     this.setMousePosition(e);

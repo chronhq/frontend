@@ -24,6 +24,7 @@ import Balloon from '../containers/Balloon';
 import Wrapper from './Wrapper';
 import NarrativeDesktop from '../templates/NarrativeDesktop/NarrativeDesktop';
 import TooltipOverlay from '../components/Tooltip/TooltipOverlay';
+import { ModalPortalContainer } from '../components/ModalPortalWrapper';
 
 const SummerStory = ({ story, fake, metric }) => (
   <Wrapper story={story} fake={fake} metric={metric}>
@@ -31,6 +32,7 @@ const SummerStory = ({ story, fake, metric }) => (
     <NarrativeDesktop />
     <Balloon />
     <TooltipOverlay />
+    <ModalPortalContainer />
   </Wrapper>
 );
 

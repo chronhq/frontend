@@ -23,7 +23,7 @@ const vector = (url, api = 'api/mvt') => ({
   tiles: [`${window.location.origin}/${api}/${url}/{z}/{x}/{y}`]
 });
 
-const geojson = (data) => ({ type: 'geojson', data });
+export const geojson = (data) => ({ type: 'geojson', data });
 
 const sources = (legacyPins) => ({
   stv: vector('stv', 'mvt'),

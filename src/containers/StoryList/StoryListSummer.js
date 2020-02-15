@@ -54,11 +54,11 @@ class StoryList extends React.Component {
       : {};
   }
 
-  @action setHover = (h, story, ref) => {
+  setHover = action((h, story, ref) => {
     this.hover = h;
     this.story = story;
     this.box = ref.getBoundingClientRect();
-  }
+  })
 
   handleStorySelection = (url) => {
     this.props.store.courseSelection.handleSelect(url, this.props.history);

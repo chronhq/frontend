@@ -1,0 +1,92 @@
+/*
+ * Chron.
+ * Copyright (c) 2019 Alisa Belyaeva, Ata Ali Kilicli, Amaury Martiny,
+ * Daniil Mordasov, Liam O’Flynn, Mikhail Orlov.
+ * -----
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * -----
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * -----
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+@import '../../styles/colors.less';
+@import '../../styles/Layers.less';
+
+@link-width: 7rem;
+
+.te-search-card--border {
+  border: 1px solid @dark-grey;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.te-search-card {
+  display: grid;
+  grid-template-columns: 6fr 2fr @link-width;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+  'title inception link'
+  'title dissolution stv'
+  'color color color';
+  margin: 1rem .5rem;
+  padding: .5rem;
+  .te-search-card--border();
+  border-color: @dark-grey-blue;
+  a {
+    pointer-events: all;
+  }
+  &:hover {
+    box-shadow: @admin-shadow;
+  }
+  &--selected {
+    border-color: @main-blue;
+    pointer-events: none;
+    background: repeating-linear-gradient(-45deg,#ccc,#ccc 10px,#ddd 10px,#ddd 20px);
+  }
+}
+
+.te-search-card__label {
+  grid-area: title;
+  text-indent: 1rem;
+}
+
+.te-search-card__date {
+  &--inception {
+    grid-area: inception;
+  }
+  &--dissolution {
+    grid-area: dissolution;
+  }
+}
+
+.te-search-card__link {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: .1rem .25rem .1rem .25rem;
+  grid-area: link;
+  transform: translate(.75rem, -50%);
+  background-color: @sidebar;
+  .te-search-card--border();
+}
+
+.te-search-card__stv {
+  grid-area: stv;
+  max-width: calc(@link-width - 1rem);
+  transform: translate(1rem, -30%);
+}
+
+.te-search-card__color {
+  grid-area: color;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

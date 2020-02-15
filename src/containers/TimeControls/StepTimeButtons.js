@@ -30,6 +30,14 @@ class StepTimeButtons extends React.Component {
 
   @observable selected = 1;
 
+  changeStep = action(() => {
+    if (this.selected === this.steps.length - 1) {
+      this.selected = 0;
+    } else {
+      this.selected += 1;
+    }
+  })
+
   @computed get step() {
     return this.steps[this.selected][0];
   }
@@ -51,14 +59,6 @@ class StepTimeButtons extends React.Component {
       this.year.setYear(this.year.limits.max);
     } else {
       this.year.setYear(next);
-    }
-  }
-
-  @action changeStep() {
-    if (this.selected === this.steps.length - 1) {
-      this.selected = 0;
-    } else {
-      this.selected += 1;
     }
   }
 

@@ -52,6 +52,24 @@ class MapStyleMenu extends React.Component {
 
   @observable style = '';
 
+  toggleMenu = action(() => {
+    this.menu = !this.menu;
+  })
+
+  setText = action((type, text) => {
+    this[type] = text;
+  })
+
+  save = action(() => {
+    if (this.valid) {
+      this.props.store.mapStyle.setUpConfig({ token: this.token, style: this.style });
+    }
+  })
+
+  clean = action(() => {
+    this.props.store.mapStyle.setUpConfig();
+  })
+
   @computed get valid() {
     return (this.styleIsValid && this.tokenIsValid);
   }
@@ -75,24 +93,6 @@ class MapStyleMenu extends React.Component {
     return {
       visibility: this.menu === true ? 'initial' : 'hidden'
     };
-  }
-
-  @action toggleMenu = () => {
-    this.menu = !this.menu;
-  }
-
-  @action setText = (type, text) => {
-    this[type] = text;
-  }
-
-  @action save = () => {
-    if (this.valid) {
-      this.props.store.mapStyle.setUpConfig({ token: this.token, style: this.style });
-    }
-  }
-
-  @action clean = () => {
-    this.props.store.mapStyle.setUpConfig();
   }
 
   render() {

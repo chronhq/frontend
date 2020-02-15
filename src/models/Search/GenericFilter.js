@@ -45,10 +45,9 @@ class GenericFilter {
 
   selectText = (d) => ([d.description]);
 
-  textCb = (t) => t;
 
   filterCb = (cur) => (
-    this.textCb(cur).toLowerCase().indexOf(this.text.toLowerCase()) > -1);
+    String(cur).toLowerCase().indexOf(this.text.toLowerCase()) > -1);
 
   filter = (id) => {
     const fields = this.selectText(this.data[id]);

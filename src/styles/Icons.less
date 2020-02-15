@@ -58,8 +58,17 @@
   .lnr-cross(@dark-color);
 }
 
+.icon-cross--blue {  
+  .lnr-cross(@blue-color);
+}
+
 .icon-cross-circle {  
   .figma-cross-circle(@red-color);
+}
+
+.icon-plus-circle--blue {  
+  .figma-cross-circle(@blue-color);
+  transform: rotate(45deg);
 }
 
 .icon-checkmark-circle {  
@@ -98,20 +107,24 @@
   .lnr-location(@dark-color);
 }
 
-.icon-magic-wand {
-  .lnr-magic-wand(@dark-color);
+.icon-magic-wand--blue {
+  .lnr-magic-wand(@blue-color);
 }
 
 .icon-double-arrow-left--light {
-  .line-double-arrow-left(@light-color)
+  .line-double-arrow-left(@light-color);
 }
 
 .icon-double-arrow-right--light {
-  .line-double-arrow-right(@light-color)
+  .line-double-arrow-right(@light-color);
 }
 
 .icon-save--light {
   .line-save(@light-color);
+}
+
+.icon-save--blue {
+  .line-save(@blue-color);
 }
 
 .icon-search--blue {
@@ -126,12 +139,36 @@
   .line-edit(@light-color);
 }
 
+.icon-edit--blue {
+  .line-edit(@blue-color);
+}
+
 .icon-delete--light {
   .line-delete(@light-color);
 }
 
+.icon-delete--blue {
+  .line-delete(@blue-color);
+}
+
+.icon-eye--blue {
+  .alice-eye(@blue-color);
+}
+
+.icon-no-eye--blue {
+  .alice-no-eye(@blue-color);
+}
+
 .icon-cancel--light {
   .line-cancel(@light-color);
+}
+
+.icon-checkmark--blue {
+  .line-checkmark(@blue-color);
+}
+
+.icon-checkmark--light {
+  .line-checkmark(@light-color);
 }
 
 .icon-calendar--light {
@@ -140,6 +177,10 @@
 
 .icon-add--light {
   .line-add(@light-color);
+}
+
+.icon-add--blue {
+  .line-add(@blue-color);
 }
 
 .icon-road-sign--light {
@@ -154,8 +195,16 @@
   .line-upload(@light-color);
 }
 
+.icon-upload--blue {
+  .line-upload(@blue-color);
+}
+
 .icon-download--light {
   .line-download(@light-color);
+}
+
+.icon-download--blue {
+  .line-download(@blue-color);
 }
 
 .icon-exit--light {
@@ -166,8 +215,29 @@
   .line-redo(@light-color);
 }
 
+.icon-redo--blue {
+  .line-redo(@blue-color);
+}
+
 .icon-recycle--light {
   .figma-recycle(@light-color);
+}
+
+.icon-arrow-box__left--light {
+  .figma-arrow-box(@light-color);
+}
+
+.icon-arrow-box__right--light {
+  .figma-arrow-box(@light-color);
+  transform: rotate(180deg);
+}
+
+.icon-scissors--blue {
+  .figma-scissors(@blue-color);
+}
+
+.icon-lock--blue {
+  .figma-lock(@blue-color);
 }
 
 .icon-group--light {
@@ -202,6 +272,10 @@
   .line-back(@play-controls-color);
 }
 
+.icon-back--blue {
+  .line-back(@blue-color);
+}
+
 .icon-step-forward {
   .line-redo(@play-controls-color);
   transform: rotate(-90deg) scale(1, -1);
@@ -210,4 +284,80 @@
 .icon-step-backward {
   .line-redo(@play-controls-color);
   transform: rotate(-90deg) scale(1, 1);
+}
+
+.color-flag {
+  background-size: 3%;
+  background-position: 0.25rem 0px;
+  background-repeat: no-repeat;
+}
+
+.color-flag--0 {
+  @c: #map-pallete[0];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--1 {
+  @c: #map-pallete[1];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--2 {
+  @c: #map-pallete[2];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--3 {
+  @c: #map-pallete[3];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--4 {
+  @c: #map-pallete[4];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--5 {
+  @c: #map-pallete[5];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--6 {
+  @c: #map-pallete[6];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--7 {
+  @c: #map-pallete[7];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--8 {
+  @c: #map-pallete[8];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--9 {
+  @c: #map-pallete[9];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--10 {
+  @c: #map-pallete[10];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--11 {
+  @c: #map-pallete[11];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--12 {
+  @c: #map-pallete[12];
+  .bookmark(replace(@c, '#', '%23'));
+}
+
+.color-flag--13 {
+  @c: #map-pallete[13];
+  .bookmark(replace(@c, '#', '%23'));
 }

@@ -28,6 +28,15 @@ class LayerToggle extends React.Component {
 
   @observable lastEventTime = 0;
 
+  keepStatus = action(() => {
+    const time = Math.round(Number(new Date()) / 500);
+    // Keep value received from first event in sequence from [touchStart, mouseDown]
+    if (time !== this.lastEventTime) {
+      this.lastEventTime = time;
+      this.keyDownStatus = this.props.checked;
+    }
+  })
+
   @computed get className() {
     return [
       'image-button',
@@ -43,15 +52,6 @@ class LayerToggle extends React.Component {
       this.props.click(this.props.name, !this.props.checked);
     }
   };
-
-  @action keepStatus = () => {
-    const time = Math.round(Number(new Date()) / 500);
-    // Keep value received from first event in sequence from [touchStart, mouseDown]
-    if (time !== this.lastEventTime) {
-      this.lastEventTime = time;
-      this.keyDownStatus = this.props.checked;
-    }
-  }
 
   render() {
     return (

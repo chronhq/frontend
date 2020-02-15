@@ -20,10 +20,15 @@ import React from 'react';
 
 import './Spinner.less';
 
-const Spinner = () => (
+const SpinnerInline = () => (
+  <div className='spinner' />
+);
+
+const SpinnerOverlay = () => (
   <div className='spinner-wrapper'>
-    <div className='spinner' />
+    <SpinnerInline />
   </div>
 );
 
-export default Spinner;
+export { SpinnerInline };
+export default SpinnerOverlay;
