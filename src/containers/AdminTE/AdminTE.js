@@ -47,7 +47,7 @@ class AdminTE extends React.Component {
       <AdminWrapper>
         <div className='te-selector'>
           <TextTopic text='Find territorial entity in the database' />
-          <AdminTESearchBar search={(e) => this.search.setText(e)} />
+          <AdminTESearchBar search={(e) => this.search.setText(e)} value={this.search.text} />
           <AdminTESearchResults />
           <AdminTEAdd />
         </div>
