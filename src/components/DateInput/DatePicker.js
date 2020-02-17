@@ -148,7 +148,7 @@ class DatePicker extends React.Component {
 
   setScreenMonth = action((m) => {
     this.setMonth(m);
-    this.screen = this.screen + 1;
+    this.screen += 1;
   });
 
   setScreenDay = (d) => {
@@ -262,7 +262,7 @@ class DatePicker extends React.Component {
     const screen = this.screenList[this.screen];
     const back = this.screen === 0
       ? () => this.props.parent.close()
-      : () => { this.screen = this.screen - 1; };
+      : () => { this.screen -= 1; };
 
     return (
       <div className='float-container date-picker__container'>
