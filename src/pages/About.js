@@ -75,6 +75,9 @@ const timeline = [{
   date: '19 Nov 2019',
   text: 'Full design update released'
 }, {
+  date: '17 Feb 2020',
+  text: 'Admin interface released'
+}, {
   date: 'Now',
   text: ['We are a community of enthusiasts behind Chron.',
     'We live in a different parts of the world',
