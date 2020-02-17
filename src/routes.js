@@ -28,9 +28,7 @@ import AnalyticsWrapper from './containers/Analytics/AnalyticsWrapper';
 
 const Story = lazy(() => import('./pages/SummerStory'));
 
-const Admin = process.env.NODE_ENV === 'development'
-  ? lazy(() => import('./pages/SummerAdmin'))
-  : lazy(() => import('./pages/Construction'));
+const Admin = lazy(() => import('./pages/SummerAdmin'));
 const NotFound = lazy(() => import('./pages/404'));
 const BadGateway = lazy(() => import('./pages/502'));
 const GatewayTimeout = lazy(() => import('./pages/504'));
