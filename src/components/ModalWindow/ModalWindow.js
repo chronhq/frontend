@@ -73,7 +73,7 @@ class WaitWindow extends React.Component {
             {this.props.task || 'Calculating overlaps'}
           </div>
           <div className='admin-te-card-main__font'>
-            Please wait, it might take up to 300 seconds
+            {`Please wait, it might take up to ${this.timerMax} seconds`}
           </div>
         </div>
         <div style={{ padding: '0 1rem' }}>

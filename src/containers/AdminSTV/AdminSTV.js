@@ -29,7 +29,7 @@ import './AdminSTV.less';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import AdminTECard from '../AdminTE/AdminTECard';
 import AdminSTVAdd from './AdminSTVAdd';
-import { ConfirmationWindow } from '../../components/ModalWindow/ModalWindow';
+import { ConfirmationWindow, WaitWindow } from '../../components/ModalWindow/ModalWindow';
 
 const STVTableHeader = () => (
   <div className='tooltip-author stv-entity--grid'>
@@ -47,11 +47,13 @@ class AdminSTV extends React.Component {
     `/api/territorial-entities/${this.props.params.entity}/`,
     'put',
     action((context, error) => {
+      this.change('waiting', false);
+      const method = context.reqOverwrite.method || context.method;
       if (error) {
         const { response } = context.response;
         console.error('Error during upload', response);
         console.error(response.data.error || response.statusText);
-      } else if (context.method === 'put') {
+      } else if (method.match(/PUT/i)) {
         const { data } = context.response;
         this.color = undefined;
         Object.keys(data).map((k) => {
@@ -59,13 +61,15 @@ class AdminSTV extends React.Component {
           return null;
         });
       }
-      if (context.method === 'DELETE') {
+      if (method.match(/DELETE/i)) {
         this.goBack();
-        this.props.store.data
-          .territorialEntities.data[this.props.params.entity] = undefined;
+        delete this.props.store.data
+          .territorialEntities.data[this.props.params.entity];
       }
     })
   );
+
+  @observable waiting = false;
 
   @observable color = undefined;
 
@@ -134,13 +138,15 @@ class AdminSTV extends React.Component {
   goBack = () => this.props.history.push('/admin/te/')
 
   submit = () => {
-    this.form.submit(this.formData);
+    this.change('waiting', true);
     this.change('confirmationIsOpen', false);
+    this.form.submit(this.formData);
   }
 
   delete = () => {
+    this.change('waiting', true);
+    this.change('deleteIsOpen', false);
     this.form.submit({}, { method: 'DELETE' });
-    this.change('confirmationIsOpen', false);
   }
 
   render() {
@@ -157,6 +163,11 @@ class AdminSTV extends React.Component {
           cancel={() => this.change('deleteIsOpen', false)}
           confirm={this.delete}
           text='Do you want to delete this entity?'
+        />
+        <WaitWindow
+          isOpen={this.waiting}
+          task='Sending data to server'
+          timerMax={60}
         />
         <AdminTECard te={this.props.params.entity} data={this.data} change={this.change} />
         {this.dirty

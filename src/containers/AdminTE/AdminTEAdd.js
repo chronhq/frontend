@@ -114,7 +114,11 @@ class AdminTEAdd extends React.Component {
     return this.enabled ? (
       <>
         <AdminAdvice text={this.advice} />
-        <WaitWindow isOpen={this.wait} />
+        <WaitWindow
+          isOpen={this.wait}
+          task='Sending data to server'
+          timerMax={60}
+        />
         <div className='te-selector' style={{ position: 'relative', paddingTop: '1rem' }}>
           <CloseButton compact onClick={this.toggleForm} task='Creating new entity' />
           <TextTopic text='Enter wikidata id for entity' />
