@@ -55,6 +55,7 @@ class AdminSTVAdd extends React.Component {
 
   toggleForm = action(() => {
     this.enabled = !this.enabled;
+    this.props.store.mapStyle.uploadedGeoJSON = undefined;
     this.props.store.admin.stvAddFormToggle(this.enabled, this.props.entity);
   });
 

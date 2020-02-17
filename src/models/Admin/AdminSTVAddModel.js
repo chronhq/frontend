@@ -85,6 +85,7 @@ class AdminSTVAddModel {
       context.response.data
     ];
     this.uploadError = undefined;
+    this.rootStore.mapStyle.uploadedGeoJSON = context.response.data.territory;
     this.specialScreen = 'edit';
   })
 
