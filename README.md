@@ -37,7 +37,16 @@ cp firebase-config.json.example firebase-config.json
 # Run the app in development environment
 # webpack-dev-server - 0.0.0.0:3000
 # webpack-bundle-analyzer - 0.0.0.0:3001 
+
+# For development using production database
+# All queries to /api would be redirected to https://chronmaps.com/api
 npm start
+
+# For development using local instance of backend server
+# All queries to /api would be redirected to http://api/api
+# !!! Add api domain to hosts file
+# echo '127.0.0.1 api'  >> /etc/hosts
+npm run dev
 ```
 
 The app can be accessed via http://localhost:3000/
