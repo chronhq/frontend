@@ -133,7 +133,11 @@ class AdminSTVAddModel {
 
   @computed get data() {
     const territory = this.files.length ? this.files[0] : undefined;
-    const overlaps = this.overlaps ? { overlaps: JSON.stringify(this.overlaps) } : {};
+    const overlaps = {};
+    if (this.overlaps) {
+      overlaps.overlaps = Object.keys(this.overlaps).filter((k) => this.overlaps[k]).map(Number);
+      if (overlaps.overlaps.length === 0) overlaps.overlaps.push('');
+    }
     return this.error ? {} : {
       entity: this.entity,
       references: this.references,
