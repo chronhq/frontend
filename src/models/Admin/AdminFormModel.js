@@ -30,6 +30,10 @@ export default class AdminFormModel {
 
   @observable response;
 
+  @observable reqData = {};
+
+  @observable reqOverwrite = {};
+
   constructor(auth, url, method, onResult, onComplete = () => null) {
     this.auth = auth;
     this.url = url;
@@ -60,6 +64,9 @@ export default class AdminFormModel {
   submit = async (data, overwite = {}) => {
     await this.auth.syncToken(true);
     const { headers } = this.auth;
+
+    this.reqData = data;
+    this.reqOverwrite = overwite;
 
     const formData = new FormData();
     if (data) {

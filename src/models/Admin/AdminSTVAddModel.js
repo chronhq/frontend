@@ -28,7 +28,7 @@ class AdminSTVAddModel {
 
   @observable endDate = undefined;
 
-  @observable references = ['https://chronmaps.com'];
+  @observable references = [];
 
   @observable files = [];
 
@@ -85,6 +85,7 @@ class AdminSTVAddModel {
       context.response.data
     ];
     this.uploadError = undefined;
+    this.rootStore.mapStyle.uploadedGeoJSON = context.response.data.territory;
     this.specialScreen = 'edit';
   })
 
@@ -124,13 +125,19 @@ class AdminSTVAddModel {
       return 'Start date should be earlier than end date';
     }
     if (!this.files.length) return 'Select file';
-    if (!this.references.length) return 'Territory must have at least one reference';
+    if (!this.references.length && this.specialScreen === 'edit') {
+      return 'Territory must have at least one reference';
+    }
     return false;
   }
 
   @computed get data() {
     const territory = this.files.length ? this.files[0] : undefined;
-    const overlaps = this.overlaps ? { overlaps: this.overlaps } : {};
+    const overlaps = {};
+    if (this.overlaps) {
+      overlaps.overlaps = Object.keys(this.overlaps).filter((k) => this.overlaps[k]).map(Number);
+      if (overlaps.overlaps.length === 0) overlaps.overlaps.push('');
+    }
     return this.error ? {} : {
       entity: this.entity,
       references: this.references,
@@ -196,8 +203,9 @@ class AdminSTVAddModel {
   })
 
   cancelOverlap = action(() => {
-    this.uploadError = 'Overlps Conflict';
-    this.overlaps = {};
+    this.specialScreen = undefined;
+    this.uploadError = 'Overlaps Conflict';
+    this.overlaps = undefined;
   })
 
   confirmOverlaps = (entity, value) => {

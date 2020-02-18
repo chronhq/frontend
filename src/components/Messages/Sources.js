@@ -74,9 +74,14 @@ class Sources extends React.Component {
 
   @computed get item() {
     const wId = this.props.id;
-    const sources = this.props.type === 'countryHover'
-      ? JSON.parse(this.props.data.references)
-      : undefined;
+    let sources;
+    try {
+      sources = this.props.type === 'countryHover'
+        ? JSON.parse(this.props.data.references)
+        : undefined;
+    } catch {
+      sources = undefined;
+    }
 
     if (this.props.store.wikidata.cache[wId] !== undefined) {
       return {

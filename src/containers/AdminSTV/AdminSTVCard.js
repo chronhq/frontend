@@ -22,25 +22,26 @@ import { observable, action, computed } from 'mobx';
 
 import { DateFromJulian } from '../../components/DateInput/DatePicker';
 import { ActionButtonFill } from '../../components/ActionButtons/ActionButtons';
-import { ConfirmationWindow } from '../../components/ModalWindow/ModalWindow';
+import { ConfirmationWindow, WaitWindow } from '../../components/ModalWindow/ModalWindow';
 import Tooltip from '../../components/Tooltip/Tooltip';
 
 @inject('store')
 @observer
 class AdminSTVCard extends React.Component {
-  @observable removing = false;
+  @observable waiting = false;
 
   @observable isOpen = false;
 
   @observable form;
 
   clickDelete = action(() => {
-    this.removing = 1;
+    this.waiting = true;
+    this.isOpen = false;
     this.form = this.props.store.auth.createForm(
       `/api/spacetime-volumes/${this.props.stv.id}/`,
       'delete',
       action((context, error) => {
-        this.removing = false;
+        this.waiting = false;
         if (error && context.response.response.status !== 410) {
           const { response } = context.response;
           console.log('Error during upload', response);
@@ -84,6 +85,7 @@ class AdminSTVCard extends React.Component {
     const coordinates = visualCenter !== null && 'coordinates' in visualCenter
       ? visualCenter.coordinates
       : ['Not set', 'Not set'];
+    const { references, start_date: start, end_date: end } = this.props.stv;
     return (
       <div className='stv-entity admin-stv-card-main__font'>
         <ConfirmationWindow
@@ -92,21 +94,26 @@ class AdminSTVCard extends React.Component {
           confirm={this.clickDelete}
           cancel={action(() => { this.isOpen = false; })}
         />
+        <WaitWindow
+          isOpen={this.waiting}
+          task='Sending data to server'
+          timerMax={60}
+        />
         <div className='stv-entity--grid'>
           <div className='stv-entity--dates'>
-            <div><DateFromJulian date={this.props.stv.start_date} /></div>
-            <div><DateFromJulian date={this.props.stv.end_date} /></div>
+            <div><DateFromJulian date={start} /></div>
+            <div><DateFromJulian date={end} /></div>
           </div>
           <div className='stv-entity--vc'>
             <div className='stv-entity--overflow'>{coordinates[0]}</div>
             <div className='stv-entity--overflow'>{coordinates[1]}</div>
           </div>
           <div className='stv-entity--source'>
-            {this.props.stv.references.map((r, idx) => (
+            {Array.isArray(references) ? references.map((r, idx) => (
               <a target='_blank' rel="noopener noreferrer" key={`sr_${idx + 0}`} className='stv-entity--overflow' href={r}>
                 {r}
               </a>
-            ))}
+            )) : ''}
           </div>
           <div className='stv-entity--buttons'>
             <a
@@ -137,8 +144,8 @@ class AdminSTVCard extends React.Component {
             <Tooltip placement='bottom' content='Delete'>
               <ActionButtonFill
                 click={action(() => { this.isOpen = true; })}
-                className={this.removing ? 'fly-away' : ''}
-                disabled={this.removing}
+                className={this.waiting ? 'fly-away' : ''}
+                disabled={this.waiting}
                 text=''
                 icon='delete--blue'
                 style={{ height: '2rem', width: '2rem', backgroundColor: 'transparent' }}

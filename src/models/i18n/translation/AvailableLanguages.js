@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import ru from './ru';
-import en from './en';
+import ru from './ru.json';
+import en from './en.json';
 
 const languages = {
   ru, en

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import mapColors from './colors';
+import mapColors from './colors.json';
 
 const colors = Object.keys(mapColors)
   .reduce((prev, cur) => ({ ...prev, [mapColors[cur]]: cur }), {});

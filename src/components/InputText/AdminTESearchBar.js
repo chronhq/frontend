@@ -34,6 +34,12 @@ class AdminTESearchBar extends React.Component {
     this.value = this.props.validate(e.target.value);
   })
 
+  componentDidMount() {
+    if (this.props.value) {
+      this.value = this.props.value;
+    }
+  }
+
   search = () => {
     this.props.search(this.value);
     if (this.props.clean) this.input({ target: { value: '' } });

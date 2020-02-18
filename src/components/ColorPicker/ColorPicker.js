@@ -20,7 +20,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
-import mapColors from '../../models/MVTStyles/colors';
+import mapColors from '../../models/MVTStyles/colors.json';
 import './ColorPicker.less';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
