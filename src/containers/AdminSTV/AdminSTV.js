@@ -88,6 +88,10 @@ class AdminSTV extends React.Component {
       this.goBack();
       return;
     }
+    // Fetch non-cached territorial entity data
+    const ts = Number(new Date());
+    this.props.store.data.territorialEntities.get(`?t=${ts}`, this.props.params.entity, true);
+
     this.props.store.wikidata.add('country', this.entity.wikidata_id);
   }
 

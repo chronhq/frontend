@@ -73,6 +73,8 @@ export default class DataModel {
       return false;
     });
 
+    this.territorialEntities.append = true;
+
     this.narrations.sortId = 'order';
 
     this.narratives.configure({

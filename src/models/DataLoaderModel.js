@@ -43,24 +43,28 @@ export default class DataLoaderModel {
 
   @observable flatGenCb = (json) => {
     const data = {};
-    json.map((cur) => {
-      data[cur[this.sortId]] = this.wrapData(cur);
-      return false;
-    });
+    if (Array.isArray(json)) {
+      for (let i = 0; i < json.length; i += 1) {
+        data[json[i][this.sortId]] = this.wrapData(json[i]);
+      }
+    } else {
+      data[json[this.sortId]] = this.wrapData(json);
+    }
     this.setData(data);
   }
 
   @observable arrayGenCb = (json) => {
     const data = {};
-    json.map((cur) => {
+    for (let i = 0; i < json.length; i += 1) {
+      const cur = json[i];
       if (!(cur[this.sortId] in data)) {
         data[cur[this.sortId]] = [];
       }
       const entry = this.wrapData(cur);
       data[cur[this.sortId]].push(entry);
       return false;
-    }, {});
-    this.setData(data);
+    }
+    return this.setData(data);
   }
 
   @computed get saveDataCb() {
@@ -81,12 +85,10 @@ export default class DataLoaderModel {
 
   getLink(params = null, id = null) {
     // if arguments not null ignore global this.filter
-    const filter = (params === null && id === null)
-      ? toJS(this.filter)
-      : JSON.stringify(params);
+    const filter = params || toJS(this.filter);
     if (id !== null) {
       console.log('get', this.model, params, id);
-      return `/api/${this.model}/${id}/`;
+      return `/api/${this.model}/${id}/${filter}`;
     } if (filter !== null) {
       return `/api/${this.model}/${filter}`;
     }
@@ -129,8 +131,10 @@ export default class DataLoaderModel {
     }
   }
 
-  @action get(params = null, id = null) {
-    this.status = { error: null, loading: true, loaded: false };
+  @action get(params = null, id = null, keepStatus = false) {
+    if (!keepStatus) {
+      this.status = { error: null, loading: true, loaded: false };
+    }
     const url = this.getLink(params, id);
     fetch(url)
       .then((res) => this.processData(res))
