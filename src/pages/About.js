@@ -124,7 +124,7 @@ class About extends React.Component {
     when( // wait for course selection and add text
       () => this.props.store.courseSelection.courseId === -1,
       () => runInAction(() => {
-        this.props.store.data.narrations.flatGenCb(ticks);
+        this.props.store.data.narrations.saveDataCb(ticks);
         this.props.store.pins.addDummyPins(points, false);
         return true;
       })

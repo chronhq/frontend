@@ -38,10 +38,7 @@ export default class DataLoaderModel {
   // etend this.data or overwrite
   @observable append = false;
 
-  // change cb type
-  @observable arrayCb = false;
-
-  @observable flatGenCb = (json) => {
+  @observable saveDataCb = (json) => {
     const data = {};
     if (Array.isArray(json)) {
       for (let i = 0; i < json.length; i += 1) {
@@ -51,24 +48,6 @@ export default class DataLoaderModel {
       data[json[this.sortId]] = this.wrapData(json);
     }
     this.setData(data);
-  }
-
-  @observable arrayGenCb = (json) => {
-    const data = {};
-    for (let i = 0; i < json.length; i += 1) {
-      const cur = json[i];
-      if (!(cur[this.sortId] in data)) {
-        data[cur[this.sortId]] = [];
-      }
-      const entry = this.wrapData(cur);
-      data[cur[this.sortId]].push(entry);
-      return false;
-    }
-    return this.setData(data);
-  }
-
-  @computed get saveDataCb() {
-    return this.arrayCb ? this.arrayGenCb : this.flatGenCb;
   }
 
   @computed get keys() {
