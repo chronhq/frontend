@@ -35,7 +35,7 @@ const AdminSTV = lazy(() => import('../../containers/AdminSTV/AdminSTV'));
 class AdminInterface extends React.Component {
   componentDidMount() {
     if (!this.loaded) {
-      this.props.store.data.territorialEntities.get();
+      this.props.store.data.territorialEntities.get('list');
     }
   }
 
