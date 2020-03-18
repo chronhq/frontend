@@ -63,7 +63,7 @@ export default class MapStyleModel {
 
   @observable visibleSTVs = [];
 
-  @observable uploadedGeoJSONColor = 1;
+  @observable uploadedGeoJSONColor = '#7F7F7F';
 
   @observable uploadedGeoJSON;
 

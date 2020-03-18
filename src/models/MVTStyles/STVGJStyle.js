@@ -37,12 +37,12 @@ const border = (id, paint = {}) => ({
   id: `adminUploadGJ-${id}`,
 });
 
-const STVGJStyle = (enabled) => (enabled ? [
+const STVGJStyle = (enabled, color) => (enabled ? [
   {
     layout: {},
     type: 'fill',
     paint: {
-      'fill-color': { type: 'identity', property: 'color' },
+      'fill-color': color,
       'fill-opacity': 0.75,
     },
     source: 'adminUploadGJ',
