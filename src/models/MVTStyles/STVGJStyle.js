@@ -16,11 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import mapColors from './colors.json';
-
-const colors = Object.keys(mapColors)
-  .reduce((prev, cur) => ({ ...prev, [mapColors[cur]]: cur }), {});
-
 const border = (id, paint = {}) => ({
   layout: {
     'line-cap': 'round',
@@ -42,12 +37,12 @@ const border = (id, paint = {}) => ({
   id: `adminUploadGJ-${id}`,
 });
 
-const STVGJStyle = (enabled, color) => (enabled ? [
+const STVGJStyle = (enabled) => (enabled ? [
   {
     layout: {},
     type: 'fill',
     paint: {
-      'fill-color': colors[color],
+      'fill-color': { type: 'identity', property: 'color' },
       'fill-opacity': 0.75,
     },
     source: 'adminUploadGJ',

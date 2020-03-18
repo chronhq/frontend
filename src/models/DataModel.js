@@ -42,6 +42,7 @@ export default class DataModel {
     ],
     heavy: [
       'cached-data',
+      'mapcolorscheme',
       'territorial-entities',
       'spacetime-volumes',
     ]
