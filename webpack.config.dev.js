@@ -64,11 +64,14 @@ module.exports = (env = {}) => ({
         changeOrigin: true,
       }]
       : {
-        '/api': 'http://api:3080/',
+        '/api': 'http://api:8086/',
         '/mvt': {
-          target: 'http://localhost:5000',
-          pathRewrite: { '^/mvt': '' }
-        }
+          target: 'http://api:8086/api/',
+        },
+        // '/mvt': {
+        //   target: 'http://localhost:5000',
+        //   pathRewrite: { '^/mvt': '' }
+        // }
       },
     headers: {
       'Access-Control-Allow-Origin': '*'
