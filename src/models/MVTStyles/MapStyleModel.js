@@ -76,7 +76,7 @@ export default class MapStyleModel {
   @computed get bordersStyle() {
     // Remove layer from style is faster than change visibility property
     const { SelectedCourseName } = this.rootStore.flags.runtime;
-    if (SelectedCourseName && SelectedCourseName.value === 'admin') {
+    if (SelectedCourseName && SelectedCourseName.value === 'admin' && this.visibleSTVs.length > 0) {
       return stvBorders(this.rootStore.year.now, this.visibleSTVs);
     }
 
@@ -137,7 +137,7 @@ export default class MapStyleModel {
     const staticSources = getSources({
       dummyPinsGJ: this.rootStore.pins.dummyPinsGJ,
       narrativeOverview: this.rootStore.pins.narrativeOverview,
-    });
+    }, this.visibleSTVs);
     const sources = (typeof this.backgroundStyle.sources !== 'undefined')
       ? {
         ...this.backgroundStyle.sources,

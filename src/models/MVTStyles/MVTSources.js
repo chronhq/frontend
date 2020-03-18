@@ -23,10 +23,20 @@ const vector = (url, api = 'api/mvt') => ({
   tiles: [`${window.location.origin}/${api}/${url}/{z}/{x}/{y}`]
 });
 
+const getAdminSource = (visibleStvs) => {
+  const v = vector('stv');
+  if (visibleStvs.length === 0) return v;
+
+  v.tiles[0] += '?';
+  v.tiles[0] += visibleStvs.map((a) => `stv=${a}`).join('&');
+  return v;
+};
+
 export const geojson = (data) => ({ type: 'geojson', data });
 
-const sources = (legacyPins) => ({
+const sources = (legacyPins, visibleStvs) => ({
   stv: vector('stv', 'mvt'),
+  stv_admin: getAdminSource(visibleStvs),
   events: vector('cached-data'),
   cities: vector('cities'),
   visual_center: vector('cities'),

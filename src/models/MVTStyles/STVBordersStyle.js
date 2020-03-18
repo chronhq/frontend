@@ -18,6 +18,7 @@
  */
 
 const STVBorders = (now, ids = undefined) => {
+  const source = ids ? 'stv_admin' : 'stv';
   const opacity = {
     min: 0.75,
     max: 0.25
@@ -51,9 +52,9 @@ const STVBorders = (now, ids = undefined) => {
         ]
       },
     },
-    source: 'stv',
+    source,
     id: 'stvs',
-    'source-layer': 'stv'
+    'source-layer': source
   };
 
   const borders = {
@@ -76,9 +77,9 @@ const STVBorders = (now, ids = undefined) => {
         ]
       },
     },
-    source: 'stv',
+    source,
     id: 'stv-lines',
-    'source-layer': 'stv'
+    'source-layer': source
   };
   return [fill, borders];
 };
