@@ -18,9 +18,12 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { observer, inject } from 'mobx-react';
+
+import { computed, observable, action } from 'mobx';
 
 import Button, { BUTTON_TYPE, BUTTON_SIZE } from '../Button/Button';
-import mapColors from '../../models/MVTStyles/colors.json';
+
 import './ColorPicker.less';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -39,19 +42,48 @@ const ColorBubble = ({
   </Button>
 );
 
+@inject('store')
+@observer
 class ColorPicker extends React.Component {
+  @observable palette = undefined;
+
+  @computed get colorInfo() {
+    return this.props.store.data.mapcolorscheme.data[this.props.selected];
+  }
+
+  @computed get mapColors() {
+    return this.props.store.admin.mapColors;
+  }
+
+  @computed get paletteColors() {
+    return this.palette ? this.mapColors[this.palette].colors : [];
+  }
+
   render() {
     return (
-      <div className='color-picker'>
-        {Object.keys(mapColors).map((c) => (
-          <ColorBubble
-            click={this.props.changeColor}
-            color={c}
-            id={mapColors[c]}
-            key={mapColors[c]}
-            selected={this.props.selected === mapColors[c]}
-          />
-        ))}
+      <div>
+        <div className='color-picker'>
+          {Object.keys(this.mapColors).map((c) => (
+            <ColorBubble
+              click={action(() => { this.palette = c; })}
+              color={this.mapColors[c].main.color}
+              id={c}
+              key={this.mapColors[c].main.id}
+              selected={false}
+            />
+          ))}
+        </div>
+        <div className='color-picker'>
+          {this.paletteColors.map((c) => (
+            <ColorBubble
+              click={this.props.changeColor}
+              color={c.color}
+              id={c.id}
+              key={c.id}
+              selected={this.props.selected === c.id}
+            />
+          ))}
+        </div>
       </div>
     );
   }

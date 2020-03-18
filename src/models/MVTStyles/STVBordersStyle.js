@@ -16,11 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import mapColors from './colors.json';
-
-const colors = Object.keys(mapColors).reduce((p, c) => ([...p, String(mapColors[c]), c]), []);
 
 const STVBorders = (now, ids = undefined) => {
+  const source = ids ? 'stv_admin' : 'stv';
   const opacity = {
     min: 0.75,
     max: 0.25
@@ -44,12 +42,7 @@ const STVBorders = (now, ids = undefined) => {
     filter,
     type: 'fill',
     paint: {
-      'fill-color': [
-        'match',
-        ['get', 'color'],
-        ...colors,
-        'rgb(127, 127, 127)' // Disputed
-      ],
+      'fill-color': { type: 'identity', property: 'color' },
       'fill-opacity': {
         base: opacity.min,
         stops: [
@@ -59,9 +52,9 @@ const STVBorders = (now, ids = undefined) => {
         ]
       },
     },
-    source: 'stv',
+    source,
     id: 'stvs',
-    'source-layer': 'stv'
+    'source-layer': source
   };
 
   const borders = {
@@ -84,9 +77,9 @@ const STVBorders = (now, ids = undefined) => {
         ]
       },
     },
-    source: 'stv',
+    source,
     id: 'stv-lines',
-    'source-layer': 'stv'
+    'source-layer': source
   };
   return [fill, borders];
 };

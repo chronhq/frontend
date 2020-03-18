@@ -57,7 +57,7 @@ class AdminSTVCard extends React.Component {
   preview = action(() => {
     if (!this.previewIsSet) {
       this.props.store.mapStyle.visibleSTVs = [this.props.stv.id];
-      if (this.props.stv.visual_center.coordinates) {
+      if (this.props.stv.visual_center && this.props.stv.visual_center.coordinates) {
         this.props.store.deck.moveCamera(
           this.props.stv.visual_center.coordinates,
           this.props.store.deck.zoom

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { observable, action } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import AdminSTVAddModel from './AdminSTVAddModel';
 
 class AdminModel {
@@ -28,6 +28,16 @@ class AdminModel {
     } else {
       this.stvAddForm = undefined;
     }
+  }
+
+  @computed get mapColors() {
+    return Object.keys(this.rootStore.data.mapcolorscheme.data).reduce((prev, cur) => {
+      const color = this.rootStore.data.mapcolorscheme.data[cur];
+      const palette = prev[color.palette] || { colors: [], main: color };
+      palette.colors.push(color);
+      if (color.main) palette.main = color;
+      return { ...prev, [color.palette]: palette };
+    }, {});
   }
 
   constructor(rootStore) {

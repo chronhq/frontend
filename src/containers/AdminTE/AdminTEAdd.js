@@ -130,7 +130,7 @@ class AdminTEAdd extends React.Component {
       </>
     ) : (
       <AdminAdviceButton
-        text='To add new entity from wikidata press the button'
+        text='To add a new entity to the database click this button'
         button='Add'
         icon='add--blue'
         click={this.toggleForm}

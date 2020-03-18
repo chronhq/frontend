@@ -42,6 +42,7 @@ export default class DataModel {
     ],
     heavy: [
       'cached-data',
+      'mapcolorscheme',
       'territorial-entities',
       'spacetime-volumes',
     ]
@@ -72,6 +73,8 @@ export default class DataModel {
       this[model] = new DataLoaderModel(url);
       return false;
     });
+
+    this.territorialEntities.append = true;
 
     this.narrations.sortId = 'order';
 

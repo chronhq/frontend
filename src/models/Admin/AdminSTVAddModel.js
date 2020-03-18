@@ -188,8 +188,9 @@ class AdminSTVAddModel {
     this.rootStore.mapStyle.uploadedGeoJSON = undefined;
     reader.onload = action((e) => {
       try {
-        this.rootStore.mapStyle.uploadedGeoJSONColor = this.rootStore.data
-          .territorialEntities.data[this.entity].color;
+        const colorId = this.rootStore.data.territorialEntities.data[this.entity].color;
+        const colorValue = this.rootStore.data.mapcolorscheme.data[colorId].color;
+        this.rootStore.mapStyle.uploadedGeoJSONColor = colorValue;
         this.rootStore.mapStyle.uploadedGeoJSON = JSON.parse(e.target.result);
       } catch {
         this.files = [];

@@ -38,33 +38,16 @@ export default class DataLoaderModel {
   // etend this.data or overwrite
   @observable append = false;
 
-  // change cb type
-  @observable arrayCb = false;
-
-  @observable flatGenCb = (json) => {
+  @observable saveDataCb = (json) => {
     const data = {};
-    json.map((cur) => {
-      data[cur[this.sortId]] = this.wrapData(cur);
-      return false;
-    });
-    this.setData(data);
-  }
-
-  @observable arrayGenCb = (json) => {
-    const data = {};
-    json.map((cur) => {
-      if (!(cur[this.sortId] in data)) {
-        data[cur[this.sortId]] = [];
+    if (Array.isArray(json)) {
+      for (let i = 0; i < json.length; i += 1) {
+        data[json[i][this.sortId]] = this.wrapData(json[i]);
       }
-      const entry = this.wrapData(cur);
-      data[cur[this.sortId]].push(entry);
-      return false;
-    }, {});
+    } else {
+      data[json[this.sortId]] = this.wrapData(json);
+    }
     this.setData(data);
-  }
-
-  @computed get saveDataCb() {
-    return this.arrayCb ? this.arrayGenCb : this.flatGenCb;
   }
 
   @computed get keys() {
@@ -81,12 +64,10 @@ export default class DataLoaderModel {
 
   getLink(params = null, id = null) {
     // if arguments not null ignore global this.filter
-    const filter = (params === null && id === null)
-      ? toJS(this.filter)
-      : JSON.stringify(params);
+    const filter = params || toJS(this.filter);
     if (id !== null) {
       console.log('get', this.model, params, id);
-      return `/api/${this.model}/${id}/`;
+      return `/api/${this.model}/${id}/${filter}`;
     } if (filter !== null) {
       return `/api/${this.model}/${filter}`;
     }
@@ -129,8 +110,10 @@ export default class DataLoaderModel {
     }
   }
 
-  @action get(params = null, id = null) {
-    this.status = { error: null, loading: true, loaded: false };
+  @action get(params = null, id = null, keepStatus = false) {
+    if (!keepStatus) {
+      this.status = { error: null, loading: true, loaded: false };
+    }
     const url = this.getLink(params, id);
     fetch(url)
       .then((res) => this.processData(res))

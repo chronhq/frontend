@@ -37,8 +37,23 @@ class AdminTECard extends React.Component {
     this.edit = !this.edit;
   })
 
+  @computed get teColor() {
+    const { data } = this.props.store.data.mapcolorscheme;
+    if (this.te.color !== undefined && data[this.te.color] !== undefined) {
+      return data[this.te.color].color;
+    }
+    console.log('Fallback', this.te.color, this.te);
+    return '#7F7F7F';
+  }
+
   @computed get style() {
-    return `color-flag color-flag--${(this.te.color > 0 && this.te.color < 14) ? this.te.color : 0}`;
+    const img = [
+      '%3Csvg width="70px" height="150px" version="1.1" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath',
+      'transform="scale(.26458)" d="m0 0v566.79l132.21-133.49 132.35 133.63v-566.93h-264.57z"',
+      `fill="${this.teColor.replace('#', '%23')}"/%3E%3C/svg%3E`].join(' ');
+    return {
+      backgroundImage: `url('data:image/svg+xml;utf-8,${(img)}')`,
+    };
   }
 
   @computed get teData() {
@@ -67,7 +82,8 @@ class AdminTECard extends React.Component {
   render() {
     return (
       <div
-        className={`admin-te-card-main__font ${this.style} te-search-card ${this.props.selected ? 'te-search-card--selected' : ''}`}
+        className={`admin-te-card-main__font color-flag te-search-card ${this.props.selected ? 'te-search-card--selected' : ''}`}
+        style={this.style}
         onClick={this.props.select}
         onKeyPress={this.props.select}
         tabIndex={0}
