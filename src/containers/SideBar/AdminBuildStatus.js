@@ -86,7 +86,7 @@ class AdminBuildStatus extends React.Component {
 
   sendRequest = (method = 'GET') => {
     const ts = Number(new Date());
-    const url = `/status/mvt?ts=${ts}`;
+    const url = `/status/mvt/?ts=${ts}`;
     axios({ url, method })
       .then((response) => {
         console.log(response);
