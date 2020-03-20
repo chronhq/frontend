@@ -69,20 +69,19 @@ class AdminBuildStatus extends React.Component {
   @computed get statusBlock() {
     const style = `update-status ${this.running ? '' : 'update-status--inactive'}`;
     const res = (
-      <div style={{
-        display: 'flex', flexDirection: 'column', alignItems: 'center', alignSelf: 'center'
-      }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div className={style} />
         <div className='text__narrative--menu'>{this.running ? 'Running' : 'Stopped'}</div>
       </div>
     );
 
     return this.running ? (
-      <Tooltip placement='bottom' content={`Duration ${this.duration}s`}>
-        {res}
-      </Tooltip>
-    ) : res;
+      <div style={{ alignSelf: 'center' }}>
+        <Tooltip placement='bottom' content={`Duration ${this.duration}s`}>
+          {res}
+        </Tooltip>
+      </div>
+    ) : (<div style={{ alignSelf: 'center' }}>{res}</div>);
   }
 
   sendRequest = (method = 'GET') => {
@@ -98,10 +97,12 @@ class AdminBuildStatus extends React.Component {
           }));
         }
       })
-      .catch((error) => {
+      .catch(action((error) => {
         // handle error
         console.log('Request Failed', url, method, error);
-      })
+        this.running = false;
+        this.duration = 0;
+      }))
       .then(() => {
         this.timeout = setTimeout(() => this.sendRequest(), this.updateInterval);
       });
