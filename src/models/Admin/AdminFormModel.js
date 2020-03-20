@@ -61,12 +61,12 @@ export default class AdminFormModel {
     if (loaded === total) this.onComplete(progressEvent);
   }
 
-  submit = async (data, overwite = {}) => {
+  submit = async (data, overwrite = {}) => {
     await this.auth.syncToken(true);
     const { headers } = this.auth;
 
     this.reqData = data;
-    this.reqOverwrite = overwite;
+    this.reqOverwrite = overwrite;
 
     const formData = new FormData();
     if (data) {
@@ -81,8 +81,8 @@ export default class AdminFormModel {
       });
     }
 
-    const url = overwite.url || this.url;
-    const method = overwite.method || this.method;
+    const url = overwrite.url || this.url;
+    const method = overwrite.method || this.method;
 
     const d = method.match(/DELETE/i) ? {} : { data: formData };
     axios({

@@ -20,11 +20,9 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed, observable, action } from 'mobx';
 
-import ModalWrapper from '../../components/ModalWrapper';
-import LayerToggle from '../../components/LayerToggle/LayerToggleSummer';
 import TwoActions from '../../components/TwoActions/TwoActions';
 import ActionButton from '../../components/ActionButtons/ActionButtons';
-import CloseButton from '../../components/Button/CloseButton';
+import ExtraSideMenu from './ExtraSideMenu';
 
 const inputClass = 'text-input icon--input dashboard-search input-text';
 
@@ -46,15 +44,9 @@ const Input = ({
 @inject('store')
 @observer
 class MapStyleMenu extends React.Component {
-  @observable menu = false;
-
   @observable token = '';
 
   @observable style = '';
-
-  toggleMenu = action(() => {
-    this.menu = !this.menu;
-  })
 
   setText = action((type, text) => {
     this[type] = text;
@@ -89,56 +81,43 @@ class MapStyleMenu extends React.Component {
     );
   }
 
-  @computed get menuStyle() {
-    return {
-      visibility: this.menu === true ? 'initial' : 'hidden'
-    };
-  }
-
   render() {
     return (
-      <LayerToggle
+      <ExtraSideMenu
         key='layer_map'
         tooltip='Map'
         extraClassName='menu-map'
         wrapper='side-bar__desktop'
         name='map'
-        checked={this.menu}
-        click={this.toggleMenu}
       >
-        <ModalWrapper close={this.toggleMenu} isOpen={this.menu}>
-          <div style={this.menuStyle} className='float-container side-bar__extra side-bar__extra--menu'>
-            <div style={{ display: 'flex', minHeight: '2rem' }}>
-              <div className='text__narrative--body'>
-                Try your mapbox styled design by uploading it here.
-              </div>
-              <CloseButton compact onClick={this.toggleMenu} />
-            </div>
-            <div className='text__narrative--menu'>
-              The style will only be applied for one session.
-              To make your style permanent please ask for instructions in Discord.
-            </div>
-            <Input
-              label='Style link'
-              setText={(e) => this.setText('style', e.target.value)}
-              value={this.style}
-              valid={this.styleIsValid}
-              placeholder='mapbox://styles/...'
-            />
-            <Input
-              label='Access token'
-              setText={(e) => this.setText('token', e.target.value)}
-              value={this.token}
-              valid={this.tokenIsValid}
-              placeholder='pk.eyJ1IjoibWlrbGVyZ20...'
-            />
-            <TwoActions>
-              <ActionButton text='Reset' icon='recycle' click={this.clean} />
-              <ActionButton text='Save' icon='save' click={this.save} enabled={this.valid} />
-            </TwoActions>
+        <div style={{ display: 'flex', minHeight: '2rem' }}>
+          <div className='text__narrative--body'>
+            Try your mapbox styled design by uploading it here.
           </div>
-        </ModalWrapper>
-      </LayerToggle>
+        </div>
+        <div className='text__narrative--menu'>
+          The style will only be applied for one session.
+          To make your style permanent please ask for instructions in Discord.
+        </div>
+        <Input
+          label='Style link'
+          setText={(e) => this.setText('style', e.target.value)}
+          value={this.style}
+          valid={this.styleIsValid}
+          placeholder='mapbox://styles/...'
+        />
+        <Input
+          label='Access token'
+          setText={(e) => this.setText('token', e.target.value)}
+          value={this.token}
+          valid={this.tokenIsValid}
+          placeholder='pk.eyJ1IjoibWlrbGVyZ20...'
+        />
+        <TwoActions>
+          <ActionButton text='Reset' icon='recycle' click={this.clean} />
+          <ActionButton text='Save' icon='save' click={this.save} enabled={this.valid} />
+        </TwoActions>
+      </ExtraSideMenu>
     );
   }
 }
