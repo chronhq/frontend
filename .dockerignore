@@ -1,3 +1,6 @@
 .git*
-data-dump/
 node_modules/
+dist/
+disabled.json
+firebase-config.json
+settings.json
