@@ -1,3 +1,6 @@
+git:
+  depth: false
+  quiet: true
 cache: npm
 before_install:
   - echo '{}' > disabled.json
