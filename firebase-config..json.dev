@@ -1,0 +1,12 @@
+{
+  "config": {
+    "apiKey": "AIzaSyD2T8uMpjvZXFTwTz3lTKsfrSBKH99kfI4",
+    "authDomain": "chronmapscom-dev.firebaseapp.com",
+    "databaseURL": "https://chronmapscom-dev.firebaseio.com",
+    "projectId": "chronmapscom-dev",
+    "storageBucket": "chronmapscom-dev.appspot.com",
+    "messagingSenderId": "123000087912",
+    "appId": "1:123000087912:web:582c8f41499df738"
+  },
+  "methods": ["GoogleAuthProvider", "FacebookAuthProvider", "TwitterAuthProvider", "EmailAuthProvider"]
+}

@@ -3,6 +3,8 @@ before_install:
   - echo '{}' > disabled.json
   - sed 's/MAPBOX_TOKEN/dummy_token/' settings.json.example > settings.json
   - cp firebase-config.json.example firebase-config.json
+  - echo ${SETTINGS_DEV} > settings.json.dev && echo ${SETTINGS_PROD} > settings.json.prod
+  - echo ${FIREBASE_DEV} > firebase-config.json.dev && echo ${FIREBASE_PROD} > firebase-config.json.prod
 install:
   - npm ci
 language: node_js
@@ -12,3 +14,11 @@ script:
   - npm run lint
   - npm run stylelint
   - npm run release
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - 'if [[ "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_BRANCH" = "master" ]];then
+      docker build -t "chronmaps/frontend:release-prod" --target release --build-arg CFG_EXT=prod .;
+      docker push "chronmaps/frontend:release-prod";
+    else
+      docker build -t "chronmaps/frontend:release-dev" --target release --build-arg CFG_EXT=dev .;
+      docker push "chronmaps/frontend:release-dev";
+    fi'
