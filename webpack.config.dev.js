@@ -65,13 +65,17 @@ module.exports = (env = {}) => ({
       }]
       : {
         '/api': 'http://api:8086/',
-        '/mvt': {
-          target: 'http://api:8086/api/',
-        },
         // '/mvt': {
-        //   target: 'http://localhost:5000',
-        //   pathRewrite: { '^/mvt': '' }
-        // }
+        //   target: 'http://api:8086/api/',
+        // },
+        '/mvt': {
+          target: 'http://localhost:5000',
+          pathRewrite: { '^/mvt': '' }
+        },
+        '/status/mvt': {
+          target: 'http://localhost:5001',
+          pathRewrite: { '^/status/mvt': '' }
+        }
       },
     headers: {
       'Access-Control-Allow-Origin': '*'

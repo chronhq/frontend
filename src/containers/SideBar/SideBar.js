@@ -25,6 +25,7 @@ import './SideBar.less';
 import EventsMenu from './EventsMenu';
 import HiddenURLButton from './HiddenURLButton';
 import MapStyleMenu from './MapStyleMenu';
+import AdminBuildStatus from './AdminBuildStatus';
 
 @inject('store')
 @observer
@@ -41,7 +42,10 @@ class SideBar extends React.Component {
             <HiddenURLButton name='admin' styles='menu-admin' wrapper='side-bar__desktop' href='/admin' />
           </>
         ) : (
-          <HiddenURLButton name='world' styles='menu-admin' wrapper='side-bar__desktop' href='/world' />
+          <>
+            <AdminBuildStatus />
+            <HiddenURLButton name='world' styles='menu-return' wrapper='side-bar__desktop' href='/world' />
+          </>
         )}
         <HiddenURLButton name='github' styles='menu-github' href='https://chronhq.github.io/wiki/' />
         <HiddenURLButton name='discord' styles='menu-discord' href='https://discord.gg/rN3uen5' />
