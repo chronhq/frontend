@@ -2,8 +2,8 @@ node_modules
 npm-debug.log*
 .DS_Store
 dist
-settings.json
-firebase-config.json
+settings.json*
+firebase-config.json*
 disabled.json
 *.sublime-workspace
 *.sublime-project

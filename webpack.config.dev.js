@@ -23,6 +23,8 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const mode = 'development';
 
+const getEnv = (env, param) => (env[param] === undefined ? process.env[param] : env[param]);
+
 module.exports = (env = {}) => ({
   mode,
   devtool: 'source-map',
@@ -57,21 +59,20 @@ module.exports = (env = {}) => ({
     disableHostCheck: true,
     contentBase: path.resolve('static'),
     publicPath: '/',
-    proxy: env.EXT
+    proxy: getEnv(env, 'EXT')
       ? [{
-        context: ['/api', '/mvt'],
+        context: ['/api', '/mvt', 'status/mvt'],
         target: 'https://chronmaps.com/',
         changeOrigin: true,
       }]
       : {
         '/api': 'http://api:8086/',
-        // '/mvt': {
-        //   target: 'http://api:8086/api/',
-        // },
-        '/mvt': {
-          target: 'http://localhost:5000',
-          pathRewrite: { '^/mvt': '' }
-        },
+        '/mvt': getEnv(env, 'PGMVT')
+          ? { target: 'http://api:8086/api/' }
+          : {
+            target: 'http://localhost:5000',
+            pathRewrite: { '^/mvt': '' }
+          },
         '/status/mvt': {
           target: 'http://localhost:5001',
           pathRewrite: { '^/status/mvt': '' }
