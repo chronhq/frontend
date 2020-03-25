@@ -6,9 +6,11 @@ before_install:
   - echo '{}' > disabled.json
   - sed 's/MAPBOX_TOKEN/dummy_token/' settings.json.example > settings.json
   - cp firebase-config.json.example firebase-config.json
-  - echo "${SETTINGS_DEV}" > settings.json.dev && echo "${SETTINGS_PROD}" > settings.json.prod
+  - echo "${SETTINGS_DEV}" | base64 -d > settings.json.dev
+  - echo "${SETTINGS_PROD}" | base64 -d > settings.json.prod
   - node -e 'const fs = require("fs"); const file = fs.readFileSync("settings.json.dev", "utf-8"); try{ JSON.parse(file); process.exit(0)} catch { process.stdout.write(file); process.exit(1) }'
-  - echo "${FIREBASE_DEV}" > firebase-config.json.dev && echo "${FIREBASE_PROD}" > firebase-config.json.prod
+  - echo "${FIREBASE_DEV}" | base64 -d > firebase-config.json.dev
+  - echo "${FIREBASE_PROD}" | base64 -d > firebase-config.json.prod
 install:
   - npm ci
 language: node_js
