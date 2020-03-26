@@ -21,7 +21,7 @@ script:
   - npm run release
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - 'if [[ "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_BRANCH" = "master" ]];then
-      bash docker.release.sh buildpush prod;
+      bash docker.fast.sh buildpush prod prod;
     else
-      bash docker.release.sh buildpush dev;
+      bash docker.fast.sh buildpush dev dev;
     fi'

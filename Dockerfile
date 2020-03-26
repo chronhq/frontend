@@ -39,3 +39,5 @@ RUN npm run release
 
 FROM nginx:stable-alpine AS release
 COPY --from=prerelease /chronmaps/dist /usr/share/nginx/html
+COPY --from=prerelease /chronmaps/static /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
