@@ -2,6 +2,7 @@ node_modules
 npm-debug.log*
 .DS_Store
 dist
+dist_release
 settings.json*
 firebase-config.json*
 disabled.json
