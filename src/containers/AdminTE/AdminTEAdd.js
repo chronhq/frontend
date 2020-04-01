@@ -72,7 +72,9 @@ class AdminTEAdd extends React.Component {
 
   select = action(() => {
     console.log('Executing select');
-    const color = Math.ceil(Math.random() * 13);
+    const keys = Object.keys(this.props.store.data.mapcolorscheme.data);
+    if (keys.length === 0) console.error('Map color scheme is empty');
+    const color = keys.length === 0 ? 1 : keys[Math.ceil(Math.random() * keys.length)];
     this.wait = true;
     this.form.submit({
       color,

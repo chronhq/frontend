@@ -82,7 +82,7 @@ class AdminSTVCard extends React.Component {
 
   render() {
     const { visual_center: visualCenter } = this.props.stv;
-    const coordinates = visualCenter !== null && 'coordinates' in visualCenter
+    const coordinates = visualCenter !== null && visualCenter !== undefined && 'coordinates' in visualCenter
       ? visualCenter.coordinates
       : ['Not set', 'Not set'];
     const { references, start_date: start, end_date: end } = this.props.stv;

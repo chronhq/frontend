@@ -41,7 +41,6 @@ class ExtraSideMenu extends React.Component {
   render() {
     return (
       <LayerToggle
-        key={this.props.key}
         tooltip={this.props.tooltip}
         extraClassName={this.props.extraClassName}
         wrapper={this.props.wrapper}
