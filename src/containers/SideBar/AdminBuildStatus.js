@@ -89,7 +89,6 @@ class AdminBuildStatus extends React.Component {
     const url = `/status/mvt/?ts=${ts}`;
     axios({ url, method })
       .then((response) => {
-        console.log(response);
         const { data } = response;
         if (data) {
           Object.keys(data).forEach(action((k) => {

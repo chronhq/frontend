@@ -52,13 +52,29 @@ class AdminSTVAddModel {
   );
 
   handleSubmit = action((context, error) => {
-    this.waiting = false;
-    this.specialScreen = undefined;
     if (error) {
+      this.waiting = false;
+      this.specialScreen = undefined;
       this.handleError(context);
-    } else { // success
+      return;
+    }
+    // success
+    if (context.response.data.task_id !== undefined) {
+      setTimeout(() => this.handleTask(context), 1000 + Math.round(Math.random() * 3500));
+    } else {
+      this.waiting = false;
+      this.specialScreen = undefined;
       this.handleSuccess(context);
     }
+  })
+
+  handleTask = action((context) => {
+    const taskId = context.response.data.task_id;
+    const ts = Number(new Date());
+    this.form.submit({}, {
+      method: 'get',
+      url: `/api/spacetime-volumes/tasks/${taskId}?ts=${ts}`
+    });
   })
 
   handleError = action((context) => {
@@ -79,6 +95,10 @@ class AdminSTVAddModel {
 
   handleSuccess = action((context) => {
     const { stvs } = this.entityData;
+    if (context.response.data.id === undefined) {
+      console.error('Invalid STV in response data', context.response);
+      return;
+    }
     this.stvId = context.response.data.id;
     this.entityData.stvs = [
       ...stvs.filter((i) => i.id !== this.stvId),
