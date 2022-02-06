@@ -18,7 +18,7 @@
  */
 import { observable, action, computed } from 'mobx';
 
-const flags = {
+export const flags = {
   runtime: {
     SelectedCourse: null,
   },

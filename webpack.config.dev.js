@@ -19,7 +19,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const mode = 'development';
 
@@ -29,7 +28,7 @@ module.exports = (env = {}) => ({
   mode,
   devtool: 'source-map',
   entry: {
-    main: path.resolve(__dirname, 'src'),
+    main: path.resolve(__dirname, 'src/index.js'),
   },
   output: {
     filename: '[name].js',
@@ -47,18 +46,11 @@ module.exports = (env = {}) => ({
     nodeEnv: mode,
   },
   devServer: {
-    host: '0.0.0.0',
-    public: '0.0.0.0:3000',
     historyApiFallback: true,
-    inline: true,
     port: 3000,
-    hot: true,
-    hotOnly: true,
     compress: true,
     https: false,
-    disableHostCheck: true,
-    contentBase: path.resolve('static'),
-    publicPath: '/',
+    static: path.resolve('static'),
     proxy: getEnv(env, 'EXT')
       ? [{
         context: ['/api', '/mvt', 'status/mvt'],
@@ -138,10 +130,6 @@ module.exports = (env = {}) => ({
       'process.env.NODE_ENV': JSON.stringify(mode),
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new BundleAnalyzerPlugin({
-      analyzerPort: '3001',
-      openAnalyzer: false,
-    }),
     new HtmlWebpackPlugin({
       title: 'Chron Development',
       filename: 'index.html',

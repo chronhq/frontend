@@ -16,17 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import { observable, computed } from 'mobx';
+import { override } from 'mobx';
 import WikidataItem from './WikidataItem';
 
 class WikidataPersonItem extends WikidataItem {
-  @observable queries = ['person'];
-
-  @observable saveEffects = {
-    person: () => null
-  }
-
-  @computed get item() {
+  @override get item() {
     if (this.data.person === undefined || !this.data.person.length) return {};
     const raw = this.data.person[0];
 
@@ -46,6 +40,12 @@ class WikidataPersonItem extends WikidataItem {
       birth: fixedBirth,
       death: fixedDeath
     };
+  }
+  constructor(id, rootStore) {
+    this.queries.push('person');
+    this.saveEffects.person = () => null;
+
+    super(id, rootStore);
   }
 }
 
