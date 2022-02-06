@@ -21,6 +21,7 @@ import {
   computed,
   action
 } from 'mobx';
+import { flags } from './FlagsModel';
 
 const INITIAL_VIEW_STATE = {
   latitude: 0,
@@ -47,8 +48,12 @@ export default class DeckViewportModel {
 
   @observable mapInitialized = false;
 
+  @computed get flags() {
+    return this.rootStore?.flags.deck.list || flags.deck
+  }
+
   @computed get viewport() {
-    const { minZoom, maxZoom, center } = this.rootStore.flags.deck.list;
+    const { minZoom, maxZoom, center } = this.flags;
 
     const vState = {
       width: this.width,
@@ -79,7 +84,7 @@ export default class DeckViewportModel {
 
   @computed get validZoomValue() {
     // Do not reset zoom if current value is in range
-    const { minZoom, maxZoom } = this.rootStore.flags.deck.list;
+    const { minZoom, maxZoom } = this.flags;
     const { zoom } = this.viewState;
     return (maxZoom >= zoom && minZoom <= zoom)
       ? zoom // Keep current zoom if in range
@@ -87,7 +92,7 @@ export default class DeckViewportModel {
   }
 
   @computed get viewState() {
-    const { minZoom, maxZoom } = this.rootStore.flags.deck.list;
+    const { minZoom, maxZoom } = this.rootStore.flags;
     return {
       width: this.width,
       height: this.height,
@@ -110,7 +115,7 @@ export default class DeckViewportModel {
 
   // Center from narration or map settings
   @computed get defaultCenter() {
-    return this.rootStore.flags.deck.list.center;
+    return this.flags.center;
   }
 
   set viewState(viewState) {
