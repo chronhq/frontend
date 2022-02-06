@@ -155,11 +155,18 @@ class WikidataItem {
 }
 
 class WikidataBattleItem extends WikidataItem {
-  @observable queries = ['event', 'battle'];
+  constructor(id, rootStore) {
+    this.queries.push('event', 'battle');
+    super(id, rootStore);
+  }
+  
 }
 
 class WikidataTreatyItem extends WikidataItem {
-  @observable queries = ['event', 'treaty'];
+  constructor(id, rootStore) {
+    this.queries.push('event', 'treaty');
+    super(id, rootStore);
+  }
 }
 
 export {

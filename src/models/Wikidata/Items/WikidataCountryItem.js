@@ -23,18 +23,7 @@ import * as queries from './Queries';
 import { julianInt } from '../../YearModel';
 
 class WikidataCountryItem extends WikidataItem {
-  @observable queries = ['country', 'form'];
-
   @observable extra = ['flag', 'capital', 'head', 'population'];
-
-  @observable saveEffects = {
-    country: this.fixData('country', 'item', false),
-    flag: this.fixData('flag', 'flag'),
-    capital: this.fixData('capital', 'capital'),
-    head: this.fixData('head', 'head'),
-    form: this.fixData('form', 'form'),
-    population: this.fixData('population', 'population')
-  };
 
   fixData(key, label, dates = true) {
     return () => {
@@ -93,6 +82,23 @@ class WikidataCountryItem extends WikidataItem {
         && julianInt(p.date) <= this.now))
       : {};
     return current;
+  }
+
+  constructor(id, rootStore) {
+    this.queries.push('country', 'form');
+    const saveEffects = {
+      country: this.fixData('country', 'item', false),
+      flag: this.fixData('flag', 'flag'),
+      capital: this.fixData('capital', 'capital'),
+      head: this.fixData('head', 'head'),
+      form: this.fixData('form', 'form'),
+      population: this.fixData('population', 'population')
+    };
+    Object.entries(saveEffects).forEach(([k,v]) => {
+      this.saveEffects[k] = v;
+    });
+
+    super(id, rootStore);
   }
 }
 
