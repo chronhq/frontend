@@ -20,8 +20,9 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed, action } from 'mobx';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+
 
 import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 

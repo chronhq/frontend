@@ -20,8 +20,8 @@ import React from 'react';
 import { action, computed } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 import LoginScreen from '../../containers/AdminOverlay/LoginScreen';
 

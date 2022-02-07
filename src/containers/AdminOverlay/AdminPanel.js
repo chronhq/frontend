@@ -20,8 +20,8 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed } from 'mobx';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 import TwoActions from '../../components/TwoActions/TwoActions';
