@@ -20,16 +20,20 @@
 
 ERR=""
 
-if [[ ${FLAGS_CONFIG_BASE64} == "" ]]; then
+if [[ "${FLAGS_CONFIG_BASE64}" == "" ]]; then
   FLAGS_CONFIG_BASE64=$(echo {} | base64)
 fi
 
-if [[ ${CHRONMAPS_CONFIG_BASE64} == "" ]]; then
-  echo "ERROR: CHRONMAPS_CONFIG_BASE64 option is not set"
+if [[ "${ANALYTICS_CONFIG_BASE64}" == "" ]]; then
+  ANALYTICS_CONFIG_BASE64=$(echo '{ "ym": "", "ga": "" }' | base64)
+fi
+
+if [[ "${MAPBOX_CONFIG_BASE64}" == "" ]]; then
+  echo "ERROR: MAPBOX_CONFIG_BASE64 option is not set"
   ERR=1
 fi
 
-if [[ ${FIREBASE_CONFIG_BASE64} == "" ]]; then
+if [[ "${FIREBASE_CONFIG_BASE64}" == "" ]]; then
   echo "ERROR: FIREBASE_CONFIG_BASE64 option is not set"
   ERR=1
 fi
@@ -39,5 +43,6 @@ if [[ "${ERR}" != "" ]]; then
 fi
 
 echo ${FLAGS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/disabled.json
-echo ${CHRONMAPS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/settings.json
+echo ${ANALYTICS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/analytics-config.json
+echo ${MAPBOX_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/mapbox-config.json
 echo ${FIREBASE_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/firebase-config.json

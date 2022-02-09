@@ -6,9 +6,10 @@ dist_release
 settings.json*
 firebase-config.json*
 disabled.json
-static/settings.json*
-static/firebase-config.json*
-static/disabled.json
+static/mapbox-config.json
+static/analytics-config.json
+static/firebase-config.json
+static/disabled-config.json
 *.sublime-workspace
 *.sublime-project
 package-lock.json
