@@ -5,7 +5,8 @@
     "databaseURL": "",
     "projectId": "",
     "storageBucket": "",
-    "messagingSenderId": ""
+    "messagingSenderId": "",
+    "appId": ""
   },
   "methods": ["GoogleAuthProvider", "FacebookAuthProvider", "TwitterAuthProvider", "EmailAuthProvider"]
 }

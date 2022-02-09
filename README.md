@@ -19,20 +19,19 @@ cd frontend
 # Install dependencies
 npm ci
 
-# Create an empty disabled.json file
-echo '{}' > disabled.json
-
-# Create a settings.json file from settings.json.example
+# Set configs
+cp configs/disabled-config.json.example static/disabled-config.json
+cp configs/analytics-config.json.example static/analytics-config.json
 
 # Setup your mapbox access token in settings.json 
 # New token can be accuired from https://www.mapbox.com/account/access-tokens
 
-sed 's/MAPBOX_TOKEN/past_your_token_here/' settings.json.example > settings.json
+sed 's/MAPBOX_TOKEN/past_your_token_here/' configs/mapbox-config.json.example > static/mapbox-config.json.json
 # Optional: configure analytics in the same config
 
 # Create project in Firebase https://console.firebase.google.com/
 # Configure firebase and auth methods https://github.com/firebase/firebaseui-web#available-providers
-cp firebase-config.json.example firebase-config.json
+cp configs/firebase-config.json.example static/firebase-config.json
 
 # Run the app in development environment
 # webpack-dev-server - 0.0.0.0:3000

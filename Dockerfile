@@ -4,9 +4,6 @@ LABEL maintainer="Mikhail Orlov <miklergm@gmail.com>"
 
 COPY . /chronmaps
 WORKDIR /chronmaps
-RUN echo '{}' > disabled.json && \
-  sed 's/MAPBOX_TOKEN/dummy_token/' settings.json.example > settings.json && \
-  cp firebase-config.json.example firebase-config.json
 RUN npm clean-install
 
 # Webpack dev-server
