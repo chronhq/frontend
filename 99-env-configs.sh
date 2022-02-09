@@ -18,14 +18,26 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+ERR=""
+
 if [[ ${FLAGS_CONFIG_BASE64} == "" ]]; then
   FLAGS_CONFIG_BASE64=$(echo {} | base64)
 fi
 
+if [[ ${CHRONMAPS_CONFIG_BASE64} == "" ]]; then
+  echo "ERROR: CHRONMAPS_CONFIG_BASE64 option is not set"
+  ERR=1
+fi
+
 if [[ ${FIREBASE_CONFIG_BASE64} == "" ]]; then
   echo "ERROR: FIREBASE_CONFIG_BASE64 option is not set"
+  ERR=1
+fi
+
+if [[ "${ERR}" != "" ]]; then
   exit 1
 fi
 
 echo ${FLAGS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/disabled.json
+echo ${CHRONMAPS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/settings.json
 echo ${FIREBASE_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/firebase-config.json

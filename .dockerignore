@@ -4,3 +4,6 @@ dist/
 disabled.json
 firebase-config.json
 settings.json
+static/settings.json*
+static/firebase-config.json*
+static/disabled.json
