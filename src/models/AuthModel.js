@@ -17,16 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, computed, action } from 'mobx';
+import axios from 'axios';
 
-import firebaseConfig from '../../firebase-config.json';
 import AdminFormModel from './Admin/AdminFormModel';
 
 export default class AuthModel {
+  @observable ready = false;
+
   @observable initialized = false;
 
-  @observable firebase = firebaseConfig.config;
+  @computed get firebase() {
+    return this.firebaseConfig.config;
+  }
 
-  @observable methods = firebaseConfig.methods;
+  @computed get methods() {
+    return this.firebaseConfig.methods;
+  }
 
   @observable user;
 
@@ -35,6 +41,18 @@ export default class AuthModel {
   @computed get isSignedIn() {
     return !!this.user;
   }
+
+  @observable firebaseConfig = {
+    config: {
+      apiKey: '',
+      authDomain: '',
+      databaseURL: '',
+      projectId: '',
+      storageBucket: '',
+      messagingSenderId: ''
+    },
+    methods: ['GoogleAuthProvider', 'FacebookAuthProvider', 'TwitterAuthProvider', 'EmailAuthProvider']
+  };
 
   @computed get headers() {
     if (!this.token) {
@@ -58,4 +76,14 @@ export default class AuthModel {
   createForm = (
     url, method, onResult, onComplete
   ) => new AdminFormModel(this, url, method, onResult, onComplete);
+
+  @action async fetchConfiguration() {
+    const { data } = await axios({ url: '/firebase-config.json', method: 'GET' });
+    this.firebaseConfig = data;
+    this.ready = true;
+  }
+
+  constructor() {
+    this.fetchConfiguration();
+  }
 }

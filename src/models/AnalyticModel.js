@@ -19,13 +19,14 @@
 
 import {
   observable,
-  action
+  action,
+  computed
 } from 'mobx';
+import axios from 'axios';
 import ym from 'react-yandex-metrika';
 import ReactGA from 'react-ga';
 
 import { getCookie, setCookie } from '../utils/localStorage';
-import settings from '../../settings.json';
 
 const YM_CONFIG = {
   defer: false,
@@ -36,37 +37,36 @@ const YM_CONFIG = {
   trackHash: false
 };
 
-const config = ((settings.analytics !== undefined)
-  ? {
-    ym: {
-      enabled: Boolean(settings.analytics.ym),
-      id: Number(settings.analytics.ym),
-      config: YM_CONFIG
-    },
-    ga: {
-      enabled: Boolean(settings.analytics.ga),
-      id: settings.analytics.ga,
-      config: {}
-    },
-  }
-  : {
-    ym: { enabled: false, id: '', config: {} },
-    ga: { enabled: false, id: '', config: {} },
-  }
-);
-
 export default class AnalyticModel {
   @observable agreement = false;
 
-  @observable config = config;
-
   @observable goal;
+
+  @observable tokens = {
+    ym: '',
+    ga: '',
+  };
 
   @action agreeWithPolicy() {
     setCookie('gdpr', true, Date.now());
     this.agreement = true;
     this.initGA();
     this.metricHit(this.goal);
+  }
+
+  @computed get config() {
+    return {
+      ym: {
+        enabled: Boolean(this.tokens.ym),
+        id: Number(this.tokens.ym),
+        config: YM_CONFIG
+      },
+      ga: {
+        enabled: Boolean(this.tokens.ga),
+        id: this.tokens.ga,
+        config: {}
+      },
+    };
   }
 
   ymHit = (link, c = 0) => {
@@ -115,12 +115,21 @@ export default class AnalyticModel {
     }
   }
 
-  constructor() {
+
+  @action async fetchConfiguration() {
+    const { data } = await axios({ url: '/analytics-config.json', method: 'GET' });
+    this.tokens = data;
+  }
+
+  constructor(rootStore) {
+    this.rootStore = rootStore;
     // Disable GA tracking
     window[`ga-disable-${this.config.ga.id}`] = true;
-    if (getCookie().indexOf('gdpr') >= 0) {
-      this.agreement = true;
-      this.initGA();
-    }
+    this.fetchConfiguration().then(() => {
+      if (getCookie().indexOf('gdpr') >= 0) {
+        this.agreement = true;
+        this.initGA();
+      }
+    });
   }
 }
