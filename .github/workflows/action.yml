@@ -31,4 +31,4 @@ jobs:
           npm run lint
           npm run stylelint
       - name: Build release
-        run: npm release
+        run: npm run release
