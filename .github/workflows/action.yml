@@ -54,7 +54,7 @@ jobs:
           key: ${{ github.sha }}
       - run: cp -R dist dist_release
       - name: "Build Docker Image"
-        run: docker build -t "chronmaps/frontend:${TAG}" . -f Dockerfile.prebuild
-      - name: "Publish Docker Image"
-        run: echo ${PUSH_PACKAGES} ${TAG}
+        run: docker build -t "chronmaps/frontend:latest" . -f Dockerfile.prebuild
+      - run: echo ${PUSH_PACKAGES} ${TAG}
+      # - name: "Publish Docker Image"
         # run: docker push "chronmaps/frontend:${TAG}"
