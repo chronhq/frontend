@@ -35,18 +35,20 @@ jobs:
         uses: actions/cache@v2
         id: release-data
         with:
-          path: |
-            ./static
-            ./dist
+          path: ./dist
           key: ${{ github.sha }}
   image:
     runs-on: ubuntu-latest
     needs: [build]
 
     steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/cache@v2
         id: release-data
         with:
-          path: ./*
+          path: ./dist
           key: ${{ github.sha }}
       - run: ls -la
+      - run: ls -la ./dist
