@@ -3,7 +3,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -30,5 +29,24 @@ jobs:
         run: |
           npm run lint
           npm run stylelint
-      - name: Build release
+      - name: Build Release
         run: npm run release
+      - name: Save Release
+        uses: actions/cache@v2
+        id: release-data
+        with:
+          path: |
+            ./static
+            ./dist
+          key: ${{ github.sha }}
+  image:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - uses: actions/cache@v2
+        id: release-data
+        with:
+          path: ./*
+          key: ${{ github.sha }}
+      - run: ls -la
