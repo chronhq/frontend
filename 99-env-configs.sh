@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
+set -e
 
 ERR=""
 
@@ -42,7 +43,7 @@ if [[ "${ERR}" != "" ]]; then
   exit 1
 fi
 
-echo ${FLAGS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/disabled.json
+echo ${FLAGS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/disabled-config.json
 echo ${ANALYTICS_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/analytics-config.json
 echo ${MAPBOX_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/mapbox-config.json
 echo ${FIREBASE_CONFIG_BASE64} | base64 -d > ${HTML_FOLDER}/firebase-config.json
