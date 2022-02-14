@@ -83,10 +83,13 @@ jobs:
             docker push "chronmaps/frontend:${{ env.BRANCH_NAME }}"
           fi
       - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-        uses: anothrNick/github-tag-action@1.36.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          CUSTOM_TAG: v${{ env.VERSION }}
-
+        run: |
+          if [[ "${{ env.BRANCH_NAME }}" == "${RELEASE_BRANCH}" ]]; then
+            git config --global user.name 'CI'
+            git config --global user.email 'github-actions@users.noreply.github.com'
+            git add package*.json
+            TAG_NAME=v${{ env.VERSION }}
+            git commit -m "🆙 ${TAG_NAME} ${MESSAGE}"
+            git tag "${TAG_NAME}"
+            git push -o ci.skip --atomic origin ${{ env.BRANCH_NAME }} ${TAG_NAME}
+          fi
