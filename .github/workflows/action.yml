@@ -55,11 +55,9 @@ jobs:
       - name: Set image version
         run: |
           if [[ "${{ env.PATCH }}" ]]; then
-            EXTRA=$([[ "${{ env.PATCH }}" == "prepatch" ]] && echo "--no-git-tag-version" || echo "--allow-same-version")
-            npm version "${{ env.PATCH }}" "${EXTRA}" -m "${MESSAGE}"
-            VERSION=$(npm pkg get version | sed -e 's/"//g')
-            echo "VERSION=${VERSION}" >> $GITHUB_ENV
+            npm version "${{ env.PATCH }}" --no-git-tag-version -m "${MESSAGE}"
           fi
+          echo "VERSION=$(npm pkg get version | sed -e 's/"//g')" >> $GITHUB_ENV
       - name: Lint
         run: |
           npm run lint
