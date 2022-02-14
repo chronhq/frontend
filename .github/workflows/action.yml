@@ -88,5 +88,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-          CUSTOM_TAG: ${{ env.VERSION }}
+          CUSTOM_TAG: v${{ env.VERSION }}
 
