@@ -7,7 +7,6 @@ jobs:
     env:
       MESSAGE: ${{ github.event.head_commit.message }}
       RELEASE_BRANCH: "master"
-      PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     strategy:
       matrix:
         node-version: [12.x]
@@ -75,7 +74,7 @@ jobs:
       
       - name: "Publish Docker Image"
         run: |
-          docker login -u ${{ secret.DOCKER_USER }} -p ${{ secret.DOCKER_PASSWORD }}
+          docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
           if [[ "${{ env.BRANCH_NAME }}" == "${RELEASE_BRANCH}" ]]; then
             echo "Publish Release Tags"
             docker push "chronmaps/frontend:latest"
@@ -85,7 +84,7 @@ jobs:
             docker push "chronmaps/frontend:${{ env.BRANCH_NAME }}"
           fi
       - name: Bump version and push tag
-        if: ${{ PUSH_PACKAGES }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
