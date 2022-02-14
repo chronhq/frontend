@@ -55,8 +55,8 @@ export default class storeModel {
     this.search = new DashboardSearch(this);
     this.wikidata = new Wikidata(this);
     this.admin = new AdminModel(this);
-    this.analytics = new AnalyticModel();
-    this.auth = new AuthModel();
+    this.analytics = new AnalyticModel(this);
+    this.auth = new AuthModel(this);
     this.overlays = new OverlayModel();
     this.remToPixel = (rem) => rem * parseFloat(
       getComputedStyle(document.documentElement).fontSize

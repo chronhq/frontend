@@ -1,10 +1,10 @@
 server {
    location / {
-        root /usr/share/nginx/html;
+        root ${HTML_FOLDER};
         try_files $uri $uri/ /index.html;
    }
    location ~* \.(?:css|js)$ {
-     root /usr/share/nginx/html;
+     root ${HTML_FOLDER};
      access_log        off;
      log_not_found     off;
      add_header Cache-Control "no-cache, public, must-revalidate, proxy-revalidate";

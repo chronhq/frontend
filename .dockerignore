@@ -4,3 +4,8 @@ dist/
 disabled.json
 firebase-config.json
 settings.json
+static/*-config.json*
+static/mapbox-config.json
+static/analytics-config.json
+static/firebase-config.json
+static/disabled-config.json

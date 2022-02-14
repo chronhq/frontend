@@ -20,15 +20,15 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { computed, action } from 'mobx';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+
 
 import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import AdminWrapper from '../../components/AdminWrapper/AdminWrapper';
 
 import ActionButton from '../../components/ActionButtons/ActionButtons';
-import disabled from '../../../disabled.json';
 
 @inject('store')
 @observer
@@ -36,6 +36,10 @@ class LoginScreen extends React.Component {
   dummyUser = action(() => {
     this.auth.user = { dummy: true };
   })
+
+  @computed get disabled() {
+    return this.props.store.flags.disabledFeatures;
+  }
 
   @computed get auth() {
     return this.props.store.auth;
@@ -54,7 +58,7 @@ class LoginScreen extends React.Component {
   }
 
   @computed get skip() {
-    return disabled.login
+    return this.disabled.login
       ? () => (
         <ActionButton text='Let Me Through' click={() => this.dummyUser()} />
       )

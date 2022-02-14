@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { observable, action, computed } from 'mobx';
+import axios from 'axios';
 
 const flags = {
   runtime: {
@@ -91,11 +92,24 @@ class FlagList {
 export default class FlagsModel {
   @observable defaultFlags = flags;
 
+  @observable disabledFeatures = {
+    map: false,
+    login: false,
+  };
+
+
+  @action async getDisabledFeatures() {
+    const { data } = await axios({ url: '/disabled-config.json', method: 'GET' });
+    this.disabledFeatures = data;
+  }
+
   constructor() {
     Object.keys(this.defaultFlags).map((l) => {
       this[l] = new FlagList(this.defaultFlags[l]);
       return null;
     });
+
+    this.getDisabledFeatures();
   }
 
   @action set(f) {

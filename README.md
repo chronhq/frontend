@@ -8,7 +8,7 @@
 * Mapbox access token
 * Firebase access token
 
-### Hot to run
+### Hot to setup
 
 ```bash
 # Clone the repo
@@ -19,21 +19,35 @@ cd frontend
 # Install dependencies
 npm ci
 
-# Create an empty disabled.json file
-echo '{}' > disabled.json
-
-# Create a settings.json file from settings.json.example
+# Set configs
+cp configs/disabled-config.json.example static/disabled-config.json
+cp configs/analytics-config.json.example static/analytics-config.json
 
 # Setup your mapbox access token in settings.json 
 # New token can be accuired from https://www.mapbox.com/account/access-tokens
 
-sed 's/MAPBOX_TOKEN/past_your_token_here/' settings.json.example > settings.json
-# Optional: configure analytics in the same config
+sed 's/MAPBOX_TOKEN/past_your_token_here/' configs/mapbox-config.json.example > static/mapbox-config.json.json
 
 # Create project in Firebase https://console.firebase.google.com/
 # Configure firebase and auth methods https://github.com/firebase/firebaseui-web#available-providers
-cp firebase-config.json.example firebase-config.json
+cp configs/firebase-config.json.example static/firebase-config.json
+```
 
+### Optional: Configure environment for docker image
+
+```bash
+
+echo "\
+FLAGS_CONFIG_BASE64=$(base64 -w0 static/disabled-config.json)
+ANALYTICS_CONFIG_BASE64=$(base64 -w0 static/analytics-config.json)
+MAPBOX_CONFIG_BASE64=$(base64 -w0 static/mapbox-config.json)
+FIREBASE_CONFIG_BASE64=$(base64 -w0 static/firebase-config.json)" > frontend.env
+
+```
+
+### Hot to run
+
+```bash
 # Run the app in development environment
 # webpack-dev-server - 0.0.0.0:3000
 # webpack-bundle-analyzer - 0.0.0.0:3001 

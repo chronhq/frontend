@@ -19,8 +19,7 @@
 import {
   computed, observable, action, runInAction
 } from 'mobx';
-
-import settings from '../../../settings.json';
+import axios from 'axios';
 
 import citiesStyle from './CitiesMVTStyle';
 import pinsStyle from './PinsMVTStyle';
@@ -57,8 +56,6 @@ export default class MapStyleModel {
 
   @observable installedMapBoxStyle;
 
-  @observable accessToken = settings.mapbox.token;
-
   @observable backgroundStyle = { ...BODY, sources: {}, layers: [] };
 
   @observable visibleSTVs = [];
@@ -66,6 +63,13 @@ export default class MapStyleModel {
   @observable uploadedGeoJSONColor = '#7F7F7F';
 
   @observable uploadedGeoJSON;
+
+  @observable accessToken = '';
+
+  @observable mapboxConfig = {
+    style: '',
+    token: '',
+  };
 
   @computed get adminGeoJSON() {
     return geojson(
@@ -184,7 +188,7 @@ export default class MapStyleModel {
     return `${link}?access_token=${this.accessToken}`;
   }
 
-  @action async setUpConfig(config = settings.mapbox) {
+  @action async setUpConfig(config = this.mapboxConfig) {
     this.accessToken = config.token;
     this.setUpBackground(config.style);
   }
@@ -212,8 +216,14 @@ export default class MapStyleModel {
     }
   }
 
+  @action async fetchConfiguration() {
+    const { data } = await axios({ url: '/mapbox-config.json', method: 'GET' });
+    this.mapboxConfig = data;
+    this.setUpConfig(data);
+  }
+
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.setUpConfig();
+    this.fetchConfiguration();
   }
 }
