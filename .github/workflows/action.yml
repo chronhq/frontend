@@ -55,7 +55,7 @@ jobs:
       - name: Set image version
         run: |
           if [[ "${{ env.PATCH }}" ]]; then
-            VERSION=$(npm version "${{ env.PATCH }}" "${MESSAGE}")
+            VERSION=$(npm version "${{ env.PATCH }}" -m "${MESSAGE}")
             echo "VERSION=${VERSION}" >> $GITHUB_ENV
           fi
       - name: Lint
