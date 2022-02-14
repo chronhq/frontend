@@ -4,45 +4,12 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        run: npm ci
-      - name: Lint
-        run: |
-          npm run lint
-          npm run stylelint
-      - name: Build Release
-        run: npm run release
-      - name: Save Release
-        uses: actions/cache@v2
-        id: release-data
-        with:
-          path: ./dist
-          key: ${{ github.sha }}
-  image:
-    runs-on: ubuntu-latest
-    needs: [build]
     env:
       MESSAGE: ${{ github.event.head_commit.message }}
       PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    strategy:
+      matrix:
+        node-version: [12.x]
     steps:
       - name: Get branch name (merge)
         if: github.event_name != 'pull_request'
@@ -66,21 +33,50 @@ jobs:
           esac
           if [[ "${{ env.BRANCH_NAME }}" != "master" ]]; then
             echo "Not main branch, resetting PATCH from ${PATCH}"
-            PATCH=from-git
+            PATCH="from-git"
           fi
           echo "PATCH=${PATCH}" >> $GITHUB_ENV
-          echo "Patch level: ${{ env.PATCH }}"
-
+          echo "Patch level: ${{ PATCH }}"
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: actions/cache@v2
-        id: release-data
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          path: ./dist
-          key: ${{ github.sha }}
+          node-version: ${{ matrix.node-version }}
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Set image version
+        run: |
+          if [[ "${{ env.PATCH }}" ]]; then
+            VERSION=$(npm version "${{ env.PATCH }}" "${MESSAGE}")
+            echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          fi
+      - name: Lint
+        run: |
+          npm run lint
+          npm run stylelint
+      - name: Build Release
+        run: |
+          npm run release
+          echo "${{ env.BRANCH_NAME }}@${{ env.VERSION }}" > dist/version
+          cat dist/version
+      # - name: Save Release
+      #   uses: actions/cache@v2
+      #   id: release-data
+      #   with:
+      #     path: ./dist
+      #     key: ${{ github.sha }}
       - run: cp -R dist dist_release
       - name: "Build Docker Image"
         run: docker build -t "chronmaps/frontend:latest" . -f Dockerfile.prebuild
+      
       # - name: "Publish Docker Image"
         # run: docker push "chronmaps/frontend:${TAG}"
+
