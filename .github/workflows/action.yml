@@ -56,9 +56,8 @@ jobs:
         run: |
           if [[ "${{ env.PATCH }}" ]]; then
             npm version "${{ env.PATCH }}" --no-git-tag-version -m "${MESSAGE}"
-            VERSION=$(npm pkg get version | sed -e 's/"//g')
-            echo "VERSION=${VERSION}" >> $GITHUB_ENV
           fi
+          echo "VERSION=$(jq -r '.version' <package.json)" >> $GITHUB_ENV
       - name: Lint
         run: |
           npm run lint
