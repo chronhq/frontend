@@ -42,7 +42,6 @@ jobs:
     needs: [build]
     env:
       MESSAGE: ${{ github.event.head_commit.message }}
-      OLDEST: ${{ github.event.commits[0].message }}
       PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     steps:
       - name: Get branch name (merge)
@@ -55,9 +54,22 @@ jobs:
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
       - name: Print Branch Name
         run: echo ${{ env.BRANCH_NAME }}
-      - run: |
-          echo Message ${MESSAGE}
-          echo OLDEST ${OLDEST}
+      - name: "Check Patch Level"
+        run: |
+          echo Commit Message ${MESSAGE}
+          case "${MESSAGE}" in 
+            *#major*) PATCH="major";;
+            *#minor*) PATCH="minor";;
+            *#patch*) PATCH="patch";;
+            *#none*)  PATCH="";;
+            *) PATCH="patch";;
+          esac
+          if [[ "${{ env.BRANCH_NAME }}" != "master" ]]; then
+            echo "Not main branch, resetting PATCH from ${PATCH}"
+            PATCH=from-git
+          fi
+          echo "PATCH=${PATCH}" >> $GITHUB_ENV
+          echo "Patch level: ${{ env.PATCH }}"
 
       - uses: actions/checkout@v2
         with:
