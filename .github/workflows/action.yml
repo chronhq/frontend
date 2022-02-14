@@ -55,7 +55,8 @@ jobs:
       - name: Set image version
         run: |
           if [[ "${{ env.PATCH }}" ]]; then
-            VERSION=$(npm version "${{ env.PATCH }}" -m "${MESSAGE}")
+            EXTRA=$([[ "${{ env.PATCH }}" == "from-git" ]] && echo "--no-git-tag-version")
+            VERSION=$(npm version "${{ env.PATCH }}" "${EXTRA}" -m "${MESSAGE}")
             echo "VERSION=${VERSION}" >> $GITHUB_ENV
           fi
       - name: Lint
@@ -65,9 +66,9 @@ jobs:
       - name: Build Release
         run: |
           npm run release
-          echo "${{ env.BRANCH_NAME }}@${{ env.VERSION }}" > dist/version
-          cat dist/version
-      - run: cp -R dist dist_release
+          echo "${{ env.BRANCH_NAME }}@${{ env.VERSION }}" | tee dist/version
+          # Move release content to avoid .dockerignore
+          mv dist dist_release
       - name: "Build Docker Image"
         run: docker build -t "chronmaps/frontend:latest" . -f Dockerfile.prebuild
       
