@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MESSAGE: ${{ github.event.head_commit.message }}
+      RELEASE_BRANCH: "master"
       PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     strategy:
       matrix:
@@ -31,9 +32,9 @@ jobs:
             *#none*)  PATCH="";;
             *) PATCH="patch";;
           esac
-          if [[ "${{ env.BRANCH_NAME }}" != "master" ]]; then
+          if [[ "${{ env.BRANCH_NAME }}" != "${RELEASE_BRANCH}" ]]; then
             echo "Not main branch, resetting PATCH from ${PATCH}"
-            PATCH="from-git"
+            PATCH="prepatch"
           fi
           echo "PATCH=${PATCH}" >> $GITHUB_ENV
           echo "Patch level: ${PATCH}"
@@ -55,7 +56,7 @@ jobs:
       - name: Set image version
         run: |
           if [[ "${{ env.PATCH }}" ]]; then
-            EXTRA=$([[ "${{ env.PATCH }}" == "from-git" ]] && echo "--no-git-tag-version")
+            EXTRA=$([[ "${{ env.PATCH }}" == "prepatch" ]] && echo "--no-git-tag-version")
             VERSION=$(npm version "${{ env.PATCH }}" "${EXTRA}" -m "${MESSAGE}")
             echo "VERSION=${VERSION}" >> $GITHUB_ENV
           fi
@@ -70,8 +71,14 @@ jobs:
           # Move release content to avoid .dockerignore
           mv dist dist_release
       - name: "Build Docker Image"
-        run: docker build -t "chronmaps/frontend:latest" . -f Dockerfile.prebuild
+        run: docker build -t "chronmaps/frontend:latest" -t "chronmaps/frontend:${{ env.BRANCH_NAME }}" -t "chronmaps/frontend:${{ env.VERSION }}" . -f Dockerfile.prebuild
       
-      # - name: "Publish Docker Image"
+      - name: "Publish Docker Image"
+        run: |
+          if [[ "${{ env.BRANCH_NAME }}" == "${RELEASE_BRANCH}" ]]; then
+            echo "Publish Release"
+          else
+            echo "Publish Branch"
+          fi
         # run: docker push "chronmaps/frontend:${TAG}"
 
