@@ -75,10 +75,20 @@ jobs:
       
       - name: "Publish Docker Image"
         run: |
+          docker login -u ${{ secret.DOCKER_USER }} -p ${{ secret.DOCKER_PASSWORD }}
           if [[ "${{ env.BRANCH_NAME }}" == "${RELEASE_BRANCH}" ]]; then
-            echo "Publish Release"
+            echo "Publish Release Tags"
+            docker push "chronmaps/frontend:latest"
+            docker push "chronmaps/frontend:${{ env.VERSION }}"
           else
-            echo "Publish Branch"
+            echo "Publish Branch Tags"
+            docker push "chronmaps/frontend:${{ env.BRANCH_NAME }}"
           fi
-        # run: docker push "chronmaps/frontend:${TAG}"
+      - name: Bump version and push tag
+        if: ${{ PUSH_PACKAGES }}
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: false
+          CUSTOM_TAG: ${VERSION}
 
