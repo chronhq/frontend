@@ -54,6 +54,9 @@ jobs:
         run: npm ci
       - name: Set image version
         run: |
+          # Obtain latest git tag
+          LATEST=$(git tag -l --format="%(creatordate:iso8601) %(refname:short)"| sort -r| sed -e "s/.*v//" -e "s/.*\s//" | head -n 1)
+          npm version ${LATEST}
           if [[ "${{ env.PATCH }}" ]]; then
             npm version "${{ env.PATCH }}" --no-git-tag-version -m "${MESSAGE}"
           fi
@@ -87,9 +90,8 @@ jobs:
           if [[ "${{ env.BRANCH_NAME }}" == "${RELEASE_BRANCH}" ]]; then
             git config --global user.name 'CI'
             git config --global user.email 'github-actions@users.noreply.github.com'
-            git add package*.json
             TAG_NAME=v${{ env.VERSION }}
             git commit -m "🆙 ${TAG_NAME} ${MESSAGE}"
             git tag "${TAG_NAME}"
-            git push -o ci.skip --atomic origin ${{ env.BRANCH_NAME }} ${TAG_NAME}
+            git push -o ci.skip origin ${TAG_NAME}
           fi
