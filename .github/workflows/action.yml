@@ -56,7 +56,7 @@ jobs:
         run: |
           # Obtain latest git tag
           LATEST=$(git tag -l --format="%(creatordate:iso8601) %(refname:short)"| sort -r| sed -e "s/.*v//" -e "s/.*\s//" | head -n 1)
-          npm version ${LATEST}
+          npm version ${LATEST} --no-git-tag-version --allow-same-version
           if [[ "${{ env.PATCH }}" ]]; then
             npm version "${{ env.PATCH }}" --no-git-tag-version -m "${MESSAGE}"
           fi
