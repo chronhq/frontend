@@ -91,7 +91,6 @@ jobs:
             git config --global user.name 'CI'
             git config --global user.email 'github-actions@users.noreply.github.com'
             TAG_NAME=v${{ env.VERSION }}
-            git commit -m "🆙 ${TAG_NAME} ${MESSAGE}"
             git tag "${TAG_NAME}"
             git push -o ci.skip origin ${TAG_NAME}
           fi
