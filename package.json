@@ -81,7 +81,7 @@
     "julian": "^0.2.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
-    "mapbox-gl": "^1.7.0",
+    "mapbox-gl": "^1.13.3",
     "mini-css-extract-plugin": "^0.9.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
